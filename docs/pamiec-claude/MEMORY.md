@@ -18,4 +18,4 @@
 - [PCB fab: Satland](pcb-fab-satland.md) — Satland lub JLCPCB (najtaniej); 35 µm (decyzja: koszt), próba nagrzewania 5 A przed P07; Plytki/Zamowienie-Satland: P00, P01, P02, P04; skrypty pakowania z P04-PCB-R2.2-zamowienie/src
 - [Kaseta R1](kaseta-r1.md) — obudowa 29.09: LOGGER 361×209×151 mm, pełny 361×265×151; wiązki v6.1 do wydłużenia; J7 TAPS na P11 przenieść; kabina, nie komora silnika
 - [Zasilanie z ogniw 18650](zasilanie-ogniwa-18650.md) — decyzja 29.09: pakiet 4S, P01/HOLD zbędne, PCB P01/P02 wstrzymane, zamienniki przyjęte; specyfikacja P02 R4 w Plytki/P02-R4-specyfikacja (czeka na D-01…D-07)
-- [Repozytorium i chmura](repo-chmura.md) — git w EGRLab (29.09): * -text, zipy recenzji poza repo, 15 plików AUX/CON jako skip-worktree; docs/CHMURA.md; push i kredyt robi użytkownik
+- [Repozytorium i chmura](repo-chmura.md) — github.com/gorbi0/EGRLab (prywatne, main od 45dce9c); * -text, 15 plików AUX/CON jako skip-worktree, e-mail lokalny gorbi@adres.pl; docs/CHMURA.md

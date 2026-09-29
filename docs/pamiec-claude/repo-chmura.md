@@ -1,6 +1,6 @@
 ---
 name: repo-chmura
-description: "Repozytorium git EGRLab (29.09.2026) pod sesje Claude w chmurze: * -text, zipy recenzji wykluczone, 15 plików AUX/CON jako skip-worktree; docs/CHMURA.md, kopia pamięci w docs/pamiec-claude; push i kredyt 250 $ robi użytkownik"
+description: "Repozytorium github.com/gorbi0/EGRLab (prywatne, 29.09.2026) pod sesje Claude w chmurze: * -text, zipy recenzji poza repo, 15 plików AUX/CON jako skip-worktree, e-mail lokalny gorbi@adres.pl; docs/CHMURA.md"
 metadata:
   node_type: memory
   type: project
@@ -11,8 +11,9 @@ metadata:
 29.09.2026 użytkownik dostał ofertę 250 $ na sesje w chmurze (odebrać do 8.10, wygasa 5.11) i poprosił o przygotowanie repozytorium.
 
 **Stan:**
-- `git init -b main` w katalogu EGRLab, pierwszy commit lokalny z globalną tożsamością git użytkownika (t.gorbaczuk@ican.pl); do zmiany przed pushem, jeśli zechce adres prywatny.
-- Push do prywatnego repo na GitHubie i podłączenie GitHuba robi użytkownik.
+- **Na GitHubie: github.com/gorbi0/EGRLab** (prywatne), gałąź main, pierwszy commit 45dce9c (258 MB). Aplikacja Claude GitHub ma dostęp do wszystkich repozytoriów konta gorbi0.
+- W tym repozytorium lokalnie `user.email = gorbi@adres.pl` (prywatny, zgodny z kontem GitHub). Globalny adres git użytkownika zostaje firmowy (t.gorbaczuk@ican.pl), nie zmieniać.
+- Credential Manager ma zapisane konto gorbi0, więc `git push` z mojej powłoki działa bez okna. Pierwsze logowanie z procesu w tle nie pokazało okna; zadziałało dopiero w terminalu użytkownika.
 - `.gitattributes`: `* -text`, bo manifesty SHA-256 i mieszane CRLF/LF muszą przetrwać bajt w bajt.
 - `.gitignore`: wszystkie `*.zip` poza paczkami DO-ZAMOWIENIA, oraz pliki podręczne. **negative-controls/ i *.kicad_prl zostają**, bo są w manifestach P00/P02 zamówieniowych i P01.
 - Rozmiar: 10 135 plików, ok. 371 MB po kompresji.

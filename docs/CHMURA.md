@@ -1,6 +1,6 @@
 # Praca w sesji Claude Code w chmurze
 
-*29.09.2026. Środowisko **NIE ZBADANE** — pierwsza sesja ma je przygotować i sprawdzić (zadanie niżej).*
+*29.09.2026. Repozytorium: `github.com/gorbi0/EGRLab` (prywatne, gałąź main). Środowisko **NIE ZBADANE** — pierwsza sesja ma je przygotować i sprawdzić (zadanie niżej).*
 
 ## Co w chmurze, co lokalnie
 
