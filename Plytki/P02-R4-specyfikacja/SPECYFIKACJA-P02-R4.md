@@ -4,6 +4,8 @@
 
 > **Poprawka 29.09.2026 (w trakcie projektu schematu):** pierwsza wersja zakładała jeden tranzystor do ochrony przed odwrotną polaryzacją i do wyłączania. To nie działa: przy ochronie polaryzacji dioda strukturalna przewodzi w kierunku zasilania, więc wyłączony tranzystor dalej zasilałby układ przez tę diodę. Są dwa SUP53P06 przeciwsobnie (Q_REV i Q_SW), a tor bramki i sterowania przechodzi 1:1 z recenzowanego P01 R3 (w tym szybkie wyłączanie przez Q_OFF). Próg UVLO przeliczony dla tej topologii (wyjście OK 0/5 V z AUX5). Szczegóły: `STAN-PRAC.md`.
 
+> **Po recenzji etapu 1 (29.09.2026):** D3 5KP24A (Z-01 spełnione), Z-02 i O-02 przepisane na obwiednię narożników, Z-08 na ≥ 10 ms w najgorszym narożniku (C_H zostaje 2200 µF), włącznik PWR na panelu ze złoconymi stykami. Szczegóły: `Plytki/P02-R4-recenzja/RECENZJA-P02-R4-ETAP1.md`.
+
 ## 1. Decyzje wejściowe (użytkownik, 29.09.2026)
 
 - Przyrząd jest zasilany z pakietu Li-ion 18650 **4S** (12,0–16,8 V), a nie z instalacji auta.
@@ -63,13 +65,13 @@ VBAT auta: klema + akumulatora (bezpiecznik 1 A) → wiązka do komory → J15 �
 | Nr | Wymaganie | Wartość | Uzasadnienie / źródło |
 |---|---|---|---|
 | Z-01 | Zakres wejścia | praca 12,0–16,8 V; bez uszkodzeń przy 0–25 V i −16,8 V (odwrotnie) | 4S; 5S przez pomyłkę; odwrócony wtyk |
-| Z-02 | UVLO | załączenie 13,53 V, wyłączenie 12,51 V (±0,34 V) | 3,38 i 3,13 V na ogniwo; wyłącza przed BMS |
+| Z-02 | UVLO | nominalnie załączenie 13,5 V, wyłączenie 12,55 V; w najgorszych narożnikach 12,90–14,08 V i 11,98–13,11 V (poprawione po etapie 1, pierwotne ±0,34 V było zaniżone) | 3S (12,6 V) nie startuje, 4S przy 3,6 V/ogniwo startuje zawsze; wyłącza przed BMS; histereza ≥ 0,84 V |
 | Z-03 | Blokada startu | brak startu przy pakiecie 3S (12,6 V) i przy jednym odwróconym ogniwie (ok. 7,2 V) | TSR przyjąłby 7,2 V i pchał prąd wstecz przez ogniwo |
 | Z-04 | Włącznik | przełącznik sygnałowy na panelu w górnej gałęzi dzielnika UVLO (ok. 0,3 mA); rozwarty albo przerwany przewód = wyłączone | brak prądu mocy w przełączniku; bez dodatkowych tranzystorów |
 | Z-05 | Budżet mocy | logika ≤ 6 W z VLOG (jak R3); VMOTOR ≤ 3,5 A ciągle (limit programu), OC 4 A, bezpiecznik 5 A | architektura v6.1 |
 | Z-06 | Pojemność na VSW | ≤ 220 µF łącznie z wejściem P07 | limit P01, ok. 31 mJ przy 16,8 V |
 | Z-07 | Załączanie Q_SW | narastanie VSW ok. 13 V/ms (jak P01 R3: C5 10 nF, R21 100 kΩ); szybkie wyłączanie przez Q_OFF i R27 10 Ω | prąd ładowania ≤ ok. 3 A przy 220 µF |
-| Z-08 | Podtrzymanie | po PFAIL_N co najmniej 14 ms przy 6 W i 28 ms przy 3 W (C_H −20 %) | czas na zamknięcie pliku |
+| Z-08 | Podtrzymanie | po PFAIL_N ≥ 10 ms przy 6 W w najgorszym narożniku (C_H −20 %, wyłączenie przy 11,98 V, spadki na obu diodach; jest 11,1 ms); nominalnie 16,8 / 33,5 ms przy 6 / 3 W (poprawione po etapie 1) | czas na zamknięcie pliku (firmware ≤ 10 ms, sekcja 9) |
 | Z-09 | PFAIL_N | poziom 3,3 V, aktywny niski; opada w ciągu ≤ 100 µs od utraty ENABLE | wyjście do P03 (nowe) i J12.3 |
 | Z-10 | SAFE_N i PG | jak P01: Q7 z otwartym kolektorem zasilany z 3V3_IO od P04, Q8 zwalnia przy ENABLE; zwora 0 Ω PG_SEND–PG_LINK | P04 bez zmian |
 | Z-11 | PSU_OK | jak R3 | P04 bez zmian |
@@ -185,7 +187,7 @@ Posiadany 1.5KE18A nie nadaje się ani na VSW, ani na wejście VBAT. Jego napię
 | Nr | Próba | Kryterium |
 |---|---|---|
 | O-01 | Odwrotna polaryzacja z zasilacza z ograniczeniem prądu (−16,8 V) | brak prądu powyżej upływów, brak uszkodzeń |
-| O-02 | UVLO: rampa 10 → 17 V i 17 → 10 V | załączenie 13,53 ±0,34 V, wyłączenie 12,51 ±0,34 V, brak drgań |
+| O-02 | UVLO: rampa 10 → 17 V i 17 → 10 V | załączenie 12,90–14,08 V, wyłączenie 11,98–13,11 V, histereza ≥ 0,84 V, brak drgań |
 | O-03 | 7,2 V i 12,6 V na wejściu | brak startu |
 | O-04 | Załączenie przy pełnym pakiecie, 220 µF na VSW | narastanie 5–15 V/ms, prąd szczytowy ≤ ok. 3 A, Q1 bez nagrzewania |
 | O-05 | Wyjęcie pakietu i wyłączenie PWR przy obciążeniu 3 W i 6 W | od PFAIL_N do spadku 5V_SYS poniżej 4,75 V co najmniej 28 / 14 ms |

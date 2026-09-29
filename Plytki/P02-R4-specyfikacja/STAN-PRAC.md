@@ -90,3 +90,16 @@ Wykonanie: etap 1 (kroki 1–3, schemat) w sesji w chmurze, polecenie w `docs/CH
 ## Etap 1 wykonany (29.09.2026, sesja w chmurze)
 
 Kroki 1–3 są w `Plytki/P02-R4-review/` (gałąź `p02-r4-schemat`): schemat 4 × A3 (WEJ, STER, LV, MON), ERC 0, netlista 317/317 pinów, kontrole elektryczne 35/35, próby ujemne 19/19. Oznaczenia toru sterowania jak w P01 R3; Q_REV = Q9, Q_SW = Q1, Q_OFF = Q2, R_T1 = R5, R_T2 = R9, R_B = R10, R_iso = R12, Rh = R11, R_ch = R40, D_ch = D2, C_H = C12. Zmiany względem tego dokumentu: R1 47 Ω/0,5 W (AUX5 stabilizuje do VLOG ok. 6,5 V), PFAIL_N z U2A buforującej OK (R6 100k / R7 150k), P04_3V3 z J13.1 oddzielone od 3V3_IO, C3 47 µF na VSW. Obliczenia i niezgodności ze specyfikacją (Z-01, Z-02, Z-08): `Plytki/P02-R4-review/docs/OBLICZENIA-R4.md`. Następny krok: lokalna recenzja schematu, potem krok 4 (PCB).
+
+## Po recenzji etapu 1 (29.09.2026) — decyzje użytkownika
+
+Recenzja: `Plytki/P02-R4-recenzja/RECENZJA-P02-R4-ETAP1.md`. PR #2 scalony (4ac375d).
+
+- **D3:** 5KP18A → 5KP24A (Z-01 spełnione; obudowa P600, footprint bez zmian).
+- **C_H:** zostaje 2200 µF; Z-08 przepisane na ≥ 10 ms w najgorszym narożniku (jest 11,1 ms).
+- **UVLO:** bez zmian w układzie; Z-02 i O-02 przepisane na obwiednię 12,90–14,08 / 11,98–13,11 V.
+- **J15:** bezpiecznik przy klemie 1 A (jak Z-12).
+- **R40:** konkretny rezystor bezpiecznikowy 22 Ω/2 W do wyboru przy liście zakupowej.
+- **Panel (P11):** włącznik PWR ze złoconymi stykami (obwód „suchy”, ok. 0,3 mA).
+
+Następny krok: etap 2 (PCB) — `ZADANIE-P02-R4-ETAP2.md`, polecenie w `docs/CHMURA.md`.

@@ -87,6 +87,8 @@ Aktualizacja 29.09.2026 (chmura): pierwsza sesja w chmurze (gałąź `chmura-sro
 
 Aktualizacja 29.09.2026 (P02 R4, etap 1): sesja w chmurze zrobiła schemat nowej płytki zasilania `Plytki/P02-R4-review` (bez PCB): 4 arkusze A3, ERC 0, 317/317 pinów zgodnych z listą części, kontrole elektryczne 35/35, próby ujemne 19/19. UVLO nominalnie 13,50/12,55 V (obwiednia 12,90–14,08 / 11,98–13,11 V — szerzej niż ±0,34 V ze specyfikacji, ale 3S nie startuje, a 4S przy 3,6 V/ogniwo startuje zawsze). R23 22 kΩ wydłuża wyłączenie Q1 do 44–71 µs nominalnie i do ok. 240 µs w narożniku, bez skutków dla PFAIL_N. Podtrzymanie po PFAIL_N w najgorszym narożniku 11,1 ms przy 6 W (Z-08: 14 ms) — do decyzji: przyjąć albo C_H 3300 µF. PFAIL_N buforuje wyjście OK (odstępstwo od dosłownego D-06, bo porównanie tego samego węzła mogło drgać albo wrócić na H w czasie podtrzymania). Czeka na lokalną recenzję schematu.
 
+Aktualizacja 29.09.2026 (recenzja etapu 1 P02 R4): PR #2 scalony po lokalnej recenzji (`Plytki/P02-R4-recenzja/RECENZJA-P02-R4-ETAP1.md`). Decyzje użytkownika: transil D3 5KP24A zamiast 5KP18A (Z-01: bez uszkodzeń do 25 V), C_H zostaje 2200 µF (Z-08 przepisane na ≥ 10 ms w najgorszym narożniku; jest 11,1 ms), UVLO bez zmian (Z-02 i O-02 przepisane na obwiednię narożników). Włącznik PWR na panelu i SW1 w P05 muszą mieć złocone styki, bo przełączają prądy rzędu µA–mA. SW1: E-Switch 100DP1T1B1M2REH (Mouser, ok. 17 zł; rozstaw nóżek do potwierdzenia). Równolegle w chmurze P05 R2; następny krok P02 R4: etap 2 (PCB).
+
 ## Najbliższe kroki (przy powrocie do Hiszpanii)
 1. Potwierdzić pinout CUD87 ze schematu i multimetrem, **zanim cokolwiek zostanie wpięte**.
 2. Test A (klimatyzacja) — kwadrans, każda pogoda.

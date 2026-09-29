@@ -50,6 +50,8 @@ W repozytorium jest 15 takich arkuszy: `AUX.kicad_sch` (pakiety P01, P05 R1) i `
 
 **Po każdym `merge`, `pull`, `reset` lub `checkout` na Windows uruchomić `bash scripts/aux-con-indeks.sh`.** Git for Windows pomija te pliki przy rozpakowywaniu drzewa i usuwa je z indeksu razem ze znacznikiem skip-worktree (tak było przy scaleniu PR #1). Następny commit usunąłby je z repozytorium. Skrypt przywraca wpisy z HEAD i sprawdza, że indeks = HEAD. `git diff --cached` pokazuje wtedy mylące nazwy (np. „usunięte” pliki `.zip.sha256` obok katalogów z AUX), więc wiarygodna kontrola to `git write-tree` równe `git rev-parse HEAD^{tree}` przed dodaniem własnych zmian.
 
+Scalanie na Windows: `git -c core.protectNTFS=false merge …` zachowuje te wpisy w indeksie (sprawdzone przy PR #2), a zwykłe `git merge` je gubi. Skrypt i tak uruchomić, a przed wypchnięciem sprawdzić, że commit ma 15 arkuszy AUX/CON.
+
 **Nowe arkusze i pliki nazywać inaczej**, np. `AUX5`, `CONN`, `ZLACZA`. Dotyczy to też nowych rewizji P05 i P04. Zmiana pliku o takiej nazwie w chmurze nie da się pobrać do lokalnego repozytorium na Windows zwykłym `git pull`.
 
 ## Sieć — polityka środowiska (sprawdzona 29.09.2026)
@@ -140,22 +142,19 @@ Manifesty SHA-256 obu pakietów w repozytorium sprawdzone po pracy: 234/234 i 22
 
 ## Kolejne zadania
 
-1. **P02 R4, etap 1 — schemat** (Opus 5.5, high). Najpierw krok 0 niżej, potem kroki 1–3 z `Plytki/P02-R4-specyfikacja/STAN-PRAC.md`. Gotowe polecenie niżej.
-2. P02 R4, etap 2 — PCB ≤ 115 × 85 mm, po lokalnej recenzji schematu.
-3. P03: wejście PFAIL_N, sprawy B2B. P05 R2, P06 (bocznik 2512), P11 R2 (przyciski, złącza panelu).
+Wykonane: krok 0 i P02 R4 etap 1 (PR #2, scalone 29.09.2026; recenzja `Plytki/P02-R4-recenzja/RECENZJA-P02-R4-ETAP1.md`).
+
+1. **P02 R4, etap 2 — PCB** (Opus 5.5, high): `Plytki/P02-R4-specyfikacja/ZADANIE-P02-R4-ETAP2.md`, polecenie niżej.
+2. **P05 R2** — w toku (gałąź `p05-r2`): `Plytki/P05-R2-specyfikacja/ZADANIE-P05-R2.md`.
+3. P03: wejście PFAIL_N, sprawy B2B. P06 (bocznik 2512). P11 R2: przyciski, złącza panelu, włącznik PWR ze złoconymi stykami (obwód „suchy”, ok. 0,3 mA).
 4. Tabela wiązek pod kasetę (`Plytki/Kaseta-R1`).
 
-### Krok 0 — uwagi z recenzji PR #1 (osobny commit) — wykonane 29.09.2026 (gałąź `p02-r4-schemat`)
+### Praca równoległa
 
-- Przypiąć wersje w `scripts/chmura/Dockerfile` i `scripts/setup-chmura.sh` do tabeli „Narzędzia”: micromamba (konkretne wydanie zamiast `latest`), poppler, OpenJDK, Node, numpy, Pillow, pdfplumber, sharp. Kolejna budowa obrazu ma dać to samo, co opisuje ten dokument.
-- `scripts/chmura/porownaj_wyniki.py`: próg dla PNG (np. powyżej 2 % różniących się pikseli → RÓŻNICA; dziś każdy PNG tego samego rozmiaru przechodzi) i jawna uwaga, że klasa PDF porównuje tylko tekst, nie grafikę.
-- ngspice: sprawdzić, czy obraz KiCada ma `libngspice.so` (używa jej symulator KiCada), i ustawić `NGSPICE_LIBRARY`; jeśli nie ma — `ngspice-lib` z conda-forge. Próba na `Plytki/P01-R3-review/src/ngshared.py`.
-- Nagłówek `setup-chmura.sh`: czas instalacji ok. 2 min (nie 3–4).
+Kilka sesji naraz jest dozwolonych. Każda pracuje tylko we własnym pakiecie i nie zmienia plików wspólnych (`EGRLab-AKTYWNE.md`, `docs/01-overview.md`, `docs/CHMURA.md`, `docs/pamiec-claude/`, `scripts/`, `.gitignore`); uzupełnia je sesja lokalna po scaleniu. Rozsądny limit to dwie sesje, bo każdy PR przechodzi lokalną recenzję.
 
-Wynik: wersje przypięte (micromamba 2.9.0-0 z sumą SHA-256, poppler 26.09.0, OpenJDK 21.0.10, Node 22.23.2, sharp 0.34.5, numpy 2.5.3, Pillow 12.3.0, pdfplumber 0.11.10, pip 25.2), obraz zbudowany od zera w 180 s z testem dymnym zgodnym z tabelą. `porownaj_wyniki.py`: PNG powyżej 2 % różniących się pikseli = RÓŻNICA, klasa PDF opisana jako porównanie samego tekstu. ngspice: `libngspice.so.0` (44.2) jest w obrazie KiCada, `NGSPICE_LIBRARY` ustawione, `ngshared.py` z P01 R3 liczy próbny obwód RC poprawnie.
-
-### Gotowe polecenie — P02 R4, etap 1
+### Gotowe polecenie — P02 R4, etap 2
 
 Ustawienia sesji: Opus 5.5, wysiłek high.
 
-> Przeczytaj CLAUDE.md, docs/CHMURA.md (zwłaszcza „Koszty”), docs/pamiec-claude/MEMORY.md, a z pamięci tylko kicad-pipeline-quirks.md, p01-r1-gate-coupling.md, p02-r1-state.md i zasilanie-ogniwa-18650.md. Pracuj na gałęzi `p02-r4-schemat`. Najpierw krok 0 z docs/CHMURA.md jako osobny commit. Potem P02 R4, etap 1 według Plytki/P02-R4-specyfikacja/STAN-PRAC.md, „Następny krok” 1–3 (R23 = 22 kΩ/0,5 W): nowy pakiet Plytki/P02-R4-review na kopii łańcucha z P02-R3-review/src, parts.py R4, schemat A3 (arkusze WEJ, STER, LV, MON), verify_schematic (netlista pin po pinie, ERC 0), check_electrical z próbami ujemnymi. Opóźnienie wyłączenia z R23 i prąd ładowania VSW policz analitycznie; symulację ngspice na wzór P01 R3 (dynamics.py) dołącz tylko wtedy, gdy testbench uruchomi się bez przepisywania. PCB nie rób. Zamkniętych pakietów nie zmieniaj. Zakończ PR-em po polsku z wynikami liczbowymi; pytania wpisz do opisu PR i nie włączaj śledzenia PR.
+> Przeczytaj CLAUDE.md, docs/CHMURA.md (zwłaszcza „Koszty”), docs/pamiec-claude/MEMORY.md, a z pamięci tylko kicad-pipeline-quirks.md, p02-r1-state.md, p01-pcb-r1-review.md i pcb-fab-satland.md. Wykonaj zadanie z Plytki/P02-R4-specyfikacja/ZADANIE-P02-R4-ETAP2.md na gałęzi p02-r4-pcb. Równolegle pracuje sesja P05 R2 — nie zmieniaj plików wspólnych wymienionych w zadaniu. Zakończ PR-em po polsku; pytania wpisz do opisu PR i nie włączaj śledzenia PR.

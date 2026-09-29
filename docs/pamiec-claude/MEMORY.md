@@ -2,7 +2,7 @@
 - [P01-R2 review](p01-r2-review.md) — R2 bez blokera; decyzje R2-01 (restart po krótkim OVP) i R2-02 (mierzalność ODBIOR)
 - [P01 PCB R1 review](p01-pcb-r1-review.md) — layout: radiatory na miedzi innych sieci, brak orientacji Q2; DRC czysty
 - [EGRLab review rules](egrlab-review-rules.md) — zakres recenzji, ograniczenia montażu/PCB, sprawdzaj poprawki liczbowo
-- [EGRLab purchasing state](egrlab-purchasing-state.md) — rejestr Zamowione/ (24.09); lista 2 z 28.09 w Plytki/Zakupy-2 (niezamówiona, wszystko na stanie po zamianach 1:1: REF5025, LVC1G37Q1, 5k11, 39-29-6128); termin: wylot 23.10.2026, PCB fabrykapcb.pl 2 dni, reguła „niedostępne w 2–3 tyg. → zamiennik”
+- [EGRLab purchasing state](egrlab-purchasing-state.md) — rejestr Zamowione/ (24.09); lista 2 z 28.09 w Plytki/Zakupy-2 (niezamówiona, wszystko na stanie po zamianach 1:1: REF5025, LVC1G37Q1, 5k11, 39-29-6128); termin: wylot 23.10.2026, PCB fabrykapcb.pl 2 dni, reguła „niedostępne w 2–3 tyg. → zamiennik”; 29.09: SW1 → E-Switch 100DP1T1B1M2REH (Mouser), obwody „suche” tylko złocone
 - [TME/Mouser/Farnell lookup](tme-mouser-lookup.md) — ajax TME, Farnell/Mouser blokują po ~15 zapytaniach, Mouser nie sprzedaje ADR4525 do PL, TME bez Würtha; dostępność Kamami z #product-availability; progi wysyłki
 - [P01 PCB state](p01-pcb-r2-state.md) — R1 Astra → R2 Claude → R3 Astra → R3.1 (moje poprawki, płytka = R3); do przymiarki używać R3.1
 - [User PCB background](user-pcb-background.md) — user wrócił do PCB po 20 latach; Claude i Astra (Codex) projektują i recenzują na zmianę; o Astrze pisać neutralnie
@@ -18,4 +18,5 @@
 - [PCB fab: Satland](pcb-fab-satland.md) — Satland lub JLCPCB (najtaniej); 35 µm (decyzja: koszt), próba nagrzewania 5 A przed P07; Plytki/Zamowienie-Satland: P00, P01, P02, P04; skrypty pakowania z P04-PCB-R2.2-zamowienie/src
 - [Kaseta R1](kaseta-r1.md) — obudowa 29.09: LOGGER 361×209×151 mm, pełny 361×265×151; wiązki v6.1 do wydłużenia; J7 TAPS na P11 przenieść; kabina, nie komora silnika
 - [Zasilanie z ogniw 18650](zasilanie-ogniwa-18650.md) — decyzja 29.09: pakiet 4S, P01/HOLD zbędne, PCB P01/P02 wstrzymane, zamienniki przyjęte; P02 R4: D-01…D-07 przyjęte, R23 22k, etap 1 (schemat) → chmura
+- [P02 R4 state](p02-r4-state.md) — etap 1 schemat w chmurze (PR #2 scalony 29.09) → recenzja: D3 5KP24A, C_H 2200 µF, UVLO obwiednia, PWR złocony; etap 2 PCB w chmurze (ZADANIE-P02-R4-ETAP2.md)
 - [Repozytorium i chmura](repo-chmura.md) — github.com/gorbi0/EGRLab; chmura sprawdzona 29.09 (Docker KiCad 10.0.6, PR #1 chmura-srodowisko); koszt Opus max ~5 $ → Sonnet do zadań mechanicznych; lokalnie plan Pro; AUX/CON skip-worktree — po każdym merge/pull scripts/aux-con-indeks.sh

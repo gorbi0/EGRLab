@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 1bdb3685-394a-4886-bbc7-14b9957d5ea4
-  modified: 2026-09-29T09:06:58.627Z
+  modified: 2026-09-29T11:22:39.804Z
 ---
 
 29.09.2026 użytkownik dostał ofertę 250 $ na sesje w chmurze (odebrać do 8.10, wygasa 5.11) i poprosił o przygotowanie repozytorium.
@@ -29,6 +29,8 @@ metadata:
 - `docs/CHMURA.md` ma sekcję „Koszty” (model/wysiłek, 5 zasad) i gotowe polecenie P02 R4 etap 1 z krokiem 0 (przypięcie wersji, próg PNG, ngspice, czas instalacji).
 - **Końce linii sprawdzać Pythonem na bajtach.** `grep -c $'\r$'` w Git Bash pokazał 88 CRLF dla pliku czysto LF. Stan: `STAN-PRAC.md` LF, `CHMURA.md` CRLF, `EGRLab-AKTYWNE.md` mieszany (66 LF). W heredocu wysłanym przez narzędzie Bash `\r`/`\n` zamieniają się w znaki sterujące (3× w tej sesji), a `Path.read_text()` zamienia CRLF na LF — przy edycji w Pythonie działać na bajtach, znaki przez `bytes([92])`/`chr(13)` albo tekst przez narzędzie Write/Edit.
 - **Po każdym merge/pull na Windows: `bash scripts/aux-con-indeks.sh`.** Git for Windows (protectNTFS) przy fast-forward PR #1 wyrzucił z indeksu 15 wpisów AUX/CON razem ze skip-worktree; commit usunąłby je z repo. `git diff --cached` pokazywał wtedy fałszywe „D” przy 15 plikach `.zip.sha256` (nazwa następnego wpisu po katalogu z AUX). Kontrola przed commitem: `git write-tree` = `HEAD^{tree}` (przed dodaniem zmian).
+- PR #2 (P02 R4, etap 1) scaliłem przez `git -c core.protectNTFS=false merge --no-ff`. Wpisy AUX/CON zostały w indeksie i w commicie; drzewo jest identyczne z `git merge-tree --write-tree` (99ccb63). Tak scalać każdy PR; `git archive` też wymaga `-c core.protectNTFS=false`.
+- Od 29.09 mogą działać dwie sesje w chmurze naraz (P02 R4 i P05 R2). Sesje nie ruszają plików wspólnych (AKTYWNE, 01-overview, CHMURA, pamiec-claude, scripts); uzupełniam je ja po scaleniu. Obserwacja GitHuba: pętla w tle czeka na nowe `refs/pull/*/head`.
 - Sterowanie: moje ccd_session_mgmt nie widzą sesji w chmurze (tylko lokalne); ListAgents pokazuje ją jako peer „cloud”, SendMessage działa jednokierunkowo. Model/wysiłek zmienia użytkownik w jej oknie. PR sprawdzać przez `git ls-remote origin 'refs/pull/*'` (gh nie jest zainstalowany).
 
 **Why:** długie zadania (generatory KiCad, Freerouting, ESP-IDF) mogą iść w chmurze bez komputera użytkownika.
