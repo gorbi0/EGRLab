@@ -29,7 +29,7 @@ SUPP = [
  ('Molex 39-29-6048 (4p Au, bez kołków)', 9, 'P02 J3-J10; P00 wiązka (męskie do H_LV04)', ('2751659', 6.71, 10, '538'), ('538-39-29-6048', 8.32, '489'), 'F', '10 szt. po 6,71 taniej niż 9 po 9,87; TME 0 szt., min. 10'),
  ('Molex 39-29-9069 (6p z kołkami)', 1, 'P04 J7', ('2612451', 14.31, 1, '23'), ('538-39-29-9069', 13.33, '0 (dostawa 23.11.2026)'), 'F', 'TME min. 32'),
  ('YR1B232KCC (232k 0,1 % zamiast 1 %)', 1, 'P08 R1', ('1083509', 4.19, 5, '1415'), None, 'F', '232k 1 %: Mouser i TME bez stanu w detalu; 0,1 % spełnia wymóg 1 %; Farnell min. 5'),
- ('REF5025AIDR (zamiast ADR4525BRZ)', 1, 'P05 U2', None, ('595-REF5025AIDR', 16.10, '5139'), 'M', 'ADR4525BRZ nigdzie na stanie (DigiKey 33 tyg.); REF5025: ten sam pinout SOIC-8 (2 VIN, 4 GND, 6 VOUT; 3 TEMP i 5 TRIM zostają wolne jak w P05), 0,05 %, 3 ppm/K; zasila tylko dzielniki okna DAQ_OK'),
+ ('REF5025ID (zamiast ADR4525BRZ)', 1, 'P05 U2', None, ('595-REF5025ID', 35.82, '5354'), 'M', 'ADR4525BRZ nigdzie na stanie (DigiKey 33 tyg.); REF5025: ten sam pinout SOIC-8 (2 VIN, 4 GND, 6 VOUT; 3 TEMP i 5 TRIM zostają wolne jak w P05); klasa wysoka 0,05 %, 3 ppm/K — REF5025AIDR (0,1 %) nie spełnia okna DAQ_OK (P05 R2, 29.09); zasila tylko dzielniki okna DAQ_OK'),
  ('SN74LVC1G37DBVRQ1 (zamiast SN74LVC1G37DBVR)', 1, 'P03 U4 (R5)', None, ('595-N74LVC1G37DBVRQ1', 1.10, '1883'), 'M', 'DBVR: TME 0 bez terminu, Mouser niedostępny (16 tyg.), Farnell brak; Q1 = wersja AEC-Q100 tego samego układu, SOT23-5'),
  ('MCP120-300DI/TO', 1, 'P08 U8', None, ('579-MCP120-300DI/TO', 2.27, '894'), 'M', 'TME i Farnell: min. 2000 szt.'),
  ('YR1B38K3CC (38,3k 0,1 %)', 1, 'P02 R9', ('1083424', 3.56, 1, '1239'), ('279-YR1B38K3CC', 3.86, '1726'), 'M', 'TE, 15 ppm'),

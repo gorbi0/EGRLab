@@ -2,6 +2,8 @@
 
 *28.09.2026. Ceny i stany sprawdzone tego dnia w TME, Kamami, Farnellu, Mouserze i DigiKey. Lista nie jest zamówieniem: po złożeniu zamówienia dopisać pozycje do `Zamowione/ZAMOWIONE.md` i `zamowione.csv`.*
 
+> **29.09.2026 — LISTA DO PRZELICZENIA, nie zamawiać w tej postaci.** Po decyzjach z 29.09 zmieniają się: format płytek (S1, `Plytki/Format-S1/`), P02 R4 zamiast P01 i P02 R3, posiadane rezystory THT zamiast nowych, nowe części w SMD 1206, SW1 P05 → E-Switch 100DP1T1B1M2REH, D3 P02 → 5KP24A. Już poprawione w tej liście: U2 P05 → REF5025ID (klasa wysoka; REF5025AIDR nie spełnia okna DAQ_OK).
+
 Zakres: wszystkie płytki z co najmniej pierwszą rewizją, bez P01 (kompletna 24.09) i bez P07 (wstrzymana), bez PCB. Źródła ilości: najnowsze pakiety P00-R3, P02-R3, P03-R5, P04-R2.2, P05-R1, P06/P08/P09/P10/P11-R1 (BOM, ZAKUPY, wiązki); P03-R5 i P04-R2.2 z 28.09 zmieniają względem R4/R2.1 tylko U4 (SN74LVC1G37 zamiast 1G07) i R17 (10k zamiast 100k). Ilości są netto: odjęte zamówienia z 24.09 i zapas P01 (tabela „Pokryte z zapasu” na końcu). P05 ma wartości z recenzji: R5 6,04k, R7 5,11k, R13 47k, opcjonalna 1N5817. Moduły ESP32-S3 i AD7606B są posiadane; MAX31856 XU ×2 kupione na Allegro (wg `P09-R1-review/docs/MODUL-KWALIFIKACJA.md`) — w `ZAMOWIONE.md` wciąż figurują jako brak.
 
 **Korekta `P00-R3-review/docs/ZAKUPY-P00.md` (mój błąd w R3).** Wiązka stanowiskowa do P04 ma tam dla J2 „gniazdo IDC16” i dla J1 „obudowę żeńską Mini-Fit 4p”. Tymczasem H_SAFE i H_LV04 są przylutowane do P04 i kończą się złączami żeńskimi, a P04 `P00-P04.md` wymaga męskiego IDC16 z usuniętym pinem 4. Ta lista kupuje więc dla P00 męski T821-1-16-S1 (druga sztuka z minimum 2) i męskie gniazdo Mini-Fit 39-29-6048 (dziesiąta sztuka z Farnella), bez żeńskiego IDC16 i bez obudowy 4p ze stykami. J3–J8 bez zmian.
@@ -14,7 +16,7 @@ Zakres: wszystkie płytki z co najmniej pierwszą rewizją, bez P01 (kompletna 2
 | TME — przewody i taśma | `TME-przewody-wklej.txt` | 4 | 347,22 zł netto | szpule 10–25 m i rolka 30,5 m taśmy; potrzeba kilkanaście metrów — do decyzji (TME albo zakup lokalny) |
 | Kamami | tabela niżej | 7 | 42,29 zł brutto | + wysyłka 8,90–14,90 zł |
 | Farnell | `FARNELL-wklej.txt` | 9 | 246,86 zł netto | powyżej 200 zł wysyłka gratis; format „kod,ilość” (LTC4412 wpisany numerem producenta) |
-| Mouser | `MOUSER-wklej.txt` | 20 | 343,96 zł netto | wszystko na stanie; powyżej 300 zł wysyłka gratis |
+| Mouser | `MOUSER-wklej.txt` | 20 | 363,68 zł netto | wszystko na stanie; powyżej 300 zł wysyłka gratis |
 | Do decyzji | — | 2 | — | bocznik PBV (tylko DigiKey, 163,30 zł), przyciski EAO (panel P11, poza PCB) |
 
 Każda pozycja poza TME i Kamami ma przypisanego jednego dostawcę (kolumna „Kupić w” w tabeli „Uzupełnienie”); Obie paczki przekraczają progi darmowej wysyłki (Farnell 200 zł, Mouser 300 zł), a każda pozycja jest dziś na stanie. Mouser nie sprzedaje do Polski TBD62083APG i ADR4525BRZ, a LTC4412 ma tam status „ograniczona dostępność”, stąd podział na dwa sklepy.
@@ -35,7 +37,7 @@ W TME nie było dokładnego MPN z BOM (brak, zero na stanie albo minimum setki s
 | MF0207 330R, 33R, 560R | MBB0207 330R/33R, TE LR1F560R | producent |
 | 232k 1 % (P08 R1) | YR1B232KCC 0,1 % (Farnell) | lepsza tolerancja; 1 % nie ma nigdzie w detalu |
 | SN74LVC1G37DBVR (P03-R5 U4) | SN74LVC1G37DBVRQ1 (Mouser) | wersja AEC-Q100 tego samego układu; DBVR nigdzie na stanie |
-| ADR4525BRZ (P05 U2) | REF5025AIDR (Mouser) | ten sam pinout SOIC-8; 0,05 % zamiast 0,02 %; zasila tylko okno DAQ_OK (analiza okna zakładała 0,1 %) |
+| ADR4525BRZ (P05 U2) | REF5025ID (Mouser; klasa wysoka, tuba) | ten sam pinout SOIC-8; 0,05 %, 3 ppm/K; REF5025AIDR (0,1 %) nie spełnia okna DAQ_OK (P05 R2, 29.09) |
 | 5,1k 0,1 % (P06 R3, R4) | YR1B5K11CC ×2 | dzielnik zostaje 1:2; wzmocnienie i tak kalibrowane |
 | Molex 39-29-9129 (P11 J7) | 39-29-6128 (Mouser) | wersja bez kołków, złocona; otwory na kołki zostają puste |
 | MBB0207 300k 0,1 % (P05 R33) | Vishay Dale RN55E3003BB14 | producent i seria; 25 ppm/K wg oznaczenia E |
@@ -241,7 +243,7 @@ Pozycje, których TME i Kamami nie mają w detalu. „—” = brak u tego dosta
 | Molex 39-29-6048 (4p Au, bez kołków) | 9 | P02 J3-J10; P00 wiązka (męskie do H_LV04) | Farnell | 2751659, 6,71, 10 szt., 538 | 538-39-29-6048, 8,32, 489 | 10 szt. po 6,71 taniej niż 9 po 9,87; TME 0 szt., min. 10 |
 | Molex 39-29-9069 (6p z kołkami) | 1 | P04 J7 | Farnell | 2612451, 14,31, 1 szt., 23 | 538-39-29-9069, 13,33, 0 (dostawa 23.11.2026) | TME min. 32 |
 | YR1B232KCC (232k 0,1 % zamiast 1 %) | 1 | P08 R1 | Farnell | 1083509, 4,19, 5 szt., 1415 | — | 232k 1 %: Mouser i TME bez stanu w detalu; 0,1 % spełnia wymóg 1 %; Farnell min. 5 |
-| REF5025AIDR (zamiast ADR4525BRZ) | 1 | P05 U2 | Mouser | — | 595-REF5025AIDR, 16,10, 5139 | ADR4525BRZ nigdzie na stanie (DigiKey 33 tyg.); REF5025: ten sam pinout SOIC-8 (2 VIN, 4 GND, 6 VOUT; 3 TEMP i 5 TRIM zostają wolne jak w P05), 0,05 %, 3 ppm/K; zasila tylko dzielniki okna DAQ_OK |
+| REF5025ID (zamiast ADR4525BRZ) | 1 | P05 U2 | Mouser | — | 595-REF5025ID, 35,82, 5354 | ADR4525BRZ nigdzie na stanie (DigiKey 33 tyg.); REF5025: ten sam pinout SOIC-8 (2 VIN, 4 GND, 6 VOUT; 3 TEMP i 5 TRIM zostają wolne jak w P05); klasa wysoka 0,05 %, 3 ppm/K — REF5025AIDR (0,1 %) nie spełnia okna DAQ_OK (P05 R2, 29.09); zasila tylko dzielniki okna DAQ_OK |
 | SN74LVC1G37DBVRQ1 (zamiast SN74LVC1G37DBVR) | 1 | P03 U4 (R5) | Mouser | — | 595-N74LVC1G37DBVRQ1, 1,10, 1883 | DBVR: TME 0 bez terminu, Mouser niedostępny (16 tyg.), Farnell brak; Q1 = wersja AEC-Q100 tego samego układu, SOT23-5 |
 | MCP120-300DI/TO | 1 | P08 U8 | Mouser | — | 579-MCP120-300DI/TO, 2,27, 894 | TME i Farnell: min. 2000 szt. |
 | YR1B38K3CC (38,3k 0,1 %) | 1 | P02 R9 | Mouser | 1083424, 3,56, 1 szt., 1239 | 279-YR1B38K3CC, 3,86, 1726 | TE, 15 ppm |
@@ -262,7 +264,7 @@ Pozycje, których TME i Kamami nie mają w detalu. „—” = brak u tego dosta
 | TE DEUTSCH DT04-12PC | 1 | P11 X3 | Mouser | — | 571-DT04-12PC, 18,83, 2450 | TME: min. 22 |
 | Adafruit 4682 (microSD) | 1 | P03 SD1 | Mouser | — | 485-4682, 13,24, 812 | brak w TME i Kamami |
 
-Farnell (`FARNELL-wklej.txt`): 9 pozycji, 246,86 zł netto. Mouser (`MOUSER-wklej.txt`): 20 pozycji, 343,96 zł netto. Rezystory YR1B są w Mouserze, bo tam minimum to 1 szt. (w Farnellu 5). Części dostępne tylko u jednego dostawcy albo w małej ilości — G6K 5 V (Farnell; TME i Mouser dopiero w 2027), TBD62083APG i LTC4412 (Farnell), C&K 7201SYCBE (Mouser, 10 szt.), 39-29-9069 (Farnell, 23 szt.), TPS2553DBVR (TME, 5 szt.), styki DEUTSCH (TME, 25 szt.) — zamówić bez zwłoki.
+Farnell (`FARNELL-wklej.txt`): 9 pozycji, 246,86 zł netto. Mouser (`MOUSER-wklej.txt`): 20 pozycji, 363,68 zł netto. Rezystory YR1B są w Mouserze, bo tam minimum to 1 szt. (w Farnellu 5). Części dostępne tylko u jednego dostawcy albo w małej ilości — G6K 5 V (Farnell; TME i Mouser dopiero w 2027), TBD62083APG i LTC4412 (Farnell), C&K 7201SYCBE (Mouser, 10 szt.), 39-29-9069 (Farnell, 23 szt.), TPS2553DBVR (TME, 5 szt.), styki DEUTSCH (TME, 25 szt.) — zamówić bez zwłoki.
 
 ## Do decyzji
 
@@ -310,4 +312,4 @@ Na płytkach nie zostaje żadna część z terminem dostawy dłuższym niż kilk
 
 ## Do sprawdzenia przy odbiorze
 
-Wtyki T812 w wariancie A101: czy mają odciążkę. Nagłówki T821 zamiast Würtha: obrys na wydruku 1:1 P03/P04. Przełącznik 611-7201-054 w Mouserze: czy to wersja 7201SYCBE do druku. RN55E3003BB14: TCR 25 ppm/K w karcie. REF5025AIDR: pinout (2 VIN, 4 GND, 6 VOUT) z kartą TI przed lutowaniem. Farnell zapisuje G6K-2P-Y jako „G6K-2PY DC5”: sprawdzić, że to wersja przewlekana, nie -2F-Y. SN74LVC1G37DBVRQ1: pinout jak w wersji bez Q1. KNP01U-1R: dopuszczalna energia impulsu. Kondensatory 0805 po uwzględnieniu DC bias: P08 C1/C2/C9 ≥ 0,47 µF, P09/P10 C4/C5 ≥ 2,2 µF (wymagania z ZAKUPY tych płytek). Styki DEUTSCH 0460-202-1631: TME ma dokładnie 25 szt., bez zapasu na pomyłkę przy zaciskaniu.
+Wtyki T812 w wariancie A101: czy mają odciążkę. Nagłówki T821 zamiast Würtha: obrys na wydruku 1:1 P03/P04. Przełącznik 611-7201-054 w Mouserze: czy to wersja 7201SYCBE do druku. RN55E3003BB14: TCR 25 ppm/K w karcie. REF5025ID: pinout (2 VIN, 4 GND, 6 VOUT) i klasę wysoką (0,05 %) z kartą TI przed lutowaniem. Farnell zapisuje G6K-2P-Y jako „G6K-2PY DC5”: sprawdzić, że to wersja przewlekana, nie -2F-Y. SN74LVC1G37DBVRQ1: pinout jak w wersji bez Q1. KNP01U-1R: dopuszczalna energia impulsu. Kondensatory 0805 po uwzględnieniu DC bias: P08 C1/C2/C9 ≥ 0,47 µF, P09/P10 C4/C5 ≥ 2,2 µF (wymagania z ZAKUPY tych płytek). Styki DEUTSCH 0460-202-1631: TME ma dokładnie 25 szt., bez zapasu na pomyłkę przy zaciskaniu.

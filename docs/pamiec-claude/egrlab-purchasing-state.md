@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 1bdb3685-394a-4886-bbc7-14b9957d5ea4
-  modified: 2026-09-29T11:22:18.452Z
+  modified: 2026-09-29T15:14:26.548Z
 ---
 
 Stan na 2026-09-24 (TME, Mouser, Kamami):
@@ -18,6 +18,7 @@ Stan na 2026-09-24 (TME, Mouser, Kamami):
   - P02 R4 zastępuje P01 i HOLD R3; nowe części R4: 5KP24A (D3; kupione 2 × 5KP18A zostają bez użycia), rezystor bezpiecznikowy 22 Ω/2 W (R40, MPN do wyboru), C_H 2200 µF/35 V, 1–2 SUP53P06 na zapas.
   - **SW1 P05 → E-Switch 100DP1T1B1M2REH** (Mouser 612-100-F1122, 17,07 zł, 516 szt., złocone styki, nóżki do druku, korpus jak C&K 7201; rozstaw nóżek do potwierdzenia) zamiast C&K 7201SYCBE (57,55 zł). W TME brak złoconej wersji do druku: E-Switch 17–19 tyg., C&K 7201SYZBE 52 zł tylko z oczkami; Light Country 1MD1T1B1M1QE 6,39 zł, ale srebrzone i z oczkami.
   - **Obwody „suche”** (SW1 P05, włącznik PWR P11 ok. 0,3 mA): tylko złocone styki.
+  - **BŁĄD na liście 2 (wykryty w PR #3):** REF5025AIDR to klasa standardowa (0,1 %, 8 ppm/K), a nie 0,05 %, jak wpisałem. Z nią dolny narożnik okna DAQ_OK wychodzi 4,7477 V, poniżej 4,75 V. P05 R2 wymaga klasy wysokiej. Mouser 29.09: 595-REF5025ID (tuba) 35,82 zł, 5354 szt. na stanie; 595-REF5025IDR (taśma) 25,78 zł, ale tylko z otwartych zamówień. **Decyzja użytkownika 29.09: REF5025ID.** Lista 2 poprawiona (ZAKUPY-2.md, zakupy-2.csv, MOUSER-wklej.txt, src/other.py, gen.py, doc.py); Mouser 363,68 zł netto; na górze baner „do przeliczenia”.
 
 **Why:** użytkownik minimalizuje liczbę dostawców i koszty wysyłki (Mouser od 300 zł bez opłaty, Farnell od 200 zł). Sam decyduje o kosztach.
 **How to apply:** przed kolejną listą sprawdź `Zamowione/` i `Plytki/Zakupy-2/`; po zamówieniu listy 2 dopisz ją do rejestru. Przy zmianie rewizji płytki regeneruj listę przez `src/gen.py` (dane w items*.py/tme.py/other.py). P07 wstrzymany. Zob. [[tme-mouser-lookup]], [[p00-r1-state]] (korekta wiązki P00), [[egrlab-review-rules]].

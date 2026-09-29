@@ -91,6 +91,8 @@ Aktualizacja 29.09.2026 (recenzja etapu 1 P02 R4): PR #2 scalony po lokalnej rec
 
 Aktualizacja 29.09.2026 (format): studium formatu S1 (`Plytki/Format-S1/STUDIUM-FORMATU-S1.md`, przyjęte przez użytkownika 29.09 (specyfikacja `Plytki/Format-S1/SPECYFIKACJA-FORMATU-S1.md`; posiadane rezystory THT na stojąco, nowe SMD 1206; wszystkie płytki z JLCPCB)): stos poziomych płytek w formacie ok. 160 × 100 mm z tercjami (L, 2/3, 1/3), płytka połączeń zamiast wiązek na jednej długiej krawędzi, listwy serwisowe z kołkami do odbioru na drugiej (wymaganie użytkownika), panel na krótkiej. Szacunek: LOGGER ok. 231 × 133 × 105 mm (3,2 l zamiast 11,4 l), pełny ok. 231 × 133 × 127 mm (3,9 l zamiast 14,5 l). Części zajmują dziś 21–53 % powierzchni płytek. P02 R4 w obecnej technice potrzebuje ok. 155 cm² wobec celu 98 cm², więc etap 2 (PCB) wstrzymany do decyzji o formacie; do wstrzymania także layout P05 R2 i zamówienie PCB P04.
 
+Aktualizacja 29.09.2026 (P05 R2): P05 R2, etap schematu (PR #3, scalony 29.09): R5 6,04 kΩ, R7 5,11 kΩ, R13 47 kΩ, CH7 = VBAT_SENSE, arkusze AUX_IN/ZLACZA, ODBIOR i INTEGRACJA według recenzji; ERC 0, 421/421, 23/23, 12/12. U2 w klasie wysokiej — decyzja użytkownika: REF5025ID (Mouser 595-REF5025ID, 35,82 zł; REF5025AIDR z listy 2 to klasa standardowa 0,1 % i daje dolny narożnik okna DAQ_OK 4,7477 V < 4,75 V — mój błąd na liście). Layout P05 w S1 osobnym zadaniem; wzór odsprzęgania U1 w `Plytki/P05-R2-review/wip-layout-obrys-R1/`. Lista zakupowa 2 poprawiona o REF5025ID i oznaczona „do przeliczenia” po decyzjach z 29.09.
+
 ## Najbliższe kroki (przy powrocie do Hiszpanii)
 1. Potwierdzić pinout CUD87 ze schematu i multimetrem, **zanim cokolwiek zostanie wpięte**.
 2. Test A (klimatyzacja) — kwadrans, każda pogoda.

@@ -66,7 +66,7 @@ for r in [
  ('MF0207 330R, 33R, 560R', 'MBB0207 330R/33R, TE LR1F560R', 'producent'),
  ('232k 1 % (P08 R1)', 'YR1B232KCC 0,1 % (Farnell)', 'lepsza tolerancja; 1 % nie ma nigdzie w detalu'),
  ('SN74LVC1G37DBVR (P03-R5 U4)', 'SN74LVC1G37DBVRQ1 (Mouser)', 'wersja AEC-Q100 tego samego układu; DBVR nigdzie na stanie'),
- ('ADR4525BRZ (P05 U2)', 'REF5025AIDR (Mouser)', 'ten sam pinout SOIC-8; 0,05 % zamiast 0,02 %; zasila tylko okno DAQ_OK (analiza okna zakładała 0,1 %)'),
+ ('ADR4525BRZ (P05 U2)', 'REF5025ID (Mouser; klasa wysoka, tuba)', 'ten sam pinout SOIC-8; 0,05 %, 3 ppm/K; REF5025AIDR (0,1 %) nie spełnia okna DAQ_OK (P05 R2, 29.09)'),
  ('5,1k 0,1 % (P06 R3, R4)', 'YR1B5K11CC ×2', 'dzielnik zostaje 1:2; wzmocnienie i tak kalibrowane'),
  ('Molex 39-29-9129 (P11 J7)', '39-29-6128 (Mouser)', 'wersja bez kołków, złocona; otwory na kołki zostają puste'),
  ('MBB0207 300k 0,1 % (P05 R33)', 'Vishay Dale RN55E3003BB14', 'producent i seria; 25 ppm/K wg oznaczenia E'),
@@ -174,7 +174,7 @@ for r in [
 a('')
 a('## Do sprawdzenia przy odbiorze')
 a('')
-a('Wtyki T812 w wariancie A101: czy mają odciążkę. Nagłówki T821 zamiast Würtha: obrys na wydruku 1:1 P03/P04. Przełącznik 611-7201-054 w Mouserze: czy to wersja 7201SYCBE do druku. RN55E3003BB14: TCR 25 ppm/K w karcie. REF5025AIDR: pinout (2 VIN, 4 GND, 6 VOUT) z kartą TI przed lutowaniem. Farnell zapisuje G6K-2P-Y jako „G6K-2PY DC5”: sprawdzić, że to wersja przewlekana, nie -2F-Y. SN74LVC1G37DBVRQ1: pinout jak w wersji bez Q1. KNP01U-1R: dopuszczalna energia impulsu. Kondensatory 0805 po uwzględnieniu DC bias: P08 C1/C2/C9 ≥ 0,47 µF, P09/P10 C4/C5 ≥ 2,2 µF (wymagania z ZAKUPY tych płytek). Styki DEUTSCH 0460-202-1631: TME ma dokładnie 25 szt., bez zapasu na pomyłkę przy zaciskaniu.')
+a('Wtyki T812 w wariancie A101: czy mają odciążkę. Nagłówki T821 zamiast Würtha: obrys na wydruku 1:1 P03/P04. Przełącznik 611-7201-054 w Mouserze: czy to wersja 7201SYCBE do druku. RN55E3003BB14: TCR 25 ppm/K w karcie. REF5025ID: pinout (2 VIN, 4 GND, 6 VOUT) i klasę wysoką (0,05 %) z kartą TI przed lutowaniem. Farnell zapisuje G6K-2P-Y jako „G6K-2PY DC5”: sprawdzić, że to wersja przewlekana, nie -2F-Y. SN74LVC1G37DBVRQ1: pinout jak w wersji bez Q1. KNP01U-1R: dopuszczalna energia impulsu. Kondensatory 0805 po uwzględnieniu DC bias: P08 C1/C2/C9 ≥ 0,47 µF, P09/P10 C4/C5 ≥ 2,2 µF (wymagania z ZAKUPY tych płytek). Styki DEUTSCH 0460-202-1631: TME ma dokładnie 25 szt., bez zapasu na pomyłkę przy zaciskaniu.')
 a('')
 with open(os.path.join(OUT, 'ZAKUPY-2.md'), 'w', encoding='utf-8', newline='\r\n') as fh:
     fh.write('\n'.join(L))
