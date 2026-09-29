@@ -177,7 +177,7 @@ def res(ref, src, value, mpn, pins, note='', sheet='P03'):
 
 
 def cap(ref, src, pins, note='', sheet='P03'):
-    add(ref, src, S_C, C100N, '100nF / X7R', 'K104K15X7RF53H5', pins, URL['k15'], note, sheet)
+    add(ref, src, S_C, C100N, '100nF / X7R', 'K104K15X7RF5TH5', pins, URL['k15'], note, sheet)  # R6: owned code (Zamowione/zamowione.csv), same part as F53H5
 
 
 # ---- sheet P03 (CORE): MCU board, SD, expander, decoder, supervisor, local pull-ups -------------------------
@@ -234,7 +234,7 @@ res('R8', 'R_PD_TEST_PRESENT', '10K / 1%', 'MF0207FTE-10K', {1: 'TEST_PRESENT', 
 # R6: edge-A connectors J_BP1..J_BP3 replace J1..J10 (format S1 §5); pinout and reasons in src/jbp_pinout.py
 from jbp_pinout import JBP
 for j, slot in [('J_BP1', 'S1'), ('J_BP2', 'S2'), ('J_BP3', 'S3')]:
-    add(j, 'ADDED_R6_EDGE_A', conn(10), IDC20, f'{j} / IDC 2x10 RA ({slot})', 'IDC box header 2x10, 2.54 mm, right angle, Au (e.g. Amphenol T821-1-20-R1)',
+    add(j, 'ADDED_R6_EDGE_A', conn(10), IDC20, f'{j} / IDC 2x10 RA ({slot})', 'IDC box header 2x10, 2.54 mm, right angle, Au (MPN to be selected)',
         {p_: v[0] for p_, v in JBP[j].items()}, '', f'Format S1 edge A, slot {slot}, centre x = 26.5 mm in the slot, pin 1 towards smaller x. Short ribbon to P12.', 'LINKS')
 for idx, (net, sheet) in enumerate([('5V_SYS', 'P03'), ('3V3_CORE', 'P03'), ('3V3_IO', 'P03'), ('GND', 'P03'), ('SUP_N', 'P03'), ('GND', 'IO')], 1):
     r = f'TP{idx}'

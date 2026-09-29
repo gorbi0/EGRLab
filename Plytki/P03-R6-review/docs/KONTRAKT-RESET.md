@@ -1,5 +1,8 @@
 # Kontrakt resetu P03-R5 / P04-R2.2
 
+*R6 (format S1): „taśma H_SAFE 150 mm” zastępuje droga taśma 30 mm + P12 + taśma 30 mm; SUP_N_OUT na J_BP3.12. Kryterium ≤ 10 ns/V na P04 U9.5 bez zmian, rozstrzyga pomiar.*
+
+
 | Odcinek | Źródło / odbiornik | Domena | Stan bez źródła | Budżet / wymaganie |
 |---|---|---|---|---|
 | SUP_RAW_N | TPS3808 OD -> U4 LVC1G37 Schmitt | 3V3_CORE | reset według supervisora | R13 10 kΩ; wejście U4 dopuszcza 100 ms/V |
