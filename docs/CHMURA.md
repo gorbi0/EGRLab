@@ -6,7 +6,7 @@
 
 | W chmurze (kontener Linux, wynik jako pull request) | Tylko lokalnie (komputer użytkownika) |
 |---|---|
-| Generatory płytek KiCad: schemat, ERC, trasowanie Freerouting, DRC, próby ujemne, PDF, Gerbery | Pomiary: DHO804, MaxiECU, auto |
+| Generatory płytek KiCad: schemat, ERC, DRC, próby ujemne, PDF, Gerbery, paczki (bez layoutu i trasowania — patrz „Koszty”, zasada 6) | Pomiary: DHO804, MaxiECU, auto; **layout i trasowanie PCB** |
 | Kompilacja i testy firmware ESP-IDF (niesprawdzone, zob. „Sieć”) | Sklepy (TME, Mouser, Farnell, Kamami) — logowanie i Cloudflare |
 | Skrypty Pythona: logi, modele (kaseta, obliczenia), kontrole zgodności złączy | Przeglądarka i aplikacje lokalne, runtime Codexa |
 | Dokumentacja i recenzje plików | Zamówienia, zakupy, wysyłka plików do producenta |
@@ -41,6 +41,10 @@ Zasady dla sesji w chmurze:
 3. Każdą kontrolę uruchamiać raz, ponownie tylko po zmianie, której dotyczy.
 4. Duże zadania dzielić na etapy z osobnym PR (schemat → recenzja lokalna → PCB), żeby nie płacić za PCB do schematu, który zmieni recenzja.
 5. Po otwarciu PR zakończyć pracę. Nie włączać śledzenia PR: każdy komentarz i scalenie budzi sesję i kosztuje turę. Pytania do użytkownika wpisywać do opisu PR.
+6. **Layout i trasowanie PCB robi sesja lokalna, nie chmura.** Pilot P02 R4 (29.09) pokazał, dlaczego. Sesja przez kilka godzin pisała własne planery tras i czekała na przebiegi routera, zużywając ok. 30 $ w godzinę. Restart kontenera skasował niewypchnięty wynik. W chmurze zostają zadania o jasnym końcu: schemat, kontrole, dokumenty, paczki.
+7. Po każdym zakończonym etapie commit i push na gałąź zadania, żeby restart kontenera niczego nie kasował.
+8. Nie pisać własnych routerów ani planerów i nie uruchamiać procesów dłuższych niż ok. 15 min. Nie monitorować ich częstym sprawdzaniem: każde wybudzenie sesji to tura liczona od całego kontekstu.
+9. Twardy limit: jeśli coś nie wychodzi po dwóch próbach, zapisać stan, wypchnąć i opisać problem w PR.
 
 ## Nazwy plików zarezerwowane w Windows
 
@@ -151,7 +155,7 @@ Wykonane: krok 0 i P02 R4 etap 1 (PR #2, scalone 29.09.2026; recenzja `Plytki/P0
 - posiadane rezystory THT na stojąco, nowe części SMD 1206;
 - produkcja w JLCPCB.
 
-1. **P02 R4, etap 2 — PCB w S1 (pilot)** (Opus 5.5, high): `Plytki/P02-R4-specyfikacja/ZADANIE-P02-R4-ETAP2.md` (wersja 2), polecenie niżej.
+1. **P02 R4, etap 2 — PCB w S1 (pilot):** sesja w chmurze wypycha schemat, rozmieszczenie i skrypty (gałąź `p02-r4-pcb`). Trasowanie i recenzję robi sesja lokalna (zasada 6). Polecenie niżej jest już tylko zapisem historycznym.
 2. **P05 R2** (gałąź `p05-r2`): z zadania obowiązują zmiany schematu i dokumentów; layout wykona nowe zadanie P05 w S1.
 3. **LOGGER w S1:** P03, P05, P06, P09, P10, każda z pinoutem J_BP i listwą serwisową. Następnie P12 (płytka połączeń), P11 pod nowy panel i obudowa.
 4. **Wariant pełny w S1:** P04, P08, P07.
