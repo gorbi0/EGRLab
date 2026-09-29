@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Uruchamia polecenie w obrazie egrlab-kicad:10.0.6 (KiCad 10.0.6 + dodatki, zob. chmura/Dockerfile).
+# Katalog bieżący i repozytorium są montowane pod tą samą ścieżką co na hoście,
+# więc ścieżki w raportach wyglądają tak samo w kontenerze i poza nim.
+#   scripts/egrlab-docker python3 src/run_release.py
+#   scripts/egrlab-docker bash            # powłoka interaktywna
+set -euo pipefail
+IMAGE="${EGRLAB_IMAGE:-egrlab-kicad:10.0.6}"
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+MOUNTS=(-v "$REPO:$REPO")
+case "$PWD/" in "$REPO"/*) ;; *) MOUNTS+=(-v "$PWD:$PWD") ;; esac
+for d in ${EGRLAB_EXTRA_MOUNTS:-}; do MOUNTS+=(-v "$d:$d"); done
+TTY=(-i); [ -t 0 ] && [ -t 1 ] && TTY=(-it)   # -i zawsze: stdin (np. heredoc) trafia do kontenera
+exec docker run --rm "${TTY[@]}" --network none \
+  --user "$(id -u):$(id -g)" -e HOME=/tmp/egrlab-home -e TZ="${TZ:-Europe/Warsaw}" \
+  ${EGRLAB_LANG:+-e LANG=$EGRLAB_LANG -e LC_ALL=$EGRLAB_LANG -e LANGUAGE=${EGRLAB_LANG%%[._]*}} \
+  -e EGRLAB_WINPATHS_VERBOSE="${EGRLAB_WINPATHS_VERBOSE:-}" \
+  "${MOUNTS[@]}" -w "$PWD" "$IMAGE" "$@"

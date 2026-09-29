@@ -11,7 +11,7 @@ Pakiety płytek i ich recenzje znajdują się w `Plytki/`.
 
 ## REPOZYTORIUM GIT I SESJE W CHMURZE (29.09.2026)
 
-Katalog jest repozytorium git: **github.com/gorbi0/EGRLab** (prywatne), gałąź main, pierwszy commit 45dce9c; aplikacja Claude GitHub ma dostęp do repozytorium. Zasady pracy w chmurze i zadanie pierwszej sesji: `docs/CHMURA.md`; kopia pamięci Claude: `docs/pamiec-claude/`. Pliki bajt w bajt (`* -text`), archiwa zip recenzji poza repozytorium, 15 arkuszy `AUX`/`CON` (nazwy zarezerwowane w Windows) jako skip-worktree — nowych tak nie nazywać. P02 R4: praca przerwana przed schematem; poprawka architektury (dwa SUP53P06 przeciwsobnie, tor sterowania z P01 R3) i nowe UVLO 13,53/12,51 V w `Plytki/P02-R4-specyfikacja/STAN-PRAC.md`.
+Katalog jest repozytorium git: **github.com/gorbi0/EGRLab** (prywatne), gałąź main, pierwszy commit 45dce9c; aplikacja Claude GitHub ma dostęp do repozytorium. Zasady pracy w chmurze i zadanie pierwszej sesji: `docs/CHMURA.md`; kopia pamięci Claude: `docs/pamiec-claude/`. Pliki bajt w bajt (`* -text`), archiwa zip recenzji poza repozytorium, 15 arkuszy `AUX`/`CON` (nazwy zarezerwowane w Windows) jako skip-worktree — nowych tak nie nazywać. P02 R4: praca przerwana przed schematem; poprawka architektury (dwa SUP53P06 przeciwsobnie, tor sterowania z P01 R3) i nowe UVLO 13,53/12,51 V w `Plytki/P02-R4-specyfikacja/STAN-PRAC.md`. Środowisko chmury sprawdzone 29.09 (gałąź `chmura-srodowisko`): KiCad 10.0.6 z obrazu Docker (PPA i mirrory Debiana zablokowane), kontrole P02-R3 i P04-PCB-R2.2 odtworzone z wynikami jak w repozytorium; opis i różnice Windows/Linux w `docs/CHMURA.md`.
 
 ## P02 R4 — SPECYFIKACJA ZASILANIA Z PAKIETU 4S (29.09.2026)
 

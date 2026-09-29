@@ -1,7 +1,7 @@
 """Rysunek koncepcji kasety R1: PDF A3 (widoki 1:2, tabele, obrys 1:1) oraz dane układu i wiązek.
 Uruchomienie: Python z reportlab (runtime Codexa) z katalogu Plytki/Kaseta-R1:  python src/rysunek.py
 """
-import csv, json, sys
+import csv, json, os, sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import model as M
@@ -11,8 +11,13 @@ from reportlab.lib.pagesizes import A3, landscape
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
+# EGRLAB_FONT_DIR (Linux/chmura): katalog czcionek Liberation, metrycznie zgodnych z Arial/Arial Narrow.
+# Bez zmiennej jak dotąd: czcionki Windows, więc wynik na Windows się nie zmienia (docs/CHMURA.md).
+FONT_DIR = os.environ.get('EGRLAB_FONT_DIR')
+LIBERATION = {'arial.ttf': 'LiberationSans-Regular.ttf', 'arialbd.ttf': 'LiberationSans-Bold.ttf',
+              'ARIALN.TTF': 'LiberationSansNarrow-Regular.ttf', 'ARIALNB.TTF': 'LiberationSansNarrow-Bold.ttf'}
 for n, f in (('A', 'arial.ttf'), ('AB', 'arialbd.ttf'), ('AN', 'ARIALN.TTF'), ('ANB', 'ARIALNB.TTF')):
-    pdfmetrics.registerFont(TTFont(n, f'C:/Windows/Fonts/{f}'))
+    pdfmetrics.registerFont(TTFont(n, os.path.join(FONT_DIR, LIBERATION[f]) if FONT_DIR else f'C:/Windows/Fonts/{f}'))
 R = M.R
 PW, PH = landscape(A3)
 DATE = '29.09.2026'

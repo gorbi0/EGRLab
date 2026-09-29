@@ -83,6 +83,8 @@ Aktualizacja 29.09.2026 (P02 R4): specyfikacja nowej płytki zasilania w `Plytki
 
 Aktualizacja 29.09.2026 (repozytorium): decyzje D-01…D-07 przyjęte (D-01 ze zmianą: VBAT z klemy akumulatora w komorze, bo wszystkie połączenia z autem mają być w komorze). Przy projekcie schematu wyszedł błąd specyfikacji: jeden tranzystor nie da jednocześnie ochrony polaryzacji i wyłączania — są dwa SUP53P06 przeciwsobnie, tor sterowania przechodzi z P01 R3, UVLO 13,53/12,51 V (`Plytki/P02-R4-specyfikacja/STAN-PRAC.md`). Katalog projektu jest repozytorium git `github.com/gorbi0/EGRLab` (prywatne) przygotowanym pod sesje Claude w chmurze (`docs/CHMURA.md`).
 
+Aktualizacja 29.09.2026 (chmura): pierwsza sesja w chmurze (gałąź `chmura-srodowisko`) sprawdziła środowisko. PPA KiCada i mirrory Debiana są blokowane przez politykę sieci, więc KiCad 10.0.6 działa z oficjalnego obrazu Docker (`scripts/setup-chmura.sh`, `scripts/egrlab-docker`). Kontrole zamkniętych pakietów odtworzone na kopiach z wynikami jak w repozytorium: P02-R3 — ERC 0, DRC 0/0/0, kontrole elektryczne 11/11, PCB 29/29, próby ujemne 10/10; P04-PCB-R2.2 — DRC 0/0/0, CAM 20/20, próby ujemne 8/8 + zerowa. Gerbery P04 z Linuksa są równoważne wydanym (w miedzi pojedyncze wierzchołki wylewek różnią się o 1 nm). Zamknięte pakiety niezmienione; różnice Windows/Linux i czasy w `docs/CHMURA.md`.
+
 ## Najbliższe kroki (przy powrocie do Hiszpanii)
 1. Potwierdzić pinout CUD87 ze schematu i multimetrem, **zanim cokolwiek zostanie wpięte**.
 2. Test A (klimatyzacja) — kwadrans, każda pogoda.

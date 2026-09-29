@@ -1,13 +1,13 @@
 # Praca w sesji Claude Code w chmurze
 
-*29.09.2026. Repozytorium: `github.com/gorbi0/EGRLab` (prywatne, gałąź main). Środowisko **NIE ZBADANE** — pierwsza sesja ma je przygotować i sprawdzić (zadanie niżej).*
+*29.09.2026. Repozytorium: `github.com/gorbi0/EGRLab` (prywatne, gałąź main). Środowisko **sprawdzone w pierwszej sesji** (gałąź `chmura-srodowisko`): KiCad 10.0.6 działa z obrazu Docker, kontrole zamkniętych P02-R3 i P04-PCB-R2.2 dają w chmurze te same wyniki co w repozytorium. Różnice Windows/Linux są opisane niżej.*
 
 ## Co w chmurze, co lokalnie
 
 | W chmurze (kontener Linux, wynik jako pull request) | Tylko lokalnie (komputer użytkownika) |
 |---|---|
 | Generatory płytek KiCad: schemat, ERC, trasowanie Freerouting, DRC, próby ujemne, PDF, Gerbery | Pomiary: DHO804, MaxiECU, auto |
-| Kompilacja i testy firmware ESP-IDF | Sklepy (TME, Mouser, Farnell, Kamami) — logowanie i Cloudflare |
+| Kompilacja i testy firmware ESP-IDF (niesprawdzone, zob. „Sieć”) | Sklepy (TME, Mouser, Farnell, Kamami) — logowanie i Cloudflare |
 | Skrypty Pythona: logi, modele (kaseta, obliczenia), kontrole zgodności złączy | Przeglądarka i aplikacje lokalne, runtime Codexa |
 | Dokumentacja i recenzje plików | Zamówienia, zakupy, wysyłka plików do producenta |
 
@@ -17,54 +17,100 @@
 - Praca na osobnej gałęzi, wynik jako pull request; użytkownik przegląda i scala.
 - **Nie zmieniać `.gitattributes`** (`* -text`). Pliki mają zostać bajt w bajt, bo pakiety mają manifesty SHA-256, a `EGRLab-AKTYWNE.md` ma celowo mieszane CRLF/LF (66 linii tylko z LF).
 - Zamkniętych pakietów (`…-review` po recenzji, `…-zamowienie`) nie zmieniać. Nowa rewizja to nowy katalog.
+- **Zamknięte pakiety uruchamiać na kopii** (np. w katalogu scratchpad sesji). `run_release.py`, `export_production.py` i próby ujemne zapisują do `verification/`, `output/`, `gerber/` i `podglad/` własnego pakietu, a na Linuksie wyniki różnią się bajtowo (niżej). Porównanie kopii z repozytorium: `scripts/chmura/porownaj_wyniki.py`.
 - Po istotnych ustaleniach aktualizować `EGRLab-AKTYWNE.md` i `docs/01-overview.md` z zachowaniem ich końców linii.
 
 ## Nazwy plików zarezerwowane w Windows
 
 `AUX`, `CON`, `PRN`, `NUL`, `COM1…9`, `LPT1…9` są w Windows nazwami urządzeń, także z rozszerzeniem. Git for Windows nie otworzy takiego pliku.
 
-W repozytorium jest 15 takich arkuszy: `AUX.kicad_sch` (pakiety P01, P05 R1) i `CON.kicad_sch` (P04, P05 R1). Na komputerze użytkownika dodano je do indeksu z zawartości czytanej przez bash (`git hash-object` + `update-index`) i oznaczono jako `skip-worktree`, więc lokalny git ich nie dotyka. W chmurze (Linux) odtwarzają się normalnie. Świeży klon na Windows ich nie odtworzy.
+W repozytorium jest 15 takich arkuszy: `AUX.kicad_sch` (pakiety P01, P05 R1) i `CON.kicad_sch` (P04, P05 R1). Na komputerze użytkownika dodano je do indeksu z zawartości czytanej przez bash (`git hash-object` + `update-index`) i oznaczono jako `skip-worktree`, więc lokalny git ich nie dotyka. W chmurze (Linux) odtwarzają się normalnie (sprawdzone 29.09). Świeży klon na Windows ich nie odtworzy.
 
 **Nowe arkusze i pliki nazywać inaczej**, np. `AUX5`, `CONN`, `ZLACZA`. Dotyczy to też nowych rewizji P05 i P04. Zmiana pliku o takiej nazwie w chmurze nie da się pobrać do lokalnego repozytorium na Windows zwykłym `git pull`.
 
-## Narzędzia
+## Sieć — polityka środowiska (sprawdzona 29.09.2026)
 
-Szkic instalacji w kontenerze Ubuntu: `scripts/setup-chmura.sh` (do sprawdzenia i poprawienia w pierwszej sesji).
+Proxy wyjściowe środowiska odrzuca część adresów kodem 403. **Nie obchodzić blokad** (np. PPA po zwykłym HTTP przez `ppa.launchpad.net` odpowiada, ale z tego nie korzystamy). Zmiana dostępu: ustawienia środowiska w aplikacji (Network access — szerszy poziom albo dopisany host).
 
-| Narzędzie | Wersja | Do czego |
+| Zablokowane (403) | Dostępne |
+|---|---|
+| `ppa.launchpadcontent.net` — PPA KiCada; `apt-get update` pada też na wpisanych w obraz PPA deadsnakes i ondrej/php | Docker Hub (`registry-1.docker.io`), przy czym bywa **429 Too Many Requests** (limit anonimowych pobrań) |
+| `deb.debian.org`, `security.debian.org`, `ftp.debian.org`, `ftp.pl.debian.org`, `cdn-fastly.deb.debian.org`, `mirror.kernel.org`, `snapshot.debian.org` | `mirror.gcr.io` (lustro Docker Hub; ten sam digest obrazu KiCada) |
+| `downloads.kicad.org`, `kicad-downloads.s3.cern.ch`, `flathub.org`, `dl.flathub.org` | `github.com/…/releases/download/…` i `release-assets.githubusercontent.com` |
+| `download.java.net`, `api.adoptium.net` | PyPI, `registry.npmjs.org`, `nodejs.org`, `conda.anaconda.org` (conda-forge) |
+| `dl.espressif.com` (ESP-IDF — sprawdzić obraz `espressif/idf` z Docker Hub, jest dostępny) | `archive.ubuntu.com`, `security.ubuntu.com` (Ubuntu 24.04 ma tylko KiCad 7.0.11) |
+| `api.github.com` i strony `github.com` spoza repozytoriów sesji (samo pobieranie wydań działa) | `gitlab.com` |
+
+## Narzędzia — obraz Docker `egrlab-kicad:10.0.6`
+
+Instalacja: `bash scripts/setup-chmura.sh` — ok. 2 min od zera (pobranie obrazu KiCada 30–40 s, budowa ok. 85 s), na końcu test dymny. Skrypt sam uruchamia demona Dockera (w kontenerze sesji nie działa od startu), pobiera na hoście pliki do `scripts/chmura/.cache/` (w `.gitignore`) i buduje obraz z `scripts/chmura/Dockerfile` na bazie oficjalnego `kicad/kicad:10.0.6` (Debian 13), przypiętego digestem; przy 429 z Docker Hub bierze ten sam obraz z `mirror.gcr.io`. Brakujące w obrazie narzędzia pochodzą z conda-forge (poppler, Java, Node), PyPI (koła Pythona), npm (sharp) i archive.ubuntu.com (czcionki, źródła locale), bo mirrory Debiana są zablokowane.
+
+| Narzędzie | W chmurze | Lokalnie (Windows) |
 |---|---|---|
-| KiCad (kicad-cli, moduł Pythona pcbnew, biblioteki symboli i footprintów) | 10.0.6, jak lokalnie | generatory, ERC/DRC, eksport |
-| Java + Freerouting | Java 21, Freerouting 2.1.0 | trasowanie |
-| Python 3 + reportlab, Pillow, numpy | — | PDF, podglądy, obliczenia |
-| poppler-utils (pdftoppm) | — | podglądy PDF |
-| Czcionki z polskimi znakami (Liberation, DejaVu) | — | zamiast Arial z Windows |
-| Node + sharp | — | tylko `run_release` P01 |
+| KiCad (kicad-cli, pcbnew, biblioteki) | 10.0.6, obraz `kicad/kicad:10.0.6`, digest `sha256:18693567…` | 10.0.6 |
+| Python z pcbnew | 3.13.5 (`/usr/bin/python3` obrazu) | Python KiCada `bin/python.exe` |
+| numpy / Pillow / reportlab / pdfplumber | 2.5.3 / 12.3.0 / 4.4.9 / 0.11.10 | Python KiCada; reportlab 4.4.9 z runtime Codexa |
+| poppler (`pdftoppm`, `pdftotext`) | 26.09.0 (conda-forge) | runtime Codexa |
+| Java | OpenJDK 21.0.10 (conda-forge) | Temurin JRE 21.0.12.1 |
+| Freerouting | 2.1.0 (sha256 `2c07d58f…`), działa bez GUI | 2.1.0 |
+| Node / sharp | 22.23.2 / 0.34.5 | runtime Codexa |
+| Czcionki | Liberation Sans i Sans Narrow (metrycznie zgodne z Arial i Arial Narrow), DejaVu | Arial z `C:/Windows/Fonts` |
+| Język | `pl_PL.UTF-8` (jak polski Windows; raporty DRC po polsku) | polski |
 
-Środowisko chmury musi mieć dostęp do sieci dla apt, PPA KiCada, wydań GitHub (Freerouting) i PyPI.
+Uruchamianie: `scripts/egrlab-docker <polecenie>`, np. w katalogu kopii pakietu `…/scripts/egrlab-docker python3 src/run_release.py`. Repozytorium i katalog bieżący są montowane pod tymi samymi ścieżkami co na hoście, kontener działa bez sieci, z uid użytkownika i tymczasowym `HOME`. Dodatkowe katalogi (np. scratchpad spoza repozytorium): `EGRLAB_EXTRA_MOUNTS="/ścieżka"`. Raporty po angielsku: `EGRLAB_LANG=C.UTF-8`.
 
-## Ścieżki Windows do sparametryzowania
+## Ścieżki Windows — jak są rozwiązane
 
-Znane miejsca:
-- KiCad: `C:/Program Files/KiCad/10.0/bin/python.exe` i `kicad-cli.exe`. `cadlib.py` w pakietach P0x ma już zmienną `KICAD_LIBRARY_ROOT`.
-- Czcionki: `C:/Windows/Fonts/arial*.ttf`, np. w `Plytki/Kaseta-R1/src/rysunek.py` i w generatorach PDF.
-- Runtime Codexa: `C:/Users/tgorbacz/.cache/codex-runtimes/…` (reportlab, pdftoppm, node).
-- Freerouting: `C:/Users/tgorbacz/.codex/.chatgpt-projects/…/.egrlab-toolchains/freerouting/`.
+Zamkniętych pakietów nie zmieniano. Zgodność daje obraz:
 
-Wyszukanie wszystkich miejsc: `grep -rn "C:/\|\.exe" --include=*.py Plytki/*/src Rewizje/*/src`.
+| W skryptach pakietów | W obrazie |
+|---|---|
+| `Path(sys.executable).with_name('kicad-cli.exe')` | dowiązanie `/usr/bin/kicad-cli.exe` → `kicad-cli` |
+| `KICAD_CLI`, `KICAD_LIBRARY_ROOT` | `/usr/bin/kicad-cli`, `/usr/share/kicad` |
+| `EGRLAB_PDF_PYTHON`, `EGRLAB_DOC_PYTHON`, `EGRLAB_NODE`, `EGRLAB_SHARP`, `PDFTOPPM`, `EGRLAB_PDFTOPPM` (domyślnie runtime Codexa) | narzędzia obrazu |
+| `EGRLAB_FREEROUTING` + `jdk-21.0.12.1+1-jre/bin/java.exe` i `freerouting-2.1.0.jar` | `/opt/egrlab/freerouting` o tym samym układzie; `java.exe` → OpenJDK 21 |
+| `C:/Windows/Fonts/arial*.ttf` w reportlab i PIL | `egrlab_winpaths.py` (ładowany przez `.pth`) podmienia tylko nazwy plików czcionek na Liberation; wyłączenie `EGRLAB_WINPATHS=0` |
+| globalne tablice bibliotek użytkownika KiCada | punkt wejścia obrazu kopiuje szablonowe `fp-lib-table` i `sym-lib-table` do `$HOME/.config/kicad/10.0` |
 
-Proponowany mechanizm: zmienne `KICAD_PYTHON`, `KICAD_CLI`, `KICAD_LIBRARY_ROOT`, `FREEROUTING_JAR`, `EGRLAB_FONT_DIR`, z dotychczasową wartością Windows jako domyślną. Wyniki na Windows nie mogą się zmienić.
+Otwarte skrypty: `Plytki/Kaseta-R1/src/rysunek.py` czyta `EGRLAB_FONT_DIR` (bez zmiennej — czcionki Windows jak dotąd, więc wynik na Windows się nie zmienia). W nowym kodzie używać nazw, które pakiety już mają, z dotychczasową ścieżką Windows jako domyślną: `KICAD_CLI`, `KICAD_LIBRARY_ROOT`, `EGRLAB_FREEROUTING` (katalog), `EGRLAB_FONT_DIR`, `EGRLAB_PDF_PYTHON`/`EGRLAB_DOC_PYTHON`, `EGRLAB_NODE`, `EGRLAB_SHARP`, `PDFTOPPM`. Obraz ustawia też proponowane wcześniej `KICAD_PYTHON` i `FREEROUTING_JAR`. Poza obrazem: `NGSPICE_LIBRARY` (P01 R2/R3, P09 — ngspice nie ma) i `EGRLAB_TCC` (tcc nie ma).
 
-## Pierwsza sesja — zadanie walidacyjne
+## Różnice Windows / Linux (P02-R3, P04-PCB-R2.2, Kaseta-R1)
 
-1. Uruchomić `scripts/setup-chmura.sh`. Sprawdzić, że `kicad-cli version` pokazuje 10.0.6 i że `python3 -c "import pcbnew"` działa. Poprawić skrypt.
-2. Sparametryzować ścieżki według sekcji wyżej.
-3. Odtworzyć kontrole zamkniętego pakietu `Plytki/P02-R3-review` (`python src/run_release.py`, bez `--rebuild`) i porównać `verification/*.json`: ERC 0, DRC 0/0/0, kontrole elektryczne jak w repozytorium. Gerbery i SVG porównywać semantycznie, bo numeracja apertur zależy od UUID (zob. `docs/pamiec-claude/kicad-pipeline-quirks.md`).
-4. W `Plytki/P04-PCB-R2.2-zamowienie` uruchomić `src/export_production.py`, `src/check_cam.py` i `src/cam_negative_controls.py`. Oczekiwane: DRC 0/0/0, CAM 20/20, próby ujemne 8/8 + zerowa.
-5. W pull requeście opisać, co działa i jakie są różnice Windows/Linux.
+Wyniki kontroli są te same; różnice dotyczą tylko zapisu plików. Klasy nadaje `porownaj_wyniki.py`.
 
-Gotowe polecenie do pierwszej sesji:
+| Różnica | Skutek | Rozstrzygnięcie |
+|---|---|---|
+| Python na Windows zapisuje CRLF, na Linuksie LF | JSON i logi różnią się bajtowo (P02: 19 plików, P04: 3) | CRLF → LF przed porównaniem |
+| Daty i ścieżki bezwzględne (netlista XML, SVG, ERC/DRC JSON, `.gbrjob`, raport wierceń, komentarz w Excellon) | skróty SHA-256 w raportach (`drc.provenance.json`, `electrical-checks.json`, `cam-checks.json`) inne | porównanie po usunięciu znaczników |
+| Windows porównuje ścieżki bez rozróżniania wielkości liter | inna kolejność list plików wejściowych | porównanie list po posortowaniu |
+| Brak globalnej tablicy bibliotek w świeżym KiCadzie | w próbach ujemnych 72 zamiast 24 zgłoszeń `lib_footprint_issues` | naprawione w obrazie |
+| Język KiCada | bez `pl_PL` opisy DRC po angielsku | obraz ma `pl_PL.UTF-8` |
+| Liberation zamiast Arial | PDF z reportlab: te same słowa, podglądy PNG różnią się na 0,6–1,0 % pikseli (kształt glifów); PDF/SVG z KiCada bez różnic | oględziny (strona 2 PCB P02 R3 — równoważna) |
+| Zaokrąglenia MSVC/GCC przy wielokątach | F.Cu i B.Cu P04: po 3 kontury regionów z wierzchołkami przesuniętymi o 1 nm; flash, ścieżki, maski, opis, obrys i wiercenia identyczne | `porownaj_gerbery.py`, tolerancja 10 nm |
+| Losowe UUID nowych ścieżek w próbach ujemnych P02 (`bcu_return`, `hold_free`) | inne miejsce odcinka w pliku, inna para w `unconnected_items` | liczby i typy naruszeń identyczne, wykrycie 10/10 |
+| Paragon eksportu P04 | ścieżka `kicad-cli` (`C:\Program Files\…\kicad-cli.exe` ↔ `/usr/bin/kicad-cli.exe`) | reszta poleceń identyczna |
 
-> Przeczytaj CLAUDE.md, docs/CHMURA.md i docs/pamiec-claude/MEMORY.md. Wykonaj zadanie walidacyjne z docs/CHMURA.md (punkty 1–5) na gałęzi `chmura-srodowisko`. Nie zmieniaj zamkniętych pakietów ani .gitattributes. Wynik opisz w pull requeście po polsku.
+Freerouting w kontenerze bez sieci wypisuje `ERROR Could not determine local host name` i nie sprawdza nowej wersji — bez znaczenia dla trasowania.
+
+## Czasy (29.09.2026)
+
+| Krok | Czas |
+|---|---|
+| `setup-chmura.sh` od zera | ok. 2 min 10 s |
+| P02-R3 `run_release.py` (bez `--rebuild`) | 78–136 s |
+| P04 `export_production.py` / `check_cam.py` / `cam_negative_controls.py` | 11 s / 3 s / 26 s |
+| Kaseta-R1 `rysunek.py` | 1 s |
+| Freerouting, 5 przebiegów na `routing/P02.dsn` z P02 R3 | 9 s |
+
+## Pierwsza sesja — zadanie walidacyjne (wykonane 29.09.2026)
+
+1. `scripts/setup-chmura.sh` — przepisany na obraz Docker (PPA zablokowane). `kicad-cli version` = 10.0.6, `import pcbnew` działa.
+2. Ścieżki Windows — rozwiązane w obrazie bez zmian w zamkniętych pakietach; `Kaseta-R1/src/rysunek.py` z `EGRLAB_FONT_DIR`.
+3. `Plytki/P02-R3-review`, `python src/run_release.py` na kopii: 13/13 kroków PASS; ERC 0, DRC 0/0/0, kontrole elektryczne 11/11 (próby ujemne 8/8), PCB 29/29, rewizja R2 → R3 8/8, próby ujemne PCB 10/10 — jak w repozytorium.
+4. `Plytki/P04-PCB-R2.2-zamowienie` na kopii: DRC 0/0/0, CAM 20/20 (450 PTH, 12 NPTH), próby ujemne 8/8 + zerowa. Suma PCB zgodna z wydaniem.
+5. Opis w pull requeście gałęzi `chmura-srodowisko`.
+
+Manifesty SHA-256 obu pakietów w repozytorium sprawdzone po pracy: 234/234 i 223/223 zgodnych.
 
 ## Kolejne zadania
 

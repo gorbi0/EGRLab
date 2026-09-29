@@ -1,35 +1,105 @@
 #!/usr/bin/env bash
-# EGRLab — szkic instalacji narzędzi w kontenerze Ubuntu (sesja Claude Code w chmurze).
-# NIE ZBADANE (29.09.2026): nazwę PPA KiCada 10, nazwy pakietów i adres Freeroutingu
-# sprawdzić w pierwszej sesji i poprawić w tym pliku. Zob. docs/CHMURA.md.
+# EGRLab — przygotowanie narzędzi w kontenerze sesji Claude Code w chmurze (Ubuntu 24.04).
+# Sprawdzone 29.09.2026 w pierwszej sesji (gałąź chmura-srodowisko), opis: docs/CHMURA.md.
+#
+# KiCad NIE z PPA: polityka sieci środowiska (Default) odrzuca ppa.launchpadcontent.net (403),
+# a także mirrory Debiana (deb.debian.org, security.debian.org) i downloads.kicad.org.
+# Dostępne są Docker Hub, pobieranie wydań z GitHuba, PyPI, npm, conda-forge i archive.ubuntu.com.
+# Dlatego: oficjalny obraz kicad/kicad:10.0.6 (Debian 13, Python 3.13 z pcbnew) + dodatki
+# zbudowane lokalnie jako egrlab-kicad:10.0.6 (scripts/chmura/Dockerfile).
+#
+# Użycie:   bash scripts/setup-chmura.sh          (ok. 3–4 min przy pustej pamięci podręcznej Dockera)
+# Potem:    scripts/egrlab-docker python3 src/run_release.py      (w katalogu pakietu)
 set -euo pipefail
-SUDO="$(command -v sudo || true)"
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+CTX="$REPO/scripts/chmura"
+C="$CTX/.cache"            # pliki pobrane na hoście (w .gitignore)
+KICAD_IMAGE=kicad/kicad:10.0.6
+IMAGE=egrlab-kicad:10.0.6
+mkdir -p "$C/wheels" "$C/fonts"
+t0=$(date +%s)
+step() { echo "== [$(( $(date +%s) - t0 )) s] $*"; }
 
-$SUDO apt-get update
-$SUDO apt-get install -y --no-install-recommends \
-  software-properties-common ca-certificates curl git \
-  python3 python3-pip python3-reportlab python3-pil python3-numpy \
-  poppler-utils fonts-liberation fonts-dejavu-core openjdk-21-jre-headless
+step "Docker"
+if ! docker info >/dev/null 2>&1; then
+  # W kontenerze sesji demon nie startuje sam.
+  (dockerd >/tmp/dockerd.log 2>&1 &)
+  for _ in $(seq 1 30); do docker info >/dev/null 2>&1 && break; sleep 1; done
+fi
+docker info --format 'serwer {{.ServerVersion}}, sterownik {{.Driver}}'
 
-# KiCad 10.0.x (lokalnie 10.0.6). Dla 9.0 PPA nazywało się ppa:kicad/kicad-9.0-releases.
-$SUDO add-apt-repository -y ppa:kicad/kicad-10.0-releases
-$SUDO apt-get update
-$SUDO apt-get install -y kicad kicad-symbols kicad-footprints
-kicad-cli version
-python3 -c "import pcbnew; print('pcbnew', pcbnew.Version())"
+step "Certyfikat proxy wyjściowego (tylko na czas budowania obrazu)"
+CA="${SSL_CERT_FILE:-/root/.ccr/ca-bundle.crt}"
+[ -f "$CA" ] || CA=/etc/ssl/certs/ca-certificates.crt
+cp "$CA" "$C/proxy-ca.crt"
 
-# Freerouting 2.1.0 (lokalnie ta sama wersja z Javą 21)
-TOOLS="$HOME/tools"
-mkdir -p "$TOOLS/freerouting"
-curl -fL -o "$TOOLS/freerouting/freerouting-2.1.0.jar" \
-  "https://github.com/freerouting/freerouting/releases/download/v2.1.0/freerouting-2.1.0.jar"
+step "micromamba (conda-forge: poppler, Java 21, Node 22)"
+[ -x "$C/micromamba" ] || curl -fsSL -o "$C/micromamba" \
+  https://github.com/mamba-org/micromamba-releases/releases/latest/download/micromamba-linux-64
+chmod +x "$C/micromamba"
 
-# Zmienne do parametryzacji skryptów (docs/CHMURA.md, sekcja „Ścieżki Windows”)
-{
-  echo "export KICAD_LIBRARY_ROOT=/usr/share/kicad"
-  echo "export KICAD_CLI=$(command -v kicad-cli)"
-  echo "export KICAD_PYTHON=$(command -v python3)"
-  echo "export FREEROUTING_JAR=$TOOLS/freerouting/freerouting-2.1.0.jar"
-  echo "export EGRLAB_FONT_DIR=/usr/share/fonts/truetype/liberation"
-} >> "$HOME/.bashrc"
-echo "Gotowe. Otwórz nową powłokę albo: source ~/.bashrc"
+step "Koła Pythona dla Pythona KiCada (3.13): numpy, Pillow, reportlab 4.4.9, pdfplumber"
+# Obraz KiCada nie ma pip ani curl; koła pobiera host (PyPI jest dostępne), instaluje je Dockerfile.
+PY=$(command -v python3)
+"$PY" -m pip download -q --disable-pip-version-check -d "$C/wheels" --only-binary=:all: --python-version 3.13 \
+  --platform manylinux2014_x86_64 --platform manylinux_2_17_x86_64 --platform manylinux_2_28_x86_64 \
+  pip numpy pillow reportlab==4.4.9 pdfplumber
+ls "$C"/wheels/reportlab-5* >/dev/null 2>&1 && rm -f "$C"/wheels/reportlab-5*
+
+step "Czcionki Liberation (metrycznie zgodne z Arial i Arial Narrow) z archive.ubuntu.com"
+if [ ! -f "$C/fonts/LiberationSansNarrow-Regular.ttf" ]; then
+  tmp=$(mktemp -d); ( cd "$tmp" && apt-get download fonts-liberation fonts-liberation-sans-narrow >/dev/null 2>&1 )
+  for d in "$tmp"/*.deb; do dpkg -x "$d" "$tmp/x"; done
+  find "$tmp/x" -name '*.ttf' -exec cp {} "$C/fonts/" \;
+  rm -rf "$tmp"
+fi
+ls "$C/fonts" | grep -c ttf
+
+step "Źródła locale pl_PL (KiCad na Windows pracuje po polsku; opisy DRC idą za językiem)"
+if [ ! -f "$C/i18n/locales/pl_PL" ]; then
+  [ -f /usr/share/i18n/locales/pl_PL ] || { apt-get download locales >/dev/null 2>&1 && dpkg -x locales_*.deb /tmp/locales-x && rm -f locales_*.deb; }
+  SRC=/usr/share/i18n; [ -f "$SRC/locales/pl_PL" ] || SRC=/tmp/locales-x/usr/share/i18n
+  mkdir -p "$C/i18n"; cp -a "$SRC/locales" "$SRC/charmaps" "$C/i18n/"
+  gunzip -kf "$C/i18n/charmaps/UTF-8.gz"
+fi
+
+step "Freerouting 2.1.0"
+[ -f "$C/freerouting-2.1.0.jar" ] || curl -fsSL -o "$C/freerouting-2.1.0.jar" \
+  https://github.com/freerouting/freerouting/releases/download/v2.1.0/freerouting-2.1.0.jar
+echo "2c07d58f75dac03782664081e7a58b41c25400d871a9fcf166a2ea6fe60d5def  $C/freerouting-2.1.0.jar" | sha256sum -c -
+
+step "Obraz $KICAD_IMAGE (ok. 0,8 GB; Docker Hub, zapasowo mirror.gcr.io)"
+# Docker Hub bywa odrzucany limitem anonimowych pobrań (429 Too Many Requests — wspólny adres wyjściowy
+# kontenerów). mirror.gcr.io podaje ten sam obraz; digest sprawdzony 29.09.2026 w obu źródłach.
+KICAD_DIGEST=sha256:18693567392b80da435f9fa952ce3a3e534c66eb5a6033f5b9c80aa3b19dd3ec
+have_kicad() { docker image inspect "$KICAD_IMAGE" --format '{{json .RepoDigests}}' 2>/dev/null | grep -q "$KICAD_DIGEST"; }
+if ! have_kicad; then
+  for src in docker.io/kicad/kicad mirror.gcr.io/kicad/kicad docker.io/kicad/kicad; do
+    for wait in 0 10 30; do
+      sleep "$wait"
+      if docker pull -q "$src@$KICAD_DIGEST" >/dev/null 2>&1; then
+        docker tag "$src@$KICAD_DIGEST" "$KICAD_IMAGE"; break 2
+      fi
+      echo "  $src: pobranie nieudane, ponawiam"
+    done
+  done
+fi
+have_kicad || { echo "BŁĄD: brak $KICAD_IMAGE o digescie $KICAD_DIGEST"; exit 1; }
+
+step "Budowanie $IMAGE"
+docker build -q --network host \
+  --build-arg HTTPS_PROXY="${HTTPS_PROXY:-}" --build-arg https_proxy="${HTTPS_PROXY:-}" \
+  -t "$IMAGE" "$CTX" >/dev/null
+
+step "Test dymny"
+"$REPO/scripts/egrlab-docker" bash -c '
+  set -e
+  v=$(kicad-cli version); echo "kicad-cli $v"; [ "$v" = 10.0.6 ]
+  python3 -c "import pcbnew,numpy,PIL,reportlab,pdfplumber; print(\"pcbnew\",pcbnew.Version(),\"| Python\",__import__(\"sys\").version.split()[0],\"| numpy\",numpy.__version__,\"| Pillow\",PIL.__version__,\"| reportlab\",reportlab.Version)"
+  python3 -c "import pcbnew; assert pcbnew.Version()==\"10.0.6\""
+  pdftoppm -v 2>&1 | head -1
+  java -version 2>&1 | grep -i "openjdk version"
+  echo "node $(node -v)"; node -e "require(process.env.EGRLAB_SHARP); console.log(\"sharp ok\")"
+  EGRLAB_WINPATHS_VERBOSE=1 python3 -c "from reportlab.pdfbase.ttfonts import TTFont; TTFont(\"A\",\"C:/Windows/Fonts/arial.ttf\")"
+  locale | grep LC_ALL'
+step "Gotowe. Polecenia uruchamiaj przez scripts/egrlab-docker (zob. docs/CHMURA.md)."
