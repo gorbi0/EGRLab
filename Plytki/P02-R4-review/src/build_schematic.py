@@ -8,9 +8,10 @@ import cadlib, collections, copy
 TITLES = [('WEJ', 'Wejscie pakietu 4S, Q9/Q1/Q2, VSW, VMOTOR, podtrzymanie C_H'),
           ('STER', 'Sterowanie: AUX5, REF, UVLO, OK, ENABLE, PFAIL_N, SAFE_N/PG, LED'),
           ('LV', 'Przetwornice TSR i rozdzial LV'),
-          ('MON', 'PSU_OK, VBAT auta, zlacza do P04/P05')]
+          ('MON', 'PSU_OK, VBAT auta (J15)'),
+          ('SERW', 'Listwy serwisowe J_SV1 / J_SV2 (krawedz B, format S1) z rezystorami szeregowymi')]
 S = {n: Sheet(n, t, i, None if i == 1 else uid('WEJ')) for i, (n, t) in enumerate(TITLES, 1)}
-SHORT = {'J1': 'BAT', 'J2': 'VMOTOR', 'J11': 'VSENSE', 'J12': 'PSUOK', 'J13': 'PG', 'J14': 'PWR', 'J15': 'VBAT_IN', 'J16': 'PFAIL'}
+SHORT = {'J1': 'BAT', 'J2': 'VMOTOR', 'J14': 'PWR', 'J15': 'VBAT_IN', 'J_BP': 'J_BP', 'J_SV1': 'J_SV1', 'J_SV2': 'J_SV2'}
 
 
 def put(sh, r, x, y, a=0, u=1):
@@ -18,7 +19,8 @@ def put(sh, r, x, y, a=0, u=1):
     if r in SHORT: p['sch_value'] = SHORT[r]
     if r.startswith('U'): p['fields'] = (-5, -14) if u in (1, 2) else (4, -9)
     if r.startswith('J'): p['fields'] = (-5, -12)
-    if r.startswith('TP'): p['fields'] = (3, -4); p['sch_value'] = ''
+    if r.startswith('J_SV'): p['fields'] = (-5, -22)
+    if r == 'J_BP': p['fields'] = (-5, -16)
     if r.startswith('Q'): p['fields'] = (5.5, -7)
     if r.startswith(('U1', 'U3', 'U4', 'U7', 'U8')) and len(r) == 2: p['fields'] = (9, -9)
     if r in ('U5', 'U6'): p['fields'] = (-9, -10)
@@ -39,37 +41,41 @@ def row(sh, y, items, x0=10, head=None):
 
 V, D, Z = 0, 270, 270   # vertical 2-pin parts (R/C/F: 0; diodes: 270 -> cathode on top)
 # ---------------- WEJ ----------------
-row('WEJ', 20, [('J1', 14), ('TP1', 8), ('Q9', 14), ('R35', 10), ('D10', 10, Z), ('C1', 10), ('C2', 10)], head='Pakiet 4S -> J1 -> Q9 (Q_REV: ochrona polaryzacji, zrodla Q9/Q1 w SW_COM)')
-row('WEJ', 36, [('Q1', 14), ('D4', 10, Z), ('C5', 10), ('C6', 10), ('R22', 10), ('R21', 10), ('TP2', 8), ('Q3', 14), ('R17', 10), ('R18', 10)],
+row('WEJ', 20, [('J1', 14), ('Q9', 14), ('R35', 10), ('D10', 10, Z), ('C1', 10), ('C2', 10)], head='Pakiet 4S -> J1 -> Q9 (Q_REV: ochrona polaryzacji, zrodla Q9/Q1 w SW_COM)')
+row('WEJ', 36, [('Q1', 14), ('D4', 10, Z), ('C5', 10), ('C6', 10), ('R22', 10), ('R21', 10), ('Q3', 14), ('R17', 10), ('R18', 10)],
     head='Q1 (Q_SW) - wlacznik; zalaczanie przez Q3/R21, narastanie VSW ustala C5 (jak P01 R3)')
 row('WEJ', 52, [('Q2', 14), ('R27', 10), ('R24', 10), ('R23', 10), ('D9', 10, Z), ('Q4', 14), ('R25', 10), ('R26', 10), ('Q5', 14), ('R19', 10), ('R20', 10)],
     head='Q2 (Q_OFF) - szybkie wylaczanie; Q4/Q5 zwalniaja Q2 przy ENABLE. R23 = 22k / 0,5W (decyzja 29.09)')
-row('WEJ', 68, [('D3', 10, Z), ('C3', 10), ('C4', 10), ('TP3', 8), ('F1', 10), ('J2', 16), ('D1', 16, Z), ('C20', 10), ('TP5', 8)],
+row('WEJ', 68, [('D3', 10, Z), ('C3', 10), ('C4', 10), ('F1', 10), ('J2', 16), ('D1', 16, Z), ('C20', 10)],
     head='VSW: TVS, C, VMOTOR przez F1 5A; D1a/D1b -> VLOG')
-row('WEJ', 84, [('R40', 10), ('D2', 16, Z), ('C12', 12), ('R41', 10), ('TP4', 8), ('TP6', 8)],
+row('WEJ', 84, [('R40', 10), ('D2', 16, Z), ('C12', 12), ('R41', 10)],
     head='Podtrzymanie: R40 22R bezpiecznikowy -> D2 -> C_H 2200u (-> D1b -> VLOG)')
 # ---------------- STER ----------------
-row('STER', 20, [('D11', 10, Z), ('D12', 10, Z), ('R1', 10), ('C7', 10), ('C8', 10), ('U1', 22), ('R2', 10), ('C9', 10), ('C10', 10), ('C11', 10), ('TP7', 8)],
+row('STER', 20, [('D11', 10, Z), ('D12', 10, Z), ('R1', 10), ('C7', 10), ('C8', 10), ('U1', 22), ('R2', 10), ('C9', 10), ('C10', 10), ('C11', 10)],
     head='AUX5: LM2936 zasilany z SW_COM lub VLOG (D11/D12) - trwa przez podtrzymanie')
-row('STER', 38, [('R3', 10), ('R4', 10), ('U3', 12), ('TP8', 8), ('R5', 10), ('J14', 14), ('R9', 10), ('R10', 10), ('C13', 10), ('TP9', 8), ('R12', 10), ('R11', 10)],
+row('STER', 38, [('R3', 10), ('R4', 10), ('U3', 12), ('R5', 10), ('J14', 14), ('R9', 10), ('R10', 10), ('C13', 10), ('R12', 10), ('R11', 10)],
     head='REF 2,495 V; UVLO: SW_COM - R5 - PWR (J14) - R9 - UV_DIV (R10, C13) - R12 - UV_CMP <- R11 <- OK')
-row('STER', 56, [('U2', 26, 0, 2), ('U2', 26, 0, 1), ('U2', 12, 0, 3), ('R6', 10), ('R7', 10), ('R13', 10), ('U4', 16), ('R36', 10), ('R37', 10), ('TP11', 8)],
-    head='U2B: UVLO -> OK (histereza R11).  U2A: PFAIL_N = bufor OK (0,6 x OK wobec REF) -> R37 -> J16.1, J12.3')
-row('STER', 72, [('R14', 10), ('D7', 10, Z), ('D8', 10, Z), ('R15', 10), ('Q6', 14), ('R16', 10), ('TP10', 8), ('J16', 14), ('R29', 10), ('LED1', 10, Z)],
+row('STER', 56, [('U2', 26, 0, 2), ('U2', 26, 0, 1), ('U2', 12, 0, 3), ('R6', 10), ('R7', 10), ('R13', 10), ('U4', 16), ('R36', 10), ('R37', 10)],
+    head='U2B: UVLO -> OK (histereza R11).  U2A: PFAIL_N = bufor OK (0,6 x OK wobec REF) -> R37 -> J_BP.14')
+row('STER', 72, [('R14', 10), ('D7', 10, Z), ('D8', 10, Z), ('R15', 10), ('Q6', 14), ('R16', 10), ('R29', 10), ('LED1', 10, Z)],
     head='ENABLE = OK przez D7/D8 i wtornik Q6 (jak P01 R3); LED PWR na VSW')
-row('STER', 88, [('Q7', 14), ('R30', 10), ('R31', 14), ('Q8', 16), ('R32', 10), ('R33', 10), ('R34', 10), ('J13', 16), ('TP12', 8)],
-    head='SAFE_N i PG do P04 (z P01 R3): Q7 zasilany z P04_3V3 (J13.1), Q8 zwalnia przy ENABLE; R34 zwora PG_SEND-PG_LINK')
+row('STER', 88, [('Q7', 14), ('R30', 10), ('R31', 14), ('Q8', 16), ('R32', 10), ('R33', 10), ('R34', 10)],
+    head='SAFE_N i PG do P04 (z P01 R3): Q7 zasilany z P04_3V3 (J_BP.15), Q8 zwalnia przy ENABLE; R34 zwora PG_SEND-PG_LINK (J_BP.17/18)')
 # ---------------- LV ----------------
-row('LV', 22, [('F2', 10), ('C21', 10), ('U5', 26), ('C22', 10), ('TP13', 10), ('F3', 10), ('C23', 10), ('U6', 26), ('C24', 10), ('TP14', 10)],
+row('LV', 22, [('F2', 10), ('C21', 10), ('U5', 26), ('C22', 10), ('F3', 10), ('C23', 10), ('U6', 26), ('C24', 10)],
     head='VLOG -> F2/F3 1A MINI -> TSR 2-2450 (5V_SYS), TSR 2-2433 (3V3_IO) - jak R3')
-row('LV', 50, [('J3', 30), ('J4', 30), ('J5', 30), ('J6', 30)], x0=12, head='LV03..LV10: 1=5V_SYS 2=GND 3=3V3_IO 4=GND (bez zmian)')
-row('LV', 72, [('J7', 30), ('J8', 30), ('J9', 30), ('J10', 30)], x0=12)
+row('LV', 62, [('J_BP', 40)], x0=40, head='J_BP: zlacze plytki polaczen P12 (krawedz A, IDC 2x10 katowe; pinout wg SPECYFIKACJA-FORMATU-S1 par. 8)')
 # ---------------- MON ----------------
 row('MON', 22, [('U8', 16), ('R43', 10), ('C26', 10), ('U9', 26, 0, 1), ('U7', 16), ('R42', 10), ('C25', 10)], head='Nadzor szyn (jak R3): U8 5V_SYS, U7 3V3_IO, U9A przesuwa poziom')
-row('MON', 44, [('U10', 26, 0, 1), ('R44', 10), ('TP15', 10), ('U10', 26, 0, 2), ('U10', 26, 0, 3), ('U10', 26, 0, 4)], head='PSU_OK = SUP3_N & SUP5_N (U10A); bramki B-D nieuzywane, wejscia do GND')
+row('MON', 44, [('U10', 26, 0, 1), ('R44', 10), ('U10', 26, 0, 2), ('U10', 26, 0, 3), ('U10', 26, 0, 4)], head='PSU_OK = SUP3_N & SUP5_N (U10A); bramki B-D nieuzywane, wejscia do GND')
 row('MON', 66, [('U9', 26, 0, 2), ('U9', 26, 0, 3), ('U9', 26, 0, 4), ('U9', 12, 0, 5), ('C27', 10), ('C28', 10), ('U10', 12, 0, 5), ('C29', 10)], head='U9B-D nieuzywane (wejscia do GND, OE# do 3V3_IO); zasilanie U9/U10')
-row('MON', 88, [('J12', 18), ('J15', 16), ('R38', 10), ('D13', 10, 90), ('J11', 16), ('TP16', 10), ('TP17', 10)],
-    head='J12 PSUOK do P04 (pin 3 = PFAIL_N); VBAT auta: J15 - R38 10k - D13 P6KE24CA - J11 VSENSE do P05 CH7')
+row('MON', 88, [('J15', 16), ('R38', 10), ('D13', 10, 90)],
+    head='VBAT auta: J15 - R38 10k - D13 P6KE24CA - VBAT_SENSE (J_BP.20 -> P12 -> P05 CH7)')
+# ---------------- SERW ----------------
+row('SERW', 30, [('J_SV1', 22)] + [(r, 10) for r in ('R50', 'R51', 'R52', 'R53', 'R54', 'R55', 'R56', 'R57', 'R58', 'R59', 'R60')],
+    head='J_SV1 (slot S2): piny 1 i 13 = GND; kazdy kolek przez rezystor szeregowy postawiony przy wezle (1k / 4,7k / 10k)')
+row('SERW', 75, [('J_SV2', 22)] + [(r, 10) for r in ('R61', 'R62', 'R63', 'R64', 'R65', 'R66', 'R67', 'R68', 'R69', 'R70', 'R71')],
+    head='J_SV2 (slot S3): szyny pakietu przez 4,7k, bramki i wezly wysokoimpedancyjne przez 10k, logika i szyny <= 5 V przez 1k')
 
 ns = collections.defaultdict(set)
 for name, sh in S.items():
@@ -86,13 +92,15 @@ W.text('Z-06: pojemnosc zalaczana przez Q1 <= 220 uF lacznie: C3 47u + VLOG (C20
 W.text('C_H ladowany osobno przez R40 + D2 (nie liczy sie do 220 uF). Hold-up po PFAIL_N: docs/OBLICZENIA-R4.md.', 8, 93.5, 1.3)
 St = S['STER']
 St.text('PWR rozwarty albo przerwany przewod = UV_DIV do masy = wylaczone. UVLO 13,53 / 12,51 V (nominalnie).', 8, 97, 1.3)
-St.text('P04_3V3 (J13.1) to 3V3 wracajace z P04 - celowo NIE polaczone z lokalnym 3V3_IO (SAFE_N = L bez ENABLE).', 8, 99.5, 1.3)
+St.text('P04_3V3 (J_BP.15) to 3V3 wracajace z P04 - celowo NIE polaczone z lokalnym 3V3_IO (SAFE_N = L bez ENABLE).', 8, 99.5, 1.3)
 St.text('Odstepstwo od D-06 (dosl.): U2A buforuje OK zamiast porownywac UV_CMP - PFAIL_N nie moze rozjechac sie ze stanem Q1.', 8, 102, 1.3)
 S['LV'].text('BUDZET LACZNY <= 6 W na VLOG (ze stratami przetwornic). F2/F3: MINI 1A 32 VDC (D-04).', 8, 90, 1.3)
 S['LV'].text('Dodatkowa pojemnosc obciazenia: suma <= 600 uF na 5V i <= 900 uF na 3V3 (wlicz C22/C24).', 8, 92.5, 1.3)
 S['MON'].text('U9A: wejscie toleruje 5 V; zasilanie 3V3. C28 na adapterze przy samym IC (nie na plycie).', 8, 100, 1.3)
-S['MON'].text('VBAT: jeden przewod od klemy + akumulatora (bezpiecznik 0,5 A przy klemie), bez przewodu masy (D-01).', 8, 102.5, 1.3)
-for i, name in enumerate(['STER', 'LV', 'MON'], 2):
+S['MON'].text('VBAT: jeden przewod od klemy + akumulatora (bezpiecznik 1 A przy klemie, R4E1-06), bez przewodu masy (D-01).', 8, 102.5, 1.3)
+S['SERW'].text('Zwarcie sasiednich kolkow albo kolka do GND ogranicza rezystor szeregowy; multimetr 10 MOhm mierzy przez niego bez zauwazalnego bledu.', 8, 100, 1.3)
+S['SERW'].text('GATE (R63) i OK/ENABLE (R54/R55) zwarte do GND zmieniaja stan wlacznika - nic sie nie uszkodzi, ale przyrzad moze sie wlaczyc albo wylaczyc.', 8, 102.5, 1.3)
+for i, name in enumerate(['STER', 'LV', 'MON', 'SERW'], 2):
     sh = S[name]; x, y = mm(8 + (i - 2) * 34), mm(98); sid = uid('sheet/' + name)
     W.items.append(f'(sheet (at {x} {y}) (size 76.2 15.24) (stroke (width .15) (type default)) (fill (color 0 0 0 0)) (uuid {sid}) (property "Sheetname" "{name}" (at {x} {y - 1.27} 0) (effects (font (size 1.3 1.3)) (justify left bottom))) (property "Sheetfile" "{name}.kicad_sch" (at {x} {y + 16.51} 0) (effects (font (size 1.3 1.3)) (justify left top))) (instances (project "P02" (path {q("/" + uid("WEJ"))} (page "{i}")))))')
     old = sh.path; sh.path = '/' + uid('WEJ') + '/' + sid; sh.items = [t.replace(q(old), q(sh.path)) for t in sh.items]
