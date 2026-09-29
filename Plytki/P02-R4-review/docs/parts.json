@@ -1,0 +1,2497 @@
+{
+  "J1": {
+    "ref": "J1",
+    "source_ref": "R4:NEW",
+    "footprint": "P02:Pigtail_PWR_2x2.5mm2",
+    "display": "BAT / soldered wires",
+    "value": "BAT / soldered wires",
+    "mpn": "PCB termination; 2 x 1.5 mm2 to XT60 (wall)",
+    "pins": {
+      "1": "P02_BAT_IN",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "Pack 4S: XT60 male in the enclosure wall -> 2 x 1.5 mm2 -> J1 with strain-relief anchor 12.5 mm (footprint of P02 R3 J1).",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": null
+  },
+  "Q9": {
+    "ref": "Q9",
+    "source_ref": "R4:NEW",
+    "footprint": "P02:TO220_3_P2.54_Drill1.4",
+    "display": "SUP53P06-20 / Q_REV",
+    "value": "SUP53P06-20 / Q_REV",
+    "mpn": "SUP53P06-20-E3",
+    "pins": {
+      "1": "P02_REV_G",
+      "2": "P02_BAT_IN",
+      "3": "P02_SW_COM"
+    },
+    "url": "https://www.vishay.com/docs/72131/sup53p06.pdf",
+    "note": "Reverse-polarity switch, back-to-back with Q1 (sources at SW_COM). Drain at the pack: correct polarity -> body diode conducts, gate pulled to GND -> on; reversed pack -> VGS = 0, body diode blocks. No heatsink: 0.37 W at 3.5 A.",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 60
+  },
+  "R35": {
+    "ref": "R35",
+    "source_ref": "R4:NEW",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "100K / 0.5W",
+    "value": "100K / 0.5W",
+    "mpn": "MFR-50FTE52-100K",
+    "pins": {
+      "1": "P02_REV_G",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Q9 gate to GND.",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "D10": {
+    "ref": "D10",
+    "source_ref": "R4:NEW",
+    "footprint": "Diode_THT:D_DO-35_SOD27_P10.16mm_Horizontal",
+    "display": "BZX55C15 / Q9 VGS",
+    "value": "BZX55C15 / Q9 VGS",
+    "mpn": "BZX55C15-TAP",
+    "pins": {
+      "1": "P02_SW_COM",
+      "2": "P02_REV_G"
+    },
+    "url": "https://www.vishay.com/docs/85604/bzx55.pdf",
+    "note": "Clamp VSG of Q9 <= 15 V (K = source).",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": null
+  },
+  "C1": {
+    "ref": "C1",
+    "source_ref": "P01R3:C1",
+    "footprint": "Capacitor_THT:CP_Radial_D5.0mm_P2.00mm",
+    "display": "10u / 63V",
+    "value": "10u / 63V",
+    "mpn": "UPW1J100MDD",
+    "pins": {
+      "1": "P02_SW_COM",
+      "2": "GND"
+    },
+    "url": "https://www.nichicon.co.jp/english/products/pdfs/e-upw.pdf",
+    "note": "Local reservoir at SW_COM (P01 C1 at VS).",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 63
+  },
+  "C2": {
+    "ref": "C2",
+    "source_ref": "P01R3:C2",
+    "footprint": "P02:C_TDK_B32529_L7.3_W2.5_P5",
+    "display": "100nF / 100V",
+    "value": "100nF / 100V",
+    "mpn": "B32529C1104J000",
+    "pins": {
+      "1": "P02_SW_COM",
+      "2": "GND"
+    },
+    "url": "https://www.tdk-electronics.tdk.com/inf/20/20/db/fc_2009/B32520_529.pdf",
+    "note": "At Q1/Q2 sources.",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 100
+  },
+  "Q1": {
+    "ref": "Q1",
+    "source_ref": "P01R3:Q1",
+    "footprint": "P02:TO220_3_P2.54_Drill1.4",
+    "display": "SUP53P06-20 / Q_SW",
+    "value": "SUP53P06-20 / Q_SW",
+    "mpn": "SUP53P06-20-E3",
+    "pins": {
+      "1": "P02_GATE",
+      "2": "P02_VSW",
+      "3": "P02_SW_COM"
+    },
+    "url": "https://www.vishay.com/docs/72131/sup53p06.pdf",
+    "note": "Main switch (P01 Q1). Drain now to VSW directly (P01: via LK1 to VPROT). No heatsink: 0.37 W at 3.5 A.",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 60
+  },
+  "D4": {
+    "ref": "D4",
+    "source_ref": "P01R3:D4",
+    "footprint": "Diode_THT:D_DO-35_SOD27_P10.16mm_Horizontal",
+    "display": "BZX55C15 / Q1 VSG",
+    "value": "BZX55C15 / Q1 VSG",
+    "mpn": "BZX55C15-TAP",
+    "pins": {
+      "1": "P02_SW_COM",
+      "2": "P02_GATE"
+    },
+    "url": "https://www.vishay.com/docs/85604/bzx55.pdf",
+    "note": "P01 D4.",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": null
+  },
+  "C5": {
+    "ref": "C5",
+    "source_ref": "P01R3:C5",
+    "footprint": "P02:C_TDK_B32529_L7.3_W2.5_P5",
+    "display": "10nF / 100V",
+    "value": "10nF / 100V",
+    "mpn": "B32529C1103J000",
+    "pins": {
+      "1": "P02_GATE",
+      "2": "P02_VSW"
+    },
+    "url": "https://www.tdk-electronics.tdk.com/inf/20/20/db/fc_2009/B32520_529.pdf",
+    "note": "Miller capacitor GATE-VSW (P01: GATE-VPROT); sets VSW slew ~12 V/ms with R21. Never above 22 nF (P01 R1 hot-plug blocker).",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 100
+  },
+  "C6": {
+    "ref": "C6",
+    "source_ref": "P01R3:C6",
+    "footprint": "P02:C_WIMA_MKS2_1u100V_L7.2_W7.2_P5",
+    "display": "1uF / 100V",
+    "value": "1uF / 100V",
+    "mpn": "MKS2D041001K00JO00",
+    "pins": {
+      "1": "P02_GATE",
+      "2": "P02_SW_COM"
+    },
+    "url": "https://www.tme.eu/Document/a1d7ff07b330f8f08de986bd168d8c92/WIMA_MKS_2.pdf",
+    "note": "G-S capacitor; keeps VSG <= 0.3 V at hot plug (C5/(C5+C6)).",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 100
+  },
+  "R22": {
+    "ref": "R22",
+    "source_ref": "P01R3:R22",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "470K / 0.5W",
+    "value": "470K / 0.5W",
+    "mpn": "MFR-50FTE52-470K",
+    "pins": {
+      "1": "P02_GATE",
+      "2": "P02_SW_COM"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Gate pull-up.",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "R21": {
+    "ref": "R21",
+    "source_ref": "P01R3:R21",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "100K / 0.5W",
+    "value": "100K / 0.5W",
+    "mpn": "MFR-50FTE52-100K",
+    "pins": {
+      "1": "P02_GATE",
+      "2": "P02_ON_COL"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Turn-on current source with C5 (slew).",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "Q3": {
+    "ref": "Q3",
+    "source_ref": "P01R3:Q3",
+    "footprint": "Package_TO_SOT_THT:TO-92_Inline_Wide",
+    "display": "2N5551G",
+    "value": "2N5551G",
+    "mpn": "2N5551G",
+    "pins": {
+      "1": "GND",
+      "2": "P02_ON_B",
+      "3": "P02_ON_COL"
+    },
+    "url": "https://www.onsemi.com/download/data-sheet/pdf/2n5550-d.pdf",
+    "note": "Turn-on of Q1.",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 160
+  },
+  "R17": {
+    "ref": "R17",
+    "source_ref": "P01R3:R17",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "4K7 / 0.5W",
+    "value": "4K7 / 0.5W",
+    "mpn": "MFR-50FTE52-4K7",
+    "pins": {
+      "1": "P02_ENABLE",
+      "2": "P02_ON_B"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "R18": {
+    "ref": "R18",
+    "source_ref": "P01R3:R18",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "47K / 0.5W",
+    "value": "47K / 0.5W",
+    "mpn": "MFR-50FTE52-47K",
+    "pins": {
+      "1": "P02_ON_B",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "Q2": {
+    "ref": "Q2",
+    "source_ref": "P01R3:Q2",
+    "footprint": "P02:TO220_3_P2.54_Drill1.4",
+    "display": "SUP53P06-20 / Q_OFF",
+    "value": "SUP53P06-20 / Q_OFF",
+    "mpn": "SUP53P06-20-E3",
+    "pins": {
+      "1": "P02_OFF_G",
+      "2": "P02_OFF_D",
+      "3": "P02_SW_COM"
+    },
+    "url": "https://www.vishay.com/docs/72131/sup53p06.pdf",
+    "note": "Fast turn-off: pulls GATE to SW_COM through R27 when ENABLE is lost (P01 Q2).",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 60
+  },
+  "R27": {
+    "ref": "R27",
+    "source_ref": "P01R3:R27",
+    "footprint": "P02:R_PR02_P17.78",
+    "display": "10R / 2W",
+    "value": "10R / 2W",
+    "mpn": "PR02000201009FR500",
+    "pins": {
+      "1": "P02_OFF_D",
+      "2": "P02_GATE"
+    },
+    "url": "https://www.vishay.com/docs/28729/pr010203.pdf",
+    "note": "Limits C6 discharge current (P01 R27).",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 250,
+    "tolerance": 0.01,
+    "tcr_ppm": 250
+  },
+  "R24": {
+    "ref": "R24",
+    "source_ref": "P01R3:R24",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "100K / 0.5W",
+    "value": "100K / 0.5W",
+    "mpn": "MFR-50FTE52-100K",
+    "pins": {
+      "1": "P02_OFF_G",
+      "2": "P02_SW_COM"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "R23": {
+    "ref": "R23",
+    "source_ref": "P01R3:R23",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "22K / 0.5W",
+    "value": "22K / 0.5W",
+    "mpn": "MFR-50FTE52-22K",
+    "pins": {
+      "1": "P02_OFF_G",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "R4 change (user decision 29.09.2026): P01 2K2/2W -> 22K/0.5W. Q2 is on while ENABLE is low; static loss 13 mW instead of 128 mW. Turn-off delay grows (docs/OBLICZENIA-R4.md); no OVP needs speed on a 4S pack.",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "D9": {
+    "ref": "D9",
+    "source_ref": "P01R3:D9",
+    "footprint": "Diode_THT:D_DO-35_SOD27_P10.16mm_Horizontal",
+    "display": "BZX55C15 / Q2 VSG",
+    "value": "BZX55C15 / Q2 VSG",
+    "mpn": "BZX55C15-TAP",
+    "pins": {
+      "1": "P02_SW_COM",
+      "2": "P02_OFF_G"
+    },
+    "url": "https://www.vishay.com/docs/85604/bzx55.pdf",
+    "note": "P01 D9.",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": null
+  },
+  "Q4": {
+    "ref": "Q4",
+    "source_ref": "P01R3:Q4",
+    "footprint": "Package_TO_SOT_THT:TO-92_Inline_Wide",
+    "display": "2N5401YBU",
+    "value": "2N5401YBU",
+    "mpn": "2N5401YBU",
+    "pins": {
+      "1": "P02_SW_COM",
+      "2": "P02_REL_PB",
+      "3": "P02_OFF_G"
+    },
+    "url": "https://www.onsemi.com/download/data-sheet/pdf/2n5401-d.pdf",
+    "note": "Holds Q2 off while ENABLE is high. onsemi 2N5401YBU E-B-C; never the -C bondout (P01 R3 note).",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 150
+  },
+  "R25": {
+    "ref": "R25",
+    "source_ref": "P01R3:R25",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "47K / 0.5W",
+    "value": "47K / 0.5W",
+    "mpn": "MFR-50FTE52-47K",
+    "pins": {
+      "1": "P02_REL_PB",
+      "2": "P02_SW_COM"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "R26": {
+    "ref": "R26",
+    "source_ref": "P01R3:R26",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "10K / 0.5W",
+    "value": "10K / 0.5W",
+    "mpn": "MFR-50FTE52-10K",
+    "pins": {
+      "1": "P02_REL_PB",
+      "2": "P02_REL_COL"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "Q5": {
+    "ref": "Q5",
+    "source_ref": "P01R3:Q5",
+    "footprint": "Package_TO_SOT_THT:TO-92_Inline_Wide",
+    "display": "2N5551G",
+    "value": "2N5551G",
+    "mpn": "2N5551G",
+    "pins": {
+      "1": "GND",
+      "2": "P02_REL_B",
+      "3": "P02_REL_COL"
+    },
+    "url": "https://www.onsemi.com/download/data-sheet/pdf/2n5550-d.pdf",
+    "note": "",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 160
+  },
+  "R19": {
+    "ref": "R19",
+    "source_ref": "P01R3:R19",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "4K7 / 0.5W",
+    "value": "4K7 / 0.5W",
+    "mpn": "MFR-50FTE52-4K7",
+    "pins": {
+      "1": "P02_ENABLE",
+      "2": "P02_REL_B"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "R20": {
+    "ref": "R20",
+    "source_ref": "P01R3:R20",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "47K / 0.5W",
+    "value": "47K / 0.5W",
+    "mpn": "MFR-50FTE52-47K",
+    "pins": {
+      "1": "P02_REL_B",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "D3": {
+    "ref": "D3",
+    "source_ref": "P01R3:D3",
+    "footprint": "P02:TVS_P600_P20.32",
+    "display": "5KP18A / VSW",
+    "value": "5KP18A / VSW",
+    "mpn": "5KP18A-B",
+    "pins": {
+      "1": "P02_VSW",
+      "2": "GND"
+    },
+    "url": "https://www.littelfuse.com/assetdocs/tvs-diodes-5kp-datasheet?assetguid=b1ddd6a2-fccb-4327-bea1-7d77c0793479",
+    "note": "Unidirectional TVS on VSW (VWM 18 V >= 16.8 V). Clamps motor-wiring transients; a pack above ~20 V (VBR min) makes it conduct.",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 18
+  },
+  "C3": {
+    "ref": "C3",
+    "source_ref": "R4:NEW",
+    "footprint": "Capacitor_THT:CP_Radial_D6.3mm_P2.50mm",
+    "display": "47u / 50V",
+    "value": "47u / 50V",
+    "mpn": "EEUFR1H470",
+    "pins": {
+      "1": "P02_VSW",
+      "2": "GND"
+    },
+    "url": "https://industrial.panasonic.com/sa/products/pt/aluminum-cap-lead",
+    "note": "VSW reservoir (spec: <= 100 uF). Counts to the 220 uF budget together with VLOG caps and P07 input (docs/OBLICZENIA-R4.md).",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 50
+  },
+  "C4": {
+    "ref": "C4",
+    "source_ref": "P01R3:C4",
+    "footprint": "P02:C_TDK_B32529_L7.3_W2.5_P5",
+    "display": "100nF / 100V",
+    "value": "100nF / 100V",
+    "mpn": "B32529C1104J000",
+    "pins": {
+      "1": "P02_VSW",
+      "2": "GND"
+    },
+    "url": "https://www.tdk-electronics.tdk.com/inf/20/20/db/fc_2009/B32520_529.pdf",
+    "note": "At Q1 drain.",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 100
+  },
+  "F1": {
+    "ref": "F1",
+    "source_ref": "R4:NEW",
+    "footprint": "Fuse:Fuseholder_Blade_Mini_Keystone_3568",
+    "display": "5A / MINI 32V",
+    "value": "5A / MINI 32V",
+    "mpn": "Littelfuse 0297005.WXNV + Keystone 3568",
+    "pins": {
+      "1": "P02_VSW",
+      "2": "VMOTOR"
+    },
+    "url": "https://www.littelfuse.com/products/fuses/automotive-passenger-car/blade-fuses/297",
+    "note": "F_M (D-04): automotive MINI blade 5 A, 32 VDC, in a PCB holder. VMOTOR <= 3.5 A continuous (firmware), OC 4 A.",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 32
+  },
+  "J2": {
+    "ref": "J2",
+    "source_ref": "P02R3:J2",
+    "footprint": "Connector_Phoenix_GMSTB:PhoenixContact_GMSTBA_2,5_3-G-7,62_1x03_P7.62mm_Horizontal",
+    "display": "VMOTOR / GMSTBA 3p 7.62",
+    "value": "VMOTOR / GMSTBA 3p 7.62",
+    "mpn": "Phoenix GMSTBA 2,5/3-G-7,62 (1766246)",
+    "pins": {
+      "1": "VMOTOR",
+      "2": "GND",
+      "3": "NC"
+    },
+    "url": "https://www.phoenixcontact.com/en-pl/products/pcb-header-gmstba-25-3-g-762-1766246",
+    "note": "P07 plug as R3. VMOTOR is now the switched pack (12-16.8 V) behind F1.",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 320
+  },
+  "D1": {
+    "ref": "D1",
+    "source_ref": "P02R3:D1",
+    "footprint": "P02:TO220_3_P2.54_Drill1.4",
+    "display": "STPS20100CT / D1a+D1b",
+    "value": "STPS20100CT / D1a+D1b",
+    "mpn": "STPS20100CT",
+    "pins": {
+      "1": "P02_VSW",
+      "2": "P02_VLOG",
+      "3": "P02_HOLD_C"
+    },
+    "url": "https://www.st.com/resource/en/datasheet/stps20100c.pdf",
+    "note": "OR of VSW (A1, D1a) and C_H (A2, D1b) into VLOG; K+tab = VLOG. Never a common-anode variant.",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 100
+  },
+  "R40": {
+    "ref": "R40",
+    "source_ref": "R4:NEW",
+    "footprint": "P02:R_PR02_P17.78",
+    "display": "22R / 2W fusible",
+    "value": "22R / 2W fusible",
+    "mpn": "Fusible flameproof 22R 2W (MPN to confirm)",
+    "pins": {
+      "1": "P02_VSW",
+      "2": "P02_CH_A"
+    },
+    "url": "https://www.vishay.com/docs/28729/pr010203.pdf",
+    "note": "R_ch: charges C_H, tau 48 ms, peak 0.76 A, 0.31 J per charge. Must be a fusible (flameproof) type that survives the charge pulse; a shorted C_H would dissipate 12.8 W here. PR02 footprint (body 2 W class).",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 250,
+    "tolerance": 0.05,
+    "tcr_ppm": 250
+  },
+  "D2": {
+    "ref": "D2",
+    "source_ref": "P02R3:D2",
+    "footprint": "P02:TO220_3_P2.54_Drill1.4",
+    "display": "STPS20100CT / D_ch",
+    "value": "STPS20100CT / D_ch",
+    "mpn": "STPS20100CT",
+    "pins": {
+      "1": "P02_CH_A",
+      "2": "P02_HOLD_C",
+      "3": "P02_CH_A"
+    },
+    "url": "https://www.st.com/resource/en/datasheet/stps20100c.pdf",
+    "note": "Charge diode of C_H; anodes 1+3 tied on the PCB, K+tab = HOLD_C. Keeps C_H out of VSW, P07 and a VSW short.",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 100
+  },
+  "C12": {
+    "ref": "C12",
+    "source_ref": "R4:NEW",
+    "footprint": "Capacitor_THT:CP_Radial_D16.0mm_P7.50mm",
+    "display": "2200u / 35V",
+    "value": "2200u / 35V",
+    "mpn": "EEUFR1V222 (16x25, P7.5) or equivalent low-ESR 105 C",
+    "pins": {
+      "1": "P02_HOLD_C",
+      "2": "GND"
+    },
+    "url": "https://industrial.panasonic.com/sa/products/pt/aluminum-cap-lead",
+    "note": "C_H hold-up (user decision 29.09.2026). 16 x 25 mm; D12.5 x 35 mm variants need another footprint.",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 35
+  },
+  "R41": {
+    "ref": "R41",
+    "source_ref": "R4:NEW",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "10K / 0.5W",
+    "value": "10K / 0.5W",
+    "mpn": "MFR-50FTE52-10K",
+    "pins": {
+      "1": "P02_HOLD_C",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "C_H bleeder, 28 mW at 16.8 V, tau 22 s.",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "C20": {
+    "ref": "C20",
+    "source_ref": "P02R3:C4",
+    "footprint": "Capacitor_THT:CP_Radial_D5.0mm_P2.00mm",
+    "display": "22u / 50V",
+    "value": "22u / 50V",
+    "mpn": "EEUFR1H220",
+    "pins": {
+      "1": "P02_VLOG",
+      "2": "GND"
+    },
+    "url": "https://industrial.panasonic.com/sa/products/pt/aluminum-cap-lead",
+    "note": "VLOG bus at D1 cathode (R3 C4).",
+    "qty": 1,
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": 50
+  },
+  "D11": {
+    "ref": "D11",
+    "source_ref": "R4:NEW",
+    "footprint": "Diode_THT:D_DO-35_SOD27_P10.16mm_Horizontal",
+    "display": "1N4148 / SW_COM",
+    "value": "1N4148 / SW_COM",
+    "mpn": "1N4148-TAP",
+    "pins": {
+      "1": "P02_V_CTRL",
+      "2": "P02_SW_COM"
+    },
+    "url": "https://www.vishay.com/docs/81857/1n4148.pdf",
+    "note": "V_CTRL = SW_COM OR VLOG: AUX5 lasts through hold-up.",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 100
+  },
+  "D12": {
+    "ref": "D12",
+    "source_ref": "R4:NEW",
+    "footprint": "Diode_THT:D_DO-35_SOD27_P10.16mm_Horizontal",
+    "display": "1N4148 / VLOG",
+    "value": "1N4148 / VLOG",
+    "mpn": "1N4148-TAP",
+    "pins": {
+      "1": "P02_V_CTRL",
+      "2": "P02_VLOG"
+    },
+    "url": "https://www.vishay.com/docs/81857/1n4148.pdf",
+    "note": "",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 100
+  },
+  "R1": {
+    "ref": "R1",
+    "source_ref": "P01R3:R1",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "47R / 0.5W",
+    "value": "47R / 0.5W",
+    "mpn": "MFR-50FTE52-47R",
+    "pins": {
+      "1": "P02_V_CTRL",
+      "2": "P02_AUX_IN"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "P01: 150R/2W against car surges. Pack has none: 47R/0.5W keeps AUX5 regulating down to VLOG ~6.5 V (9 mA).",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "C7": {
+    "ref": "C7",
+    "source_ref": "P01R3:C7",
+    "footprint": "Capacitor_THT:CP_Radial_D5.0mm_P2.00mm",
+    "display": "22u / 50V",
+    "value": "22u / 50V",
+    "mpn": "EEUFR1H220",
+    "pins": {
+      "1": "P02_AUX_IN",
+      "2": "GND"
+    },
+    "url": "https://industrial.panasonic.com/sa/products/pt/aluminum-cap-lead",
+    "note": "",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 50
+  },
+  "C8": {
+    "ref": "C8",
+    "source_ref": "P01R3:C8",
+    "footprint": "P02:C_Vishay_K15_H5_P5",
+    "display": "100nF / X7R",
+    "value": "100nF / X7R",
+    "mpn": "K104K15X7RF53H5",
+    "pins": {
+      "1": "P02_AUX_IN",
+      "2": "GND"
+    },
+    "url": "https://www.vishay.com/docs/45171/kseries.pdf",
+    "note": "",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 50
+  },
+  "U1": {
+    "ref": "U1",
+    "source_ref": "P01R3:U1",
+    "footprint": "Package_TO_SOT_THT:TO-92_Inline_Wide",
+    "display": "LM2936Z-5.0",
+    "value": "LM2936Z-5.0",
+    "mpn": "LM2936Z-5.0/NOPB",
+    "pins": {
+      "1": "P02_AUX5",
+      "2": "GND",
+      "3": "P02_AUX_IN"
+    },
+    "url": "https://www.ti.com/lit/ds/symlink/lm2936.pdf",
+    "note": "AUX5 for comparator, TL431, OK pull-up.",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 40
+  },
+  "R2": {
+    "ref": "R2",
+    "source_ref": "P01R3:R2",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "1R / 0.5W",
+    "value": "1R / 0.5W",
+    "mpn": "MFR-50FTE52-1R",
+    "pins": {
+      "1": "P02_AUX5",
+      "2": "P02_C_AUX_TOP"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "ESR for LM2936 output stability (P01 R2).",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "C9": {
+    "ref": "C9",
+    "source_ref": "P01R3:C9",
+    "footprint": "Capacitor_THT:CP_Radial_D6.3mm_P2.50mm",
+    "display": "47u / 50V",
+    "value": "47u / 50V",
+    "mpn": "EEUFR1H470",
+    "pins": {
+      "1": "P02_C_AUX_TOP",
+      "2": "GND"
+    },
+    "url": "https://industrial.panasonic.com/sa/products/pt/aluminum-cap-lead",
+    "note": "",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 50
+  },
+  "C10": {
+    "ref": "C10",
+    "source_ref": "P01R3:C10",
+    "footprint": "P02:C_Vishay_K15_H5_P5",
+    "display": "100nF / X7R",
+    "value": "100nF / X7R",
+    "mpn": "K104K15X7RF53H5",
+    "pins": {
+      "1": "P02_AUX5",
+      "2": "GND"
+    },
+    "url": "https://www.vishay.com/docs/45171/kseries.pdf",
+    "note": "At U1.",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 50
+  },
+  "C11": {
+    "ref": "C11",
+    "source_ref": "P01R3:C11",
+    "footprint": "P02:C_Vishay_K15_H5_P5",
+    "display": "100nF / X7R",
+    "value": "100nF / X7R",
+    "mpn": "K104K15X7RF53H5",
+    "pins": {
+      "1": "P02_AUX5",
+      "2": "GND"
+    },
+    "url": "https://www.vishay.com/docs/45171/kseries.pdf",
+    "note": "At U2 pin 8.",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 50
+  },
+  "R3": {
+    "ref": "R3",
+    "source_ref": "P01R3:R3",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "820R / 0.5W",
+    "value": "820R / 0.5W",
+    "mpn": "MFR-50FTE52-820R",
+    "pins": {
+      "1": "P02_AUX5",
+      "2": "P02_REF"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "TL431 cathode current ~2.8 mA.",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "R4": {
+    "ref": "R4",
+    "source_ref": "P01R3:R4",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "10K / 0.5W",
+    "value": "10K / 0.5W",
+    "mpn": "MFR-50FTE52-10K",
+    "pins": {
+      "1": "P02_REF",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "U3": {
+    "ref": "U3",
+    "source_ref": "P01R3:U3",
+    "footprint": "Package_TO_SOT_THT:TO-92_Inline_Wide",
+    "display": "TL431BILP",
+    "value": "TL431BILP",
+    "mpn": "TL431BILP",
+    "pins": {
+      "1": "P02_REF",
+      "2": "GND",
+      "3": "P02_REF"
+    },
+    "url": "https://www.ti.com/lit/ds/symlink/tl431.pdf",
+    "note": "TI LP: 1=K 2=A 3=REF; 2.495 V.",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": null
+  },
+  "R5": {
+    "ref": "R5",
+    "source_ref": "R4:NEW",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "1K / 0.5W",
+    "value": "1K / 0.5W",
+    "mpn": "MFR-50FTE52-1K",
+    "pins": {
+      "1": "P02_SW_COM",
+      "2": "P02_PWR_A"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "R_T1: limits current if the PWR wire shorts to GND (16.8 mA, 0.28 W). Part of the UVLO top branch.",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "J14": {
+    "ref": "J14",
+    "source_ref": "R4:NEW",
+    "footprint": "P02:Pigtail_PWR_SW_2xAWG22",
+    "display": "PWR / soldered wires",
+    "value": "PWR / soldered wires",
+    "mpn": "PCB termination; 2 x AWG22 to panel switch",
+    "pins": {
+      "1": "P02_PWR_A",
+      "2": "P02_PWR_B"
+    },
+    "url": "",
+    "note": "Panel switch in the UVLO top branch (Z-04): closed = on; open or broken wire = off. ~0.3 mA, signal-grade switch.",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": null
+  },
+  "R9": {
+    "ref": "R9",
+    "source_ref": "R4:NEW",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "41K2 / 0.5W",
+    "value": "41K2 / 0.5W",
+    "mpn": "MFR-50FTE52-41K2",
+    "pins": {
+      "1": "P02_PWR_B",
+      "2": "P02_UV_DIV"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "R_T2 (STAN-PRAC: 41.2k).",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "R10": {
+    "ref": "R10",
+    "source_ref": "R4:NEW",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "10K / 0.5W",
+    "value": "10K / 0.5W",
+    "mpn": "MFR-50FTE52-10K",
+    "pins": {
+      "1": "P02_UV_DIV",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "R_B.",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "C13": {
+    "ref": "C13",
+    "source_ref": "R4:NEW",
+    "footprint": "P02:C_Vishay_K15_H5_P5",
+    "display": "10nF / X7R",
+    "value": "10nF / X7R",
+    "mpn": "K103K15X7RF53H5",
+    "pins": {
+      "1": "P02_UV_DIV",
+      "2": "GND"
+    },
+    "url": "https://www.vishay.com/docs/45171/kseries.pdf",
+    "note": "Filter before R12 (tau ~98 us), not on the feedback node (R3 lesson).",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 50
+  },
+  "R12": {
+    "ref": "R12",
+    "source_ref": "R4:NEW",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "10K / 0.5W",
+    "value": "10K / 0.5W",
+    "mpn": "MFR-50FTE52-10K",
+    "pins": {
+      "1": "P02_UV_DIV",
+      "2": "P02_UV_CMP"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "R_iso: separates C13 from the hysteresis feedback.",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "R11": {
+    "ref": "R11",
+    "source_ref": "R4:NEW",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "464K / 0.5W",
+    "value": "464K / 0.5W",
+    "mpn": "MFR-50FTE52-464K",
+    "pins": {
+      "1": "P02_OK",
+      "2": "P02_UV_CMP"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Rh: hysteresis from OK (0 / ~4.8 V).",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "U2": {
+    "ref": "U2",
+    "source_ref": "P01R3:U2",
+    "footprint": "Package_DIP:DIP-8_W7.62mm",
+    "display": "LM2903P",
+    "value": "LM2903P",
+    "mpn": "LM2903P",
+    "pins": {
+      "1": "P02_PFAIL_OC",
+      "2": "P02_REF",
+      "3": "P02_PF_IN",
+      "4": "GND",
+      "5": "P02_UV_CMP",
+      "6": "P02_REF",
+      "7": "P02_OK",
+      "8": "P02_AUX5"
+    },
+    "url": "https://www.ti.com/lit/ds/symlink/lm2903.pdf",
+    "note": "B: UVLO (P01 layout: 5=+ 6=REF 7=OK). A: PFAIL_N buffer of OK (3 = OK x 0.6, 2 = REF). Deviation from literal D-06 wording: A follows OK itself, so PFAIL_N can never disagree with the switch state (see docs/OBLICZENIA-R4.md).",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": null
+  },
+  "R6": {
+    "ref": "R6",
+    "source_ref": "R4:NEW",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "100K / 0.5W",
+    "value": "100K / 0.5W",
+    "mpn": "MFR-50FTE52-100K",
+    "pins": {
+      "1": "P02_OK",
+      "2": "P02_PF_IN"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "OK divider for U2A: 0.6 x OK.",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "R7": {
+    "ref": "R7",
+    "source_ref": "R4:NEW",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "150K / 0.5W",
+    "value": "150K / 0.5W",
+    "mpn": "MFR-50FTE52-150K",
+    "pins": {
+      "1": "P02_PF_IN",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "R13": {
+    "ref": "R13",
+    "source_ref": "P01R3:R13",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "2K2 / 0.5W",
+    "value": "2K2 / 0.5W",
+    "mpn": "MFR-50FTE52-2K2",
+    "pins": {
+      "1": "P02_AUX5",
+      "2": "P02_OK"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "OK pull-up (P01).",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "U4": {
+    "ref": "U4",
+    "source_ref": "P01R3:U4",
+    "footprint": "Package_TO_SOT_THT:TO-92_Inline_Wide",
+    "display": "MCP120-450DI/TO",
+    "value": "MCP120-450DI/TO",
+    "mpn": "MCP120-450DI/TO",
+    "pins": {
+      "1": "P02_OK",
+      "2": "P02_AUX5",
+      "3": "GND"
+    },
+    "url": "https://ww1.microchip.com/downloads/en/devicedoc/11184d.pdf",
+    "note": "POR of OK: holds OK low until AUX5 > 4.5 V + reset timeout (P01 U4).",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": null
+  },
+  "R14": {
+    "ref": "R14",
+    "source_ref": "P01R3:R14",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "4K7 / 0.5W",
+    "value": "4K7 / 0.5W",
+    "mpn": "MFR-50FTE52-4K7",
+    "pins": {
+      "1": "P02_OK",
+      "2": "P02_BUF_D1"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "D7": {
+    "ref": "D7",
+    "source_ref": "P01R3:D7",
+    "footprint": "Diode_THT:D_DO-35_SOD27_P10.16mm_Horizontal",
+    "display": "1N4148",
+    "value": "1N4148",
+    "mpn": "1N4148-TAP",
+    "pins": {
+      "1": "P02_BUF_D2",
+      "2": "P02_BUF_D1"
+    },
+    "url": "https://www.vishay.com/docs/81857/1n4148.pdf",
+    "note": "",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 100
+  },
+  "D8": {
+    "ref": "D8",
+    "source_ref": "P01R3:D8",
+    "footprint": "Diode_THT:D_DO-35_SOD27_P10.16mm_Horizontal",
+    "display": "1N4148",
+    "value": "1N4148",
+    "mpn": "1N4148-TAP",
+    "pins": {
+      "1": "P02_BUF_BASE",
+      "2": "P02_BUF_D2"
+    },
+    "url": "https://www.vishay.com/docs/81857/1n4148.pdf",
+    "note": "",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 100
+  },
+  "R15": {
+    "ref": "R15",
+    "source_ref": "P01R3:R15",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "100K / 0.5W",
+    "value": "100K / 0.5W",
+    "mpn": "MFR-50FTE52-100K",
+    "pins": {
+      "1": "P02_BUF_BASE",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "Q6": {
+    "ref": "Q6",
+    "source_ref": "P01R3:Q6",
+    "footprint": "Package_TO_SOT_THT:TO-92_Inline_Wide",
+    "display": "2N5551G",
+    "value": "2N5551G",
+    "mpn": "2N5551G",
+    "pins": {
+      "1": "P02_ENABLE",
+      "2": "P02_BUF_BASE",
+      "3": "P02_AUX5"
+    },
+    "url": "https://www.onsemi.com/download/data-sheet/pdf/2n5550-d.pdf",
+    "note": "ENABLE emitter follower.",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 160
+  },
+  "R16": {
+    "ref": "R16",
+    "source_ref": "P01R3:R16",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "10K / 0.5W",
+    "value": "10K / 0.5W",
+    "mpn": "MFR-50FTE52-10K",
+    "pins": {
+      "1": "P02_ENABLE",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "R36": {
+    "ref": "R36",
+    "source_ref": "R4:NEW",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "10K / 0.5W",
+    "value": "10K / 0.5W",
+    "mpn": "MFR-50FTE52-10K",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "P02_PFAIL_OC"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "PFAIL_N pull-up to local 3V3_IO (low whenever 3V3_IO is absent).",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "R37": {
+    "ref": "R37",
+    "source_ref": "R4:NEW",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "1K / 0.5W",
+    "value": "1K / 0.5W",
+    "mpn": "MFR-50FTE52-1K",
+    "pins": {
+      "1": "P02_PFAIL_OC",
+      "2": "PFAIL_N"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Series protection of J16.1 / J12.3.",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "J16": {
+    "ref": "J16",
+    "source_ref": "R4:NEW",
+    "footprint": "P02:Pigtail_PFAIL_2xAWG28",
+    "display": "PFAIL / soldered wires",
+    "value": "PFAIL / soldered wires",
+    "mpn": "PCB termination; 2 x AWG28 to P03",
+    "pins": {
+      "1": "PFAIL_N",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "D-02: new P03 input (1k series, 10k pull-up to 3V3_CORE on P03).",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": null
+  },
+  "Q7": {
+    "ref": "Q7",
+    "source_ref": "P01R3:Q7",
+    "footprint": "Package_TO_SOT_THT:TO-92_Inline_Wide",
+    "display": "2N5551G",
+    "value": "2N5551G",
+    "mpn": "2N5551G",
+    "pins": {
+      "1": "GND",
+      "2": "P02_FAULT_B",
+      "3": "SAFE_N"
+    },
+    "url": "https://www.onsemi.com/download/data-sheet/pdf/2n5550-d.pdf",
+    "note": "SAFE_N open collector (P01 Q7).",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 160
+  },
+  "R30": {
+    "ref": "R30",
+    "source_ref": "P01R3:R30",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "10K / 0.5W",
+    "value": "10K / 0.5W",
+    "mpn": "MFR-50FTE52-10K",
+    "pins": {
+      "1": "P04_3V3",
+      "2": "P02_FAULT_B"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Fed from J13.1 (3V3 returned by P04), not from local 3V3_IO: SAFE_N = L whenever P04 is powered and ENABLE is absent (P01 behaviour).",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "R31": {
+    "ref": "R31",
+    "source_ref": "P01R3:R31",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "100K / 0.5W",
+    "value": "100K / 0.5W",
+    "mpn": "MFR-50FTE52-100K",
+    "pins": {
+      "1": "P02_FAULT_B",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "Q8": {
+    "ref": "Q8",
+    "source_ref": "P01R3:Q8",
+    "footprint": "Package_TO_SOT_THT:TO-92_Inline_Wide",
+    "display": "2N5551G",
+    "value": "2N5551G",
+    "mpn": "2N5551G",
+    "pins": {
+      "1": "GND",
+      "2": "P02_FAULT_REL_B",
+      "3": "P02_FAULT_B"
+    },
+    "url": "https://www.onsemi.com/download/data-sheet/pdf/2n5550-d.pdf",
+    "note": "Releases SAFE_N on ENABLE.",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 160
+  },
+  "R32": {
+    "ref": "R32",
+    "source_ref": "P01R3:R32",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "10K / 0.5W",
+    "value": "10K / 0.5W",
+    "mpn": "MFR-50FTE52-10K",
+    "pins": {
+      "1": "P02_ENABLE",
+      "2": "P02_FAULT_REL_B"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "R33": {
+    "ref": "R33",
+    "source_ref": "P01R3:R33",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "47K / 0.5W",
+    "value": "47K / 0.5W",
+    "mpn": "MFR-50FTE52-47K",
+    "pins": {
+      "1": "P02_FAULT_REL_B",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "R34": {
+    "ref": "R34",
+    "source_ref": "P01R3:R34",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "0R / link",
+    "value": "0R / link",
+    "mpn": "Tinned copper wire 0.6 mm",
+    "pins": {
+      "1": "PG_SEND",
+      "2": "PG_LINK"
+    },
+    "url": "",
+    "note": "Presence link PG_SEND-PG_LINK (P01 R34).",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": null,
+    "tolerance": 0,
+    "tcr_ppm": 0
+  },
+  "J13": {
+    "ref": "J13",
+    "source_ref": "P01R3:J5",
+    "footprint": "P02:Pigtail_PG_6xAWG22",
+    "display": "PG / soldered harness",
+    "value": "PG / soldered harness",
+    "mpn": "PCB termination; H_PG 6 x AWG22 -> Mini-Fit 6p 39-01-2060",
+    "pins": {
+      "1": "P04_3V3",
+      "2": "SAFE_N",
+      "3": "GND",
+      "4": "PG_SEND",
+      "5": "PG_LINK",
+      "6": "GND"
+    },
+    "url": "",
+    "note": "Moved from P01 J5; P04 J7 unchanged. Pin 1 is the 3V3 supplied by P04 (named P04_3V3 here so it never merges with local 3V3_IO).",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": null
+  },
+  "R29": {
+    "ref": "R29",
+    "source_ref": "P01R3:R29",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "6K8 / 0.5W",
+    "value": "6K8 / 0.5W",
+    "mpn": "MFR-50FTE52-6K8",
+    "pins": {
+      "1": "P02_VSW",
+      "2": "P02_LED_A"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "LED PWR ~2 mA at 16.8 V; also bleeds VSW when Q1 is off.",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "LED1": {
+    "ref": "LED1",
+    "source_ref": "P01R3:LED1",
+    "footprint": "LED_THT:LED_D3.0mm",
+    "display": "GREEN 3mm / PWR",
+    "value": "GREEN 3mm / PWR",
+    "mpn": "L-934GD",
+    "pins": {
+      "1": "GND",
+      "2": "P02_LED_A"
+    },
+    "url": "https://www.kingbrightusa.com/images/catalog/SPEC/L-934GD.pdf",
+    "note": "Lit while Q1 is on (VSW present).",
+    "qty": 1,
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": null
+  },
+  "F2": {
+    "ref": "F2",
+    "source_ref": "P02R3:F2",
+    "footprint": "Fuse:Fuseholder_Blade_Mini_Keystone_3568",
+    "display": "1A / MINI 32V",
+    "value": "1A / MINI 32V",
+    "mpn": "Littelfuse 0297001.WXNV + Keystone 3568",
+    "pins": {
+      "1": "P02_VLOG",
+      "2": "P02_VIN_DC5"
+    },
+    "url": "https://www.littelfuse.com/products/fuses/automotive-passenger-car/blade-fuses/297",
+    "note": "D-04: automotive MINI 1 A, 32 VDC (R3: Schurter SPT T1A). <= 0.86 A at 7 V for the 6 W budget.",
+    "qty": 1,
+    "sheet": "LV",
+    "on_board": true,
+    "v_rating": 32
+  },
+  "F3": {
+    "ref": "F3",
+    "source_ref": "P02R3:F3",
+    "footprint": "Fuse:Fuseholder_Blade_Mini_Keystone_3568",
+    "display": "1A / MINI 32V",
+    "value": "1A / MINI 32V",
+    "mpn": "Littelfuse 0297001.WXNV + Keystone 3568",
+    "pins": {
+      "1": "P02_VLOG",
+      "2": "P02_VIN_DC33"
+    },
+    "url": "https://www.littelfuse.com/products/fuses/automotive-passenger-car/blade-fuses/297",
+    "note": "D-04.",
+    "qty": 1,
+    "sheet": "LV",
+    "on_board": true,
+    "v_rating": 32
+  },
+  "U5": {
+    "ref": "U5",
+    "source_ref": "P02R3:U1",
+    "footprint": "Converter_DCDC:Converter_DCDC_TRACO_TSR2-xxxx_THT",
+    "display": "TSR 2-2450",
+    "value": "TSR 2-2450",
+    "mpn": "TSR 2-2450",
+    "pins": {
+      "1": "P02_VIN_DC5",
+      "2": "GND",
+      "3": "5V_SYS"
+    },
+    "url": "https://www.tracopower.com/products/tsr2.pdf",
+    "note": "Input 6.5-36 V; design floor 7 V.",
+    "qty": 1,
+    "sheet": "LV",
+    "on_board": true,
+    "v_rating": 36
+  },
+  "U6": {
+    "ref": "U6",
+    "source_ref": "P02R3:U2",
+    "footprint": "Converter_DCDC:Converter_DCDC_TRACO_TSR2-xxxx_THT",
+    "display": "TSR 2-2433",
+    "value": "TSR 2-2433",
+    "mpn": "TSR 2-2433",
+    "pins": {
+      "1": "P02_VIN_DC33",
+      "2": "GND",
+      "3": "3V3_IO"
+    },
+    "url": "https://www.tracopower.com/products/tsr2.pdf",
+    "note": "3V3_IO only; never tie to 3V3_CORE of P03.",
+    "qty": 1,
+    "sheet": "LV",
+    "on_board": true,
+    "v_rating": 36
+  },
+  "C21": {
+    "ref": "C21",
+    "source_ref": "P02R3:C5",
+    "footprint": "Capacitor_THT:CP_Radial_D5.0mm_P2.00mm",
+    "display": "10u / 50V",
+    "value": "10u / 50V",
+    "mpn": "EEUFR1H100",
+    "pins": {
+      "1": "P02_VIN_DC5",
+      "2": "GND"
+    },
+    "url": "https://industrial.panasonic.com/sa/products/pt/aluminum-cap-lead",
+    "note": "",
+    "qty": 1,
+    "sheet": "LV",
+    "on_board": true,
+    "v_rating": 50
+  },
+  "C22": {
+    "ref": "C22",
+    "source_ref": "P02R3:C6",
+    "footprint": "Capacitor_THT:CP_Radial_D5.0mm_P2.00mm",
+    "display": "22u / 16V",
+    "value": "22u / 16V",
+    "mpn": "EEUFR1C220",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "GND"
+    },
+    "url": "https://industrial.panasonic.com/sa/products/pt/aluminum-cap-lead",
+    "note": "",
+    "qty": 1,
+    "sheet": "LV",
+    "on_board": true,
+    "v_rating": 16
+  },
+  "C23": {
+    "ref": "C23",
+    "source_ref": "P02R3:C7",
+    "footprint": "Capacitor_THT:CP_Radial_D5.0mm_P2.00mm",
+    "display": "10u / 50V",
+    "value": "10u / 50V",
+    "mpn": "EEUFR1H100",
+    "pins": {
+      "1": "P02_VIN_DC33",
+      "2": "GND"
+    },
+    "url": "https://industrial.panasonic.com/sa/products/pt/aluminum-cap-lead",
+    "note": "",
+    "qty": 1,
+    "sheet": "LV",
+    "on_board": true,
+    "v_rating": 50
+  },
+  "C24": {
+    "ref": "C24",
+    "source_ref": "P02R3:C8",
+    "footprint": "Capacitor_THT:CP_Radial_D5.0mm_P2.00mm",
+    "display": "22u / 16V",
+    "value": "22u / 16V",
+    "mpn": "EEUFR1C220",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "GND"
+    },
+    "url": "https://industrial.panasonic.com/sa/products/pt/aluminum-cap-lead",
+    "note": "",
+    "qty": 1,
+    "sheet": "LV",
+    "on_board": true,
+    "v_rating": 16
+  },
+  "J3": {
+    "ref": "J3",
+    "source_ref": "P02R3:J3",
+    "footprint": "Connector_Molex:Molex_Mini-Fit_Jr_5566-04A_2x02_P4.20mm_Vertical",
+    "display": "LV03 / Mini-Fit Jr 4p",
+    "value": "LV03 / Mini-Fit Jr 4p",
+    "mpn": "Molex 39-29-6048 (Au, vertical, no snap pegs)",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "GND",
+      "3": "3V3_IO",
+      "4": "GND"
+    },
+    "url": "https://www.molex.com/en-us/products/part-detail/39296048",
+    "note": "LV03: 1=5V_SYS 2=GND 3=3V3_IO 4=GND (as R3).",
+    "qty": 1,
+    "sheet": "LV",
+    "on_board": true,
+    "v_rating": null
+  },
+  "J4": {
+    "ref": "J4",
+    "source_ref": "P02R3:J4",
+    "footprint": "Connector_Molex:Molex_Mini-Fit_Jr_5566-04A_2x02_P4.20mm_Vertical",
+    "display": "LV04 / Mini-Fit Jr 4p",
+    "value": "LV04 / Mini-Fit Jr 4p",
+    "mpn": "Molex 39-29-6048 (Au, vertical, no snap pegs)",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "GND",
+      "3": "3V3_IO",
+      "4": "GND"
+    },
+    "url": "https://www.molex.com/en-us/products/part-detail/39296048",
+    "note": "LV04: 1=5V_SYS 2=GND 3=3V3_IO 4=GND (as R3).",
+    "qty": 1,
+    "sheet": "LV",
+    "on_board": true,
+    "v_rating": null
+  },
+  "J5": {
+    "ref": "J5",
+    "source_ref": "P02R3:J5",
+    "footprint": "Connector_Molex:Molex_Mini-Fit_Jr_5566-04A_2x02_P4.20mm_Vertical",
+    "display": "LV05 / Mini-Fit Jr 4p",
+    "value": "LV05 / Mini-Fit Jr 4p",
+    "mpn": "Molex 39-29-6048 (Au, vertical, no snap pegs)",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "GND",
+      "3": "3V3_IO",
+      "4": "GND"
+    },
+    "url": "https://www.molex.com/en-us/products/part-detail/39296048",
+    "note": "LV05: 1=5V_SYS 2=GND 3=3V3_IO 4=GND (as R3).",
+    "qty": 1,
+    "sheet": "LV",
+    "on_board": true,
+    "v_rating": null
+  },
+  "J6": {
+    "ref": "J6",
+    "source_ref": "P02R3:J6",
+    "footprint": "Connector_Molex:Molex_Mini-Fit_Jr_5566-04A_2x02_P4.20mm_Vertical",
+    "display": "LV06 / Mini-Fit Jr 4p",
+    "value": "LV06 / Mini-Fit Jr 4p",
+    "mpn": "Molex 39-29-6048 (Au, vertical, no snap pegs)",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "GND",
+      "3": "3V3_IO",
+      "4": "GND"
+    },
+    "url": "https://www.molex.com/en-us/products/part-detail/39296048",
+    "note": "LV06: 1=5V_SYS 2=GND 3=3V3_IO 4=GND (as R3).",
+    "qty": 1,
+    "sheet": "LV",
+    "on_board": true,
+    "v_rating": null
+  },
+  "J7": {
+    "ref": "J7",
+    "source_ref": "P02R3:J7",
+    "footprint": "Connector_Molex:Molex_Mini-Fit_Jr_5566-04A_2x02_P4.20mm_Vertical",
+    "display": "LV07 / Mini-Fit Jr 4p",
+    "value": "LV07 / Mini-Fit Jr 4p",
+    "mpn": "Molex 39-29-6048 (Au, vertical, no snap pegs)",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "GND",
+      "3": "3V3_IO",
+      "4": "GND"
+    },
+    "url": "https://www.molex.com/en-us/products/part-detail/39296048",
+    "note": "LV07: 1=5V_SYS 2=GND 3=3V3_IO 4=GND (as R3).",
+    "qty": 1,
+    "sheet": "LV",
+    "on_board": true,
+    "v_rating": null
+  },
+  "J8": {
+    "ref": "J8",
+    "source_ref": "P02R3:J8",
+    "footprint": "Connector_Molex:Molex_Mini-Fit_Jr_5566-04A_2x02_P4.20mm_Vertical",
+    "display": "LV08 / Mini-Fit Jr 4p",
+    "value": "LV08 / Mini-Fit Jr 4p",
+    "mpn": "Molex 39-29-6048 (Au, vertical, no snap pegs)",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "GND",
+      "3": "3V3_IO",
+      "4": "GND"
+    },
+    "url": "https://www.molex.com/en-us/products/part-detail/39296048",
+    "note": "LV08: 1=5V_SYS 2=GND 3=3V3_IO 4=GND (as R3).",
+    "qty": 1,
+    "sheet": "LV",
+    "on_board": true,
+    "v_rating": null
+  },
+  "J9": {
+    "ref": "J9",
+    "source_ref": "P02R3:J9",
+    "footprint": "Connector_Molex:Molex_Mini-Fit_Jr_5566-04A_2x02_P4.20mm_Vertical",
+    "display": "LV09 / Mini-Fit Jr 4p",
+    "value": "LV09 / Mini-Fit Jr 4p",
+    "mpn": "Molex 39-29-6048 (Au, vertical, no snap pegs)",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "GND",
+      "3": "3V3_IO",
+      "4": "GND"
+    },
+    "url": "https://www.molex.com/en-us/products/part-detail/39296048",
+    "note": "LV09: 1=5V_SYS 2=GND 3=3V3_IO 4=GND (as R3).",
+    "qty": 1,
+    "sheet": "LV",
+    "on_board": true,
+    "v_rating": null
+  },
+  "J10": {
+    "ref": "J10",
+    "source_ref": "P02R3:J10",
+    "footprint": "Connector_Molex:Molex_Mini-Fit_Jr_5566-04A_2x02_P4.20mm_Vertical",
+    "display": "LV10 / Mini-Fit Jr 4p",
+    "value": "LV10 / Mini-Fit Jr 4p",
+    "mpn": "Molex 39-29-6048 (Au, vertical, no snap pegs)",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "GND",
+      "3": "3V3_IO",
+      "4": "GND"
+    },
+    "url": "https://www.molex.com/en-us/products/part-detail/39296048",
+    "note": "LV10: 1=5V_SYS 2=GND 3=3V3_IO 4=GND (as R3).",
+    "qty": 1,
+    "sheet": "LV",
+    "on_board": true,
+    "v_rating": null
+  },
+  "U7": {
+    "ref": "U7",
+    "source_ref": "P02R3:U3",
+    "footprint": "Package_TO_SOT_THT:TO-92_Inline_Wide",
+    "display": "MCP120-300DI/TO",
+    "value": "MCP120-300DI/TO",
+    "mpn": "MCP120-300DI/TO",
+    "pins": {
+      "1": "P02_SUP3_N",
+      "2": "3V3_IO",
+      "3": "GND"
+    },
+    "url": "https://ww1.microchip.com/downloads/en/devicedoc/11184d.pdf",
+    "note": "Variant D: 1=RST 2=VDD 3=VSS; open drain.",
+    "qty": 1,
+    "sheet": "MON",
+    "on_board": true,
+    "v_rating": null
+  },
+  "U8": {
+    "ref": "U8",
+    "source_ref": "P02R3:U4",
+    "footprint": "Package_TO_SOT_THT:TO-92_Inline_Wide",
+    "display": "MCP120-450DI/TO",
+    "value": "MCP120-450DI/TO",
+    "mpn": "MCP120-450DI/TO",
+    "pins": {
+      "1": "P02_SUP5_RAW",
+      "2": "5V_SYS",
+      "3": "GND"
+    },
+    "url": "https://ww1.microchip.com/downloads/en/devicedoc/11184d.pdf",
+    "note": "Variant D: 1=RST 2=VDD 3=VSS; open drain.",
+    "qty": 1,
+    "sheet": "MON",
+    "on_board": true,
+    "v_rating": null
+  },
+  "R42": {
+    "ref": "R42",
+    "source_ref": "P02R3:R2",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "10K / 0.5W",
+    "value": "10K / 0.5W",
+    "mpn": "MFR-50FTE52-10K",
+    "pins": {
+      "1": "P02_SUP3_N",
+      "2": "3V3_IO"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "",
+    "qty": 1,
+    "sheet": "MON",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "R43": {
+    "ref": "R43",
+    "source_ref": "P02R3:R3",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "10K / 0.5W",
+    "value": "10K / 0.5W",
+    "mpn": "MFR-50FTE52-10K",
+    "pins": {
+      "1": "P02_SUP5_RAW",
+      "2": "5V_SYS"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "",
+    "qty": 1,
+    "sheet": "MON",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "C25": {
+    "ref": "C25",
+    "source_ref": "P02R3:C9",
+    "footprint": "P02:C_Vishay_K15_H5_P5",
+    "display": "100nF / X7R",
+    "value": "100nF / X7R",
+    "mpn": "K104K15X7RF53H5",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "GND"
+    },
+    "url": "https://www.vishay.com/docs/45171/kseries.pdf",
+    "note": "At U7.",
+    "qty": 1,
+    "sheet": "MON",
+    "on_board": true,
+    "v_rating": 50
+  },
+  "C26": {
+    "ref": "C26",
+    "source_ref": "P02R3:C10",
+    "footprint": "P02:C_Vishay_K15_H5_P5",
+    "display": "100nF / X7R",
+    "value": "100nF / X7R",
+    "mpn": "K104K15X7RF53H5",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "GND"
+    },
+    "url": "https://www.vishay.com/docs/45171/kseries.pdf",
+    "note": "At U8.",
+    "qty": 1,
+    "sheet": "MON",
+    "on_board": true,
+    "v_rating": 50
+  },
+  "U9": {
+    "ref": "U9",
+    "source_ref": "P02R3:U5",
+    "footprint": "P02:Adapter_SO14_DIP14_W15.24_Kamami575068",
+    "display": "74LVC125A / SO14 adapter",
+    "value": "74LVC125A / SO14 adapter",
+    "mpn": "74LVC125AD,118 (Nexperia) on Kamami 575068",
+    "pins": {
+      "1": "GND",
+      "2": "P02_SUP5_RAW",
+      "3": "P02_SUP5_N",
+      "4": "3V3_IO",
+      "5": "GND",
+      "6": "NC",
+      "7": "GND",
+      "8": "NC",
+      "9": "GND",
+      "10": "3V3_IO",
+      "11": "NC",
+      "12": "GND",
+      "13": "3V3_IO",
+      "14": "3V3_IO"
+    },
+    "url": "https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf",
+    "note": "As R3 U5: 5 V RST to 3.3 V logic. Unused OE#=3V3_IO, inputs=GND.",
+    "qty": 1,
+    "sheet": "MON",
+    "on_board": true,
+    "v_rating": null
+  },
+  "C27": {
+    "ref": "C27",
+    "source_ref": "P02R3:C11",
+    "footprint": "P02:C_Vishay_K15_H5_P5",
+    "display": "100nF / X7R",
+    "value": "100nF / X7R",
+    "mpn": "K104K15X7RF53H5",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "GND"
+    },
+    "url": "https://www.vishay.com/docs/45171/kseries.pdf",
+    "note": "At adapter pins; C28 on the adapter itself.",
+    "qty": 1,
+    "sheet": "MON",
+    "on_board": true,
+    "v_rating": 50
+  },
+  "C28": {
+    "ref": "C28",
+    "source_ref": "P02R3:C16",
+    "footprint": "",
+    "display": "100nF / adapter U9",
+    "value": "100nF / adapter U9",
+    "mpn": "GRM21BR71H104KA01L (0805)",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "GND"
+    },
+    "url": "https://www.murata.com",
+    "note": "Fitted on the U9 adapter at IC pins 14 and 7 (as R3 C16).",
+    "qty": 1,
+    "sheet": "MON",
+    "on_board": false,
+    "v_rating": 50
+  },
+  "U10": {
+    "ref": "U10",
+    "source_ref": "P02R3:U6",
+    "footprint": "Package_DIP:DIP-14_W7.62mm",
+    "display": "SN74HC08N",
+    "value": "SN74HC08N",
+    "mpn": "SN74HC08N",
+    "pins": {
+      "1": "P02_SUP3_N",
+      "2": "P02_SUP5_N",
+      "3": "PSU_OK",
+      "4": "GND",
+      "5": "GND",
+      "6": "NC",
+      "7": "GND",
+      "8": "NC",
+      "9": "GND",
+      "10": "GND",
+      "11": "NC",
+      "12": "GND",
+      "13": "GND",
+      "14": "3V3_IO"
+    },
+    "url": "https://www.ti.com/lit/ds/symlink/sn74hc08.pdf",
+    "note": "Gate A = PSU_OK (as R3). HOLD_READY gates of R3 removed: gates B-D inputs to GND, outputs open.",
+    "qty": 1,
+    "sheet": "MON",
+    "on_board": true,
+    "v_rating": null
+  },
+  "C29": {
+    "ref": "C29",
+    "source_ref": "P02R3:C12",
+    "footprint": "P02:C_Vishay_K15_H5_P5",
+    "display": "100nF / X7R",
+    "value": "100nF / X7R",
+    "mpn": "K104K15X7RF53H5",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "GND"
+    },
+    "url": "https://www.vishay.com/docs/45171/kseries.pdf",
+    "note": "At U10.",
+    "qty": 1,
+    "sheet": "MON",
+    "on_board": true,
+    "v_rating": 50
+  },
+  "R44": {
+    "ref": "R44",
+    "source_ref": "P02R3:R4",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "10K / 0.5W",
+    "value": "10K / 0.5W",
+    "mpn": "MFR-50FTE52-10K",
+    "pins": {
+      "1": "PSU_OK",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "PSU_OK low while U10 is unpowered.",
+    "qty": 1,
+    "sheet": "MON",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "J12": {
+    "ref": "J12",
+    "source_ref": "P02R3:J12",
+    "footprint": "P02:Pigtail_PSUOK_6x_P2.54",
+    "display": "PSUOK / soldered ribbon",
+    "value": "PSUOK / soldered ribbon",
+    "mpn": "PCB termination; H_PSUOK",
+    "pins": {
+      "1": "PSU_OK",
+      "2": "GND",
+      "3": "PFAIL_N",
+      "4": "NC",
+      "5": "NC",
+      "6": "NC"
+    },
+    "url": "",
+    "note": "6 x AWG28, 150 mm, IDC 6p KEY 5 at P04 J6 (as R3). Pin 3 = PFAIL_N (R3: HOLD_READY); NC on P04.",
+    "qty": 1,
+    "sheet": "MON",
+    "on_board": true,
+    "v_rating": null
+  },
+  "J15": {
+    "ref": "J15",
+    "source_ref": "R4:NEW",
+    "footprint": "P02:Pigtail_VBAT_1xAWG22",
+    "display": "VBAT_IN / soldered wire",
+    "value": "VBAT_IN / soldered wire",
+    "mpn": "PCB termination; 1 x AWG22",
+    "pins": {
+      "1": "VBAT_CAR"
+    },
+    "url": "",
+    "note": "D-01: one wire from the car battery + terminal in the engine bay, 0.5 A in-line fuse <= 10 cm from the terminal; NO ground wire.",
+    "qty": 1,
+    "sheet": "MON",
+    "on_board": true,
+    "v_rating": null
+  },
+  "R38": {
+    "ref": "R38",
+    "source_ref": "R4:NEW",
+    "footprint": "P02:R_MFR50_H4_P15.24",
+    "display": "10K / 0.5W",
+    "value": "10K / 0.5W",
+    "mpn": "MFR-50FTE52-10K",
+    "pins": {
+      "1": "VBAT_CAR",
+      "2": "VBAT_SENSE"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Limits TVS current; CH7 multiplier 6.0898 -> 6.1918 (+1.67 %, recalibrate).",
+    "qty": 1,
+    "sheet": "MON",
+    "on_board": true,
+    "v_rating": 350,
+    "tolerance": 0.01,
+    "tcr_ppm": 100
+  },
+  "D13": {
+    "ref": "D13",
+    "source_ref": "R4:NEW",
+    "footprint": "Diode_THT:D_DO-15_P10.16mm_Horizontal",
+    "display": "P6KE24CA / VBAT",
+    "value": "P6KE24CA / VBAT",
+    "mpn": "P6KE24CA",
+    "pins": {
+      "1": "VBAT_SENSE",
+      "2": "GND"
+    },
+    "url": "https://www.littelfuse.com/assetdocs/tvs-diodes-p6ke-datasheet",
+    "note": "Bidirectional, VWM 20.5 V, VC 33.2 V.",
+    "qty": 1,
+    "sheet": "MON",
+    "on_board": true,
+    "v_rating": 20.5
+  },
+  "J11": {
+    "ref": "J11",
+    "source_ref": "P02R3:J11",
+    "footprint": "Connector_Molex:Molex_Mini-Fit_Jr_5566-02A_2x01_P4.20mm_Vertical",
+    "display": "VSENSE / Mini-Fit Jr 2p",
+    "value": "VSENSE / Mini-Fit Jr 2p",
+    "mpn": "Molex Mini-Fit Jr 5566-02A vertical, Au (39-29-x02x, confirm)",
+    "pins": {
+      "1": "VBAT_SENSE",
+      "2": "GND"
+    },
+    "url": "http://www.molex.com/pdm_docs/sd/039281043_sd.pdf",
+    "note": "D-03: 2p instead of 14p; P05 J5 -> CH7 (VBAT of the car).",
+    "qty": 1,
+    "sheet": "MON",
+    "on_board": true,
+    "v_rating": null
+  },
+  "TP1": {
+    "ref": "TP1",
+    "source_ref": "R4:NEW",
+    "value": "P02_BAT_IN",
+    "display": "BAT_IN",
+    "pins": {
+      "1": "P02_BAT_IN"
+    },
+    "footprint": "P02:TestPad_1",
+    "mpn": "PCB test pad",
+    "qty": 1,
+    "url": "",
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": null,
+    "note": "Probe access; no circuit function."
+  },
+  "TP2": {
+    "ref": "TP2",
+    "source_ref": "R4:NEW",
+    "value": "P02_GATE",
+    "display": "GATE",
+    "pins": {
+      "1": "P02_GATE"
+    },
+    "footprint": "P02:TestPad_1",
+    "mpn": "PCB test pad",
+    "qty": 1,
+    "url": "",
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": null,
+    "note": "Probe access; no circuit function."
+  },
+  "TP3": {
+    "ref": "TP3",
+    "source_ref": "R4:NEW",
+    "value": "P02_VSW",
+    "display": "VSW",
+    "pins": {
+      "1": "P02_VSW"
+    },
+    "footprint": "P02:TestPad_1",
+    "mpn": "PCB test pad",
+    "qty": 1,
+    "url": "",
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": null,
+    "note": "Probe access; no circuit function."
+  },
+  "TP4": {
+    "ref": "TP4",
+    "source_ref": "R4:NEW",
+    "value": "P02_HOLD_C",
+    "display": "HOLD_C",
+    "pins": {
+      "1": "P02_HOLD_C"
+    },
+    "footprint": "P02:TestPad_1",
+    "mpn": "PCB test pad",
+    "qty": 1,
+    "url": "",
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": null,
+    "note": "TP4: raw C_H (0.31 J max); use a DMM or a probe with a series resistor."
+  },
+  "TP5": {
+    "ref": "TP5",
+    "source_ref": "R4:NEW",
+    "value": "P02_VLOG",
+    "display": "VLOG",
+    "pins": {
+      "1": "P02_VLOG"
+    },
+    "footprint": "P02:TestPad_1",
+    "mpn": "PCB test pad",
+    "qty": 1,
+    "url": "",
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": null,
+    "note": "Probe access; no circuit function."
+  },
+  "TP6": {
+    "ref": "TP6",
+    "source_ref": "R4:NEW",
+    "value": "GND",
+    "display": "GND",
+    "pins": {
+      "1": "GND"
+    },
+    "footprint": "P02:TestPad_1",
+    "mpn": "PCB test pad",
+    "qty": 1,
+    "url": "",
+    "sheet": "WEJ",
+    "on_board": true,
+    "v_rating": null,
+    "note": "Probe access; no circuit function."
+  },
+  "TP7": {
+    "ref": "TP7",
+    "source_ref": "R4:NEW",
+    "value": "P02_AUX5",
+    "display": "AUX5",
+    "pins": {
+      "1": "P02_AUX5"
+    },
+    "footprint": "P02:TestPad_1",
+    "mpn": "PCB test pad",
+    "qty": 1,
+    "url": "",
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": null,
+    "note": "Probe access; no circuit function."
+  },
+  "TP8": {
+    "ref": "TP8",
+    "source_ref": "R4:NEW",
+    "value": "P02_REF",
+    "display": "REF",
+    "pins": {
+      "1": "P02_REF"
+    },
+    "footprint": "P02:TestPad_1",
+    "mpn": "PCB test pad",
+    "qty": 1,
+    "url": "",
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": null,
+    "note": "Probe access; no circuit function."
+  },
+  "TP9": {
+    "ref": "TP9",
+    "source_ref": "R4:NEW",
+    "value": "P02_UV_DIV",
+    "display": "UV_DIV",
+    "pins": {
+      "1": "P02_UV_DIV"
+    },
+    "footprint": "P02:TestPad_1",
+    "mpn": "PCB test pad",
+    "qty": 1,
+    "url": "",
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": null,
+    "note": "Probe access; no circuit function."
+  },
+  "TP10": {
+    "ref": "TP10",
+    "source_ref": "R4:NEW",
+    "value": "P02_ENABLE",
+    "display": "ENABLE",
+    "pins": {
+      "1": "P02_ENABLE"
+    },
+    "footprint": "P02:TestPad_1",
+    "mpn": "PCB test pad",
+    "qty": 1,
+    "url": "",
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": null,
+    "note": "Probe access; no circuit function."
+  },
+  "TP11": {
+    "ref": "TP11",
+    "source_ref": "R4:NEW",
+    "value": "PFAIL_N",
+    "display": "PFAIL_N",
+    "pins": {
+      "1": "PFAIL_N"
+    },
+    "footprint": "P02:TestPad_1",
+    "mpn": "PCB test pad",
+    "qty": 1,
+    "url": "",
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": null,
+    "note": "Probe access; no circuit function."
+  },
+  "TP12": {
+    "ref": "TP12",
+    "source_ref": "R4:NEW",
+    "value": "SAFE_N",
+    "display": "SAFE_N",
+    "pins": {
+      "1": "SAFE_N"
+    },
+    "footprint": "P02:TestPad_1",
+    "mpn": "PCB test pad",
+    "qty": 1,
+    "url": "",
+    "sheet": "STER",
+    "on_board": true,
+    "v_rating": null,
+    "note": "Probe access; no circuit function."
+  },
+  "TP13": {
+    "ref": "TP13",
+    "source_ref": "R4:NEW",
+    "value": "5V_SYS",
+    "display": "5V_SYS",
+    "pins": {
+      "1": "5V_SYS"
+    },
+    "footprint": "P02:TestPad_1",
+    "mpn": "PCB test pad",
+    "qty": 1,
+    "url": "",
+    "sheet": "LV",
+    "on_board": true,
+    "v_rating": null,
+    "note": "Probe access; no circuit function."
+  },
+  "TP14": {
+    "ref": "TP14",
+    "source_ref": "R4:NEW",
+    "value": "3V3_IO",
+    "display": "3V3_IO",
+    "pins": {
+      "1": "3V3_IO"
+    },
+    "footprint": "P02:TestPad_1",
+    "mpn": "PCB test pad",
+    "qty": 1,
+    "url": "",
+    "sheet": "LV",
+    "on_board": true,
+    "v_rating": null,
+    "note": "Probe access; no circuit function."
+  },
+  "TP15": {
+    "ref": "TP15",
+    "source_ref": "R4:NEW",
+    "value": "PSU_OK",
+    "display": "PSU_OK",
+    "pins": {
+      "1": "PSU_OK"
+    },
+    "footprint": "P02:TestPad_1",
+    "mpn": "PCB test pad",
+    "qty": 1,
+    "url": "",
+    "sheet": "MON",
+    "on_board": true,
+    "v_rating": null,
+    "note": "Probe access; no circuit function."
+  },
+  "TP16": {
+    "ref": "TP16",
+    "source_ref": "R4:NEW",
+    "value": "VBAT_SENSE",
+    "display": "VBAT_SENSE",
+    "pins": {
+      "1": "VBAT_SENSE"
+    },
+    "footprint": "P02:TestPad_1",
+    "mpn": "PCB test pad",
+    "qty": 1,
+    "url": "",
+    "sheet": "MON",
+    "on_board": true,
+    "v_rating": null,
+    "note": "Probe access; no circuit function."
+  },
+  "TP17": {
+    "ref": "TP17",
+    "source_ref": "R4:NEW",
+    "value": "GND",
+    "display": "GND",
+    "pins": {
+      "1": "GND"
+    },
+    "footprint": "P02:TestPad_1",
+    "mpn": "PCB test pad",
+    "qty": 1,
+    "url": "",
+    "sheet": "MON",
+    "on_board": true,
+    "v_rating": null,
+    "note": "Probe access; no circuit function."
+  }
+}

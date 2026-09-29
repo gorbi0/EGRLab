@@ -86,3 +86,7 @@ Podtrzymanie po PFAIL_N (2200 µF −20 %): 14,2 ms przy 6 W i 28,3 ms przy 3 W,
 4. PCB ≤ 115 × 85 mm, DRC, przymiarka, recenzja.
 
 Wykonanie: etap 1 (kroki 1–3, schemat) w sesji w chmurze, polecenie w `docs/CHMURA.md` („Kolejne zadania”); etap 2 (krok 4, PCB) po lokalnej recenzji schematu.
+
+## Etap 1 wykonany (29.09.2026, sesja w chmurze)
+
+Kroki 1–3 są w `Plytki/P02-R4-review/` (gałąź `p02-r4-schemat`): schemat 4 × A3 (WEJ, STER, LV, MON), ERC 0, netlista 317/317 pinów, kontrole elektryczne 35/35, próby ujemne 19/19. Oznaczenia toru sterowania jak w P01 R3; Q_REV = Q9, Q_SW = Q1, Q_OFF = Q2, R_T1 = R5, R_T2 = R9, R_B = R10, R_iso = R12, Rh = R11, R_ch = R40, D_ch = D2, C_H = C12. Zmiany względem tego dokumentu: R1 47 Ω/0,5 W (AUX5 stabilizuje do VLOG ok. 6,5 V), PFAIL_N z U2A buforującej OK (R6 100k / R7 150k), P04_3V3 z J13.1 oddzielone od 3V3_IO, C3 47 µF na VSW. Obliczenia i niezgodności ze specyfikacją (Z-01, Z-02, Z-08): `Plytki/P02-R4-review/docs/OBLICZENIA-R4.md`. Następny krok: lokalna recenzja schematu, potem krok 4 (PCB).

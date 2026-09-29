@@ -1,0 +1,340 @@
+{
+  "checks": [
+    {
+      "check": "C01 Every exported functional pin agrees with parts.py",
+      "pass": true,
+      "info": "0 mismatches"
+    },
+    {
+      "check": "T01 Q9 and Q1 back-to-back: Q9 D=BAT_IN S=SW_COM, Q1 S=SW_COM D=VSW (reverse polarity blocked by Q9 body diode)",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "check": "T02 BAT_IN reaches only J1.1, Q9 drain and TP1",
+      "pass": true,
+      "info": "J1.1, Q9.2, TP1.1"
+    },
+    {
+      "check": "T03 Zener clamps D10/D4/D9: cathode SW_COM, anode on the gate of Q9/Q1/Q2",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "check": "T04 Gate block as P01 R3: C5 GATE-VSW, C6 GATE-SW_COM, Q2 S=SW_COM D->R27->GATE, Q4 E=SW_COM C=OFF_G, R23 OFF_G-GND",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "check": "T05 PWR switch in the UVLO top branch: SW_COM-R5-J14-R9-UV_DIV, R10 to GND (open = UV_DIV at 0 V = off)",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "check": "T06 Filter C13 on UV_DIV before R12; hysteresis R11 from OK into UV_CMP; U2B + = UV_CMP, - = REF, out = OK",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "check": "T07 PFAIL_N buffers OK: U2A + = OK x R7/(R6+R7), - = REF; pull-up to 3V3_IO; R37 to PFAIL_N at J16.1 and J12.3",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "check": "T08 SAFE_N as P01: Q7 base fed only from J13.1 (P04 3V3, separate from local 3V3_IO); Q8 released by ENABLE",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "check": "T09 C_H: charged only via R40 + D2 (K = HOLD_C), discharged only via D1 A2; D1 A1 = VSW, K = VLOG",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "check": "T10 VMOTOR only from VSW through F1; nothing else on VMOTOR",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "check": "T11 TSR inputs from VLOG through F2/F3",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "check": "T12 AUX5 supply V_CTRL = SW_COM (D11) OR VLOG (D12)",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "check": "T13 VBAT: J15 - R38 - VBAT_SENSE (D13 bidirectional TVS to GND) - J11.1; no GND wire from the car",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "check": "T14 TVS on VSW with VWM >= 16.8 V (5KP18A: 18 V)",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "check": "U01 Nominal UVLO matches spec 13.53 / 12.51 V within 0.05 V",
+      "pass": true,
+      "info": "13.501 / 12.548 V"
+    },
+    {
+      "check": "U02 Z-03: no start at 12.6 V (3S full) in any corner (on_min > 12.6 V)",
+      "pass": true,
+      "info": "on_min 12.90 V"
+    },
+    {
+      "check": "U03 Rested 4S at 3.6 V/cell (14.4 V) always starts (on_max < 14.4 V)",
+      "pass": true,
+      "info": "on_max 14.08 V"
+    },
+    {
+      "check": "U04 Off threshold >= 11.6 V in all corners (2.9 V/cell, above the BMS cut-off 2.5..2.8 V/cell); on > off per corner is U05",
+      "pass": true,
+      "info": "off 11.98..13.11 V"
+    },
+    {
+      "check": "U05 Hysteresis >= 0.7 V in all corners (D-05)",
+      "pass": true,
+      "info": "0.84 V"
+    },
+    {
+      "check": "P01 PFAIL_N follows OK with >= 0.2 V margin both ways (U2A)",
+      "pass": true,
+      "info": "high 0.23 V, low 2.19 V"
+    },
+    {
+      "check": "P02 U2 inputs: REF inside the LM2903 CM range over temperature (one input in range)",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "check": "P03 Z-09: PFAIL_N edge <= 100 us after OK/ENABLE change",
+      "pass": true,
+      "info": "5.4 us"
+    },
+    {
+      "check": "S01 Q1 turn-off after ENABLE loss <= 1 ms in all declared cases (R23 = 22k)",
+      "pass": true,
+      "info": "max 239 us"
+    },
+    {
+      "check": "S02 Hot plug 25 V: VSG(Q1) step C5/(C5+C6+Ciss) <= 0.8 V (P01 R1 blocker rule)",
+      "pass": true,
+      "info": "0.29 V"
+    },
+    {
+      "check": "S03 Z-07: capacitive inrush at the 220 uF budget <= 3.0 A (nominal)",
+      "pass": true,
+      "info": "2.53 A"
+    },
+    {
+      "check": "S04 O-04: VSW slew 5..15 V/ms in all corners",
+      "pass": true,
+      "info": "11.5, 14.7, 5.6"
+    },
+    {
+      "check": "S05 Start: Q1 peak <= 5 A and energy <= 50 mJ (P01 R3 accepted 137 mJ)",
+      "pass": true,
+      "info": "3.69 A / 37 mJ, 4.40 A / 35 mJ, 2.31 A / 25 mJ"
+    },
+    {
+      "check": "S06 Z-06: VSW cap <= 100 uF and switched on-board C <= 120 uF (>= 100 uF left for P07 within 220 uF)",
+      "pass": true,
+      "info": "C3 47 uF, on-board 89 uF, P07 allowance 131 uF"
+    },
+    {
+      "check": "H01 Hold-up after PFAIL_N >= 10 ms at 6 W in the worst corner (firmware closes the file in <= 10 ms, spec section 9)",
+      "pass": true,
+      "info": "11.1 ms"
+    },
+    {
+      "check": "L01 Z-13: Q1 and Q9 each <= 1 W and Tj <= 110 C at 5 A, 50 C ambient, no heatsink (62 K/W)",
+      "pass": true,
+      "info": "0.37 W at 3.5 A, 0.75 W at 5 A"
+    },
+    {
+      "check": "L02 PWR wire shorted to GND: R5 <= 60 % of 0.5 W",
+      "pass": true,
+      "info": "286 mW"
+    },
+    {
+      "check": "L03 R23 static loss (Q4 on, OFF_G at SW_COM) <= 10 % of 0.5 W",
+      "pass": true,
+      "info": "13.0 mW"
+    },
+    {
+      "check": "L04 AUX5 regulates down to V_CTRL: LM2936 input >= 5.5 V at VLOG = 7 V",
+      "pass": true,
+      "info": "5.89 V at 8.8 mA"
+    },
+    {
+      "check": "R01 Z-14: every part on the pack-side nets rated >= 25 V (clamps and wire terminations listed as exempt)",
+      "pass": true,
+      "info": ""
+    }
+  ],
+  "uvlo": {
+    "on_V": [
+      12.897013255292507,
+      14.082612906226345
+    ],
+    "off_V": [
+      11.97868541938558,
+      13.109871210070319
+    ],
+    "hysteresis_V": [
+      0.8424370298530537,
+      1.0501645423011645
+    ],
+    "nominal_on_V": 13.500986206896552,
+    "nominal_off_V": 12.547724907046756,
+    "corners": 512,
+    "ok_high_nominal_V": 4.835521643329498,
+    "enable_nominal_V": 2.4987010936067318,
+    "div_filter_tau_us": 79.48722024415058,
+    "pwr_open_to_trip_us": 21.68359383284782,
+    "divider_mA_at_16V8": 0.3218390804597701
+  },
+  "pfail": {
+    "PF_IN_high_min_V": 2.7757076317722826,
+    "PF_IN_low_max_V": 0.2573940149625935,
+    "threshold_V": [
+      2.447,
+      2.543
+    ],
+    "margin_high_V": 0.23270763177228249,
+    "margin_low_V": 2.1896059850374066,
+    "REF_max_V": 2.528,
+    "CM_top_V": 2.8499999999999996,
+    "ok_high_min_V": 4.698279937034349,
+    "edge_us": 5.414000000000001
+  },
+  "turn_off_us": {
+    "12.5 V, Ciss typ 3.5 nF (datasheet), Vth 1.5 V": 44.08312958589203,
+    "12.5 V, P01 model nominal (13 nF, 1.5 V, 2 us)": 71.20046483988388,
+    "12.5 V, P01 model corner (26 nF, 3.5 V, 6 us, C6 +10 %, R +1 %)": 239.37789100303576,
+    "16.8 V, Ciss typ 3.5 nF (datasheet), Vth 1.5 V": 44.537448614374796,
+    "16.8 V, P01 model nominal (13 nF, 1.5 V, 2 us)": 64.29491893186197,
+    "16.8 V, P01 model corner (26 nF, 3.5 V, 6 us, C6 +10 %, R +1 %)": 183.72198569629066
+  },
+  "turn_off_calibration": {
+    "model_us": {
+      "off_0": 40.33342134225094,
+      "off_1": 58.16185409404036
+    },
+    "p01_spice_us": {
+      "off_0": 42.92833343524803,
+      "off_1": 64.22836796706862
+    },
+    "ratio": {
+      "off_0": 0.9395524613851785,
+      "off_1": 0.9055477499266569
+    }
+  },
+  "inrush": {
+    "nominal, 16.8 V": {
+      "slew_V_per_ms": 11.51500113723301,
+      "ramp_ms": 1.4589664212605493,
+      "I_cap_A": 2.5333002501912625,
+      "I_CH_end_A": 0.7932933796973765,
+      "I_load_A": 0.36697247706422015,
+      "I_peak_A": 3.693566106952859,
+      "E_Q1_mJ": 36.68530769522916,
+      "E_parts_mJ": {
+        "C_VSW": 31.046400000000002,
+        "C_H": 3.2837215529232657,
+        "load": 2.355186142305895
+      }
+    },
+    "fast corner, 16.8 V": {
+      "slew_V_per_ms": 14.736678501266772,
+      "ramp_ms": 1.1400126560782244,
+      "I_cap_A": 3.24206927027869,
+      "I_CH_end_A": 0.7955805505072718,
+      "I_load_A": 0.36697247706422015,
+      "I_peak_A": 4.404622297850182,
+      "E_Q1_mJ": 35.45255085127454,
+      "E_parts_mJ": {
+        "C_VSW": 31.046400000000002,
+        "C_H": 2.5658466670774964,
+        "load": 1.8403041841970402
+      }
+    },
+    "slow corner, 13.2 V": {
+      "slew_V_per_ms": 5.556267116073309,
+      "ramp_ms": 2.3756957187703787,
+      "I_cap_A": 1.222378765536128,
+      "I_CH_end_A": 0.618175161550323,
+      "I_load_A": 0.47058823529411764,
+      "I_peak_A": 2.311142162380569,
+      "E_Q1_mJ": 24.513887420220485,
+      "E_parts_mJ": {
+        "C_VSW": 19.1664,
+        "C_H": 3.300966682923053,
+        "load": 2.0465207372974312
+      }
+    }
+  },
+  "hotplug_VSG_V": 0.28767123287671237,
+  "hold_up": {
+    "nominal (C, V_off nom, Vf 0.25+0.45)": {
+      "V0_V": 11.847724907046757,
+      "E_mJ": 100.5054440203617,
+      "ms_3W": 33.5018146734539,
+      "ms_6W": 16.75090733672695
+    },
+    "worst (C -20 %, V_off min, Vf 0.30+0.50)": {
+      "V0_V": 11.178685419385578,
+      "E_mJ": 66.84744678091367,
+      "ms_3W": 22.28248226030456,
+      "ms_6W": 11.14124113015228
+    },
+    "Z-08 spec method (C -20 %, V_off nom, one diode 0.45)": {
+      "V0_V": 12.097724907046757,
+      "E_mJ": 85.67235417538991,
+      "ms_3W": 28.557451391796636,
+      "ms_6W": 14.278725695898318
+    },
+    "PWR off at 16.8 V (C -20 %)": {
+      "V0_V": 16.0,
+      "E_mJ": 182.16,
+      "ms_3W": 60.72,
+      "ms_6W": 30.36
+    }
+  },
+  "q_loss_W": {
+    "3.5": 0.3675,
+    "5.0": 0.75
+  },
+  "spec_conformance": [
+    {
+      "id": "Z-02",
+      "text": "UVLO 13.53 / 12.51 V, spread +/-0.34 V",
+      "result": "on 12.90..14.08 V, off 11.98..13.11 V",
+      "met": false
+    },
+    {
+      "id": "Z-08",
+      "text": "after PFAIL_N >= 14 ms at 6 W and >= 28 ms at 3 W (C_H -20 %)",
+      "result": "worst 11.1 / 22.3 ms; nominal 16.8 / 33.5 ms",
+      "met": false
+    },
+    {
+      "id": "Z-01",
+      "text": "no damage at 0..25 V",
+      "result": "5KP18A on VSW: VBR min 20 V; a steady 25 V source drives the TVS into breakdown",
+      "met": false
+    }
+  ],
+  "pin_mismatches": [],
+  "limits": "0..50 C; analytic models; LM2903/TL431/LM2936 data-sheet limits; SUP53P06 gate model of P01 R3; NOT_TESTED hardware",
+  "inputs_sha256": {
+    "verification/P02.xml": "615410edf0d9f09bb20aceacb5dc1442b4f61064c4c854a9b7907d7a3525849c",
+    "docs/parts.json": "443e14fdbc5ea4acc2dcd317cb5331147e5f64e162a3b33d382ba583483ac058",
+    "src/check_electrical.py": "5390b44eed92977abe9410c96ee635ba81d317c8a0fdff21f8557ff42567b3f6"
+  },
+  "passed": true
+}
