@@ -9,6 +9,18 @@ Pakiety płytek i ich recenzje znajdują się w `Plytki/`.
 
 
 
+## FORMAT S1-3 — P02 R4 W KLASIE L, P10 NA POZIOMIE 4 (29.09.2026)
+
+Decyzja użytkownika („opcja 1”): P02 R4 w klasie L (160 × 100 mm, cały poziom 1), bo w klasie 2/3 trasowanie się nie domykało (15 niepołączeń w obu metodach). Skutek zapisany jako specyfikacja S1-3 (`Plytki/Format-S1/SPECYFIKACJA-FORMATU-S1.md` §7, `format-s1.json`): P10 na poziomie 4, slot S3 — J3 (OBD) wychodzi ścianą wejść razem z pozostałymi przewodami z auta; od spodu bez SOIC, elementy od góry ≤ 16,5 mm. P10 R2 zakładał slot S1 poziomu 1 — do sprawdzenia przed layoutem. Wariant pełny: na poziomie 4 zostaje tylko S2, więc P04 (2/3) potrzebuje szóstego poziomu (albo P10) — do decyzji przy wariancie pełnym. Wysokość stosu LOGGER bez zmian.
+
+## P03 R6 — SCHEMAT CORE W FORMACIE S1 (PR #6, scalony 29.09.2026)
+
+Pakiet `Plytki/P03-R6-review/` (sesja w chmurze, bez PCB): obwód P03-R5 w klasie L na poziomie 2; złącza J_BP1–J_BP3 (IDC 2×10 kątowe, po jednym na slot), trzy listwy serwisowe, wejście PFAIL_N z P02 R4 (J_BP2.18 → R42 1 kΩ → GPIO3, podciągnięcie R43 do 3V3_CORE). ERC 0 (6 arkuszy), 511 pinów, kontrole J_BP / PFAIL_N / listew 12/12, próby ujemne 22/22 z zerową. Do zrobienia przy layoucie (lokalnie), z uwag do PR: R43 10 kΩ → 100 kΩ, J_BP2.17 GND → 5V_SYS, dodatkowe części jako SMD, krótka droga SUP_N przez P12.
+
+## P09 R2 / P10 R2 — SCHEMATY W FORMACIE S1 (PR #5, scalony 29.09.2026)
+
+Pakiety `Plytki/P09-R2-review/` i `Plytki/P10-R2-review/` (sesja w chmurze, bez PCB). P09 R2: J_BP IDC 2×8, listwa serwisowa 1×13, posiadane rezystory THT na stojąco; kontrole 52/52, próby ujemne 35/35. P10 R2: J_BP IDC 2×5, listwa serwisowa 1×9; kontrole 32/32, próby ujemne 36/36. P10 przechodzi w S1-3 na poziom 4, slot S3 (wyżej): przed layoutem układy SOIC na górę, J3 przy ścianie wejść.
+
 ## REPOZYTORIUM GIT I SESJE W CHMURZE (29.09.2026)
 
 Katalog jest repozytorium git: **github.com/gorbi0/EGRLab** (prywatne), gałąź main, pierwszy commit 45dce9c; aplikacja Claude GitHub ma dostęp do repozytorium. Zasady pracy w chmurze i zadanie pierwszej sesji: `docs/CHMURA.md`; kopia pamięci Claude: `docs/pamiec-claude/`. Pliki bajt w bajt (`* -text`), archiwa zip recenzji poza repozytorium, 15 arkuszy `AUX`/`CON` (nazwy zarezerwowane w Windows) jako skip-worktree — nowych tak nie nazywać. P02 R4: praca przerwana przed schematem; poprawka architektury (dwa SUP53P06 przeciwsobnie, tor sterowania z P01 R3) i nowe UVLO 13,53/12,51 V w `Plytki/P02-R4-specyfikacja/STAN-PRAC.md`. Środowisko chmury sprawdzone 29.09 (gałąź `chmura-srodowisko`): KiCad 10.0.6 z obrazu Docker (PPA i mirrory Debiana zablokowane), kontrole P02-R3 i P04-PCB-R2.2 odtworzone z wynikami jak w repozytorium; opis i różnice Windows/Linux w `docs/CHMURA.md`.

@@ -93,6 +93,8 @@ Aktualizacja 29.09.2026 (format): studium formatu S1 (`Plytki/Format-S1/STUDIUM-
 
 Aktualizacja 29.09.2026 (P05 R2): P05 R2, etap schematu (PR #3, scalony 29.09): R5 6,04 kΩ, R7 5,11 kΩ, R13 47 kΩ, CH7 = VBAT_SENSE, arkusze AUX_IN/ZLACZA, ODBIOR i INTEGRACJA według recenzji; ERC 0, 421/421, 23/23, 12/12. U2 w klasie wysokiej — decyzja użytkownika: REF5025ID (Mouser 595-REF5025ID, 35,82 zł; REF5025AIDR z listy 2 to klasa standardowa 0,1 % i daje dolny narożnik okna DAQ_OK 4,7477 V < 4,75 V — mój błąd na liście). Layout P05 w S1 osobnym zadaniem; wzór odsprzęgania U1 w `Plytki/P05-R2-review/wip-layout-obrys-R1/`. Lista zakupowa 2 poprawiona o REF5025ID i oznaczona „do przeliczenia” po decyzjach z 29.09.
 
+Aktualizacja 29.09.2026 (schematy S1, format S1-3): scalone PR #5 (P09 R2 i P10 R2: J_BP IDC 2×8 / 2×5, listwy serwisowe 1×13 / 1×9, kontrole 52/52 i 32/32) oraz PR #6 (P03 R6: CORE w klasie L na poziomie 2, J_BP1–J_BP3, PFAIL_N z P02 R4, ERC 0, 511 pinów); wszystkie bez PCB, layout lokalnie. Użytkownik wybrał dla P02 R4 klasę L (w 2/3 trasowanie się nie domykało), więc format przeszedł na S1-3: P10 na poziomie 4, slot S3 (od spodu bez SOIC, J3 przy ścianie wejść), a wariant pełny będzie potrzebował szóstego poziomu — do decyzji później.
+
 ## Najbliższe kroki (przy powrocie do Hiszpanii)
 1. Potwierdzić pinout CUD87 ze schematu i multimetrem, **zanim cokolwiek zostanie wpięte**.
 2. Test A (klimatyzacja) — kwadrans, każda pogoda.

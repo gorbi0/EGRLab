@@ -1,4 +1,6 @@
-# Format S1 — specyfikacja (wersja S1-2, 29.09.2026)
+# Format S1 — specyfikacja (wersja S1-3, 29.09.2026)
+
+*S1-3 (29.09.2026 wieczorem, decyzja użytkownika „opcja 1”): P02 R4 w klasie L zajmuje cały poziom 1, P10 schodzi na poziom 4, slot S3 (§7). W klasie 2/3 trasowanie P02 R4 się nie domykało (15 niepołączeń w obu metodach). Skutki dla P10 i wariantu pełnego: §7.*
 
 *S1-2 (29.09.2026, decyzja użytkownika w trakcie pilota P02 R4): dopuszczony montaż SMD od spodu płytki (§4, §9).*
 
@@ -106,10 +108,10 @@ Punkty, których nie ma na listwie, wymagają rozebrania stosu.
 
 | Poziom | Dystans pod płytką wyżej | S1 | S2 | S3 |
 |---|---|---|---|---|
-| 1 | 25 mm (wysoki) | P10 | P02 R4 | P02 R4 |
+| 1 | 25 mm (wysoki) | P02 R4 | P02 R4 | P02 R4 |
 | 2 | 20 mm | P03 | P03 | P03 |
 | 3 | 20 mm | P05 | P05 | P09 |
-| 4 | 20 mm | P06 | pełny: P04 | pełny: P04 |
+| 4 | 20 mm | P06 | pełny: zob. niżej | P10 |
 | 5 (pełny) | 20 mm | P08 | P07 | P07 |
 
 Uzasadnienie:
@@ -119,8 +121,13 @@ Uzasadnienie:
 - P03 jest w środku stosu.
 
 Jeśli layout nie zmieści się w klasie:
-- P02 R4 dostaje klasę L, a P10 idzie na poziom 4;
+- P02 R4 dostaje klasę L, a P10 idzie na poziom 4 — **zastosowane w S1-3**;
 - P06 dostaje klasę 2/3, a wariant pełny ma wtedy 6 poziomów.
+
+Skutki S1-3 (P02 R4 w klasie L, P10 na poziomie 4, slot S3):
+- **P10:** slot S3 leży przy ścianie wejść, więc J3 (OBD) wychodzi tą samą ścianą co pozostałe przewody z auta. Poziom 4 nie jest wysoki: od spodu tylko SMD ≤ 1,5 mm, bez SOIC (§4), elementy od góry ≤ 16,5 mm. Schemat P10 R2 zakładał slot S1 poziomu 1 — do sprawdzenia przed layoutem (obudowy układów od spodu, położenie J3).
+- **Wariant pełny:** na poziomie 4 zostaje wolny tylko S2, więc P04 (2/3) nie mieści się obok P06 i P10. Pełny dostaje szósty poziom (P04 albo P10). **Do decyzji przy wariancie pełnym** (P04, P07, P08 powstają później); wysokość stosu rośnie wtedy o ok. 21,6 mm.
+- **LOGGER:** liczba poziomów i wysokość stosu bez zmian.
 
 Wysokość stosu:
 - LOGGER: ok. 8 + 4 × 1,6 + 25 + 20 + 20 + 16,5 + 3 ≈ 99 mm;

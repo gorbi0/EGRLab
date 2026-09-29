@@ -1,5 +1,5 @@
 {
-  "wersja": "S1-2 (29.09.2026)",
+  "wersja": "S1-3 (29.09.2026)",
   "opis": "Dane liczbowe formatu S1 dla generatorów płytek. Tekst i uzasadnienia: SPECYFIKACJA-FORMATU-S1.md.",
   "uklad_wspolrzednych": "x wzdłuż 160 mm (0 = strona panelu), y w poprzek (0 = krawędź A, płytka połączeń; 100 = krawędź B, strona serwisowa), z w górę; wymiary w mm",
   "sloty": [
@@ -48,15 +48,15 @@
   },
   "przydzial": {
     "LOGGER": [
-      {"poziom": 1, "dystans": 25.0, "plytki": [{"P10": ["S1"]}, {"P02R4": ["S2", "S3"]}]},
+      {"poziom": 1, "dystans": 25.0, "plytki": [{"P02R4": ["S1", "S2", "S3"]}]},
       {"poziom": 2, "dystans": 20.0, "plytki": [{"P03": ["S1", "S2", "S3"]}]},
       {"poziom": 3, "dystans": 20.0, "plytki": [{"P05": ["S1", "S2"]}, {"P09": ["S3"]}]},
-      {"poziom": 4, "dystans": 20.0, "plytki": [{"P06": ["S1"]}]}
+      {"poziom": 4, "dystans": 20.0, "plytki": [{"P06": ["S1"]}, {"P10": ["S3"]}]}
     ],
     "PELNY_dodatkowo": [
       {"poziom": 4, "plytki": [{"P04": ["S2", "S3"]}]},
       {"poziom": 5, "dystans": 20.0, "plytki": [{"P08": ["S1"]}, {"P07": ["S2", "S3"]}]}
     ],
-    "uwagi": "P02R4 i P06: jeśli layout nie zmieści się w klasie, P02R4 → L (P10 na poziom 4), P06 → 2/3 (pełny: 6 poziomów)"
+    "uwagi": "S1-3: P02R4 w klasie L (cały poziom 1), P10 na poziomie 4, slot S3. Wariant pełny: na poziomie 4 zostaje tylko S2, więc P04 (2/3) nie mieści się obok P06 i P10; szósty poziom (P04 albo P10) do decyzji przy wariancie pełnym. P06: jeśli layout nie zmieści się w klasie 1/3, P06 → 2/3 (pełny: kolejny poziom)."
   }
 }
