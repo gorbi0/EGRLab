@@ -2,6 +2,8 @@
 Analytic models only (declared assumptions below); no transistor-level simulation, no bench result is claimed.
   python src/check_electrical.py [--negative]
 --negative applies deliberate value/topology mutations (plus a null control) and requires each to be detected.
+Etap 2 (format S1): J_BP (S1 section 8) replaces J11/J12/J13/J16; service headers J_SV1/J_SV2 with series resistors (S1 section 6);
+D3 5KP24A (R4E1-01) with the Z-01 check (VBR min >= 25 V); R5 power against its own rating (anti-surge 1206).
 Assumption sources: TL431B (2.483..2.507 V, drift <= 17 mV), LM2903 (Vos <= 15 mV full range, Ib <= 250 nA,
 CM <= V+ - 2 V over temperature), LM2936-5.0 (+/-3 %), SUP53P06-20 gate model of P01 R3 dynamics.py
 (Q2 input 10 nF nominal / 20 nF corner + 30 % Miller, Vth 1..3 V), STPS20100CT Vf, MFR-50 1 % / 100 ppm/K over 25 K.
@@ -20,6 +22,17 @@ HV = {'P02_BAT_IN', 'P02_SW_COM', 'P02_VSW', 'P02_VLOG', 'P02_HOLD_C', 'P02_CH_A
       'P02_VIN_DC5', 'P02_VIN_DC33', 'P02_LED_A', 'VBAT_CAR'}
 CLAMP_EXEMPT = {'D3': 'TVS, VWM checked separately', 'D13': 'TVS, VWM checked separately', 'D4': 'Zener clamp, sees <= 15 V',
                 'D9': 'Zener clamp, sees <= 15 V', 'D10': 'Zener clamp, sees <= 15 V', 'LED1': 'LED behind R29'}
+
+
+TVS = {'5KP18A': (18.0, 20.0), '5KP24A': (24.0, 26.7)}   # VWM, VBR min (Littelfuse 5KP data sheet)
+JBP_S1 = {1: 'GND', 2: '5V_SYS', 3: 'GND', 4: '5V_SYS', 5: 'GND', 6: '5V_SYS', 7: 'GND', 8: '3V3_IO', 9: 'GND', 10: '3V3_IO', 11: 'GND', 12: 'PSU_OK',
+          13: 'GND', 14: 'PFAIL_N', 15: 'P04_3V3', 16: 'SAFE_N', 17: 'PG_SEND', 18: 'PG_LINK', 19: 'GND', 20: 'VBAT_SENSE'}   # copied from S1 section 8
+PACK_NODES = {'P02_BAT_IN', 'P02_SW_COM', 'P02_VSW', 'VMOTOR', 'P02_HOLD_C', 'P02_VLOG'}
+HIGHZ_NODES = {'P02_GATE', 'P02_OFF_G', 'P02_UV_DIV', 'P02_UV_CMP', 'P02_REF', 'VBAT_SENSE'}
+SV_REQUIRED = {'P02_BAT_IN', 'P02_VSW', 'P02_VLOG', 'P02_HOLD_C', 'P02_GATE', 'P02_UV_DIV', 'P02_REF', 'P02_AUX5', 'P02_OK', 'P02_ENABLE',
+               'PFAIL_N', 'SAFE_N', 'PSU_OK', '5V_SYS', '3V3_IO', 'VBAT_SENSE'}   # task etap 2, section 1 (O-01..O-09)
+SV_VMAX = {'R50': 5.15, 'R51': 2.53, 'R52': 3.5, 'R53': 3.5, 'R54': 5.15, 'R55': 5.15, 'R56': 3.4, 'R57': 3.4, 'R58': 3.6, 'R59': 33.2, 'R60': 3.6,
+           'R61': 16.8, 'R62': 16.8, 'R63': 16.8, 'R64': 16.8, 'R65': 16.8, 'R66': 16.8, 'R67': 16.8, 'R68': 16.8, 'R69': 5.25, 'R70': 3.5, 'R71': 3.5}
 
 
 def value(r, vv):
@@ -176,7 +189,7 @@ def evaluate(vv, pp):
     ck('T01 Q9 and Q1 back-to-back: Q9 D=BAT_IN S=SW_COM, Q1 S=SW_COM D=VSW (reverse polarity blocked by Q9 body diode)',
        g('Q9', 2) == 'P02_BAT_IN' and g('Q9', 3) == 'P02_SW_COM' and g('Q1', 3) == 'P02_SW_COM' and g('Q1', 2) == 'P02_VSW' and g('Q9', 1) == 'P02_REV_G'
        and g('R35', 1) == 'P02_REV_G' and g('R35', 2) == 'GND')
-    ck('T02 BAT_IN reaches only J1.1, Q9 drain and TP1', members(pp, 'P02_BAT_IN') == ['J1.1', 'Q9.2', 'TP1.1'], ', '.join(members(pp, 'P02_BAT_IN')))
+    ck('T02 BAT_IN reaches only J1.1, Q9 drain and the service resistor R61', members(pp, 'P02_BAT_IN') == ['J1.1', 'Q9.2', 'R61.1'], ', '.join(members(pp, 'P02_BAT_IN')))
     ck('T03 Zener clamps D10/D4/D9: cathode SW_COM, anode on the gate of Q9/Q1/Q2',
        all(g(d, 1) == 'P02_SW_COM' and g(d, 2) == gate for d, gate in [('D10', 'P02_REV_G'), ('D4', 'P02_GATE'), ('D9', 'P02_OFF_G')]))
     ck('T04 Gate block as P01 R3: C5 GATE-VSW, C6 GATE-SW_COM, Q2 S=SW_COM D->R27->GATE, Q4 E=SW_COM C=OFF_G, R23 OFF_G-GND',
@@ -189,22 +202,41 @@ def evaluate(vv, pp):
     ck('T06 Filter C13 on UV_DIV before R12; hysteresis R11 from OK into UV_CMP; U2B + = UV_CMP, - = REF, out = OK',
        g('C13', 1) == 'P02_UV_DIV' and {g('R12', 1), g('R12', 2)} == {'P02_UV_DIV', 'P02_UV_CMP'} and {g('R11', 1), g('R11', 2)} == {'P02_OK', 'P02_UV_CMP'}
        and g('U2', 5) == 'P02_UV_CMP' and g('U2', 6) == 'P02_REF' and g('U2', 7) == 'P02_OK' and 'C13.1' not in members(pp, 'P02_UV_CMP'))
-    ck('T07 PFAIL_N buffers OK: U2A + = OK x R7/(R6+R7), - = REF; pull-up to 3V3_IO; R37 to PFAIL_N at J16.1 and J12.3',
+    ck('T07 PFAIL_N buffers OK: U2A + = OK x R7/(R6+R7), - = REF; pull-up to 3V3_IO; R37 to PFAIL_N at J_BP.14',
        g('U2', 3) == 'P02_PF_IN' and g('U2', 2) == 'P02_REF' and g('R6', 1) == 'P02_OK' and g('R6', 2) == 'P02_PF_IN' and g('R7', 2) == 'GND'
-       and g('U2', 1) == 'P02_PFAIL_OC' and g('R36', 1) == '3V3_IO' and g('R37', 2) == 'PFAIL_N' and g('J16', 1) == 'PFAIL_N' and g('J12', 3) == 'PFAIL_N')
-    ck('T08 SAFE_N as P01: Q7 base fed only from J13.1 (P04 3V3, separate from local 3V3_IO); Q8 released by ENABLE',
-       members(pp, g('J13', 1)) == ['J13.1', 'R30.1'] and g('J13', 1) != '3V3_IO' and g('Q7', 3) == 'SAFE_N' == g('J13', 2)
+       and g('U2', 1) == 'P02_PFAIL_OC' and g('R36', 1) == '3V3_IO' and g('R37', 1) == 'P02_PFAIL_OC' and g('R37', 2) == 'PFAIL_N' and g('J_BP', 14) == 'PFAIL_N')
+    ck('T08 SAFE_N as P01: Q7 base fed only from J_BP.15 (P04 3V3, separate from local 3V3_IO; R58 = service pin); Q8 released by ENABLE',
+       members(pp, g('J_BP', 15)) == ['J_BP.15', 'R30.1', 'R58.1'] and g('J_BP', 15) != '3V3_IO' and g('Q7', 3) == 'SAFE_N' == g('J_BP', 16)
        and g('Q8', 3) == g('Q7', 2) and g('R32', 1) == 'P02_ENABLE' and {g('R34', 1), g('R34', 2)} == {'PG_SEND', 'PG_LINK'})
     ck('T09 C_H: charged only via R40 + D2 (K = HOLD_C), discharged only via D1 A2; D1 A1 = VSW, K = VLOG',
        {g('R40', 1), g('R40', 2)} == {'P02_VSW', 'P02_CH_A'} and g('D2', 1) == g('D2', 3) == 'P02_CH_A' and g('D2', 2) == 'P02_HOLD_C'
        and g('D1', 1) == 'P02_VSW' and g('D1', 3) == 'P02_HOLD_C' and g('D1', 2) == 'P02_VLOG'
-       and set(members(pp, 'P02_HOLD_C')) == {'C12.1', 'D1.3', 'D2.2', 'R41.1', 'TP4.1'})
-    ck('T10 VMOTOR only from VSW through F1; nothing else on VMOTOR', g('F1', 1) == 'P02_VSW' and members(pp, 'VMOTOR') == ['F1.2', 'J2.1'])
+       and set(members(pp, 'P02_HOLD_C')) == {'C12.1', 'D1.3', 'D2.2', 'R41.1', 'R67.1'})
+    ck('T10 VMOTOR only from VSW through F1; nothing else on VMOTOR but J2.1 and the service resistor R66', g('F1', 1) == 'P02_VSW' and members(pp, 'VMOTOR') == ['F1.2', 'J2.1', 'R66.1'])
     ck('T11 TSR inputs from VLOG through F2/F3', g('F2', 1) == g('F3', 1) == 'P02_VLOG' and g('U5', 1) == g('F2', 2) and g('U6', 1) == g('F3', 2))
     ck('T12 AUX5 supply V_CTRL = SW_COM (D11) OR VLOG (D12)', g('D11', 2) == 'P02_SW_COM' and g('D12', 2) == 'P02_VLOG' and g('D11', 1) == g('D12', 1) == g('R1', 1))
-    ck('T13 VBAT: J15 - R38 - VBAT_SENSE (D13 bidirectional TVS to GND) - J11.1; no GND wire from the car',
-       members(pp, 'VBAT_CAR') == ['J15.1', 'R38.1'] and set(members(pp, 'VBAT_SENSE')) == {'D13.1', 'J11.1', 'R38.2', 'TP16.1'} and g('D13', 2) == 'GND')
-    ck('T14 TVS on VSW with VWM >= 16.8 V (5KP18A: 18 V)', g('D3', 1) == 'P02_VSW' and g('D3', 2) == 'GND' and '5KP18A' in vv['D3'].upper() + parts['D3']['mpn'])
+    ck('T13 VBAT: J15 - R38 - VBAT_SENSE (D13 bidirectional TVS to GND) - J_BP.20; no GND wire from the car',
+       members(pp, 'VBAT_CAR') == ['J15.1', 'R38.1'] and set(members(pp, 'VBAT_SENSE')) == {'D13.1', 'J_BP.20', 'R38.2', 'R59.1'} and g('D13', 2) == 'GND')
+    tvs = next((t for t in TVS if t in vv['D3'].upper()), None)
+    ck('T14 TVS on VSW with VWM >= 16.8 V', g('D3', 1) == 'P02_VSW' and g('D3', 2) == 'GND' and tvs is not None and TVS[tvs][0] >= 16.8, f'{tvs}: VWM {TVS.get(tvs, (0, 0))[0]} V')
+    ck('T15 Z-01: no damage at a steady 25 V (5S by mistake): VBR min of the VSW transil >= 25 V (R4E1-01)', tvs is not None and TVS[tvs][1] >= 25,
+       f'{tvs}: VBR min {TVS.get(tvs, (0, 0))[1]} V')
+    jbp = {n: g('J_BP', n) for n in range(1, 21)}
+    ck('T16 J_BP pinout = S1 section 8 (GND 1,3,5,7,9,11,13,19; 5V_SYS 2,4,6; 3V3_IO 8,10; 12 PSU_OK, 14 PFAIL_N, 15 P04_3V3, 16 SAFE_N, 17 PG_SEND, 18 PG_LINK, 20 VBAT_SENSE)',
+       jbp == JBP_S1, ', '.join(f'{n}={v}' for n, v in jbp.items() if v != JBP_S1[n]))
+    bad_sv = []; seen = set()
+    for hdr in ('J_SV1', 'J_SV2'):
+        pins = sorted((int(n) for (r, n) in pp if r == hdr))
+        if not pins or len(pins) > 13 or g(hdr, pins[0]) != 'GND' or g(hdr, pins[-1]) != 'GND': bad_sv.append(f'{hdr}: GND ends / count'); continue
+        for n in pins[1:-1]:
+            m = members(pp, g(hdr, n)); rr = [x for x in m if x != f'{hdr}.{n}']
+            if len(m) != 2 or len(rr) != 1 or not rr[0].startswith('R'): bad_sv.append(f'{hdr}.{n}: {m}'); continue
+            r, rp = rr[0].split('.'); node = g(r, '1' if rp == '2' else '2'); seen.add(node)
+            want = 4700 if node in PACK_NODES else 10000 if node in HIGHZ_NODES else 1000
+            if node in ('GND', None) or node.startswith('P02_SV_') or abs(value(r, vv) - want) > 1: bad_sv.append(f'{hdr}.{n}: {r} {vv[r]} on {node}, want {want:.0f} R')
+    miss = sorted(SV_REQUIRED - seen)
+    ck('T17 Service headers (S1 section 6): <= 13 pins, GND on both ends, every other pin only through one series resistor of its class '
+       '(4K7 pack rails, 10K high-impedance, 1K logic/<= 5 V); all O-01..O-09 points present', not bad_sv and not miss, '; '.join(bad_sv + [f'missing {m}' for m in miss]))
     # --- UVLO
     u = uvlo(vv)
     ck('U01 Nominal UVLO matches spec 13.53 / 12.51 V within 0.05 V', abs(u['nominal_on_V'] - 13.53) <= .05 and abs(u['nominal_off_V'] - 12.51) <= .05,
@@ -243,7 +275,10 @@ def evaluate(vv, pp):
     ck('L01 Z-13: Q1 and Q9 each <= 1 W and Tj <= 110 C at 5 A, 50 C ambient, no heatsink (62 K/W)', q[5.0] <= 1 and 50 + q[5.0] * 62 <= 110,
        f'{q[3.5]:.2f} W at 3.5 A, {q[5.0]:.2f} W at 5 A')
     p5 = 16.8 ** 2 / rlim('R5', vv)[0]
-    ck('L02 PWR wire shorted to GND: R5 <= 60 % of 0.5 W', p5 <= .3, f'{p5 * 1e3:.0f} mW')
+    ck('L02 PWR wire shorted to GND: R5 <= 60 % of its rating (anti-surge 1206, 0.66 W)', p5 <= .6 * parts['R5']['p_rating_W'], f"{p5 * 1e3:.0f} mW of {parts['R5']['p_rating_W'] * 1e3:.0f} mW")
+    psv = {r: vmax ** 2 / rlim(r, vv)[0] for r, vmax in SV_VMAX.items() if r in vv}
+    ck('L05 Service resistor with its pin shorted to GND: <= 50 % of its rating (node at its maximum voltage)',
+       all(v <= .5 * parts[r]['p_rating_W'] for r, v in psv.items()), f'max {max(psv.values()) * 1e3:.0f} mW ({max(psv, key=psv.get)})')
     p23 = 16.8 ** 2 / rlim('R23', vv)[0]
     ck('L03 R23 static loss (Q4 on, OFF_G at SW_COM) <= 10 % of 0.5 W', p23 <= .05, f'{p23 * 1e3:.1f} mW')
     iaux = (5 - 2.495) / value('R3', vv) + 5 / value('R13', vv) + 2e-3 + 1.5e-3
@@ -255,13 +290,13 @@ def evaluate(vv, pp):
             if p.get('v_rating') is None or p['v_rating'] < 25: bad.append(r)
     ck('R01 Z-14: every part on the pack-side nets rated >= 25 V (clamps and wire terminations listed as exempt)', not bad, ', '.join(bad))
     spec = [
-        {'id': 'Z-02', 'text': 'UVLO 13.53 / 12.51 V, spread +/-0.34 V', 'result': f"on {u['on_V'][0]:.2f}..{u['on_V'][1]:.2f} V, off {u['off_V'][0]:.2f}..{u['off_V'][1]:.2f} V",
-         'met': u['on_V'][0] >= 13.53 - .34 and u['on_V'][1] <= 13.53 + .34 and u['off_V'][0] >= 12.51 - .34 and u['off_V'][1] <= 12.51 + .34},
-        {'id': 'Z-08', 'text': 'after PFAIL_N >= 14 ms at 6 W and >= 28 ms at 3 W (C_H -20 %)',
+        {'id': 'Z-02', 'text': 'UVLO envelope (after etap 1): on 12.90..14.08 V, off 11.98..13.11 V, hysteresis >= 0.84 V',
+         'result': f"on {u['on_V'][0]:.2f}..{u['on_V'][1]:.2f} V, off {u['off_V'][0]:.2f}..{u['off_V'][1]:.2f} V, hysteresis >= {u['hysteresis_V'][0]:.2f} V",
+         'met': u['on_V'][0] >= 12.895 and u['on_V'][1] <= 14.085 and u['off_V'][0] >= 11.975 and u['off_V'][1] <= 13.115 and u['hysteresis_V'][0] >= .835},
+        {'id': 'Z-08', 'text': 'after PFAIL_N >= 10 ms at 6 W in the worst corner (after etap 1); nominal 16.8 / 33.5 ms at 6 / 3 W',
          'result': f"worst {w['ms_6W']:.1f} / {w['ms_3W']:.1f} ms; nominal {h['nominal (C, V_off nom, Vf 0.25+0.45)']['ms_6W']:.1f} / {h['nominal (C, V_off nom, Vf 0.25+0.45)']['ms_3W']:.1f} ms",
-         'met': w['ms_6W'] >= 14 and w['ms_3W'] >= 28},
-        {'id': 'Z-01', 'text': 'no damage at 0..25 V', 'result': '5KP18A on VSW: VBR min 20 V; a steady 25 V source drives the TVS into breakdown',
-         'met': False},
+         'met': w['ms_6W'] >= 10},
+        {'id': 'Z-01', 'text': 'no damage at 0..25 V', 'result': f"{tvs} on VSW: VBR min {TVS.get(tvs, (0, 0))[1]} V", 'met': tvs is not None and TVS[tvs][1] >= 25},
     ]
     return {'checks': checks, 'uvlo': u, 'pfail': pf, 'turn_off_us': off, 'turn_off_calibration': calibration(vv), 'inrush': ir, 'hotplug_VSG_V': hp,
             'hold_up': h, 'q_loss_W': q, 'spec_conformance': spec, 'pin_mismatches': mismatch,
@@ -273,7 +308,13 @@ MUTATIONS = [  # (name, value overrides, pin overrides, expected failing check i
     ('c5_220n_hotplug', {'C5': '220nF'}, {}, 'S02'), ('c6_100n_hotplug', {'C6': '100nF'}, {}, 'S02'),
     ('r23_220k_slow_off', {'R23': '220K'}, {}, 'S01'),
     ('pwr_bypassed', {}, {('R9', '1'): 'P02_SW_COM'}, 'T05'),
-    ('safe_from_local_3v3', {}, {('R30', '1'): '3V3_IO', ('J13', '1'): '3V3_IO'}, 'T08'),
+    ('safe_from_local_3v3', {}, {('R30', '1'): '3V3_IO', ('J_BP', '15'): '3V3_IO', ('R58', '1'): '3V3_IO'}, 'T08'),
+    ('d3_5kp18a_z01', {'D3': '5KP18A / VSW'}, {}, 'T15'),
+    ('jbp_5v_on_pin1', {}, {('J_BP', '1'): '5V_SYS'}, 'T16'),
+    ('sv_pin_straight_to_vsw', {}, {('J_SV2', '6'): 'P02_VSW'}, 'T17'),
+    ('sv_no_gnd_at_end', {}, {('J_SV1', '13'): 'P02_SV_AUX5'}, 'T17'),
+    ('sv_bat_in_through_1k', {'R61': '1K / 1206'}, {}, 'T17'),
+    ('sv_gate_through_100r', {'R63': '100R / 1206'}, {}, 'L05'),
     ('r9_36k5_starts_on_3s', {'R9': '36K5'}, {}, 'U02'), ('r11_4m64_no_hysteresis', {'R11': '4M64'}, {}, 'U05'),
     ('dch_reversed', {}, {('D2', '1'): 'P02_HOLD_C', ('D2', '3'): 'P02_HOLD_C', ('D2', '2'): 'P02_CH_A'}, 'T09'),
     ('ch_1000u', {'C12': '1000u'}, {}, 'H01'),
