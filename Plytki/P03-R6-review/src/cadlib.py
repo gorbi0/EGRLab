@@ -6,7 +6,7 @@ import re,json,copy,math,uuid,functools,os
 from pathlib import Path
 P=Path(__file__).resolve().parents[1]
 K=Path(os.environ.get('KICAD_LIBRARY_ROOT','C:/Program Files/KiCad/10.0/share/kicad'))
-PRJ='P03';REV='P03-R5';DATE='2026-09-28';TITLE='EGRLab P03 CORE';COMMENT='Do recenzji / montaz i pomiary wymagaja odbioru' 
+PRJ='P03';REV='P03-R6';DATE='2026-09-29';TITLE='EGRLab P03 CORE';COMMENT='Format S1, klasa L, poziom 2 / tylko schemat, do recenzji' 
 class A(str):pass
 def parse(t):
  toks=re.findall(r'"(?:\\.|[^"\\])*"|[()]|[^\s()]+',t);i=0
@@ -25,7 +25,7 @@ def dump(x):
  return json.dumps(x,ensure_ascii=False)
 def subs(x,n):return [v for v in x if isinstance(v,list) and v and v[0]==n]
 def one(x,n):return next(v for v in x if isinstance(v,list) and v and v[0]==n)
-def uid(x):return str(uuid.uuid5(uuid.NAMESPACE_URL,'egrlab/p03-r4/'+x))
+def uid(x):return str(uuid.uuid5(uuid.NAMESPACE_URL,'egrlab/p03-r6/'+x))
 def q(x):return json.dumps(str(x),ensure_ascii=False)
 def mm(x):return round(x*2.54,5)
 @functools.lru_cache(None)

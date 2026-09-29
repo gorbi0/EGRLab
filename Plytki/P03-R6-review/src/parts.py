@@ -1,13 +1,15 @@
-"""P03 R5 parts (R4: U4 LVC1G37 replaces LVC1G07; R3 + Schmitt buffer U6 SN74LVC1G17, R41 220R and C15 on the reset line to P04; J4.15 = SUP_N_OUT): explicit list. source_ref maps each part to the v6.1 P03 BOM (M1, SD1, U17, U_CS, U5, U_IN1..4,
-U_OUT1..3, J_*A/B, R_*, C_*, LED1, W_LINK) or marks it as added in R1. Pin nets follow the v6.1 import
-(reference/v6.1-P03-import.xml) except the user decisions of 25.09.2026 (see docs/ZALOZENIA-P03-R2.md):
-- M1: the owned Waveshare ESP32-S3-DEV-KIT-N32R16V (DevKitC-1 pinout, rows 22.86 mm apart, measured by the user);
-  symbol pins are the physical header pins J1-1..J1-22 / J3-1..J3-22, pin names are the GPIO names;
-- SD1: Adafruit 4682 (3 V microSD breakout, 9-pin header, fab print in reference/);
-- J1 (DAQ B2B): right-angle 2x8 socket at the board edge; P05 sits beside P03 with the right-angle header;
-- J8 (CAN): IDC 2x3 box header, key pin 4 (v6.1 had 4p IDC, which does not exist as a box header);
-- U3 (TPS3808) on Chip Quik PA0085: DIP-6, rows 15.24 mm apart (measured by the user).
-Footprints come from KiCad 10.0.6 libraries, from the reviewed P01/P02 libraries or are generated here.
+"""P03 R6 parts: R5 CORE moved to format S1 (Plytki/Format-S1/SPECYFIKACJA-FORMATU-S1.md, S1-2), schematic only.
+R6 changes against R5 (circuit functions unchanged; see docs/ZMIANY-R6.md):
+- J1 (DAQ B2B), J2..J8 (IDC), J9 (PANELCORE Mini-Fit) and J10 (LV03 pigtail) -> three right-angle IDC 2x10 box headers
+  J_BP1..J_BP3 on edge A, one per slot; pinout in src/jbp_pinout.py; 5V_SYS and 3V3_IO now arrive from P02 R4 through P12;
+- new input PFAIL_N (P02 R4, D-02): J_BP2.18 -> R42 1K -> GPIO3 (J1-13), R43 10K to 3V3_CORE on the connector side;
+- three 1x13 right-angle service headers J_SV1..J_SV3 on edge B, every non-GND pin through a series resistor at the node;
+- passives: values owned in Zamowione/zamowione.csv (10K, 4K7 MF0207; 100 nF K15) stay THT, resistors vertical; the rest SMD 1206;
+- 74LVC125A soldered as SOIC-14 and TPS3808 as SOT-23-6 directly (fab board; Kamami/PA0085 adapters not needed).
+R5 history: U4 LVC1G37 replaces LVC1G07 (R5); Schmitt buffer U6 SN74LVC1G17, R41 220R and C15 on the reset line to P04 (R4).
+source_ref maps each part to the v6.1 P03 BOM or marks it as added. Pin nets follow the v6.1 import
+(reference/v6.1-P03-import.xml) except the user decisions of 25.09.2026 (M1 Waveshare N32R16V on 2x 1x22 headers, rows 22.86 mm;
+SD1 Adafruit 4682) and the documented R2..R6 deltas.
 """
 from cadlib import *
 import shutil, json, csv
@@ -100,14 +102,17 @@ def pigtail_fp(name, count, pitch, drill, padd, label):
     return fpfile(name, b)
 
 
-M1FP = waveshare_fp(); SDFP = adafruit4682_fp(); PAFP = pa0085_fp()
-LVFP = pigtail_fp('Pigtail_LV_4xAWG22_P3.81', 4, 3.81, 1.1, 2.2, 'LV03 1=5V 2=GND 3=3V3_IO 4=GND')
-ADP = copyp02('Adapter_SO14_DIP14_W15.24_Kamami575068'); C100N = copyp02('C_Vishay_K15_H5_P5'); TPFP = copyp02('TestPad_1')
-RFP = copyfp('Resistor_THT', 'R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal'); LED = copyfp('LED_THT', 'LED_D3.0mm')
+M1FP = waveshare_fp(); SDFP = adafruit4682_fp()
+C100N = copyp02('C_Vishay_K15_H5_P5'); TPFP = copyp02('TestPad_1')
+RTHT = copyfp('Resistor_THT', 'R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical'); LED = copyfp('LED_THT', 'LED_D3.0mm')
+RSMD = copyfp('Resistor_SMD', 'R_1206_3216Metric_Pad1.30x1.75mm_HandSolder')
 DIP28 = copyfp('Package_DIP', 'DIP-28_W7.62mm'); DIP16 = copyfp('Package_DIP', 'DIP-16_W7.62mm')
-B2B = copyfp('Connector_PinSocket_2.54mm', 'PinSocket_2x08_P2.54mm_Horizontal')
-IDC = {n: copyfp('Connector_IDC', f'IDC-Header_2x{n:02d}_P2.54mm_Vertical') for n in (3, 4, 5, 8)}
-MF8 = copyfp('Connector_Molex', 'Molex_Mini-Fit_Jr_5566-08A_2x04_P4.20mm_Vertical')
+SO14 = copyfp('Package_SO', 'SOIC-14_3.9x8.7mm_P1.27mm'); SOT236 = copyfp('Package_TO_SOT_SMD', 'SOT-23-6')
+IDC20 = copyfp('Connector_IDC', 'IDC-Header_2x10_P2.54mm_Horizontal')
+SV13 = copyfp('Connector_PinHeader_2.54mm', 'PinHeader_1x13_P2.54mm_Horizontal')
+# S1 §9 / task §4: resistor values owned in Zamowione/zamowione.csv (MF0207, TME 24.09) stay THT, mounted vertically.
+OWNED_R = {'10K': 'MF0207FTE-10K', '4K7': 'MF0207FTE-4K7'}
+SMD_R = {'1K': 'RC1206FR-071KL', '330R': 'RC1206FR-07330RL', '220R': 'RC1206FR-07220RL', '33R': 'RC1206FR-0733RL'}
 
 
 def custom_symbol(name, left, right, half_w, pitch=2.54):
@@ -163,7 +168,12 @@ def add(ref, src, sym, fp, display, mpn, pins, url='', note='', sheet='P03'):
 
 
 def res(ref, src, value, mpn, pins, note='', sheet='P03'):
-    add(ref, src, S_R, RFP, value, mpn, pins, URL['mf0207'], note, sheet)
+    """R6: footprint and MPN follow the value (owned THT values vertical, all other values SMD 1206); mpn argument = R5 history."""
+    v = value.split('/')[0].strip()
+    if v in OWNED_R:
+        add(ref, src, S_R, RTHT, value, OWNED_R[v], pins, URL['mf0207'], note, sheet)
+    else:
+        add(ref, src, S_R, RSMD, v + ' / 1% 1206', SMD_R[v], pins, '', note, sheet)
 
 
 def cap(ref, src, pins, note='', sheet='P03'):
@@ -174,11 +184,11 @@ def cap(ref, src, pins, note='', sheet='P03'):
 GPIO = {'J1-4': 'SPI3_SCLK_SRC', 'J1-5': 'SPI3_MOSI_SRC', 'J1-6': 'SPI3_MISO_CORE', 'J1-7': 'SD_CS', 'J1-8': 'I2C_SCL', 'J1-9': 'TC2_CS_SRC',
         'J1-10': 'CAN_TX', 'J1-11': 'CAN_RX_CORE', 'J1-12': 'TC1_CS_SRC', 'J1-15': 'ADC_SCLK_SRC', 'J1-16': 'I2C_SDA', 'J1-17': 'ADC_DOUTA_CORE',
         'J1-18': 'ADC_CS_SRC', 'J1-19': 'ADC_CONVST_SRC', 'J1-20': 'ADC_BUSY_CORE', 'J3-4': 'PWM', 'J3-5': 'ADC_SDI_SRC', 'J3-6': 'INTERLOCK_CORE',
-        'J3-7': 'SCOPE_TRIG', 'J3-8': 'HW_ARMED_CORE', 'J3-9': 'MCU_ARM', 'J3-10': 'CURRENT_CS_N', 'J3-18': 'HEARTBEAT',
+        'J3-7': 'SCOPE_TRIG', 'J3-8': 'HW_ARMED_CORE', 'J3-9': 'MCU_ARM', 'J3-10': 'CURRENT_CS_N', 'J3-18': 'HEARTBEAT', 'J1-13': 'PFAIL_N_CORE',
         'J1-1': '3V3_CORE', 'J1-2': '3V3_CORE', 'J1-3': 'SUP_N', 'J1-21': '5V_M1', 'J1-22': 'GND', 'J3-1': 'GND', 'J3-21': 'GND', 'J3-22': 'GND'}
 m1pins = {f'J{r}-{i}': GPIO.get(f'J{r}-{i}', 'NC') for r in (1, 3) for i in range(1, 23)}
 add('M1', 'M1', S_M1, M1FP, 'Waveshare ESP32-S3-DEV-KIT-N32R16V', 'owned (Waveshare ESP32-S3-DEV-KIT-N32R16V) on 2x 1x22 female headers', m1pins, URL['ws'],
-    'Rows 22.86 mm (measured). GPIO numbers are the v6.1 contract. Remove the on-board RGB LED on GPIO38 (v6.1). GPIO47/48 1.8 V: unused. 3V3 = 3V3_CORE; never tie to 3V3_IO.')
+    'Rows 22.86 mm (measured). GPIO numbers are the v6.1 contract; R6: GPIO3 = PFAIL_N_CORE (JTAG strap only with EFUSE_STRAP_JTAG_SEL=1, never burn). Remove the on-board RGB LED on GPIO38 (v6.1). GPIO47/48 1.8 V: unused. 3V3 = 3V3_CORE; never tie to 3V3_IO.')
 add('SD1', 'SD1', S_SD, SDFP, 'Adafruit 4682 microSD (3V)', 'Adafruit 4682 on a 1x9 female header + 2x M2.5 spacer',
     {1: '3V3_CORE', 2: 'GND', 3: 'SPI3_SCLK', 4: 'SPI3_MISO', 5: 'SPI3_MOSI', 6: 'SD_CS', 7: 'NC', 8: 'NC', 9: 'NC'}, URL['ada'],
     'User decision 25.09: Adafruit 4682 (3 V only, no regulator/level shifter). SO = card out (MISO), SI = card in (MOSI). D1, DAT2, DET unused.')
@@ -191,8 +201,8 @@ add('U2', 'U_CS', S_139, DIP16, 'SN74HC139N', 'SN74HC139N', {1: 'CURRENT_CS_N', 
     9: 'NC', 10: 'NC', 11: 'NC', 12: 'NC', 13: 'GND', 14: 'GND', 15: '3V3_CORE', 16: '3V3_CORE'}, URL['hc139'], '/G = GPIO38, A = MEAS_BANK, B = GND (v6.1). Second half disabled. DIP16 socket (bought).')
 cap('C1', 'C_CS', {1: '3V3_CORE', 2: 'GND'}, 'At U2 pin 16.')
 res('R1', 'R_CS_IDLE', '10K / 1%', 'MF0207FTE-10K', {1: 'CURRENT_CS_N', 2: '3V3_CORE'}, 'Decoder disabled while GPIO38 floats.')
-add('U3', 'U5', S_TPS, PAFP, 'TPS3808G33DBVR / PA0085', 'TPS3808G33DBVR on Chip Quik PA0085', {1: 'SUP_RAW_N', 2: 'GND', 3: '3V3_CORE', 4: 'NC', 5: '3V3_CORE', 6: '3V3_CORE'},
-    URL['tps'], 'SOT23-6 on PA0085 (rows 15.24 mm, measured). Pin n = SOT pin n: confirm on the adapter before soldering. CT open = fixed delay.')
+add('U3', 'U5', S_TPS, SOT236, 'TPS3808G33DBVR', 'TPS3808G33DBVR', {1: 'SUP_RAW_N', 2: 'GND', 3: '3V3_CORE', 4: 'NC', 5: '3V3_CORE', 6: '3V3_CORE'},
+    URL['tps'], 'R6: SOT23-6 soldered directly on the fab board (PA0085 adapter not used). CT open = fixed delay.')
 cap('C3', 'C_DEC_U5_6', {1: '3V3_CORE', 2: 'GND'}, 'At U3 pin 6.')
 res('R13', 'R_SUP_PU', '10K / 1%', 'MF0207FTE-10K', {1: 'SUP_RAW_N', 2: '3V3_CORE'}, 'Supervisor pull-up before U4; does not discharge Waveshare EN capacitor.')
 res('R9', 'R_PU_I2C_SCL', '4K7 / 1%', 'MF0207FTE-4K7', {1: '3V3_CORE', 2: 'I2C_SCL'})
@@ -204,8 +214,6 @@ cap('C4', 'C_MARK', {1: 'MARK', 2: 'GND'}, 'MARK button debounce.')
 res('R4', 'R_LED', '1K / 1%', 'MF0207FTE-1K', {1: 'STATUS_LED', 2: 'LED_A'})
 add('LED1', 'LED1', S_LED, LED, 'GREEN 3mm / STATUS', 'L-934GD', {1: 'GND', 2: 'LED_A'}, URL['l934'], 'MCP23017 GPA7.')
 res('R14', 'W_LINK', '1K / 1%', 'MF0207FTE-1K', {1: '3V3_CORE', 2: 'CORE_LINK'}, 'CORE_LINK = presence of 3V3_CORE through 1 k (R3, review P3-02): a harness short to GND draws 3.3 mA; P04 R16 10 k sees >= 2.85 V (74LVC125A VIH 2.0 V). v6.1 had a wire link.')
-add('J10', 'J_LV03B', symbol('Connector_Generic', 'Conn_01x04'), LVFP, 'LV03 / soldered harness', 'PCB termination; H_LV03 from P02 J3',
-    {1: '5V_SYS', 2: 'GND', 3: '3V3_IO', 4: 'GND'}, '', 'H_LV03: 4 x AWG22, 200 mm, Mini-Fit Jr 4p at P02 (LV03). Soldered here, anchor 12.5 mm (v6.1: soldered end on P03).')
 # ---- sheet IO: buffers and harness connectors --------------------------------------------------------------
 BUF = {'U11': ('U_IN1', {1: 'GND', 2: 'ADC_DOUTA', 3: 'ADC_DOUTA_CORE', 4: 'GND', 5: 'ADC_BUSY', 6: 'ADC_BUSY_CORE', 7: 'GND', 8: 'SPI3_MISO_CORE', 9: 'SPI3_MISO', 10: 'GND', 11: 'CAN_RX_CORE', 12: 'CAN_RX', 13: 'GND', 14: '3V3_CORE'}),
        'U12': ('U_IN2', {1: 'GND', 2: 'HW_ARMED', 3: 'HW_ARMED_CORE', 4: 'GND', 5: 'INTERLOCK', 6: 'INTERLOCK_CORE', 7: 'GND', 8: 'LOGGER_CURRENT_OK_CORE', 9: 'LOGGER_CURRENT_OK', 10: 'GND', 11: 'SENSOR_HEALTHY_CORE', 12: 'SENSOR_HEALTHY', 13: 'GND', 14: '3V3_CORE'}),
@@ -215,7 +223,7 @@ BUF = {'U11': ('U_IN1', {1: 'GND', 2: 'ADC_DOUTA', 3: 'ADC_DOUTA_CORE', 4: 'GND'
        'U22': ('U_OUT2', {1: 'GND', 2: 'ADC_RESET_SRC', 3: 'ADC_RESET', 4: 'GND', 5: 'MEAS_EN_SRC', 6: 'MEAS_EN', 7: 'GND', 8: 'CS_ILOG_N', 9: 'CS_ILOG_N_SRC', 10: 'GND', 11: 'CS_ITEST_N', 12: 'CS_ITEST_N_SRC', 13: 'GND', 14: '3V3_CORE'}),
        'U23': ('U_OUT3', {1: 'GND', 2: 'SPI3_SCLK_SRC', 3: 'SPI3_SCLK', 4: 'GND', 5: 'SPI3_MOSI_SRC', 6: 'SPI3_MOSI', 7: 'GND', 8: 'TC1_CS', 9: 'TC1_CS_SRC', 10: 'GND', 11: 'TC2_CS', 12: 'TC2_CS_SRC', 13: 'GND', 14: '3V3_CORE'})}
 for i, (ref, (src, pins)) in enumerate(BUF.items()):
-    add(ref, src, S_BUF, ADP, '74LVC125A / SO14 adapter', '74LVC125AD,118 (Nexperia) on Kamami 575068', pins, URL['lvc125'],
+    add(ref, src, S_BUF, SO14, '74LVC125A / SOIC-14', '74LVC125AD,118 (Nexperia)', pins, URL['lvc125'],
         'Nexperia only (Ioff), v6.1. Unused OE# = 3V3_IO in U_IN4 as in v6.1.' if src == 'U_IN4' else 'Nexperia only (Ioff), v6.1.', 'IO')
     cap(f'C{5 + i}', f'C_{src}', {1: '3V3_CORE', 2: 'GND'}, f'At {ref} pin 14.', 'IO')
 res('R2', 'R_CURRENT_OK', '10K / 1%', 'MF0207FTE-10K', {1: 'LOGGER_CURRENT_OK', 2: 'GND'}, 'Receiver pull-down: open cable = not OK.', 'IO')
@@ -223,23 +231,11 @@ res('R3', 'R_HW_PD', '10K / 1%', 'MF0207FTE-10K', {1: 'HW_ARMED', 2: 'GND'}, 'Re
 res('R6', 'R_PD_LOGGER_CLEAR', '10K / 1%', 'MF0207FTE-10K', {1: 'LOGGER_CLEAR', 2: 'GND'}, 'Receiver pull-down.', 'IO')
 res('R7', 'R_PD_SENSOR_HEALTHY', '10K / 1%', 'MF0207FTE-10K', {1: 'SENSOR_HEALTHY', 2: 'GND'}, 'Receiver pull-down: cable open or transmitter unpowered = fault (v6.1).', 'IO')
 res('R8', 'R_PD_TEST_PRESENT', '10K / 1%', 'MF0207FTE-10K', {1: 'TEST_PRESENT', 2: 'GND'}, 'Receiver pull-down.', 'IO')
-add('J1', 'J_DAQA', conn(8), B2B, 'DAQ B2B / RA socket 2x8', 'Samtec SSW-108-02-G-D-RA (right-angle 2x8 socket, Au) or equivalent',
-    {1: 'ADC_SCLK', 2: 'NC', 3: 'ADC_SDI', 4: 'GND', 5: 'ADC_DOUTA', 6: 'GND', 7: 'ADC_CS', 8: 'GND', 9: 'ADC_CONVST', 10: 'GND', 11: 'ADC_BUSY', 12: 'GND',
-     13: 'ADC_RESET', 14: 'GND', 15: 'MEAS_EN', 16: 'GND'}, URL['ssw'], 'User decision 25.09: P05 beside P03, right-angle pair edge to edge. Key: position 2 blocked here, pin 2 removed on P05 (v6.1).', 'IO')
-add('J2', 'J_ILOGA', conn(4), IDC[4], 'ILOG / IDC 2x4 KEY 2', 'IDC box header 2x4, 2.54 mm, Au', {1: 'ADC_SCLK', 2: 'NC', 3: 'ADC_DOUTA', 4: 'GND', 5: 'CS_ILOG_N', 6: 'GND', 7: 'LOGGER_CURRENT_OK', 8: 'GND'},
-    '', 'KEY 2: remove header pin 2 (v6.1).', 'IO')
-add('J3', 'J_ITESTA', conn(3), IDC[3], 'ITEST / IDC 2x3 KEY 2', 'IDC box header 2x3, 2.54 mm, Au', {1: 'ADC_SCLK', 2: 'NC', 3: 'ADC_DOUTA', 4: 'GND', 5: 'CS_ITEST_N', 6: 'GND'}, '', 'KEY 2: remove header pin 2.', 'IO')
-add('J4', 'J_SAFEA', conn(8), IDC[8], 'SAFE / IDC 2x8 KEY 4', 'IDC box header 2x8, 2.54 mm, Au', {1: 'PWM', 2: 'GND', 3: 'HEARTBEAT', 4: 'NC', 5: 'MCU_ARM', 6: 'GND', 7: 'HW_ARMED', 8: 'GND',
-    9: 'INTERLOCK', 10: 'GND', 11: 'SENSOR_ENABLE', 12: 'GND', 13: 'CORE_LINK', 14: 'GND', 15: 'SUP_N_OUT', 16: 'GND'}, '', 'KEY 4: remove header pin 4. R4: pin 15 = SUP_N_OUT (Schmitt buffer U6 + R41), P04 J2.15 SUP_N.', 'IO')
-add('J5', 'J_DIRA', conn(4), IDC[4], 'DIR / IDC 2x4 KEY 4', 'IDC box header 2x4, 2.54 mm, Au', {1: 'MOTOR_INA', 2: 'GND', 3: 'MOTOR_INB', 4: 'NC', 5: 'ENA_DIAG', 6: 'GND', 7: 'ENB_DIAG', 8: 'GND'},
-    '', 'KEY 4: remove header pin 4.', 'IO')
-add('J6', 'J_SFAULTA', conn(3), IDC[3], 'SFAULT / IDC 2x3 KEY 3', 'IDC box header 2x3, 2.54 mm, Au', {1: 'SENSOR_HEALTHY', 2: 'GND', 3: 'NC', 4: 'NC', 5: 'NC', 6: 'NC'}, '', 'KEY 3: remove header pin 3.', 'IO')
-add('J7', 'J_TEMPA', conn(5), IDC[5], 'TEMP / IDC 2x5 KEY 4', 'IDC box header 2x5, 2.54 mm, Au', {1: 'SPI3_SCLK', 2: 'GND', 3: 'SPI3_MOSI', 4: 'NC', 5: 'SPI3_MISO', 6: 'GND', 7: 'TC1_CS', 8: 'GND',
-    9: 'TC2_CS', 10: 'GND'}, '', 'KEY 4: remove header pin 4.', 'IO')
-add('J8', 'J_CANA', conn(3), IDC[3], 'CAN / IDC 2x3 KEY 4', 'IDC box header 2x3, 2.54 mm, Au', {1: 'CAN_TX', 2: 'GND', 3: 'CAN_RX', 4: 'NC', 5: 'NC', 6: 'NC'}, '',
-    'User decision 25.09: 2x3 instead of the non-existent 2x2 box header; KEY 4 (remove pin 4); 5-6 NC. H_CAN and P10 follow (6-way ribbon).', 'IO')
-add('J9', 'J_PANELCOREA', conn(4, 'Top_Bottom'), MF8, 'PANELCORE / Mini-Fit Jr 8p', 'Molex Mini-Fit Jr 5566-08A vertical, Au (39-28-x08x)',
-    {1: 'GND', 2: 'MARK', 3: 'TEST_KEY', 4: 'LOGGER_CLEAR', 5: 'TEST_PRESENT', 6: 'NC', 7: 'N_J_SCOPE_HOT', 8: 'GND'}, URL['minifit'], 'Key PANELCORE per v6.1 connectors.csv.', 'IO')
+# R6: edge-A connectors J_BP1..J_BP3 replace J1..J10 (format S1 §5); pinout and reasons in src/jbp_pinout.py
+from jbp_pinout import JBP
+for j, slot in [('J_BP1', 'S1'), ('J_BP2', 'S2'), ('J_BP3', 'S3')]:
+    add(j, 'ADDED_R6_EDGE_A', conn(10), IDC20, f'{j} / IDC 2x10 RA ({slot})', 'IDC box header 2x10, 2.54 mm, right angle, Au (e.g. Amphenol T821-1-20-R1)',
+        {p_: v[0] for p_, v in JBP[j].items()}, '', f'Format S1 edge A, slot {slot}, centre x = 26.5 mm in the slot, pin 1 towards smaller x. Short ribbon to P12.', 'LINKS')
 for idx, (net, sheet) in enumerate([('5V_SYS', 'P03'), ('3V3_CORE', 'P03'), ('3V3_IO', 'P03'), ('GND', 'P03'), ('SUP_N', 'P03'), ('GND', 'IO')], 1):
     r = f'TP{idx}'
     PARTS[r] = {'ref': r, 'source_ref': 'ADDED_TESTPAD', 'value': net, 'display': net, 'pins': {'1': net}, 'symbol': S_TP, 'footprint': TPFP,
@@ -304,22 +300,43 @@ S_ST=custom_symbol('SN74LVC1G17DBV',[('2','A','input'),('3','GND','power_in'),('
                    [('4','Y','output'),('5','VCC','power_in')],7.62)
 add('U6','ADDED_R4_RESET_SCHMITT',S_ST,copyfp('Package_TO_SOT_SMD','SOT-23-5'),'SN74LVC1G17DBVR','SN74LVC1G17DBVR',
     {1:'NC',2:'SUP_N',3:'GND',4:'SUP_N_DRV',5:'3V3_CORE'},'https://www.ti.com/lit/ds/symlink/sn74lvc1g17.pdf',
-    'DBV SOT23-5, 0.95 mm pitch; direct hand soldering. Schmitt-trigger buffer, push-pull. Drives J4.15 (P04 SUP_N) through R41.', 'POWER')
+    'DBV SOT23-5, 0.95 mm pitch; direct hand soldering. Schmitt-trigger buffer, push-pull. Drives J_BP3.12 (P04 SUP_N) through R41.', 'POWER')
 add('R41','ADDED_R4_RESET_SERIES',S_R,copyfp('Resistor_SMD','R_1206_3216Metric_Pad1.30x1.75mm_HandSolder'),'220R / 1% 1206','RC1206FR-07220RL',
     {1:'SUP_N_DRV',2:'SUP_N_OUT'},'',
-    'Series resistor U6.4 -> J4.15, 2.8 mm from U6: harness short to GND <= 16 mA (3.465 V). Initial value; 150 mm H_SAFE to P04-R2.2 R17=10K. Verify <=10 ns/V at P04 U9.5 with actual load/probe; ideal RC is not a guaranteed capacitance limit.', 'POWER')
+    'Series resistor U6.4 -> J_BP3.12 (R6; R5: J4.15): short to GND <= 16 mA (3.465 V). Initial value; R6 path ribbon 30 mm + P12 + ribbon 30 mm to P04. Verify <=10 ns/V at P04 U9.5 with actual load/probe; ideal RC is not a guaranteed capacitance limit.', 'POWER')
 add('C15','ADDED_R4_RESET_DECAP',S_C,C1206,'100nF / 50V X7R','GRM31CR71H104KA01L',{1:'3V3_CORE',2:'GND'},
     '', '1206, at U6 pin 5, local ground via.', 'POWER')
 for idx,n in [(7,'5V_M1'),(8,'SUP_RAW_N')]:
     add(f'TP{idx}','ADDED_R2_TESTPAD',S_TP,TPFP,n,'PCB test pad',{1:n},'', 'Probe access.', 'POWER')
 
-for r in ['U3','C3','R13','U4','R34','R35','C12','U5','Q1','C13','C14','J10','TP1','TP2','TP3','TP4','TP5']:
+
+# ---- R6: PFAIL_N input from P02 R4 (D-02) ------------------------------------------------------------------
+# P02 R4 drives PFAIL_N from an LM2903 open collector (R36 10K to its 3V3_IO, R37 1K series). The 10K pull-up sits on the
+# connector side: LOW at the GPIO = VOL + (3V3_CORE - VOL) * 1K / 11K (0.68 V at VOL 0.4 V, 3.465 V) < VIL 0.825 V;
+# on the GPIO side the same 10K would give 0.91 V (fails). J_BP2 open (no P02/P12): 10K pulls HIGH = supply OK.
+res('R42', 'ADDED_R6_PFAIL_SERIES', '1K / 1%', '', {1: 'PFAIL_N', 2: 'PFAIL_N_CORE'}, 'PFAIL_N series resistor at M1 GPIO3 (J1-13): limits clamp current when P02 is live and CORE is not.')
+res('R43', 'ADDED_R6_PFAIL_PULLUP', '10K / 1%', '', {1: 'PFAIL_N', 2: '3V3_CORE'}, 'PFAIL_N default HIGH (supply OK) with J_BP2 open; connector side of R42.')
+
+# ---- R6: service headers on edge B (format S1 §6) -----------------------------------------------------------
+from serwis_pinout import SERWIS
+SERIES = {}
+_n = 44
+for j, slot in [('J_SV1', 'S1'), ('J_SV2', 'S2'), ('J_SV3', 'S3')]:
+    pins = {1: 'GND', 13: 'GND'}
+    for p_ in range(2, 13):
+        node, val, why = SERWIS[j][p_]; r = f'R{_n}'; _n += 1
+        pins[p_] = 'SV_' + node; SERIES[(j, p_)] = r
+        res(r, 'ADDED_R6_SERVICE_SERIES', val + ' / 1%', '', {1: node, 2: 'SV_' + node}, f'{j}.{p_} series resistor, placed at the {node} node (S1 §6): {why}.', 'SERWIS')
+    add(j, 'ADDED_R6_SERVICE', symbol('Connector_Generic', 'Conn_01x13'), SV13, f'{j} / goldpin 1x13 RA ({slot})', 'Pin header 1x13, 2.54 mm, right angle, Au',
+        pins, '', f'Format S1 edge B, slot {slot}, x = 10..43 mm in the slot; pins protrude ~6 mm beyond the edge. GND on pins 1 and 13. Silkscreen: signal name at every pin, readable from edge B.', 'SERWIS')
+
+for r in ['U3','C3','R13','U4','R34','R35','C12','U5','Q1','C13','C14','TP1','TP2','TP3','TP4','TP5']:
     PARTS[r]['sheet']='POWER'
 for r in ['U21','U22','U23','C9','C10','C11']:PARTS[r]['sheet']='OUT'
 # Short visible values; exact purchasing data stays in MPN and BOM.
 PARTS['M1']['display']=PARTS['M1']['value']='Waveshare N32R16V'
 PARTS['SD1']['display']=PARTS['SD1']['value']='Adafruit 4682'
-PARTS['U3']['display']=PARTS['U3']['value']='TPS3808G33 / PA0085'
+PARTS['U3']['display']=PARTS['U3']['value']='TPS3808G33'
 for r in BUF:PARTS[r]['display']=PARTS[r]['value']='74LVC125A'
 
 
