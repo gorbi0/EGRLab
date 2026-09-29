@@ -1,0 +1,579 @@
+{
+  "checks": [
+    {
+      "id": "JBP-16-PINS",
+      "pass": true
+    },
+    {
+      "id": "JBP-ODD-GND",
+      "pass": true
+    },
+    {
+      "id": "JBP-EVEN-SIGNALS",
+      "pass": true
+    },
+    {
+      "id": "JBP-SPI-NETS",
+      "pass": true
+    },
+    {
+      "id": "JBP-CONTINUITY-R1",
+      "pass": true
+    },
+    {
+      "id": "JBP-S1-SUPPLY-PINS",
+      "pass": true
+    },
+    {
+      "id": "JBP-SUPPLY-USED",
+      "pass": true
+    },
+    {
+      "id": "JBP-CSV",
+      "pass": true
+    },
+    {
+      "id": "SRV-MAX-13",
+      "pass": true
+    },
+    {
+      "id": "SRV-ENDS-GND",
+      "pass": true
+    },
+    {
+      "id": "SRV-GND-ONLY-ENDS",
+      "pass": true
+    },
+    {
+      "id": "SRV-SERIES-R-AT-NODE",
+      "pass": true
+    },
+    {
+      "id": "SRV-COVERS-ODBIOR",
+      "pass": true
+    },
+    {
+      "id": "SRV-CSV",
+      "pass": true
+    },
+    {
+      "id": "PARTS-SOURCES",
+      "pass": true
+    },
+    {
+      "id": "U1-INPUT-IOFF",
+      "pass": true
+    },
+    {
+      "id": "U2-MISO-IOFF",
+      "pass": true
+    },
+    {
+      "id": "U3-HC139",
+      "pass": true
+    },
+    {
+      "id": "MPN",
+      "pass": true
+    },
+    {
+      "id": "MODULE-PINOUT-J3",
+      "pass": true
+    },
+    {
+      "id": "VIN-SELECT-J3",
+      "pass": true
+    },
+    {
+      "id": "ISOLATED-J3-3VO",
+      "pass": true
+    },
+    {
+      "id": "MODULE-PINOUT-J4",
+      "pass": true
+    },
+    {
+      "id": "VIN-SELECT-J4",
+      "pass": true
+    },
+    {
+      "id": "ISOLATED-J4-3VO",
+      "pass": true
+    },
+    {
+      "id": "RES-1",
+      "pass": true
+    },
+    {
+      "id": "RES-2",
+      "pass": true
+    },
+    {
+      "id": "RES-3",
+      "pass": true
+    },
+    {
+      "id": "RES-4",
+      "pass": true
+    },
+    {
+      "id": "RES-5",
+      "pass": true
+    },
+    {
+      "id": "RES-6",
+      "pass": true
+    },
+    {
+      "id": "RES-7",
+      "pass": true
+    },
+    {
+      "id": "RES-8",
+      "pass": true
+    },
+    {
+      "id": "RES-9",
+      "pass": true
+    },
+    {
+      "id": "RES-10",
+      "pass": true
+    },
+    {
+      "id": "RES-11",
+      "pass": true
+    },
+    {
+      "id": "RES-12",
+      "pass": true
+    },
+    {
+      "id": "RES-13",
+      "pass": true
+    },
+    {
+      "id": "RES-14",
+      "pass": true
+    },
+    {
+      "id": "RES-15",
+      "pass": true
+    },
+    {
+      "id": "RES-16",
+      "pass": true
+    },
+    {
+      "id": "RES-17",
+      "pass": true
+    },
+    {
+      "id": "RES-18",
+      "pass": true
+    },
+    {
+      "id": "RES-19",
+      "pass": true
+    },
+    {
+      "id": "CAP-1",
+      "pass": true
+    },
+    {
+      "id": "CAP-2",
+      "pass": true
+    },
+    {
+      "id": "CAP-3",
+      "pass": true
+    },
+    {
+      "id": "CAP-4",
+      "pass": true
+    },
+    {
+      "id": "CAP-5",
+      "pass": true
+    },
+    {
+      "id": "CAP-6",
+      "pass": true
+    },
+    {
+      "id": "CAP-7",
+      "pass": true
+    },
+    {
+      "id": "ACTUAL-NETLIST-TRUTH",
+      "pass": true
+    }
+  ],
+  "negative_controls": [
+    {
+      "mutation": "swap-decoder",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "U3-HC139",
+        "ACTUAL-NETLIST-TRUTH"
+      ]
+    },
+    {
+      "mutation": "enable-on-both-CS",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "U3-HC139",
+        "ACTUAL-NETLIST-TRUTH"
+      ]
+    },
+    {
+      "mutation": "unused-input-float",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "U2-MISO-IOFF"
+      ]
+    },
+    {
+      "mutation": "5V-logic",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "U1-INPUT-IOFF"
+      ]
+    },
+    {
+      "mutation": "VIN-output-short",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "MODULE-PINOUT-J3",
+        "ISOLATED-J3-3VO"
+      ]
+    },
+    {
+      "mutation": "module-reversed",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "MODULE-PINOUT-J4"
+      ]
+    },
+    {
+      "mutation": "bypass-MISO-R",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "RES-11"
+      ]
+    },
+    {
+      "mutation": "missing-CS-pullup",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "RES-1"
+      ]
+    },
+    {
+      "mutation": "wrong-VIN-select",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "VIN-SELECT-J3"
+      ]
+    },
+    {
+      "mutation": "DRDY-bus-short",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "MODULE-PINOUT-J4"
+      ]
+    },
+    {
+      "mutation": "jbp-odd-pin-signal",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "JBP-ODD-GND",
+        "JBP-SPI-NETS",
+        "JBP-CSV"
+      ]
+    },
+    {
+      "mutation": "jbp-odd-pin-NC",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "JBP-ODD-GND",
+        "JBP-CSV"
+      ]
+    },
+    {
+      "mutation": "jbp-even-pin-GND",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "JBP-EVEN-SIGNALS",
+        "JBP-SPI-NETS",
+        "JBP-CONTINUITY-R1",
+        "JBP-S1-SUPPLY-PINS",
+        "JBP-CSV"
+      ]
+    },
+    {
+      "mutation": "jbp-second-5V-lost",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "JBP-EVEN-SIGNALS",
+        "JBP-CONTINUITY-R1",
+        "JBP-S1-SUPPLY-PINS",
+        "JBP-CSV"
+      ]
+    },
+    {
+      "mutation": "jbp-CS-swapped",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "JBP-SPI-NETS",
+        "JBP-CSV"
+      ]
+    },
+    {
+      "mutation": "jbp-unused-signal",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "JBP-S1-SUPPLY-PINS",
+        "JBP-CSV"
+      ]
+    },
+    {
+      "mutation": "jbp-CSV-mismatch",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "JBP-SPI-NETS",
+        "JBP-CONTINUITY-R1",
+        "JBP-S1-SUPPLY-PINS",
+        "JBP-CSV"
+      ]
+    },
+    {
+      "mutation": "srv-first-not-GND",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "SRV-ENDS-GND",
+        "SRV-GND-ONLY-ENDS",
+        "SRV-CSV"
+      ]
+    },
+    {
+      "mutation": "srv-last-not-GND",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "SRV-ENDS-GND",
+        "SRV-GND-ONLY-ENDS",
+        "SRV-CSV"
+      ]
+    },
+    {
+      "mutation": "srv-extra-GND-inside",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "SRV-GND-ONLY-ENDS",
+        "SRV-SERIES-R-AT-NODE",
+        "SRV-COVERS-ODBIOR",
+        "SRV-CSV"
+      ]
+    },
+    {
+      "mutation": "srv-14th-pin",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "SRV-MAX-13",
+        "SRV-GND-ONLY-ENDS",
+        "SRV-SERIES-R-AT-NODE",
+        "SRV-CSV"
+      ]
+    },
+    {
+      "mutation": "srv-no-resistor",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "SRV-SERIES-R-AT-NODE",
+        "SRV-COVERS-ODBIOR",
+        "SRV-CSV"
+      ]
+    },
+    {
+      "mutation": "srv-resistor-shorted",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "SRV-SERIES-R-AT-NODE",
+        "SRV-COVERS-ODBIOR"
+      ]
+    },
+    {
+      "mutation": "srv-resistor-100R",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "SRV-SERIES-R-AT-NODE"
+      ]
+    },
+    {
+      "mutation": "srv-resistor-0R",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "SRV-SERIES-R-AT-NODE"
+      ]
+    },
+    {
+      "mutation": "srv-extra-load-on-pin",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "SRV-SERIES-R-AT-NODE",
+        "SRV-COVERS-ODBIOR",
+        "U3-HC139"
+      ]
+    },
+    {
+      "mutation": "srv-duplicate-node",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "SRV-SERIES-R-AT-NODE",
+        "SRV-COVERS-ODBIOR"
+      ]
+    },
+    {
+      "mutation": "srv-node-GND",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "SRV-SERIES-R-AT-NODE",
+        "SRV-COVERS-ODBIOR"
+      ]
+    },
+    {
+      "mutation": "R1-fp-SMD",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "PARTS-SOURCES"
+      ]
+    },
+    {
+      "mutation": "R11-fp-THT",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "PARTS-SOURCES"
+      ]
+    },
+    {
+      "mutation": "C1-fp-SMD",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "PARTS-SOURCES"
+      ]
+    },
+    {
+      "mutation": "C4-fp-THT",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "PARTS-SOURCES"
+      ]
+    },
+    {
+      "mutation": "R11-value",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "PARTS-SOURCES",
+        "RES-11"
+      ]
+    },
+    {
+      "mutation": "C6-value",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "CAP-6"
+      ]
+    },
+    {
+      "mutation": "U1-mpn",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "MPN"
+      ]
+    },
+    {
+      "mutation": "null-control (no change)",
+      "expected": "clean",
+      "detected": false,
+      "by": []
+    }
+  ],
+  "truth_table": [
+    {
+      "CS": [
+        0,
+        0
+      ],
+      "enabled_MISO": [],
+      "expected": []
+    },
+    {
+      "CS": [
+        0,
+        1
+      ],
+      "enabled_MISO": [
+        1
+      ],
+      "expected": [
+        1
+      ]
+    },
+    {
+      "CS": [
+        1,
+        0
+      ],
+      "enabled_MISO": [
+        2
+      ],
+      "expected": [
+        2
+      ]
+    },
+    {
+      "CS": [
+        1,
+        1
+      ],
+      "enabled_MISO": [],
+      "expected": []
+    }
+  ],
+  "hardware_tested": false
+}

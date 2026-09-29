@@ -1,0 +1,13 @@
+# Kwalifikacja kupionego MAX31856 XU
+
+Źródło: [dokładna kupiona oferta](https://allegro.pl/oferta/max31856-modul-termopary-dla-typow-k-j-n-r-s-t-e-b-19-bitowy-modul-xu-18805671895), zdjęcia obejrzane 27.09.2026. Deklarowany wymiar około 24×21×1 mm. Zdjęcie strony elementów: terminal termopary u góry, listwa u dołu; od lewej VIN, 3Vo, GND, SCK, SDO, SDI, CS, FLT, DRDY. Zdjęcie spodu: „VIN/Logic: 3.3–5V”. Nie ma schematu regulatora i translatorów. Oznaczenie 482K na małym układzie nie wystarcza do pewnego ustalenia typu.
+
+Na P09 moduł jest obrócony o 180° względem tego zdjęcia: listwa u góry, terminal w kierunku dolnej krawędzi nośnika. Pin1/VIN znajduje się po prawej w rzędzie J3/J4. Obie orientacje dotyczą widoku od strony elementów. Nigdy nie określać pinów według samego położenia zdjęcia bez napisów.
+
+1. Bez zasilania potwierdzić napisy obu egzemplarzy; omomierzem potwierdzić GND. Zmierzyć raster, rozstaw otworów, obrys, wysokość listwy i terminala. Przyłożyć do wydruku montażowego 1:1 (belka100 mm). Zapisać pomiary w ODBIOR. Jeśli nie pasuje, zmienić footprint/położenie i ponownie przeprowadzić DRC przed produkcją. Otwory Ø6 mm są regulacją podparcia, nie zastępują pasującego rastra listwy.
+2. Każdy moduł osobno, poza nośnikiem, zasilić VIN=3,3 V z zasilacza z limitem startowym50 mA. Gdy limit zadziała, odłączyć i sprawdzić przyczynę. Zmierzyć VIN, 3Vo i prąd. Wymagany zakres VDD MAX31856:3,0–3,6 V; sprawdzić 3Vo również przy dolnej rzeczywistej wartości 3V3_IO i po rozgrzaniu modułu do planowanego zakresu. Nie podawać napięcia z zewnątrz na 3Vo.
+3. Jeżeli 3,3 V na VIN nie zapewnia VDD≥3,0 V, zbadać wariant VIN=5 V: potwierdzić 3Vo w zakresie3,0–3,6 V i wszystkie poziomy SPI przy współpracy z logiką3,3 V. U2 ma wejścia tolerujące5,5 V, ale wyjść U1 nie traktować jako uniwersalnych wejść5 V. Sprawdzić, czy pull-up modułu nie wypycha SCK/SDI/CS ponad3V3_IO podczas sterowania. Bez tego nie wybierać pozycji5 V na P09.
+4. Sprawdzić konfigurację CR0=0x91, CR1=0x03 i odczyt 0x0C–0x0F. Porównać temperaturę pokojową, ogrzewanie końcówki, rozwarcie termopary i odwrócenie jej biegunów. Brak modułu ma dawać błąd komunikacji, nigdy poprawne0°C. Samo odczytanie CR0/CR1 nie potwierdza autentyczności scalaka.
+5. Sprawdzić oba moduły z P09 i P03: aktywne TC1, TC2, oba nieaktywne, oba CS niskie, wyłączona P09 przy zasilonej P03 i odwrotnie. Oscyloskopem sprawdzić MISO oraz CS, w tym podczas zapisu na SD. Stan obu CS niski testować na stole, bez silnika. Nie przepinać modułów ani zwór pod napięciem.
+
+Wybrany wariant VIN zapisać oddzielnie dla TC1 i TC2 na karcie egzemplarza i naklejce obok JP. Jeden dostarczony moduł wystarcza do uruchomienia pierwszego kanału; drugi kanał pozostawić pusty i obsłużyć jego błąd w konfiguracji testowej.
