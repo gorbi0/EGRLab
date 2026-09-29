@@ -1,0 +1,217 @@
+[
+  {
+    "mutation": "remove R15",
+    "expected": "default ADC_CS_SRC",
+    "detected": true
+  },
+  {
+    "mutation": "remove R16",
+    "expected": "default ADC_SCLK_SRC",
+    "detected": true
+  },
+  {
+    "mutation": "remove R17",
+    "expected": "default ADC_SDI_SRC",
+    "detected": true
+  },
+  {
+    "mutation": "remove R18",
+    "expected": "default ADC_CONVST_SRC",
+    "detected": true
+  },
+  {
+    "mutation": "remove R19",
+    "expected": "default ADC_RESET_SRC",
+    "detected": true
+  },
+  {
+    "mutation": "remove R20",
+    "expected": "default MEAS_EN_SRC",
+    "detected": true
+  },
+  {
+    "mutation": "remove R21",
+    "expected": "default SPI3_SCLK_SRC",
+    "detected": true
+  },
+  {
+    "mutation": "remove R22",
+    "expected": "default SPI3_MOSI_SRC",
+    "detected": true
+  },
+  {
+    "mutation": "remove R23",
+    "expected": "default TC1_CS_SRC",
+    "detected": true
+  },
+  {
+    "mutation": "remove R24",
+    "expected": "default TC2_CS_SRC",
+    "detected": true
+  },
+  {
+    "mutation": "remove R25",
+    "expected": "default MEAS_BANK",
+    "detected": true
+  },
+  {
+    "mutation": "remove R1",
+    "expected": "default CURRENT_CS_N",
+    "detected": true
+  },
+  {
+    "mutation": "remove R11",
+    "expected": "default SD_CS",
+    "detected": true
+  },
+  {
+    "mutation": "remove R26",
+    "expected": "default INTERLOCK",
+    "detected": true
+  },
+  {
+    "mutation": "remove R27",
+    "expected": "default TEST_KEY",
+    "detected": true
+  },
+  {
+    "mutation": "remove R28",
+    "expected": "default ENA_DIAG",
+    "detected": true
+  },
+  {
+    "mutation": "remove R29",
+    "expected": "default ENB_DIAG",
+    "detected": true
+  },
+  {
+    "mutation": "remove R30",
+    "expected": "default CAN_RX",
+    "detected": true
+  },
+  {
+    "mutation": "remove R31",
+    "expected": "default ADC_BUSY",
+    "detected": true
+  },
+  {
+    "mutation": "remove R32",
+    "expected": "default ADC_DOUTA",
+    "detected": true
+  },
+  {
+    "mutation": "remove R33",
+    "expected": "default SPI3_MISO",
+    "detected": true
+  },
+  {
+    "mutation": "remove R3",
+    "expected": "default HW_ARMED",
+    "detected": true
+  },
+  {
+    "mutation": "remove R2",
+    "expected": "default LOGGER_CURRENT_OK",
+    "detected": true
+  },
+  {
+    "mutation": "remove R7",
+    "expected": "default SENSOR_HEALTHY",
+    "detected": true
+  },
+  {
+    "mutation": "remove R6",
+    "expected": "default LOGGER_CLEAR",
+    "detected": true
+  },
+  {
+    "mutation": "remove R8",
+    "expected": "default TEST_PRESENT",
+    "detected": true
+  },
+  {
+    "mutation": "MCU EN disconnected",
+    "expected": "common reset MCU MCP",
+    "detected": true
+  },
+  {
+    "mutation": "USB rail directly connected",
+    "expected": "SYS and USB local rail separated",
+    "detected": true
+  },
+  {
+    "mutation": "PMOS reversed",
+    "expected": "PMOS body diode SYS to M1",
+    "detected": true
+  },
+  {
+    "mutation": "RAW bypasses output buffer",
+    "expected": "supervisor isolated from EN capacitance",
+    "detected": true
+  },
+  {
+    "mutation": "VDD and CT mistaken",
+    "expected": "TPS3808 DBV supply pins",
+    "detected": true
+  },
+  {
+    "mutation": "reset limiter shorted",
+    "expected": "reset sink current limiter",
+    "detected": true
+  },
+  {
+    "mutation": "push pull instead of OD",
+    "expected": "Schmitt-input non-inverting open-drain reset buffer",
+    "detected": true
+  },
+  {
+    "mutation": "R14 back to 0R (R2)",
+    "expected": "no supply rail on a connector pin directly or through < 100 ohm (supply inputs J_BP2.19/20, J_BP3.5 excepted)",
+    "detected": true
+  },
+  {
+    "mutation": "J_BP3.13 tied to 3V3_CORE",
+    "expected": "no supply rail on a connector pin directly or through < 100 ohm (supply inputs J_BP2.19/20, J_BP3.5 excepted)",
+    "detected": true
+  },
+  {
+    "mutation": "5V_SYS on a signal pin J_BP1.20",
+    "expected": "no supply rail on a connector pin directly or through < 100 ohm (supply inputs J_BP2.19/20, J_BP3.5 excepted)",
+    "detected": true
+  },
+  {
+    "mutation": "second 5V_SYS pin lost",
+    "expected": "supply inputs from P02 R4 on J_BP2.19/20 and J_BP3.5",
+    "detected": true
+  },
+  {
+    "mutation": "U4 regressed to non-Schmitt LVC1G07",
+    "expected": "Schmitt-input non-inverting open-drain reset buffer",
+    "detected": true
+  },
+  {
+    "mutation": "J_BP3.12 on SUP_N (buffer bypassed, R3)",
+    "expected": "reset to P04 through Schmitt buffer U6 and R41",
+    "detected": true
+  },
+  {
+    "mutation": "inverting Schmitt LVC1G14 instead of LVC1G17",
+    "expected": "reset to P04 through Schmitt buffer U6 and R41",
+    "detected": true
+  },
+  {
+    "mutation": "R41 shorted",
+    "expected": "reset to P04 through Schmitt buffer U6 and R41",
+    "detected": true
+  },
+  {
+    "mutation": "U6 fed from SUP_RAW_N",
+    "expected": "reset to P04 through Schmitt buffer U6 and R41",
+    "detected": true
+  },
+  {
+    "mutation": "C15 not on 3V3_CORE",
+    "expected": "U6 decoupling C15 100nF",
+    "detected": true
+  }
+]

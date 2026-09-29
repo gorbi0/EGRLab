@@ -1,5 +1,6 @@
 """Functional checks of the EXPORTED netlist, independent of generator/parts.json (R3: + supply rails on connectors, frozen neighbour pin maps;
-R4: reset to P04 through the Schmitt buffer U6 and R41).
+R4: reset to P04 through the Schmitt buffer U6 and R41; R6: format S1 - J1..J10 replaced by J_BP1..3, service headers J_SV1..3;
+the frozen neighbour pin maps of R3 no longer apply, the edge-A pinout is checked in verify_jbp.py).
 Facts and pin numbers are reviewed against the manufacturer data sheets listed in docs/ZRODLA.md.
 This checks topology and defaults, not transient analogue behaviour or real devices.
 """
@@ -34,6 +35,9 @@ def checks(root):
  def pin(r,n):return pins.get((r,str(n)))
  def between(r,a,b):return {pin(r,1),pin(r,2)}=={a,b}
  def value(r,s):return comps.get(r) is not None and comps[r].findtext('value','').startswith(s)
+ def ohms(v):
+  m=re.fullmatch(r'(\d+)([RKM]?)(\d*)',v.split('/')[0].strip().upper())
+  return float(m[1]+('.'+m[3] if m[3] else ''))*{'':1,'R':1,'K':1e3,'M':1e6}[m[2]] if m else None
  for n,(u,p,rail) in (SOURCE|RECEIVER).items():
   rs=[r for r in comps if r.startswith('R') and between(r,n,rail) and value(r,'10K')]
   check('default '+n,pin(u,p)==n and len(rs)==1,rs)
@@ -41,14 +45,15 @@ def checks(root):
  check('common reset MCU MCP',all(pin(r,p)=='SUP_N' for r,p in [('M1','J1-3'),('U1','18'),('TP5','1')]))
  # R4: P04 takes the common reset through a Schmitt buffer: its 74LVC125A needs <= 10 ns/V, SUP_N rises in milliseconds.
  check('reset to P04 through Schmitt buffer U6 and R41',value('U6','SN74LVC1G17DBVR') and all(pin('U6',p)==n for p,n in {'1':'NC','2':'SUP_N','3':'GND','4':'SUP_N_DRV','5':'3V3_CORE'}.items())
-       and value('R41','220R') and nodes('SUP_N_DRV')==[('R41','1'),('U6','4')] and nodes('SUP_N_OUT')==[('J4','15'),('R41','2')])
+       and value('R41','220R') and nodes('SUP_N_DRV')==[('R41','1'),('U6','4')] and {('J_BP3','12'),('R41','2')}<=set(nodes('SUP_N_OUT'))
+       and all(k in (('J_BP3','12'),('R41','2')) or (k[0].startswith('R') and ohms(comps[k[0]].findtext('value',''))>=1000 and {pin(k[0],1),pin(k[0],2)}=={'SUP_N_OUT','SV_SUP_N_OUT'}) for k in nodes('SUP_N_OUT')))
  check('U6 decoupling C15 100nF',between('C15','3V3_CORE','GND') and value('C15','100nF'))
  check('supervisor isolated from EN capacitance',pin('U3',1)=='SUP_RAW_N' and pin('U4',2)=='SUP_RAW_N' and between('R13','SUP_RAW_N','3V3_CORE'))
  check('Schmitt-input non-inverting open-drain reset buffer',value('U4','SN74LVC1G37DBVR') and all(pin('U4',p)==n for p,n in {'1':'NC','2':'SUP_RAW_N','3':'GND','4':'RESET_DRV_N','5':'3V3_CORE'}.items()))
  check('reset sink current limiter',between('R34','RESET_DRV_N','SUP_N') and value('R34','220R'))
  check('common reset local pullup',between('R35','SUP_N','3V3_CORE') and value('R35','10K'))
  check('TPS3808 DBV supply pins',all(pin('U3',p)==n for p,n in {'1':'SUP_RAW_N','2':'GND','3':'3V3_CORE','4':'NC','5':'3V3_CORE','6':'3V3_CORE'}.items()))
- check('SYS and USB local rail separated',pin('J10',1)=='5V_SYS' and pin('M1','J1-21')=='5V_M1' and pin('TP7',1)=='5V_M1' and not any(r.startswith('R') and between(r,'5V_SYS','5V_M1') for r in comps))
+ check('SYS and USB local rail separated',pin('J_BP2',19)=='5V_SYS' and pin('J_BP2',20)=='5V_SYS' and pin('M1','J1-21')=='5V_M1' and pin('TP7',1)=='5V_M1' and not any(r.startswith('R') and between(r,'5V_SYS','5V_M1') for r in comps))
  check('LTC4412 pin map and enable',value('U5','LTC4412IS6') and all(pin('U5',p)==n for p,n in {'1':'5V_SYS','2':'GND','3':'GND','4':'NC','5':'PWR_GATE','6':'5V_M1'}.items()))
  check('PMOS body diode SYS to M1',value('Q1','AO3401A') and pin('Q1',1)=='PWR_GATE' and pin('Q1',2)=='5V_M1' and pin('Q1',3)=='5V_SYS')
  for r,u,p,n in [('R36','U21',6,'ADC_SCLK'),('R37','U21',11,'ADC_CONVST'),('R38','U23',3,'SPI3_SCLK'),('R39','U21',8,'ADC_SDI'),('R40','U23',6,'SPI3_MOSI')]:
@@ -59,32 +64,23 @@ def checks(root):
  old,_=extract(ET.parse(P/'reference/P03-R1.xml').getroot())
  allowed={('M1','J1-3'):'SUP_N',('M1','J1-21'):'5V_M1',('U3','1'):'SUP_RAW_N',('R13','1'):'SUP_RAW_N',
           ('U21','6'):'ADC_SCLK_DRV',('U21','8'):'ADC_SDI_DRV',('U21','11'):'ADC_CONVST_DRV',
-          ('U23','3'):'SPI3_SCLK_DRV',('U23','6'):'SPI3_MOSI_DRV',('J4','15'):'SUP_N_OUT'}
- differences=[(r,p,n,pins.get((r,p))) for (r,p),n in old.items() if pins.get((r,p))!=allowed.get((r,p),n)]
- check('R1 pin contract plus exact R2/R4 delta',not differences,differences)
- # R3 (review P3-02): no connector pin may carry a supply rail directly or through < 100 ohm (J10 = LV03 supply input).
- def ohms(v):
-  m=re.fullmatch(r'(\d+)([RKM]?)(\d*)',v.split('/')[0].strip().upper())
-  return float(m[1]+('.'+m[3] if m[3] else ''))*{'':1,'R':1,'K':1e3,'M':1e6}[m[2]] if m else None
- rails={'3V3_CORE','3V3_IO','5V_SYS','5V_M1'};hot=[]
+          ('U23','3'):'SPI3_SCLK_DRV',('U23','6'):'SPI3_MOSI_DRV',('M1','J1-13'):'PFAIL_N_CORE'}
+ # R6: the R1 harness connectors J1..J10 are gone (their nets are checked on J_BP1..3 in verify_jbp.py).
+ differences=[(r,p,n,pins.get((r,p))) for (r,p),n in old.items() if not re.fullmatch(r'J\d+',r) and pins.get((r,p))!=allowed.get((r,p),n)]
+ check('R1 pin contract plus exact R2/R4/R6 delta',not differences,differences)
+ # R3 (review P3-02): no connector pin may carry a supply rail directly or through < 100 ohm.
+ # R6: supply INPUTS from P02 R4 through P12: J_BP2.19/20 = 5V_SYS, J_BP3.5 = 3V3_IO (were J10 LV03); nothing else.
+ rails={'3V3_CORE','3V3_IO','5V_SYS','5V_M1'};hot=[];SUPPLY_IN={('J_BP2','19'):'5V_SYS',('J_BP2','20'):'5V_SYS',('J_BP3','5'):'3V3_IO'}
  for (r,p),n in pins.items():
-  if not re.fullmatch(r'J\d+',r) or r=='J10' or n in ('GND','NC'):continue
+  if not r.startswith('J') or SUPPLY_IN.get((r,p))==n or n in ('GND','NC'):continue
   if n in rails:hot.append((r,p,n,'direct'))
   for rr in comps:
    if rr.startswith('R') and n in (pin(rr,1),pin(rr,2)):
     far=pin(rr,2) if pin(rr,1)==n else pin(rr,1)
     if far in rails and (ohms(comps[rr].findtext('value','')) or 0)<100:hot.append((r,p,n,rr+' '+comps[rr].findtext('value','')))
- check('no supply rail on a connector pin directly or through < 100 ohm (LV03 J10 excepted)',not hot,hot)
- check('CORE_LINK from 3V3_CORE through 1K (R14)',between('R14','3V3_CORE','CORE_LINK') and value('R14','1K') and pin('J4',13)=='CORE_LINK')
- # R3: mating connectors equal the frozen pin maps of the neighbour releases (P02-R3 J3, P04-R2.1 J2, P05-R1 J1).
- # R4: P04 J2.15 (SUP_N in the frozen P04 map) is driven from the buffered copy SUP_N_OUT; the frozen file is unchanged.
- ALIAS={('J4','15'):{'SUP_N':'SUP_N_OUT'}}
- iface=json.loads((P/'reference/interfaces-R3.json').read_text(encoding='utf-8'));bad=[]
- for link in iface['links']:
-  for p_,n in link['pins'].items():
-   got=pin(link['mine'],p_);want=ALIAS.get((link['mine'],p_),{}).get(n,n)
-   if not (got==want or (n=='NC' and got=='NC')):bad.append((link['name'],link['mine']+'.'+p_,got,want))
- check('mating connectors equal the frozen neighbour pin maps (LV03, H_SAFE, DAQ B2B)',not bad,bad)
+ check('no supply rail on a connector pin directly or through < 100 ohm (supply inputs J_BP2.19/20, J_BP3.5 excepted)',not hot,hot)
+ check('supply inputs from P02 R4 on J_BP2.19/20 and J_BP3.5',all(pin(r,p_)==n for (r,p_),n in SUPPLY_IN.items()))
+ check('CORE_LINK from 3V3_CORE through 1K (R14)',between('R14','3V3_CORE','CORE_LINK') and value('R14','1K') and pin('J_BP3',13)=='CORE_LINK')
  return out
 
 def move_pin(root,r,p,target):
@@ -119,14 +115,13 @@ def run():
   m=copy.deepcopy(root);move_pin(m,r,p,n);mutants.append((desc,expected,m))
  m=copy.deepcopy(root);m.find("./components/comp[@ref='R34']/value").text='0R';mutants.append(('reset limiter shorted','reset sink current limiter',m))
  m=copy.deepcopy(root);m.find("./components/comp[@ref='U4']/value").text='SN74LVC1G17';mutants.append(('push pull instead of OD','Schmitt-input non-inverting open-drain reset buffer',m))
- m=copy.deepcopy(root);m.find("./components/comp[@ref='R14']/value").text='0R';mutants.append(('R14 back to 0R (R2)','no supply rail on a connector pin directly or through < 100 ohm (LV03 J10 excepted)',m))
- m=copy.deepcopy(root);move_pin(m,'J4','13','3V3_CORE');mutants.append(('J4.13 tied to 3V3_CORE','no supply rail on a connector pin directly or through < 100 ohm (LV03 J10 excepted)',m))
- m=copy.deepcopy(root);move_pin(m,'J4','15','CORE_LINK');mutants.append(('SUP_N pin moved onto CORE_LINK','mating connectors equal the frozen neighbour pin maps (LV03, H_SAFE, DAQ B2B)',m))
- m=copy.deepcopy(root);move_pin(m,'J1','1','ADC_SDI');mutants.append(('B2B pin 1 carries ADC_SDI','mating connectors equal the frozen neighbour pin maps (LV03, H_SAFE, DAQ B2B)',m))
+ m=copy.deepcopy(root);m.find("./components/comp[@ref='R14']/value").text='0R';mutants.append(('R14 back to 0R (R2)','no supply rail on a connector pin directly or through < 100 ohm (supply inputs J_BP2.19/20, J_BP3.5 excepted)',m))
+ m=copy.deepcopy(root);move_pin(m,'J_BP3','13','3V3_CORE');mutants.append(('J_BP3.13 tied to 3V3_CORE','no supply rail on a connector pin directly or through < 100 ohm (supply inputs J_BP2.19/20, J_BP3.5 excepted)',m))
+ m=copy.deepcopy(root);move_pin(m,'J_BP1','20','5V_SYS');mutants.append(('5V_SYS on a signal pin J_BP1.20','no supply rail on a connector pin directly or through < 100 ohm (supply inputs J_BP2.19/20, J_BP3.5 excepted)',m))
+ m=copy.deepcopy(root);move_pin(m,'J_BP2','19','GND');mutants.append(('second 5V_SYS pin lost','supply inputs from P02 R4 on J_BP2.19/20 and J_BP3.5',m))
  m=copy.deepcopy(root);m.find("./components/comp[@ref='U4']/value").text='SN74LVC1G07DBVR';mutants.append(('U4 regressed to non-Schmitt LVC1G07','Schmitt-input non-inverting open-drain reset buffer',m))
  # R4 buffer U6/R41/C15
- m=copy.deepcopy(root);move_pin(m,'J4','15','SUP_N');mutants.append(('J4.15 back on SUP_N (buffer bypassed, R3)','reset to P04 through Schmitt buffer U6 and R41',m))
- m=copy.deepcopy(root);move_pin(m,'J4','15','SUP_N');mutants.append(('J4.15 back on SUP_N vs frozen P04 map','mating connectors equal the frozen neighbour pin maps (LV03, H_SAFE, DAQ B2B)',m))
+ m=copy.deepcopy(root);move_pin(m,'J_BP3','12','SUP_N');mutants.append(('J_BP3.12 on SUP_N (buffer bypassed, R3)','reset to P04 through Schmitt buffer U6 and R41',m))
  m=copy.deepcopy(root);m.find("./components/comp[@ref='U6']/value").text='SN74LVC1G14DBVR';mutants.append(('inverting Schmitt LVC1G14 instead of LVC1G17','reset to P04 through Schmitt buffer U6 and R41',m))
  m=copy.deepcopy(root);m.find("./components/comp[@ref='R41']/value").text='0R';mutants.append(('R41 shorted','reset to P04 through Schmitt buffer U6 and R41',m))
  m=copy.deepcopy(root);move_pin(m,'U6','2','SUP_RAW_N');mutants.append(('U6 fed from SUP_RAW_N','reset to P04 through Schmitt buffer U6 and R41',m))

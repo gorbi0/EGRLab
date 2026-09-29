@@ -1,0 +1,146 @@
+{
+  "checks": [
+    {
+      "check": "U4 Schmitt input and open drain, exact pinout",
+      "pass": true,
+      "detail": {
+        "value": "SN74LVC1G37DBVR",
+        "pins": {
+          "4": "RESET_DRV_N",
+          "5": "3V3_CORE",
+          "3": "GND",
+          "2": "SUP_RAW_N",
+          "1": "unconnected-(U4-NC-Pad1)"
+        }
+      }
+    },
+    {
+      "check": "TPS3808 pull-up nominal >=10k and connected correctly",
+      "pass": true,
+      "detail": 10000.0
+    },
+    {
+      "check": "R34 discharge peak <=16mA",
+      "pass": true,
+      "detail": 0.015909090909090907
+    },
+    {
+      "check": "SUP_N low at 3.0V below MCP VIL=0.6V",
+      "pass": true,
+      "detail": {
+        "worst_estimate_V": 0.5139456132267487,
+        "U4_VOL_V": 0.4,
+        "EN_pullup_assumption_ohm": [
+          9500,
+          10500
+        ]
+      }
+    },
+    {
+      "check": "P04 R17 default low from worst-case leakage below 0.8V",
+      "pass": true,
+      "detail": {
+        "voltage_V": 0.303,
+        "sum_uA": 30,
+        "direction": "conservative absolute sum, not measured current"
+      }
+    },
+    {
+      "check": "P04 active input high above 2.0V",
+      "pass": true,
+      "detail": {
+        "lower_bound_V": 2.342969354488155,
+        "U6_VOH_min_V": 2.4,
+        "U9_input_uA": 20
+      }
+    },
+    {
+      "check": "U6 output and P04 receiver retain reviewed topology",
+      "pass": true,
+      "detail": {
+        "P03_J_BP3_12": "SUP_N_OUT",
+        "P04_J2_15 (P04-R2.2, frozen; S1 revision of P04 pending)": "SUP_N"
+      }
+    },
+    {
+      "check": "R6 path estimate within the 10 ns/V limit (estimate, not a guarantee)",
+      "pass": true,
+      "detail": {
+        "model": "ideal RC, ns/V = R41*C/0.8 V",
+        "R41_ohm": 220.0,
+        "C_components_pF": {
+          "ribbon P03-P12 30 mm": 3.0,
+          "ribbon P12-P04 30 mm": 3.0,
+          "P12 trace (assumed <= 120 mm, 0.1 pF/mm over GND)": 12.0,
+          "4 IDC contacts x 1 pF": 4.0,
+          "P04 74LVC125A input": 5.0,
+          "local traces P03+P04": 3.0
+        },
+        "C_total_pF": 30.0,
+        "estimate_ns_per_V": 8.25,
+        "limit_ns_per_V": 10,
+        "C_for_limit_pF": 36.4,
+        "R5_reference": {
+          "C_pF": 20.0,
+          "ns_per_V": 5.5
+        },
+        "P12_requirement": "SUP_N_OUT trace on P12 <= 120 mm over continuous GND, no stubs; total load <= 30 pF",
+        "status": "ESTIMATE - measure both edges at P04 U9.5 (ODBIOR)"
+      }
+    }
+  ],
+  "negative_controls": [
+    {
+      "mutation": "U4=SN74LVC1G07DBVR",
+      "detected": true,
+      "failures": [
+        "U4 Schmitt input and open drain, exact pinout"
+      ]
+    },
+    {
+      "mutation": "R13=1K / 1%",
+      "detected": true,
+      "failures": [
+        "TPS3808 pull-up nominal >=10k and connected correctly"
+      ]
+    },
+    {
+      "mutation": "R34=10R / 1%",
+      "detected": true,
+      "failures": [
+        "R34 discharge peak <=16mA"
+      ]
+    },
+    {
+      "mutation": "R17=100K / 1%",
+      "detected": true,
+      "failures": [
+        "P04 R17 default low from worst-case leakage below 0.8V"
+      ]
+    }
+  ],
+  "hardware_tested": false,
+  "slew_estimate_R6": {
+    "model": "ideal RC, ns/V = R41*C/0.8 V",
+    "R41_ohm": 220.0,
+    "C_components_pF": {
+      "ribbon P03-P12 30 mm": 3.0,
+      "ribbon P12-P04 30 mm": 3.0,
+      "P12 trace (assumed <= 120 mm, 0.1 pF/mm over GND)": 12.0,
+      "4 IDC contacts x 1 pF": 4.0,
+      "P04 74LVC125A input": 5.0,
+      "local traces P03+P04": 3.0
+    },
+    "C_total_pF": 30.0,
+    "estimate_ns_per_V": 8.25,
+    "limit_ns_per_V": 10,
+    "C_for_limit_pF": 36.4,
+    "R5_reference": {
+      "C_pF": 20.0,
+      "ns_per_V": 5.5
+    },
+    "P12_requirement": "SUP_N_OUT trace on P12 <= 120 mm over continuous GND, no stubs; total load <= 30 pF",
+    "status": "ESTIMATE - measure both edges at P04 U9.5 (ODBIOR)"
+  },
+  "scope": "DC limits, exact parts and pin maps; output slew, power ramps and B2B fit require bench/physical checks."
+}
