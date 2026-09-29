@@ -1,5 +1,5 @@
 {
-  "wersja": "S1-1 (29.09.2026)",
+  "wersja": "S1-2 (29.09.2026)",
   "opis": "Dane liczbowe formatu S1 dla generatorów płytek. Tekst i uzasadnienia: SPECYFIKACJA-FORMATU-S1.md.",
   "uklad_wspolrzednych": "x wzdłuż 160 mm (0 = strona panelu), y w poprzek (0 = krawędź A, płytka połączeń; 100 = krawędź B, strona serwisowa), z w górę; wymiary w mm",
   "sloty": [
@@ -35,7 +35,7 @@
     "zakres_x_w_slocie": [10.0, 43.0],
     "max_pinow_na_slot": 13,
     "GND": "pierwszy i ostatni pin każdej listwy",
-    "wezly_wysokoimpedancyjne": "przez rezystor szeregowy 1–10 kΩ przy węźle"
+    "rezystory_szeregowe": "każdy kołek poza GND przez rezystor przy węźle: 1 kΩ (szyny do 5 V, logika), 4,7 kΩ (szyny pakietu do 16,8 V), 10 kΩ (węzły wysokoimpedancyjne)"
   },
   "poziomy": {
     "dystans_standard": 20.0,
@@ -43,7 +43,7 @@
     "wys_max_gora_standard": 16.5,
     "wys_max_gora_wysoki": 21.5,
     "wyprowadzenia_THT_od_spodu_max": 1.5,
-    "elementy_od_spodu": "brak",
+    "elementy_od_spodu": "tylko SMD o wysokości <= 1,5 mm; SOIC (1,75 mm) tylko na poziomie 1; >= 1 mm od pól THT; poza strefami dystansów",
     "dystans_od_dna_obudowy": 8.0
   },
   "przydzial": {
