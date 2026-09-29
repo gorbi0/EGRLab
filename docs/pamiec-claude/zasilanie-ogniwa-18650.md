@@ -36,5 +36,7 @@ Listę zakupową 2 trzeba przeliczyć.
 
 29.09 (przerwane przed schematem): **poprawka** — jeden P-MOSFET nie da ochrony polaryzacji i wyłączania; są dwa SUP53P06 przeciwsobnie (Q_REV, Q_SW) + tor sterowania P01 R3 1:1 (Q_OFF itd.), 3 × SUP53P06 (wszystkie kupione). UVLO przeliczone: 1k + przełącznik PWR + 41,2k / 10k, R_iso 10k, Rh 464k z OK 0/5 V (AUX5 z LM2936 zasilanego z SW_COM i VLOG) → 13,53 / 12,51 V. Stan i mapa części: `Plytki/P02-R4-specyfikacja/STAN-PRAC.md`.
 
+29.09 (wieczór): D-01…D-07 przyjęte, **R23 = 22 kΩ/0,5 W** (decyzja użytkownika; OVP przy pakiecie nie istnieje). Etap 1 (schemat + kontrole elektryczne, bez PCB) idzie do sesji w chmurze na Opusie 5.5 high — polecenie w `docs/CHMURA.md` („Kolejne zadania”); PCB dopiero po mojej recenzji schematu.
+
 **Why:** użytkownik optymalizuje gabaryty i koszt; termin 23.10 przestał być ograniczeniem.
 **How to apply:** nie wracać do zasilania z auta ani do banku HOLD bez nowej decyzji. Nowa płytka zasilania zastępuje P01 i P02, a interfejsy do P03/P04/P05/P07 muszą zostać zgodne. Zob. [[kaseta-r1]], [[pcb-fab-satland]], [[egrlab-purchasing-state]], [[p02-r1-state]].

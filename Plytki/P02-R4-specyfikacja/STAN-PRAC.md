@@ -28,7 +28,7 @@ Straty przy 3,5 A: po 0,37 W na każdy tranzystor, radiatory niepotrzebne.
 |---|---|---|
 | Q1 SUP53P06 | Q_SW: G = GATE, D = VSW, S = SW_COM | dren do VSW (w P01 przez LK1 do VPROT) |
 | Q2 SUP53P06 + R27 10 Ω/2 W | Q_OFF: szybkie wyłączanie, podciąga GATE do SW_COM | bez zmian |
-| R23 2,2 kΩ/2 W (bramka Q_OFF do GND) | jak P01 albo 22 kΩ/0,5 W | **do decyzji:** w P01 szybkość była potrzebna na OVP; przy pakiecie 22 kΩ daje ok. 55 µs zamiast ok. 7 µs i 13 mW zamiast 128 mW strat stałych |
+| R23 2,2 kΩ/2 W (bramka Q_OFF do GND) | **22 kΩ/0,5 W** | **decyzja użytkownika 29.09:** w P01 szybkość była potrzebna na OVP, którego przy pakiecie nie ma; ok. 55 µs zamiast ok. 7 µs i 13 mW zamiast 128 mW strat stałych |
 | R24 100 kΩ, D9 BZX55C15 (bramka Q_OFF) | bez zmian | — |
 | Q3 2N5551, R17 4,7 kΩ, R18 47 kΩ, R21 100 kΩ | załączanie Q_SW | bez zmian |
 | Q4 2N5401, R25 47 kΩ, R26 10 kΩ; Q5 2N5551, R19 4,7 kΩ, R20 47 kΩ | zwalnianie Q_OFF przy ENABLE | bez zmian |
@@ -85,4 +85,4 @@ Podtrzymanie po PFAIL_N (2200 µF −20 %): 14,2 ms przy 6 W i 28,3 ms przy 3 W,
 3. Schemat, `verify_schematic` (netlista pin po pinie, ERC 0) i `check_electrical` (UVLO, podtrzymanie, straty, zakresy napięć) z próbami ujemnymi.
 4. PCB ≤ 115 × 85 mm, DRC, przymiarka, recenzja.
 
-Proponowane miejsce wykonania kroków 1–4: sesja w chmurze po przygotowaniu środowiska (`docs/CHMURA.md`).
+Wykonanie: etap 1 (kroki 1–3, schemat) w sesji w chmurze, polecenie w `docs/CHMURA.md` („Kolejne zadania”); etap 2 (krok 4, PCB) po lokalnej recenzji schematu.

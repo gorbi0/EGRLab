@@ -20,11 +20,35 @@
 - **Zamknięte pakiety uruchamiać na kopii** (np. w katalogu scratchpad sesji). `run_release.py`, `export_production.py` i próby ujemne zapisują do `verification/`, `output/`, `gerber/` i `podglad/` własnego pakietu, a na Linuksie wyniki różnią się bajtowo (niżej). Porównanie kopii z repozytorium: `scripts/chmura/porownaj_wyniki.py`.
 - Po istotnych ustaleniach aktualizować `EGRLab-AKTYWNE.md` i `docs/01-overview.md` z zachowaniem ich końców linii.
 
+## Koszty — model, wysiłek, zasady oszczędności
+
+Sesja w chmurze płaci z kredytu za każdy krok: każde wywołanie narzędzia wysyła modelowi cały dotychczasowy kontekst, a przy wysiłku max model długo myśli także przed krokami mechanicznymi. Pierwsza sesja (walidacja środowiska, Opus 5.5 max) kosztowała ok. 5 $. Sesja lokalna idzie z planu użytkownika, nie z kredytu.
+
+Model i wysiłek ustawia użytkownik w oknie sesji **przed pierwszą wiadomością**; zmiana w trakcie działa dopiero od następnej tury.
+
+| Zadanie | Model | Wysiłek |
+|---|---|---|
+| Mechaniczne: środowisko, generatory według gotowej specyfikacji, paczki, odtwarzanie kontroli, dokumenty | Sonnet 5.5 | medium |
+| Projektowe: schemat i PCB nowej rewizji, kontrole elektryczne | Opus 5.5 | high |
+| Recenzja wyniku | sesja lokalna | — |
+
+Wysiłku max w chmurze nie używać.
+
+Zasady dla sesji w chmurze:
+
+1. Czytać tylko to, co wskazuje zadanie: z `docs/pamiec-claude/` indeks `MEMORY.md` i pliki wymienione w poleceniu. Nie przeglądać repozytorium na zapas.
+2. Długie wyjścia (Docker, KiCad, Freerouting, pip) kierować do pliku i pokazywać koniec, np. `polecenie > /tmp/log.txt 2>&1; tail -n 20 /tmp/log.txt`. Z JSON-ów wyciągać potrzebne pola zamiast wypisywać całe pliki.
+3. Każdą kontrolę uruchamiać raz, ponownie tylko po zmianie, której dotyczy.
+4. Duże zadania dzielić na etapy z osobnym PR (schemat → recenzja lokalna → PCB), żeby nie płacić za PCB do schematu, który zmieni recenzja.
+5. Po otwarciu PR zakończyć pracę. Nie włączać śledzenia PR: każdy komentarz i scalenie budzi sesję i kosztuje turę. Pytania do użytkownika wpisywać do opisu PR.
+
 ## Nazwy plików zarezerwowane w Windows
 
 `AUX`, `CON`, `PRN`, `NUL`, `COM1…9`, `LPT1…9` są w Windows nazwami urządzeń, także z rozszerzeniem. Git for Windows nie otworzy takiego pliku.
 
 W repozytorium jest 15 takich arkuszy: `AUX.kicad_sch` (pakiety P01, P05 R1) i `CON.kicad_sch` (P04, P05 R1). Na komputerze użytkownika dodano je do indeksu z zawartości czytanej przez bash (`git hash-object` + `update-index`) i oznaczono jako `skip-worktree`, więc lokalny git ich nie dotyka. W chmurze (Linux) odtwarzają się normalnie (sprawdzone 29.09). Świeży klon na Windows ich nie odtworzy.
+
+**Po każdym `merge`, `pull`, `reset` lub `checkout` na Windows uruchomić `bash scripts/aux-con-indeks.sh`.** Git for Windows pomija te pliki przy rozpakowywaniu drzewa i usuwa je z indeksu razem ze znacznikiem skip-worktree (tak było przy scaleniu PR #1). Następny commit usunąłby je z repozytorium. Skrypt przywraca wpisy z HEAD i sprawdza, że indeks = HEAD. `git diff --cached` pokazuje wtedy mylące nazwy (np. „usunięte” pliki `.zip.sha256` obok katalogów z AUX), więc wiarygodna kontrola to `git write-tree` równe `git rev-parse HEAD^{tree}` przed dodaniem własnych zmian.
 
 **Nowe arkusze i pliki nazywać inaczej**, np. `AUX5`, `CONN`, `ZLACZA`. Dotyczy to też nowych rewizji P05 i P04. Zmiana pliku o takiej nazwie w chmurze nie da się pobrać do lokalnego repozytorium na Windows zwykłym `git pull`.
 
@@ -114,6 +138,20 @@ Manifesty SHA-256 obu pakietów w repozytorium sprawdzone po pracy: 234/234 i 22
 
 ## Kolejne zadania
 
-- P02 R4 — schemat i PCB według `Plytki/P02-R4-specyfikacja/STAN-PRAC.md`.
-- P03: wejście PFAIL_N, sprawy B2B. P05 R2, P06 (bocznik 2512), P11 R2 (przyciski, złącza panelu).
-- Tabela wiązek pod kasetę (`Plytki/Kaseta-R1`).
+1. **P02 R4, etap 1 — schemat** (Opus 5.5, high). Najpierw krok 0 niżej, potem kroki 1–3 z `Plytki/P02-R4-specyfikacja/STAN-PRAC.md`. Gotowe polecenie niżej.
+2. P02 R4, etap 2 — PCB ≤ 115 × 85 mm, po lokalnej recenzji schematu.
+3. P03: wejście PFAIL_N, sprawy B2B. P05 R2, P06 (bocznik 2512), P11 R2 (przyciski, złącza panelu).
+4. Tabela wiązek pod kasetę (`Plytki/Kaseta-R1`).
+
+### Krok 0 — uwagi z recenzji PR #1 (osobny commit)
+
+- Przypiąć wersje w `scripts/chmura/Dockerfile` i `scripts/setup-chmura.sh` do tabeli „Narzędzia”: micromamba (konkretne wydanie zamiast `latest`), poppler, OpenJDK, Node, numpy, Pillow, pdfplumber, sharp. Kolejna budowa obrazu ma dać to samo, co opisuje ten dokument.
+- `scripts/chmura/porownaj_wyniki.py`: próg dla PNG (np. powyżej 2 % różniących się pikseli → RÓŻNICA; dziś każdy PNG tego samego rozmiaru przechodzi) i jawna uwaga, że klasa PDF porównuje tylko tekst, nie grafikę.
+- ngspice: sprawdzić, czy obraz KiCada ma `libngspice.so` (używa jej symulator KiCada), i ustawić `NGSPICE_LIBRARY`; jeśli nie ma — `ngspice-lib` z conda-forge. Próba na `Plytki/P01-R3-review/src/ngshared.py`.
+- Nagłówek `setup-chmura.sh`: czas instalacji ok. 2 min (nie 3–4).
+
+### Gotowe polecenie — P02 R4, etap 1
+
+Ustawienia sesji: Opus 5.5, wysiłek high.
+
+> Przeczytaj CLAUDE.md, docs/CHMURA.md (zwłaszcza „Koszty”), docs/pamiec-claude/MEMORY.md, a z pamięci tylko kicad-pipeline-quirks.md, p01-r1-gate-coupling.md, p02-r1-state.md i zasilanie-ogniwa-18650.md. Pracuj na gałęzi `p02-r4-schemat`. Najpierw krok 0 z docs/CHMURA.md jako osobny commit. Potem P02 R4, etap 1 według Plytki/P02-R4-specyfikacja/STAN-PRAC.md, „Następny krok” 1–3 (R23 = 22 kΩ/0,5 W): nowy pakiet Plytki/P02-R4-review na kopii łańcucha z P02-R3-review/src, parts.py R4, schemat A3 (arkusze WEJ, STER, LV, MON), verify_schematic (netlista pin po pinie, ERC 0), check_electrical z próbami ujemnymi. Opóźnienie wyłączenia z R23 i prąd ładowania VSW policz analitycznie; symulację ngspice na wzór P01 R3 (dynamics.py) dołącz tylko wtedy, gdy testbench uruchomi się bez przepisywania. PCB nie rób. Zamkniętych pakietów nie zmieniaj. Zakończ PR-em po polsku z wynikami liczbowymi; pytania wpisz do opisu PR i nie włączaj śledzenia PR.
