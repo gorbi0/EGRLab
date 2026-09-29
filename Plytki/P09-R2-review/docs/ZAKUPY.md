@@ -27,7 +27,7 @@
 | MF0207 100 k | 7 | 7 |
 | K104K15X7RF5TH5 100 n | 3 | 5 |
 
-Razem z P10 R2 (1 × 10 k, 3 × 100 n): 10 k — 7 z 7, 100 k — 7 z 7, 100 n — 6 z 5, więc brakuje jednego kondensatora 100 n (zob. opis PR).
+Razem z P10 R2 (3 × 10 k — R2 i dwa rezystory serwisowe CAN, 3 × 100 n): 10 k — 9 wobec 7, 100 k — 7 z 7, 100 n — 6 wobec 5 (zob. opis PR i `P10-R2-review/docs/ZAKUPY.md`).
 
 Uwagi do zakupów:
 - J1 (J_BP): obudowane złącze kątowe IDC 2×8, raster 2,54 mm, styki Au; z płytką połączeń P12 łączy je krótka taśma IDC 2×8 (dwa gniazda zaciskowe, jedno do J_BP, drugie do P12).

@@ -41,7 +41,7 @@ Przypisanie części do rejestru wynika z dosłownego dopasowania wartości i ty
 
 1. Przymiarka 1:1 modułów MAX31856 XU i kwalifikacja zasilania (`docs/MODUL-KWALIFIKACJA.md`) — bez zmian względem R1; obrys gniazd nadal prowizoryczny.
 2. Layout: 74 % zajętości wg obrysów; J_BP środek x = 26,5 mm, listwa J2 w x = 10–43 mm, rezystory R20–R30 od spodu.
-3. Zapas części z rejestru (zob. `docs/ZAKUPY.md` i opis PR): 100 n wymaga 6 szt. na P09+P10 wobec 5.
+3. Zapas części z rejestru (zob. `docs/ZAKUPY.md` i opis PR): P09 + P10 razem potrzebują 10 k — 9 szt. wobec 7 oraz 100 n — 6 szt. wobec 5.
 4. Listwa serwisowa musi być **kątowa** (posiadana 1×40 jest prosta); typ IDC J_BP do wyboru w zakupach.
 5. Poprawka firmware MAX31856 z R1 (`P09-R1-review/firmware`) bez zmian, do scalenia przy integracji P03.
 

@@ -1,0 +1,396 @@
+{
+  "U1": {
+    "ref": "U1",
+    "source_ref": "U16",
+    "footprint": "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
+    "display": "TCAN1051V",
+    "value": "TCAN1051V",
+    "mpn": "TCAN1051VDRQ1",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "GND",
+      "3": "5V_SYS",
+      "4": "RX_RAW",
+      "5": "3V3_IO",
+      "6": "CAN_L",
+      "7": "CAN_H",
+      "8": "3V3_IO"
+    },
+    "sheet": "P10",
+    "url": "https://www.ti.com/lit/ds/symlink/tcan1051-q1.pdf",
+    "note": "S and TXD hardwired to VIO. No MCU transmit connection and no mode jumper. V variant required.",
+    "qty": 1,
+    "on_board": true,
+    "zrodlo": "nowe"
+  },
+  "U2": {
+    "ref": "U2",
+    "source_ref": "ADDED_RX_IOFF",
+    "footprint": "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm",
+    "display": "74LVC125AD",
+    "value": "74LVC125AD",
+    "mpn": "74LVC125AD,118 Nexperia",
+    "pins": {
+      "1": "GND",
+      "2": "RX_RAW",
+      "3": "RX_BUF",
+      "4": "3V3_IO",
+      "5": "GND",
+      "6": "NC",
+      "7": "GND",
+      "8": "NC",
+      "9": "GND",
+      "10": "3V3_IO",
+      "11": "NC",
+      "12": "GND",
+      "13": "3V3_IO",
+      "14": "3V3_IO"
+    },
+    "sheet": "CORE",
+    "url": "https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf",
+    "note": "Ioff protects dead P10 from P03 receiver pull-up. HC125 is not a substitute.",
+    "qty": 1,
+    "on_board": true,
+    "zrodlo": "rejestr"
+  },
+  "D1": {
+    "ref": "D1",
+    "source_ref": "D3",
+    "footprint": "Package_TO_SOT_SMD:SOT-23",
+    "display": "PESD2CAN",
+    "value": "PESD2CAN",
+    "mpn": "PESD2CAN,215 Nexperia",
+    "pins": {
+      "1": "CAN_L",
+      "2": "CAN_H",
+      "3": "GND"
+    },
+    "sheet": "P10",
+    "url": "https://assets.nexperia.com/documents/data-sheet/PESD2CAN.pdf",
+    "note": "Pins1/2 are identical protected lines; pin3 common to GND. Routed at cable entry. Not a TVS for the supply rail.",
+    "qty": 1,
+    "on_board": true,
+    "zrodlo": "nowe"
+  },
+  "R1": {
+    "ref": "R1",
+    "source_ref": "P10_R1",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "100R",
+    "value": "100R",
+    "mpn": "SMD 1206 1% 0.25W 100R",
+    "pins": {
+      "1": "RX_BUF",
+      "2": "CAN_RX"
+    },
+    "sheet": "CORE",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "zrodlo": "nowe"
+  },
+  "R2": {
+    "ref": "R2",
+    "source_ref": "P10_R1",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical",
+    "display": "10K",
+    "value": "10K",
+    "mpn": "MF0207 Yageo 10K 1% 0.6W (owned, standing)",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "RX_RAW"
+    },
+    "sheet": "CORE",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "zrodlo": "rejestr"
+  },
+  "C1": {
+    "ref": "C1",
+    "source_ref": "DECOUPLING",
+    "footprint": "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm",
+    "display": "100n",
+    "value": "100n",
+    "mpn": "K104K15X7RF5TH5 Vishay 100n X7R 50V radial 5mm (owned)",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "GND"
+    },
+    "sheet": "P10",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "zrodlo": "rejestr"
+  },
+  "C2": {
+    "ref": "C2",
+    "source_ref": "DECOUPLING",
+    "footprint": "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm",
+    "display": "100n",
+    "value": "100n",
+    "mpn": "K104K15X7RF5TH5 Vishay 100n X7R 50V radial 5mm (owned)",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "GND"
+    },
+    "sheet": "P10",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "zrodlo": "rejestr"
+  },
+  "C3": {
+    "ref": "C3",
+    "source_ref": "DECOUPLING",
+    "footprint": "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm",
+    "display": "100n",
+    "value": "100n",
+    "mpn": "K104K15X7RF5TH5 Vishay 100n X7R 50V radial 5mm (owned)",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "GND"
+    },
+    "sheet": "CORE",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "zrodlo": "rejestr"
+  },
+  "C4": {
+    "ref": "C4",
+    "source_ref": "DECOUPLING",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
+    "display": "4u7",
+    "value": "4u7",
+    "mpn": "SMD 1206 X7R 25V 10% 4u7",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "GND"
+    },
+    "sheet": "P10",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "zrodlo": "nowe"
+  },
+  "C5": {
+    "ref": "C5",
+    "source_ref": "DECOUPLING",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
+    "display": "4u7",
+    "value": "4u7",
+    "mpn": "SMD 1206 X7R 25V 10% 4u7",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "GND"
+    },
+    "sheet": "P10",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "zrodlo": "nowe"
+  },
+  "J1": {
+    "ref": "J1",
+    "source_ref": "J_BP",
+    "footprint": "Connector_IDC:IDC-Header_2x05_P2.54mm_Horizontal",
+    "display": "J_BP / IDC 2x5",
+    "value": "J_BP / IDC 2x5",
+    "mpn": "IDC header 2x5 2.54mm angled shrouded, Au (type to be chosen in the purchase list)",
+    "pins": {
+      "1": "GND",
+      "3": "GND",
+      "5": "GND",
+      "7": "GND",
+      "9": "GND",
+      "2": "5V_SYS",
+      "4": "3V3_IO",
+      "6": "CAN_TX",
+      "8": "CAN_RX",
+      "10": "5V_SYS"
+    },
+    "sheet": "CORE",
+    "url": "",
+    "note": "Edge A, centre x=26.5 mm of the slot (S1). Odd pins GND, even pins signals/supplies. Pin 1 towards smaller x. Replaces LV10 (P02-R3/J10) and CORE CAN (P03-R2/J8).",
+    "qty": 1,
+    "on_board": true,
+    "zrodlo": "nowe"
+  },
+  "J3": {
+    "ref": "J3",
+    "source_ref": "J_OBD_TAIL",
+    "footprint": "P10:PTH_OBD",
+    "display": "OBD / PTH",
+    "value": "OBD / PTH",
+    "mpn": "Soldered 120ohm twisted pair",
+    "pins": {
+      "1": "CAN_H",
+      "2": "CAN_L"
+    },
+    "sheet": "P10",
+    "url": "",
+    "note": "300mm cable to OBD male typeA pins6/14. All other OBD pins NC, including4/5/16. Device GND from its power input only.",
+    "qty": 1,
+    "on_board": true,
+    "zrodlo": "nowe"
+  },
+  "R3": {
+    "ref": "R3",
+    "source_ref": "P10_R2",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K",
+    "value": "1K",
+    "mpn": "SMD 1206 1% 0.25W 1K",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "SRV_5V_SYS"
+    },
+    "sheet": "CORE",
+    "url": "",
+    "note": "Serwis: kołek przez rezystor przy węźle, zsunięta sonda nic nie uszkodzi",
+    "qty": 1,
+    "on_board": true,
+    "zrodlo": "nowe"
+  },
+  "R4": {
+    "ref": "R4",
+    "source_ref": "P10_R2",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K",
+    "value": "1K",
+    "mpn": "SMD 1206 1% 0.25W 1K",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "SRV_3V3_IO"
+    },
+    "sheet": "CORE",
+    "url": "",
+    "note": "Serwis: kołek przez rezystor przy węźle, zsunięta sonda nic nie uszkodzi",
+    "qty": 1,
+    "on_board": true,
+    "zrodlo": "nowe"
+  },
+  "R5": {
+    "ref": "R5",
+    "source_ref": "P10_R2",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K",
+    "value": "1K",
+    "mpn": "SMD 1206 1% 0.25W 1K",
+    "pins": {
+      "1": "RX_RAW",
+      "2": "SRV_RX_RAW"
+    },
+    "sheet": "CORE",
+    "url": "",
+    "note": "Serwis: kołek przez rezystor przy węźle, zsunięta sonda nic nie uszkodzi",
+    "qty": 1,
+    "on_board": true,
+    "zrodlo": "nowe"
+  },
+  "R6": {
+    "ref": "R6",
+    "source_ref": "P10_R2",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K",
+    "value": "1K",
+    "mpn": "SMD 1206 1% 0.25W 1K",
+    "pins": {
+      "1": "CAN_RX",
+      "2": "SRV_CAN_RX"
+    },
+    "sheet": "CORE",
+    "url": "",
+    "note": "Serwis: kołek przez rezystor przy węźle, zsunięta sonda nic nie uszkodzi",
+    "qty": 1,
+    "on_board": true,
+    "zrodlo": "nowe"
+  },
+  "R7": {
+    "ref": "R7",
+    "source_ref": "P10_R2",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K",
+    "value": "1K",
+    "mpn": "SMD 1206 1% 0.25W 1K",
+    "pins": {
+      "1": "CAN_TX",
+      "2": "SRV_CAN_TX"
+    },
+    "sheet": "CORE",
+    "url": "",
+    "note": "Serwis: kołek przez rezystor przy węźle, zsunięta sonda nic nie uszkodzi",
+    "qty": 1,
+    "on_board": true,
+    "zrodlo": "nowe"
+  },
+  "R8": {
+    "ref": "R8",
+    "source_ref": "P10_R2",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical",
+    "display": "10K",
+    "value": "10K",
+    "mpn": "MF0207 Yageo 10K 1% 0.6W (owned, standing)",
+    "pins": {
+      "1": "CAN_H",
+      "2": "SRV_CAN_H"
+    },
+    "sheet": "CORE",
+    "url": "",
+    "note": "Serwis: kołek przez rezystor przy węźle, zsunięta sonda nic nie uszkodzi",
+    "qty": 1,
+    "on_board": true,
+    "zrodlo": "rejestr"
+  },
+  "R9": {
+    "ref": "R9",
+    "source_ref": "P10_R2",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical",
+    "display": "10K",
+    "value": "10K",
+    "mpn": "MF0207 Yageo 10K 1% 0.6W (owned, standing)",
+    "pins": {
+      "1": "CAN_L",
+      "2": "SRV_CAN_L"
+    },
+    "sheet": "CORE",
+    "url": "",
+    "note": "Serwis: kołek przez rezystor przy węźle, zsunięta sonda nic nie uszkodzi",
+    "qty": 1,
+    "on_board": true,
+    "zrodlo": "rejestr"
+  },
+  "J2": {
+    "ref": "J2",
+    "source_ref": "J_SRV",
+    "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x09_P2.54mm_Horizontal",
+    "display": "SERWIS / goldpin 1x9",
+    "value": "SERWIS / goldpin 1x9",
+    "mpn": "Goldpin 1x9 2.54mm angled (buy angled strip, owned 1x40 is straight)",
+    "pins": {
+      "1": "GND",
+      "9": "GND",
+      "2": "SRV_5V_SYS",
+      "3": "SRV_3V3_IO",
+      "4": "SRV_RX_RAW",
+      "5": "SRV_CAN_RX",
+      "6": "SRV_CAN_TX",
+      "7": "SRV_CAN_H",
+      "8": "SRV_CAN_L"
+    },
+    "sheet": "CORE",
+    "url": "",
+    "note": "Edge B, x=10..43 mm of the slot; pin 1 towards smaller x; pins stick ~6 mm beyond the edge. GND at both ends.",
+    "qty": 1,
+    "on_board": true,
+    "zrodlo": "nowe"
+  }
+}
