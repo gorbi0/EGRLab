@@ -1,6 +1,6 @@
 ---
 name: format-s1
-description: "Studium formatu S1 (29.09): stos płytek 160×100 z tercjami zamiast kasety R1, płytka połączeń zamiast wiązek, listwy serwisowe z kołkami na jednej krawędzi (wymaganie użytkownika); LOGGER ok. 3,2 l zamiast 11,4 l; do decyzji"
+description: "Studium formatu S1 (29.09): stos płytek 160×100 z tercjami zamiast kasety R1, płytka połączeń zamiast wiązek, listwy serwisowe z kołkami na jednej krawędzi (wymaganie użytkownika); LOGGER ok. 3,2 l zamiast 11,4 l; PRZYJĘTY 29.09, specyfikacja S1-1"
 metadata:
   node_type: memory
   type: project
