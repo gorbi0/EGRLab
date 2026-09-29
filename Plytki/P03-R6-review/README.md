@@ -57,7 +57,7 @@ Obwód U6 (SN74LVC1G17) → R41 220 Ω → SUP_N_OUT bez zmian, na J_BP3.12. Sza
 
 - Rezystory: wartości posiadane w `Zamowione/zamowione.csv` jako MF0207 (10 kΩ, 4,7 kΩ) są THT na stojąco (`R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical`). Pozostałe to SMD 1206: 30 × 1 kΩ, 2 × 220 Ω, 1 × 330 Ω, 5 × 33 Ω.
 - Kondensatory: 100 nF K15 THT jak w R5; C12–C15 zostają 1206 przy SOT-23 (lokalne odsprzęganie, decyzja R2/R4).
-- **Ilości wobec posiadanych (pytanie w PR):** reguła „wartość i typ są w rejestrze” daje 36 × 10 kΩ THT i 11 × K15, a posiadane są 7 × 10 kΩ i 5 × K15 (P01 wstrzymane, więc cały zapas wolny). Reszta to zakup, np. z listy 2.
+- **Ilości wobec posiadanych (pytanie w PR):** reguła „wartość i typ są w rejestrze” daje 36 × 10 kΩ THT i 11 × K15. Posiadane są 7 × 10 kΩ i 5 × K15, a P09 R2 i P10 R2 zużywają je w całości, więc dla P03 to w całości zakup.
 - SOIC-14 i SOT-23-6 lutowane wprost; adaptery Kamami 575068 i PA0085 zbędne. DIP28 i DIP16 w podstawkach (kupione).
 
 ## Wymagania dla layoutu (sesja lokalna)
@@ -75,6 +75,7 @@ Obwód U6 (SN74LVC1G17) → R41 220 Ω → SUP_N_OUT bez zmian, na J_BP3.12. Sza
 |---|---|---|
 | ERC | 0 naruszeń (6 arkuszy) | `verification/erc.json` |
 | Netlista pin po pinie z `parts.py` | 122 części, 511/511 pinów, 0 różnic | `schematic-check.json` |
+| Nazwy sieci wobec P09 R2 i P10 R2 (main, 29.09) | SPI3_*, TC1/2_CS, CAN_TX/RX, 5V_SYS, 3V3_IO zgodne z ich `docs/J_BP.csv` (porównanie ręczne) | — |
 | Mapa v6.1 | 310 pinów, 8 udokumentowanych różnic R2/R4, 0 nieoczekiwanych; piny dawnych złączy sprawdzane po sieci na J_BP | `v61-compare.json` |
 | Funkcje i stany domyślne (z R5, poprawione pod nowe złącza) | 53/53; mutacje 43/43 | `function-checks.json`, `function-mutations.json` |
 | Budżet resetu + szacunek zbocza R6 | 8/8; mutacje 4/4 | `reset-budget.json` |
@@ -91,7 +92,7 @@ Nie przeniesiono kontroli R3 „złącza równe zamrożonym mapom sąsiadów” 
 2. GPIO3 dla PFAIL_N (formalnie strap JTAG) — akceptacja albo inna decyzja.
 3. VOL LM2903 przy 0,6 mA i stan nieokreślony PFAIL_N przy P02 bez zasilania — pomiar w odbiorze; ewentualna zmiana po stronie P02 (np. pull-up P02 do 5V_SYS przez dzielnik albo bufor push-pull).
 4. Zbocze SUP_N_OUT: szacunek 8,3 ns/V przy 30 pF; wymaganie długości ścieżki dla P12 i pomiar na P04.
-5. Ilości THT 10 kΩ i K15 wobec posiadanych.
+5. Ilości THT 10 kΩ i K15 wobec posiadanych: P09 R2 i P10 R2 (scalone 29.09) już biorą 9 × 10 kΩ wobec 7 i 6 × K15 wobec 5, więc wszystkie 36 × 10 kΩ, 2 × 4,7 kΩ i 11 × K15 z P03 to zakup. Czy nowe sztuki kupować jako MF0207/K15 (spójnie z regułą „wartość i typ”), czy jako SMD 1206?
 6. Spadek 5V_SYS na drodze P02 → P12 → P03 (8 styków IDC, dwie żyły na złącze): ok. 40–60 mV przy 0,8 A — do potwierdzenia pomiarem wobec wymagania 4,85 V z R5 (teraz na J_BP2.19–20).
 7. Wysokość M1 na listwach i przymiarka modułów przed layoutem.
 8. B2B P03–P05 z R5 przestaje być problemem (brak B2B w S1); `docs/B2B-STATUS.md` z R5 nie jest przenoszony.
