@@ -8,7 +8,7 @@
 # Dlatego: oficjalny obraz kicad/kicad:10.0.6 (Debian 13, Python 3.13 z pcbnew) + dodatki
 # zbudowane lokalnie jako egrlab-kicad:10.0.6 (scripts/chmura/Dockerfile).
 #
-# Użycie:   bash scripts/setup-chmura.sh          (ok. 3–4 min przy pustej pamięci podręcznej Dockera)
+# Użycie:   bash scripts/setup-chmura.sh          (ok. 2–3 min przy pustej pamięci podręcznej Dockera)
 # Potem:    scripts/egrlab-docker python3 src/run_release.py      (w katalogu pakietu)
 set -euo pipefail
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -33,18 +33,24 @@ CA="${SSL_CERT_FILE:-/root/.ccr/ca-bundle.crt}"
 [ -f "$CA" ] || CA=/etc/ssl/certs/ca-certificates.crt
 cp "$CA" "$C/proxy-ca.crt"
 
-step "micromamba (conda-forge: poppler, Java 21, Node 22)"
-[ -x "$C/micromamba" ] || curl -fsSL -o "$C/micromamba" \
-  https://github.com/mamba-org/micromamba-releases/releases/latest/download/micromamba-linux-64
+# Wersje przypięte do tabeli „Narzędzia” w docs/CHMURA.md; zmiana tutaj = zmiana tam i w Dockerfile.
+MICROMAMBA_VER=2.9.0-0
+MICROMAMBA_SHA=366cd9cd8be14df1ab8ed50352a82111082a36686b2d389fdb79a92c3fafb3e3
+WHEELS="pip==25.2 numpy==2.5.3 pillow==12.3.0 reportlab==4.4.9 pdfplumber==0.11.10"
+
+step "micromamba $MICROMAMBA_VER (conda-forge: poppler 26.09.0, OpenJDK 21.0.10, Node 22.23.2)"
+echo "$MICROMAMBA_SHA  $C/micromamba" | sha256sum -c --status - 2>/dev/null || curl -fsSL -o "$C/micromamba" \
+  "https://github.com/mamba-org/micromamba-releases/releases/download/$MICROMAMBA_VER/micromamba-linux-64"
+echo "$MICROMAMBA_SHA  $C/micromamba" | sha256sum -c -
 chmod +x "$C/micromamba"
 
-step "Koła Pythona dla Pythona KiCada (3.13): numpy, Pillow, reportlab 4.4.9, pdfplumber"
+step "Koła Pythona dla Pythona KiCada (3.13): $WHEELS"
 # Obraz KiCada nie ma pip ani curl; koła pobiera host (PyPI jest dostępne), instaluje je Dockerfile.
 PY=$(command -v python3)
 "$PY" -m pip download -q --disable-pip-version-check -d "$C/wheels" --only-binary=:all: --python-version 3.13 \
   --platform manylinux2014_x86_64 --platform manylinux_2_17_x86_64 --platform manylinux_2_28_x86_64 \
-  pip numpy pillow reportlab==4.4.9 pdfplumber
-ls "$C"/wheels/reportlab-5* >/dev/null 2>&1 && rm -f "$C"/wheels/reportlab-5*
+  $WHEELS
+ls "$C"/wheels/reportlab-5* >/dev/null 2>&1 && rm -f "$C"/wheels/reportlab-5* || true
 
 step "Czcionki Liberation (metrycznie zgodne z Arial i Arial Narrow) z archive.ubuntu.com"
 if [ ! -f "$C/fonts/LiberationSansNarrow-Regular.ttf" ]; then
@@ -101,5 +107,6 @@ step "Test dymny"
   java -version 2>&1 | grep -i "openjdk version"
   echo "node $(node -v)"; node -e "require(process.env.EGRLAB_SHARP); console.log(\"sharp ok\")"
   EGRLAB_WINPATHS_VERBOSE=1 python3 -c "from reportlab.pdfbase.ttfonts import TTFont; TTFont(\"A\",\"C:/Windows/Fonts/arial.ttf\")"
-  locale | grep LC_ALL'
+  locale | grep LC_ALL
+  python3 -c "import ctypes,os; ctypes.CDLL(os.environ[\"NGSPICE_LIBRARY\"]); print(\"ngspice\", os.environ[\"NGSPICE_LIBRARY\"])"'
 step "Gotowe. Polecenia uruchamiaj przez scripts/egrlab-docker (zob. docs/CHMURA.md)."

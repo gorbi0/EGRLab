@@ -8,8 +8,11 @@ Nic nie zapisuje do żadnego z katalogów. Klasy wyniku dla każdego pliku róż
   ZNACZNIKI — identyczny po usunięciu dat, znaczników czasu i ścieżek bezwzględnych
   KOLEJNOŚĆ — JSON równy po posortowaniu list (Windows sortuje ścieżki bez rozróżniania wielkości liter)
   SKRÓTY    — JSON różni się tylko skrótami SHA-256 plików, które same są w klasach wyżej
-  RASTER    — PNG: ten sam rozmiar, podany odsetek różniących się pikseli
-  PDF       — ta sama liczba stron i te same słowa (pdftotext, multizbiór), różnice w strumieniach
+  RASTER    — PNG: ten sam rozmiar i najwyżej RASTER_MAX_PCT % różniących się pikseli (podany odsetek);
+              powyżej progu PNG dostaje klasę RÓŻNICA (Liberation zamiast Arial daje 0,6–1,0 %)
+  PDF       — ta sama liczba stron i te same słowa (pdftotext, multizbiór), różnice w strumieniach.
+              UWAGA: porównywany jest tylko tekst, NIE grafika (rysunki, ścieżki, położenie) — PDF
+              z tej klasy trzeba obejrzeć albo porównać jego podgląd PNG
   GERBER    — Gerber równy semantycznie (gerber_equiv z P00-R3: apertury i kolejność bez znaczenia)
   GERBER~   — Gerber równy z tolerancją 10 nm wierzchołków (porownaj_gerbery.py; podana maks. odchyłka)
   RÓŻNICA   — rzeczywista różnica treści (wymaga oceny)
@@ -24,6 +27,7 @@ TS = re.compile(r'\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}:\d{2}(\.\d+)?([+-]\d{2}:\d{2}
 WINPATH = re.compile(r'[A-Za-z]:[\\/](?:[^\s"<>|]*[\\/])?')
 GERBER_SUFFIXES = {'.gtl', '.gbl', '.gts', '.gbs', '.gto', '.gbo', '.gtp', '.gbp', '.gm1', '.gbr', '.g1', '.g2'}
 POSIXABS = re.compile(r'/(?:tmp|home|repo|root)/[^\s"<>]*/')
+RASTER_MAX_PCT = 2.0   # próg dla PNG: więcej różniących się pikseli = RÓŻNICA
 
 
 def text_norm(b):
@@ -98,7 +102,11 @@ def classify(rel, a, b, benign_hashes):
         return 'LOG', ''
     if suf == '.png':
         pct, info = png_diff(a, b)
-        return ('RASTER', f'{info}, {pct:.3f} % pikseli') if pct is not None else ('RÓŻNICA', info)
+        if pct is None:
+            return 'RÓŻNICA', info
+        if pct > RASTER_MAX_PCT:
+            return 'RÓŻNICA', f'{info}, {pct:.3f} % pikseli > próg {RASTER_MAX_PCT} %'
+        return 'RASTER', f'{info}, {pct:.3f} % pikseli'
     if suf in GERBER_SUFFIXES:
         sys.path.insert(0, str(Path(__file__).resolve().parent))
         from porownaj_gerbery import compare, verdict
@@ -111,7 +119,7 @@ def classify(rel, a, b, benign_hashes):
     if suf == '.pdf':
         (pa, ta), (pb, tb) = pdf_info(a), pdf_info(b)
         if pa == pb and ta == tb:
-            return 'PDF', f'{pa} str., te same słowa ({len(ta)})'
+            return 'PDF', f'{pa} str., te same słowa ({len(ta)}); grafika nieporównana'
         return 'RÓŻNICA', f'strony {pa}/{pb}, tekst {"identyczny" if ta == tb else "różny"}'
     if suf == '.json':
         try:
