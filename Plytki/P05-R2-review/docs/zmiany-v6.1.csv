@@ -1,0 +1,111 @@
+﻿nowa_ref;stara_ref;wartosc;uwaga
+U1;U1;AD7606BBSTZ;"OS=111 serial software; REF_SELECT high = internal reference. Grounded DB pins per serial-mode data sheet."
+U2;U13;REF5025IDR;"Reference for rail window only; NOT ADC reference. High grade REF5025IDR (0.05 %, 3 ppm/K); REF5025AIDR is NOT equivalent. C24 1uF output (REF50xx: 1..50uF required)."
+U3;U6;TLV1702-Q1;
+U4;U18;TBD62083APG;COM to coil supply. Inputs 2..8 tied low. Local diodes at coils.
+U5;U_READY;SN74HC08N;
+U6;U_SUP3;MCP120-300DI/TO;D bondout 1 reset, 2 VDD, 3 GND. Open drain.
+U7;U_SUP5;MCP120-450DI/TO;D bondout 1 reset, 2 VDD, 3 GND. Open drain.
+U8;U_SUPBUF;74LVC125AD;"Nexperia Ioff, soldered directly; no adapter."
+U9;U_RX1;74LVC125AD;"Nexperia Ioff, soldered directly; no adapter."
+U10;U_RX2;74LVC125AD;"Nexperia Ioff, soldered directly; no adapter."
+U11;U_TX;74LVC125AD;"Nexperia Ioff, soldered directly; no adapter."
+U12;ADDED_LOCAL_LDO;MCP1700-3302E/TO;Local logic supply derived from ADC AVCC. LV05.3 is test point only.
+R1;R_FILT;1R;"1W minimum; pulse energy at turn-on >=6mJ. One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K."
+C1;C_A;470u / 16V;"Panasonic FR, D8 x 11.5mm, pitch 3.5mm; 20%."
+C2;ADDED_LDO_IN;1u;
+C3;ADDED_LDO_OUT;2.2u;
+R2;ADDED_LDO_BLEED;1K;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+C4;C_DEC_U1_1;100n;
+C5;C_DEC_U1_37;100n;
+C6;C_DEC_U1_38;100n;
+C7;C_DEC_U1_48;100n;
+C8;C_DEC_U1_23;100n;
+C9;C_REGCAP_A;1u;
+C10;C_REGCAP_D;1u;
+C11;C_ADC_REF;100n;
+C12;ADDED_INTERNAL_REF_BULK;22u;22uF 25V X7R 20%, 1210. Ceff >=10uF including bias/tolerance/temperature: procurement acceptance, not yet measured.
+C13;C_REFCAP;22u;22uF 25V X7R 20%, 1210. Ceff >=10uF including bias/tolerance/temperature: procurement acceptance, not yet measured.
+C14;C_DEC_U2;100n;
+C15;C_DEC_U3;100n;
+C16;C_DEC_U5;100n;
+C17;C_DEC_U6;100n;
+C18;C_DEC_U7;100n;
+C19;C_DEC_U8;100n;
+C20;C_DEC_U9;100n;
+C21;C_DEC_U10;100n;
+C22;C_DEC_U11;100n;
+C23;C_REF_IN;1u;
+C24;C_REF_OUT;1u;
+C25;C_RAIL_LOW;10n;
+C26;C_RAIL_HIGH;10n;
+R3;R_RAIL_T;15K;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+R4;R_RAIL_B;10K;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+R5;R_RAIL_LT;6.04K;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+R6;R_RAIL_LB;20K;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+R7;R_RAIL_HT;5.11K;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+R8;R_RAIL_HB;24.9K;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+R9;R_RAIL_PULL;10K;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+R10;R_U_SUP3;10K;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+R11;R_SUP5_RAW;10K;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+R12;R_READY_PD;10K;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+R13;R_EXT_ADC_CS;47K;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+R14;R_EXT_ADC_SCLK;10K;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+R15;R_EXT_ADC_SDI;10K;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+R16;R_EXT_ADC_CONVST;10K;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+R17;R_EXT_ADC_RESET;10K;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+R18;R_EXT_MEAS_EN;10K;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+R19;R_LOCAL_ADC_CS_P05;10K;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+R20;R_LOCAL_ADC_SCLK_P05;10K;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+R21;R_LOCAL_ADC_SDI_P05;10K;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+R22;R_LOCAL_ADC_CONVST_P05;10K;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+R23;R_LOCAL_ADC_RESET_P05;10K;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+R24;R_LOCAL_MEAS_EN_P05;10K;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+R25;ADDED_MEAS_PERMIT_PD;10K;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+R26;ADDED_DOUT_DAMP;33R;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+R27;ADDED_BUSY_DAMP;33R;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+K1;KMEAS1;G6K-2P-Y DC5;"THT replacement of same electrical G6K-2F-Y; contacts 3/6 common, 4/5 NO. 5V coil."
+D1;D4;1N4148;
+K2;KMEAS2;G6K-2P-Y DC5;"THT replacement of same electrical G6K-2F-Y; contacts 3/6 common, 4/5 NO. 5V coil."
+D2;D5;1N4148;
+K3;KMEAS3;G6K-2P-Y DC5;"THT replacement of same electrical G6K-2F-Y; contacts 3/6 common, 4/5 NO. 5V coil."
+D3;D6;1N4148;
+C27;CF1;220p;
+C28;CF2;220p;
+C29;CF3;220p;
+C30;CF4;220p;
+C31;CF5;220p;
+R28;RB1;100K;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+R29;RB2;100K;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+R30;R_CH6_ZERO;10K;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+C32;CI_ADC;1n;
+R31;RV1;499K;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+R32;RB3;100K;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+C33;CF6;220p;
+R33;RA1;300K;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+R34;RA3;100K;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+R35;RB4;100K;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+C34;CF7;220p;
+SW1;JP_AUX;AUX HI / LO;"DPDT gold contacts; manufacturer common 2/5. HI 2-1 + 5-4; LO 2-3 + 5-6. No live switching."
+J6;J_AUX;AUX / coax 50mm;"Panel BNC shell must connect to circuit GND; not an isolated differential input."
+J1;J_DAQB;DAQ / B2B;DAQ pin 2 removed. Pigtails soldered into PTH, tie at 11.5..15mm. LV05.3 not tied to local 3V3_DAQ.
+J2;J_LV05B;LV05 / PTH;DAQ pin 2 removed. Pigtails soldered into PTH, tie at 11.5..15mm. LV05.3 not tied to local 3V3_DAQ.
+J3;J_DAQOKB;DAQOK / PTH;DAQ pin 2 removed. Pigtails soldered into PTH, tie at 11.5..15mm. LV05.3 not tied to local 3V3_DAQ.
+J4;J_TAPSB;TAPS / PTH;DAQ pin 2 removed. Pigtails soldered into PTH, tie at 11.5..15mm. LV05.3 not tied to local 3V3_DAQ.
+J5;J_VSENSEB;VSENSE / PTH;DAQ pin 2 removed. Pigtails soldered into PTH, tie at 11.5..15mm. LV05.3 not tied to local 3V3_DAQ.
+TP1;ADDED_TESTPAD;GND;
+TP2;ADDED_TESTPAD;5V_SYS;
+TP3;ADDED_TESTPAD;5VA_P05;
+TP4;ADDED_TESTPAD;3V3_DAQ;
+TP5;ADDED_TESTPAD;3V3_IO;
+TP6;ADDED_TESTPAD;REF_2V5;
+TP7;ADDED_TESTPAD;RAIL_SENSE;
+TP8;ADDED_TESTPAD;RAIL_LOW;
+TP9;ADDED_TESTPAD;RAIL_HIGH;
+TP10;ADDED_TESTPAD;DAQ_OK;
+TP11;ADDED_TESTPAD;MEAS_PERMIT;
+TP12;ADDED_TESTPAD;AD_BUSY_LOCAL;
+TP13;ADDED_TESTPAD;ADC_REF;
+TP14;ADDED_TESTPAD;REGCAP_A;
+TP15;ADDED_TESTPAD;REGCAP_D;
+TP16;ADDED_TESTPAD;REFCAP;

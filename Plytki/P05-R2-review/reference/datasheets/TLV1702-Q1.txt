@@ -1,0 +1,1543 @@
+200n 
+400n 
+600n 
+800n 
+1000n 
+1200n 
+-40 -25 -10 5 20 35 50 65 80 95 110 125 
+Propagation Delay (s) 
+Temperature ( C) 
+ 18 V Low-to-High 
+ 18 V High-to-Low 
+2.2 V Low-to-High 
+2.2 V High-to-Low 
+C0 12
+V(PULLUP)
+t
+t
+R(PULLUP)
+V(th±)
+V(th+)
+VI
+V(th±)
+V(th+)
+VO
++
+_
+VS
+½
+Device
++
+_
+VS
+½
+Device
+VI
+VO
+V(PULLUP)
+GND
+GND
+Product
+Folder
+Order
+Now
+T echnical
+Documents
+Tools &
+Software
+Support &
+Community
+Reference
+Design
+An IMPORTANT NOTICE at the end of this data sheet addresses availability, warranty, changes, use in safety-critical applications,
+intellectual property matters and other important disclaimers. PRODUCTION DATA.
+TLV1701-Q1, TLV1702-Q1, TLV1704-Q1
+SLOS890C – OCTOBER 2015 – REVISED DECEMBER 2019
+TLV170x-Q12.2-Vto36-V,microPowerComparator
+1
+1 Features
+1• Qualified for Automotive Applications
+• AEC Q100-Qualified With the Following Results
+– Device Temperature Grade 1: –40°C to
++125°C Ambient Operating Temperature
+– Device HBM ESD Classification Level 2
+(TLV1701-Q1)
+– Device HBM ESD Classification Level 1C
+(TLV1702-Q1,TLV1704-Q1)
+– Device CDM ESD Classification Level C6
+• Supply Range: 2.2 V to 36 V or ±1.1 V to ±18 V
+• Low Quiescent Current: 55 µA per Comparator
+• Input Common-Mode Range Includes Both Rails
+• Low Propagation Delay: 560 ns
+• Low Input Offset Voltage: 300 µV
+• Open Collector Outputs:
+– Up to 36 V Above Negative Supply Regardless
+of Supply Voltage
+• Industrial Temperature Range: –40°C to +125°C
+• Small Packages:
+– Single: SOT23-5 and SC-70-5
+– Dual: VSSOP-8
+– Quad: TSSOP-14
+2 Applications
+• Overvoltage and Undervoltage Detectors
+• Window Comparators
+• Overcurrent Detectors
+• Zero-Crossing Detectors
+• System Monitoring for:
+– White Goods
+– Automotive
+– Medical
+3 Description
+The TLV1701-Q1 (Single), TLV1702-Q1 (Dual) and
+TLV1704-Q1 (Quad) devices offers a wide supply
+range, rail-to-rail inputs, low quiescent current, and
+low propagation delay. All these features come in
+industry-standard, extremely-small packages, making
+these devices the best general-purpose comparators
+available.
+The open collector output offers the advantage of
+allowing the output to be pulled to any voltage rail up
+to 36 V above the negative power supply, regardless
+of the TLV170x-Q1 supply voltage.
+The device is a microPower comparator. Low input
+offset voltage, low input bias currents, low supply
+current, and open-collector configuration make the
+TLV170x-Q1 device flexible enough to handle almost
+any application, from simple voltage detection to
+driving a single relay.
+The device is specified for operation across the
+expanded industrial temperature range of –40°C to
++125°C.
+Device Information(1)
+PART NUMBER PACKAGE BODY SIZE (NOM)
+TLV1701-Q1
+SOT-23 (5) 1.60 mm × 2.90 mm
+SC-70 (5) 1.25 mm × 2.00 mm
+TLV1702-Q1 VSSOP (8) 3.00 mm × 3.00 mm
+TLV1704-Q1 TSSOP (14) 4.40 mm × 5.00 mm
+(1) For all available packages, see the package option addendum
+at the end of the data sheet.
+TLV1702-Q1 as a Window Comparator Stable Propagation Delay vs Temperature
+2
+TLV1701-Q1, TLV1702-Q1, TLV1704-Q1
+SLOS890C – OCTOBER 2015 – REVISED DECEMBER 2019 www.ti.com
+Product Folder Links: TLV1701-Q1 TLV1702-Q1 TLV1704-Q1
+Submit Documentation Feedback Copyright © 2015–2019, Texas Instruments Incorporated
+Table of Contents
+1 Features .................................................................. 1
+2 Applications ........................................................... 1
+3 Description ............................................................. 1
+4 Revision History..................................................... 2
+5 Device Comparison Table..................................... 3
+6 Pin Configuration and Functions ......................... 4
+7 Specifications......................................................... 5
+7.1 Absolute Maximum Ratings ...................................... 5
+7.2 ESD Ratings.............................................................. 5
+7.3 Recommended Operating Conditions....................... 5
+7.4 Thermal Information .................................................. 5
+7.5 Electrical Characteristics........................................... 6
+7.6 Switching Characteristics .......................................... 6
+7.7 Typical Characteristics .............................................. 7
+8 Detailed Description ............................................ 10
+8.1 Overview ................................................................. 10
+8.2 Functional Block Diagram ....................................... 10
+8.3 Feature Description................................................. 11
+8.4 Device Functional Modes........................................ 11
+9 Application and Implementation ........................ 12
+9.1 Application Information............................................ 12
+9.2 Typical Application ................................................. 12
+10 Power Supply Recommendations ..................... 13
+11 Layout................................................................... 14
+11.1 Layout Guidelines ................................................. 14
+11.2 Layout Example .................................................... 14
+12 Device and Documentation Support ................. 15
+12.1 Documentation Support ........................................ 15
+12.2 Related Links ........................................................ 15
+12.3 Receiving Notification of Documentation Updates 15
+12.4 Support Resources ............................................... 15
+12.5 Trademarks ........................................................... 15
+12.6 Electrostatic Discharge Caution ............................ 15
+12.7 Glossary ................................................................ 15
+13 Mechanical, Packaging, and Orderable
+Information ........................................................... 15
+4 Revision History
+NOTE: Page numbers for previous revisions may differ from page numbers in the current version.
+Changes from Revision B (September 2017) to Revision C Page
+• Added DCK Package Information........................................................................................................................................... 1
+• Changed incorrect front page HBM ESD classification level from 3A to 2 for TLV1701-Q1 ................................................. 1
+• Changed incorrect front page CDM from C5 back to C6 ....................................................................................................... 1
+Changes from Revision A (December 2015) to Revision B Page
+• Added TLV1701-Q1 device to data sheet .............................................................................................................................. 1
+• Added TLV1701-Q1 to ESD table and specified the ESD ratings under each device ........................................................... 5
+Changes from Original (November 2015) to Revision A Page
+• Added TLV1704-Q1 device to data sheet .............................................................................................................................. 1
+3
+TLV1701-Q1, TLV1702-Q1, TLV1704-Q1
+www.ti.com SLOS890C – OCTOBER 2015 – REVISED DECEMBER 2019
+Product Folder Links: TLV1701-Q1 TLV1702-Q1 TLV1704-Q1
+Submit Documentation FeedbackCopyright © 2015–2019, Texas Instruments Incorporated
+5 Device Comparison Table
+Table 1. Related Products
+DEVICE FEATURES
+TLC3702-Q1
+Push-pull, 20-µA, 20-mA drive
+TLC3704-Q1
+TLV3012-Q1 Push-pull, 5-µA, integrated 1.242-V reference
+TLV3501-Q1
+Push-Pull, 3.2 mA, 4.5-ns propagation delay
+TLV3502-Q1
+TLV3701-Q1
+Push-pull, 560-nA, reverse battery to 16 V
+TLV3702-Q1
+REF50xx-Q1 Series reference, 0.1% tolerance, 8 ppm/°C
+TL4050xx-Q1 Shunt reference, 0.1% tolerance, 50 ppm/°C
+TLVH431-Q1 Adjustable Shunt Reference, 1.24 V to 18 V
+1 
+2 
+3 
+4 
+5 
+6 
+7
+1IN±
+1IN+
+2IN±
+2IN+
+V+
+1OUT
+2OUT
+4IN±
+3IN+
+3IN±
+V-
+4OUT
+3OUT
+4IN+
+14 
+13 
+12 
+11 
+10 
+9 
+8
+1 
+2 
+3 
+4
+8 
+7 
+6 
+5
+V+
+2OUT
+2IN±
+2IN+
+1OUT
+1IN±
+1IN+
+V-
+1
+2
+3
+5
+4
+V+
+OUT
+IN+
+V-
+IN±
+4
+TLV1701-Q1, TLV1702-Q1, TLV1704-Q1
+SLOS890C – OCTOBER 2015 – REVISED DECEMBER 2019 www.ti.com
+Product Folder Links: TLV1701-Q1 TLV1702-Q1 TLV1704-Q1
+Submit Documentation Feedback Copyright © 2015–2019, Texas Instruments Incorporated
+6 Pin Configuration and Functions
+TLV1701-Q1 DBV and DCK Packages
+5-Pin SOT-23 and SC70
+Top View
+TLV1702-Q1 DGK Package
+8-Pin VSSOP
+Top View
+TLV1704-Q1 PW Package
+14-Pin TSSOP
+Top View
+Pin Functions
+PIN
+I/O DESCRIPTION
+NAME TLV1701-Q1
+DBV, DCK
+TLV1702-Q1
+DGK
+TLV1704-Q1
+PW
+IN+ 1 — — I Noninverting input
+1IN+ — 3 5 I Noninverting input, channel 1
+2IN+ — 5 7 I Noninverting input, channel 2
+3IN+ — — 9 I Noninverting input, channel 3
+4IN+ — — 11 I Noninverting input, channel 4
+IN– 3 — — I Inverting input
+1IN– — 2 4 I Inverting input, channel 1
+2IN– — 6 6 I Inverting input, channel 2
+3IN– — — 8 I Inverting input, channel 3
+4IN– — — 10 I Inverting input, channel 4
+OUT 4 — — O Output
+1OUT — 1 2 O Output, channel 1
+2OUT — 7 1 O Output, channel 2
+3OUT — — 14 O Output, channel 3
+4OUT — — 13 O Output, channel 4
+V+ 5 8 3 — Positive (highest) power supply
+V– 2 4 12 — Negative (lowest) power supply
+5
+TLV1701-Q1, TLV1702-Q1, TLV1704-Q1
+www.ti.com SLOS890C – OCTOBER 2015 – REVISED DECEMBER 2019
+Product Folder Links: TLV1701-Q1 TLV1702-Q1 TLV1704-Q1
+Submit Documentation FeedbackCopyright © 2015–2019, Texas Instruments Incorporated
+(1) Stresses beyond those listed under Absolute Maximum Ratings may cause permanent damage to the device. These are stress ratings
+only, and functional operation of the device at these or any other conditions beyond those indicated under Recommended Operating
+Conditions is not implied. Exposure to absolute-maximum-rated conditions for extended periods may affect device reliability.
+(2) Input pins are diode-clamped to the power-supply rails. Input signals that can swing more than 0.5 V beyond the supply rails must be
+current limited to 10 mA or less.
+(3) Short-circuit to ground; one comparator per package.
+7 Specifications
+7.1 Absolute Maximum Ratings
+over operating free-air temperature range (unless otherwise noted) (1)
+MIN MAX UNIT
+Supply voltage 40 (±20) V
+Signal input pins
+Voltage (2) (VS–) – 0.5 (VS+) + 0.5 V
+Current (2) ±10 mA
+Output short-circuit (3) Continuous mA
+Operating temperature –55 150 °C
+Junction temperature, TJ 150 °C
+Storage temperature, Tstg –65 150 °C
+(1) AEC Q100-002 indicates that HBM stressing shall be in accordance with the ANSI/ESDA/JEDEC JS-001 specification.
+7.2 ESD Ratings
+VALUE UNIT
+TLV1701-Q1
+V(ESD) Electrostatic discharge
+Human-body model (HBM), per AEC Q100-002 (1) ±2000
+V
+Charged-device model (CDM), per AEC Q100-011 ±1000
+TLV1702-Q1
+V(ESD) Electrostatic discharge
+Human-body model (HBM), per AEC Q100-002 (1) ±1000
+V
+Charged-device model (CDM), per AEC Q100-011 ±1000
+TLV1704-Q1
+V(ESD) Electrostatic discharge
+Human-body model (HBM), per AEC Q100-002 (1) ±1000
+V
+Charged-device model (CDM), per AEC Q100-011 ±1000
+7.3 Recommended Operating Conditions
+over operating free-air temperature range (unless otherwise noted)
+MIN NOM MAX UNIT
+Supply voltage VS = (VS+) – (VS–) 2.2 (±1.1) 36 (±18) V
+Specified temperature –40 125 °C
+(1) For more information about traditional and new thermal metrics, see the Semiconductor and IC Package Thermal Metrics application
+report.
+7.4 Thermal Information
+THERMAL METRIC (1)
+TLV1701-Q1 TLV1702-Q1 TLV1704-Q1
+UNITDBV (SOT-23) DCK (SC-70) DGK (VSSOP) PW (TSSOP)
+5 PINS 5 PINS 8 PINS 14 PINS
+RθJA Junction-to-ambient thermal resistance 233.1 222.5 199 128.1 °C/W
+RθJC(top) Junction-to-case (top) thermal resistance 156.4 137.2 89.5 56.5 °C/W
+RθJB Junction-to-board thermal resistance 60.6 71.3 120.4 69.9 °C/W
+ψJT Junction-to-top characterization parameter 35.7 44.6 22 9.1 °C/W
+ψJB Junction-to-board characterization parameter 59.7 71.0 118.7 69.3 °C/W
+RθJC(bot) Junction-to-case (bottom) thermal resistance N/A N/A N/A N/A °C/W
+6
+TLV1701-Q1, TLV1702-Q1, TLV1704-Q1
+SLOS890C – OCTOBER 2015 – REVISED DECEMBER 2019 www.ti.com
+Product Folder Links: TLV1701-Q1 TLV1702-Q1 TLV1704-Q1
+Submit Documentation Feedback Copyright © 2015–2019, Texas Instruments Incorporated
+7.5 Electrical Characteristics
+at TA = 25°C, VS = 2.2 V to 36 V, CL = 15 pF, RPULLUP = 5.1 kΩ, VCM = VS / 2, and VS = VPULLUP (unless otherwise noted)
+PARAMETER TEST CONDITIONS MIN TYP MAX UNIT
+OFFSET VOLTAGE
+VOS Input offset voltage
+TA = 25°C, VS = 2.2 V ±0.5 ±3.5 mV
+TA = 25°C, VS = 36 V ±0.3 ±2.5 mV
+TA = –40°C to +125°C ±5.5
+mVTA = 25°C, VS = 36 V, TLV1701-Q1 Only ±0.4 ±3.2
+TA = –40°C to +125°C, TLV1701-Q1 Only ±6.3
+dVOS/dT Input offset voltage drift TA = –40°C to +125°C ±4 ±20 μV/°C
+PSRR Power-supply rejection ratio
+TA = 25°C 15 100 μV/V
+TA = –40°C to +125°C 20 μV/V
+INPUT VOLTAGE RANGE
+VCM Common-mode voltage range TA = –40°C to +125°C (V–) (V+) V
+INPUT BIAS CURRENT
+IB Input bias current
+TA = 25°C 5 15 nA
+TA = –40°C to +125°C 20 nA
+IOS Input offset current 0.5 nA
+CLOAD Capacitive load drive See Typical Characteristics
+OUTPUT
+VO Voltage output swing from rail
+IO ≤ 4 mA, input overdrive = 100 mV,
+VS = 36 V 900 mV
+IO = 0 mA, input overdrive = 100 mV,
+VS = 36 V 600 mV
+ISC Short circuit sink current 20 mA
+Output leakage current VIN+ > VIN– 70 nA
+POWER SUPPLY
+VS Specified voltage range 2.2 36 V
+IQ Quiescent current (per channel)
+IO = 0 A 55 75 μA
+IO = 0 A, TA = –40°C to +125°C 100 μA
+7.6 Switching Characteristics
+at TA = 25°C, VS = +2.2 V to +36 V, CL = 15 pF, RPULLUP = 5.1 kΩ, VCM = VS / 2, and VS = VPULLUP (unless otherwise noted)
+PARAMETER TEST CONDITIONS MIN TYP MAX UNIT
+tpHL Propagation delay time, high-to-low Input overdrive = 100 mV 460 ns
+tpLH Propagation delay time, low-to-high Input overdrive = 100 mV 560 ns
+tR Rise time Input overdrive = 100 mV 365 ns
+tF Fall time Input overdrive = 100 mV 240 ns
+Common-Mode Voltage (V)
+Offset Voltage (mV)
+0 6 12 18 24 30 36
+-3
+-2
+-1
+0
+1
+2
+3
+D003
+Common-Mode Voltage (V)
+Offset Voltage (mV)
+0 0.5 1 1.5 2
+-3
+-2
+-1
+0
+1
+2
+3
+D002
+±18 
+±16 
+±14 
+±12 
+±10 
+±8 
+±6 
+±4 
+±2 
+0
+0 5 10 15 20
+Output Voltage (V) 
+Output Current (mA) C011 
+VS = ±1.1 V 
+VS = ±18 V 
+0
+0.25
+0.5
+0.75
+1
+±50 ±25 0 25 50 75 100 125
+  
+Input Offset Current (nA) 
+Temperature (C) C014 
+VS = ±18 V 
+VS = 2.2 V 
+35
+40
+45
+50
+55
+60
+65
+70
+75
+±40 ±25 ±10 5 20 35 50 65 80 95 110 125
+Quiescent Current (A) 
+Temperature (C) C017 
+VS = 2.2 V 
+VS = ±18 V 
+0
+2
+4
+6
+±50 ±25 0 25 50 75 100 125
+Input Bias Current (nA) 
+Temperature (C) 
+Ibn
+Ibp
+C015 
+VS = ±18 V 
+VS = 2.2 V 
+7
+TLV1701-Q1, TLV1702-Q1, TLV1704-Q1
+www.ti.com SLOS890C – OCTOBER 2015 – REVISED DECEMBER 2019
+Product Folder Links: TLV1701-Q1 TLV1702-Q1 TLV1704-Q1
+Submit Documentation FeedbackCopyright © 2015–2019, Texas Instruments Incorporated
+7.7 Typical Characteristics
+at TA = 25°C, VS = 5 V, RPULLUP = 5.1 kΩ, and input overdrive = 100 mV (unless otherwise noted)
+Figure 1. Quiescent Current vs Temperature Figure 2. Input Bias Current vs Temperature
+Figure 3. Input Offset Current vs Temperature Figure 4. Output Voltage vs Output Current
+VS = ±18 V 14 typical units shown
+Figure 5. Offset Voltage vs Common-Mode Voltage
+VS = 2.2 V 13 typical units shown
+Figure 6. Offset Voltage vs Common-Mode Voltage
+2XWSXW9ROWDJH9GLY 
+,QSXW9ROWDJHP9GLY 
+7LPHQVGLY 
+& 
+2XWSXW9ROWDJH 
+,QSXW9ROWDJH 
+W3/+  QV 
+2XWSXW9ROWDJH9GLY 
+,QSXW9ROWDJHP9GLY 
+7LPHQVGLY 
+& 
+2XWSXW9ROWDJH 
+,QSXW9ROWDJH 
+W3/+  QV 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+20p 200p  2n 
+Propagation Delay (s) 
+Output Capacitive Load (F) 
+2.2 V Supply 
+18 V Supply 
+C020 
+tPLH 
+tPHL 
+200n 
+400n 
+600n 
+800n 
+1000n 
+1200n 
+-40 -25 -10 5 20 35 50 65 80 95 110 125 
+Propagation Delay (s) 
+Temperature ( C) 
+ 18 V Low-to-High 
+ 18 V High-to-Low 
+2.2 V Low-to-High 
+2.2 V High-to-Low 
+C0 12
+Supply Voltage (V)
+Offset Voltage (mV)
+0 6 12 18 24 30 36
+-3
+-2
+-1
+0
+1
+2
+3
+D001
+200n 
+400n 
+600n 
+800n 
+1000n 
+0 200 400 600 800 1000 
+Propagation Delay (s) 
+Input Overdrive (mV) 
+18 V Low-to-High 
+18 V High-to-Low 
+2.2 V Low-to-High 
+2.2 V High-to-Low 
+C020 
+8
+TLV1701-Q1, TLV1702-Q1, TLV1704-Q1
+SLOS890C – OCTOBER 2015 – REVISED DECEMBER 2019 www.ti.com
+Product Folder Links: TLV1701-Q1 TLV1702-Q1 TLV1704-Q1
+Submit Documentation Feedback Copyright © 2015–2019, Texas Instruments Incorporated
+Typical Characteristics (continued)
+at TA = 25°C, VS = 5 V, RPULLUP = 5.1 kΩ, and input overdrive = 100 mV (unless otherwise noted)
+16 typical units shown
+Figure 7. Offset Voltage vs Supply Voltage
+Figure 8. Propagation Delay vs Input Overdrive
+Figure 9. Propagation Delay vs Capacitive Load
+VOD = 100 mV
+Figure 10. Propagation Delay vs Temperature
+VS = 36 V Overdrive = 100 mV
+Figure 11. Propagation Delay (TpLH)
+VS = 36 V Overdrive = 100 mV
+Figure 12. Propagation Delay (TpHL)
+0
+5
+10
+15
+20
+25
+30
+0 6 12 18 24 30 36
+Short Circuit Current (mA) 
+Supply Voltage (V) C016 
+VS = 2.2 V 
+Offset Voltage (mV)
+Percentage of Comparators (%)
+0
+5
+10
+15
+20
+25
+30
+-2.5
+-1.8
+-1.6
+-1.4
+-1.2
+-1
+-0.8
+-0.6
+-0.4
+-0.2
+0
+0.2
+0.4
+0.6
+0.8
+1
+1.2
+1.4
+1.6
+1.8
+2.5
+D005
+Offset Voltage (mV)
+Percentage of Comparators (%)
+0
+5
+10
+15
+20
+25
+30
+35
+-3.5
+-2.8
+-2.4
+-2
+-1.6
+-1.2
+-0.8
+-0.4
+0
+0.4
+0.8
+1.2
+1.6
+2
+2.4
+2.8
+3.5
+D004
+2XWSXW9ROWDJHP9GLY 
+,QSXW9ROWDJHP9GLY 
+7LPHQVGLY 
+& 
+2XWSXW9ROWDJH 
+,QSXW9ROWDJH 
+W3/+  QV 
+2XWSXW9ROWDJHP9GLY 
+,QSXW9ROWDJHP9GLY 
+7LPHQVGLY 
+& 
+2XWSXW9ROWDJH 
+,QSXW9ROWDJH 
+W3/+  QV 
+9
+TLV1701-Q1, TLV1702-Q1, TLV1704-Q1
+www.ti.com SLOS890C – OCTOBER 2015 – REVISED DECEMBER 2019
+Product Folder Links: TLV1701-Q1 TLV1702-Q1 TLV1704-Q1
+Submit Documentation FeedbackCopyright © 2015–2019, Texas Instruments Incorporated
+Typical Characteristics (continued)
+at TA = 25°C, VS = 5 V, RPULLUP = 5.1 kΩ, and input overdrive = 100 mV (unless otherwise noted)
+VS = 2.2 V Overdrive = 100 mV
+Figure 13. Propagation Delay (TpLH)
+VS = 2.2 V Overdrive = 100
+mV
+Figure 14. Propagation Delay (TpHL)
+VS = ±18 V Distribution taken from 2524 comparators
+Figure 15. Offset Voltage Production Distribution
+VS = 2.2 V Distribution taken from 2524 comparators
+Figure 16. Offset Voltage Production Distribution
+Sink current
+Figure 17. Short-Circuit Current vs Supply Voltage
+IN+
+IN+
+IN-
+IN-
+OUT
+V+
+V-
+10
+TLV1701-Q1, TLV1702-Q1, TLV1704-Q1
+SLOS890C – OCTOBER 2015 – REVISED DECEMBER 2019 www.ti.com
+Product Folder Links: TLV1701-Q1 TLV1702-Q1 TLV1704-Q1
+Submit Documentation Feedback Copyright © 2015–2019, Texas Instruments Incorporated
+8 Detailed Description
+8.1 Overview
+The TLV170x-Q1 comparator features rail-to-rail input and output on supply voltages as high as 36 V. The rail-to-
+rail input stage enables detection of signals close to the supply and ground. The open-collector configuration
+allows the device to be used in wired-OR configurations, such as a window comparator. A low supply current of
+55 μA per channel with small, space-saving packages, makes these comparators versatile for use in a wide
+range of applications, from portable to industrial.
+8.2 Functional Block Diagram
+VI
++
+_
+VS+
+Device
+VS±
+REF3333
+VS
+R(PULLUP)
+VO
+V(PULLUP)
+GND
+Voltage (5 V/div) 
+Time (5 ms/div) 
+Output Voltage 
+Input Voltage 
+C030 
+11
+TLV1701-Q1, TLV1702-Q1, TLV1704-Q1
+www.ti.com SLOS890C – OCTOBER 2015 – REVISED DECEMBER 2019
+Product Folder Links: TLV1701-Q1 TLV1702-Q1 TLV1704-Q1
+Submit Documentation FeedbackCopyright © 2015–2019, Texas Instruments Incorporated
+8.3 Feature Description
+8.3.1 Comparator Inputs
+The TLV170x-Q1 device is a rail-to-rail input comparator, with an input common-mode range that includes the
+supply rails. The TLV170x-Q1 device is designed to prevent phase inversion when the input pins exceed the
+supply voltage. Figure 18 shows the TLV170x-Q1 device response when input voltages exceed the supply,
+resulting in no phase inversion.
+Figure 18. No Phase Inversion: Comparator Response to Input Voltage
+(Propagation Delay Included)
+8.4 Device Functional Modes
+8.4.1 Setting Reference Voltage
+Using a stable reference is important when setting the transition point for the TLV170x-Q1 device. The REF3333,
+as shown in Figure 19, provides a 3.3-V reference voltage with low drift and only 3.9 μA of quiescent current.
+Figure 19. Reference Voltage for the TLV170x-Q1
++
+Vin
+5 V
+5 V
+Rh 
+576 k 
+Rx 
+100 k 
+Ry 
+100 k 
+Vout
+-
++
++V
+5 V
+Rp
+5 k 
+12
+TLV1701-Q1, TLV1702-Q1, TLV1704-Q1
+SLOS890C – OCTOBER 2015 – REVISED DECEMBER 2019 www.ti.com
+Product Folder Links: TLV1701-Q1 TLV1702-Q1 TLV1704-Q1
+Submit Documentation Feedback Copyright © 2015–2019, Texas Instruments Incorporated
+9 Application and Implementation
+NOTE
+Information in the following applications sections is not part of the TI component
+specification, and TI does not warrant its accuracy or completeness. TI’s customers are
+responsible for determining suitability of components for their purposes. Customers should
+validate and test their design implementation to confirm system functionality.
+9.1 Application Information
+The TLV170x-Q1 device can be used in a wide variety of applications, such as zero crossing detectors, window
+comparators, over and undervoltage detectors, and high-side voltage sense circuits.
+9.2 Typical Application
+Comparators are used to differentiate between two different signal levels. For example, a comparator
+differentiates between an overtemperature and normal-temperature condition. However, noise or signal variation
+at the comparison threshold causes multiple transitions. This application example sets upper and lower
+hysteresis thresholds to eliminate the multiple transitions caused by noise.
+Figure 20. Comparator Schematic With Hysteresis
+9.2.1 Design Requirements
+The design requirements are as follows:
+• Supply voltage: 5 V
+• Input: 0 V to 5 V
+• Lower threshold (VL) = 2.3 V ±0.1 V
+• Upper threshold (VH) = 2.7 V ±0.1 V
+• VH – VL = 2.4 V ±0.1 V
+• Low-power consumption
+13
+TLV1701-Q1, TLV1702-Q1, TLV1704-Q1
+www.ti.com SLOS890C – OCTOBER 2015 – REVISED DECEMBER 2019
+Product Folder Links: TLV1701-Q1 TLV1702-Q1 TLV1704-Q1
+Submit Documentation FeedbackCopyright © 2015–2019, Texas Instruments Incorporated
+Typical Application (continued)
+9.2.2 Detailed Design Procedure
+Make a small change to the comparator circuit to add hysteresis. Hysteresis uses two different threshold voltages
+to avoid the multiple transitions introduced in the previous circuit. The input signal must exceed the upper
+threshold (VH) to transition low, or below the lower threshold (VL) to transition high.
+Figure 20 illustrates hysteresis on a comparator. Resistor Rh sets the hysteresis level. An open-collector output
+stage requires a pullup resistor (Rp). The pullup resistor creates a voltage divider at the comparator output that
+introduces an error when the output is at logic high. This error can be minimized if Rh > 100 Rp.
+When the output is at a logic high (5 V), Rh is in parallel with Rx (ignoring Rp). This configuration drives more
+current into Ry, and raises the threshold voltage (VH) to 2.7 V. The input signal must drive above VH = 2.7 V to
+cause the output to transition to logic low (0 V).
+When the output is at logic low (0 V), Rh is in parallel with Ry. This configuration reduces the current into Ry, and
+reduces the threshold voltage to 2.3 V. The input signal must drive below VL = 2.3 V to cause the output to
+transition to logic high (5 V).
+For more details on this design and other alternative devices that can be used in place of the TLV1702, refer to
+Precision Design TIPD144, Comparator with Hysteresis Reference Design.
+9.2.3 Application Curve
+Figure 21 shows the upper and lower thresholds for hysteresis. The upper threshold is 2.76 V and the lower
+threshold is 2.34 V, both of which are close to the design target.
+Figure 21. TLV1701 Upper and Lower Threshold With Hysteresis
+10 Power Supply Recommendations
+The TLV170x-Q1 device is specified for operation from 2.2 V to 36 V (±1.1 to ±18 V); many specifications apply
+from –40°C to +125°C. Parameters that can exhibit significant variance with regard to operating voltage or
+temperature are presented in the Typical Characteristics section.
+CAUTION
+Supply voltages larger than 40 V can permanently damage the device; see the
+Absolute Maximum Ratings.
+Place 0.1-μF bypass capacitors close to the power-supply pins to reduce errors coupling in from noisy or high-
+impedance power supplies. For more detailed information on bypass capacitor placement; see the Layout
+Guidelines section.
+IN+
+IN-
+V±
+V+
+OUT
+VS+
+GND
+GND
+Only needed for
+dual-supply
+operation
+OUT
+IN-
+IN+
+Run the input traces
+as far away from
+the supply lines
+as possible
+Use low-ESR, ceramic 
+bypass capacitor
++IN+
+OUT
+(Schematic Representation)
+IN-
+VS± or GND
+V+
+V-
+14
+TLV1701-Q1, TLV1702-Q1, TLV1704-Q1
+SLOS890C – OCTOBER 2015 – REVISED DECEMBER 2019 www.ti.com
+Product Folder Links: TLV1701-Q1 TLV1702-Q1 TLV1704-Q1
+Submit Documentation Feedback Copyright © 2015–2019, Texas Instruments Incorporated
+11 Layout
+11.1 Layout Guidelines
+Comparators are very sensitive to input noise. For best results, maintain the following layout guidelines:
+• Use a printed-circuit board (PCB) with a good, unbroken low-inductance ground plane. Proper grounding (use
+of ground plane) helps maintain specified performance of the TLV170x-Q1 device.
+• To minimize supply noise, place a decoupling capacitor (0.1-μF ceramic, surface-mount capacitor) as close
+as possible to VS as shown in Figure 22.
+• On the inputs and the output, keep lead lengths as short as possible to avoid unwanted parasitic feedback
+around the comparator. Keep inputs away from the output.
+• Solder the device directly to the PCB rather than using a socket.
+• For slow-moving input signals, take care to prevent parasitic feedback. A small capacitor (1000 pF or less)
+placed between the inputs can help eliminate oscillations in the transition region. This capacitor causes some
+degradation to propagation delay when the impedance is low. Run the topside ground plane between the
+output and inputs.
+• Run the ground pin ground trace under the device up to the bypass capacitor, shielding the inputs from the
+outputs.
+11.2 Layout Example
+Figure 22. Comparator Board Layout
+15
+TLV1701-Q1, TLV1702-Q1, TLV1704-Q1
+www.ti.com SLOS890C – OCTOBER 2015 – REVISED DECEMBER 2019
+Product Folder Links: TLV1701-Q1 TLV1702-Q1 TLV1704-Q1
+Submit Documentation FeedbackCopyright © 2015–2019, Texas Instruments Incorporated
+12 Device and Documentation Support
+12.1 Documentation Support
+12.1.1 Related Documentation
+For related documentation, see the following:
+• Precision Design, Comparator with Hysteresis Reference Design, TIDU020
+• REF33xx 3.9-μA, SC70-3, SOT-23-3, and UQFN-8, 30-ppm/°C Drift Voltage Reference, SBOS392
+12.2 Related Links
+Table 2 lists quick access links. Categories include technical documents, support and community resources,
+tools and software, and quick access to sample or buy.
+Table 2. Related Links
+PARTS PRODUCT FOLDER SAMPLE & BUY TECHNICAL
+DOCUMENTS
+TOOLS &
+SOFTWARE
+SUPPORT &
+COMMUNITY
+TLV1701-Q1 Click here Click here Click here Click here Click here
+TLV1702-Q1 Click here Click here Click here Click here Click here
+TLV1704-Q1 Click here Click here Click here Click here Click here
+12.3 Receiving Notification of Documentation Updates
+To receive notification of documentation updates, navigate to the device product folder on ti.com. In the upper
+right corner, click on Alert me to register and receive a weekly digest of any product information that has
+changed. For change details, review the revision history included in any revised document.
+12.4 Support Resources
+TI E2E™ support forums are an engineer's go-to source for fast, verified answers and design help — straight
+from the experts. Search existing answers or ask your own question to get the quick design help you need.
+Linked content is provided "AS IS" by the respective contributors. They do not constitute TI specifications and do
+not necessarily reflect TI's views; see TI's Terms of Use.
+12.5 Trademarks
+E2E is a trademark of Texas Instruments.
+All other trademarks are the property of their respective owners.
+12.6 Electrostatic Discharge Caution
+This integrated circuit can be damaged by ESD. Texas Instruments recommends that all integrated circuits be handled with
+appropriate precautions. Failure to observe proper handling and installation procedures can cause damage.
+ESD damage can range from subtle performance degradation to complete device failure. Precision integrated circuits may be more
+susceptible to damage because very small parametric changes could cause the device not to meet its published specifications.
+12.7 Glossary
+SLYZ022 — TI Glossary.
+This glossary lists and explains terms, acronyms, and definitions.
+13 Mechanical, Packaging, and Orderable Information
+The following pages include mechanical packaging and orderable information. This information is the most
+current data available for the designated devices. This data is subject to change without notice and revision of
+this document. For browser-based versions of this data sheet, refer to the left-hand navigation.
+PACKAGE OPTION ADDENDUM
+www.ti.com 25-Nov-2025
+PACKAGING INFORMATION
+Orderable part number Status
+(1)
+Material type
+(2)
+Package | Pins Package qty | Carrier RoHS
+(3)
+Lead finish/
+Ball material
+(4)
+MSL rating/
+Peak reflow
+(5)
+Op temp (°C) Part marking
+(6)
+TLV1701AQDCKRQ1 Active Production SC70 (DCK) | 5 3000 | LARGE T&R Yes NIPDAU | SN Level-2-260C-1 YEAR -40 to 125 1FG
+TLV1701AQDCKRQ1.B Active Production SC70 (DCK) | 5 3000 | LARGE T&R Yes NIPDAU Level-2-260C-1 YEAR -40 to 125 1FG
+TLV1701QDBVRQ1 Active Production SOT-23 (DBV) | 5 3000 | LARGE T&R Yes NIPDAU Level-2-260C-1 YEAR -40 to 125 1701
+TLV1701QDBVRQ1.B Active Production SOT-23 (DBV) | 5 3000 | LARGE T&R Yes NIPDAU Level-2-260C-1 YEAR -40 to 125 1701
+TLV1702AQDGKRQ1 Active Production VSSOP (DGK) | 8 2500 | LARGE T&R Yes NIPDAU | NIPDAUAG Level-2-260C-1 YEAR -40 to 125 1702Q
+TLV1702AQDGKRQ1.B Active Production VSSOP (DGK) | 8 2500 | LARGE T&R Yes NIPDAUAG Level-2-260C-1 YEAR -40 to 125 1702Q
+TLV1704AQPWRQ1 Active Production TSSOP (PW) | 14 2000 | LARGE T&R Yes NIPDAU Level-2-260C-1 YEAR -40 to 125 T1704Q1
+TLV1704AQPWRQ1.B Active Production TSSOP (PW) | 14 2000 | LARGE T&R Yes NIPDAU Level-2-260C-1 YEAR -40 to 125 T1704Q1
+ 
+(1) Status:  For more details on status, see our product life cycle.
+ 
+(2) Material type:  When designated, preproduction parts are prototypes/experimental devices, and are not yet approved or released for full production. Testing and final process, including without limitation quality assurance,
+reliability performance testing, and/or process qualification, may not yet be complete, and this item is subject to further changes or possible discontinuation. If available for ordering, purchases will be subject to an additional
+waiver at checkout, and are intended for early internal evaluation purposes only. These items are sold without warranties of any kind.
+ 
+(3) RoHS values:  Yes, No, RoHS Exempt. See the TI RoHS Statement for additional information and value definition.
+ 
+(4) Lead finish/Ball material:  Parts may have multiple material finish options. Finish options are separated by a vertical ruled line. Lead finish/Ball material values may wrap to two lines if the finish value exceeds the maximum
+column width.
+ 
+(5) MSL rating/Peak reflow:  The moisture sensitivity level ratings and peak solder (reflow) temperatures. In the event that a part has multiple moisture sensitivity ratings, only the lowest level per JEDEC standards is shown.
+Refer to the shipping label for the actual reflow temperature that will be used to mount the part to the printed circuit board.
+ 
+(6) Part marking:  There may be an additional marking, which relates to the logo, the lot trace code information, or the environmental category of the part.
+ 
+Multiple part markings will be inside parentheses. Only one part marking contained in parentheses and separated by a "~" will appear on a part. If a line is indented then it is a continuation of the previous line and the two
+combined represent the entire part marking for that device.
+ 
+Important Information and Disclaimer:The information provided on this page represents TI's knowledge and belief as of the date that it is provided. TI bases its knowledge and belief on information provided by third parties, and
+makes no representation or warranty as to the accuracy of such information. Efforts are underway to better integrate information from third parties. TI has taken and continues to take reasonable steps to provide representative
+and accurate information but may not have conducted destructive testing or chemical analysis on incoming materials and chemicals. TI and TI suppliers consider certain information to be proprietary, and thus CAS numbers
+and other limited information may not be available for release.
+Addendum-Page 1
+PACKAGE OPTION ADDENDUM
+www.ti.com 25-Nov-2025
+ 
+In no event shall TI's liability arising out of such information exceed the total purchase price of the TI part(s) at issue in this document sold by TI to Customer on an annual basis.
+ 
+ OTHER QUALIFIED VERSIONS OF TLV1701-Q1, TLV1702-Q1, TLV1704-Q1 :
+• Catalog : TLV1701, TLV1702, TLV1704
+ NOTE: Qualified Version Definitions:
+• Catalog - TI's standard catalog product
+Addendum-Page 2
+PACKAGE MATERIALS INFORMATION
+  
+www.ti.com 15-Jul-2026
+TAPE AND REEL INFORMATION
+Reel Width (W1)
+REEL DIMENSIONS
+A0B0K0WDimension designed to accommodate the component lengthDimension designed to accommodate the component thicknessOverall width of the carrier tapePitch between successive cavity centersDimension designed to accommodate the component width
+TAPE DIMENSIONSK0 P1B0WA0Cavity
+QUADRANT ASSIGNMENTS FOR PIN 1 ORIENTATION IN TAPE
+Pocket QuadrantsSprocket HolesQ1Q1Q2Q2Q3Q3Q4Q4User Direction of Feed
+P1ReelDiameter
+ 
+*All dimensions are nominal
+Device Package
+Type
+Package
+Drawing
+Pins SPQ Reel
+Diameter
+(mm)
+Reel
+Width
+W1 (mm)
+A0
+(mm)
+B0
+(mm)
+K0
+(mm)
+P1
+(mm)
+W
+(mm)
+Pin1
+Quadrant
+TLV1701AQDCKRQ1 SC70 DCK 5 3000 180.0 8.4 2.3 2.55 1.2 4.0 8.0 Q3
+TLV1701AQDCKRQ1 SC70 DCK 5 3000 178.0 9.0 2.4 2.5 1.2 4.0 8.0 Q3
+TLV1701QDBVRQ1 SOT-23 DBV 5 3000 180.0 8.4 3.2 3.2 1.4 4.0 8.0 Q3
+TLV1701QDBVRQ1 SOT-23 DBV 5 3000 178.0 9.0 3.23 3.17 1.37 4.0 8.0 Q3
+TLV1702AQDGKRQ1 VSSOP DGK 8 2500 330.0 12.4 5.3 3.4 1.4 8.0 12.0 Q1
+TLV1702AQDGKRQ1 VSSOP DGK 8 2500 330.0 12.4 5.3 3.4 1.4 8.0 12.0 Q1
+TLV1704AQPWRQ1 TSSOP PW 14 2000 330.0 12.4 6.9 5.6 1.6 8.0 12.0 Q1
+Pack Materials-Page 1
+PACKAGE MATERIALS INFORMATION
+  
+www.ti.com 15-Jul-2026
+TAPE AND REEL BOX DIMENSIONS
+Width (mm)
+W LH
+ 
+*All dimensions are nominal
+Device Package Type Package Drawing Pins SPQ Length (mm) Width (mm) Height (mm)
+TLV1701AQDCKRQ1 SC70 DCK 5 3000 210.0 185.0 35.0
+TLV1701AQDCKRQ1 SC70 DCK 5 3000 190.0 190.0 30.0
+TLV1701QDBVRQ1 SOT-23 DBV 5 3000 210.0 185.0 35.0
+TLV1701QDBVRQ1 SOT-23 DBV 5 3000 180.0 180.0 18.0
+TLV1702AQDGKRQ1 VSSOP DGK 8 2500 366.0 364.0 50.0
+TLV1702AQDGKRQ1 VSSOP DGK 8 2500 353.0 353.0 32.0
+TLV1704AQPWRQ1 TSSOP PW 14 2000 353.0 353.0 32.0
+Pack Materials-Page 2
+www.ti.com
+PACKAGE OUTLINE
+C
+0.22
+0.08 TYP
+0.25
+3.0
+2.6
+2X 0.95
+1.9
+1.45
+0.90
+0.15
+0.00 TYP
+5X 0.5
+0.3
+0.6
+0.3 TYP
+8
+0  TYP
+1.9
+(0.1)
+(0.15)
+4X 0 -15
+4X 4 -15
+A
+3.05
+2.75
+B1.75
+1.45
+(1.1)
+SOT-23 - 1.45 mm max heightDBV0005A
+SMALL OUTLINE TRANSISTOR
+4214839/K   08/2024
+NOTES: 
+ 
+1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+    per ASME Y14.5M.
+2. This drawing is subject to change without notice.
+3. Refernce JEDEC MO-178.
+4. Body dimensions do not include mold flash, protrusions, or gate burrs. Mold flash, protrusions, or gate burrs shall not
+    exceed 0.25 mm per side.
+5. Support pin may differ or may not be present.
+0.2 C A B
+1
+3
+4
+5
+2
+INDEX AREA
+PIN 1
+ NOTE 5
+GAGE PLANE
+SEATING PLANE
+0.1 C
+SCALE  4.000
+www.ti.com
+EXAMPLE BOARD LAYOUT
+0.07 MAX
+ARROUND
+0.07 MIN
+ARROUND
+5X (1.1)
+5X (0.6)
+(2.6)
+(1.9)
+2X (0.95)
+(R0.05) TYP
+4214839/K   08/2024
+SOT-23 - 1.45 mm max heightDBV0005A
+SMALL OUTLINE TRANSISTOR
+NOTES: (continued)
+ 
+6. Publication IPC-7351 may have alternate designs. 
+7. Solder mask tolerances between and around signal pads can vary based on board fabrication site.
+ 
+SYMM
+LAND PATTERN EXAMPLE
+EXPOSED METAL SHOWN
+SCALE:15X
+PKG
+1
+3 4
+5
+2
+SOLDER MASK
+OPENING
+METAL UNDER
+SOLDER MASK
+SOLDER MASK
+DEFINED
+EXPOSED METAL
+METALSOLDER MASK
+OPENING
+NON SOLDER MASK
+DEFINED
+(PREFERRED)
+SOLDER MASK DETAILS
+EXPOSED METAL
+www.ti.com
+EXAMPLE STENCIL DESIGN
+(2.6)
+(1.9)
+2X(0.95)
+5X (1.1)
+5X (0.6)
+(R0.05) TYP
+SOT-23 - 1.45 mm max heightDBV0005A
+SMALL OUTLINE TRANSISTOR
+4214839/K   08/2024
+NOTES: (continued)
+ 
+8. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+     design recommendations. 
+9. Board assembly site may have different recommendations for stencil design.
+ 
+SOLDER PASTE EXAMPLE
+BASED ON 0.125 mm THICK STENCIL
+SCALE:15X
+SYMM
+PKG
+1
+3 4
+5
+2
+www.ti.com
+PACKAGE OUTLINE
+C
+6X 0.65
+2X
+1.95
+8X 0.38
+0.25
+5.05
+4.75 TYP
+SEATING
+PLANE
+0.15
+0.05
+0.25
+GAGE PLANE
+0 -8
+1.1 MAX
+0.23
+0.13
+B 3.1
+2.9
+NOTE 4
+A
+3.1
+2.9
+NOTE 3
+0.7
+0.4
+VSSOP - 1.1 mm max heightDGK0008A
+SMALL OUTLINE PACKAGE
+4214862/A   04/2023
+1
+4
+5
+8
+0.13 C A B
+PIN 1 INDEX AREA
+SEE DETAIL  A
+0.1 C
+NOTES: 
+ 
+1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+    per ASME Y14.5M. 
+2. This drawing is subject to change without notice. 
+3. This dimension does not include mold flash, protrusions, or gate burrs. Mold flash, protrusions, or gate burrs shall not
+    exceed 0.15 mm per side. 
+4. This dimension does not include interlead flash. Interlead flash shall not exceed 0.25 mm per side.
+5. Reference JEDEC registration MO-187.
+ 
+PowerPAD is a trademark of Texas Instruments.
+A  20
+DETAIL A
+TYPICAL
+SCALE  4.000
+www.ti.com
+EXAMPLE BOARD LAYOUT
+0.05 MAX
+ALL AROUND
+0.05 MIN
+ALL AROUND
+8X (1.4)
+8X (0.45)
+6X (0.65)
+(4.4)
+(R0.05) TYP
+VSSOP - 1.1 mm max heightDGK0008A
+SMALL OUTLINE PACKAGE
+4214862/A   04/2023
+NOTES: (continued)
+ 
+  6. Publication IPC-7351 may have alternate designs. 
+  7. Solder mask tolerances between and around signal pads can vary based on board fabrication site.
+  8. Vias are optional depending on application, refer to device data sheet. If any vias are implemented, refer to their locations shown
+      on this view. It is recommended that vias under paste be filled, plugged or tented.
+  9. Size of metal pad may vary due to creepage requirement.
+ 
+TM
+LAND PATTERN EXAMPLE
+EXPOSED METAL SHOWN
+SCALE: 15X
+SYMM
+SYMM
+1
+4
+5
+8
+SEE DETAILS
+15.000
+METALSOLDER MASK
+OPENING
+METAL UNDER
+SOLDER MASK
+SOLDER MASK
+OPENING
+EXPOSED METALEXPOSED METAL
+SOLDER MASK DETAILS
+NON-SOLDER MASK
+DEFINED
+(PREFERRED)
+SOLDER MASK
+DEFINED
+www.ti.com
+EXAMPLE STENCIL DESIGN
+8X (1.4)
+8X (0.45)
+6X (0.65)
+(4.4)
+(R0.05) TYP
+VSSOP - 1.1 mm max heightDGK0008A
+SMALL OUTLINE PACKAGE
+4214862/A   04/2023
+NOTES: (continued)
+ 
+11. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+      design recommendations.   
+12. Board assembly site may have different recommendations for stencil design.
+ 
+TM
+SOLDER PASTE EXAMPLE
+ SCALE: 15X
+SYMM
+SYMM
+1
+4
+5
+8
+www.ti.com
+PACKAGE OUTLINE
+C
+0.22
+0.08 TYP
+0.15
+2.4
+1.8
+2X 0.65
+1.3
+1.1 MAX
+0.1
+0.0 TYP
+5X 0.33
+0.15
+NOTE 5
+0.1 C A B
+0.46
+0.26 TYP
+8
+0  TYP
+1.3
+4X 0 -12
+4X 4 -15
+A
+2.15
+1.85
+B1.4
+1.1
+(0.9)
+(0.15)
+(0.1)
+SOT - 1.1 max heightDCK0005A
+SMALL OUTLINE TRANSISTOR
+4214834/G   11/2024
+NOTES: 
+ 
+1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+    per ASME Y14.5M.
+2. This drawing is subject to change without notice.
+3. Refernce JEDEC MO-203.
+4. Support pin may differ or may not be present.
+5. Lead width does not comply with JEDEC.
+6. Body dimensions do not include mold flash, protrusions, or gate burrs. Mold flash, protrusions, or gate burrs shall not exceed
+    0.25mm per side
+0.1 C A B
+1
+3
+4
+5
+2
+INDEX AREA
+PIN 1
+NOTE 4
+NOTE 5
+GAGE PLANE
+SEATING PLANE
+0.1 C
+SCALE  5.600
+www.ti.com
+EXAMPLE BOARD LAYOUT
+0.07 MAX
+ARROUND
+0.07 MIN
+ARROUND
+5X (0.95)
+5X (0.4)
+(2.2)
+(1.3)
+2X (0.65)
+(R0.05) TYP
+4214834/G   11/2024
+SOT - 1.1 max heightDCK0005A
+SMALL OUTLINE TRANSISTOR
+NOTES: (continued)
+ 
+7. Publication IPC-7351 may have alternate designs. 
+8. Solder mask tolerances between and around signal pads can vary based on board fabrication site.
+ 
+SYMM
+LAND PATTERN EXAMPLE
+EXPOSED METAL SHOWN
+SCALE:18X
+PKG
+1
+3 4
+5
+2
+SOLDER MASK
+OPENING
+METAL UNDER
+SOLDER MASK
+SOLDER MASK
+DEFINED
+EXPOSED METAL
+METALSOLDER MASK
+OPENING
+NON SOLDER MASK
+DEFINED
+(PREFERRED)
+SOLDER MASK DETAILS
+EXPOSED METAL
+www.ti.com
+EXAMPLE STENCIL DESIGN
+(2.2)
+(1.3)
+2X(0.65)
+5X (0.95)
+5X (0.4)
+(R0.05) TYP
+SOT - 1.1 max heightDCK0005A
+SMALL OUTLINE TRANSISTOR
+4214834/G   11/2024
+NOTES: (continued)
+ 
+9. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+     design recommendations. 
+10. Board assembly site may have different recommendations for stencil design.
+ 
+SOLDER PASTE EXAMPLE
+BASED ON 0.125 THICK STENCIL
+SCALE:18X
+SYMM
+PKG
+1
+3 4
+5
+2
+www.ti.com
+PACKAGE OUTLINE
+C
+12X 0.65
+2X
+3.9
+14X 0.30
+0.17
+6.6
+6.2 TYP
+1.2 MAX
+0.15
+0.05
+0.25
+GAGE PLANE
+0 -8
+4X (0 -12 )
+B 4.5
+4.3
+NOTE 4
+A
+5.1
+4.9
+NOTE 3
+0.75
+0.50
+(0.15) TYP
+TSSOP - 1.2 mm max heightPW0014A
+SMALL OUTLINE PACKAGE
+4220202/B   12/2023
+1
+7
+8
+14
+0.1 C A B
+PIN 1 INDEX AREA
+SEE DETAIL  A
+0.1 C
+NOTES: 
+ 
+1. All linear dimensions are in millimeters. Any dimensions in parenthesis are for reference only. Dimensioning and tolerancing
+    per ASME Y14.5M. 
+2. This drawing is subject to change without notice. 
+3. This dimension does not include mold flash, protrusions, or gate burrs. Mold flash, protrusions, or gate burrs shall not
+    exceed 0.15 mm per side. 
+4. This dimension does not include interlead flash. Interlead flash shall not exceed 0.25 mm per side.
+5. Reference JEDEC registration MO-153.
+ 
+SEATING
+PLANE
+A  20
+DETAIL A
+TYPICAL
+SCALE  2.500
+www.ti.com
+EXAMPLE BOARD LAYOUT
+0.05 MAX
+ALL AROUND
+0.05 MIN
+ALL AROUND
+14X (1.5)
+14X (0.45)
+12X (0.65)
+(5.8)
+(R0.05) TYP
+TSSOP - 1.2 mm max heightPW0014A
+SMALL OUTLINE PACKAGE
+4220202/B   12/2023
+NOTES: (continued)
+ 
+6. Publication IPC-7351 may have alternate designs. 
+7. Solder mask tolerances between and around signal pads can vary based on board fabrication site.
+ 
+LAND PATTERN EXAMPLE
+EXPOSED METAL SHOWN
+SCALE: 10X
+SYMM
+SYMM
+1
+7 8
+14
+15.000
+METALSOLDER MASK
+OPENING
+METAL UNDER
+SOLDER MASK
+SOLDER MASK
+OPENING
+EXPOSED METALEXPOSED METAL
+SOLDER MASK DETAILS
+NON-SOLDER MASK
+DEFINED
+(PREFERRED)
+SOLDER MASK
+DEFINED
+www.ti.com
+EXAMPLE STENCIL DESIGN
+14X (1.5)
+14X (0.45)
+12X (0.65)
+(5.8)
+(R0.05) TYP
+TSSOP - 1.2 mm max heightPW0014A
+SMALL OUTLINE PACKAGE
+4220202/B   12/2023
+NOTES: (continued)
+ 
+8. Laser cutting apertures with trapezoidal walls and rounded corners may offer better paste release. IPC-7525 may have alternate
+    design recommendations.   
+9. Board assembly site may have different recommendations for stencil design.
+ 
+SOLDER PASTE EXAMPLE
+BASED ON 0.125 mm THICK STENCIL
+SCALE: 10X
+SYMM
+SYMM
+1
+7 8
+14
+IMPORTANT NOTICE AND DISCLAIMER
+TI PROVIDES TECHNICAL AND RELIABILITY DATA (INCLUDING DATASHEETS), DESIGN RESOURCES (INCLUDING REFERENCE 
+DESIGNS), APPLICATION OR OTHER DESIGN ADVICE, WEB TOOLS, SAFETY INFORMATION, AND OTHER RESOURCES “AS IS” 
+AND WITH ALL FAULTS, AND DISCLAIMS ALL WARRANTIES, EXPRESS AND IMPLIED, INCLUDING WITHOUT LIMITATION ANY 
+IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT OF THIRD 
+PARTY INTELLECTUAL PROPERTY RIGHTS.
+These resources are intended for skilled developers designing with TI products. You are solely responsible for (1) selecting the appropriate 
+TI products for your application, (2) designing, validating and testing your application, and (3) ensuring your application meets applicable 
+standards, and any other safety, security, regulatory or other requirements.
+These resources are subject to change without notice. TI grants you permission to use these resources only for development of an 
+application that uses the TI products described in the resource. Other reproduction and display of these resources is prohibited. No license 
+is granted to any other TI intellectual property right or to any third party intellectual property right. TI disclaims responsibility for, and you fully 
+indemnify TI and its representatives against any claims, damages, costs, losses, and liabilities arising out of your use of these resources.
+TI’s products are provided subject to TI’s Terms of Sale, TI’s General Quality Guidelines, or other applicable terms available either on 
+ti.com or provided in conjunction with such TI products. TI’s provision of these resources does not expand or otherwise alter TI’s applicable 
+warranties or warranty disclaimers for TI products. Unless TI explicitly designates a product as custom or customer-specified, TI products 
+are standard, catalog, general purpose devices.
+TI objects to and rejects any additional or different terms you may propose.
+IMPORTANT NOTICE
+Copyright © 2026, Texas Instruments Incorporated
+Last updated 10/2025

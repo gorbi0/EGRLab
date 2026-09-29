@@ -1,0 +1,377 @@
+{
+  "checks": [
+    {
+      "name": "AD7606B all 64 physical pins",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Separate REGCAP and reference capacitors",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "VDRIVE supplied from local AVCC-derived regulator",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "All digital supply pins share local domain",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Open-collector window and supervisor bondout",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "READY and relay permit: actual HC08 truth table",
+      "pass": true,
+      "detail": {
+        "rows": 16
+      }
+    },
+    {
+      "name": "RX ADC_SCLK",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "RX ADC_SDI",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "RX ADC_CS",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "RX ADC_CONVST",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "RX ADC_RESET",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "RX MEAS_EN",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Defaults on both sides of RX buffers",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Window reference REF50xx SOIC-8: 2 VIN, 4 GND, 6 VOUT, others open",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "MISO tri-state and BUSY Ioff output",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Relay driver input/output/COM and pull-down",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "G6K NO contacts and coil polarity",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Channel lower arms and grounded current placeholder",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "AUX switch commons and HI-only shunt",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Logical B2B pinout matches captured P03",
+      "pass": true,
+      "detail": {
+        "1": "ADC_SCLK",
+        "2": "NC",
+        "3": "ADC_SDI",
+        "4": "GND",
+        "5": "ADC_DOUTA",
+        "6": "GND",
+        "7": "ADC_CS",
+        "8": "GND",
+        "9": "ADC_CONVST",
+        "10": "GND",
+        "11": "ADC_BUSY",
+        "12": "GND",
+        "13": "ADC_RESET",
+        "14": "GND",
+        "15": "MEAS_EN",
+        "16": "GND"
+      }
+    },
+    {
+      "name": "LV connector preserved, 3V3 test only",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Rail-window tolerance stays inside ADC static limits",
+      "pass": true,
+      "detail": {
+        "low_nominal_V": 4.800307219662058,
+        "high_nominal_V": 5.185771409530156,
+        "low_corner_V": [
+          4.752430161764617,
+          4.848546707582147
+        ],
+        "high_corner_V": [
+          5.137464130815927,
+          5.234439356089881
+        ],
+        "R_total_error": 0.0035,
+        "reference_allowance_fraction": 0.00115,
+        "Vos_V": 0.0055,
+        "Ib_A": 2e-08,
+        "scope": "Static corner budget -40..125C; not a guaranteed transient response or lifetime bound.",
+        "standard_grade_REF5025AIDR": {
+          "low_corner_V": [
+            4.7476577215337405,
+            4.853375059143223
+          ],
+          "high_corner_V": [
+            5.132306233158538,
+            5.239653177103961
+          ],
+          "reference_allowance_fraction": 0.00215,
+          "inside_4V75_5V25": false
+        },
+        "tsr_margin": {
+          "TSR -2 %, 25 C": {
+            "5VA_V": [
+              4.888,
+              4.88
+            ],
+            "to_low_corner_mV": 31.5,
+            "to_high_corner_mV": 249.5
+          },
+          "TSR -2 %, 60 C": {
+            "5VA_V": [
+              4.853,
+              4.845
+            ],
+            "to_low_corner_mV": -3.5,
+            "to_high_corner_mV": 284.5
+          },
+          "TSR +2 %, 25 C": {
+            "5VA_V": [
+              5.088,
+              5.08
+            ],
+            "to_low_corner_mV": 231.5,
+            "to_high_corner_mV": 49.5
+          },
+          "TSR +2 %, 60 C": {
+            "5VA_V": [
+              5.123,
+              5.115
+            ],
+            "to_low_corner_mV": 266.5,
+            "to_high_corner_mV": 14.5
+          }
+        }
+      }
+    },
+    {
+      "name": "Window corners as in review P5-02 table",
+      "pass": true,
+      "detail": {
+        "low_corner_V": [
+          4.7524,
+          4.8485
+        ],
+        "high_corner_V": [
+          5.1375,
+          5.2344
+        ]
+      }
+    }
+  ],
+  "negative_controls": [
+    {
+      "mutation": "WR wrongly grounded",
+      "target_check": "AD7606B all 64 physical pins",
+      "detected": true
+    },
+    {
+      "mutation": "REGCAPs shorted",
+      "target_check": "Separate REGCAP and reference capacitors",
+      "detected": true
+    },
+    {
+      "mutation": "Independent VDRIVE supply",
+      "target_check": "VDRIVE supplied from local AVCC-derived regulator",
+      "detected": true
+    },
+    {
+      "mutation": "READY bypasses SUP3",
+      "target_check": "READY and relay permit: actual HC08 truth table",
+      "detected": true
+    },
+    {
+      "mutation": "Relay permit bypasses READY",
+      "target_check": "READY and relay permit: actual HC08 truth table",
+      "detected": true
+    },
+    {
+      "mutation": "MISO always enabled",
+      "target_check": "MISO tri-state and BUSY Ioff output",
+      "detected": true
+    },
+    {
+      "mutation": "Relay on NC terminal",
+      "target_check": "G6K NO contacts and coil polarity",
+      "detected": true
+    },
+    {
+      "mutation": "AUX LO still shunted",
+      "target_check": "AUX switch commons and HI-only shunt",
+      "detected": true
+    },
+    {
+      "mutation": "Missing CS default",
+      "target_check": "Defaults on both sides of RX buffers",
+      "detected": true
+    },
+    {
+      "mutation": "REF TEMP pin loaded",
+      "target_check": "Window reference REF50xx SOIC-8: 2 VIN, 4 GND, 6 VOUT, others open",
+      "detected": true
+    },
+    {
+      "mutation": "CH7 back on VPROT",
+      "target_check": "Channel lower arms and grounded current placeholder",
+      "detected": true
+    },
+    {
+      "mutation": "U2 standard grade REF5025AIDR",
+      "target_check": "Rail-window tolerance stays inside ADC static limits",
+      "detected": true
+    }
+  ],
+  "truth_table_rows": 16,
+  "channels": {
+    "MOTOR": {
+      "source_R_ohm": 300000.0,
+      "shunt_R_ohm": 100000.0,
+      "inverse_gain": 4.06,
+      "estimated_input_referred_bias_V": 0.12,
+      "external_RC_pole_Hz": 9790.440438683258,
+      "scope": "5Mohm to approx 2V equivalent input model; final two-point calibration is mandatory."
+    },
+    "SENSOR": {
+      "source_R_ohm": 100000.0,
+      "shunt_R_ohm": null,
+      "inverse_gain": 1.02,
+      "estimated_input_referred_bias_V": 0.04,
+      "external_RC_pole_Hz": 7379.001906987875,
+      "scope": "5Mohm to approx 2V equivalent input model; final two-point calibration is mandatory."
+    },
+    "VSENSE": {
+      "source_R_ohm": 499000.0,
+      "shunt_R_ohm": 100000.0,
+      "inverse_gain": 6.0898,
+      "estimated_input_referred_bias_V": 0.1996,
+      "external_RC_pole_Hz": 8828.764551293716,
+      "scope": "5Mohm to approx 2V equivalent input model; final two-point calibration is mandatory."
+    },
+    "AUX_HI": {
+      "source_R_ohm": 300000.0,
+      "shunt_R_ohm": 100000.0,
+      "inverse_gain": 4.06,
+      "estimated_input_referred_bias_V": 0.12,
+      "external_RC_pole_Hz": 9790.440438683258,
+      "scope": "5Mohm to approx 2V equivalent input model; final two-point calibration is mandatory."
+    },
+    "AUX_LO": {
+      "source_R_ohm": 100000.0,
+      "shunt_R_ohm": null,
+      "inverse_gain": 1.02,
+      "estimated_input_referred_bias_V": 0.04,
+      "external_RC_pole_Hz": 7379.001906987875,
+      "scope": "5Mohm to approx 2V equivalent input model; final two-point calibration is mandatory."
+    }
+  },
+  "window": {
+    "low_nominal_V": 4.800307219662058,
+    "high_nominal_V": 5.185771409530156,
+    "low_corner_V": [
+      4.752430161764617,
+      4.848546707582147
+    ],
+    "high_corner_V": [
+      5.137464130815927,
+      5.234439356089881
+    ],
+    "R_total_error": 0.0035,
+    "reference_allowance_fraction": 0.00115,
+    "Vos_V": 0.0055,
+    "Ib_A": 2e-08,
+    "scope": "Static corner budget -40..125C; not a guaranteed transient response or lifetime bound.",
+    "standard_grade_REF5025AIDR": {
+      "low_corner_V": [
+        4.7476577215337405,
+        4.853375059143223
+      ],
+      "high_corner_V": [
+        5.132306233158538,
+        5.239653177103961
+      ],
+      "reference_allowance_fraction": 0.00215,
+      "inside_4V75_5V25": false
+    },
+    "tsr_margin": {
+      "TSR -2 %, 25 C": {
+        "5VA_V": [
+          4.888,
+          4.88
+        ],
+        "to_low_corner_mV": 31.5,
+        "to_high_corner_mV": 249.5
+      },
+      "TSR -2 %, 60 C": {
+        "5VA_V": [
+          4.853,
+          4.845
+        ],
+        "to_low_corner_mV": -3.5,
+        "to_high_corner_mV": 284.5
+      },
+      "TSR +2 %, 25 C": {
+        "5VA_V": [
+          5.088,
+          5.08
+        ],
+        "to_low_corner_mV": 231.5,
+        "to_high_corner_mV": 49.5
+      },
+      "TSR +2 %, 60 C": {
+        "5VA_V": [
+          5.123,
+          5.115
+        ],
+        "to_low_corner_mV": 266.5,
+        "to_high_corner_mV": 14.5
+      }
+    }
+  }
+}
