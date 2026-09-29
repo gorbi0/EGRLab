@@ -157,12 +157,28 @@ Wykonane: krok 0 i P02 R4 etap 1 (PR #2, scalone 29.09.2026; recenzja `Plytki/P0
 
 1. **P02 R4, etap 2 — PCB w S1 (pilot):** sesja w chmurze wypycha schemat, rozmieszczenie i skrypty (gałąź `p02-r4-pcb`). Trasowanie i recenzję robi sesja lokalna (zasada 6). Polecenie niżej jest już tylko zapisem historycznym.
 2. **P05 R2** (gałąź `p05-r2`): z zadania obowiązują zmiany schematu i dokumentów; layout wykona nowe zadanie P05 w S1.
-3. **LOGGER w S1:** P03, P05, P06, P09, P10, każda z pinoutem J_BP i listwą serwisową. Następnie P12 (płytka połączeń), P11 pod nowy panel i obudowa.
+3. **LOGGER w S1 — schematy w chmurze, layouty lokalnie:**
+   - P09 i P10: `Plytki/Format-S1/zadania/ZADANIE-P09-P10-S1.md` (Sonnet 5.5, high), polecenie niżej;
+   - P03: `Plytki/Format-S1/zadania/ZADANIE-P03-S1.md` (Opus 5.5, high), polecenie niżej;
+   - potem P05 (J_BP i listwa na schemacie R2) i P06 (po doborze bocznika 2512 i przełącznika BYPASS);
+   - na końcu P12 (płytka połączeń z plików `docs/J_BP.csv` wszystkich płytek), P11 pod nowy panel i obudowa.
 4. **Wariant pełny w S1:** P04, P08, P07.
 
 ### Praca równoległa
 
 Kilka sesji może działać naraz. Każda pracuje tylko we własnym pakiecie. Żadna nie zmienia plików wspólnych: `EGRLab-AKTYWNE.md`, `docs/01-overview.md`, `docs/CHMURA.md`, `docs/pamiec-claude/`, `scripts/`, `Plytki/Format-S1/`, `.gitignore`. Uzupełnia je sesja lokalna po scaleniu. Rozsądny limit to dwie sesje, bo każdy PR przechodzi lokalną recenzję.
+
+### Gotowe polecenie — P09 i P10 w S1 (schematy)
+
+Ustawienia sesji: Sonnet 5.5, wysiłek high.
+
+> Przeczytaj CLAUDE.md, docs/CHMURA.md (zwłaszcza „Koszty”, zasady 6–9), docs/pamiec-claude/MEMORY.md, a z pamięci tylko format-s1.md, chmura-limity.md i kicad-pipeline-quirks.md. Wykonaj zadanie z Plytki/Format-S1/zadania/ZADANIE-P09-P10-S1.md na gałęzi p09-p10-s1. Tylko schematy i kontrole, bez PCB. Po każdej płytce commit i push. Nie zmieniaj plików wspólnych wymienionych w zadaniu. Zakończ PR-em po polsku; pytania wpisz do opisu PR i nie włączaj śledzenia PR.
+
+### Gotowe polecenie — P03 w S1 (schemat)
+
+Ustawienia sesji: Opus 5.5, wysiłek high.
+
+> Przeczytaj CLAUDE.md, docs/CHMURA.md (zwłaszcza „Koszty”, zasady 6–9), docs/pamiec-claude/MEMORY.md, a z pamięci tylko format-s1.md, chmura-limity.md, kicad-pipeline-quirks.md i p03-r1-state.md. Wykonaj zadanie z Plytki/Format-S1/zadania/ZADANIE-P03-S1.md na gałęzi p03-s1. Tylko schemat i kontrole, bez PCB. Po każdym etapie commit i push. Nie zmieniaj plików wspólnych wymienionych w zadaniu. Zakończ PR-em po polsku; pytania wpisz do opisu PR i nie włączaj śledzenia PR.
 
 ### Gotowe polecenie — P02 R4, etap 2 (S1)
 

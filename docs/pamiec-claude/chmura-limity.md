@@ -17,7 +17,7 @@ metadata:
 Wcześniej schemat P02 R4 w chmurze zajął 25 min i był dobry.
 
 **Reguła:**
-- Layout i trasowanie PCB robi sesja lokalna (KiCad i Freerouting na komputerze użytkownika, z planu Pro, nie z kredytu).
+- Layout i trasowanie PCB robi sesja lokalna (KiCad i Freerouting na komputerze użytkownika, z planu Max użytkownika, nie z kredytu).
 - Do chmury idą tylko zadania o jasnym końcu: schemat, kontrole, dokumenty, paczki.
 - W każdym poleceniu dla chmury:
   - commit i push po każdym etapie;
