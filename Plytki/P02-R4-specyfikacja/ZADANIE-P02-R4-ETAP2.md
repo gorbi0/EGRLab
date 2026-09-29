@@ -1,5 +1,7 @@
 # P02 R4, etap 2 — PCB w formacie S1 (pilot); zadanie dla sesji w chmurze
 
+*Wersja 2.1, 29.09.2026: dopuszczony montaż SMD od spodu (format S1-2).*
+
 *Wersja 2, 29.09.2026. Zmiany względem wersji 1:*
 - *format S1 zamiast obrysu 115 × 85 mm;*
 - *złącze płytki połączeń zamiast ośmiu złączy LV i wiązek sygnałowych;*
@@ -66,7 +68,8 @@ Wolno zmieniać `Plytki/P02-R4-review/` i `Plytki/P02-R4-specyfikacja/STAN-PRAC.
   - C2/C4 przy Q1/Q2, C8/C10 przy U1, C11 przy U2, C13 przy R12/U2;
   - C25–C29 przy U7–U10, C21–C24 przy TSR;
   - C_H, D2 i D1 blisko siebie.
-- **Strefy dystansów:** Ø 7 mm bez elementów i bez miedzi innych sieci. Pod spodem nie ma elementów, a wyprowadzenia THT są przycinane do ≤ 1,5 mm.
+- **Strefy dystansów:** Ø 7 mm bez elementów i bez miedzi innych sieci. Wyprowadzenia THT przycinane do ≤ 1,5 mm.
+- **Montaż od spodu (S1-2):** wolno SMD ≤ 1,5 mm, a SOIC na poziomie 1 (P02 R4) też. Od spodu mogą trafić: nowe rezystory i kondensatory SMD, rezystory szeregowe kołków serwisowych (pod listwą) i U9 74LVC125A w SOIC bez adaptera. Część ta sama co w zakupach: 74LVC125AD, obudowa SO14. Odległość ≥ 1 mm od pól THT; nadruk od spodu.
 - **Reguły produkcyjne** jak P02-R3 (pierścień ≥ 0,25 mm). Na nadruku `P02 R4 S1-2/3 S2–S3`, znaczniki krawędzi A i B oraz opisy kołków.
 
 ## 3. Kontrole

@@ -1,4 +1,6 @@
-# Format S1 — specyfikacja (wersja S1-1, 29.09.2026)
+# Format S1 — specyfikacja (wersja S1-2, 29.09.2026)
+
+*S1-2 (29.09.2026, decyzja użytkownika w trakcie pilota P02 R4): dopuszczony montaż SMD od spodu płytki (§4, §9).*
 
 Obowiązuje dla każdej nowej płytki urządzenia EGRLab. Dane liczbowe dla generatorów są w `format-s1.json`, uzasadnienie w `STUDIUM-FORMATU-S1.md`.
 
@@ -63,7 +65,8 @@ Otwory odsunięte od krawędzi A i B zostawiają wolny pas na złącza i kołki.
 |---|---|
 | Dystans między poziomami (M3, żeński-żeński) | 20 mm standardowo; 25 mm dla poziomu „wysokiego” |
 | Wysokość elementów nad płytką | ≤ 16,5 mm (poziom wysoki: ≤ 21,5 mm) |
-| Wyprowadzenia THT od spodu | przycięte do ≤ 1,5 mm; elementów od spodu brak |
+| Wyprowadzenia THT od spodu | przycięte do ≤ 1,5 mm |
+| Elementy od spodu (S1-2) | tylko SMD o wysokości ≤ 1,5 mm (0805/1206, SOT-23, SOD-123); SOIC (1,75 mm) tylko na poziomie 1, nad dnem obudowy; ≥ 1 mm od pól THT; poza strefami dystansów; nadruk oznaczeń od spodu |
 | Dystans od dna obudowy | 8 mm |
 
 Wyższe elementy montujemy na leżąco (np. kondensator C_H Ø 16 × 25 mm). TO-220 może stać na poziomie wysokim (ok. 19,5 mm z nóżkami skróconymi do 4 mm). Blaszka TO-220 leży tylko na miedzi swojej sieci.
@@ -168,6 +171,7 @@ Złącze zastępuje LV03–LV10 oraz J11, J12, J13 i J16 z etapu 1. Przewodami z
   - posiadane THT zostają;
   - nowe ceramiczne to SMD 1206 albo 0805 X7R;
   - elektrolity wyższe niż limit poziomu montujemy na leżąco.
+- **Strona montażu (S1-2):** THT i wszystko wyższe niż 1,5 mm na górze. Od spodu najlepiej pasują nowe rezystory i kondensatory SMD, rezystory szeregowe kołków serwisowych (pod listwą) oraz kondensatory odsprzęgające pod swoim układem. Lutowanie ręczne: najpierw spód, potem góra.
 - **Układy scalone:** DIP, SOIC albo LQFP, bez QFN i BGA. Na płytce z fabryki SOIC lutujemy wprost; adapter SO14→DIP tylko tam, gdzie już jest kupiony i jest na niego miejsce.
 - **Moduły** (ESP32-S3, microSD, MAX31856) stoją na gniazdach i razem z nimi mieszczą się w limicie poziomu. Jeśli się nie mieszczą, płytka przechodzi na poziom wysoki.
 - **Nadruk:**
