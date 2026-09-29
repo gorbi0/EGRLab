@@ -67,7 +67,7 @@ Proxy wyjściowe środowiska odrzuca część adresów kodem 403. **Nie obchodzi
 
 ## Narzędzia — obraz Docker `egrlab-kicad:10.0.6`
 
-Instalacja: `bash scripts/setup-chmura.sh` — ok. 2 min od zera (pobranie obrazu KiCada 30–40 s, budowa ok. 85 s), na końcu test dymny. Skrypt sam uruchamia demona Dockera (w kontenerze sesji nie działa od startu), pobiera na hoście pliki do `scripts/chmura/.cache/` (w `.gitignore`) i buduje obraz z `scripts/chmura/Dockerfile` na bazie oficjalnego `kicad/kicad:10.0.6` (Debian 13), przypiętego digestem; przy 429 z Docker Hub bierze ten sam obraz z `mirror.gcr.io`. Brakujące w obrazie narzędzia pochodzą z conda-forge (poppler, Java, Node), PyPI (koła Pythona), npm (sharp) i archive.ubuntu.com (czcionki, źródła locale), bo mirrory Debiana są zablokowane.
+Wersje w tabeli są przypięte w `scripts/setup-chmura.sh` (micromamba, koła Pythona) i `scripts/chmura/Dockerfile` (poppler, OpenJDK, Node, sharp); zmiana wersji = zmiana w obu plikach i w tabeli. Instalacja: `bash scripts/setup-chmura.sh` — ok. 2–3 min od zera (pobranie obrazu KiCada 30–40 s, budowa ok. 85 s), na końcu test dymny. Skrypt sam uruchamia demona Dockera (w kontenerze sesji nie działa od startu), pobiera na hoście pliki do `scripts/chmura/.cache/` (w `.gitignore`) i buduje obraz z `scripts/chmura/Dockerfile` na bazie oficjalnego `kicad/kicad:10.0.6` (Debian 13), przypiętego digestem; przy 429 z Docker Hub bierze ten sam obraz z `mirror.gcr.io`. Brakujące w obrazie narzędzia pochodzą z conda-forge (poppler, Java, Node), PyPI (koła Pythona), npm (sharp) i archive.ubuntu.com (czcionki, źródła locale), bo mirrory Debiana są zablokowane.
 
 | Narzędzie | W chmurze | Lokalnie (Windows) |
 |---|---|---|
@@ -77,6 +77,8 @@ Instalacja: `bash scripts/setup-chmura.sh` — ok. 2 min od zera (pobranie obraz
 | poppler (`pdftoppm`, `pdftotext`) | 26.09.0 (conda-forge) | runtime Codexa |
 | Java | OpenJDK 21.0.10 (conda-forge) | Temurin JRE 21.0.12.1 |
 | Freerouting | 2.1.0 (sha256 `2c07d58f…`), działa bez GUI | 2.1.0 |
+| ngspice (biblioteka współdzielona) | 44.2 (`libngspice0` z obrazu KiCada), `NGSPICE_LIBRARY` ustawione w obrazie | `ngspice.dll` z runtime KiCada |
+| micromamba | 2.9.0-0 (sha256 `366cd9cd…`) | — |
 | Node / sharp | 22.23.2 / 0.34.5 | runtime Codexa |
 | Czcionki | Liberation Sans i Sans Narrow (metrycznie zgodne z Arial i Arial Narrow), DejaVu | Arial z `C:/Windows/Fonts` |
 | Język | `pl_PL.UTF-8` (jak polski Windows; raporty DRC po polsku) | polski |
@@ -96,7 +98,7 @@ Zamkniętych pakietów nie zmieniano. Zgodność daje obraz:
 | `C:/Windows/Fonts/arial*.ttf` w reportlab i PIL | `egrlab_winpaths.py` (ładowany przez `.pth`) podmienia tylko nazwy plików czcionek na Liberation; wyłączenie `EGRLAB_WINPATHS=0` |
 | globalne tablice bibliotek użytkownika KiCada | punkt wejścia obrazu kopiuje szablonowe `fp-lib-table` i `sym-lib-table` do `$HOME/.config/kicad/10.0` |
 
-Otwarte skrypty: `Plytki/Kaseta-R1/src/rysunek.py` czyta `EGRLAB_FONT_DIR` (bez zmiennej — czcionki Windows jak dotąd, więc wynik na Windows się nie zmienia). W nowym kodzie używać nazw, które pakiety już mają, z dotychczasową ścieżką Windows jako domyślną: `KICAD_CLI`, `KICAD_LIBRARY_ROOT`, `EGRLAB_FREEROUTING` (katalog), `EGRLAB_FONT_DIR`, `EGRLAB_PDF_PYTHON`/`EGRLAB_DOC_PYTHON`, `EGRLAB_NODE`, `EGRLAB_SHARP`, `PDFTOPPM`. Obraz ustawia też proponowane wcześniej `KICAD_PYTHON` i `FREEROUTING_JAR`. Poza obrazem: `NGSPICE_LIBRARY` (P01 R2/R3, P09 — ngspice nie ma) i `EGRLAB_TCC` (tcc nie ma).
+Otwarte skrypty: `Plytki/Kaseta-R1/src/rysunek.py` czyta `EGRLAB_FONT_DIR` (bez zmiennej — czcionki Windows jak dotąd, więc wynik na Windows się nie zmienia). W nowym kodzie używać nazw, które pakiety już mają, z dotychczasową ścieżką Windows jako domyślną: `KICAD_CLI`, `KICAD_LIBRARY_ROOT`, `EGRLAB_FREEROUTING` (katalog), `EGRLAB_FONT_DIR`, `EGRLAB_PDF_PYTHON`/`EGRLAB_DOC_PYTHON`, `EGRLAB_NODE`, `EGRLAB_SHARP`, `PDFTOPPM`. Obraz ustawia też proponowane wcześniej `KICAD_PYTHON` i `FREEROUTING_JAR`. `NGSPICE_LIBRARY` wskazuje `libngspice.so.0` z obrazu (sprawdzone na `Plytki/P01-R3-review/src/ngshared.py`). Poza obrazem: `EGRLAB_TCC` (tcc nie ma).
 
 ## Różnice Windows / Linux (P02-R3, P04-PCB-R2.2, Kaseta-R1)
 
@@ -143,12 +145,14 @@ Manifesty SHA-256 obu pakietów w repozytorium sprawdzone po pracy: 234/234 i 22
 3. P03: wejście PFAIL_N, sprawy B2B. P05 R2, P06 (bocznik 2512), P11 R2 (przyciski, złącza panelu).
 4. Tabela wiązek pod kasetę (`Plytki/Kaseta-R1`).
 
-### Krok 0 — uwagi z recenzji PR #1 (osobny commit)
+### Krok 0 — uwagi z recenzji PR #1 (osobny commit) — wykonane 29.09.2026 (gałąź `p02-r4-schemat`)
 
 - Przypiąć wersje w `scripts/chmura/Dockerfile` i `scripts/setup-chmura.sh` do tabeli „Narzędzia”: micromamba (konkretne wydanie zamiast `latest`), poppler, OpenJDK, Node, numpy, Pillow, pdfplumber, sharp. Kolejna budowa obrazu ma dać to samo, co opisuje ten dokument.
 - `scripts/chmura/porownaj_wyniki.py`: próg dla PNG (np. powyżej 2 % różniących się pikseli → RÓŻNICA; dziś każdy PNG tego samego rozmiaru przechodzi) i jawna uwaga, że klasa PDF porównuje tylko tekst, nie grafikę.
 - ngspice: sprawdzić, czy obraz KiCada ma `libngspice.so` (używa jej symulator KiCada), i ustawić `NGSPICE_LIBRARY`; jeśli nie ma — `ngspice-lib` z conda-forge. Próba na `Plytki/P01-R3-review/src/ngshared.py`.
 - Nagłówek `setup-chmura.sh`: czas instalacji ok. 2 min (nie 3–4).
+
+Wynik: wersje przypięte (micromamba 2.9.0-0 z sumą SHA-256, poppler 26.09.0, OpenJDK 21.0.10, Node 22.23.2, sharp 0.34.5, numpy 2.5.3, Pillow 12.3.0, pdfplumber 0.11.10, pip 25.2), obraz zbudowany od zera w 180 s z testem dymnym zgodnym z tabelą. `porownaj_wyniki.py`: PNG powyżej 2 % różniących się pikseli = RÓŻNICA, klasa PDF opisana jako porównanie samego tekstu. ngspice: `libngspice.so.0` (44.2) jest w obrazie KiCada, `NGSPICE_LIBRARY` ustawione, `ngshared.py` z P01 R3 liczy próbny obwód RC poprawnie.
 
 ### Gotowe polecenie — P02 R4, etap 1
 
