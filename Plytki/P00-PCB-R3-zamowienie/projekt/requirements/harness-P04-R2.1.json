@@ -1,0 +1,61 @@
+{
+  "revision": "P00-R3",
+  "p04_revision": "P04-R2.1",
+  "p04_parts": "reference/P04-R2.1-parts.json",
+  "p04_rail_min_V": 3.135,
+  "p00_rail_min_V": 3.14,
+  "p00_series_ohm": 1000,
+  "branch_ohm": 1000,
+  "resistor_tolerance": 0.01,
+  "margin_V": 0.2,
+  "thresholds_V": {
+    "74LVC125A": 2.0,
+    "SN74HC08N": 2.36
+  },
+  "ic_pins": {
+    "74LVC125A": {"in": ["2", "5", "9", "12"], "out": ["3", "6", "8", "11"]},
+    "SN74HC08N": {"in": ["1", "2", "4", "5", "9", "10", "12", "13"], "out": ["3", "6", "8", "11"]},
+    "SN74HC14N": {"in": ["1", "3", "5", "9", "11", "13"], "out": ["2", "4", "6", "8", "10", "12"]},
+    "SN74HC74N": {"in": ["1", "2", "3", "4", "10", "11", "12", "13"], "out": ["5", "6", "8", "9"]},
+    "CD74HC123E": {"in": ["1", "2", "3", "9", "10", "11"], "out": ["4", "5", "12", "13"]},
+    "MCP100-300DI/TO": {"in": [], "out": ["1"]},
+    "2N3904": {"in": ["2"], "out": ["3"]}
+  },
+  "channels": [
+    {"p00": "J1.1", "p00_net": "P00_OUT1", "name": "PSU", "p04": "J6.1", "net": "PSU_OK"},
+    {"p00": "J2.1", "p00_net": "P00_OUT2", "name": "DAQ", "p04": "J5.1", "net": "DAQ_OK"},
+    {"p00": "J3.1", "p00_net": "P00_OUT3", "name": "DRIVE", "p04": "J3.7", "net": "DRIVE_OK"},
+    {"p00": "J4.1", "p00_net": "P00_OUT4", "name": "SENSOR", "p04": "J4.3", "net": "SENSOR_OK"},
+    {"p00": "J5.1", "p00_net": "P00_OUT5", "name": "CORE", "p04": "J2.13", "net": "CORE_LINK"},
+    {"p00": "J6.1", "p00_net": "P00_OUT6", "name": "PG", "p04": "J7.5", "net": "PG_LINK"},
+    {"p00": "J7.1", "p00_net": "P00_OUT7", "name": "KEY", "p04": "J8.3", "net": "TEST_KEY", "series": "R41"},
+    {"p00": "J8.1", "p00_net": "P00_OUT8", "name": "MECH", "p04": "J8.4", "net": "MECH_OK", "series": "R42"},
+    {"p00": "J9.1", "p00_net": "P00_HEART", "name": "HB", "p04": "J2.3", "net": "HEARTBEAT"}
+  ],
+  "branch_source": {"p04": "TP1", "net": "3V3_IO"},
+  "branches": [
+    {"name": "H_SUP", "p04": "J2.15", "net": "SUP_N"},
+    {"name": "H_MCU", "p04": "J2.5", "net": "MCU_ARM"},
+    {"name": "H_HB", "p04": "J2.3", "net": "HEARTBEAT", "exclusive_with": "J9.1"},
+    {"name": "H_PWM", "p04": "J2.1", "net": "PWM"},
+    {"name": "H_SENSOR", "p04": "J2.11", "net": "SENSOR_ENABLE"}
+  ],
+  "contacts": [
+    {"name": "STOP", "type": "NC", "a": "J8.1", "net_a": "PANEL_3V3", "b": "J8.7", "net_b": "STOP_NC_OUT"},
+    {"name": "ARM", "type": "NO", "a": "J8.9", "net_a": "ARM_CONTACT", "b": "J8.10", "net_b": "GND"},
+    {"name": "SAFE_N_TEST", "type": "NO chwilowy", "a": "J7.2", "net_a": "SAFE_N", "b": "J7.3", "net_b": "GND"}
+  ],
+  "power": {"v33": "J1.3", "v33_net": "3V3_IO", "gnd": ["J1.2", "J1.4"], "leave_open": ["J1.1"]},
+  "measure_only": [
+    {"p04": "J3.1", "net": "MOTOR_PERMIT"},
+    {"p04": "J3.3", "net": "PWM_OUT"},
+    {"p04": "J3.5", "net": "ARM_CLK"},
+    {"p04": "J4.1", "net": "SENSOR_PERMIT"},
+    {"p04": "J2.7", "net": "HW_ARMED"},
+    {"p04": "J2.9", "net": "INTERLOCK"},
+    {"p04": "J3.9", "net": "SAFE_N"}
+  ],
+  "gnd_pins": ["J2.2", "J2.6", "J2.8", "J2.10", "J2.12", "J2.14", "J2.16", "J3.4", "J3.6", "J3.8", "J3.10", "J4.4", "J5.2", "J6.2", "J7.3", "J7.6", "J8.2", "J8.10"],
+  "key_pins_nc": ["J2.4", "J3.2", "J4.2", "J5.4", "J6.5"],
+  "doc": "docs/P00-P04-WIAZKA.md"
+}

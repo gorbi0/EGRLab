@@ -1,0 +1,47 @@
+P01 R3 gate screening - XML extracted
+.options reltol=0.001 abstol=1e-9 vntol=1e-6 method=gear gmin=1e-10
+.model pm VDMOS(pchan vto=-1 kp=10 lambda=0.01 rd=0.004 rs=0.004 cgs=1p cgdmax=1p cgdmin=1p cjo=1p)
+.model npm NPN(is=1e-14 bf=50 vaf=100 cje=30p cjc=10p tf=2n tr=1e-06)
+.model ppm PNP(is=1e-14 bf=50 vaf=100 cje=30p cjc=10p tf=2n tr=1e-06)
+.model body D(is=1n n=1.5 rs=0.01)
+.model z15 D(is=1n n=1.5 bv=15 ibv=5m rs=10)
+Vinput input 0 14
+Rsource input p01_vs 0.05
+Cin p01_vs 0 10u
+Venable p01_enable 0 PWL(0 0 1m 0 1.000001m 2.7)
+Cload vprot 0 0.00022
+Rload vprot 0 1000000.0
+Bload vprot 0 I=1.5*tanh(v(vprot)/0.2)
+R17 p01_enable p01_on_base 4700
+R18 p01_on_base 0 47000
+R19 p01_enable p01_release_base 4700
+R20 p01_release_base 0 47000
+R21 p01_gate p01_on_col 99000
+R22 p01_gate p01_vs 474700
+R23 p01_off_base 0 2200
+R24 p01_off_base p01_vs 100000
+R25 p01_release_pbase p01_vs 47000
+R26 p01_release_pbase p01_release_col 10000
+R27 p01_off_col p01_gate 10
+C5 p01_gate vprot 9.5e-09
+C6 p01_gate p01_vs 1.05e-06
+MQ1 Q1d p01_gate p01_vs pm
+VQ1i Q1d p01_q1_drain 0
+DQ1body p01_q1_drain p01_vs body
+CQ1gs p01_gate p01_vs 3.21e-09
+CQ1gd p01_gate p01_q1_drain 2e-09
+CQ1ds p01_q1_drain p01_vs 600p
+MQ2 Q2d p01_off_base p01_vs pm
+VQ2i Q2d p01_off_col 0
+DQ2body p01_off_col p01_vs body
+CQ2gs p01_off_base p01_vs 1e-08
+CQ2gd p01_off_base p01_off_col 3e-09
+CQ2ds p01_off_col p01_vs 600p
+Q3 p01_on_col p01_on_base 0 npm
+Q4 p01_off_base p01_release_pbase p01_vs ppm
+Q5 p01_release_col p01_release_base 0 npm
+RLK1 p01_q1_drain vprot 0.0002
+D4 p01_gate p01_vs z15
+D9 p01_off_base p01_vs z15
+.tran 1e-05 0.5 0 1e-05
+.end

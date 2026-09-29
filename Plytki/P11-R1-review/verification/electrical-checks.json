@@ -1,0 +1,1705 @@
+{
+  "checks": [
+    {
+      "id": "MATE-J4",
+      "pass": true
+    },
+    {
+      "id": "MATE-J5",
+      "pass": true
+    },
+    {
+      "id": "MATE-J7",
+      "pass": true
+    },
+    {
+      "id": "MATE-J1",
+      "pass": true
+    },
+    {
+      "id": "MATE-J10",
+      "pass": true
+    },
+    {
+      "id": "BASELINE-J2",
+      "pass": true
+    },
+    {
+      "id": "BASELINE-J3",
+      "pass": true
+    },
+    {
+      "id": "BASELINE-J8",
+      "pass": true
+    },
+    {
+      "id": "BASELINE-J9",
+      "pass": true
+    },
+    {
+      "id": "TAIL-TO-PORT-X2",
+      "pass": true
+    },
+    {
+      "id": "TAIL-TO-PORT-X3",
+      "pass": true
+    },
+    {
+      "id": "TAIL-TO-PORT-X8",
+      "pass": true
+    },
+    {
+      "id": "CONTACT-TAIL",
+      "pass": true
+    },
+    {
+      "id": "CONTACT-X11",
+      "pass": true
+    },
+    {
+      "id": "CONTACT-X12",
+      "pass": true
+    },
+    {
+      "id": "CONTACT-X13",
+      "pass": true
+    },
+    {
+      "id": "CONTACT-X14",
+      "pass": true
+    },
+    {
+      "id": "CONTACT-X15",
+      "pass": true
+    },
+    {
+      "id": "CONTACT-X16",
+      "pass": true
+    },
+    {
+      "id": "CONTACT-X17",
+      "pass": true
+    },
+    {
+      "id": "SCOPE-J6",
+      "pass": true
+    },
+    {
+      "id": "SCOPE-X6",
+      "pass": true
+    },
+    {
+      "id": "ISOLATED-AGND_SENSOR",
+      "pass": true
+    },
+    {
+      "id": "ISOLATED-5V_SENSOR",
+      "pass": true
+    },
+    {
+      "id": "ISOLATED-ECU_P1",
+      "pass": true
+    },
+    {
+      "id": "ISOLATED-EGR_P1",
+      "pass": true
+    },
+    {
+      "id": "ISOLATED-T_EGR_P1",
+      "pass": true
+    },
+    {
+      "id": "ISOLATED-T_EGR_P3",
+      "pass": true
+    },
+    {
+      "id": "NO-ACTIVE-OR-LOAD-PARTS",
+      "pass": true
+    },
+    {
+      "id": "ACTUAL-NETS-64-STATES",
+      "pass": true
+    },
+    {
+      "id": "OPEN-WIRE-KILLS-X15.1",
+      "pass": true
+    },
+    {
+      "id": "OPEN-WIRE-KILLS-X12.1",
+      "pass": true
+    },
+    {
+      "id": "OPEN-WIRE-KILLS-X12.2",
+      "pass": true
+    },
+    {
+      "id": "OPEN-WIRE-KILLS-X13.1",
+      "pass": true
+    },
+    {
+      "id": "OPEN-WIRE-KILLS-X13.2",
+      "pass": true
+    },
+    {
+      "id": "OPEN-WIRE-KILLS-X8.10",
+      "pass": true
+    },
+    {
+      "id": "OPEN-WIRE-KILLS-X8.11",
+      "pass": true
+    },
+    {
+      "id": "STOP-OPEN-WIRE",
+      "pass": true
+    }
+  ],
+  "negative_controls": [
+    {
+      "mutation": "J5.1->3V3_IO",
+      "detected": true,
+      "by": [
+        "MATE-J5",
+        "ACTUAL-NETS-64-STATES"
+      ]
+    },
+    {
+      "mutation": "J5.7->PANEL_3V3",
+      "detected": true,
+      "by": [
+        "MATE-J5",
+        "ACTUAL-NETS-64-STATES",
+        "STOP-OPEN-WIRE"
+      ]
+    },
+    {
+      "mutation": "J5.4->LOOP_OUT",
+      "detected": true,
+      "by": [
+        "MATE-J5",
+        "ACTUAL-NETS-64-STATES",
+        "OPEN-WIRE-KILLS-X8.10",
+        "OPEN-WIRE-KILLS-X8.11"
+      ]
+    },
+    {
+      "mutation": "X12.2->TEST_KEY",
+      "detected": true,
+      "by": [
+        "CONTACT-X12",
+        "ACTUAL-NETS-64-STATES"
+      ]
+    },
+    {
+      "mutation": "X13.2->ILK_L1_L2",
+      "detected": true,
+      "by": [
+        "CONTACT-X13",
+        "ACTUAL-NETS-64-STATES"
+      ]
+    },
+    {
+      "mutation": "X13.4->PANEL_3V3",
+      "detected": true,
+      "by": [
+        "CONTACT-X13",
+        "ACTUAL-NETS-64-STATES"
+      ]
+    },
+    {
+      "mutation": "X15.2->PANEL_3V3",
+      "detected": true,
+      "by": [
+        "CONTACT-X15",
+        "ACTUAL-NETS-64-STATES"
+      ]
+    },
+    {
+      "mutation": "J10.2->GND",
+      "detected": true,
+      "by": [
+        "MATE-J10",
+        "ISOLATED-AGND_SENSOR"
+      ]
+    },
+    {
+      "mutation": "J9.1->ECU_P1",
+      "detected": true,
+      "by": [
+        "BASELINE-J9",
+        "ISOLATED-ECU_P1",
+        "ISOLATED-T_EGR_P1"
+      ]
+    },
+    {
+      "mutation": "X8.1->EGR_P1",
+      "detected": true,
+      "by": [
+        "TAIL-TO-PORT-X8",
+        "ISOLATED-EGR_P1",
+        "ISOLATED-T_EGR_P1"
+      ]
+    },
+    {
+      "mutation": "J7.7->GND",
+      "detected": true,
+      "by": [
+        "MATE-J7"
+      ]
+    },
+    {
+      "mutation": "J11.12->GND",
+      "detected": true,
+      "by": [
+        "CONTACT-TAIL"
+      ]
+    },
+    {
+      "mutation": "X16.3->PANEL_3V3",
+      "detected": true,
+      "by": [
+        "CONTACT-X16"
+      ]
+    },
+    {
+      "mutation": "J4.6->GND",
+      "detected": true,
+      "by": [
+        "MATE-J4"
+      ]
+    },
+    {
+      "mutation": "X6.2->AGND_SENSOR",
+      "detected": true,
+      "by": [
+        "SCOPE-X6",
+        "ISOLATED-AGND_SENSOR"
+      ]
+    },
+    {
+      "mutation": "X3.2->TAP_P1",
+      "detected": true,
+      "by": [
+        "TAIL-TO-PORT-X3"
+      ]
+    },
+    {
+      "mutation": "extra-LED-load",
+      "detected": true,
+      "by": [
+        "NO-ACTIVE-OR-LOAD-PARTS"
+      ]
+    }
+  ],
+  "truth_table": [
+    {
+      "key": false,
+      "l1": false,
+      "l2": false,
+      "loop": false,
+      "stop": false,
+      "test": false,
+      "actual": {
+        "mech": false,
+        "key": false,
+        "clear": true,
+        "stop_feed": true,
+        "present": false
+      },
+      "expected": {
+        "mech": false,
+        "key": false,
+        "clear": true,
+        "stop_feed": true,
+        "present": false
+      }
+    },
+    {
+      "key": false,
+      "l1": false,
+      "l2": false,
+      "loop": false,
+      "stop": false,
+      "test": true,
+      "actual": {
+        "mech": false,
+        "key": false,
+        "clear": true,
+        "stop_feed": true,
+        "present": true
+      },
+      "expected": {
+        "mech": false,
+        "key": false,
+        "clear": true,
+        "stop_feed": true,
+        "present": true
+      }
+    },
+    {
+      "key": false,
+      "l1": false,
+      "l2": false,
+      "loop": false,
+      "stop": true,
+      "test": false,
+      "actual": {
+        "mech": false,
+        "key": false,
+        "clear": true,
+        "stop_feed": false,
+        "present": false
+      },
+      "expected": {
+        "mech": false,
+        "key": false,
+        "clear": true,
+        "stop_feed": false,
+        "present": false
+      }
+    },
+    {
+      "key": false,
+      "l1": false,
+      "l2": false,
+      "loop": false,
+      "stop": true,
+      "test": true,
+      "actual": {
+        "mech": false,
+        "key": false,
+        "clear": true,
+        "stop_feed": false,
+        "present": true
+      },
+      "expected": {
+        "mech": false,
+        "key": false,
+        "clear": true,
+        "stop_feed": false,
+        "present": true
+      }
+    },
+    {
+      "key": false,
+      "l1": false,
+      "l2": false,
+      "loop": true,
+      "stop": false,
+      "test": false,
+      "actual": {
+        "mech": false,
+        "key": false,
+        "clear": true,
+        "stop_feed": true,
+        "present": false
+      },
+      "expected": {
+        "mech": false,
+        "key": false,
+        "clear": true,
+        "stop_feed": true,
+        "present": false
+      }
+    },
+    {
+      "key": false,
+      "l1": false,
+      "l2": false,
+      "loop": true,
+      "stop": false,
+      "test": true,
+      "actual": {
+        "mech": false,
+        "key": false,
+        "clear": true,
+        "stop_feed": true,
+        "present": true
+      },
+      "expected": {
+        "mech": false,
+        "key": false,
+        "clear": true,
+        "stop_feed": true,
+        "present": true
+      }
+    },
+    {
+      "key": false,
+      "l1": false,
+      "l2": false,
+      "loop": true,
+      "stop": true,
+      "test": false,
+      "actual": {
+        "mech": false,
+        "key": false,
+        "clear": true,
+        "stop_feed": false,
+        "present": false
+      },
+      "expected": {
+        "mech": false,
+        "key": false,
+        "clear": true,
+        "stop_feed": false,
+        "present": false
+      }
+    },
+    {
+      "key": false,
+      "l1": false,
+      "l2": false,
+      "loop": true,
+      "stop": true,
+      "test": true,
+      "actual": {
+        "mech": false,
+        "key": false,
+        "clear": true,
+        "stop_feed": false,
+        "present": true
+      },
+      "expected": {
+        "mech": false,
+        "key": false,
+        "clear": true,
+        "stop_feed": false,
+        "present": true
+      }
+    },
+    {
+      "key": false,
+      "l1": false,
+      "l2": true,
+      "loop": false,
+      "stop": false,
+      "test": false,
+      "actual": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": true,
+        "present": false
+      },
+      "expected": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": true,
+        "present": false
+      }
+    },
+    {
+      "key": false,
+      "l1": false,
+      "l2": true,
+      "loop": false,
+      "stop": false,
+      "test": true,
+      "actual": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": true,
+        "present": true
+      },
+      "expected": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": true,
+        "present": true
+      }
+    },
+    {
+      "key": false,
+      "l1": false,
+      "l2": true,
+      "loop": false,
+      "stop": true,
+      "test": false,
+      "actual": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": false,
+        "present": false
+      },
+      "expected": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": false,
+        "present": false
+      }
+    },
+    {
+      "key": false,
+      "l1": false,
+      "l2": true,
+      "loop": false,
+      "stop": true,
+      "test": true,
+      "actual": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": false,
+        "present": true
+      },
+      "expected": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": false,
+        "present": true
+      }
+    },
+    {
+      "key": false,
+      "l1": false,
+      "l2": true,
+      "loop": true,
+      "stop": false,
+      "test": false,
+      "actual": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": true,
+        "present": false
+      },
+      "expected": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": true,
+        "present": false
+      }
+    },
+    {
+      "key": false,
+      "l1": false,
+      "l2": true,
+      "loop": true,
+      "stop": false,
+      "test": true,
+      "actual": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": true,
+        "present": true
+      },
+      "expected": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": true,
+        "present": true
+      }
+    },
+    {
+      "key": false,
+      "l1": false,
+      "l2": true,
+      "loop": true,
+      "stop": true,
+      "test": false,
+      "actual": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": false,
+        "present": false
+      },
+      "expected": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": false,
+        "present": false
+      }
+    },
+    {
+      "key": false,
+      "l1": false,
+      "l2": true,
+      "loop": true,
+      "stop": true,
+      "test": true,
+      "actual": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": false,
+        "present": true
+      },
+      "expected": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": false,
+        "present": true
+      }
+    },
+    {
+      "key": false,
+      "l1": true,
+      "l2": false,
+      "loop": false,
+      "stop": false,
+      "test": false,
+      "actual": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": true,
+        "present": false
+      },
+      "expected": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": true,
+        "present": false
+      }
+    },
+    {
+      "key": false,
+      "l1": true,
+      "l2": false,
+      "loop": false,
+      "stop": false,
+      "test": true,
+      "actual": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": true,
+        "present": true
+      },
+      "expected": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": true,
+        "present": true
+      }
+    },
+    {
+      "key": false,
+      "l1": true,
+      "l2": false,
+      "loop": false,
+      "stop": true,
+      "test": false,
+      "actual": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": false,
+        "present": false
+      },
+      "expected": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": false,
+        "present": false
+      }
+    },
+    {
+      "key": false,
+      "l1": true,
+      "l2": false,
+      "loop": false,
+      "stop": true,
+      "test": true,
+      "actual": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": false,
+        "present": true
+      },
+      "expected": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": false,
+        "present": true
+      }
+    },
+    {
+      "key": false,
+      "l1": true,
+      "l2": false,
+      "loop": true,
+      "stop": false,
+      "test": false,
+      "actual": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": true,
+        "present": false
+      },
+      "expected": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": true,
+        "present": false
+      }
+    },
+    {
+      "key": false,
+      "l1": true,
+      "l2": false,
+      "loop": true,
+      "stop": false,
+      "test": true,
+      "actual": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": true,
+        "present": true
+      },
+      "expected": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": true,
+        "present": true
+      }
+    },
+    {
+      "key": false,
+      "l1": true,
+      "l2": false,
+      "loop": true,
+      "stop": true,
+      "test": false,
+      "actual": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": false,
+        "present": false
+      },
+      "expected": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": false,
+        "present": false
+      }
+    },
+    {
+      "key": false,
+      "l1": true,
+      "l2": false,
+      "loop": true,
+      "stop": true,
+      "test": true,
+      "actual": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": false,
+        "present": true
+      },
+      "expected": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": false,
+        "present": true
+      }
+    },
+    {
+      "key": false,
+      "l1": true,
+      "l2": true,
+      "loop": false,
+      "stop": false,
+      "test": false,
+      "actual": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": true,
+        "present": false
+      },
+      "expected": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": true,
+        "present": false
+      }
+    },
+    {
+      "key": false,
+      "l1": true,
+      "l2": true,
+      "loop": false,
+      "stop": false,
+      "test": true,
+      "actual": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": true,
+        "present": true
+      },
+      "expected": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": true,
+        "present": true
+      }
+    },
+    {
+      "key": false,
+      "l1": true,
+      "l2": true,
+      "loop": false,
+      "stop": true,
+      "test": false,
+      "actual": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": false,
+        "present": false
+      },
+      "expected": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": false,
+        "present": false
+      }
+    },
+    {
+      "key": false,
+      "l1": true,
+      "l2": true,
+      "loop": false,
+      "stop": true,
+      "test": true,
+      "actual": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": false,
+        "present": true
+      },
+      "expected": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": false,
+        "present": true
+      }
+    },
+    {
+      "key": false,
+      "l1": true,
+      "l2": true,
+      "loop": true,
+      "stop": false,
+      "test": false,
+      "actual": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": true,
+        "present": false
+      },
+      "expected": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": true,
+        "present": false
+      }
+    },
+    {
+      "key": false,
+      "l1": true,
+      "l2": true,
+      "loop": true,
+      "stop": false,
+      "test": true,
+      "actual": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": true,
+        "present": true
+      },
+      "expected": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": true,
+        "present": true
+      }
+    },
+    {
+      "key": false,
+      "l1": true,
+      "l2": true,
+      "loop": true,
+      "stop": true,
+      "test": false,
+      "actual": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": false,
+        "present": false
+      },
+      "expected": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": false,
+        "present": false
+      }
+    },
+    {
+      "key": false,
+      "l1": true,
+      "l2": true,
+      "loop": true,
+      "stop": true,
+      "test": true,
+      "actual": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": false,
+        "present": true
+      },
+      "expected": {
+        "mech": false,
+        "key": false,
+        "clear": false,
+        "stop_feed": false,
+        "present": true
+      }
+    },
+    {
+      "key": true,
+      "l1": false,
+      "l2": false,
+      "loop": false,
+      "stop": false,
+      "test": false,
+      "actual": {
+        "mech": false,
+        "key": true,
+        "clear": true,
+        "stop_feed": true,
+        "present": false
+      },
+      "expected": {
+        "mech": false,
+        "key": true,
+        "clear": true,
+        "stop_feed": true,
+        "present": false
+      }
+    },
+    {
+      "key": true,
+      "l1": false,
+      "l2": false,
+      "loop": false,
+      "stop": false,
+      "test": true,
+      "actual": {
+        "mech": false,
+        "key": true,
+        "clear": true,
+        "stop_feed": true,
+        "present": true
+      },
+      "expected": {
+        "mech": false,
+        "key": true,
+        "clear": true,
+        "stop_feed": true,
+        "present": true
+      }
+    },
+    {
+      "key": true,
+      "l1": false,
+      "l2": false,
+      "loop": false,
+      "stop": true,
+      "test": false,
+      "actual": {
+        "mech": false,
+        "key": true,
+        "clear": true,
+        "stop_feed": false,
+        "present": false
+      },
+      "expected": {
+        "mech": false,
+        "key": true,
+        "clear": true,
+        "stop_feed": false,
+        "present": false
+      }
+    },
+    {
+      "key": true,
+      "l1": false,
+      "l2": false,
+      "loop": false,
+      "stop": true,
+      "test": true,
+      "actual": {
+        "mech": false,
+        "key": true,
+        "clear": true,
+        "stop_feed": false,
+        "present": true
+      },
+      "expected": {
+        "mech": false,
+        "key": true,
+        "clear": true,
+        "stop_feed": false,
+        "present": true
+      }
+    },
+    {
+      "key": true,
+      "l1": false,
+      "l2": false,
+      "loop": true,
+      "stop": false,
+      "test": false,
+      "actual": {
+        "mech": true,
+        "key": true,
+        "clear": true,
+        "stop_feed": true,
+        "present": false
+      },
+      "expected": {
+        "mech": true,
+        "key": true,
+        "clear": true,
+        "stop_feed": true,
+        "present": false
+      }
+    },
+    {
+      "key": true,
+      "l1": false,
+      "l2": false,
+      "loop": true,
+      "stop": false,
+      "test": true,
+      "actual": {
+        "mech": true,
+        "key": true,
+        "clear": true,
+        "stop_feed": true,
+        "present": true
+      },
+      "expected": {
+        "mech": true,
+        "key": true,
+        "clear": true,
+        "stop_feed": true,
+        "present": true
+      }
+    },
+    {
+      "key": true,
+      "l1": false,
+      "l2": false,
+      "loop": true,
+      "stop": true,
+      "test": false,
+      "actual": {
+        "mech": true,
+        "key": true,
+        "clear": true,
+        "stop_feed": false,
+        "present": false
+      },
+      "expected": {
+        "mech": true,
+        "key": true,
+        "clear": true,
+        "stop_feed": false,
+        "present": false
+      }
+    },
+    {
+      "key": true,
+      "l1": false,
+      "l2": false,
+      "loop": true,
+      "stop": true,
+      "test": true,
+      "actual": {
+        "mech": true,
+        "key": true,
+        "clear": true,
+        "stop_feed": false,
+        "present": true
+      },
+      "expected": {
+        "mech": true,
+        "key": true,
+        "clear": true,
+        "stop_feed": false,
+        "present": true
+      }
+    },
+    {
+      "key": true,
+      "l1": false,
+      "l2": true,
+      "loop": false,
+      "stop": false,
+      "test": false,
+      "actual": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": true,
+        "present": false
+      },
+      "expected": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": true,
+        "present": false
+      }
+    },
+    {
+      "key": true,
+      "l1": false,
+      "l2": true,
+      "loop": false,
+      "stop": false,
+      "test": true,
+      "actual": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": true,
+        "present": true
+      },
+      "expected": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": true,
+        "present": true
+      }
+    },
+    {
+      "key": true,
+      "l1": false,
+      "l2": true,
+      "loop": false,
+      "stop": true,
+      "test": false,
+      "actual": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": false,
+        "present": false
+      },
+      "expected": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": false,
+        "present": false
+      }
+    },
+    {
+      "key": true,
+      "l1": false,
+      "l2": true,
+      "loop": false,
+      "stop": true,
+      "test": true,
+      "actual": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": false,
+        "present": true
+      },
+      "expected": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": false,
+        "present": true
+      }
+    },
+    {
+      "key": true,
+      "l1": false,
+      "l2": true,
+      "loop": true,
+      "stop": false,
+      "test": false,
+      "actual": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": true,
+        "present": false
+      },
+      "expected": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": true,
+        "present": false
+      }
+    },
+    {
+      "key": true,
+      "l1": false,
+      "l2": true,
+      "loop": true,
+      "stop": false,
+      "test": true,
+      "actual": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": true,
+        "present": true
+      },
+      "expected": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": true,
+        "present": true
+      }
+    },
+    {
+      "key": true,
+      "l1": false,
+      "l2": true,
+      "loop": true,
+      "stop": true,
+      "test": false,
+      "actual": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": false,
+        "present": false
+      },
+      "expected": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": false,
+        "present": false
+      }
+    },
+    {
+      "key": true,
+      "l1": false,
+      "l2": true,
+      "loop": true,
+      "stop": true,
+      "test": true,
+      "actual": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": false,
+        "present": true
+      },
+      "expected": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": false,
+        "present": true
+      }
+    },
+    {
+      "key": true,
+      "l1": true,
+      "l2": false,
+      "loop": false,
+      "stop": false,
+      "test": false,
+      "actual": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": true,
+        "present": false
+      },
+      "expected": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": true,
+        "present": false
+      }
+    },
+    {
+      "key": true,
+      "l1": true,
+      "l2": false,
+      "loop": false,
+      "stop": false,
+      "test": true,
+      "actual": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": true,
+        "present": true
+      },
+      "expected": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": true,
+        "present": true
+      }
+    },
+    {
+      "key": true,
+      "l1": true,
+      "l2": false,
+      "loop": false,
+      "stop": true,
+      "test": false,
+      "actual": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": false,
+        "present": false
+      },
+      "expected": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": false,
+        "present": false
+      }
+    },
+    {
+      "key": true,
+      "l1": true,
+      "l2": false,
+      "loop": false,
+      "stop": true,
+      "test": true,
+      "actual": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": false,
+        "present": true
+      },
+      "expected": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": false,
+        "present": true
+      }
+    },
+    {
+      "key": true,
+      "l1": true,
+      "l2": false,
+      "loop": true,
+      "stop": false,
+      "test": false,
+      "actual": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": true,
+        "present": false
+      },
+      "expected": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": true,
+        "present": false
+      }
+    },
+    {
+      "key": true,
+      "l1": true,
+      "l2": false,
+      "loop": true,
+      "stop": false,
+      "test": true,
+      "actual": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": true,
+        "present": true
+      },
+      "expected": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": true,
+        "present": true
+      }
+    },
+    {
+      "key": true,
+      "l1": true,
+      "l2": false,
+      "loop": true,
+      "stop": true,
+      "test": false,
+      "actual": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": false,
+        "present": false
+      },
+      "expected": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": false,
+        "present": false
+      }
+    },
+    {
+      "key": true,
+      "l1": true,
+      "l2": false,
+      "loop": true,
+      "stop": true,
+      "test": true,
+      "actual": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": false,
+        "present": true
+      },
+      "expected": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": false,
+        "present": true
+      }
+    },
+    {
+      "key": true,
+      "l1": true,
+      "l2": true,
+      "loop": false,
+      "stop": false,
+      "test": false,
+      "actual": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": true,
+        "present": false
+      },
+      "expected": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": true,
+        "present": false
+      }
+    },
+    {
+      "key": true,
+      "l1": true,
+      "l2": true,
+      "loop": false,
+      "stop": false,
+      "test": true,
+      "actual": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": true,
+        "present": true
+      },
+      "expected": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": true,
+        "present": true
+      }
+    },
+    {
+      "key": true,
+      "l1": true,
+      "l2": true,
+      "loop": false,
+      "stop": true,
+      "test": false,
+      "actual": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": false,
+        "present": false
+      },
+      "expected": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": false,
+        "present": false
+      }
+    },
+    {
+      "key": true,
+      "l1": true,
+      "l2": true,
+      "loop": false,
+      "stop": true,
+      "test": true,
+      "actual": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": false,
+        "present": true
+      },
+      "expected": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": false,
+        "present": true
+      }
+    },
+    {
+      "key": true,
+      "l1": true,
+      "l2": true,
+      "loop": true,
+      "stop": false,
+      "test": false,
+      "actual": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": true,
+        "present": false
+      },
+      "expected": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": true,
+        "present": false
+      }
+    },
+    {
+      "key": true,
+      "l1": true,
+      "l2": true,
+      "loop": true,
+      "stop": false,
+      "test": true,
+      "actual": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": true,
+        "present": true
+      },
+      "expected": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": true,
+        "present": true
+      }
+    },
+    {
+      "key": true,
+      "l1": true,
+      "l2": true,
+      "loop": true,
+      "stop": true,
+      "test": false,
+      "actual": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": false,
+        "present": false
+      },
+      "expected": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": false,
+        "present": false
+      }
+    },
+    {
+      "key": true,
+      "l1": true,
+      "l2": true,
+      "loop": true,
+      "stop": true,
+      "test": true,
+      "actual": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": false,
+        "present": true
+      },
+      "expected": {
+        "mech": false,
+        "key": true,
+        "clear": false,
+        "stop_feed": false,
+        "present": true
+      }
+    }
+  ],
+  "hardware_tested": false,
+  "scope": "Static net graph, no mechanical travel/timing/failure-rate qualification. NC switches assumed healthy. Shared TAPs do not select source."
+}

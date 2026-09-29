@@ -1,0 +1,107 @@
+Sprawdziłem v5 pod kątem, o który prosiłeś. Wszystkie wnioski poniżej są zweryfikowane w plikach — tam, gdzie liczę, podaję liczby.
+
+Co się odtwarza u mnie
+
+63 testy Pythona przechodzą, manifest SHA256 zgadza się co do pliku, builds.json deklaruje pięć wariantów ESP-IDF 5.4.3 z exit_code: 0 i dołączone są binaria. Netlista ma 2382 wpisy pin–sieć w 341 sieciach, komplet 603 pozycji BOM rozbity na 16 zespołów.
+
+Architektura
+
+Najważniejsza zmiana strukturalna w v5 to przeniesienie pomiaru prądu na moduły: P06 i P07 mają własny łańcuch INA240 → dzielnik → MCP6022 → MCP3201 z odniesieniem MCP1525, a przez kabel idzie już tylko SPI z osobnym CS. To usuwa analogowe połączenie międzypłytkowe, które w MOD było słabym punktem, i realizuje Twój wymóg wymienności: lepszy przetwornik prądu to wymiana P06/P07, bez ruszania reszty.
+
+Policzyłem ten tor: 5 mΩ × 50 = 0,25 V/A, dzielnik 2,00k/2,00k daje 0,125 V/A, odniesienie 2,5 V, 12 bitów → 4,88 mA na bit, zero prądu dokładnie w połowie skali, ±8 A mieści się w 0,25–2,25 V z zapasem. Dokumentacja podaje ten sam krok i uczciwie nazywa go kwantyzacją, nie dokładnością. Względem v4.1 (AD7606B, 0,6 mA/bit) to osiem razy gorzej, ale dla progu open 0,1 A to wciąż 20 bitów, a dla prądu zerwania rzędu 0,5–1 A — zupełnie wystarczy.
+
+Progi przetężeniowe policzyłem osobno, bo to była słabość, którą zgłaszałem w v4: OC_HIGH = 2,5 × (1 + 10k/24,9k) = 3,504 V → +4,02 A, OC_LOW = 2,5 × 15k/25k = 1,5 V → −4,00 A. Oba wyprowadzone z tego samego buforowanego 2,5 V, nie z szyny 5 V. Symetrycznie i bez dryfu razem z zasilaniem — to jest poprawka strukturalna, nie kosmetyczna.
+
+Poprawność elektryczna — co sprawdziłem
+
+Przeszedłem netlistę skryptem, nie wzrokowo:
+
+Kontrola	Wynik
+Kierunki wszystkich 67 bramek 74LVC125	zgodne; nadajnik i odbiornik po właściwych stronach
+Sieci z wieloma nadajnikami	tylko ADC_DOUTA (3 źródła) i SPI3_MISO (2), wszystkie bramkowane CS-em
+Nieużywane bramki buforów	wejście na masie, wyjście otwarte, OE nieaktywne — poprawnie
+Sterowniki SAFE_N	wyłącznie wyjścia otwarte (Q7, Q8, Q9, Q10, Q_OC) + jeden pull-up; pozostałe końcówki 74HC to wejścia
+/CLR watchdoga 74HC123	SUP_N_P04, odseparowane od SAFE_N — poprawka R01 przeżyła podział
+Zatrzask OC na P07	D = PERMIT_N, CLR = rails ∧ OC; skasowanie możliwe tylko przy zdjętym zezwoleniu
+Łańcuch INTERLOCK	6 bramek AND, MODULES_OK ∧ MECH_OK, pętle z pull-downami
+Sieci wiszące	cztery, wszystkie nieszkodliwe (niżej)
+
+Nie znalazłem konfliktu wyjść ani odwróconego kierunku sygnału.
+
+Wykonalność w warunkach amatorskich
+
+Przejrzałem obudowy wszystkich 603 pozycji. Zestaw to DIP-8/14/16/18, TO-92, SOT-23, SOIC, 1206 i elementy przewlekane. Żadnego QFN, DFN, BGA ani padów od spodu, żadnych 0603 i mniejszych. To spełnia Twoje ograniczenie.
+
+Jeden wyjątek: AD7606B w LQFP-64, 0,5 mm na P05. Da się to zlutować ręcznie z topnikiem metodą przeciągania albo hot-airem z szablonem, ale to jedyny element, który tego wymaga. Skoro moduły i tak mają być wymienne, warto rozważyć gotowy breakout z AD7606B na P05 — wtedy w całym urządzeniu nie zostaje nic drobniejszego niż SOIC.
+
+Cztery systemy złączy: DEUTSCH DT (6 szt., adaptery i panel — uzasadnione, to koniec wystawiony na komorę silnika), MicroFit 3.0 (24), MSTB 5.08 (12, śrubowe, bez narzędzia), IDC (24). To dwa osobne zaciskarki plus praska IDC. W zakupy.csv są tylko nazwa i ilość — nie ma pozycji narzędziowych ani materiału montażowego, a przy tej liczbie zaciskanych styków to realna pozycja kosztowa i głównego źródła przerywanych styków w urządzeniu budowanym po to, żeby szukać przerywanych styków.
+
+Znalezione braki
+
+1. Nigdzie nie ma liczby warstw PCB. Przeszukałem docs/, hardware/ i src/ — zero trafień na „warstw". Przy Twoim limicie dwóch warstw to nie jest szczegół, tylko reguła projektowa, którą trzeba zapisać przed layoutem, i najostrzej dotyczy P05: AD7606B, 64 wyprowadzenia, zakres ±2,5 V na kanale masy czujnika i 76 µV na bit. Na dwóch warstwach to jest wykonalne, ale wymaga świadomego planu — dolna warstwa jako ciągła masa bez przecinania jej ścieżkami pod przetwornikiem, rozdział analogu i cyfry rozmieszczeniem, a nie szczeliną, kondensatory odniesienia dosłownie przy nóżkach. Tego nie da się „dodać później"; to determinuje rozmieszczenie.
+
+2. „+ adapter (Ioff)" przy 28 układach 74LVC125 w SO-14 kłóci się z robieniem PCB na zamówienie. Na płytce z firmy SO-14 ląduje bezpośrednio. Albo to pozostałość po myśleniu o płytce uniwersalnej, albo intencją są podstawki — w obu przypadkach 28 adapterów to zbędna wysokość, koszt i 392 dodatkowe luty.
+
+3. Cztery sieci wiszące — do sprzątnięcia przed layoutem, bo wyskoczą w ERC:
+
+Sieć	Co to jest
+I_LOG_SER, I_TEST_SER	wolne końce rezystorów RO2/RO1 — pozostałość po v4.1, gdzie prąd szedł analogowo do P05; teraz mierzy go lokalny MCP3201
+STOP_PRESSED	styk NO grzybka z P11 nie dochodzi nigdzie; firmware go nie czyta, a GPB7 ekspandera stoi wolne
+LOCAL_ARM_CLK	wyjście drugiej bramki U_GATE na P07 nieużyte; zatrzask jest taktowany niebramkowanym ARM_CLK_P07, co działa, bo D = PERMIT_N i tak wymusza warunek
+
+Żadna z nich nie jest błędem funkcjonalnym — to resztki po konwersji z v4.1.
+
+4. MCP1525 zasila wejście odniesienia MCP3201 bezpośrednio, przez 1 µF. Wejście VREF przetwornika SAR pobiera prąd impulsowo przy każdej konwersji, a MCP1525 ma ograniczoną wydajność. Przy 2 kSps i 500 kHz zegara powinno być w porządku, ale to jest pozycja do zmierzenia przy uruchomieniu — na szczęście J_ANALOG_TP wyprowadza P06_REF25 na sondę, więc jest gdzie przyłożyć skop.
+
+Kod
+
+Odczyt prądu jest zrobiony porządnie i odpowiada na pytanie, które zadałbym w pierwszej kolejności — czy brak modułu udaje pomiar. Nie udaje: current_read() sprawdza obecność modułu, błąd magistrali, bit NULL MCP3201 (wykrywa wiszącą magistralę czytaną jako same jedynki), kody przy krańcach skali i okno czasowe konwersji, i dopiero wtedy ustawia CURRENT_OK. Do okna uśredniania prądu wchodzi znacznik ze środka konwersji prądowej, nie czas próbki głównego przetwornika — czyli ktoś pomyślał o przesunięciu między dwoma ADC.
+
+Do tego doszedł warunek voltage_calibrated: bez kalibracji napięcia są NaN, a nie ładnie wyglądającymi liczbami. Mapa portu B zgadza się z netlistą po przeniesieniu MARK na GPB6 i SCOPE na GPIO41.
+
+Co bym zrobił przed layoutem
+
+Zapisałbym regułę dwóch warstw jako punkt w dokumentacji każdego modułu, z osobnym akapitem dla P05. Rozstrzygnąłbym sprawę adapterów pod SO-14 — jeśli PCB idą do firmy, adaptery znikają z BOM-u. Wyczyściłbym cztery wiszące sieci, dopisał narzędzia i materiał montażowy do zakupów, i rozważył gotowy moduł z AD7606B, żeby w całym urządzeniu nie zostało nic drobniejszego od SOIC.
+
+Poza tym architektura i warstwa elektryczna trzymają się w tej rewizji. Podział na moduły rzeczywiście realizuje to, o co prosiłeś: wymiana toru prądowego, czujnika czy napędu to wymiana jednej płytki i jej profilu, a nie nowe urządzenie.
+
+Uważasz, że taki układ dało by się wstępnie poskładać na płytkach uniwersalnych? - nie zakłądałem tego, ale z twojego opisu wychodzi, że dopuszczasz taką możliwość?
+
+Dobre pytanie — w poprzedniej odpowiedzi zasugerowałem to mimochodem, przez uwagę o adapterach. Sprawdzę, co faktycznie wychodzi moduł po module.
+
+Break down package types per module
+
+Tak, dopuszczam — ale tylko dla części modułów, i nie przypadkiem akurat tych, które są najłatwiejsze. Rozbicie na płytki paradoksalnie to umożliwia: możesz mieć mieszankę, bo każdy moduł ma własne złącza i własny odbiór.
+
+Moduł po module
+Moduł	Uniwersalna?	Dlaczego
+P04 SAFE	tak, wręcz idealna	prawie wyłącznie logika DIP (74HC74, 74HC123, 74HC14, kilka 74HC08), tranzystory SOT-23 na adapterach, reszta to rezystory i złącza. Funkcja jest boolowska i wolna — nie ma tu ani jednego sygnału, któremu montaż punktowy zaszkodzi. Do tego P00 pozwala ją wygrzać bez procesora i bez mostka
+P02 PSU	tak	dwa moduły TSR, bezpieczniki, kondensatory, jeden bufor. Nic krytycznego czasowo
+P09 TEMP	tak	gotowe moduły MAX31856 na goldpinach plus bufor. Tylko trzymaj wejścia termopar z dala od reszty
+P10 CAN	tak	transceiver SOIC-8 na adapterze, dwa rezystory, ESD
+P11 PANEL, P00	tak	pasywne rozprowadzenie i przyrząd uruchomieniowy — z definicji
+P03 CORE	tak, z zastrzeżeniem	Waveshare na listwach, MCP23017 w DIP-28, siedem 74LVC125 na adapterach. Ryzykiem jest SD po SPI przy 10 MHz na plątaninie drutów — na start zejdź z zegarem
+P08 SENSOR	tak	TPS2553 w SOT-23-6 na adapterze, przekaźnik, driver
+P06 I-LOGGER	granicznie	cały łańcuch analogowy jest w DIP/SOIC i niskoimpedancyjny, więc wybacza sporo. Krytyczny jest Kelvin do bocznika — dwie osobne pary od padów pomiarowych prosto na wejścia INA240, skręcone, bez wspólnego odcinka z torem prądu. Da się to zrobić na uniwersalnej, ale to nie jest „przylutuj gdziekolwiek"
+P07 DRIVE	do pierwszych prób tak, do odbioru nie	mostek, KPWR, 1000 µF, TVS, bocznik i komparator OC. Pętla mocy na drutach ma dużą powierzchnię i indukcyjność — przy zmianach kierunku dostaniesz dzwonienie, którego nie da się odróżnić od zjawiska. Cel „OC → PWM/EN nisko poniżej 20 µs" i pomiar impulsu regeneracji będą mierzyły Twój montaż, nie układ
+P01 PROTECT	technicznie tak, ale bez sensu	wszystko przewlekane, więc pasuje — tylko ścieżki uniwersalnej nie przeniosą 5 A, trzeba lutować szyny z drutu wzdłuż toru mocy. A ten moduł ma już skończony projekt PWR-THT, więc to najlepszy kandydat na pierwszą prawdziwą płytkę
+P05 DAQ	nie	tu bym nie schodził na uniwersalną
+Dlaczego akurat P05 nie
+
+Trzy rzeczy naraz, każda wystarczająca osobno.
+
+AD7606B w LQFP-64 i tak wymaga adaptera, a adapter odsuwa kondensatory odniesienia i zasilania od nóżek — czyli łamie dokładnie tę regułę, którą pakiet sam stawia w rozdziale o granicach podziału. Osiem torów wejściowych jest wysokoimpedancyjnych (dzielniki 100 kΩ z filtrami 220 pF); na uniwersalnej biegną jako gołe druty obok siebie, więc dostajesz przydźwięk i przesłuchy w miejscu, gdzie sygnał ma amplitudę pojedynczych miliwoltów. No i nie ma płaszczyzny masy — a kanał masy czujnika ma pracować na ±2,5 V z krokiem 76 µV. Na montażu punktowym ten kanał po prostu przestaje znaczyć to, po co powstał.
+
+Czyli: na uniwersalnej P05 uruchomisz SPI, sprawdzisz kolejność kanałów i znaki, przetestujesz przełączanie zakresów i firmware — ale nie zweryfikujesz nią pomiaru, dla którego ten moduł istnieje. Jeśli tak ją potraktujesz, to jest to sensowne narzędzie pośrednie.
+
+Co montaż punktowy kosztuje w tym konkretnym urządzeniu
+
+Brak ciągłej masy odbiera sens kanałowi H2. Długie odcinki wysokoimpedancyjne zbierają zakłócenia i zmieniają pasmo torów, więc kalibracja DC nie przeniesie się na wersję z PCB. Zegary trzeba zejść w dół — ADC SPI 8 MHz i SD 10 MHz na drutach to proszenie się o błędy; przy uruchomieniu zejdź na 1 MHz i przelicz, czy mieścisz się w czasie konwersji i odczytu przy 2 kS/s.
+
+Czego nie tracisz: całej logiki bezpieczeństwa, firmware'u, formatu danych, procedur i profili. To jest największa część ryzyka projektowego i akurat ją da się wygrzać na uniwersalnej, zanim zamówisz miedź.
+
+Konsekwencja dla mojej poprzedniej uwagi
+
+Wycofuję się z twierdzenia, że „+ adapter (Ioff)" przy 74LVC125 to niespójność. To zależy od modułu: na płytce uniwersalnej adapter jest konieczny, na płytce z firmy zbędny. Brakuje natomiast deklaracji, który moduł idzie którą drogą — i to jest właściwa poprawka do pakietu. Jedna kolumna w moduly.csv albo wiersz w karcie modułu: „wykonanie: uniwersalna / PCB", a za nią wynika obecność adapterów w BOM-ie i sposób odbioru.
+
+Gdybym miał to zapisać jako regułę: P01 i P05 na PCB od razu, P07 na PCB przed odbiorem napędu, reszta może powstać na uniwersalnych i zostać taka na stałe, jeśli przejdzie własny odbiór.

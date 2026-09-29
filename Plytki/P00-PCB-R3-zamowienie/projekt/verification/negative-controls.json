@@ -1,0 +1,137 @@
+[
+  {
+    "control": "null_control",
+    "expected_failing_check": "none (null control: all checks pass, DRC clean)",
+    "detected": true,
+    "failed_checks": [],
+    "drc_violation_types": []
+  },
+  {
+    "control": "sw_rotated",
+    "expected_failing_check": "Wurth WS-SLTV switches",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "Wurth WS-SLTV switches: COM = middle pin 1, pin 2 = 3V3, pin 3 = GND, pin 3 above pin 2 on all nine (opposite-side contact: slider up = H/RUN, as printed)"
+    ],
+    "drc_violation_types": [
+      "hole_clearance",
+      "shorting_items",
+      "solder_mask_bridge"
+    ]
+  },
+  {
+    "control": "header_flipped",
+    "expected_failing_check": "Headers J1..J9",
+    "detected": true,
+    "failed_checks": [
+      "Headers J1..J9: left pin GND, right pin signal (as printed), same row"
+    ],
+    "drc_violation_types": []
+  },
+  {
+    "control": "mount_shift",
+    "expected_failing_check": "Four NPTH 3.2 mm holes",
+    "detected": true,
+    "failed_checks": [
+      "Four NPTH 3.2 mm holes 5 mm from the corners, copper keepouts on both layers"
+    ],
+    "drc_violation_types": []
+  },
+  {
+    "control": "ref_inside_other",
+    "expected_failing_check": "Every visible reference",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "Every visible reference outside other courtyards and nearest to its own part"
+    ],
+    "drc_violation_types": [
+      "silk_overlap"
+    ]
+  },
+  {
+    "control": "decap_far",
+    "expected_failing_check": "Capacitors at their pins",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "Capacitors at their pins: LM2937 in/out <= 10 mm, 555 VCC and CTRL <= 8 mm",
+      "Every visible reference outside other courtyards and nearest to its own part"
+    ],
+    "drc_violation_types": [
+      "courtyards_overlap",
+      "hole_clearance",
+      "hole_to_hole",
+      "pth_inside_courtyard",
+      "shorting_items",
+      "silk_overlap",
+      "solder_mask_bridge",
+      "track_dangling"
+    ]
+  },
+  {
+    "control": "label_swap",
+    "expected_failing_check": "Channel numbers",
+    "detected": true,
+    "failed_checks": [
+      "Channel numbers 1..8 and HB beside their own LED (<= 5 mm, nearest LED is their own)"
+    ],
+    "drc_violation_types": []
+  },
+  {
+    "control": "thin_supply",
+    "expected_failing_check": "Every pre-routed (locked) segment",
+    "detected": true,
+    "failed_checks": [
+      "Every pre-routed (locked) segment and via retained with its width and layer (supply, 3V3 rail, channels)"
+    ],
+    "drc_violation_types": []
+  },
+  {
+    "control": "dangling_lock",
+    "expected_failing_check": "Fresh native DRC",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "Every pre-routed (locked) segment and via retained with its width and layer (supply, 3V3 rail, channels)"
+    ],
+    "drc_violation_types": [
+      "track_dangling"
+    ]
+  },
+  {
+    "control": "preload_wrong",
+    "expected_failing_check": "R5 permanent preload",
+    "detected": true,
+    "failed_checks": [
+      "Every value, footprint ID and pad net equals the exported schematic netlist",
+      "R5 permanent preload: 560 ohm directly from 3V3 to GND"
+    ],
+    "drc_violation_types": []
+  },
+  {
+    "control": "cout_bypassed",
+    "expected_failing_check": "C6 return through R6",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "Every value, footprint ID and pad net equals the exported schematic netlist",
+      "C6 return through R6: exactly C6.2 and R6.1 on private net; R6 is 1 ohm to GND"
+    ],
+    "drc_violation_types": [
+      "hole_clearance",
+      "shorting_items",
+      "solder_mask_bridge"
+    ]
+  },
+  {
+    "control": "vin_legend_at_tp3",
+    "expected_failing_check": "Supply legend nearest to J10",
+    "detected": true,
+    "failed_checks": [
+      "Supply legend nearest to J10 (not TP3); TP3 labelled ZA D1 within 4 mm (TP3 is after D1, not a supply input)"
+    ],
+    "drc_violation_types": []
+  }
+]

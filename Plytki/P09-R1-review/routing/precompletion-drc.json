@@ -1,0 +1,136 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-27T11:51:13",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P09.kicad_pcb",
+    "unconnected_items": [],
+    "violations": [
+        {
+            "description": "Thermal relief connection to zone incomplete (layer B.Cu; 4 spokes connected to isolated island)",
+            "items": [
+                {
+                    "description": "Zone [GND] on B.Cu, priority 0",
+                    "pos": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "uuid": "cb590497-abce-4d68-b606-f5b1dd61bad5"
+                },
+                {
+                    "description": "PTH pad 2 [GND] of R3",
+                    "pos": {
+                        "x": 22.16,
+                        "y": 41.0
+                    },
+                    "uuid": "bfb0c608-7121-415f-b40f-b61e69157ea7"
+                }
+            ],
+            "severity": "error",
+            "type": "starved_thermal"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track [TC1_CS_MODULE] on F.Cu, length 2,0937 mm",
+                    "pos": {
+                        "x": 25.08,
+                        "y": 55.7801
+                    },
+                    "uuid": "7a578f1f-5209-4181-a46c-57fe07c0b08a"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track [TC1_CS_MODULE] on B.Cu, length 2,0937 mm",
+                    "pos": {
+                        "x": 25.08,
+                        "y": 55.7801
+                    },
+                    "uuid": "4b4ad6cf-5376-4d8a-9af3-1d3e23f73071"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track [TC1_MISO] on F.Cu, length 4,0822 mm",
+                    "pos": {
+                        "x": 70.9439,
+                        "y": 56.8371
+                    },
+                    "uuid": "a53c615e-bfed-4819-8126-52ad3c5101aa"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Track [TC1_MISO] on B.Cu, length 4,0822 mm",
+                    "pos": {
+                        "x": 70.9439,
+                        "y": 56.8371
+                    },
+                    "uuid": "ef9bc43f-238c-4ff3-b427-d63dea8175d6"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of TP5",
+                    "pos": {
+                        "x": 64.0,
+                        "y": 33.375
+                    },
+                    "uuid": "85fc86d5-1478-40b6-a794-4e65ec3196db"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        }
+    ]
+}

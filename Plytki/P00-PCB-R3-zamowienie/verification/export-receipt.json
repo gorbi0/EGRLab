@@ -1,0 +1,80 @@
+{
+  "time_utc": "2026-09-28T18:44:33.893196+00:00",
+  "kicad": "10.0.6",
+  "board_sha256": "cf39f545a7b62be48802057be33b82b9f97b4e2d6216e24155f17a824b2bf63a",
+  "drc_sha256": "be887b6fc84bd023f9111e2aac3ba1c90651d047dcc897ace57d2877a53049a8",
+  "drc": {
+    "violations": 0,
+    "unconnected_items": 0,
+    "schematic_parity": 0
+  },
+  "inputs_unchanged": true,
+  "commands": [
+    [
+      "C:\\Program Files\\KiCad\\10.0\\bin\\kicad-cli.exe",
+      "pcb",
+      "drc",
+      "--refill-zones",
+      "--schematic-parity",
+      "--severity-all",
+      "--format",
+      "json",
+      "--units",
+      "mm",
+      "--output",
+      "C:\\Users\\tgorbacz\\Documents\\GORBI\\Priv\\Kia\\Sportage\\EGRLab\\Plytki\\P00-PCB-R3-zamowienie\\verification\\drc.json",
+      "C:\\Users\\tgorbacz\\Documents\\GORBI\\Priv\\Kia\\Sportage\\EGRLab\\Plytki\\P00-PCB-R3-zamowienie\\projekt\\eda\\P00.kicad_pcb"
+    ],
+    [
+      "C:\\Program Files\\KiCad\\10.0\\bin\\kicad-cli.exe",
+      "pcb",
+      "export",
+      "gerbers",
+      "--layers",
+      "F.Cu,B.Cu,F.Mask,B.Mask,F.SilkS,Edge.Cuts",
+      "--precision",
+      "6",
+      "--subtract-soldermask",
+      "--disable-aperture-macros",
+      "--check-zones",
+      "--output",
+      "C:\\Users\\tgorbacz\\Documents\\GORBI\\Priv\\Kia\\Sportage\\EGRLab\\Plytki\\P00-PCB-R3-zamowienie\\gerber/",
+      "C:\\Users\\tgorbacz\\Documents\\GORBI\\Priv\\Kia\\Sportage\\EGRLab\\Plytki\\P00-PCB-R3-zamowienie\\projekt\\eda\\P00.kicad_pcb"
+    ],
+    [
+      "C:\\Program Files\\KiCad\\10.0\\bin\\kicad-cli.exe",
+      "pcb",
+      "export",
+      "drill",
+      "--format",
+      "excellon",
+      "--drill-origin",
+      "absolute",
+      "--excellon-zeros-format",
+      "decimal",
+      "--excellon-units",
+      "mm",
+      "--excellon-separate-th",
+      "--generate-map",
+      "--map-format",
+      "svg",
+      "--generate-report",
+      "--report-path",
+      "C:\\Users\\tgorbacz\\Documents\\GORBI\\Priv\\Kia\\Sportage\\EGRLab\\Plytki\\P00-PCB-R3-zamowienie\\verification\\drill-report.txt",
+      "--output",
+      "C:\\Users\\tgorbacz\\Documents\\GORBI\\Priv\\Kia\\Sportage\\EGRLab\\Plytki\\P00-PCB-R3-zamowienie\\gerber/",
+      "C:\\Users\\tgorbacz\\Documents\\GORBI\\Priv\\Kia\\Sportage\\EGRLab\\Plytki\\P00-PCB-R3-zamowienie\\projekt\\eda\\P00.kicad_pcb"
+    ]
+  ],
+  "files": {
+    "P00-B_Cu.gbl": "cc28c5529830494350801793a838b909136f8c2ef4b02b8f8babc8ee30ed31ca",
+    "P00-B_Mask.gbs": "7b4288369e48b0ab81bd258214fa4c59d94a82b2171e31aca5dedf919d45fcff",
+    "P00-Edge_Cuts.gm1": "2dce2528cf14eccfa1dfb03b18d08deb36e9333103b245d868df45f1201f9c20",
+    "P00-F_Cu.gtl": "c850e87f7ad13e4d32b94029fb53a8fe6707e6cb54fe8f5443aec6f1e1eb6857",
+    "P00-F_Mask.gts": "a0b89b6b173e62f712a67008a6a155d33622bc25642be842c4b87ae81e912e3b",
+    "P00-F_Silkscreen.gto": "3f4e713075192fd6e5b2185c774614d65aae20830fe6bc367783553c221f61dc",
+    "P00-NPTH.drl": "142457568f7c8a5a980e974f893e18010c1304ae16a0e06dd9752673846d17ae",
+    "P00-PTH.drl": "afd18b7b15e17bae65378a4006653663e0201f30ae6c249959d8095d541a499d"
+  },
+  "native_job_sha256": "be9edc5c6baae29a26e7678efe46bf6a04561cbe56b70ff28338d1731ab2209c"
+}

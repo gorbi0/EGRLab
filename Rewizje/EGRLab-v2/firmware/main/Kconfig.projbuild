@@ -1,0 +1,21 @@
+menu "EGRLab"
+config EGR_ACTIVE_TEST
+    bool "Wlacz TEST po odbiorze sprzetu i kalibracji"
+    default n
+config EGR_SAMPLE_HZ
+    int "Zadana czestotliwosc probkowania; kwalifikuj czasy na sprzecie"
+    range 100 20000
+    default 2000
+config EGR_WIFI_UI
+    bool "SoftAP z podgladem i przyciskami na telefonie"
+    default n
+    depends on EGR_ACTIVE_TEST
+config EGR_WIFI_SSID
+    string "SSID punktu dostepowego"
+    default "EGRLab"
+    depends on EGR_WIFI_UI
+config EGR_WIFI_PASSWORD
+    string "Haslo WPA2 (min. 8 znakow; puste = siec otwarta)"
+    default "zmien-to-haslo"
+    depends on EGR_WIFI_UI
+endmenu

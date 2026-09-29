@@ -1,0 +1,9 @@
+menu "EGRLab"
+config EGR_ACTIVE_TEST
+    bool "Enable TEST after hardware acceptance and calibration"
+    default n
+config EGR_SAMPLE_HZ
+    int "Requested sample rate; qualify timing on hardware"
+    range 100 20000
+    default 2000
+endmenu

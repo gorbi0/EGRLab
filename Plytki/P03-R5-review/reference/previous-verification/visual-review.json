@@ -1,0 +1,21 @@
+{
+  "date": "2026-09-27",
+  "reviewer": "Claude",
+  "reports": {
+    "P03-R4-schemat.pdf": {
+      "pages": 5,
+      "sha256": "550f5679a2ef8f0ae0785360e07c215b0544c99fec19c7ad4bd4214be5c0877a",
+      "all_pages_visually_reviewed": true,
+      "findings": "All 5 sheets at 75 dpi. Sheet 2 POWER at 200 dpi: U6 SN74LVC1G17DBVR (A = SUP_N, Y = SUP_N_DRV, NC marked, VCC 3V3_CORE), R41 220R / 1% 1206 to SUP_N_OUT, C15 100nF next to C12, R4 note lines readable. Sheet 5 LINKS at 250 dpi: J4.15 label SUP_N_OUT fits. Sheet 1 title line changed to the buffer wording and re-inspected at 200 dpi; the final PDF differs from the inspected render only in that line. Title blocks P03-R4 / 2026-09-27."
+    },
+    "P03-R4-PCB.pdf": {
+      "pages": 4,
+      "sha256": "d812f982a2c7cc1a1ab18314f7cb30b0c87979eb1c1173833e6f5ed3e8ed5657",
+      "all_pages_visually_reviewed": true,
+      "findings": "Page 1 at 110 dpi (R4 summary: 0/0/0, 30/30, 18/18 + null, 100 vias). Pages 2-4 at 40 dpi and the change area at 300/600 dpi: U6 above J4, C15 in the strip below the antenna keepout, R41 in the J4-U12 gap with its vertical reference below it, SUP_N via -> U6.2, U6.4 -> R41 -> via -> B.Cu -> J4.15, HW_ARMED_CORE B.Cu run between two vias, 3V3_CORE feed along the U12 adapter edge; coordinates match route_critical.py. Note columns of pages 2-3 read at 130 dpi. Final PDF pixel-identical to the inspected renders."
+    }
+  },
+  "pcb_render": "Poppler pdftoppm 40, 110, 130, 300 and 600 dpi",
+  "schematic_render": "Poppler pdftoppm 75, 200 and 250 dpi",
+  "hardware_or_mating_test": false
+}

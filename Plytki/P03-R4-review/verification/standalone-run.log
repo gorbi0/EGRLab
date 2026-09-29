@@ -1,0 +1,490 @@
+> C:\Program Files\KiCad\10.0\bin\python.exe build_schematic.py
+Placed 91 components on 5 A3 sheets
+> C:\Program Files\KiCad\10.0\bin\kicad-cli.exe sch erc --severity-all --format json -o verification/erc.json eda/P03.kicad_sch
+> C:\Program Files\KiCad\10.0\bin\kicad-cli.exe sch export netlist --format kicadxml -o verification/P03.xml eda/P03.kicad_sch
+> C:\Program Files\KiCad\10.0\bin\python.exe verify_schematic.py
+{"components": 91, "parts": 91, "pin_checks": 430, "extra": [], "erc_sheets": 5, "erc_violations": 0, "nets": 132} errors 0
+> C:\Program Files\KiCad\10.0\bin\python.exe compare_v61.py
+v6.1 pins checked 310; differences 9; unexpected 0; added parts ['C12', 'C13', 'C14', 'C15', 'Q1', 'R15', 'R16', 'R17', 'R18', 'R19', 'R20', 'R21', 'R22', 'R23', 'R24', 'R25', 'R26', 'R27', 'R28', 'R29', 'R30', 'R31', 'R32', 'R33', 'R34', 'R35', 'R36', 'R37', 'R38', 'R39', 'R40', 'R41', 'TP1', 'TP2', 'TP3', 'TP4', 'TP5', 'TP6', 'TP7', 'TP8', 'U4', 'U5', 'U6']
+> C:\Program Files\KiCad\10.0\bin\python.exe verify_function.py
+PASS default ADC_CS_SRC
+PASS default ADC_SCLK_SRC
+PASS default ADC_SDI_SRC
+PASS default ADC_CONVST_SRC
+PASS default ADC_RESET_SRC
+PASS default MEAS_EN_SRC
+PASS default SPI3_SCLK_SRC
+PASS default SPI3_MOSI_SRC
+PASS default TC1_CS_SRC
+PASS default TC2_CS_SRC
+PASS default MEAS_BANK
+PASS default CURRENT_CS_N
+PASS default SD_CS
+PASS default INTERLOCK
+PASS default TEST_KEY
+PASS default ENA_DIAG
+PASS default ENB_DIAG
+PASS default CAN_RX
+PASS default ADC_BUSY
+PASS default ADC_DOUTA
+PASS default SPI3_MISO
+PASS default HW_ARMED
+PASS default LOGGER_CURRENT_OK
+PASS default SENSOR_HEALTHY
+PASS default LOGGER_CLEAR
+PASS default TEST_PRESENT
+PASS common reset MCU MCP
+PASS reset to P04 through Schmitt buffer U6 and R41
+PASS U6 decoupling C15 100nF
+PASS supervisor isolated from EN capacitance
+PASS non-inverting open-drain reset buffer
+PASS reset sink current limiter
+PASS common reset local pullup
+PASS TPS3808 DBV supply pins
+PASS SYS and USB local rail separated
+PASS LTC4412 pin map and enable
+PASS PMOS body diode SYS to M1
+PASS source termination R36
+PASS source termination R37
+PASS source termination R38
+PASS source termination R39
+PASS source termination R40
+PASS buffer powered from CORE U11
+PASS buffer powered from CORE U12
+PASS buffer powered from CORE U13
+PASS buffer powered from CORE U14
+PASS buffer powered from CORE U21
+PASS buffer powered from CORE U22
+PASS buffer powered from CORE U23
+PASS R1 pin contract plus exact R2/R4 delta
+PASS no supply rail on a connector pin directly or through < 100 ohm (LV03 J10 excepted)
+PASS CORE_LINK from 3V3_CORE through 1K (R14)
+PASS mating connectors equal the frozen neighbour pin maps (LV03, H_SAFE, DAQ B2B)
+53 functional checks; 43/43 mutations detected
+> C:\Program Files\KiCad\10.0\bin\kicad-cli.exe sch export pdf -o output/pdf/P03-R4-schemat.pdf eda/P03.kicad_sch
+> C:/Users/tgorbacz/.cache/codex-runtimes/codex-primary-runtime/dependencies/native/poppler/Library/bin/pdftoppm.exe -png -r 60 output/pdf/P03-R4-schemat.pdf output/previews/sch
+> C:\Program Files\KiCad\10.0\bin\python.exe run_layout.py --reuse-ses
+Created P03 board: 91 footprints + 5 M3 holes; rule areas: M3 H1, M3 H2, M3 H3, M3 H4, M3 H5, ANTENNA M1, SD1 M2.5 1, SD1 M2.5 2, LV03 TIE
+Rules: Default 0.30/0.25 mm, Power (5V_SYS, 3V3_CORE, 3V3_IO) 0.60/0.30 mm; no DRC exclusions.
+2-layer stackup: Cu35/FR4 1.53/Cu35; nominal laminate incl Cu = 1.60 mm, mask separate.
+5V_SYS feed, 17 decoupling stubs and 12 capacitor GND vias locked (min clearance to other pads, mm): {'U11.14-C5.1': 1.39, 'U12.14-C6.1': 1.39, 'U13.14-C7.1': 1.39, 'U14.14-C8.1': 1.39, 'U21.14-C9.1': 1.39, 'U22.14-C10.1': 1.39, 'U23.14-C11.1': 1.39, 'U1.9-C2.1': 1.44, 'U2.16-C1.1': 2.49, 'U3.6-C3.1': 3.73, 'U4.5-C12.1': 0.94, 'U6.5-C15.1': 0.94, 'U6.4-R41.1': 1.09, 'ADC_SCLK_DRV': 1.54, 'ADC_CONVST_DRV': 1.54, 'SPI3_SCLK_DRV': 1.54, 'ADC_SDI_DRV': 1.54} {'C5': 2.2, 'C6': 4.06, 'C7': 4.8, 'C8': 4.2, 'C9': 2.78, 'C10': 2.44, 'C11': 1.04, 'C2': 3.21, 'C1': 2.23, 'C3': 3.59, 'C12': 3.92, 'C15': 3.92} ; DSN exported.
+seed round 1 seeded 823 colliding nets []
+R3 copper seeded (locked) except 2 replaced wires and the nets none ; DSN exported.
+Rules: Default 0.30/0.25 mm, Power (5V_SYS, 3V3_CORE, 3V3_IO) 0.60/0.30 mm; no DRC exclusions.
+DSN: GND pins removed from the router net list; pre-routed board frozen.
+SES imported; GND planes filled; saved native board.
+unlocked 823 seeded R3 items
+Rules: Default 0.30/0.25 mm, Power (5V_SYS, 3V3_CORE, 3V3_IO) 0.60/0.30 mm; no DRC exclusions.
+
+Fontconfig error: No writable cache directories
+	C:/WINDOWS/Cache/Fontcache
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+removed 30 redundant free items ['5V_M1', 'GND'] ; dropped 2 tiny; joined 0 near-miss ends; 0 duplicate and 0 dead-end items; unconnected 2 (interim) ; solid zone connection: ['J4.2', 'U11.10', 'U11.13', 'U12.10', 'U12.13', 'U12.4', 'U12.7', 'U13.1', 'U13.13', 'U13.4', 'U13.7', 'U14.1', 'U14.12', 'U14.5', 'U14.7', 'U21.10', 'U21.13', 'U22.1', 'U22.10', 'U22.13', 'U23.10', 'U23.13', 'U23.4', 'U5.2']
+Rules: Default 0.30/0.25 mm, Power (5V_SYS, 3V3_CORE, 3V3_IO) 0.60/0.30 mm; no DRC exclusions.
+GND stitching: 54 vias; pour islands {'F.Cu': 39, 'B.Cu': 34} -> {'F.Cu': 39, 'B.Cu': 34}
+Rules: Default 0.30/0.25 mm, Power (5V_SYS, 3V3_CORE, 3V3_IO) 0.60/0.30 mm; no DRC exclusions.
+
+Fontconfig error: No writable cache directories
+	C:/WINDOWS/Cache/Fontcache
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+
+Fontconfig error: No writable cache directories
+	C:/WINDOWS/Cache/Fontcache
+CLUSTER 289
+[
+ [
+  "F.Cu:0",
+  {
+   "F.Cu": [
+    116.288,
+    113.509,
+    118.812,
+    116.034
+   ]
+  }
+ ]
+]
+clusters 1
+> C:\Program Files\KiCad\10.0\bin\python.exe build_board.py
+> C:\Program Files\KiCad\10.0\bin\python.exe set_rules.py
+> C:\Program Files\KiCad\10.0\bin\python.exe set_stackup.py
+> C:\Program Files\KiCad\10.0\bin\python.exe route_critical.py
+> C:\Program Files\KiCad\10.0\bin\python.exe seed_r3.py
+> C:\Program Files\KiCad\10.0\bin\python.exe prepare_routing.py
+> C:/Program Files/KiCad/10.0/bin/kicad-cli.exe pcb drc --format json --severity-all -o routing/critical-drc.json eda/P03.kicad_pcb
+> C:\Program Files\KiCad\10.0\bin\python.exe import_routing.py
+> C:\Program Files\KiCad\10.0\bin\python.exe unseed.py
+> C:\Program Files\KiCad\10.0\bin\python.exe set_rules.py
+> C:/Program Files/KiCad/10.0/bin/kicad-cli.exe pcb drc --format json --severity-all --schematic-parity --all-track-errors --refill-zones -o routing/postroute-drc.json eda/P03.kicad_pcb
+routing/postroute-drc.json {'starved_thermal': 31, 'silk_edge_clearance': 1, 'silk_over_copper': 11, 'silk_overlap': 23} unconnected 2 parity 0
+> C:\Program Files\KiCad\10.0\bin\python.exe set_rules.py
+> C:\Program Files\KiCad\10.0\bin\python.exe stitch.py
+> C:\Program Files\KiCad\10.0\bin\python.exe set_rules.py
+> C:/Program Files/KiCad/10.0/bin/kicad-cli.exe pcb drc --format json --severity-all --schematic-parity --all-track-errors --refill-zones -o routing/postclean-drc.json eda/P03.kicad_pcb
+routing/postclean-drc.json {'silk_edge_clearance': 1, 'silk_over_copper': 11, 'silk_overlap': 23} unconnected 0 parity 0
+> C:/Program Files/KiCad/10.0/bin/kicad-cli.exe pcb drc --format json --severity-all --schematic-parity --all-track-errors --refill-zones -o routing/postclean-drc.json eda/P03.kicad_pcb
+routing/postclean-drc.json {'silk_edge_clearance': 1, 'silk_over_copper': 11, 'silk_overlap': 23} unconnected 0 parity 0
+> C:\Program Files\KiCad\10.0\bin\python.exe tools/ground_islands.py
+> C:\Program Files\KiCad\10.0\bin\python.exe silkscreen.py
+references 83 max shift 12.96 | legends 29 max shift 4.37
+> C:\Program Files\KiCad\10.0\bin\python.exe set_rules.py
+Rules: Default 0.30/0.25 mm, Power (5V_SYS, 3V3_CORE, 3V3_IO) 0.60/0.30 mm; no DRC exclusions.
+> C:\Program Files\KiCad\10.0\bin\python.exe verify_pcb.py
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+PASS Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)
+PASS 91 parts + 5 mounting holes, nothing else
+PASS Every value, footprint ID and pad net equals the exported schematic netlist
+PASS 2 copper layers, 1.6 mm board
+PASS Both copper layers explicitly 35 um
+PASS Closed rectangular outline 160 x 120 mm (P01/P02 format)
+PASS Five NPTH 3.2 mm holes: the four P01/P02 corners + H5 (155, 38) next to the DAQ socket; copper keepouts on both layers
+PASS No courtyard within 4.5 mm of a mounting-hole centre (screw head + washer)
+PASS Explicit DRC rules and net classes active (Default 0.30/0.25, Power 0.60/0.30 for 5V_SYS, 3V3_CORE, 3V3_IO); no DRC exclusions
+PASS Every pre-routed (locked) segment and via retained with its width and layer (5V_SYS feed 1.0 mm, decoupling stubs, capacitor GND vias, R4 buffer copper)
+PASS Supply nets: branches >= 0.6 mm; locked main feed remains 1.0 mm
+PASS M1 Waveshare: two 1x22 rows 22.86 mm apart (J1 row towards the board, J3 row at the left), USB-C end at the top edge (<= 0.5 mm)
+PASS ANTENNA keepout: M1 antenna end + 3 mm sides + 8 mm beyond, both layers, no track / via / pour; no other part inside
+PASS J1 DAQ (right-angle 2x8 socket to P05): mating face 0-0.5 mm inside the right edge; H2 and H5 on both sides within 25 mm; key position 2 NC
+PASS IDC box headers J2..J8: at an edge (courtyard <= 0.5 mm), long axis along it, odd (signal) row inside, key pin NC (v6.1 keys)
+PASS J9 PANELCORE (Mini-Fit Jr 8p) at an edge (<= 0.5 mm), position 6 NC
+PASS SD1 Adafruit 4682: card end at a board edge (card tip <= 0.6 mm inside), M2.5 stand-off keepouts r 3 mm around both holes, both layers
+PASS J10 LV03 pigtail: 1=5V_SYS 2=GND 3=3V3_IO 4=GND; anchors 12.5 mm from the solder row towards the edge; no copper under the tie band; the test pad under each LV03 pad has its net
+PASS 100 nF at every IC: <= 8 mm straight and <= 20 mm routed to the VCC pin (74LVC125 pin 14, MCP23017 pin 9, 74HC139 pin 16, TPS3808 VDD, LVC1G07/1G17 pin 5)
+PASS Source termination: <=12 mm straight and <=20 mm routed from buffer
+PASS TPS3808 C3 is at VDD 6, not MR 3
+PASS R4 reset to P04: U6 (SN74LVC1G17) <= 15 mm from J4.15; U6.4 -> R41 <= 5 mm and R41 -> J4.15 <= 15 mm routed; J4.15 = SUP_N_OUT, U6.2 = SUP_N
+PASS Power feed physically terminates on Q1 drain/source and M1
+PASS Supply domains (v6.1): every 74LVC125 VCC on 3V3_CORE; 3V3_IO only at J10.3, TP3 and the unused OE# of U14; 3V3_CORE never joins 3V3_IO
+PASS GND pours on both layers, island removal on; largest island >= 75 % of each pour; layers stitched by >= 40 GND vias (8 mm grid)
+PASS Every visible reference outside other courtyards and nearest to its own part (R41: in its gap between J4 and U12, right below it)
+PASS Every board legend outside all courtyards (visible after assembly); the M1 / SD1 module outlines excepted
+PASS Connector names DAQ, ILOG, ITEST, SAFE, DIR, SFAULT, TEMP, CAN, PANELCORE, LV03 next to their own connector (<= 4 mm, nearest connector)
+PASS KEY n beside every IDC header, in line with its key pin (<= 1.5 mm along the header), <= 3 mm outside the box, nearest to its own header
+PASS Operating legends present (USB-C at the edge, antenna keepout, microSD card slot)
+30/30 checks
+> C:\Program Files\KiCad\10.0\bin\python.exe negative_controls.py
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+OK       null_control -> 0 failing checks []
+OK       c3_at_wrong_pin -> 3 failing checks ['hole_clearance', 'shorting_items', 'solder_mask_bridge', 'starved_thermal', 'track_dangling']
+OK       m1_rotated -> 5 failing checks ['clearance', 'courtyards_overlap', 'hole_clearance', 'hole_to_hole', 'npth_inside_courtyard', 'pth_inside_courtyard', 'shorting_items', 'silk_over_copper', 'silk_overlap', 'solder_mask_bridge', 'track_dangling']
+OK       j1_inward -> 3 failing checks ['clearance', 'hole_clearance', 'shorting_items', 'silk_over_copper', 'solder_mask_bridge', 'starved_thermal']
+OK       hole_shift -> 1 failing checks []
+OK       ref_inside_other -> 1 failing checks []
+OK       decap_far -> 3 failing checks ['courtyards_overlap', 'hole_clearance', 'pth_inside_courtyard', 'shorting_items', 'silk_over_copper', 'silk_overlap', 'solder_mask_bridge', 'starved_thermal', 'track_dangling']
+OK       key_swap -> 1 failing checks []
+OK       name_swap -> 3 failing checks ['silk_over_copper']
+OK       thin_supply -> 1 failing checks []
+OK       antenna_track -> 2 failing checks ['items_not_allowed', 'track_dangling']
+OK       sd_off_edge -> 2 failing checks ['clearance', 'hole_clearance', 'shorting_items', 'silk_overlap', 'solder_mask_bridge', 'track_dangling']
+OK       idc_rotated -> 4 failing checks ['courtyards_overlap', 'hole_clearance', 'npth_inside_courtyard', 'shorting_items', 'silk_over_copper', 'silk_overlap', 'solder_mask_bridge']
+OK       tp_swap -> 2 failing checks ['hole_clearance', 'shorting_items', 'solder_mask_bridge']
+OK       pour_split -> 2 failing checks ['clearance', 'hole_clearance', 'shorting_items', 'solder_mask_bridge', 'starved_thermal', 'track_dangling', 'tracks_crossing']
+OK       dangling_lock -> 3 failing checks ['track_dangling']
+OK       u6_far -> 4 failing checks ['clearance', 'courtyards_overlap', 'hole_clearance', 'pth_inside_courtyard', 'shorting_items', 'silk_over_copper', 'silk_overlap', 'solder_mask_bridge', 'track_dangling']
+OK       c15_far -> 3 failing checks ['silk_over_copper', 'silk_overlap']
+OK       r41_label_out -> 2 failing checks ['silk_overlap']
+19 / 19 controls as expected (1 null + defects detected)
+> C:\Program Files\KiCad\10.0\bin\python.exe check_revision.py
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+PASS Part set = R3 + U6, R41, C15 (nothing removed)
+PASS Only pin change against R3: J4.15 SUP_N -> SUP_N_OUT
+PASS New parts: U6 SN74LVC1G17DBVR (SOT-23-5), R41 220R 1206, C15 100 nF 1206
+PASS No value, MPN, footprint, datasheet, source or sheet change on R3 parts; note changed only on J4
+PASS Board values of R3 parts unchanged
+PASS R3 footprints: positions, pads, drills, nets and zone connections identical, except the net of J4.15
+PASS R3 copper removed: exactly the three replaced segments (HW_ARMED_CORE x2, SUP_N branch end to J4.15)
+PASS R4 copper added: locked, inside the change area 6-31 x 58-84 mm, only on the nets of the change
+PASS Lock state changed only on the kept R3 segments of the two replaced wires (SUP_N, HW_ARMED_CORE; now laid and locked by route_critical.py)
+PASS Zones and rule areas identical to R3
+PASS Board outline identical to R3
+PASS Silk text changes only the title line (PCB R3 -> PCB R4)
+PASS R3 package unchanged (release manifest) - not present next to this copy, not checked
+R3 -> R4: 13 / 13 | copper 924 -> 946 (- 3 + 25 , relocked 8 )
+> C:\Program Files\KiCad\10.0\bin\python.exe C:\Users\tgorbacz\AppData\Local\Temp\claude\C--Users-tgorbacz-Documents-GORBI-Priv-Kia-Sportage-EGRLab\1bdb3685-394a-4886-bbc7-14b9957d5ea4\scratchpad\r4-standalone\P03-R4-review\verification\check_tables.py
+{'pass': True, 'csv_rows': {'BOM.csv': 91, 'interfejsy.csv': 88, 'netlist-pinowa.csv': 430, 'STANY-DOMYSLNE.csv': 26, 'wiazki-BOM.csv': 1, 'zakupy.csv': 29}, 'cad_pins_checked': 430, 'purchase_parts_checked': 83}
+> C:\Program Files\KiCad\10.0\bin\kicad-cli.exe pcb render --side top --width 2400 --height 1800 --quality basic -o output/previews/render-top.png eda/P03.kicad_pcb
+> C:\Program Files\KiCad\10.0\bin\kicad-cli.exe pcb render --side bottom --width 2400 --height 1800 --quality basic -o output/previews/render-bottom.png eda/P03.kicad_pcb
+> C:\Program Files\KiCad\10.0\bin\python.exe make_pdf.py
+C:\Users\tgorbacz\AppData\Local\Temp\claude\C--Users-tgorbacz-Documents-GORBI-Priv-Kia-Sportage-EGRLab\1bdb3685-394a-4886-bbc7-14b9957d5ea4\scratchpad\r4-standalone\P03-R4-review\output\pdf\P03-R4-PCB.pdf pages 4
+P03-R4 generation and checks complete. Next: visual review of both PDFs, then src/package_release.py.

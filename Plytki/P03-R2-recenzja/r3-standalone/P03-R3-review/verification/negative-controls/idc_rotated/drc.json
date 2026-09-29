@@ -1,0 +1,352 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-27T13:06:00",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P03.kicad_pcb",
+    "unconnected_items": [],
+    "violations": [
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci SENSOR_HEALTHY oraz GND)",
+            "items": [
+                {
+                    "description": "Ścieżka [SENSOR_HEALTHY] na F.Cu, długość 26,5471 mm",
+                    "pos": {
+                        "x": 26.7356,
+                        "y": 86.8885
+                    },
+                    "uuid": "28729296-dd44-4f69-b431-b3591ef9fcd3"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na J6",
+                    "pos": {
+                        "x": 26.8,
+                        "y": 110.96
+                    },
+                    "uuid": "9ab47707-47a8-4931-b065-5d68eed9c0d6"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [SENSOR_HEALTHY] na F.Cu, długość 26,5471 mm",
+                    "pos": {
+                        "x": 26.7356,
+                        "y": 86.8885
+                    },
+                    "uuid": "28729296-dd44-4f69-b431-b3591ef9fcd3"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na J6",
+                    "pos": {
+                        "x": 26.8,
+                        "y": 110.96
+                    },
+                    "uuid": "9ab47707-47a8-4931-b065-5d68eed9c0d6"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint J6",
+                    "pos": {
+                        "x": 26.8,
+                        "y": 113.5
+                    },
+                    "uuid": "2534f0e7-e720-4ef1-b282-c635025e382a"
+                },
+                {
+                    "description": "Footprint R26",
+                    "pos": {
+                        "x": 28.0,
+                        "y": 96.5
+                    },
+                    "uuid": "54ebdf25-ff5e-47a7-ad57-8107efc0e167"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint J6",
+                    "pos": {
+                        "x": 26.8,
+                        "y": 113.5
+                    },
+                    "uuid": "2534f0e7-e720-4ef1-b282-c635025e382a"
+                },
+                {
+                    "description": "Footprint SD1",
+                    "pos": {
+                        "x": 58.5,
+                        "y": 96.6
+                    },
+                    "uuid": "81965ca0-b253-42f7-a724-df640059c8e1"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "NPTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole NPTH z SD1",
+                    "pos": {
+                        "x": 38.18,
+                        "y": 114.38
+                    },
+                    "uuid": "70026be9-5571-4815-bbe2-c6297b17687d"
+                },
+                {
+                    "description": "Footprint J6",
+                    "pos": {
+                        "x": 26.8,
+                        "y": 113.5
+                    },
+                    "uuid": "2534f0e7-e720-4ef1-b282-c635025e382a"
+                }
+            ],
+            "severity": "error",
+            "type": "npth_inside_courtyard"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [SENSOR_HEALTHY] na F.Cu, długość 26,5471 mm",
+                    "pos": {
+                        "x": 26.7356,
+                        "y": 86.8885
+                    },
+                    "uuid": "28729296-dd44-4f69-b431-b3591ef9fcd3"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na J6",
+                    "pos": {
+                        "x": 26.8,
+                        "y": 110.96
+                    },
+                    "uuid": "9ab47707-47a8-4931-b065-5d68eed9c0d6"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment z J6 na F.Silkscreen",
+                    "pos": {
+                        "x": 37.09,
+                        "y": 107.67
+                    },
+                    "uuid": "798e4075-55b8-4afb-b6fe-620e05069e61"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,1300 mm)",
+            "items": [
+                {
+                    "description": "Prostokąt z SD1 na F.Silkscreen",
+                    "pos": {
+                        "x": 61.16,
+                        "y": 117.04
+                    },
+                    "uuid": "55406e41-1eb9-4cde-a145-086cc6934dbb"
+                },
+                {
+                    "description": "Segment z J6 na F.Silkscreen",
+                    "pos": {
+                        "x": 37.09,
+                        "y": 107.67
+                    },
+                    "uuid": "798e4075-55b8-4afb-b6fe-620e05069e61"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,1300 mm)",
+            "items": [
+                {
+                    "description": "Prostokąt z SD1 na F.Silkscreen",
+                    "pos": {
+                        "x": 61.16,
+                        "y": 117.04
+                    },
+                    "uuid": "55406e41-1eb9-4cde-a145-086cc6934dbb"
+                },
+                {
+                    "description": "Segment z J6 na F.Silkscreen",
+                    "pos": {
+                        "x": 37.09,
+                        "y": 116.79
+                    },
+                    "uuid": "c70ab7fe-8e25-4192-8923-1e9bae403226"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Segment z J6 na F.Silkscreen",
+                    "pos": {
+                        "x": 22.89,
+                        "y": 108.98
+                    },
+                    "uuid": "4ef30496-79cf-435b-bd21-7595bca29464"
+                },
+                {
+                    "description": "Prostokąt z SD1 na F.Silkscreen",
+                    "pos": {
+                        "x": 61.16,
+                        "y": 117.04
+                    },
+                    "uuid": "55406e41-1eb9-4cde-a145-086cc6934dbb"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Prostokąt z SD1 na F.Silkscreen",
+                    "pos": {
+                        "x": 61.16,
+                        "y": 117.04
+                    },
+                    "uuid": "55406e41-1eb9-4cde-a145-086cc6934dbb"
+                },
+                {
+                    "description": "Segment z J6 na F.Silkscreen",
+                    "pos": {
+                        "x": 21.59,
+                        "y": 107.67
+                    },
+                    "uuid": "79c36aa2-86e1-4af9-bd47-a04e1689769f"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Segment z J6 na F.Silkscreen",
+                    "pos": {
+                        "x": 35.79,
+                        "y": 115.48
+                    },
+                    "uuid": "2a731e77-50f2-4a0c-87b7-d0f0072825f3"
+                },
+                {
+                    "description": "Prostokąt z SD1 na F.Silkscreen",
+                    "pos": {
+                        "x": 61.16,
+                        "y": 117.04
+                    },
+                    "uuid": "55406e41-1eb9-4cde-a145-086cc6934dbb"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Tekst PCB 'KEY3' na F.Silkscreen",
+                    "pos": {
+                        "x": 24.26,
+                        "y": 108.875
+                    },
+                    "uuid": "395aae76-ce42-4400-8a34-83c738746e4e"
+                },
+                {
+                    "description": "Segment z J6 na F.Silkscreen",
+                    "pos": {
+                        "x": 22.89,
+                        "y": 108.98
+                    },
+                    "uuid": "4ef30496-79cf-435b-bd21-7595bca29464"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Tekst PCB 'KEY3' na F.Silkscreen",
+                    "pos": {
+                        "x": 24.26,
+                        "y": 108.875
+                    },
+                    "uuid": "395aae76-ce42-4400-8a34-83c738746e4e"
+                },
+                {
+                    "description": "Segment z J6 na F.Silkscreen",
+                    "pos": {
+                        "x": 22.89,
+                        "y": 115.48
+                    },
+                    "uuid": "7e730945-acff-411b-969c-36edd24835c5"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        }
+    ]
+}

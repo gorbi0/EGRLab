@@ -1,0 +1,110 @@
+{
+ "pakiet": {
+  "ogniwa": 4,
+  "V_pelny": 16.8,
+  "V_nominalny": 14.4,
+  "V_rozladowany": 12.0
+ },
+ "czas_pracy": {
+  "3500 mAh": {
+   "Wh": 50.4,
+   "h_przy_3W": 15.1,
+   "h_przy_6W": 7.6
+  },
+  "1500 mAh": {
+   "Wh": 21.6,
+   "h_przy_3W": 6.5,
+   "h_przy_6W": 3.2
+  }
+ },
+ "uvlo": {
+  "topologia": "jak P02 R3/P01: DIV -> R_iso -> CMP, Rh z OK (0/5 V, AUX5)",
+  "R_T1_przy_plytce": 1000.0,
+  "R_T2_E96": 41200,
+  "R_B": 10000.0,
+  "R_iso": 10000.0,
+  "Rh_E96": 464000,
+  "R_T_obl": 41707,
+  "Rh_obl": 467074,
+  "V_on": 13.53,
+  "V_off": 12.51,
+  "V_on_na_ogniwo": 3.383,
+  "V_off_na_ogniwo": 3.129,
+  "rozrzut_V": 0.34,
+  "prad_dzielnika_mA_przy_16V8": 0.322,
+  "ogniwo_odwrocone_V": 7.2,
+  "pakiet_3S_pelny_V": 12.6
+ },
+ "podtrzymanie": {
+  "2200 uF nominalnie, od progu UVLO (PFAIL_N)": {
+   "V_start": 12.06,
+   "E_J": 0.106,
+   "ms_przy_3W": 35.4,
+   "ms_przy_6W": 17.7
+  },
+  "2200 uF nominalnie, od pełnego pakietu": {
+   "V_start": 16.35,
+   "E_J": 0.24,
+   "ms_przy_3W": 80.1,
+   "ms_przy_6W": 40.0
+  },
+  "2200 uF -20 %, od progu UVLO (PFAIL_N)": {
+   "V_start": 12.06,
+   "E_J": 0.085,
+   "ms_przy_3W": 28.3,
+   "ms_przy_6W": 14.2
+  },
+  "2200 uF -20 %, od pełnego pakietu": {
+   "V_start": 16.35,
+   "E_J": 0.192,
+   "ms_przy_3W": 64.0,
+   "ms_przy_6W": 32.0
+  }
+ },
+ "ladowanie_C_H": {
+  "R_ch_ohm": 22.0,
+  "tau_ms": 48.4,
+  "prad_szczytowy_A": 0.76,
+  "energia_w_R_ch_J": 0.31,
+  "czas_do_95proc_ms": 145.0
+ },
+ "zalaczenie_tranzystora": {
+  "C_VSW_max_uF": 220.0,
+  "energia_ladowania_mJ": 31.0,
+  "uwaga": "limit jak w P01 (220 uF, ok. 32 mJ przy 17 V); C_H ładowany osobno przez R_ch"
+ },
+ "straty_Q1": {
+  "0.5 A": {
+   "P_Q1_W": 0.01,
+   "przyrost_K_bez_radiatora": 0.0,
+   "Tj_przy_50C": 50.0
+  },
+  "3.5 A": {
+   "P_Q1_W": 0.37,
+   "przyrost_K_bez_radiatora": 23.0,
+   "Tj_przy_50C": 73.0
+  },
+  "4.5 A": {
+   "P_Q1_W": 0.61,
+   "przyrost_K_bez_radiatora": 38.0,
+   "Tj_przy_50C": 88.0
+  },
+  "5.0 A": {
+   "P_Q1_W": 0.75,
+   "przyrost_K_bez_radiatora": 46.0,
+   "Tj_przy_50C": 96.0
+  }
+ },
+ "straty_uwaga": "wartości na jeden tranzystor; w torze są dwa SUP53P06 szeregowo (Q_REV i Q_SW), każdy osobno bez radiatora",
+ "straty_D1": {
+  "I_logika_max_A": 0.55,
+  "P_W": 0.25
+ },
+ "vbat_ch7": {
+  "mnoznik_P05": 6.0898,
+  "mnoznik_z_10k": 6.1918,
+  "zmiana_proc": 1.67,
+  "zakres_V": 61.9,
+  "ADC_przy_ograniczeniu_TVS_V": 5.36
+ }
+}

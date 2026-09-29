@@ -1,0 +1,27 @@
+zlacze;nazwa;typ;pin;siec;druga_strona;zmiana_wzgledem_R3_P01
+J1;BAT;przewody 2x1,5 mm2 lutowane w PTH z kotwa;1;BAT+;XT60 w scianie -> pakiet 4S;nowe znaczenie (R3: SUPPLY z P01)
+J1;BAT;przewody 2x1,5 mm2 lutowane w PTH z kotwa;2;BAT-;XT60 w scianie -> pakiet 4S;nowe znaczenie
+J2;VMOTOR;Phoenix GMSTBA 2,5/3-G-7,62;1;VMOTOR (VSW przez F_M 5 A);P07;napiecie 12-16,8 V, bezpiecznik na plytce
+J2;VMOTOR;Phoenix GMSTBA 2,5/3-G-7,62;2;GND;P07;bez zmian
+J2;VMOTOR;Phoenix GMSTBA 2,5/3-G-7,62;3;NC;P07;bez zmian
+J3-J10;LV03-LV10;Mini-Fit Jr 4p 39-29-6048;1;5V_SYS;P03-P10;bez zmian
+J3-J10;LV03-LV10;Mini-Fit Jr 4p 39-29-6048;2;GND;P03-P10;bez zmian
+J3-J10;LV03-LV10;Mini-Fit Jr 4p 39-29-6048;3;3V3_IO;P03-P10;bez zmian
+J3-J10;LV03-LV10;Mini-Fit Jr 4p 39-29-6048;4;GND;P03-P10;bez zmian
+J11;VSENSE;Mini-Fit Jr 2p (D-03);1;VBAT_SENSE (akumulator auta);P05 J5 -> CH7;R3: 14p, pin 1 = VPROT_SENSE
+J11;VSENSE;Mini-Fit Jr 2p (D-03);2;GND;P05 J5;bez zmian
+J12;PSUOK;6xAWG28 lutowane -> IDC 6p KEY 5;1;PSU_OK;P04 J6;bez zmian
+J12;PSUOK;6xAWG28 lutowane -> IDC 6p KEY 5;2;GND;P04 J6;bez zmian
+J12;PSUOK;6xAWG28 lutowane -> IDC 6p KEY 5;3;PFAIL_N;P04 J6 (NC na P04);R3: HOLD_READY
+J12;PSUOK;6xAWG28 lutowane -> IDC 6p KEY 5;4-6;NC;P04 J6;bez zmian
+J13;PG;6xAWG22 lutowane -> Mini-Fit 6p 39-01-2060;1;3V3_IO (zasilanie Q7 z P04);P04 J7;przeniesione z P01 J5
+J13;PG;6xAWG22 lutowane -> Mini-Fit 6p 39-01-2060;2;SAFE_N (otwarty kolektor Q7);P04 J7;przeniesione z P01 J5
+J13;PG;6xAWG22 lutowane -> Mini-Fit 6p 39-01-2060;3;GND;P04 J7;przeniesione z P01 J5
+J13;PG;6xAWG22 lutowane -> Mini-Fit 6p 39-01-2060;4;PG_SEND;P04 J7;przeniesione z P01 J5 (zwora 0 R do pinu 5)
+J13;PG;6xAWG22 lutowane -> Mini-Fit 6p 39-01-2060;5;PG_LINK;P04 J7;przeniesione z P01 J5
+J13;PG;6xAWG22 lutowane -> Mini-Fit 6p 39-01-2060;6;GND;P04 J7;przeniesione z P01 J5
+J14;PWR;2xAWG22 lutowane;1;PWR_A (za R_T1 1,0 k w dzielniku UVLO);przelacznik na panelu (zwarcie = wlaczone);nowe
+J14;PWR;2xAWG22 lutowane;2;PWR_B (do R_T2 41,2 k);przelacznik na panelu;nowe
+J15;VBAT_IN;1xAWG22 lutowany;1;VBAT auta (przez 10 k i transil do J11.1);gniazdo w scianie -> wiazka do komory -> klema + akumulatora przez bezpiecznik 1 A (D-01);nowe
+J16;PFAIL;2xAWG28 lutowane;1;PFAIL_N;P03 (nowe wejscie, D-02);nowe
+J16;PFAIL;2xAWG28 lutowane;2;GND;P03;nowe

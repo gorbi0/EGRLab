@@ -1,0 +1,363 @@
+{
+  "checks": [
+    {
+      "name": "Native DRC / unconnected / schematic parity",
+      "pass": true,
+      "detail": {
+        "violations": 0,
+        "unconnected_items": 0,
+        "schematic_parity": 0
+      }
+    },
+    {
+      "name": "Two layers and 1.6 mm FR4",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "160 x 120 mm outline",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Four M3 holes at 5 mm offsets",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Main carrier inventory; adapter capacitors excluded",
+      "pass": true,
+      "detail": {
+        "footprints": 99
+      }
+    },
+    {
+      "name": "Every numbered pad matches exported XML",
+      "pass": true,
+      "detail": {
+        "pads": 349,
+        "wrong": []
+      }
+    },
+    {
+      "name": "MCP100 D and 2N3904 physical pin assignment",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "IDC finished drill 1.2 mm, pad 1.9 mm",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Keys and SENSOR spare pads are NC",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Harness PTHs for AWG22 and AWG28",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Cable tie anchors 10-15 mm from solder rows",
+      "pass": true,
+      "detail": {
+        "J1": [
+          12.0
+        ],
+        "J2": [
+          12.0,
+          14.54
+        ]
+      }
+    },
+    {
+      "name": "Tie straps and M3 keep copper off both faces",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "J2 harness GND row: band without tracks and vias, GND pour allowed, on both layers",
+      "pass": true,
+      "detail": {
+        "track_or_via_ends_in_band": []
+      }
+    },
+    {
+      "name": "Carrier decouplers at most 8 mm from supply pin",
+      "pass": true,
+      "detail": {
+        "U1/C4": 7.135,
+        "U2/C5": 7.05,
+        "U3/C6": 6.173,
+        "U4/C7": 5.67,
+        "U5/C8": 5.67,
+        "U6/C9": 5.67,
+        "U7/C10": 5.67,
+        "U8/C11": 4.81,
+        "U9/C12": 4.81,
+        "U10/C13": 4.81,
+        "U11/C14": 6.515
+      }
+    },
+    {
+      "name": "Watchdog RC traces short, locked and without vias",
+      "pass": true,
+      "detail": {
+        "WD_RC": {
+          "length_mm": 11.334,
+          "vias": 0,
+          "all_front_locked": true
+        },
+        "WD_C": {
+          "length_mm": 6.399,
+          "vias": 0,
+          "all_front_locked": true
+        }
+      }
+    },
+    {
+      "name": "C1 lands on U1 timing nodes, not ground",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Tracks >=0.30 mm; vias 0.8/0.4 mm",
+      "pass": true,
+      "detail": {
+        "minimum_track_mm": 0.3,
+        "vias": 101
+      }
+    },
+    {
+      "name": "Ground pours on both sides, no isolated islands",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Harness and connector ground pads retain thermals (no solid zone connection)",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "No DRC exclusions; minimum clearance 0.25 mm",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Every main part has visible reference",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "R2 values and MPN: U11 MCP100-300 (R4-01), R38/R39 1K and R40 100R (R4-03), C18 1n C0G (R4-04), R41/R42 1K (R4-07)",
+      "pass": true,
+      "detail": {
+        "U11": [
+          "MCP100-300DI/TO",
+          "MCP100-300DI/TO"
+        ],
+        "R38": [
+          "1K",
+          "MFR-25FRF52-1K"
+        ],
+        "R39": [
+          "1K",
+          "MFR-25FRF52-1K"
+        ],
+        "R41": [
+          "1K",
+          "MFR-25FRF52-1K"
+        ],
+        "R42": [
+          "1K",
+          "MFR-25FRF52-1K"
+        ],
+        "R40": [
+          "100R",
+          "MFR-25FRF52-100R"
+        ],
+        "C18": [
+          "1n",
+          "K102J15C0GF53H5"
+        ]
+      }
+    },
+    {
+      "name": "Series resistors sit at their connector pin: the connector-side net carries only pin + resistor pad, copper within the limit (R4-03, R4-07)",
+      "pass": true,
+      "detail": {
+        "PANEL_3V3": {
+          "resistor_pad": "R40.2",
+          "connector_pin": "J8.1",
+          "pads_on_net": [
+            "J8.1",
+            "R40.2"
+          ],
+          "distance_mm": 8.28,
+          "copper_mm": 8.4,
+          "limit_mm": 12
+        },
+        "TEST_KEY": {
+          "resistor_pad": "R41.1",
+          "connector_pin": "J8.3",
+          "pads_on_net": [
+            "J8.3",
+            "R41.1"
+          ],
+          "distance_mm": 4.5,
+          "copper_mm": 4.5,
+          "limit_mm": 8
+        },
+        "MECH_OK": {
+          "resistor_pad": "R42.1",
+          "connector_pin": "J8.4",
+          "pads_on_net": [
+            "J8.4",
+            "R42.1"
+          ],
+          "distance_mm": 4.5,
+          "copper_mm": 4.5,
+          "limit_mm": 8
+        },
+        "PG_3V3": {
+          "resistor_pad": "R39.2",
+          "connector_pin": "J7.1",
+          "pads_on_net": [
+            "J7.1",
+            "R39.2"
+          ],
+          "distance_mm": 11.23,
+          "copper_mm": 11.8,
+          "limit_mm": 15
+        }
+      }
+    },
+    {
+      "name": "SAFE_N ends at U2.11: C18 (1 nF) within 5 mm, R5 (100 k) within 16 mm; both on SAFE_N / GND (R4-04)",
+      "pass": true,
+      "detail": {
+        "C18.1": 2.98,
+        "R5.1": 13.95,
+        "SAFE_N_copper_mm": 241.3
+      }
+    },
+    {
+      "name": "KEY n beside every IDC header, in line with its key pin (<= 1.0 mm along the header), <= 3 mm outside the box, nearest to its own header (R4-05)",
+      "pass": true,
+      "detail": {
+        "J3": {
+          "key_pin": "2",
+          "text": {
+            "along_offset_mm": 0.0,
+            "gap_to_header_mm": 0.9,
+            "nearest_header": "J3"
+          }
+        },
+        "J4": {
+          "key_pin": "2",
+          "text": {
+            "along_offset_mm": 0.0,
+            "gap_to_header_mm": 2.2,
+            "nearest_header": "J4"
+          }
+        },
+        "J5": {
+          "key_pin": "4",
+          "text": {
+            "along_offset_mm": 0.4,
+            "gap_to_header_mm": 1.2,
+            "nearest_header": "J5"
+          }
+        },
+        "J6": {
+          "key_pin": "5",
+          "text": {
+            "along_offset_mm": 0.0,
+            "gap_to_header_mm": 1.2,
+            "nearest_header": "J6"
+          }
+        }
+      }
+    },
+    {
+      "name": "GND pours stitched (R4-06): >= 40 locked GND vias 0.8/0.4; largest island >= 75 % of each pour (as P03)",
+      "pass": true,
+      "detail": {
+        "stitching_vias": 71,
+        "pour": {
+          "F.Cu": {
+            "islands": 34,
+            "largest_percent": 82.9
+          },
+          "B.Cu": {
+            "islands": 40,
+            "largest_percent": 80.3
+          }
+        },
+        "filled_percent_of_board": {
+          "F.Cu": 76.5,
+          "B.Cu": 73.7
+        }
+      }
+    }
+  ],
+  "negative_controls": [
+    {
+      "mutation": "Swap local supervisor ground",
+      "target_check": "MCP100 D and 2N3904 physical pin assignment",
+      "detected": true
+    },
+    {
+      "mutation": "Wrong IDC hole",
+      "target_check": "IDC finished drill 1.2 mm, pad 1.9 mm",
+      "detected": true
+    },
+    {
+      "mutation": "Disabled tie keepout",
+      "target_check": "Tie straps and M3 keep copper off both faces",
+      "detected": true
+    },
+    {
+      "mutation": "Decoupler moved away",
+      "target_check": "Carrier decouplers at most 8 mm from supply pin",
+      "detected": true
+    },
+    {
+      "mutation": "Grounded timing capacitor",
+      "target_check": "C1 lands on U1 timing nodes, not ground",
+      "detected": true
+    },
+    {
+      "mutation": "Panel 3V3 resistor R40 fitted as 0R",
+      "target_check": "R2 values and MPN: U11 MCP100-300 (R4-01), R38/R39 1K and R40 100R (R4-03), C18 1n C0G (R4-04), R41/R42 1K (R4-07)",
+      "detected": true
+    },
+    {
+      "mutation": "TEST_KEY carries a 20 mm detour (R41 away from J8.3)",
+      "target_check": "Series resistors sit at their connector pin: the connector-side net carries only pin + resistor pad, copper within the limit (R4-03, R4-07)",
+      "detected": true
+    },
+    {
+      "mutation": "C18 moved to the far end of SAFE_N",
+      "target_check": "SAFE_N ends at U2.11: C18 (1 nF) within 5 mm, R5 (100 k) within 16 mm; both on SAFE_N / GND (R4-04)",
+      "detected": true
+    },
+    {
+      "mutation": "KEY 4 of J5 moved to the pin-1 row",
+      "target_check": "KEY n beside every IDC header, in line with its key pin (<= 1.0 mm along the header), <= 3 mm outside the box, nearest to its own header (R4-05)",
+      "detected": true
+    },
+    {
+      "mutation": "Track band under the J2 GND row disabled",
+      "target_check": "J2 harness GND row: band without tracks and vias, GND pour allowed, on both layers",
+      "detected": true
+    },
+    {
+      "mutation": "Stitching vias on 3V3_IO instead of GND",
+      "target_check": "GND pours stitched (R4-06): >= 40 locked GND vias 0.8/0.4; largest island >= 75 % of each pour (as P03)",
+      "detected": true
+    }
+  ]
+}

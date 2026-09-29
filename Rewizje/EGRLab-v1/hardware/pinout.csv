@@ -1,0 +1,28 @@
+﻿GPIO;signal;direction;notes
+1;PWM;out;AND z MOTOR_PERMIT
+2;INA;out;47k pulldown
+38;INB;out;"RGB też na tym GPIO; bez biblioteki LED"
+4;SPI3_SCLK;out;SD i MAX31856
+5;SPI3_MOSI;out;SD i MAX31856
+6;SPI3_MISO;in;SD i MAX31856
+7;SD_CS;out;10k pullup
+8;TC1_CS;out;10k pullup
+16;TC2_CS;out;10k pullup
+9;ADC_SCLK;out;SPI2 mode2
+11;ADC_DOUTA;in;3.3V VDRIVE
+12;ADC_CS;out;8 ramek16bit
+13;ADC_CONVST;out;CONVST_A=B
+14;ADC_BUSY;in;timeout100us
+10;I2C_SDA;in/out;4.7k pullup
+15;I2C_SCL;out;4.7k pullup
+17;CAN_TX;out;TWAI listen only
+18;CAN_RX;in;TCAN VIO3.3
+21;HEARTBEAT;out;monostable
+39;MCU_ARM;out;47k pulldown
+40;HW_ARMED;in;Q74HC74
+41;MARK;in;10k pullup, switch toGND
+42;INTERLOCK;in;10k pulldown
+43;UART0_TX;reserved;CH343
+44;UART0_RX;reserved;CH343
+19;USB_D-;reserved;board
+20;USB_D+;reserved;board

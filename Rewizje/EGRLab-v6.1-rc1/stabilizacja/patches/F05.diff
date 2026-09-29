@@ -1,0 +1,45 @@
+--- README.md-before
++++ README.md-after
+@@ -35,7 +35,7 @@
+ |---|---|
+ | Instalacja | 12 V; normalna praca 10,5-16 V |
+ | Prąd | 5 A łącznie, po odbiorze cieplnym; bezpiecznik F1 nadal 5 A |
+-| OVP, narastanie VIN | 18,00 V po regulacji RV1 przy temperaturze pokojowej |
++| OVP, narastanie VIN | około 18 V; punkt kalibracji pokojowej, nie dokładność w temperaturze |
+ | Powrót po OVP | nominalnie 16,66 V; nie regulować jako niezależnego progu |
+ | UVLO, opadanie VIN | nominalnie 9,37 V |
+ | Start po UVLO | nominalnie 9,85 V |
+@@ -78,3 +78,6 @@
+ Dioda szeregowa powoduje większy spadek napięcia i wydzielanie ciepła. Zakres pracy, czasy odcięcia i parametry impulsowe nie są kopiami LM74800EVM-CD. Nie ma trybu utrzymywania wyjścia na 18 V, aktywnego limitu prądu, podtrzymania loggera przy rozruchu ani gwarancji zachowania ostatnich danych SD po odcięciu.
+ 
+ **Nie deklarujemy odporności na dowolny load dump ani zgodności z ISO 7637/16750.** Moc „15 kW” transila dotyczy określonego impulsu, nie ciągłego pochłaniania energii. Odbiór zwarć, impulsów i temperatur jest opisany w URUCHOMIENIE.md. Do czasu jego wykonania jest to projekt prototypu, a nie zweryfikowany samochodowy zamiennik modułu TI.
++
++
++Uzupełnienie 6.1-rc1: próg OVP jest nominalnie około 18V. Liczba 18,00 w obliczeniu lub nastawie zasilacza nie jest gwarancją dokładności układu. Odbiór obejmuje regulację w temperaturze pokojowej oraz pomiar progów w 0/25/50°C według tej instrukcji. D6, offset komparatora i tolerancje wpływają na wynik.
+--- PROJEKT.md-before
++++ PROJEKT.md-after
+@@ -37,7 +37,7 @@
+ 
+ OVP wykorzystuje VH przy wyłączaniu i VL przy powrocie. UVLO wykorzystuje VL przy załączaniu i VH przy wyłączaniu. Ponieważ oba wyjścia dzielą OK, poniżej okna UV i powyżej okna OV sprzężenia są wspólne; okna nie nakładają się i nie powoduje to oscylacji w modelu DC.
+ 
+-Model z rzeczywistymi wartościami rezystorów, obciążeniem OK=80 uA, VD=0,60 V i prądem wejść 25 nA daje RV1 około **2,143 kΩ**, OVP **18,00/16,66 V**, UVLO **9,85/9,37 V**. RV1 należy ustawić pomiarem, nie samą liczbą obrotów śruby.
++Model z rzeczywistymi wartościami rezystorów, obciążeniem OK=80 uA, VD=0,60 V i prądem wejść 25 nA daje RV1 około **2,143 kΩ**, OVP **około 18,0/16,7 V** (wartości nominalnego modelu DC), UVLO **9,85/9,37 V**. RV1 należy ustawić pomiarem, nie samą liczbą obrotów śruby.
+ 
+ Kontrola 5000 zestawów parametrów daje orientacyjną wrażliwość OVP około 17,52-18,54 V i UVLO około 9,01-9,77 V przy opadaniu. To nie gwarantowane granice: przyjęto m.in. VD=0,4-0,85 V, obciążenie OK=20-150 uA, tolerancję wzorca z dryftem, offset U2 do ±15 mV i prądy wejść do 500 nA. Kalibracja pokojowa usuwa część rozrzutu, lecz nie cały dryft termiczny.
+ 
+@@ -94,3 +94,6 @@
+ 13. Bourns 3296: https://www.bourns.com/docs/product-datasheets/3296.pdf
+ 
+ Nie dołączono kopii kart katalogowych do paczki; powyższe odnośniki identyfikują źródła do kontroli przed zakupem.
++
++
++Uzupełnienie 6.1-rc1: próg OVP jest nominalnie około 18V. Liczba 18,00 w obliczeniu lub nastawie zasilacza nie jest gwarancją dokładności układu. Odbiór obejmuje regulację w temperaturze pokojowej oraz pomiar progów w 0/25/50°C według tej instrukcji. D6, offset komparatora i tolerancje wpływają na wynik.
+--- URUCHOMIENIE.md-before
++++ URUCHOMIENIE.md-after
+@@ -88,3 +88,6 @@
+ | KPWR, silnik, regeneracja | | NIE ZBADANO |
+ 
+ Kopię wypełnionego protokołu dołącz do egzemplarza. „Zaliczone DC” nie oznacza zaliczenia impulsów ani zgody na dowolne warunki pod maską.
++
++
++Uzupełnienie 6.1-rc1: próg OVP jest nominalnie około 18V. Liczba 18,00 w obliczeniu lub nastawie zasilacza nie jest gwarancją dokładności układu. Odbiór obejmuje regulację w temperaturze pokojowej oraz pomiar progów w 0/25/50°C według tej instrukcji. D6, offset komparatora i tolerancje wpływają na wynik.

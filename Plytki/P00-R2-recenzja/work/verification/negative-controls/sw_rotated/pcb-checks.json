@@ -1,0 +1,408 @@
+{
+  "board": "P00.kicad_pcb",
+  "board_sha256": "7c53611558acd2e6cddebe5921997efc75338fb1c3abb7f5f96e35719e4f942c",
+  "checks": [
+    {
+      "check": "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "pass": false
+    },
+    {
+      "check": "66 parts + 4 mounting holes, nothing else",
+      "pass": true
+    },
+    {
+      "check": "Every value, footprint ID and pad net equals the exported schematic netlist",
+      "pass": true
+    },
+    {
+      "check": "2 copper layers, 1.6 mm board",
+      "pass": true
+    },
+    {
+      "check": "Both copper layers explicitly 35 um",
+      "pass": true
+    },
+    {
+      "check": "Closed rectangular outline 115 x 70 mm",
+      "pass": true
+    },
+    {
+      "check": "Four NPTH 3.2 mm holes 5 mm from the corners, copper keepouts on both layers",
+      "pass": true
+    },
+    {
+      "check": "No courtyard within 4.5 mm of a mounting-hole centre (screw head + washer)",
+      "pass": true
+    },
+    {
+      "check": "Explicit DRC rules active (P01/P02 set); no DRC exclusions",
+      "pass": true
+    },
+    {
+      "check": "Every pre-routed (locked) segment and via retained with its width and layer (supply, 3V3 rail, channels)",
+      "pass": true
+    },
+    {
+      "check": "Wurth WS-SLTV switches: COM = middle pin 1, pin 2 = 3V3, pin 3 = GND, pin 3 above pin 2 on all nine (opposite-side contact: slider up = H/RUN, as printed)",
+      "pass": false
+    },
+    {
+      "check": "Every header signal pin is reached only through its 1 k (OUTn = RSn.2 + Jn.1; HEART = R3.2 + J9.1)",
+      "pass": true
+    },
+    {
+      "check": "Headers J1..J9: left pin GND, right pin signal (as printed), same row",
+      "pass": true
+    },
+    {
+      "check": "LEDs: cathode GND; channel LEDs fed from the switch node (not from the output), HB LED from the 555 output, power LED from 3V3",
+      "pass": true
+    },
+    {
+      "check": "Supply: J10.1 +VIN -> D1 anode, D1 cathode -> LM2937 IN; LM2937 GND/OUT; reverse polarity blocked by D1",
+      "pass": true
+    },
+    {
+      "check": "R5 permanent preload: 560 ohm directly from 3V3 to GND",
+      "pass": true
+    },
+    {
+      "check": "C6 return through R6: exactly C6.2 and R6.1 on private net; R6 is 1 ohm to GND",
+      "pass": true
+    },
+    {
+      "check": "Capacitors at their pins: LM2937 in/out <= 10 mm, 555 VCC and CTRL <= 8 mm",
+      "pass": true
+    },
+    {
+      "check": "J10 screw terminal at the left edge, wire entry facing the edge (rot 90, courtyard <= 2 mm from x = 0)",
+      "pass": true
+    },
+    {
+      "check": "GND pours on both layers, island removal on (every island tied to a GND pad)",
+      "pass": true
+    },
+    {
+      "check": "Every visible reference outside other courtyards and nearest to its own part",
+      "pass": true
+    },
+    {
+      "check": "Every board legend outside all courtyards (visible after assembly)",
+      "pass": true
+    },
+    {
+      "check": "Channel numbers 1..8 and HB beside their own LED (<= 5 mm, nearest LED is their own)",
+      "pass": true
+    },
+    {
+      "check": "Operating legends present (slider sense, header pinout, heartbeat run/stop, +VIN next to J10 pin 1 <= 12 mm)",
+      "pass": true
+    }
+  ],
+  "details": {
+    "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)": {
+      "violations": 15,
+      "unconnected_items": 1,
+      "schematic_parity": 0
+    },
+    "Every value, footprint ID and pad net equals the exported schematic netlist": {
+      "errors": [],
+      "pads": 145
+    },
+    "No courtyard within 4.5 mm of a mounting-hole centre (screw head + washer)": [],
+    "Every pre-routed (locked) segment and via retained with its width and layer (supply, 3V3 rail, channels)": {
+      "missing": [],
+      "locked_items": 106
+    },
+    "Wurth WS-SLTV switches: COM = middle pin 1, pin 2 = 3V3, pin 3 = GND, pin 3 above pin 2 on all nine (opposite-side contact: slider up = H/RUN, as printed)": {
+      "SW1": {
+        "nets": {
+          "1": "P00_S1",
+          "2": "P00_V33",
+          "3": "GND"
+        },
+        "pin3_above_pin2": true,
+        "ok": true
+      },
+      "SW2": {
+        "nets": {
+          "1": "P00_S2",
+          "2": "P00_V33",
+          "3": "GND"
+        },
+        "pin3_above_pin2": true,
+        "ok": true
+      },
+      "SW3": {
+        "nets": {
+          "1": "P00_S3",
+          "2": "P00_V33",
+          "3": "GND"
+        },
+        "pin3_above_pin2": false,
+        "ok": false
+      },
+      "SW4": {
+        "nets": {
+          "1": "P00_S4",
+          "2": "P00_V33",
+          "3": "GND"
+        },
+        "pin3_above_pin2": true,
+        "ok": true
+      },
+      "SW5": {
+        "nets": {
+          "1": "P00_S5",
+          "2": "P00_V33",
+          "3": "GND"
+        },
+        "pin3_above_pin2": true,
+        "ok": true
+      },
+      "SW6": {
+        "nets": {
+          "1": "P00_S6",
+          "2": "P00_V33",
+          "3": "GND"
+        },
+        "pin3_above_pin2": true,
+        "ok": true
+      },
+      "SW7": {
+        "nets": {
+          "1": "P00_S7",
+          "2": "P00_V33",
+          "3": "GND"
+        },
+        "pin3_above_pin2": true,
+        "ok": true
+      },
+      "SW8": {
+        "nets": {
+          "1": "P00_S8",
+          "2": "P00_V33",
+          "3": "GND"
+        },
+        "pin3_above_pin2": true,
+        "ok": true
+      },
+      "SW9": {
+        "nets": {
+          "1": "P00_RESET",
+          "2": "P00_V33",
+          "3": "GND"
+        },
+        "pin3_above_pin2": true,
+        "ok": true
+      }
+    },
+    "Every header signal pin is reached only through its 1 k (OUTn = RSn.2 + Jn.1; HEART = R3.2 + J9.1)": {
+      "J1": [
+        "J1.1",
+        "RS1.2"
+      ],
+      "J2": [
+        "J2.1",
+        "RS2.2"
+      ],
+      "J3": [
+        "J3.1",
+        "RS3.2"
+      ],
+      "J4": [
+        "J4.1",
+        "RS4.2"
+      ],
+      "J5": [
+        "J5.1",
+        "RS5.2"
+      ],
+      "J6": [
+        "J6.1",
+        "RS6.2"
+      ],
+      "J7": [
+        "J7.1",
+        "RS7.2"
+      ],
+      "J8": [
+        "J8.1",
+        "RS8.2"
+      ],
+      "J9": [
+        "J9.1",
+        "R3.2"
+      ]
+    },
+    "Headers J1..J9: left pin GND, right pin signal (as printed), same row": {
+      "J1": {
+        "gnd_x": 12.73,
+        "sig_x": 15.27,
+        "gnd_net": "GND"
+      },
+      "J2": {
+        "gnd_x": 23.73,
+        "sig_x": 26.27,
+        "gnd_net": "GND"
+      },
+      "J3": {
+        "gnd_x": 34.73,
+        "sig_x": 37.27,
+        "gnd_net": "GND"
+      },
+      "J4": {
+        "gnd_x": 45.73,
+        "sig_x": 48.27,
+        "gnd_net": "GND"
+      },
+      "J5": {
+        "gnd_x": 56.73,
+        "sig_x": 59.27,
+        "gnd_net": "GND"
+      },
+      "J6": {
+        "gnd_x": 67.73,
+        "sig_x": 70.27,
+        "gnd_net": "GND"
+      },
+      "J7": {
+        "gnd_x": 78.73,
+        "sig_x": 81.27,
+        "gnd_net": "GND"
+      },
+      "J8": {
+        "gnd_x": 89.73,
+        "sig_x": 92.27,
+        "gnd_net": "GND"
+      },
+      "J9": {
+        "gnd_x": 100.73,
+        "sig_x": 103.27,
+        "gnd_net": "GND"
+      }
+    },
+    "LEDs: cathode GND; channel LEDs fed from the switch node (not from the output), HB LED from the 555 output, power LED from 3V3": {
+      "LED1": [
+        "GND",
+        "P00_LED1"
+      ],
+      "LED2": [
+        "GND",
+        "P00_LED2"
+      ],
+      "LED3": [
+        "GND",
+        "P00_LED3"
+      ],
+      "LED4": [
+        "GND",
+        "P00_LED4"
+      ],
+      "LED5": [
+        "GND",
+        "P00_LED5"
+      ],
+      "LED6": [
+        "GND",
+        "P00_LED6"
+      ],
+      "LED7": [
+        "GND",
+        "P00_LED7"
+      ],
+      "LED8": [
+        "GND",
+        "P00_LED8"
+      ],
+      "LED9": [
+        "GND",
+        "P00_LED_HB"
+      ],
+      "LED10": [
+        "GND",
+        "P00_LED_PWR"
+      ]
+    },
+    "Supply: J10.1 +VIN -> D1 anode, D1 cathode -> LM2937 IN; LM2937 GND/OUT; reverse polarity blocked by D1": {
+      "J10.1": "P00_VIN",
+      "J10.2": "GND",
+      "D1.2": "P00_VIN",
+      "D1.1": "P00_VIN_P",
+      "U2.1": "P00_VIN_P",
+      "U2.2": "GND",
+      "U2.3": "P00_V33"
+    },
+    "C6 return through R6: exactly C6.2 and R6.1 on private net; R6 is 1 ohm to GND": [
+      "C6.2",
+      "R6.1"
+    ],
+    "Capacitors at their pins: LM2937 in/out <= 10 mm, 555 VCC and CTRL <= 8 mm": {
+      "C5.1-U2.1": 7.63,
+      "C6.1-U2.3": 7.76,
+      "C7.1-U2.3": 7.13,
+      "C3.1-U1.8": 3.51,
+      "C2.1-U1.5": 4.38
+    },
+    "J10 screw terminal at the left edge, wire entry facing the edge (rot 90, courtyard <= 2 mm from x = 0)": {
+      "orientation": 90.0,
+      "courtyard_left_mm": 1.25
+    },
+    "GND pours on both layers, island removal on (every island tied to a GND pad)": {
+      "islands": {
+        "F.Cu": 1,
+        "B.Cu": 1
+      },
+      "filled_percent": {
+        "F.Cu": 80.8,
+        "B.Cu": 83.0
+      }
+    },
+    "Every visible reference outside other courtyards and nearest to its own part": {},
+    "Every board legend outside all courtyards (visible after assembly)": {},
+    "Channel numbers 1..8 and HB beside their own LED (<= 5 mm, nearest LED is their own)": {
+      "1": {
+        "to_own_led_mm": 2.83,
+        "nearest_led": 1
+      },
+      "2": {
+        "to_own_led_mm": 2.83,
+        "nearest_led": 2
+      },
+      "3": {
+        "to_own_led_mm": 2.83,
+        "nearest_led": 3
+      },
+      "4": {
+        "to_own_led_mm": 2.83,
+        "nearest_led": 4
+      },
+      "5": {
+        "to_own_led_mm": 2.83,
+        "nearest_led": 5
+      },
+      "6": {
+        "to_own_led_mm": 2.83,
+        "nearest_led": 6
+      },
+      "7": {
+        "to_own_led_mm": 2.83,
+        "nearest_led": 7
+      },
+      "8": {
+        "to_own_led_mm": 2.83,
+        "nearest_led": 8
+      },
+      "HB": {
+        "to_own_led_mm": 3.13,
+        "nearest_led": 9
+      }
+    },
+    "Operating legends present (slider sense, header pinout, heartbeat run/stop, +VIN next to J10 pin 1 <= 12 mm)": {
+      "missing": [],
+      "+VIN_to_J10.1_mm": 10.45
+    }
+  },
+  "passed": 22,
+  "total": 24
+}

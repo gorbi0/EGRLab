@@ -1,0 +1,200 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-27T09:07:32",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P00.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [/P00_V33] na SW3",
+                    "pos": {
+                        "x": 36.0,
+                        "y": 46.46
+                    },
+                    "uuid": "02e28f06-f87a-42b8-904a-ed8b4e4a04e3"
+                },
+                {
+                    "description": "Ścieżka [/P00_V33] na B.Cu, długość 11,0000 mm",
+                    "pos": {
+                        "x": 25.0,
+                        "y": 51.54
+                    },
+                    "uuid": "475a928e-bd9e-433c-b248-9124ccd72501"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci /P00_V33 oraz GND)",
+            "items": [
+                {
+                    "description": "Ścieżka [/P00_V33] na B.Cu, długość 11,0000 mm",
+                    "pos": {
+                        "x": 25.0,
+                        "y": 51.54
+                    },
+                    "uuid": "475a928e-bd9e-433c-b248-9124ccd72501"
+                },
+                {
+                    "description": "Pole PTH 3 [GND] na SW3",
+                    "pos": {
+                        "x": 36.0,
+                        "y": 51.54
+                    },
+                    "uuid": "8375edf9-c1a9-480a-87d3-731c1f91f35c"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci /P00_V33 oraz GND)",
+            "items": [
+                {
+                    "description": "Ścieżka [/P00_V33] na B.Cu, długość 11,0000 mm",
+                    "pos": {
+                        "x": 36.0,
+                        "y": 51.54
+                    },
+                    "uuid": "151bc1fd-1483-42e2-ab12-06eef034a3e2"
+                },
+                {
+                    "description": "Pole PTH 3 [GND] na SW3",
+                    "pos": {
+                        "x": 36.0,
+                        "y": 51.54
+                    },
+                    "uuid": "8375edf9-c1a9-480a-87d3-731c1f91f35c"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [/P00_V33] na B.Cu, długość 11,0000 mm",
+                    "pos": {
+                        "x": 36.0,
+                        "y": 51.54
+                    },
+                    "uuid": "151bc1fd-1483-42e2-ab12-06eef034a3e2"
+                },
+                {
+                    "description": "Pole PTH 3 [GND] na SW3",
+                    "pos": {
+                        "x": 36.0,
+                        "y": 51.54
+                    },
+                    "uuid": "8375edf9-c1a9-480a-87d3-731c1f91f35c"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [/P00_V33] na B.Cu, długość 11,0000 mm",
+                    "pos": {
+                        "x": 25.0,
+                        "y": 51.54
+                    },
+                    "uuid": "475a928e-bd9e-433c-b248-9124ccd72501"
+                },
+                {
+                    "description": "Pole PTH 3 [GND] na SW3",
+                    "pos": {
+                        "x": 36.0,
+                        "y": 51.54
+                    },
+                    "uuid": "8375edf9-c1a9-480a-87d3-731c1f91f35c"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/P00_V33] na B.Cu, długość 11,0000 mm",
+                    "pos": {
+                        "x": 36.0,
+                        "y": 51.54
+                    },
+                    "uuid": "151bc1fd-1483-42e2-ab12-06eef034a3e2"
+                },
+                {
+                    "description": "Pole PTH 3 [GND] na SW3",
+                    "pos": {
+                        "x": 36.0,
+                        "y": 51.54
+                    },
+                    "uuid": "8375edf9-c1a9-480a-87d3-731c1f91f35c"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/P00_V33] na B.Cu, długość 11,0000 mm",
+                    "pos": {
+                        "x": 25.0,
+                        "y": 51.54
+                    },
+                    "uuid": "475a928e-bd9e-433c-b248-9124ccd72501"
+                },
+                {
+                    "description": "Pole PTH 3 [GND] na SW3",
+                    "pos": {
+                        "x": 36.0,
+                        "y": 51.54
+                    },
+                    "uuid": "8375edf9-c1a9-480a-87d3-731c1f91f35c"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        }
+    ]
+}

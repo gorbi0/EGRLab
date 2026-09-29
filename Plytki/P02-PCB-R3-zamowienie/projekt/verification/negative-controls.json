@@ -1,0 +1,98 @@
+[
+  {
+    "control": "vprot_neck",
+    "expected_failing_check": "VPROT input node",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "VPROT input node: one F.Cu zone island joins J1.1 SUPPLY, J2.1 VMOTOR, TP1, R9.1; >= 4 mm copper along J1.1-J2.1 (5 A)",
+      "Divider tops at their sources: R6.1 on the bank rail (<= 25 mm to C2/C3 +), R9.1 in the VPROT node zone"
+    ]
+  },
+  {
+    "control": "bcu_return",
+    "expected_failing_check": "5 A return J2.2",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "5 A return J2.2 -> J1.2 in the B.Cu GND pour: corridor rule area on B.Cu, no track or via inside, both pads on the pour"
+    ]
+  },
+  {
+    "control": "hold_free",
+    "expected_failing_check": "HOLD_STORE (unfused bank side)",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "HOLD_STORE (unfused bank side) stays on the board: only C1..C3 +, F1.2, R1.1, R6.1, R20.1; all its copper locked"
+    ]
+  },
+  {
+    "control": "decap_far",
+    "expected_failing_check": "100 nF at every IC",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "100 nF at every IC: <= 8 mm straight and <= 20 mm routed to the supply pin",
+      "Every visible reference outside other courtyards and nearest to its own part"
+    ]
+  },
+  {
+    "control": "ref_inside_other",
+    "expected_failing_check": "Every visible reference",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "Every visible reference outside other courtyards and nearest to its own part"
+    ]
+  },
+  {
+    "control": "mount_shift",
+    "expected_failing_check": "Four NPTH 3.2 mm holes",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "Four NPTH 3.2 mm holes at the P01 positions with copper keepouts on both layers"
+    ]
+  },
+  {
+    "control": "lv_swap",
+    "expected_failing_check": "Legends at their parts",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "Legends at their parts and nearer to them than to the neighbours: LV03..LV10, HOLD_STORE warning, J1/J2/J11/J12/J13 pins, test pads, fuse ratings, LED"
+    ]
+  },
+  {
+    "control": "thin_vprot",
+    "expected_failing_check": "Power nets: narrowest track",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "Every pre-routed (locked) power segment retained with its width and layer",
+      "Power nets: narrowest track VPROT >= 1.0, HOLD_FUSED >= 1.5, CHARGE_D/VIN >= 1.0, HOLD_STORE >= 0.6, VLOG_RES >= 0.8 mm (no thin unfused sense track)"
+    ]
+  },
+  {
+    "control": "raw_tp3",
+    "expected_failing_check": "TP3 only after R20",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "Every value, footprint ID and pad net equals the exported schematic netlist",
+      "HOLD_STORE (unfused bank side) stays on the board: only C1..C3 +, F1.2, R1.1, R6.1, R20.1; all its copper locked",
+      "TP3 only after R20; no raw HOLD_STORE test pad"
+    ]
+  },
+  {
+    "control": "feedback_bypass",
+    "expected_failing_check": "Isolating resistors R18/R19",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "Every value, footprint ID and pad net equals the exported schematic netlist",
+      "Isolating resistors R18/R19 routed <=15mm to comparator; feedback after resistor"
+    ]
+  }
+]

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\EGRLab-v6.1-rc1\eda\EXT\EXT.kicad_sch</source>
+    <date>2026-09-23T12:09:33</date>
+    <tool>Eeschema 10.0.6</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title>EGRLab 6.1-rc1 / EXT / MIGRATION FOR REVIEW</title>
+        <company/>
+        <rev>6.1-rc1</rev>
+        <date/>
+        <source>EXT.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="J2">
+      <value>MSTB 5.08 gniazdo 2p &gt;=12A, KEY BAT</value>
+      <fields>
+        <field name="SourceRef">J_BATA</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="EGRLab" part="EXT_J_BATA" description=""/>
+      <property name="SourceRef" value="J_BATA"/>
+      <property name="Sheetname" value="Root"/>
+      <property name="Sheetfile" value="EXT.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>0fbc0c37-7973-5e59-85c3-84546fcb3740</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="J3">
+      <value>Wejście B+ / B-</value>
+      <fields>
+        <field name="SourceRef">J_PWR</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="EGRLab" part="EXT_J_PWR" description=""/>
+      <property name="SourceRef" value="J_PWR"/>
+      <property name="Sheetname" value="Root"/>
+      <property name="Sheetfile" value="EXT.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>63d68e02-4acb-5733-8a92-e3070613029e</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="X1">
+      <value>5 A</value>
+      <fields>
+        <field name="SourceRef">F1</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="EGRLab" part="EXT_F1" description=""/>
+      <property name="SourceRef" value="F1"/>
+      <property name="Sheetname" value="Root"/>
+      <property name="Sheetfile" value="EXT.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>28ff1ede-7909-50fc-8c5d-8ce2b7cfd27e</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="IN"/>
+            <pin num="OUT"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="EGRLab" part="EXT_F1">
+      <fields>
+        <field name="Reference">X1</field>
+        <field name="Value">5 A</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="IN" name="IN" type="passive"/>
+        <pin num="OUT" name="OUT" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="EGRLab" part="EXT_J_BATA">
+      <fields>
+        <field name="Reference">J2</field>
+        <field name="Value">MSTB 5.08 gniazdo 2p &gt;=12A, KEY BAT</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="EGRLab" part="EXT_J_PWR">
+      <fields>
+        <field name="Reference">J3</field>
+        <field name="Value">Wejście B+ / B-</field>
+        <field name="Footprint"/>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="EGRLab">
+      <uri>${KIPRJMOD}/../libraries/EGRLab.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="/BAT_FUSED" class="Default">
+      <node ref="J2" pin="1" pinfunction="1_1" pintype="passive"/>
+      <node ref="X1" pin="OUT" pinfunction="OUT_OUT" pintype="passive"/>
+    </net>
+    <net code="2" name="/GND" class="Default">
+      <node ref="J2" pin="2" pinfunction="2_2" pintype="passive"/>
+      <node ref="J3" pin="2" pinfunction="2_2" pintype="passive"/>
+    </net>
+    <net code="3" name="/N_F1_IN" class="Default">
+      <node ref="J3" pin="1" pinfunction="1_1" pintype="passive"/>
+      <node ref="X1" pin="IN" pinfunction="IN_IN" pintype="passive"/>
+    </net>
+  </nets>
+</export>

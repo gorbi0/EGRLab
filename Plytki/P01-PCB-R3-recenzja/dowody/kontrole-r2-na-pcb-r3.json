@@ -1,0 +1,453 @@
+{
+  "board_sha256": "5fbb1dc48ff57aca6e1e7027a695caa5dd432e4a8a749874c0418747fdb2eb6b",
+  "checks": [
+    {
+      "check": "89 electrical + 2 heatsinks + 4 mounting footprints",
+      "pass": true
+    },
+    {
+      "check": "All R3 values, footprint IDs, pad nets and pad geometry preserved",
+      "pass": true
+    },
+    {
+      "check": "Frozen R3 schematic bytes unchanged",
+      "pass": true
+    },
+    {
+      "check": "2 copper layers / 1.6 mm nominal board",
+      "pass": true
+    },
+    {
+      "check": "Both copper layers explicitly 70 um",
+      "pass": true
+    },
+    {
+      "check": "Closed rectangular outline 160 x 120",
+      "pass": true
+    },
+    {
+      "check": "Four NPTH 3.2 mm mounting holes at defined centres",
+      "pass": true
+    },
+    {
+      "check": "Four mounting keepouts on both copper layers",
+      "pass": true
+    },
+    {
+      "check": "Every pre-routed critical segment and via retained",
+      "pass": false
+    },
+    {
+      "check": "Actual Q1 source/gate probe tracks <= 5 mm",
+      "pass": true
+    },
+    {
+      "check": "LK1 sides on distinct DRAIN and VPROT nets",
+      "pass": true
+    },
+    {
+      "check": "Kelvin sense pads have only a dedicated 0.4 mm terminal branch",
+      "pass": true
+    },
+    {
+      "check": "J7 four thermals present, >=0.9 mm sampled width, F and B",
+      "pass": true
+    },
+    {
+      "check": "Heatsink pads remain net-free",
+      "pass": true
+    },
+    {
+      "check": "Harness anchors 12.5 mm from solder row",
+      "pass": true
+    },
+    {
+      "check": "Explicit DRC rules active; no waivers",
+      "pass": true
+    },
+    {
+      "check": "R2/PCB1-01: no F.Cu copper under the heatsink profiles (tracks, vias, pads, zone fill)",
+      "pass": true
+    },
+    {
+      "check": "R2/PCB1-01: F.Cu rule areas cover both heatsink envelopes, bay open",
+      "pass": true
+    },
+    {
+      "check": "R2/PCB1-02: TO-220 tab side marked on silkscreen (Q1, Q2, D2); TAB text at Q2",
+      "pass": true
+    },
+    {
+      "check": "R2/PCB1-03: OV_REF<=20, OV_SENSE/UV_SENSE<=40, REF<=70 mm routed; >=5 mm from power tracks on both layers",
+      "pass": true
+    },
+    {
+      "check": "R2/PCB1-03,05,06: functional neighbours (C6 at Q1, D9 at Q2, R21 at Q3, R7/R8 at U2.3, buffer around Q6, C10 at U2, C11 at U4)",
+      "pass": true
+    },
+    {
+      "check": "R2/PCB1-04: J5 wires run from the pad row towards the bottom edge, no component under them",
+      "pass": true
+    },
+    {
+      "check": "R2/PCB1-06: test pads J1/J2/J4/J8 carry net legends (text box within 3 mm of the pad centre)",
+      "pass": true
+    }
+  ],
+  "details": {
+    "All R3 values, footprint IDs, pad nets and pad geometry preserved": {
+      "errors": [],
+      "electrical_physical_pads": 195
+    },
+    "Every pre-routed critical segment and via retained": {
+      "missing": [
+        [
+          "track",
+          "P01_VS",
+          [
+            [
+              93.8,
+              34.0
+            ],
+            [
+              93.8,
+              39.5
+            ]
+          ],
+          0.8,
+          0
+        ],
+        [
+          "track",
+          "P01_VS",
+          [
+            [
+              110.54,
+              22.3
+            ],
+            [
+              113.9,
+              25.6
+            ]
+          ],
+          0.5,
+          0
+        ],
+        [
+          "track",
+          "P01_VS",
+          [
+            [
+              94.0,
+              34.0
+            ],
+            [
+              110.54,
+              34.0
+            ]
+          ],
+          5.0,
+          2
+        ],
+        [
+          "track",
+          "P01_VS",
+          [
+            [
+              110.54,
+              34.0
+            ],
+            [
+              110.6,
+              40.8
+            ]
+          ],
+          0.8,
+          2
+        ],
+        [
+          "track",
+          "P01_VS",
+          [
+            [
+              110.54,
+              22.3
+            ],
+            [
+              110.54,
+              34.0
+            ]
+          ],
+          2.0,
+          2
+        ],
+        [
+          "track",
+          "/P01_GATE",
+          [
+            [
+              105.5,
+              30.0
+            ],
+            [
+              105.5,
+              48.5
+            ]
+          ],
+          0.8,
+          0
+        ],
+        [
+          "track",
+          "/P01_GATE",
+          [
+            [
+              103.96,
+              39.5
+            ],
+            [
+              105.5,
+              39.5
+            ]
+          ],
+          0.8,
+          0
+        ],
+        [
+          "track",
+          "/P01_GATE",
+          [
+            [
+              105.46,
+              22.3
+            ],
+            [
+              105.5,
+              30.0
+            ]
+          ],
+          0.8,
+          0
+        ],
+        [
+          "track",
+          "/P01_GATE",
+          [
+            [
+              101.9,
+              25.6
+            ],
+            [
+              105.46,
+              22.3
+            ]
+          ],
+          0.5,
+          0
+        ]
+      ],
+      "count": 61
+    },
+    "Actual Q1 source/gate probe tracks <= 5 mm": {
+      "TP1": 4.617748369064722,
+      "TP2": 4.617748369064722
+    },
+    "J7 four thermals present, >=0.9 mm sampled width, F and B": [
+      {
+        "pad": "1",
+        "layer": "F.Cu",
+        "12_samples": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "gap_samples_must_be_false": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "spoke_mm": 1.2,
+        "gap_mm": 0.3
+      },
+      {
+        "pad": "1",
+        "layer": "B.Cu",
+        "12_samples": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "gap_samples_must_be_false": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "spoke_mm": 1.2,
+        "gap_mm": 0.3
+      },
+      {
+        "pad": "2",
+        "layer": "F.Cu",
+        "12_samples": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "gap_samples_must_be_false": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "spoke_mm": 1.2,
+        "gap_mm": 0.3
+      },
+      {
+        "pad": "2",
+        "layer": "B.Cu",
+        "12_samples": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "gap_samples_must_be_false": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "spoke_mm": 1.2,
+        "gap_mm": 0.3
+      }
+    ],
+    "Harness anchors 12.5 mm from solder row": {
+      "J5": [
+        12.5,
+        12.5
+      ],
+      "J7": [
+        12.5,
+        12.5
+      ]
+    },
+    "R2/PCB1-01: no F.Cu copper under the heatsink profiles (tracks, vias, pads, zone fill)": {
+      "items": [],
+      "zone_fill": []
+    },
+    "R2/PCB1-01: F.Cu rule areas cover both heatsink envelopes, bay open": {
+      "HS1": true,
+      "HS2": true
+    },
+    "R2/PCB1-02: TO-220 tab side marked on silkscreen (Q1, Q2, D2); TAB text at Q2": {
+      "thick_tab_line": {
+        "Q1": true,
+        "Q2": true,
+        "D2": true
+      },
+      "TAB_text_to_Q2_tab_line_mm": 3.9502025264535443
+    },
+    "R2/PCB1-03: OV_REF<=20, OV_SENSE/UV_SENSE<=40, REF<=70 mm routed; >=5 mm from power tracks on both layers": {
+      "routed_mm": {
+        "P01_OV_REF": 11.5,
+        "P01_OV_SENSE": 23.7,
+        "P01_UV_SENSE": 28.2,
+        "P01_REF": 45.6
+      },
+      "min_edge_gap_to_power_mm": {
+        "P01_UV_SENSE": 34.1,
+        "P01_REF": 43.73,
+        "P01_OV_REF": 45.53,
+        "P01_OV_SENSE": 32.51
+      }
+    },
+    "R2/PCB1-03,05,06: functional neighbours (C6 at Q1, D9 at Q2, R21 at Q3, R7/R8 at U2.3, buffer around Q6, C10 at U2, C11 at U4)": {
+      "C6.1-Q1.1": 9.8,
+      "C6.2-Q1.3": 9.8,
+      "D9.2-Q2.1": 7.51,
+      "D9.1-Q2.3": 10.2,
+      "R21.2-Q3.3": 5.51,
+      "R7.2-U2.3": 5.2,
+      "R8.2-U2.3": 10.9,
+      "R14.2-D7.2": 4.77,
+      "D7.1-D8.2": 3.5,
+      "D8.1-Q6.2": 5.23,
+      "R15.1-Q6.2": 6.36,
+      "R11.2-U2.5": 12.71,
+      "R13.2-U4.1": 16.77,
+      "C10.1-U2.8": 4.0,
+      "C11.1-U4.2": 5.89
+    },
+    "R2/PCB1-04: J5 wires run from the pad row towards the bottom edge, no component under them": {
+      "pad_row_y": 101.0,
+      "anchor_y": 113.5,
+      "blockers": []
+    },
+    "R2/PCB1-06: test pads J1/J2/J4/J8 carry net legends (text box within 3 mm of the pad centre)": {
+      "J1.1": 2.47,
+      "J1.2": 2.25,
+      "J2.1": 1.75,
+      "J2.2": 1.55,
+      "J4.1": 2.09,
+      "J4.2": 2.28,
+      "J4.3": 1.95,
+      "J8.1": 2.13,
+      "J8.2": 1.76
+    }
+  },
+  "pass": false,
+  "tracks_and_vias": 406
+}

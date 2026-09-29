@@ -1,0 +1,64 @@
+﻿ref;qty;part_or_requirement;package;function;stage;notes
+M1;1;Waveshare ESP32-S3-DEV-KIT-N32R16-M;moduł posiadany;MCU;1;potwierdzić nadruk WROOM-2-N32R16V
+M2;1;LM74800EVM-CD;TI evaluation module;wejście automotive;2;"ustawić i zmierzyć OVP 18V; cały moduł wraz z MOSFET-ami"
+M3;1;TSR 2-2450;Traco Power;5V 2A;2;"wejście 6.5–36V; nie gwarantuje cold crank"
+M4;1;TSR 2-2433;Traco Power;3.3V 2A;2;nie łączyć wyjścia z regulatorem Waveshare
+M5;1;Pololu 1451 / VNH5019;gotowy carrier;H-bridge;8;"VDD pull-upów z MOTOR_PERMIT; nie stale z 3V3"
+U1;1;AD7606BSTZ;LQFP-64;ADC;5;"wersja B; alternatywnie płytka z tym samym układem i wszystkimi sygnałami"
+U2 U3;2;INA240A2EDRQ1;SOIC-8;prąd TEST i LOGGER;6;"gain50; nie zastępować A1 bez zmiany skalowania"
+U4 U5;2;TLV1702QDGKRQ1;VSSOP-8;okno prądu i VPROT;4;open collector do 3V3
+U6;1;TLV1704;TSSOP-14;5V window / OV motor / OV 3V3;4;sprawdzić pełny ordering code przed zakupem
+U7 U8;2;TPS3808G33;SOT-23-6;UV 3V3_IO oraz ESP_3V3;4;progi wg konkretnego wariantu
+U9;1;TPS3808G01;SOT-23-6;niezależny UV 5V_A;4;"zasilany z 3V3_IO; SENSE dzielnik107k/10k"
+U10;1;ADR4525BRZ;SOIC-8;odniesienie 2.5V safety;4;osobne kondensatory wg datasheet
+U11;1;SN74HC74;SOIC-14/DIP-14;latch sprzętowego ARM;4;"3V3; reset asynchroniczny, brak auto restart"
+U12;1;SN74HC123;SOIC-16/DIP-16;watchdog heartbeat;4;"R220k/C1uF; czas zmierzyć"
+U13;1;SN74HC14;SOIC-14/DIP-14;debounce i inwersje;4;nieużywane wejścia ustalone
+U14 U15 U16 U22 U23 U24;6;SN74HC08;SOIC-14/DIP-14;AND safety / PWM / banki;4;24 bramki AND: safety, PWM, PERMIT, blokady bankow i sensora
+U17;1;MCP23017-E/SP;DIP-28;ekspander I2C;5;adres0x20
+U18;1;TPS2553DBVR;SOT-23-6;limit zasilania sensora;9;"RILIM249k; ~0.1A nie 20mA"
+U19 U20;2;MAX31856MUD+;TSSOP-14 / moduł3V3;termopary K;7;moduł nie może wymuszać logiki5V
+U21;1;TCAN1051VDRQ1;SOIC-8;CAN VIO3V3;7;"wariant V; S fizycznie high w LISTEN"
+KML1 KML2 KML3;3;G6K-2F-Y DC5;DPDT 5V;bank odczepów LOGGER;5;"styki NO; pięć użytych torów"
+KMT1 KMT2 KMT3;3;G6K-2F-Y DC5;DPDT 5V;bank odczepów TEST;5;blokada wzajemnego załączenia sprzętowa
+KPOL;1;G6K-2F-Y DC5;DPDT 5V;zamiana pin5/6;9;przełączać bez napięcia
+KSENSOR;1;G6K-2F-Y DC5;DPDT 5V;odłączenie obu linii sensora;9;5V i AGND przed KPOL
+KPWR;1;przekaźnik samochodowy NO 12V ≥20A;gniazdo z blokadą;odcięcie VMOTOR;8;dobór cewki i czasu opadania z datasheet konkretnego modelu
+RSH_T RSH_L;2;5mΩ 2W 1% 4-terminal;"Kelvin; np. WSK2512 odpowiedni wariant";boczniki;6;"TCR≤50ppm/K; weryfikować 4 styki rzeczywistego SKU"
+Q1 Q2 Q3 Q4;4;2N7002;SOT-23;cewki banków/polaryzacji/sensora;5;prąd jednej gałęzi banku3cewek sprawdzić termicznie
+Q5;1;MOSFET N logic-level 60V;RDSon określone dla VGS2.5/3.3V;cewka KPWR;8;nie wybierać po samym VGS(th)
+D1;1;SM8S24CA;automotive TVS bidirectional;wejście;2;energia impulsu wymaga kwalifikacji
+D2;1;SMCJ18A;TVS unidirectional;VMOTOR;8;regeneracja, nie ciągły hamulec
+D3;1;PESD2CAN;SOT-23;CAN ESD;7;krótki powrót do masy przy złączu
+D4-D11;8;1N4148/1N4007;diody cewek;przekaźniki sygnałowe;5;katoda do +5V
+D12 D13;2;1N4007 + Zener18V;obwód cewki KPWR;szybkie opadanie;8;polaryzacja zgodna z kierunkiem energii cewki
+F1;1;bezpiecznik10A + uchwyt;samochodowy;główne wejście;2;blisko źródła
+F2 F3;2;bezpiecznik1A + uchwyt;DC;gałęzie logiki;2;zapas na inrush zweryfikować
+F4;1;bezpiecznik5A + uchwyt;DC;TEST motor;8;zmiana dopiero po kwalifikacji prądu
+RM1-RM8;8;150kΩ 0.1% ≥200V;1206;odczepy motor obu banków;5;po2 szeregowo na każdy z4odczepów
+RS1-RS12;12;49.9kΩ 0.1% ≥100V;1206;odczepy p4/5/6 obu banków;5;po2 szeregowo, przy złączach
+RV1 RV2;2;249kΩ 0.1%;1206;VBAT;5;wspólny pojedynczy tor
+RB1 RB2 RB3;3;100kΩ 0.1%;0805;dolne rezystory M_A/M_B/VBAT;5;uwzględnić RIN ADC
+RC1-RC4;4;10Ω 0.1%;0805;Kelvin INA;6;pary dobrane
+RO1 RO2;2;100Ω;0805;wyjścia INA do ADC;6;filtr 1nF
+R_OC;1;zestaw 3k/7k/1k/9k 0.1%;0805;progi±4A/±8A;4;"po2 każdej wartości; ±8A domyślnie nieobsadzone"
+R_SUP;1;zestaw 100k/20k/7k/3k/13k/17k/15k/10k/6k/19k/4k/21k/11k/25k/107k;0.1%;progi zasilania;4;"wartości i sieci w dokumencie; zestaw minimum2szt/wartość"
+R_MISC;1;zestaw 100/330/1k/2.2k/4.7k/10k/47k/100k/220k/249kΩ;0805/1206;pull-upy, filtry, watchdog, ILIM;4;"10szt typowych wartości; 2.2k 0.5W VMOTOR"
+C_ADC;1;zestaw według typowej aplikacji AD7606B;X7R;zasilanie i odniesienie;5;"100nF przy każdej nodze,1uF REGCAP,10uF reference; sprawdzić pinout"
+CF1-CF6;6;220pF C0G;0805;RC analog;5;M_A/M_B/p4/p5/p6/VBAT
+CI1-CI5;5;1nF C0G;0805;filtry prądu i OC;6;różnicowe wejścia opcjonalnie DNP
+C_BULK;1;1000uF 50V low ESR;radial;VMOTOR;8;prąd tętnień i temperatura odpowiednie
+C_A;1;470uF 10V low ESR + 1Ω 0.5W;radial/1206;filtr5V_A;5;spadek szyny zmierzyć
+C_MISC;1;100nF×30,1uF×8,10uF×12,100uF×2,10nF×8;X7R / elektrolit;odsprzęganie;2;napięcia znamionowe stosowne do szyny
+SD1;1;microSD High Endurance 32GB + gniazdo SPI3V3;FAT32;zapis;7;"test latency; bez translatorów rezystorowych do5V"
+TC1 TC2;2;termopara K izolowana + przewód kompensacyjny;mechaniczne mocowanie;temperatury;7;"zakres do miejsca montażu; nie dotykać masą złącza termopary"
+SW_STOP;1;grzybek zatrzaskowy NC;panel;E-STOP;4;bezpośrednio w CLEAR latch
+SW_ARM SW_MARK;2;przycisk chwilowy NO;panel;ARM/MARK;4;"ARM sprzętowy; MARK GPIO41"
+SW_MODE SW_CAN;2;przełącznik kluczykowy TEST / LISTEN-ACTIVE;panel;tryby;4;CAN ACTIVE nieobsługiwany w bazowym firmware
+SW_LOG1 SW_LOG2;2;krańcówka NC w gnieździe LOGGER;mechaniczna;interlock;4;otwiera pętlę po włożeniu wtyku
+J_LOG J_TEST J_PWR;1;komplet złączy blokowanych niezamiennych;LOGGER12p TEST8p PWR2p;wiązki;0;"prąd i temperatura wg przewodów; styków OEM nie zgadywać"
+J_EGR;1;komplet dopasowany do rzeczywistych złączy OEM;męski + żeński + TEST;adaptery;0;zakup dopiero po identyfikacji obudów i kluczy
+J_OBD;1;OBD-II męski z przewodem;16p;CAN;7;"obsadzone6/14/4;16niezasilaTEST"
+MECH;1;obudowa, przepusty, dystanse, radiator, przewody;kabina/stół;montaż;0;"wiązki odciążone; nie pozostawiać płytek w komorze silnika"
+OPT1;1;SSD1306 OLED128x64 I2C;opcjonalne;UI;13;nieimplementowane GUI
+OPT2;1;DS3231 + CR2032 bez ładowarki;opcjonalne;UTC;13;nieimplementowany driver RTC

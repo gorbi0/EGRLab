@@ -1,0 +1,83 @@
+{
+ "method": "R4: separate folder outside the project (Claude scratchpad r4-standalone/P03-R4-review) with src, reference, docs, README, routing/P03.ses, routing/P03-R3.ses and the two verification scripts only; no eda, reports or PDFs; full run_release.py (KiCad 10.0.6 Python), then verification/rebuild-compare.py <release> <copy> writing into the copy. R3 is not next to the copy, so check_revision.py records the R3 package as not present there.",
+ "packages": [
+  "P03-R4-review (release)",
+  "scratchpad r4-standalone/P03-R4-review (rebuild)"
+ ],
+ "checks": [
+  {
+   "category": "footprints_pads_references",
+   "same": true,
+   "original_sha256": "49e6ddd18cfd23a220db07530b59fee70c374255fdcf84f7cb0beade182c0209",
+   "rebuilt_sha256": "49e6ddd18cfd23a220db07530b59fee70c374255fdcf84f7cb0beade182c0209"
+  },
+  {
+   "category": "tracks_vias",
+   "same": true,
+   "original_sha256": "c76132cdbdcf40c12ad47eb002eca25eb363b139c4d02a7fc0beb70e27e3900a",
+   "rebuilt_sha256": "c76132cdbdcf40c12ad47eb002eca25eb363b139c4d02a7fc0beb70e27e3900a"
+  },
+  {
+   "category": "zone_boundaries",
+   "same": true,
+   "original_sha256": "727fc082aad3579afc8525776725b66cb99bfcb33e70ce90fecd81d601ebffe7",
+   "rebuilt_sha256": "727fc082aad3579afc8525776725b66cb99bfcb33e70ce90fecd81d601ebffe7"
+  },
+  {
+   "category": "drawings",
+   "same": true,
+   "original_sha256": "6d9101e05f66fca183e9b0669b29ab14af80fe07f8f058a1385c97252f3c2b51",
+   "rebuilt_sha256": "6d9101e05f66fca183e9b0669b29ab14af80fe07f8f058a1385c97252f3c2b51"
+  },
+  {
+   "category": "pinmap",
+   "same": true,
+   "original_sha256": "4802565d1d58dc8a9a9095a943ed6f4fea767f71529e9f88525d091979b4fba5",
+   "rebuilt_sha256": "4802565d1d58dc8a9a9095a943ed6f4fea767f71529e9f88525d091979b4fba5"
+  },
+  {
+   "category": "project_rules",
+   "same": true,
+   "original_sha256": "0d091ccbcfe95bb018e142bcf17c3186af0c378bd70f1100f39b72b2dc45b94b",
+   "rebuilt_sha256": "0d091ccbcfe95bb018e142bcf17c3186af0c378bd70f1100f39b72b2dc45b94b"
+  },
+  {
+   "category": "schematic_sheets",
+   "same": true,
+   "original_sha256": "a722204bf9ae94666655cb3c410ff22e66710410cfffda5dc85626a14561ac78",
+   "rebuilt_sha256": "a722204bf9ae94666655cb3c410ff22e66710410cfffda5dc85626a14561ac78"
+  },
+  {
+   "category": "local_libraries",
+   "same": true,
+   "original_sha256": "fa00aab622f356147b22a8562d28381730ff5e3d175be34d80308106a82261fb",
+   "rebuilt_sha256": "fa00aab622f356147b22a8562d28381730ff5e3d175be34d80308106a82261fb"
+  }
+ ],
+ "filled_copper": [
+  {
+   "layer": "F.Cu",
+   "xor_mm2": 0.0,
+   "limit_mm2": 1e-08,
+   "equivalent": true
+  },
+  {
+   "layer": "B.Cu",
+   "xor_mm2": 4.475e-10,
+   "limit_mm2": 1e-08,
+   "equivalent": true
+  }
+ ],
+ "all_equal": true,
+ "generation_inputs_equal_release": true,
+ "generation_inputs_checked": 85,
+ "generation_inputs_differing": [],
+ "results_in_rebuild": {
+  "pcb-checks.json": "30/30",
+  "function-checks.json": "53/53",
+  "negative-controls.json": "19/19",
+  "function-mutations.json": "43/43",
+  "revision-checks.json": "13/13"
+ },
+ "note_after_rebuild": "After the rebuild only verification/QA.md, verification/visual-review.json and this report were written in the release; no generator, footprint, SES, document input or board changed."
+}

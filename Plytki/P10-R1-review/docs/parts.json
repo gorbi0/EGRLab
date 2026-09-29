@@ -1,0 +1,344 @@
+{
+  "U1": {
+    "ref": "U1",
+    "source_ref": "U16",
+    "footprint": "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
+    "display": "TCAN1051V",
+    "value": "TCAN1051V",
+    "mpn": "TCAN1051VDRQ1",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "GND",
+      "3": "5V_SYS",
+      "4": "RX_RAW",
+      "5": "3V3_IO",
+      "6": "CAN_L",
+      "7": "CAN_H",
+      "8": "3V3_IO"
+    },
+    "sheet": "P10",
+    "url": "https://www.ti.com/lit/ds/symlink/tcan1051-q1.pdf",
+    "note": "S and TXD hardwired to VIO. No MCU transmit connection and no mode jumper. V variant required.",
+    "qty": 1,
+    "on_board": true
+  },
+  "U2": {
+    "ref": "U2",
+    "source_ref": "ADDED_RX_IOFF",
+    "footprint": "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm",
+    "display": "74LVC125AD",
+    "value": "74LVC125AD",
+    "mpn": "74LVC125AD,118 Nexperia",
+    "pins": {
+      "1": "GND",
+      "2": "RX_RAW",
+      "3": "RX_BUF",
+      "4": "3V3_IO",
+      "5": "GND",
+      "6": "NC",
+      "7": "GND",
+      "8": "NC",
+      "9": "GND",
+      "10": "3V3_IO",
+      "11": "NC",
+      "12": "GND",
+      "13": "3V3_IO",
+      "14": "3V3_IO"
+    },
+    "sheet": "CORE",
+    "url": "https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf",
+    "note": "Ioff protects dead P10 from P03 receiver pull-up. HC125 is not a substitute.",
+    "qty": 1,
+    "on_board": true
+  },
+  "D1": {
+    "ref": "D1",
+    "source_ref": "D3",
+    "footprint": "Package_TO_SOT_SMD:SOT-23",
+    "display": "PESD2CAN",
+    "value": "PESD2CAN",
+    "mpn": "PESD2CAN,215 Nexperia",
+    "pins": {
+      "1": "CAN_L",
+      "2": "CAN_H",
+      "3": "GND"
+    },
+    "sheet": "P10",
+    "url": "https://assets.nexperia.com/documents/data-sheet/PESD2CAN.pdf",
+    "note": "Pins1/2 are identical protected lines; pin3 common to GND. Routed at cable entry. Not a TVS for the supply rail.",
+    "qty": 1,
+    "on_board": true
+  },
+  "R1": {
+    "ref": "R1",
+    "source_ref": "P10_R1",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "100R",
+    "value": "100R",
+    "mpn": "Metal film 100R 1% 0.25W",
+    "pins": {
+      "1": "RX_BUF",
+      "2": "CAN_RX"
+    },
+    "sheet": "CORE",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "R2": {
+    "ref": "R2",
+    "source_ref": "P10_R1",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K",
+    "value": "10K",
+    "mpn": "Metal film 10K 1% 0.25W",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "RX_RAW"
+    },
+    "sheet": "CORE",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "C1": {
+    "ref": "C1",
+    "source_ref": "DECOUPLING",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "display": "100n",
+    "value": "100n",
+    "mpn": "X7R 25V 10% 0805 100n",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "GND"
+    },
+    "sheet": "P10",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "C2": {
+    "ref": "C2",
+    "source_ref": "DECOUPLING",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "display": "100n",
+    "value": "100n",
+    "mpn": "X7R 25V 10% 0805 100n",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "GND"
+    },
+    "sheet": "P10",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "C3": {
+    "ref": "C3",
+    "source_ref": "DECOUPLING",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "display": "100n",
+    "value": "100n",
+    "mpn": "X7R 25V 10% 0805 100n",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "GND"
+    },
+    "sheet": "CORE",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "C4": {
+    "ref": "C4",
+    "source_ref": "DECOUPLING",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "display": "4u7",
+    "value": "4u7",
+    "mpn": "X7R 25V 10% 0805 4u7",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "GND"
+    },
+    "sheet": "P10",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "C5": {
+    "ref": "C5",
+    "source_ref": "DECOUPLING",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "display": "4u7",
+    "value": "4u7",
+    "mpn": "X7R 25V 10% 0805 4u7",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "GND"
+    },
+    "sheet": "P10",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "J1": {
+    "ref": "J1",
+    "source_ref": "J_LV10B",
+    "footprint": "P10:PTH_LV10",
+    "display": "LV10 / PTH",
+    "value": "LV10 / PTH",
+    "mpn": "Soldered harness",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "GND",
+      "3": "3V3_IO",
+      "4": "GND"
+    },
+    "sheet": "P10",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "J2": {
+    "ref": "J2",
+    "source_ref": "J_CANB",
+    "footprint": "P10:PTH_CAN_CORE",
+    "display": "CORE CAN / PTH KEY4",
+    "value": "CORE CAN / PTH KEY4",
+    "mpn": "Soldered ribbon 6p",
+    "pins": {
+      "1": "CAN_TX",
+      "2": "GND",
+      "3": "CAN_RX",
+      "4": "NC",
+      "5": "NC",
+      "6": "NC"
+    },
+    "sheet": "CORE",
+    "url": "",
+    "note": "P03-R2/J8. CAN_TX only to TP6; no path to transceiver. Wires4/5/6 insulated at P10.",
+    "qty": 1,
+    "on_board": true
+  },
+  "J3": {
+    "ref": "J3",
+    "source_ref": "J_OBD_TAIL",
+    "footprint": "P10:PTH_OBD",
+    "display": "OBD / PTH",
+    "value": "OBD / PTH",
+    "mpn": "Soldered 120ohm twisted pair",
+    "pins": {
+      "1": "CAN_H",
+      "2": "CAN_L"
+    },
+    "sheet": "P10",
+    "url": "",
+    "note": "300mm cable to OBD male typeA pins6/14. All other OBD pins NC, including4/5/16. Device GND from its power input only.",
+    "qty": 1,
+    "on_board": true
+  },
+  "TP1": {
+    "ref": "TP1",
+    "source_ref": "TESTPAD",
+    "footprint": "P10:TestPad_1",
+    "display": "5V_SYS",
+    "value": "5V_SYS",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "5V_SYS"
+    },
+    "sheet": "CORE",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "TP2": {
+    "ref": "TP2",
+    "source_ref": "TESTPAD",
+    "footprint": "P10:TestPad_1",
+    "display": "3V3_IO",
+    "value": "3V3_IO",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "3V3_IO"
+    },
+    "sheet": "CORE",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "TP3": {
+    "ref": "TP3",
+    "source_ref": "TESTPAD",
+    "footprint": "P10:TestPad_1",
+    "display": "GND",
+    "value": "GND",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "GND"
+    },
+    "sheet": "CORE",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "TP4": {
+    "ref": "TP4",
+    "source_ref": "TESTPAD",
+    "footprint": "P10:TestPad_1",
+    "display": "RX_RAW",
+    "value": "RX_RAW",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "RX_RAW"
+    },
+    "sheet": "CORE",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "TP5": {
+    "ref": "TP5",
+    "source_ref": "TESTPAD",
+    "footprint": "P10:TestPad_1",
+    "display": "CAN_RX",
+    "value": "CAN_RX",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "CAN_RX"
+    },
+    "sheet": "CORE",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "TP6": {
+    "ref": "TP6",
+    "source_ref": "TESTPAD",
+    "footprint": "P10:TestPad_1",
+    "display": "CAN_TX",
+    "value": "CAN_TX",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "CAN_TX"
+    },
+    "sheet": "CORE",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  }
+}

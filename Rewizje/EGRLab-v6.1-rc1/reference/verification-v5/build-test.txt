@@ -1,0 +1,31 @@
+Executing action: all (aliases: build)
+Running ninja in directory C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.b5\test
+Executing "ninja all"...
+[1/4] C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.b5\test\esp-idf\esptool_py && C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\tools\python_env\idf5.4_py3.12_env\Scripts\python.exe C:/Users/tgorbacz/.codex/.chatgpt-projects/g-p-6a8827e57cc881919b26f761377a7bd3/.egrlab-toolchains/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app C:/Users/tgorbacz/.codex/.chatgpt-projects/g-p-6a8827e57cc881919b26f761377a7bd3/.b5/test/partition_table/partition-table.bin C:/Users/tgorbacz/.codex/.chatgpt-projects/g-p-6a8827e57cc881919b26f761377a7bd3/.b5/test/egrlab_v5.bin"
+
+egrlab_v5.bin binary size 0x64e60 bytes. Smallest app partition is 0x100000 bytes. 0x9b1a0 bytes (61%) free.
+
+
+[2/4] Performing build step for 'bootloader'
+
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.b5\test\bootloader\esp-idf\esptool_py && C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\tools\python_env\idf5.4_py3.12_env\Scripts\python.exe C:/Users/tgorbacz/.codex/.chatgpt-projects/g-p-6a8827e57cc881919b26f761377a7bd3/.egrlab-toolchains/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 C:/Users/tgorbacz/.codex/.chatgpt-projects/g-p-6a8827e57cc881919b26f761377a7bd3/.b5/test/bootloader/bootloader.bin"
+
+
+Bootloader binary size 0x5390 bytes. 0x2c70 bytes (35%) free.
+
+
+
+[3/4] No install step for 'bootloader'
+
+[4/4] Completed 'bootloader'
+
+
+
+Project build complete. To flash, run:
+ idf.py flash
+or
+ idf.py -p PORT flash
+or
+ python -m esptool --chip esp32s3 -b 460800 --before default_reset --after hard_reset write_flash --flash_mode dout --flash_size 32MB --flash_freq 80m 0x0 .b5\test\bootloader\bootloader.bin 0x8000 .b5\test\partition_table\partition-table.bin 0x10000 .b5\test\egrlab_v5.bin
+or from the "C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.b5\test" directory
+ python -m esptool --chip esp32s3 -b 460800 --before default_reset --after hard_reset write_flash "@flash_args"

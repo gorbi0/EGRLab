@@ -1,0 +1,914 @@
+{
+  "U1": {
+    "ref": "U1",
+    "source_ref": "U_RX1",
+    "footprint": "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm",
+    "display": "74LVC125AD",
+    "value": "74LVC125AD",
+    "mpn": "74LVC125AD,118 Nexperia",
+    "pins": {
+      "1": "GND",
+      "2": "SPI3_SCLK",
+      "3": "CLK_BUF",
+      "4": "GND",
+      "5": "SPI3_MOSI",
+      "6": "MOSI_BUF",
+      "7": "GND",
+      "8": "CS1_BUF",
+      "9": "TC1_CS",
+      "10": "GND",
+      "11": "CS2_BUF",
+      "12": "TC2_CS",
+      "13": "GND",
+      "14": "3V3_IO"
+    },
+    "sheet": "SPI",
+    "url": "https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf",
+    "note": "Ioff required; all input buffers always enabled.",
+    "qty": 1,
+    "on_board": true
+  },
+  "U2": {
+    "ref": "U2",
+    "source_ref": "U_TX",
+    "footprint": "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm",
+    "display": "74LVC125AD",
+    "value": "74LVC125AD",
+    "mpn": "74LVC125AD,118 Nexperia",
+    "pins": {
+      "1": "OE1_N",
+      "2": "TC1_MISO",
+      "3": "TX1",
+      "4": "OE2_N",
+      "5": "TC2_MISO",
+      "6": "TX2",
+      "7": "GND",
+      "8": "NC",
+      "9": "GND",
+      "10": "3V3_IO",
+      "11": "NC",
+      "12": "GND",
+      "13": "3V3_IO",
+      "14": "3V3_IO"
+    },
+    "sheet": "SPI",
+    "url": "https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf",
+    "note": "Separate 100R output resistors; inactive channels Hi-Z.",
+    "qty": 1,
+    "on_board": true
+  },
+  "U3": {
+    "ref": "U3",
+    "source_ref": "ADDED_CS_DECODER",
+    "footprint": "Package_DIP:DIP-16_W7.62mm",
+    "display": "SN74HC139N",
+    "value": "SN74HC139N",
+    "mpn": "SN74HC139N",
+    "pins": {
+      "1": "GND",
+      "2": "CS1_BUF",
+      "3": "CS2_BUF",
+      "4": "NC",
+      "5": "OE2_N",
+      "6": "OE1_N",
+      "7": "NC",
+      "8": "GND",
+      "9": "NC",
+      "10": "NC",
+      "11": "NC",
+      "12": "NC",
+      "13": "GND",
+      "14": "GND",
+      "15": "3V3_IO",
+      "16": "3V3_IO"
+    },
+    "sheet": "SPI",
+    "url": "https://www.ti.com/lit/ds/symlink/sn74hc139.pdf",
+    "note": "Only exactly one active CS enables a MISO buffer. Static truth table, not a substitute for CS dead time.",
+    "qty": 1,
+    "on_board": true
+  },
+  "R1": {
+    "ref": "R1",
+    "source_ref": "P09_R1",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K",
+    "value": "10K",
+    "mpn": "Metal film 10K 1% 0.25W",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "TC1_CS"
+    },
+    "sheet": "SPI",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 10000,
+    "tolerance": 0.01
+  },
+  "R2": {
+    "ref": "R2",
+    "source_ref": "P09_R1",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K",
+    "value": "10K",
+    "mpn": "Metal film 10K 1% 0.25W",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "TC2_CS"
+    },
+    "sheet": "SPI",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 10000,
+    "tolerance": 0.01
+  },
+  "R3": {
+    "ref": "R3",
+    "source_ref": "P09_R1",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "100K",
+    "value": "100K",
+    "mpn": "Metal film 100K 1% 0.25W",
+    "pins": {
+      "1": "SPI3_SCLK",
+      "2": "GND"
+    },
+    "sheet": "SPI",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 100000,
+    "tolerance": 0.01
+  },
+  "R4": {
+    "ref": "R4",
+    "source_ref": "P09_R1",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "100K",
+    "value": "100K",
+    "mpn": "Metal film 100K 1% 0.25W",
+    "pins": {
+      "1": "SPI3_MOSI",
+      "2": "GND"
+    },
+    "sheet": "SPI",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 100000,
+    "tolerance": 0.01
+  },
+  "R5": {
+    "ref": "R5",
+    "source_ref": "P09_R1",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K",
+    "value": "10K",
+    "mpn": "Metal film 10K 1% 0.25W",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "CS1_BUF"
+    },
+    "sheet": "SPI",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 10000,
+    "tolerance": 0.01
+  },
+  "R6": {
+    "ref": "R6",
+    "source_ref": "P09_R1",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K",
+    "value": "10K",
+    "mpn": "Metal film 10K 1% 0.25W",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "CS2_BUF"
+    },
+    "sheet": "SPI",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 10000,
+    "tolerance": 0.01
+  },
+  "R7": {
+    "ref": "R7",
+    "source_ref": "P09_R1",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "100K",
+    "value": "100K",
+    "mpn": "Metal film 100K 1% 0.25W",
+    "pins": {
+      "1": "CLK_BUF",
+      "2": "GND"
+    },
+    "sheet": "SPI",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 100000,
+    "tolerance": 0.01
+  },
+  "R8": {
+    "ref": "R8",
+    "source_ref": "P09_R1",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "100K",
+    "value": "100K",
+    "mpn": "Metal film 100K 1% 0.25W",
+    "pins": {
+      "1": "MOSI_BUF",
+      "2": "GND"
+    },
+    "sheet": "SPI",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 100000,
+    "tolerance": 0.01
+  },
+  "R9": {
+    "ref": "R9",
+    "source_ref": "P09_R1",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "100K",
+    "value": "100K",
+    "mpn": "Metal film 100K 1% 0.25W",
+    "pins": {
+      "1": "TC1_MISO",
+      "2": "GND"
+    },
+    "sheet": "SPI",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 100000,
+    "tolerance": 0.01
+  },
+  "R10": {
+    "ref": "R10",
+    "source_ref": "P09_R1",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "100K",
+    "value": "100K",
+    "mpn": "Metal film 100K 1% 0.25W",
+    "pins": {
+      "1": "TC2_MISO",
+      "2": "GND"
+    },
+    "sheet": "SPI",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 100000,
+    "tolerance": 0.01
+  },
+  "R11": {
+    "ref": "R11",
+    "source_ref": "P09_R1",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "100R",
+    "value": "100R",
+    "mpn": "Metal film 100R 1% 0.25W",
+    "pins": {
+      "1": "TX1",
+      "2": "SPI3_MISO"
+    },
+    "sheet": "SPI",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 100,
+    "tolerance": 0.01
+  },
+  "R12": {
+    "ref": "R12",
+    "source_ref": "P09_R1",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "100R",
+    "value": "100R",
+    "mpn": "Metal film 100R 1% 0.25W",
+    "pins": {
+      "1": "TX2",
+      "2": "SPI3_MISO"
+    },
+    "sheet": "SPI",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 100,
+    "tolerance": 0.01
+  },
+  "R13": {
+    "ref": "R13",
+    "source_ref": "P09_R1",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "100K",
+    "value": "100K",
+    "mpn": "Metal film 100K 1% 0.25W",
+    "pins": {
+      "1": "SPI3_MISO",
+      "2": "GND"
+    },
+    "sheet": "SPI",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 100000,
+    "tolerance": 0.01
+  },
+  "R14": {
+    "ref": "R14",
+    "source_ref": "P09_R1",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "47R",
+    "value": "47R",
+    "mpn": "Metal film 47R 1% 0.25W",
+    "pins": {
+      "1": "CLK_BUF",
+      "2": "CLK_MODULE"
+    },
+    "sheet": "SPI",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 47,
+    "tolerance": 0.01
+  },
+  "R15": {
+    "ref": "R15",
+    "source_ref": "P09_R1",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "47R",
+    "value": "47R",
+    "mpn": "Metal film 47R 1% 0.25W",
+    "pins": {
+      "1": "MOSI_BUF",
+      "2": "MOSI_MODULE"
+    },
+    "sheet": "SPI",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 47,
+    "tolerance": 0.01
+  },
+  "R16": {
+    "ref": "R16",
+    "source_ref": "P09_R1",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "47R",
+    "value": "47R",
+    "mpn": "Metal film 47R 1% 0.25W",
+    "pins": {
+      "1": "CS1_BUF",
+      "2": "TC1_CS_MODULE"
+    },
+    "sheet": "SPI",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 47,
+    "tolerance": 0.01
+  },
+  "R17": {
+    "ref": "R17",
+    "source_ref": "P09_R1",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "47R",
+    "value": "47R",
+    "mpn": "Metal film 47R 1% 0.25W",
+    "pins": {
+      "1": "CS2_BUF",
+      "2": "TC2_CS_MODULE"
+    },
+    "sheet": "SPI",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 47,
+    "tolerance": 0.01
+  },
+  "R18": {
+    "ref": "R18",
+    "source_ref": "P09_R1",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K",
+    "value": "10K",
+    "mpn": "Metal film 10K 1% 0.25W",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "OE1_N"
+    },
+    "sheet": "SPI",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 10000,
+    "tolerance": 0.01
+  },
+  "R19": {
+    "ref": "R19",
+    "source_ref": "P09_R1",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K",
+    "value": "10K",
+    "mpn": "Metal film 10K 1% 0.25W",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "OE2_N"
+    },
+    "sheet": "SPI",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 10000,
+    "tolerance": 0.01
+  },
+  "C1": {
+    "ref": "C1",
+    "source_ref": "P09_R1",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "display": "100n",
+    "value": "100n",
+    "mpn": "X7R 25V 10% 0805 100n",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "GND"
+    },
+    "sheet": "P09",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "farads": 1e-07
+  },
+  "C2": {
+    "ref": "C2",
+    "source_ref": "P09_R1",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "display": "100n",
+    "value": "100n",
+    "mpn": "X7R 25V 10% 0805 100n",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "GND"
+    },
+    "sheet": "P09",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "farads": 1e-07
+  },
+  "C3": {
+    "ref": "C3",
+    "source_ref": "P09_R1",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "display": "100n",
+    "value": "100n",
+    "mpn": "X7R 25V 10% 0805 100n",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "GND"
+    },
+    "sheet": "P09",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "farads": 1e-07
+  },
+  "C4": {
+    "ref": "C4",
+    "source_ref": "P09_R1",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "display": "4u7",
+    "value": "4u7",
+    "mpn": "X7R 25V 10% 0805 4u7",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "GND"
+    },
+    "sheet": "P09",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "farads": 4.7e-06
+  },
+  "C5": {
+    "ref": "C5",
+    "source_ref": "P09_R1",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "display": "4u7",
+    "value": "4u7",
+    "mpn": "X7R 25V 10% 0805 4u7",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "GND"
+    },
+    "sheet": "P09",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "farads": 4.7e-06
+  },
+  "C6": {
+    "ref": "C6",
+    "source_ref": "P09_R1",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "display": "1u",
+    "value": "1u",
+    "mpn": "X7R 25V 10% 0805 1u",
+    "pins": {
+      "1": "TC1_VIN",
+      "2": "GND"
+    },
+    "sheet": "P09",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "farads": 1e-06
+  },
+  "C7": {
+    "ref": "C7",
+    "source_ref": "P09_R1",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "display": "1u",
+    "value": "1u",
+    "mpn": "X7R 25V 10% 0805 1u",
+    "pins": {
+      "1": "TC2_VIN",
+      "2": "GND"
+    },
+    "sheet": "P09",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "farads": 1e-06
+  },
+  "J1": {
+    "ref": "J1",
+    "source_ref": "J_LV09B",
+    "footprint": "P09:PTH_LV09",
+    "display": "LV09 / PTH",
+    "value": "LV09 / PTH",
+    "mpn": "Soldered harness",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "GND",
+      "3": "3V3_IO",
+      "4": "GND"
+    },
+    "sheet": "P09",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "J2": {
+    "ref": "J2",
+    "source_ref": "J_TEMPB",
+    "footprint": "P09:PTH_TEMP",
+    "display": "TEMP / PTH KEY4",
+    "value": "TEMP / PTH KEY4",
+    "mpn": "Soldered harness",
+    "pins": {
+      "1": "SPI3_SCLK",
+      "2": "GND",
+      "3": "SPI3_MOSI",
+      "4": "NC",
+      "5": "SPI3_MISO",
+      "6": "GND",
+      "7": "TC1_CS",
+      "8": "GND",
+      "9": "TC2_CS",
+      "10": "GND"
+    },
+    "sheet": "P09",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "J3": {
+    "ref": "J3",
+    "source_ref": "TC1",
+    "footprint": "P09:MAX31856_XU_socket",
+    "display": "TC1 / MAX31856 XU",
+    "value": "TC1 / MAX31856 XU",
+    "mpn": "Socket 1x9 2.54mm Au + owned MAX31856 module",
+    "pins": {
+      "1": "TC1_VIN",
+      "2": "TC1_3VO",
+      "3": "GND",
+      "4": "CLK_MODULE",
+      "5": "TC1_MISO",
+      "6": "MOSI_MODULE",
+      "7": "TC1_CS_MODULE",
+      "8": "TC1_FLT_N",
+      "9": "TC1_DRDY_N"
+    },
+    "sheet": "P09",
+    "url": "https://allegro.pl/oferta/max31856-modul-termopary-dla-typow-k-j-n-r-s-t-e-b-19-bitowy-modul-xu-18805671895",
+    "note": "Pinout photo6: VIN/3Vo/GND/SCK/SDO/SDI/CS/FLT/DRDY. Pitch/body/hole fit must be measured; carrier mounting holes are oversize 6mm for nylon M2.5 with 8mm washers. No Adafruit electrical equivalence assumed.",
+    "qty": 1,
+    "on_board": true
+  },
+  "JP1": {
+    "ref": "JP1",
+    "source_ref": "ADDED_VIN_SELECT",
+    "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical",
+    "display": "VIN SELECT / OPEN",
+    "value": "VIN SELECT / OPEN",
+    "mpn": "Header 1x3 + one shunt (not fitted initially)",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "TC1_VIN",
+      "3": "5V_SYS"
+    },
+    "sheet": "P09",
+    "url": "",
+    "note": "One shunt: 1-2=3.3V initial qualification; 2-3=5V ONLY after regulator and level-shifter qualification. Never two shunts. Power off before change.",
+    "qty": 1,
+    "on_board": true
+  },
+  "J4": {
+    "ref": "J4",
+    "source_ref": "TC2",
+    "footprint": "P09:MAX31856_XU_socket",
+    "display": "TC2 / MAX31856 XU",
+    "value": "TC2 / MAX31856 XU",
+    "mpn": "Socket 1x9 2.54mm Au + owned MAX31856 module",
+    "pins": {
+      "1": "TC2_VIN",
+      "2": "TC2_3VO",
+      "3": "GND",
+      "4": "CLK_MODULE",
+      "5": "TC2_MISO",
+      "6": "MOSI_MODULE",
+      "7": "TC2_CS_MODULE",
+      "8": "TC2_FLT_N",
+      "9": "TC2_DRDY_N"
+    },
+    "sheet": "P09",
+    "url": "https://allegro.pl/oferta/max31856-modul-termopary-dla-typow-k-j-n-r-s-t-e-b-19-bitowy-modul-xu-18805671895",
+    "note": "Pinout photo6: VIN/3Vo/GND/SCK/SDO/SDI/CS/FLT/DRDY. Pitch/body/hole fit must be measured; carrier mounting holes are oversize 6mm for nylon M2.5 with 8mm washers. No Adafruit electrical equivalence assumed.",
+    "qty": 1,
+    "on_board": true
+  },
+  "JP2": {
+    "ref": "JP2",
+    "source_ref": "ADDED_VIN_SELECT",
+    "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical",
+    "display": "VIN SELECT / OPEN",
+    "value": "VIN SELECT / OPEN",
+    "mpn": "Header 1x3 + one shunt (not fitted initially)",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "TC2_VIN",
+      "3": "5V_SYS"
+    },
+    "sheet": "P09",
+    "url": "",
+    "note": "One shunt: 1-2=3.3V initial qualification; 2-3=5V ONLY after regulator and level-shifter qualification. Never two shunts. Power off before change.",
+    "qty": 1,
+    "on_board": true
+  },
+  "TP1": {
+    "ref": "TP1",
+    "source_ref": "TESTPAD",
+    "footprint": "P09:TestPad_1",
+    "display": "3V3_IO",
+    "value": "3V3_IO",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "3V3_IO"
+    },
+    "sheet": "CONNECT",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "TP2": {
+    "ref": "TP2",
+    "source_ref": "TESTPAD",
+    "footprint": "P09:TestPad_1",
+    "display": "5V_SYS",
+    "value": "5V_SYS",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "5V_SYS"
+    },
+    "sheet": "CONNECT",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "TP3": {
+    "ref": "TP3",
+    "source_ref": "TESTPAD",
+    "footprint": "P09:TestPad_1",
+    "display": "GND",
+    "value": "GND",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "GND"
+    },
+    "sheet": "CONNECT",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "TP4": {
+    "ref": "TP4",
+    "source_ref": "TESTPAD",
+    "footprint": "P09:TestPad_1",
+    "display": "CS1_BUF",
+    "value": "CS1_BUF",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "CS1_BUF"
+    },
+    "sheet": "CONNECT",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "TP5": {
+    "ref": "TP5",
+    "source_ref": "TESTPAD",
+    "footprint": "P09:TestPad_1",
+    "display": "CS2_BUF",
+    "value": "CS2_BUF",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "CS2_BUF"
+    },
+    "sheet": "CONNECT",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "TP6": {
+    "ref": "TP6",
+    "source_ref": "TESTPAD",
+    "footprint": "P09:TestPad_1",
+    "display": "OE1_N",
+    "value": "OE1_N",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "OE1_N"
+    },
+    "sheet": "CONNECT",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "TP7": {
+    "ref": "TP7",
+    "source_ref": "TESTPAD",
+    "footprint": "P09:TestPad_1",
+    "display": "OE2_N",
+    "value": "OE2_N",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "OE2_N"
+    },
+    "sheet": "CONNECT",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "TP8": {
+    "ref": "TP8",
+    "source_ref": "TESTPAD",
+    "footprint": "P09:TestPad_1",
+    "display": "TC1_3VO",
+    "value": "TC1_3VO",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "TC1_3VO"
+    },
+    "sheet": "CONNECT",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "TP9": {
+    "ref": "TP9",
+    "source_ref": "TESTPAD",
+    "footprint": "P09:TestPad_1",
+    "display": "TC2_3VO",
+    "value": "TC2_3VO",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "TC2_3VO"
+    },
+    "sheet": "CONNECT",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "TP10": {
+    "ref": "TP10",
+    "source_ref": "TESTPAD",
+    "footprint": "P09:TestPad_1",
+    "display": "TC1_FLT_N",
+    "value": "TC1_FLT_N",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "TC1_FLT_N"
+    },
+    "sheet": "CONNECT",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "TP11": {
+    "ref": "TP11",
+    "source_ref": "TESTPAD",
+    "footprint": "P09:TestPad_1",
+    "display": "TC2_FLT_N",
+    "value": "TC2_FLT_N",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "TC2_FLT_N"
+    },
+    "sheet": "CONNECT",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "TP12": {
+    "ref": "TP12",
+    "source_ref": "TESTPAD",
+    "footprint": "P09:TestPad_1",
+    "display": "TC1_DRDY_N",
+    "value": "TC1_DRDY_N",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "TC1_DRDY_N"
+    },
+    "sheet": "CONNECT",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "TP13": {
+    "ref": "TP13",
+    "source_ref": "TESTPAD",
+    "footprint": "P09:TestPad_1",
+    "display": "TC2_DRDY_N",
+    "value": "TC2_DRDY_N",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "TC2_DRDY_N"
+    },
+    "sheet": "CONNECT",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  }
+}

@@ -1,0 +1,234 @@
+{
+  "board_sha256": "510b2cf719d183f26076c74b246ddbc7a76d604d773c7ea6d6a21516bc6ac19f",
+  "checks": [
+    {
+      "check": "89 electrical + 2 heatsinks + 4 mounting footprints",
+      "pass": true
+    },
+    {
+      "check": "All R3 values, footprint IDs, pad nets and pad geometry preserved",
+      "pass": true
+    },
+    {
+      "check": "Frozen R3 schematic bytes unchanged",
+      "pass": true
+    },
+    {
+      "check": "2 copper layers / 1.6 mm nominal board",
+      "pass": true
+    },
+    {
+      "check": "Both copper layers explicitly 70 um",
+      "pass": true
+    },
+    {
+      "check": "Closed rectangular outline 160 x 120",
+      "pass": true
+    },
+    {
+      "check": "Four NPTH 3.2 mm mounting holes at defined centres",
+      "pass": true
+    },
+    {
+      "check": "Four mounting keepouts on both copper layers",
+      "pass": true
+    },
+    {
+      "check": "Every pre-routed critical segment and via retained",
+      "pass": false
+    },
+    {
+      "check": "Actual Q1 source/gate probe tracks <= 5 mm",
+      "pass": false
+    },
+    {
+      "check": "LK1 sides on distinct DRAIN and VPROT nets",
+      "pass": true
+    },
+    {
+      "check": "Kelvin sense pads have only a dedicated 0.4 mm terminal branch",
+      "pass": true
+    },
+    {
+      "check": "J7 four thermals present, >=0.9 mm sampled width, F and B",
+      "pass": true
+    },
+    {
+      "check": "Heatsink pads remain net-free",
+      "pass": true
+    },
+    {
+      "check": "Harness anchors 12.5 mm from solder row",
+      "pass": true
+    },
+    {
+      "check": "Explicit DRC rules active; no waivers",
+      "pass": true
+    }
+  ],
+  "details": {
+    "All R3 values, footprint IDs, pad nets and pad geometry preserved": {
+      "errors": [],
+      "electrical_physical_pads": 195
+    },
+    "Every pre-routed critical segment and via retained": {
+      "missing": [
+        [
+          "track",
+          "/P01_GATE",
+          [
+            [
+              103.0,
+              26.0
+            ],
+            [
+              105.46,
+              23.54
+            ]
+          ],
+          0.5,
+          0
+        ]
+      ],
+      "count": 56
+    },
+    "Actual Q1 source/gate probe tracks <= 5 mm": {
+      "TP1": 4.804751801064713,
+      "TP2": null
+    },
+    "J7 four thermals present, >=0.9 mm sampled width, F and B": [
+      {
+        "pad": "1",
+        "layer": "F.Cu",
+        "12_samples": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "gap_samples_must_be_false": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "spoke_mm": 1.2,
+        "gap_mm": 0.3
+      },
+      {
+        "pad": "1",
+        "layer": "B.Cu",
+        "12_samples": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "gap_samples_must_be_false": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "spoke_mm": 1.2,
+        "gap_mm": 0.3
+      },
+      {
+        "pad": "2",
+        "layer": "F.Cu",
+        "12_samples": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "gap_samples_must_be_false": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "spoke_mm": 1.2,
+        "gap_mm": 0.3
+      },
+      {
+        "pad": "2",
+        "layer": "B.Cu",
+        "12_samples": [
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "gap_samples_must_be_false": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "spoke_mm": 1.2,
+        "gap_mm": 0.3
+      }
+    ],
+    "Harness anchors 12.5 mm from solder row": {
+      "J5": [
+        12.5,
+        12.5
+      ],
+      "J7": [
+        12.5,
+        12.5
+      ]
+    }
+  },
+  "pass": false,
+  "tracks_and_vias": 479
+}

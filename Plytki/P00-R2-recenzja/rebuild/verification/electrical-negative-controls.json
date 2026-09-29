@@ -1,0 +1,51 @@
+[
+  {
+    "case": "five_volt_claim",
+    "expected_check": "Declared J10",
+    "detected": true,
+    "failed_checks": [
+      "Declared J10 range keeps U2 above 4.75 V after D1 budget"
+    ]
+  },
+  {
+    "case": "preload_open",
+    "expected_check": "Preload physically",
+    "detected": true,
+    "failed_checks": [
+      "Preload physically connects V33 to GND in exported netlist"
+    ]
+  },
+  {
+    "case": "preload_100k",
+    "expected_check": "Preload alone",
+    "detected": true,
+    "failed_checks": [
+      "Preload alone meets 5 mA including tolerance and TCR"
+    ]
+  },
+  {
+    "case": "invalid_C6",
+    "expected_check": "C6 is the confirmed",
+    "detected": true,
+    "failed_checks": [
+      "C6 is the confirmed Panasonic 22uF 50V D5 P2 part",
+      "BOM matches netlist MPN values and has no invalid C6 code"
+    ]
+  },
+  {
+    "case": "C6_return_bypass",
+    "expected_check": "C6 return",
+    "detected": true,
+    "failed_checks": [
+      "C6 return is connected only to R6, and R6 to GND"
+    ]
+  },
+  {
+    "case": "R6_zero",
+    "expected_check": "Series resistance",
+    "detected": true,
+    "failed_checks": [
+      "Series resistance places C6 branch inside 0.01..3 ohm at reference conditions"
+    ]
+  }
+]

@@ -1,0 +1,239 @@
+{
+  "pass": true,
+  "parser": "własny parser Gerber X2/Excellon (src/check_cam.py), bez KiCada",
+  "checks": [
+    {
+      "name": "Dokładnie 6 warstw Gerber i 2 pliki Excellon",
+      "pass": true,
+      "details": [
+        "P04-B_Cu.gbl",
+        "P04-B_Mask.gbs",
+        "P04-Edge_Cuts.gm1",
+        "P04-F_Cu.gtl",
+        "P04-F_Mask.gts",
+        "P04-F_Silkscreen.gto",
+        "P04-NPTH.drl",
+        "P04-PTH.drl"
+      ]
+    },
+    {
+      "name": "Funkcje warstw w atrybutach X2",
+      "pass": true,
+      "details": {
+        "F_Cu": "Copper,L1,Top",
+        "B_Cu": "Copper,L2,Bot",
+        "F_Mask": "Soldermask,Top",
+        "B_Mask": "Soldermask,Bot",
+        "F_Silkscreen": "Legend,Top",
+        "Edge_Cuts": "Profile,NP"
+      }
+    },
+    {
+      "name": "Każda warstwa (poza zadeklarowanymi jako puste) drukuje dane",
+      "pass": true,
+      "details": {
+        "F_Cu": 880,
+        "B_Cu": 899,
+        "F_Mask": 357,
+        "B_Mask": 357,
+        "F_Silkscreen": 4089,
+        "Edge_Cuts": 4
+      }
+    },
+    {
+      "name": "Wszystkie Gerbery: mm, format 4.6, znacznik końca",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "Maski mają polaryzację Negative",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "Wspólny początek współrzędnych (TF.SameCoordinates)",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "Jeden zamknięty obrys 160 × 120 mm w początku układu",
+      "pass": true,
+      "details": {
+        "(0.0, 0.0)": 2,
+        "(160.0, 0.0)": 2,
+        "(0.0, -120.0)": 2,
+        "(160.0, -120.0)": 2
+      }
+    },
+    {
+      "name": "PTH: każdy otwór zgodny z PCB (położenie i średnica)",
+      "pass": true,
+      "details": {
+        "plik": 450,
+        "pcb": 450,
+        "brak": [],
+        "nadmiar": [],
+        "sparowane_w_tolerancji_0.001mm": [
+          [
+            [
+              123.336,
+              -79.951,
+              0.4
+            ],
+            [
+              123.336,
+              -79.95,
+              0.4
+            ]
+          ],
+          [
+            [
+              115.388,
+              -81.493,
+              0.4
+            ],
+            [
+              115.388,
+              -81.492,
+              0.4
+            ]
+          ],
+          [
+            [
+              87.817,
+              -17.346,
+              0.4
+            ],
+            [
+              87.816,
+              -17.346,
+              0.4
+            ]
+          ],
+          [
+            [
+              112.626,
+              -88.863,
+              0.4
+            ],
+            [
+              112.625,
+              -88.863,
+              0.4
+            ]
+          ],
+          [
+            [
+              126.169,
+              -103.365,
+              0.4
+            ],
+            [
+              126.169,
+              -103.364,
+              0.4
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "name": "PTH: mm, dziesiętnie, współrzędne absolutne, bez szczelin",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "PTH: jawny atrybut metalizacji",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "NPTH: każdy otwór zgodny z PCB (położenie i średnica)",
+      "pass": true,
+      "details": {
+        "plik": 12,
+        "pcb": 12,
+        "brak": [],
+        "nadmiar": [],
+        "sparowane_w_tolerancji_0.001mm": []
+      }
+    },
+    {
+      "name": "NPTH: mm, dziesiętnie, współrzędne absolutne, bez szczelin",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "NPTH: jawny atrybut metalizacji",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "Miedź góra: położenie i sieć każdego pola (bez otworów NPTH) zgodne z PCB",
+      "pass": true,
+      "details": {
+        "pola": 349,
+        "pcb": 349,
+        "brak": [],
+        "nadmiar": []
+      }
+    },
+    {
+      "name": "Miedź góra: liczba regionów wylewek = liczba konturów wypełnienia w PCB",
+      "pass": true,
+      "details": {
+        "gerber": 34,
+        "pcb": 34
+      }
+    },
+    {
+      "name": "Maska góra: otwarcie nad każdym polem z maską w PCB",
+      "pass": true,
+      "details": []
+    },
+    {
+      "name": "Miedź dół: położenie i sieć każdego pola (bez otworów NPTH) zgodne z PCB",
+      "pass": true,
+      "details": {
+        "pola": 349,
+        "pcb": 349,
+        "brak": [],
+        "nadmiar": []
+      }
+    },
+    {
+      "name": "Miedź dół: liczba regionów wylewek = liczba konturów wypełnienia w PCB",
+      "pass": true,
+      "details": {
+        "gerber": 40,
+        "pcb": 40
+      }
+    },
+    {
+      "name": "Maska dół: otwarcie nad każdym polem z maską w PCB",
+      "pass": true,
+      "details": []
+    },
+    {
+      "name": "Bajty CAM bez zmian od eksportu",
+      "pass": true,
+      "details": null
+    }
+  ],
+  "board_sha256": "70cf04471fa7301582df2b6236ef8a0705797b923ac1e077615e536a4d1e8b5d",
+  "files": {
+    "P04-B_Cu.gbl": "02be58de6217e276eb54dd14cb9a28c996866f291d385f5aa7143da7665cf40d",
+    "P04-B_Mask.gbs": "3b5c36f1630fa0cfda96b5627486b8508ad8429d6fed901f97c77954ce9c4da4",
+    "P04-Edge_Cuts.gm1": "2955606f5798c99a1518d9ca18dd780ae330858b6d33ad738501f8ee81b15c3b",
+    "P04-F_Cu.gtl": "675a3dd0ddc05ebb2473ae8fd493036f03329c0c6ecd8f5606fa437b72ce5081",
+    "P04-F_Mask.gts": "e0649a0c552f1bb080b07eef64b1caa8ca5a81c3e8f3620aa6f8c3232743b1e6",
+    "P04-F_Silkscreen.gto": "23d30f3085a8666074ed0a36fbd01c1d7ce1b72e0ae850544f3d8851a11a8aff",
+    "P04-NPTH.drl": "1d4e34673b0e1a24125ffcc8069f7a0fe602e634df093d3a4f3c6247585488fa",
+    "P04-PTH.drl": "3730f574721508d6e816ef45b3768651b733043b53e541ffeb606f504dd7f6b0"
+  },
+  "notes": [
+    "Współrzędne w plikach nie są odbijane; tylko kolorowy podgląd spodu jest lustrzany (widok od spodu).",
+    "To kontrola zawartości CAM względem modelu PCB, nie niezależny DRC elektryczny.",
+    "Łuki w regionach przybliżone odcinkami wyłącznie do podglądów i testu położenia w masce."
+  ]
+}

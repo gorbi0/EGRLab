@@ -1,0 +1,161 @@
+{
+  "checks": [
+    {
+      "id": "BOARD-SIZE",
+      "pass": true
+    },
+    {
+      "id": "TWO-LAYER-1.6",
+      "pass": true
+    },
+    {
+      "id": "TIE-J1",
+      "pass": true
+    },
+    {
+      "id": "PTH-J1",
+      "pass": true
+    },
+    {
+      "id": "TIE-J2",
+      "pass": true
+    },
+    {
+      "id": "PTH-J2",
+      "pass": true
+    },
+    {
+      "id": "MODULE-PITCH-J3",
+      "pass": true
+    },
+    {
+      "id": "MODULE-DRILL-J3",
+      "pass": true
+    },
+    {
+      "id": "MODULE-SUPPORT-J3",
+      "pass": true
+    },
+    {
+      "id": "MODULE-PITCH-J4",
+      "pass": true
+    },
+    {
+      "id": "MODULE-DRILL-J4",
+      "pass": true
+    },
+    {
+      "id": "MODULE-SUPPORT-J4",
+      "pass": true
+    },
+    {
+      "id": "LOGIC-DECOUPLING",
+      "pass": true
+    },
+    {
+      "id": "MODULE-DECOUPLING",
+      "pass": true
+    },
+    {
+      "id": "MIN-TRACK",
+      "pass": true
+    },
+    {
+      "id": "GND-POURS",
+      "pass": true
+    },
+    {
+      "id": "PCB-PAD-PARITY",
+      "pass": true
+    },
+    {
+      "id": "ALL-REFS-VISIBLE",
+      "pass": true
+    },
+    {
+      "id": "M3-HOLES",
+      "pass": true
+    },
+    {
+      "id": "THT-RESISTORS",
+      "pass": true
+    }
+  ],
+  "negative_controls": [
+    {
+      "mutation": "reverse-module",
+      "detected": true,
+      "by": [
+        "MODULE-PITCH-J3",
+        "MODULE-SUPPORT-J3",
+        "MODULE-DECOUPLING"
+      ]
+    },
+    {
+      "mutation": "small-socket-drill",
+      "detected": true,
+      "by": [
+        "MODULE-DRILL-J4"
+      ]
+    },
+    {
+      "mutation": "wrong-net",
+      "detected": true,
+      "by": [
+        "PCB-PAD-PARITY"
+      ]
+    },
+    {
+      "mutation": "missing-anchor",
+      "detected": true,
+      "by": [
+        "TIE-J2"
+      ]
+    },
+    {
+      "mutation": "tie-no-keepout",
+      "detected": true,
+      "by": [
+        "TIE-J1"
+      ]
+    },
+    {
+      "mutation": "support-no-keepout",
+      "detected": true,
+      "by": [
+        "MODULE-SUPPORT-J3"
+      ]
+    },
+    {
+      "mutation": "remote-cap",
+      "detected": true,
+      "by": [
+        "LOGIC-DECOUPLING"
+      ]
+    },
+    {
+      "mutation": "thin-track",
+      "detected": true,
+      "by": [
+        "MIN-TRACK"
+      ]
+    },
+    {
+      "mutation": "missing-ref",
+      "detected": true,
+      "by": [
+        "ALL-REFS-VISIBLE"
+      ]
+    },
+    {
+      "mutation": "4-layer",
+      "detected": true,
+      "by": [
+        "TWO-LAYER-1.6"
+      ]
+    }
+  ],
+  "tracks": 437,
+  "footprints": 52,
+  "hardware_tested": false
+}

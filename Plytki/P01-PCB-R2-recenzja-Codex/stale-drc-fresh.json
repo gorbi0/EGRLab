@@ -1,0 +1,889 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-24T18:57:04",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P01.kicad_pcb",
+    "unconnected_items": [],
+    "violations": [
+        {
+            "description": "Items shorting two nets (nets /SAFE/3V3_IO and /SAFE/SAFE_N)",
+            "items": [
+                {
+                    "description": "Track [/SAFE/3V3_IO] on B.Cu, length 0,7071 mm",
+                    "pos": {
+                        "x": 142.1483,
+                        "y": 87.0
+                    },
+                    "uuid": "46d34a6e-5e78-46d6-85a5-d37e615c4ec7"
+                },
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Items shorting two nets (nets /SAFE/P01_FAULT_BASE and /SAFE/SAFE_N)",
+            "items": [
+                {
+                    "description": "PTH pad 2 [/SAFE/P01_FAULT_BASE] of Q7",
+                    "pos": {
+                        "x": 118.04,
+                        "y": 93.7
+                    },
+                    "uuid": "cee2db8e-4625-4aa4-b1cf-7d3e841a3081"
+                },
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Items shorting two nets (nets /SAFE/SAFE_N and /SAFE/3V3_IO)",
+            "items": [
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                },
+                {
+                    "description": "Track [/SAFE/3V3_IO] on B.Cu, length 5,4483 mm",
+                    "pos": {
+                        "x": 136.7,
+                        "y": 87.0
+                    },
+                    "uuid": "ecce834d-670a-47f8-81d5-b966c6afad03"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Hole clearance violation (board setup constraints hole clearance 0,2500 mm; actual 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                },
+                {
+                    "description": "PTH pad 2 [/SAFE/P01_FAULT_BASE] of Q7",
+                    "pos": {
+                        "x": 118.04,
+                        "y": 93.7
+                    },
+                    "uuid": "cee2db8e-4625-4aa4-b1cf-7d3e841a3081"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Items shorting two nets (nets /SAFE/P01_FAULT_BASE and /SAFE/SAFE_N)",
+            "items": [
+                {
+                    "description": "PTH pad 2 [/SAFE/P01_FAULT_BASE] of R30",
+                    "pos": {
+                        "x": 121.46,
+                        "y": 87.0
+                    },
+                    "uuid": "2fb69119-23fb-4aae-a554-75cf7c55b5f0"
+                },
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Hole clearance violation (board setup constraints hole clearance 0,2500 mm; actual 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                },
+                {
+                    "description": "PTH pad 2 [/SAFE/P01_FAULT_BASE] of R30",
+                    "pos": {
+                        "x": 121.46,
+                        "y": 87.0
+                    },
+                    "uuid": "2fb69119-23fb-4aae-a554-75cf7c55b5f0"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Items shorting two nets (nets /SAFE/SAFE_N and /SAFE/PG_LINK)",
+            "items": [
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                },
+                {
+                    "description": "PTH pad 2 [/SAFE/PG_LINK] of J8",
+                    "pos": {
+                        "x": 134.32,
+                        "y": 97.6
+                    },
+                    "uuid": "e8b22a7f-17b0-49ad-a81d-e93a6d703077"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Hole clearance violation (board setup constraints hole clearance 0,2500 mm; actual 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                },
+                {
+                    "description": "PTH pad 2 [/SAFE/PG_LINK] of J8",
+                    "pos": {
+                        "x": 134.32,
+                        "y": 97.6
+                    },
+                    "uuid": "e8b22a7f-17b0-49ad-a81d-e93a6d703077"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Items shorting two nets (nets GND and /SAFE/SAFE_N)",
+            "items": [
+                {
+                    "description": "PTH pad 3 [GND] of J4",
+                    "pos": {
+                        "x": 144.2,
+                        "y": 97.66
+                    },
+                    "uuid": "33c06898-9aaf-49c6-85d6-9c006b8740a6"
+                },
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Hole clearance violation (board setup constraints hole clearance 0,2500 mm; actual 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                },
+                {
+                    "description": "PTH pad 3 [GND] of J4",
+                    "pos": {
+                        "x": 144.2,
+                        "y": 97.66
+                    },
+                    "uuid": "33c06898-9aaf-49c6-85d6-9c006b8740a6"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Items shorting two nets (nets /SAFE/3V3_IO and /SAFE/SAFE_N)",
+            "items": [
+                {
+                    "description": "PTH pad 1 [/SAFE/3V3_IO] of J4",
+                    "pos": {
+                        "x": 144.2,
+                        "y": 87.5
+                    },
+                    "uuid": "28f6374d-ce07-4e4f-b581-faf975950fb0"
+                },
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Hole clearance violation (board setup constraints hole clearance 0,2500 mm; actual 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                },
+                {
+                    "description": "PTH pad 1 [/SAFE/3V3_IO] of J4",
+                    "pos": {
+                        "x": 144.2,
+                        "y": 87.5
+                    },
+                    "uuid": "28f6374d-ce07-4e4f-b581-faf975950fb0"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Items shorting two nets (nets /SAFE/SAFE_N and /SAFE/PG_SEND)",
+            "items": [
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                },
+                {
+                    "description": "PTH pad 1 [/SAFE/PG_SEND] of J8",
+                    "pos": {
+                        "x": 139.4,
+                        "y": 97.6
+                    },
+                    "uuid": "fd4e106c-01ff-41f6-bb78-00ea3f06b425"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Hole clearance violation (board setup constraints hole clearance 0,2500 mm; actual 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                },
+                {
+                    "description": "PTH pad 1 [/SAFE/PG_SEND] of J8",
+                    "pos": {
+                        "x": 139.4,
+                        "y": 97.6
+                    },
+                    "uuid": "fd4e106c-01ff-41f6-bb78-00ea3f06b425"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Items shorting two nets (nets /SAFE/PG_SEND and /SAFE/SAFE_N)",
+            "items": [
+                {
+                    "description": "PTH pad 1 [/SAFE/PG_SEND] of R34",
+                    "pos": {
+                        "x": 139.8,
+                        "y": 93.0
+                    },
+                    "uuid": "afbcabe6-0513-45d6-8ac4-e8dad1ed775c"
+                },
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Hole clearance violation (board setup constraints hole clearance 0,2500 mm; actual 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                },
+                {
+                    "description": "PTH pad 1 [/SAFE/PG_SEND] of R34",
+                    "pos": {
+                        "x": 139.8,
+                        "y": 93.0
+                    },
+                    "uuid": "afbcabe6-0513-45d6-8ac4-e8dad1ed775c"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Items shorting two nets (nets /SAFE/PG_LINK and /SAFE/SAFE_N)",
+            "items": [
+                {
+                    "description": "Track [/SAFE/PG_LINK] on B.Cu, length 6,5054 mm",
+                    "pos": {
+                        "x": 129.72,
+                        "y": 93.0
+                    },
+                    "uuid": "5025323e-0e24-4182-9f81-6fcf39bee0f5"
+                },
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Items shorting two nets (nets /SAFE/3V3_IO and /SAFE/SAFE_N)",
+            "items": [
+                {
+                    "description": "PTH pad 1 [/SAFE/3V3_IO] of R30",
+                    "pos": {
+                        "x": 136.7,
+                        "y": 87.0
+                    },
+                    "uuid": "616a9797-16a5-42c0-92ba-ba241139eebb"
+                },
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Hole clearance violation (board setup constraints hole clearance 0,2500 mm; actual 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                },
+                {
+                    "description": "PTH pad 1 [/SAFE/3V3_IO] of R30",
+                    "pos": {
+                        "x": 136.7,
+                        "y": 87.0
+                    },
+                    "uuid": "616a9797-16a5-42c0-92ba-ba241139eebb"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Items shorting two nets (nets /SAFE/PG_LINK and /SAFE/SAFE_N)",
+            "items": [
+                {
+                    "description": "Track [/SAFE/PG_LINK] on B.Cu, length 5,1600 mm",
+                    "pos": {
+                        "x": 124.56,
+                        "y": 93.0
+                    },
+                    "uuid": "c23b835a-e011-4b14-bdde-5decfc159608"
+                },
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Items shorting two nets (nets /SAFE/PG_LINK and /SAFE/SAFE_N)",
+            "items": [
+                {
+                    "description": "PTH pad 2 [/SAFE/PG_LINK] of R34",
+                    "pos": {
+                        "x": 124.56,
+                        "y": 93.0
+                    },
+                    "uuid": "5404f0d9-9b4d-4ac7-8f70-93d1e433c5aa"
+                },
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Hole clearance violation (board setup constraints hole clearance 0,2500 mm; actual 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                },
+                {
+                    "description": "PTH pad 2 [/SAFE/PG_LINK] of R34",
+                    "pos": {
+                        "x": 124.56,
+                        "y": 93.0
+                    },
+                    "uuid": "5404f0d9-9b4d-4ac7-8f70-93d1e433c5aa"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Items shorting two nets (nets /SAFE/3V3_IO and /SAFE/SAFE_N)",
+            "items": [
+                {
+                    "description": "Track [/SAFE/3V3_IO] on B.Cu, length 1,5517 mm",
+                    "pos": {
+                        "x": 144.2,
+                        "y": 87.5
+                    },
+                    "uuid": "6c3718bb-99aa-4d34-8eea-c32e17a4b0e4"
+                },
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Items shorting two nets (nets /SAFE/P01_FAULT_BASE and /SAFE/SAFE_N)",
+            "items": [
+                {
+                    "description": "Track [/SAFE/P01_FAULT_BASE] on B.Cu, length 5,1600 mm",
+                    "pos": {
+                        "x": 116.0,
+                        "y": 87.3
+                    },
+                    "uuid": "320d6187-d3b7-4622-ba55-33198b22535a"
+                },
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Items shorting two nets (nets /SAFE/P01_FAULT_BASE and /SAFE/SAFE_N)",
+            "items": [
+                {
+                    "description": "Track [/SAFE/P01_FAULT_BASE] on B.Cu, length 1,8409 mm",
+                    "pos": {
+                        "x": 116.7383,
+                        "y": 92.3983
+                    },
+                    "uuid": "c4ce11a4-06c5-4b36-af32-01c9c6107073"
+                },
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Items shorting two nets (nets /SAFE/P01_FAULT_BASE and /SAFE/SAFE_N)",
+            "items": [
+                {
+                    "description": "Track [/SAFE/P01_FAULT_BASE] on B.Cu, length 5,2566 mm",
+                    "pos": {
+                        "x": 111.4817,
+                        "y": 92.3983
+                    },
+                    "uuid": "a34435e5-3aee-402d-ad99-5efff0556021"
+                },
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Items shorting two nets (nets /SAFE/P01_FAULT_BASE and /SAFE/SAFE_N)",
+            "items": [
+                {
+                    "description": "Track [/SAFE/P01_FAULT_BASE] on B.Cu, length 0,4243 mm",
+                    "pos": {
+                        "x": 121.16,
+                        "y": 87.3
+                    },
+                    "uuid": "0a147d39-9d61-4c0a-ad96-51cc30c31014"
+                },
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Clearance violation (netclass 'Default' clearance 0,3000 mm; actual 0,0998 mm)",
+            "items": [
+                {
+                    "description": "Track [GND] on B.Cu, length 2,4828 mm",
+                    "pos": {
+                        "x": 144.2,
+                        "y": 97.66
+                    },
+                    "uuid": "700412ee-5d4f-4e1f-b468-b7f2a596544a"
+                },
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                },
+                {
+                    "description": "PTH pad 2 [/SAFE/P01_FAULT_BASE] of R30",
+                    "pos": {
+                        "x": 121.46,
+                        "y": 87.0
+                    },
+                    "uuid": "2fb69119-23fb-4aae-a554-75cf7c55b5f0"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                },
+                {
+                    "description": "PTH pad 1 [/SAFE/3V3_IO] of J4",
+                    "pos": {
+                        "x": 144.2,
+                        "y": 87.5
+                    },
+                    "uuid": "28f6374d-ce07-4e4f-b581-faf975950fb0"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                },
+                {
+                    "description": "PTH pad 1 [/SAFE/3V3_IO] of R30",
+                    "pos": {
+                        "x": 136.7,
+                        "y": 87.0
+                    },
+                    "uuid": "616a9797-16a5-42c0-92ba-ba241139eebb"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                },
+                {
+                    "description": "PTH pad 3 [GND] of J4",
+                    "pos": {
+                        "x": 144.2,
+                        "y": 97.66
+                    },
+                    "uuid": "33c06898-9aaf-49c6-85d6-9c006b8740a6"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                },
+                {
+                    "description": "PTH pad 1 [/SAFE/PG_SEND] of R34",
+                    "pos": {
+                        "x": 139.8,
+                        "y": 93.0
+                    },
+                    "uuid": "afbcabe6-0513-45d6-8ac4-e8dad1ed775c"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                },
+                {
+                    "description": "PTH pad 1 [/SAFE/PG_SEND] of J8",
+                    "pos": {
+                        "x": 139.4,
+                        "y": 97.6
+                    },
+                    "uuid": "fd4e106c-01ff-41f6-bb78-00ea3f06b425"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                },
+                {
+                    "description": "PTH pad 2 [/SAFE/P01_FAULT_BASE] of Q7",
+                    "pos": {
+                        "x": 118.04,
+                        "y": 93.7
+                    },
+                    "uuid": "cee2db8e-4625-4aa4-b1cf-7d3e841a3081"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                },
+                {
+                    "description": "PTH pad 2 [/SAFE/PG_LINK] of J8",
+                    "pos": {
+                        "x": 134.32,
+                        "y": 97.6
+                    },
+                    "uuid": "e8b22a7f-17b0-49ad-a81d-e93a6d703077"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "Track [/SAFE/SAFE_N] on B.Cu, length 20,1750 mm",
+                    "pos": {
+                        "x": 122.8625,
+                        "y": 91.4175
+                    },
+                    "uuid": "d63a8900-a740-4241-8537-3d28160199f0"
+                },
+                {
+                    "description": "PTH pad 2 [/SAFE/PG_LINK] of R34",
+                    "pos": {
+                        "x": 124.56,
+                        "y": 93.0
+                    },
+                    "uuid": "5404f0d9-9b4d-4ac7-8f70-93d1e433c5aa"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        }
+    ]
+}

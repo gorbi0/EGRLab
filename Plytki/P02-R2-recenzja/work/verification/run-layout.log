@@ -1,0 +1,29 @@
+Created P02 board: 72 footprints + 4 M3 holes
+2-layer stackup: Cu70/FR4 1.46/Cu70; nominal laminate incl Cu = 1.60 mm, mask separate.
+P02 critical power paths locked; VPROT node zone filled; DSN exported.
+Applied explicit 0.30 mm net clearance; no DRC exclusions.
+DSN: VPROT node is a router keepout; GND/VPROT pins removed from the router net list; pre-routed board frozen.
+SES imported; GND planes filled; saved native board.
+Applied explicit 0.30 mm net clearance; no DRC exclusions.
+removed 1 redundant free segments ['5V_SYS'] ; dropped 0 tiny; joined 0 near-miss ends; unconnected 0; solid zone connection: none
+Applied explicit 0.30 mm net clearance; no DRC exclusions.
+> C:\Program Files\KiCad\10.0\bin\python.exe build_board.py
+> C:\Program Files\KiCad\10.0\bin\python.exe set_stackup.py
+> C:\Program Files\KiCad\10.0\bin\python.exe route_critical.py
+> C:\Program Files\KiCad\10.0\bin\python.exe prepare_routing.py
+> C:/Program Files/KiCad/10.0/bin/kicad-cli.exe pcb drc --format json --severity-all -o routing/critical-drc.json eda/P02.kicad_pcb
+> C:\Program Files\KiCad\10.0\bin\python.exe import_routing.py
+> C:\Program Files\KiCad\10.0\bin\python.exe set_rules.py
+> C:/Program Files/KiCad/10.0/bin/kicad-cli.exe pcb drc --format json --severity-all --schematic-parity --all-track-errors --refill-zones -o routing/postroute-drc.json eda/P02.kicad_pcb
+routing/postroute-drc.json {'starved_thermal': 2, 'silk_edge_clearance': 1, 'silk_over_copper': 5, 'silk_overlap': 51} unconnected 0 parity 0
+> C:\Program Files\KiCad\10.0\bin\python.exe cleanup.py
+> C:\Program Files\KiCad\10.0\bin\python.exe set_rules.py
+> C:/Program Files/KiCad/10.0/bin/kicad-cli.exe pcb drc --format json --severity-all --schematic-parity --all-track-errors --refill-zones -o routing/postclean-drc.json eda/P02.kicad_pcb
+routing/postclean-drc.json {'starved_thermal': 2, 'silk_edge_clearance': 1, 'silk_over_copper': 5, 'silk_overlap': 51} unconnected 0 parity 0
+
+
+Fontconfig error: No writable cache directories
+	C:/WINDOWS/Cache/Fontcache
+
+Fontconfig error: No writable cache directories
+	C:/WINDOWS/Cache/Fontcache

@@ -1,0 +1,574 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-27T17:35:18",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P03.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole lutownicze 5 [3V3_CORE] z U6 na F.Cu",
+                    "pos": {
+                        "x": 36.2375,
+                        "y": 74.35
+                    },
+                    "uuid": "6eb88d63-86a3-4e29-8c70-fde2d7110337"
+                },
+                {
+                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 6,9155 mm",
+                    "pos": {
+                        "x": 39.33,
+                        "y": 74.51
+                    },
+                    "uuid": "3f71cc2c-0011-4ad4-8249-4b5ea5186381"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole lutownicze 2 [SUP_N] z U6 na F.Cu",
+                    "pos": {
+                        "x": 33.9625,
+                        "y": 75.3
+                    },
+                    "uuid": "2ea68426-a69d-4d4f-bd91-7fc50449276b"
+                },
+                {
+                    "description": "Ścieżka [SUP_N] na B.Cu, długość 21,2873 mm",
+                    "pos": {
+                        "x": 30.54,
+                        "y": 55.48
+                    },
+                    "uuid": "b720f234-bdc8-4816-9ea3-f3858380d195"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Ścieżka [/POWER/SUP_N_DRV] na F.Cu, długość 0,6541 mm",
+                    "pos": {
+                        "x": 11.2375,
+                        "y": 76.25
+                    },
+                    "uuid": "03fcec04-3914-479b-9916-47025b2c82e1"
+                },
+                {
+                    "description": "Pole lutownicze 4 [/POWER/SUP_N_DRV] z U6 na F.Cu",
+                    "pos": {
+                        "x": 36.2375,
+                        "y": 76.25
+                    },
+                    "uuid": "c7a8c2e5-c1e6-4e43-bb41-d31fc6ae0df2"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci unconnected-(U6-NC-Pad1) oraz GND)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [unconnected-(U6-NC-Pad1)] z U6 na F.Cu",
+                    "pos": {
+                        "x": 33.9625,
+                        "y": 74.35
+                    },
+                    "uuid": "1a73354a-46e9-46dd-a114-51ff2857b034"
+                },
+                {
+                    "description": "Ścieżka [GND] na F.Cu, długość 2,2000 mm",
+                    "pos": {
+                        "x": 34.44,
+                        "y": 74.4
+                    },
+                    "uuid": "2bf02444-3bc5-436d-aad8-b993b5d109c3"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz 3V3_CORE)",
+            "items": [
+                {
+                    "description": "Przelotka [GND] na F.Cu - B.Cu",
+                    "pos": {
+                        "x": 36.64,
+                        "y": 74.4
+                    },
+                    "uuid": "37433669-d2d0-474f-90f9-eb95013add1e"
+                },
+                {
+                    "description": "Pole lutownicze 5 [3V3_CORE] z U6 na F.Cu",
+                    "pos": {
+                        "x": 36.2375,
+                        "y": 74.35
+                    },
+                    "uuid": "6eb88d63-86a3-4e29-8c70-fde2d7110337"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz 3V3_CORE)",
+            "items": [
+                {
+                    "description": "Ścieżka [GND] na F.Cu, długość 2,2000 mm",
+                    "pos": {
+                        "x": 34.44,
+                        "y": 74.4
+                    },
+                    "uuid": "2bf02444-3bc5-436d-aad8-b993b5d109c3"
+                },
+                {
+                    "description": "Pole lutownicze 5 [3V3_CORE] z U6 na F.Cu",
+                    "pos": {
+                        "x": 36.2375,
+                        "y": 74.35
+                    },
+                    "uuid": "6eb88d63-86a3-4e29-8c70-fde2d7110337"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 5 [3V3_CORE] z U6 na F.Cu",
+                    "pos": {
+                        "x": 36.2375,
+                        "y": 74.35
+                    },
+                    "uuid": "6eb88d63-86a3-4e29-8c70-fde2d7110337"
+                },
+                {
+                    "description": "Przelotka [GND] na F.Cu - B.Cu",
+                    "pos": {
+                        "x": 36.64,
+                        "y": 74.4
+                    },
+                    "uuid": "37433669-d2d0-474f-90f9-eb95013add1e"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu (klasa sieci 'Power' prześwit 0,3000 mm; obecnie 0,0379 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 6,9155 mm",
+                    "pos": {
+                        "x": 39.33,
+                        "y": 74.51
+                    },
+                    "uuid": "3f71cc2c-0011-4ad4-8249-4b5ea5186381"
+                },
+                {
+                    "description": "Pole lutownicze 4 [/POWER/SUP_N_DRV] z U6 na F.Cu",
+                    "pos": {
+                        "x": 36.2375,
+                        "y": 76.25
+                    },
+                    "uuid": "c7a8c2e5-c1e6-4e43-bb41-d31fc6ae0df2"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 5 [3V3_CORE] z U6 na F.Cu",
+                    "pos": {
+                        "x": 36.2375,
+                        "y": 74.35
+                    },
+                    "uuid": "6eb88d63-86a3-4e29-8c70-fde2d7110337"
+                },
+                {
+                    "description": "Przelotka [GND] na F.Cu - B.Cu",
+                    "pos": {
+                        "x": 36.64,
+                        "y": 74.4
+                    },
+                    "uuid": "37433669-d2d0-474f-90f9-eb95013add1e"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz unconnected-(U6-NC-Pad1))",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [GND] na C6",
+                    "pos": {
+                        "x": 34.44,
+                        "y": 74.4
+                    },
+                    "uuid": "cbd6ac82-57ef-49e3-a8b3-a1e9ef4177ae"
+                },
+                {
+                    "description": "Pole lutownicze 1 [unconnected-(U6-NC-Pad1)] z U6 na F.Cu",
+                    "pos": {
+                        "x": 33.9625,
+                        "y": 74.35
+                    },
+                    "uuid": "1a73354a-46e9-46dd-a114-51ff2857b034"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu (klasa sieci 'Power' prześwit 0,3000 mm; obecnie 0,2350 mm)",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [GND] na C6",
+                    "pos": {
+                        "x": 34.44,
+                        "y": 74.4
+                    },
+                    "uuid": "cbd6ac82-57ef-49e3-a8b3-a1e9ef4177ae"
+                },
+                {
+                    "description": "Pole lutownicze 5 [3V3_CORE] z U6 na F.Cu",
+                    "pos": {
+                        "x": 36.2375,
+                        "y": 74.35
+                    },
+                    "uuid": "6eb88d63-86a3-4e29-8c70-fde2d7110337"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz SUP_N)",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [GND] na C6",
+                    "pos": {
+                        "x": 34.44,
+                        "y": 74.4
+                    },
+                    "uuid": "cbd6ac82-57ef-49e3-a8b3-a1e9ef4177ae"
+                },
+                {
+                    "description": "Pole lutownicze 2 [SUP_N] z U6 na F.Cu",
+                    "pos": {
+                        "x": 33.9625,
+                        "y": 75.3
+                    },
+                    "uuid": "2ea68426-a69d-4d4f-bd91-7fc50449276b"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint C6",
+                    "pos": {
+                        "x": 34.44,
+                        "y": 79.4
+                    },
+                    "uuid": "60e4224e-e6b2-4596-ab3d-b211af9df2b1"
+                },
+                {
+                    "description": "Footprint U6",
+                    "pos": {
+                        "x": 35.1,
+                        "y": 75.3
+                    },
+                    "uuid": "81f8bad3-acc5-420e-9262-13cafc00b978"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [GND] na C6",
+                    "pos": {
+                        "x": 34.44,
+                        "y": 74.4
+                    },
+                    "uuid": "cbd6ac82-57ef-49e3-a8b3-a1e9ef4177ae"
+                },
+                {
+                    "description": "Footprint U6",
+                    "pos": {
+                        "x": 35.1,
+                        "y": 75.3
+                    },
+                    "uuid": "81f8bad3-acc5-420e-9262-13cafc00b978"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [GND] na F.Cu, długość 2,2000 mm",
+                    "pos": {
+                        "x": 34.44,
+                        "y": 74.4
+                    },
+                    "uuid": "2bf02444-3bc5-436d-aad8-b993b5d109c3"
+                },
+                {
+                    "description": "Pole lutownicze 1 [unconnected-(U6-NC-Pad1)] z U6 na F.Cu",
+                    "pos": {
+                        "x": 33.9625,
+                        "y": 74.35
+                    },
+                    "uuid": "1a73354a-46e9-46dd-a114-51ff2857b034"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [GND] na F.Cu, długość 2,2000 mm",
+                    "pos": {
+                        "x": 34.44,
+                        "y": 74.4
+                    },
+                    "uuid": "2bf02444-3bc5-436d-aad8-b993b5d109c3"
+                },
+                {
+                    "description": "Pole lutownicze 5 [3V3_CORE] z U6 na F.Cu",
+                    "pos": {
+                        "x": 36.2375,
+                        "y": 74.35
+                    },
+                    "uuid": "6eb88d63-86a3-4e29-8c70-fde2d7110337"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Przelotka [GND] na F.Cu - B.Cu",
+                    "pos": {
+                        "x": 36.64,
+                        "y": 74.4
+                    },
+                    "uuid": "37433669-d2d0-474f-90f9-eb95013add1e"
+                },
+                {
+                    "description": "Pole lutownicze 5 [3V3_CORE] z U6 na F.Cu",
+                    "pos": {
+                        "x": 36.2375,
+                        "y": 74.35
+                    },
+                    "uuid": "6eb88d63-86a3-4e29-8c70-fde2d7110337"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [GND] na C6",
+                    "pos": {
+                        "x": 34.44,
+                        "y": 74.4
+                    },
+                    "uuid": "cbd6ac82-57ef-49e3-a8b3-a1e9ef4177ae"
+                },
+                {
+                    "description": "Pole lutownicze 1 [unconnected-(U6-NC-Pad1)] z U6 na F.Cu",
+                    "pos": {
+                        "x": 33.9625,
+                        "y": 74.35
+                    },
+                    "uuid": "1a73354a-46e9-46dd-a114-51ff2857b034"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [GND] na C6",
+                    "pos": {
+                        "x": 34.44,
+                        "y": 74.4
+                    },
+                    "uuid": "cbd6ac82-57ef-49e3-a8b3-a1e9ef4177ae"
+                },
+                {
+                    "description": "Pole lutownicze 2 [SUP_N] z U6 na F.Cu",
+                    "pos": {
+                        "x": 33.9625,
+                        "y": 75.3
+                    },
+                    "uuid": "2ea68426-a69d-4d4f-bd91-7fc50449276b"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 0,4950 mm",
+                    "pos": {
+                        "x": 11.2375,
+                        "y": 74.35
+                    },
+                    "uuid": "5fc76114-ef1f-4aa8-919a-500213c032f3"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [SUP_N] na F.Cu, długość 1,7125 mm",
+                    "pos": {
+                        "x": 7.25,
+                        "y": 75.3
+                    },
+                    "uuid": "714c96ea-5336-4628-8c62-5cdd0be59a61"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [/POWER/SUP_N_DRV] na F.Cu, długość 0,6541 mm",
+                    "pos": {
+                        "x": 11.2375,
+                        "y": 76.25
+                    },
+                    "uuid": "03fcec04-3914-479b-9916-47025b2c82e1"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment z U6 na F.Silkscreen",
+                    "pos": {
+                        "x": 34.19,
+                        "y": 73.74
+                    },
+                    "uuid": "2b00bcf0-ce52-4184-87fa-63d148a84794"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment z U6 na F.Silkscreen",
+                    "pos": {
+                        "x": 34.19,
+                        "y": 73.79
+                    },
+                    "uuid": "a31b3e0a-ff17-45d9-8ef1-a708bdcbdb34"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,1025 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C6",
+                    "pos": {
+                        "x": 34.44,
+                        "y": 71.955
+                    },
+                    "uuid": "9a7622dd-1c5f-43eb-906f-101af507a18f"
+                },
+                {
+                    "description": "Pole odnośnika do U6",
+                    "pos": {
+                        "x": 35.6,
+                        "y": 72.255
+                    },
+                    "uuid": "d011c3b2-7760-4549-afa7-a2f980a84313"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        }
+    ]
+}

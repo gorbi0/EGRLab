@@ -1,0 +1,145 @@
+--- F02-before
++++ F02-after
+@@ -2288,7 +2288,7 @@
+       "kind": "connector",
+       "note": "SFAULT",
+       "pins": {
+-        "1": "SENSOR_FAULT_N",
++        "1": "SENSOR_HEALTHY",
+         "2": "GND",
+         "4": "NC",
+         "5": "NC",
+@@ -2427,6 +2427,17 @@
+       "ref": "R_PD_LOGGER_CLEAR",
+       "value": "10k"
+     },
++    "P03_R_PD_SENSOR_HEALTHY": {
++      "board": "P03",
++      "kind": "res",
++      "note": "Odbiorczy pull-down: kabel przerwany lub nadajnik bez zasilania = awaria",
++      "pins": {
++        "1": "SENSOR_HEALTHY",
++        "2": "GND"
++      },
++      "ref": "R_PD_SENSOR_HEALTHY",
++      "value": "10k"
++    },
+     "P03_R_PD_TEST_PRESENT": {
+       "board": "P03",
+       "kind": "res",
+@@ -2469,17 +2480,6 @@
+         "2": "SD_CS"
+       },
+       "ref": "R_PU_SD_CS",
+-      "value": "10k"
+-    },
+-    "P03_R_PU_SENSOR_FAULT_N": {
+-      "board": "P03",
+-      "kind": "res",
+-      "note": "",
+-      "pins": {
+-        "1": "3V3_CORE",
+-        "2": "SENSOR_FAULT_N"
+-      },
+-      "ref": "R_PU_SENSOR_FAULT_N",
+       "value": "10k"
+     },
+     "P03_R_SCOPE": {
+@@ -2535,7 +2535,7 @@
+         "17": "GND",
+         "18": "SUP_N",
+         "19": "NC",
+-        "2": "SENSOR_FAULT_N_CORE",
++        "2": "SENSOR_HEALTHY_CORE",
+         "20": "NC",
+         "21": "ADC_RESET_SRC",
+         "22": "MEAS_EN_SRC",
+@@ -2626,8 +2626,8 @@
+       "pins": {
+         "1": "GND",
+         "10": "GND",
+-        "11": "SENSOR_FAULT_N_CORE",
+-        "12": "SENSOR_FAULT_N",
++        "11": "SENSOR_HEALTHY_CORE",
++        "12": "SENSOR_HEALTHY",
+         "13": "GND",
+         "14": "3V3_CORE",
+         "2": "HW_ARMED",
+@@ -6867,7 +6867,7 @@
+       "kind": "termination",
+       "note": "SFAULT",
+       "pins": {
+-        "1": "SENSOR_FAULT_N",
++        "1": "SENSOR_HEALTHY",
+         "2": "GND",
+         "4": "NC",
+         "5": "NC",
+@@ -6931,7 +6931,7 @@
+       "kind": "res",
+       "note": "",
+       "pins": {
+-        "1": "SENSOR_FAULT_N",
++        "1": "SENSOR_FAULT_LOCAL_N",
+         "2": "3V3_IO"
+       },
+       "ref": "R_FAULT_PU",
+@@ -7000,7 +7000,7 @@
+         "1": "5V_SYS",
+         "2": "GND",
+         "3": "SENSOR_LOCAL",
+-        "4": "SENSOR_FAULT_N",
++        "4": "SENSOR_FAULT_LOCAL_N",
+         "5": "ILIM_232K",
+         "6": "SENSOR_LIMITED"
+       },
+@@ -7013,7 +7013,7 @@
+       "note": "",
+       "pins": {
+         "1": "P08_SUP3_N",
+-        "10": "GND",
++        "10": "SENSOR_FAULT_LOCAL_N",
+         "11": "NC",
+         "12": "GND",
+         "13": "GND",
+@@ -7024,8 +7024,8 @@
+         "5": "SENSOR_OK",
+         "6": "SENSOR_LOCAL",
+         "7": "GND",
+-        "8": "NC",
+-        "9": "GND"
++        "8": "SENSOR_HEALTH_LOCAL",
++        "9": "SENSOR_OK"
+       },
+       "ref": "U_READY",
+       "value": "SN74HC08N DIP14"
+@@ -7070,9 +7070,9 @@
+         "14": "3V3_IO",
+         "2": "SENSOR_PERMIT",
+         "3": "SENSOR_PERMIT_P08",
+-        "4": "3V3_IO",
+-        "5": "GND",
+-        "6": "NC",
++        "4": "GND",
++        "5": "SENSOR_HEALTH_LOCAL",
++        "6": "SENSOR_HEALTHY",
+         "7": "GND",
+         "8": "NC",
+         "9": "GND"
+@@ -8114,7 +8114,7 @@
+       "przewod": "taśma 6 żył AWG28, raster 1.27mm",
+       "rodzina": "IDC",
+       "typ_wtyku": "IDC żeński 6p Au z odciążką, KEY 3",
+-      "wersja": "M2",
++      "wersja": "M2.1",
+       "wlasciciel_wiazki": "P08",
+       "zakonczenie": "Przewody do PTH; 2 otwory kotwy + opaska; bez pól SMD"
+     },
+@@ -9275,7 +9275,7 @@
+       "from_pin": 1,
+       "from_ref": "J_SFAULTA",
+       "max_cm": 15.0,
+-      "net": "SENSOR_FAULT_N",
++      "net": "SENSOR_HEALTHY",
+       "to_board": "P08",
+       "to_pin": 1,
+       "to_ref": "J_SFAULTB"

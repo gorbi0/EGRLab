@@ -1,0 +1,1743 @@
+{
+  "M1": {
+    "ref": "M1",
+    "source_ref": "M1",
+    "footprint": "P03:Waveshare_ESP32-S3-DEV-KIT_2x22_W22.86",
+    "display": "Waveshare N32R16V",
+    "value": "Waveshare N32R16V",
+    "mpn": "owned (Waveshare ESP32-S3-DEV-KIT-N32R16V) on 2x 1x22 female headers",
+    "pins": {
+      "J1-1": "3V3_CORE",
+      "J1-2": "3V3_CORE",
+      "J1-3": "SUP_N",
+      "J1-4": "SPI3_SCLK_SRC",
+      "J1-5": "SPI3_MOSI_SRC",
+      "J1-6": "SPI3_MISO_CORE",
+      "J1-7": "SD_CS",
+      "J1-8": "I2C_SCL",
+      "J1-9": "TC2_CS_SRC",
+      "J1-10": "CAN_TX",
+      "J1-11": "CAN_RX_CORE",
+      "J1-12": "TC1_CS_SRC",
+      "J1-13": "NC",
+      "J1-14": "NC",
+      "J1-15": "ADC_SCLK_SRC",
+      "J1-16": "I2C_SDA",
+      "J1-17": "ADC_DOUTA_CORE",
+      "J1-18": "ADC_CS_SRC",
+      "J1-19": "ADC_CONVST_SRC",
+      "J1-20": "ADC_BUSY_CORE",
+      "J1-21": "5V_M1",
+      "J1-22": "GND",
+      "J3-1": "GND",
+      "J3-2": "NC",
+      "J3-3": "NC",
+      "J3-4": "PWM",
+      "J3-5": "ADC_SDI_SRC",
+      "J3-6": "INTERLOCK_CORE",
+      "J3-7": "SCOPE_TRIG",
+      "J3-8": "HW_ARMED_CORE",
+      "J3-9": "MCU_ARM",
+      "J3-10": "CURRENT_CS_N",
+      "J3-11": "NC",
+      "J3-12": "NC",
+      "J3-13": "NC",
+      "J3-14": "NC",
+      "J3-15": "NC",
+      "J3-16": "NC",
+      "J3-17": "NC",
+      "J3-18": "HEARTBEAT",
+      "J3-19": "NC",
+      "J3-20": "NC",
+      "J3-21": "GND",
+      "J3-22": "GND"
+    },
+    "url": "https://docs.waveshare.com/ESP32-S3-DEV-KIT-N8R8",
+    "note": "Rows 22.86 mm (measured). GPIO numbers are the v6.1 contract. Remove the on-board RGB LED on GPIO38 (v6.1). GPIO47/48 1.8 V: unused. 3V3 = 3V3_CORE; never tie to 3V3_IO.",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "SD1": {
+    "ref": "SD1",
+    "source_ref": "SD1",
+    "footprint": "P03:Adafruit_4682_microSD_1x09",
+    "display": "Adafruit 4682",
+    "value": "Adafruit 4682",
+    "mpn": "Adafruit 4682 on a 1x9 female header + 2x M2.5 spacer",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "GND",
+      "3": "SPI3_SCLK",
+      "4": "SPI3_MISO",
+      "5": "SPI3_MOSI",
+      "6": "SD_CS",
+      "7": "NC",
+      "8": "NC",
+      "9": "NC"
+    },
+    "url": "https://www.adafruit.com/product/4682",
+    "note": "User decision 25.09: Adafruit 4682 (3 V only, no regulator/level shifter). SO = card out (MISO), SI = card in (MOSI). D1, DAT2, DET unused.",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "U1": {
+    "ref": "U1",
+    "source_ref": "U17",
+    "footprint": "Package_DIP:DIP-28_W7.62mm",
+    "display": "MCP23017-E/SP",
+    "value": "MCP23017-E/SP",
+    "mpn": "MCP23017-E/SP",
+    "pins": {
+      "1": "TEST_KEY_CORE",
+      "2": "SENSOR_HEALTHY_CORE",
+      "3": "ENA_DIAG_CORE",
+      "4": "ENB_DIAG_CORE",
+      "5": "LOGGER_CLEAR_CORE",
+      "6": "TEST_PRESENT_CORE",
+      "7": "MARK",
+      "8": "NC",
+      "9": "3V3_CORE",
+      "10": "GND",
+      "11": "NC",
+      "12": "I2C_SCL",
+      "13": "I2C_SDA",
+      "14": "NC",
+      "15": "GND",
+      "16": "GND",
+      "17": "GND",
+      "18": "SUP_N",
+      "19": "NC",
+      "20": "NC",
+      "21": "ADC_RESET_SRC",
+      "22": "MEAS_EN_SRC",
+      "23": "MEAS_BANK",
+      "24": "SENSOR_ENABLE",
+      "25": "LOGGER_CURRENT_OK_CORE",
+      "26": "MOTOR_INA",
+      "27": "MOTOR_INB",
+      "28": "STATUS_LED"
+    },
+    "url": "https://ww1.microchip.com/downloads/en/devicedoc/20001952c.pdf",
+    "note": "Address 0x20 (A2..A0 = GND). IODIRA 0x10, IODIRB 0x7F (v6.1). In 2x DIP14 precision sockets end to end (bought).",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "C2": {
+    "ref": "C2",
+    "source_ref": "C_DEC_U17_9",
+    "footprint": "P03:C_Vishay_K15_H5_P5",
+    "display": "100nF / X7R",
+    "value": "100nF / X7R",
+    "mpn": "K104K15X7RF53H5",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "GND"
+    },
+    "url": "https://www.vishay.com/docs/45171/kseries.pdf",
+    "note": "At U1 pin 9.",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "U2": {
+    "ref": "U2",
+    "source_ref": "U_CS",
+    "footprint": "Package_DIP:DIP-16_W7.62mm",
+    "display": "SN74HC139N",
+    "value": "SN74HC139N",
+    "mpn": "SN74HC139N",
+    "pins": {
+      "1": "CURRENT_CS_N",
+      "2": "MEAS_BANK",
+      "3": "GND",
+      "4": "CS_ILOG_N_SRC",
+      "5": "CS_ITEST_N_SRC",
+      "6": "NC",
+      "7": "NC",
+      "8": "GND",
+      "9": "NC",
+      "10": "NC",
+      "11": "NC",
+      "12": "NC",
+      "13": "GND",
+      "14": "GND",
+      "15": "3V3_CORE",
+      "16": "3V3_CORE"
+    },
+    "url": "https://www.ti.com/lit/ds/symlink/sn74hc139.pdf",
+    "note": "/G = GPIO38, A = MEAS_BANK, B = GND (v6.1). Second half disabled. DIP16 socket (bought).",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "C1": {
+    "ref": "C1",
+    "source_ref": "C_CS",
+    "footprint": "P03:C_Vishay_K15_H5_P5",
+    "display": "100nF / X7R",
+    "value": "100nF / X7R",
+    "mpn": "K104K15X7RF53H5",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "GND"
+    },
+    "url": "https://www.vishay.com/docs/45171/kseries.pdf",
+    "note": "At U2 pin 16.",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "R1": {
+    "ref": "R1",
+    "source_ref": "R_CS_IDLE",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K / 1%",
+    "value": "10K / 1%",
+    "mpn": "MF0207FTE-10K",
+    "pins": {
+      "1": "CURRENT_CS_N",
+      "2": "3V3_CORE"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Decoder disabled while GPIO38 floats.",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "U3": {
+    "ref": "U3",
+    "source_ref": "U5",
+    "footprint": "P03:Adapter_SOT23-6_DIP6_W15.24_ChipQuik_PA0085",
+    "display": "TPS3808G33 / PA0085",
+    "value": "TPS3808G33 / PA0085",
+    "mpn": "TPS3808G33DBVR on Chip Quik PA0085",
+    "pins": {
+      "1": "SUP_RAW_N",
+      "2": "GND",
+      "3": "3V3_CORE",
+      "4": "NC",
+      "5": "3V3_CORE",
+      "6": "3V3_CORE"
+    },
+    "url": "https://www.ti.com/lit/ds/symlink/tps3808.pdf",
+    "note": "SOT23-6 on PA0085 (rows 15.24 mm, measured). Pin n = SOT pin n: confirm on the adapter before soldering. CT open = fixed delay.",
+    "qty": 1,
+    "sheet": "POWER",
+    "on_board": true
+  },
+  "C3": {
+    "ref": "C3",
+    "source_ref": "C_DEC_U5_6",
+    "footprint": "P03:C_Vishay_K15_H5_P5",
+    "display": "100nF / X7R",
+    "value": "100nF / X7R",
+    "mpn": "K104K15X7RF53H5",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "GND"
+    },
+    "url": "https://www.vishay.com/docs/45171/kseries.pdf",
+    "note": "At U3 pin 6.",
+    "qty": 1,
+    "sheet": "POWER",
+    "on_board": true
+  },
+  "R13": {
+    "ref": "R13",
+    "source_ref": "R_SUP_PU",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K / 1%",
+    "value": "10K / 1%",
+    "mpn": "MF0207FTE-10K",
+    "pins": {
+      "1": "SUP_RAW_N",
+      "2": "3V3_CORE"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Supervisor pull-up before U4; does not discharge Waveshare EN capacitor.",
+    "qty": 1,
+    "sheet": "POWER",
+    "on_board": true
+  },
+  "R9": {
+    "ref": "R9",
+    "source_ref": "R_PU_I2C_SCL",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "4K7 / 1%",
+    "value": "4K7 / 1%",
+    "mpn": "MF0207FTE-4K7",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "I2C_SCL"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "R10": {
+    "ref": "R10",
+    "source_ref": "R_PU_I2C_SDA",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "4K7 / 1%",
+    "value": "4K7 / 1%",
+    "mpn": "MF0207FTE-4K7",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "I2C_SDA"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "R11": {
+    "ref": "R11",
+    "source_ref": "R_PU_SD_CS",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K / 1%",
+    "value": "10K / 1%",
+    "mpn": "MF0207FTE-10K",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "SD_CS"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Card deselected while GPIO7 floats.",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "R12": {
+    "ref": "R12",
+    "source_ref": "R_SCOPE",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "330R / 1%",
+    "value": "330R / 1%",
+    "mpn": "MF0207FTE-330R",
+    "pins": {
+      "1": "SCOPE_TRIG",
+      "2": "N_J_SCOPE_HOT"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "SCOPE_TRIG series resistor to PANELCORE pin 7.",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "R5": {
+    "ref": "R5",
+    "source_ref": "R_MARK",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K / 1%",
+    "value": "10K / 1%",
+    "mpn": "MF0207FTE-10K",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "MARK"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "C4": {
+    "ref": "C4",
+    "source_ref": "C_MARK",
+    "footprint": "P03:C_Vishay_K15_H5_P5",
+    "display": "100nF / X7R",
+    "value": "100nF / X7R",
+    "mpn": "K104K15X7RF53H5",
+    "pins": {
+      "1": "MARK",
+      "2": "GND"
+    },
+    "url": "https://www.vishay.com/docs/45171/kseries.pdf",
+    "note": "MARK button debounce.",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "R4": {
+    "ref": "R4",
+    "source_ref": "R_LED",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "1K / 1%",
+    "value": "1K / 1%",
+    "mpn": "MF0207FTE-1K",
+    "pins": {
+      "1": "STATUS_LED",
+      "2": "LED_A"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "LED1": {
+    "ref": "LED1",
+    "source_ref": "LED1",
+    "footprint": "LED_THT:LED_D3.0mm",
+    "display": "GREEN 3mm / STATUS",
+    "value": "GREEN 3mm / STATUS",
+    "mpn": "L-934GD",
+    "pins": {
+      "1": "GND",
+      "2": "LED_A"
+    },
+    "url": "https://www.kingbrightusa.com/images/catalog/SPEC/L-934GD.pdf",
+    "note": "MCP23017 GPA7.",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "R14": {
+    "ref": "R14",
+    "source_ref": "W_LINK",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "0R",
+    "value": "0R",
+    "mpn": "ZOR-25-R-52-0R (or wire link)",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "CORE_LINK"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "CORE_LINK = presence of 3V3_CORE (v6.1 W_LINK).",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "J10": {
+    "ref": "J10",
+    "source_ref": "J_LV03B",
+    "footprint": "P03:Pigtail_LV_4xAWG22_P3.81",
+    "display": "LV03 / soldered harness",
+    "value": "LV03 / soldered harness",
+    "mpn": "PCB termination; H_LV03 from P02 J3",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "GND",
+      "3": "3V3_IO",
+      "4": "GND"
+    },
+    "url": "",
+    "note": "H_LV03: 4 x AWG22, 200 mm, Mini-Fit Jr 4p at P02 (LV03). Soldered here, anchor 12.5 mm (v6.1: soldered end on P03).",
+    "qty": 1,
+    "sheet": "POWER",
+    "on_board": true
+  },
+  "U11": {
+    "ref": "U11",
+    "source_ref": "U_IN1",
+    "footprint": "P03:Adapter_SO14_DIP14_W15.24_Kamami575068",
+    "display": "74LVC125A",
+    "value": "74LVC125A",
+    "mpn": "74LVC125AD,118 (Nexperia) on Kamami 575068",
+    "pins": {
+      "1": "GND",
+      "2": "ADC_DOUTA",
+      "3": "ADC_DOUTA_CORE",
+      "4": "GND",
+      "5": "ADC_BUSY",
+      "6": "ADC_BUSY_CORE",
+      "7": "GND",
+      "8": "SPI3_MISO_CORE",
+      "9": "SPI3_MISO",
+      "10": "GND",
+      "11": "CAN_RX_CORE",
+      "12": "CAN_RX",
+      "13": "GND",
+      "14": "3V3_CORE"
+    },
+    "url": "https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf",
+    "note": "Nexperia only (Ioff), v6.1.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "C5": {
+    "ref": "C5",
+    "source_ref": "C_U_IN1",
+    "footprint": "P03:C_Vishay_K15_H5_P5",
+    "display": "100nF / X7R",
+    "value": "100nF / X7R",
+    "mpn": "K104K15X7RF53H5",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "GND"
+    },
+    "url": "https://www.vishay.com/docs/45171/kseries.pdf",
+    "note": "At U11 pin 14.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "U12": {
+    "ref": "U12",
+    "source_ref": "U_IN2",
+    "footprint": "P03:Adapter_SO14_DIP14_W15.24_Kamami575068",
+    "display": "74LVC125A",
+    "value": "74LVC125A",
+    "mpn": "74LVC125AD,118 (Nexperia) on Kamami 575068",
+    "pins": {
+      "1": "GND",
+      "2": "HW_ARMED",
+      "3": "HW_ARMED_CORE",
+      "4": "GND",
+      "5": "INTERLOCK",
+      "6": "INTERLOCK_CORE",
+      "7": "GND",
+      "8": "LOGGER_CURRENT_OK_CORE",
+      "9": "LOGGER_CURRENT_OK",
+      "10": "GND",
+      "11": "SENSOR_HEALTHY_CORE",
+      "12": "SENSOR_HEALTHY",
+      "13": "GND",
+      "14": "3V3_CORE"
+    },
+    "url": "https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf",
+    "note": "Nexperia only (Ioff), v6.1.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "C6": {
+    "ref": "C6",
+    "source_ref": "C_U_IN2",
+    "footprint": "P03:C_Vishay_K15_H5_P5",
+    "display": "100nF / X7R",
+    "value": "100nF / X7R",
+    "mpn": "K104K15X7RF53H5",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "GND"
+    },
+    "url": "https://www.vishay.com/docs/45171/kseries.pdf",
+    "note": "At U12 pin 14.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "U13": {
+    "ref": "U13",
+    "source_ref": "U_IN3",
+    "footprint": "P03:Adapter_SO14_DIP14_W15.24_Kamami575068",
+    "display": "74LVC125A",
+    "value": "74LVC125A",
+    "mpn": "74LVC125AD,118 (Nexperia) on Kamami 575068",
+    "pins": {
+      "1": "GND",
+      "2": "ENA_DIAG",
+      "3": "ENA_DIAG_CORE",
+      "4": "GND",
+      "5": "ENB_DIAG",
+      "6": "ENB_DIAG_CORE",
+      "7": "GND",
+      "8": "LOGGER_CLEAR_CORE",
+      "9": "LOGGER_CLEAR",
+      "10": "GND",
+      "11": "TEST_PRESENT_CORE",
+      "12": "TEST_PRESENT",
+      "13": "GND",
+      "14": "3V3_CORE"
+    },
+    "url": "https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf",
+    "note": "Nexperia only (Ioff), v6.1.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "C7": {
+    "ref": "C7",
+    "source_ref": "C_U_IN3",
+    "footprint": "P03:C_Vishay_K15_H5_P5",
+    "display": "100nF / X7R",
+    "value": "100nF / X7R",
+    "mpn": "K104K15X7RF53H5",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "GND"
+    },
+    "url": "https://www.vishay.com/docs/45171/kseries.pdf",
+    "note": "At U13 pin 14.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "U14": {
+    "ref": "U14",
+    "source_ref": "U_IN4",
+    "footprint": "P03:Adapter_SO14_DIP14_W15.24_Kamami575068",
+    "display": "74LVC125A",
+    "value": "74LVC125A",
+    "mpn": "74LVC125AD,118 (Nexperia) on Kamami 575068",
+    "pins": {
+      "1": "GND",
+      "2": "TEST_KEY",
+      "3": "TEST_KEY_CORE",
+      "4": "3V3_IO",
+      "5": "GND",
+      "6": "NC",
+      "7": "GND",
+      "8": "NC",
+      "9": "GND",
+      "10": "3V3_IO",
+      "11": "NC",
+      "12": "GND",
+      "13": "3V3_IO",
+      "14": "3V3_CORE"
+    },
+    "url": "https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf",
+    "note": "Nexperia only (Ioff), v6.1. Unused OE# = 3V3_IO in U_IN4 as in v6.1.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "C8": {
+    "ref": "C8",
+    "source_ref": "C_U_IN4",
+    "footprint": "P03:C_Vishay_K15_H5_P5",
+    "display": "100nF / X7R",
+    "value": "100nF / X7R",
+    "mpn": "K104K15X7RF53H5",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "GND"
+    },
+    "url": "https://www.vishay.com/docs/45171/kseries.pdf",
+    "note": "At U14 pin 14.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "U21": {
+    "ref": "U21",
+    "source_ref": "U_OUT1",
+    "footprint": "P03:Adapter_SO14_DIP14_W15.24_Kamami575068",
+    "display": "74LVC125A",
+    "value": "74LVC125A",
+    "mpn": "74LVC125AD,118 (Nexperia) on Kamami 575068",
+    "pins": {
+      "1": "GND",
+      "2": "ADC_CS_SRC",
+      "3": "ADC_CS",
+      "4": "GND",
+      "5": "ADC_SCLK_SRC",
+      "6": "ADC_SCLK_DRV",
+      "7": "GND",
+      "8": "ADC_SDI_DRV",
+      "9": "ADC_SDI_SRC",
+      "10": "GND",
+      "11": "ADC_CONVST_DRV",
+      "12": "ADC_CONVST_SRC",
+      "13": "GND",
+      "14": "3V3_CORE"
+    },
+    "url": "https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf",
+    "note": "Nexperia only (Ioff), v6.1.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "C9": {
+    "ref": "C9",
+    "source_ref": "C_U_OUT1",
+    "footprint": "P03:C_Vishay_K15_H5_P5",
+    "display": "100nF / X7R",
+    "value": "100nF / X7R",
+    "mpn": "K104K15X7RF53H5",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "GND"
+    },
+    "url": "https://www.vishay.com/docs/45171/kseries.pdf",
+    "note": "At U21 pin 14.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "U22": {
+    "ref": "U22",
+    "source_ref": "U_OUT2",
+    "footprint": "P03:Adapter_SO14_DIP14_W15.24_Kamami575068",
+    "display": "74LVC125A",
+    "value": "74LVC125A",
+    "mpn": "74LVC125AD,118 (Nexperia) on Kamami 575068",
+    "pins": {
+      "1": "GND",
+      "2": "ADC_RESET_SRC",
+      "3": "ADC_RESET",
+      "4": "GND",
+      "5": "MEAS_EN_SRC",
+      "6": "MEAS_EN",
+      "7": "GND",
+      "8": "CS_ILOG_N",
+      "9": "CS_ILOG_N_SRC",
+      "10": "GND",
+      "11": "CS_ITEST_N",
+      "12": "CS_ITEST_N_SRC",
+      "13": "GND",
+      "14": "3V3_CORE"
+    },
+    "url": "https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf",
+    "note": "Nexperia only (Ioff), v6.1.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "C10": {
+    "ref": "C10",
+    "source_ref": "C_U_OUT2",
+    "footprint": "P03:C_Vishay_K15_H5_P5",
+    "display": "100nF / X7R",
+    "value": "100nF / X7R",
+    "mpn": "K104K15X7RF53H5",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "GND"
+    },
+    "url": "https://www.vishay.com/docs/45171/kseries.pdf",
+    "note": "At U22 pin 14.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "U23": {
+    "ref": "U23",
+    "source_ref": "U_OUT3",
+    "footprint": "P03:Adapter_SO14_DIP14_W15.24_Kamami575068",
+    "display": "74LVC125A",
+    "value": "74LVC125A",
+    "mpn": "74LVC125AD,118 (Nexperia) on Kamami 575068",
+    "pins": {
+      "1": "GND",
+      "2": "SPI3_SCLK_SRC",
+      "3": "SPI3_SCLK_DRV",
+      "4": "GND",
+      "5": "SPI3_MOSI_SRC",
+      "6": "SPI3_MOSI_DRV",
+      "7": "GND",
+      "8": "TC1_CS",
+      "9": "TC1_CS_SRC",
+      "10": "GND",
+      "11": "TC2_CS",
+      "12": "TC2_CS_SRC",
+      "13": "GND",
+      "14": "3V3_CORE"
+    },
+    "url": "https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf",
+    "note": "Nexperia only (Ioff), v6.1.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "C11": {
+    "ref": "C11",
+    "source_ref": "C_U_OUT3",
+    "footprint": "P03:C_Vishay_K15_H5_P5",
+    "display": "100nF / X7R",
+    "value": "100nF / X7R",
+    "mpn": "K104K15X7RF53H5",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "GND"
+    },
+    "url": "https://www.vishay.com/docs/45171/kseries.pdf",
+    "note": "At U23 pin 14.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "R2": {
+    "ref": "R2",
+    "source_ref": "R_CURRENT_OK",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K / 1%",
+    "value": "10K / 1%",
+    "mpn": "MF0207FTE-10K",
+    "pins": {
+      "1": "LOGGER_CURRENT_OK",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Receiver pull-down: open cable = not OK.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "R3": {
+    "ref": "R3",
+    "source_ref": "R_HW_PD",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K / 1%",
+    "value": "10K / 1%",
+    "mpn": "MF0207FTE-10K",
+    "pins": {
+      "1": "HW_ARMED",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Receiver pull-down.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "R6": {
+    "ref": "R6",
+    "source_ref": "R_PD_LOGGER_CLEAR",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K / 1%",
+    "value": "10K / 1%",
+    "mpn": "MF0207FTE-10K",
+    "pins": {
+      "1": "LOGGER_CLEAR",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Receiver pull-down.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "R7": {
+    "ref": "R7",
+    "source_ref": "R_PD_SENSOR_HEALTHY",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K / 1%",
+    "value": "10K / 1%",
+    "mpn": "MF0207FTE-10K",
+    "pins": {
+      "1": "SENSOR_HEALTHY",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Receiver pull-down: cable open or transmitter unpowered = fault (v6.1).",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "R8": {
+    "ref": "R8",
+    "source_ref": "R_PD_TEST_PRESENT",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K / 1%",
+    "value": "10K / 1%",
+    "mpn": "MF0207FTE-10K",
+    "pins": {
+      "1": "TEST_PRESENT",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Receiver pull-down.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "J1": {
+    "ref": "J1",
+    "source_ref": "J_DAQA",
+    "footprint": "Connector_PinSocket_2.54mm:PinSocket_2x08_P2.54mm_Horizontal",
+    "display": "DAQ B2B / RA socket 2x8",
+    "value": "DAQ B2B / RA socket 2x8",
+    "mpn": "Samtec SSW-108-02-G-D-RA (right-angle 2x8 socket, Au) or equivalent",
+    "pins": {
+      "1": "ADC_SCLK",
+      "2": "NC",
+      "3": "ADC_SDI",
+      "4": "GND",
+      "5": "ADC_DOUTA",
+      "6": "GND",
+      "7": "ADC_CS",
+      "8": "GND",
+      "9": "ADC_CONVST",
+      "10": "GND",
+      "11": "ADC_BUSY",
+      "12": "GND",
+      "13": "ADC_RESET",
+      "14": "GND",
+      "15": "MEAS_EN",
+      "16": "GND"
+    },
+    "url": "https://www.samtec.com/products/ssw",
+    "note": "User decision 25.09: P05 beside P03, right-angle pair edge to edge. Key: position 2 blocked here, pin 2 removed on P05 (v6.1).",
+    "qty": 1,
+    "sheet": "LINKS",
+    "on_board": true
+  },
+  "J2": {
+    "ref": "J2",
+    "source_ref": "J_ILOGA",
+    "footprint": "Connector_IDC:IDC-Header_2x04_P2.54mm_Vertical",
+    "display": "ILOG / IDC 2x4 KEY 2",
+    "value": "ILOG / IDC 2x4 KEY 2",
+    "mpn": "IDC box header 2x4, 2.54 mm, Au",
+    "pins": {
+      "1": "ADC_SCLK",
+      "2": "NC",
+      "3": "ADC_DOUTA",
+      "4": "GND",
+      "5": "CS_ILOG_N",
+      "6": "GND",
+      "7": "LOGGER_CURRENT_OK",
+      "8": "GND"
+    },
+    "url": "",
+    "note": "KEY 2: remove header pin 2 (v6.1).",
+    "qty": 1,
+    "sheet": "LINKS",
+    "on_board": true
+  },
+  "J3": {
+    "ref": "J3",
+    "source_ref": "J_ITESTA",
+    "footprint": "Connector_IDC:IDC-Header_2x03_P2.54mm_Vertical",
+    "display": "ITEST / IDC 2x3 KEY 2",
+    "value": "ITEST / IDC 2x3 KEY 2",
+    "mpn": "IDC box header 2x3, 2.54 mm, Au",
+    "pins": {
+      "1": "ADC_SCLK",
+      "2": "NC",
+      "3": "ADC_DOUTA",
+      "4": "GND",
+      "5": "CS_ITEST_N",
+      "6": "GND"
+    },
+    "url": "",
+    "note": "KEY 2: remove header pin 2.",
+    "qty": 1,
+    "sheet": "LINKS",
+    "on_board": true
+  },
+  "J4": {
+    "ref": "J4",
+    "source_ref": "J_SAFEA",
+    "footprint": "Connector_IDC:IDC-Header_2x08_P2.54mm_Vertical",
+    "display": "SAFE / IDC 2x8 KEY 4",
+    "value": "SAFE / IDC 2x8 KEY 4",
+    "mpn": "IDC box header 2x8, 2.54 mm, Au",
+    "pins": {
+      "1": "PWM",
+      "2": "GND",
+      "3": "HEARTBEAT",
+      "4": "NC",
+      "5": "MCU_ARM",
+      "6": "GND",
+      "7": "HW_ARMED",
+      "8": "GND",
+      "9": "INTERLOCK",
+      "10": "GND",
+      "11": "SENSOR_ENABLE",
+      "12": "GND",
+      "13": "CORE_LINK",
+      "14": "GND",
+      "15": "SUP_N",
+      "16": "GND"
+    },
+    "url": "",
+    "note": "KEY 4: remove header pin 4.",
+    "qty": 1,
+    "sheet": "LINKS",
+    "on_board": true
+  },
+  "J5": {
+    "ref": "J5",
+    "source_ref": "J_DIRA",
+    "footprint": "Connector_IDC:IDC-Header_2x04_P2.54mm_Vertical",
+    "display": "DIR / IDC 2x4 KEY 4",
+    "value": "DIR / IDC 2x4 KEY 4",
+    "mpn": "IDC box header 2x4, 2.54 mm, Au",
+    "pins": {
+      "1": "MOTOR_INA",
+      "2": "GND",
+      "3": "MOTOR_INB",
+      "4": "NC",
+      "5": "ENA_DIAG",
+      "6": "GND",
+      "7": "ENB_DIAG",
+      "8": "GND"
+    },
+    "url": "",
+    "note": "KEY 4: remove header pin 4.",
+    "qty": 1,
+    "sheet": "LINKS",
+    "on_board": true
+  },
+  "J6": {
+    "ref": "J6",
+    "source_ref": "J_SFAULTA",
+    "footprint": "Connector_IDC:IDC-Header_2x03_P2.54mm_Vertical",
+    "display": "SFAULT / IDC 2x3 KEY 3",
+    "value": "SFAULT / IDC 2x3 KEY 3",
+    "mpn": "IDC box header 2x3, 2.54 mm, Au",
+    "pins": {
+      "1": "SENSOR_HEALTHY",
+      "2": "GND",
+      "3": "NC",
+      "4": "NC",
+      "5": "NC",
+      "6": "NC"
+    },
+    "url": "",
+    "note": "KEY 3: remove header pin 3.",
+    "qty": 1,
+    "sheet": "LINKS",
+    "on_board": true
+  },
+  "J7": {
+    "ref": "J7",
+    "source_ref": "J_TEMPA",
+    "footprint": "Connector_IDC:IDC-Header_2x05_P2.54mm_Vertical",
+    "display": "TEMP / IDC 2x5 KEY 4",
+    "value": "TEMP / IDC 2x5 KEY 4",
+    "mpn": "IDC box header 2x5, 2.54 mm, Au",
+    "pins": {
+      "1": "SPI3_SCLK",
+      "2": "GND",
+      "3": "SPI3_MOSI",
+      "4": "NC",
+      "5": "SPI3_MISO",
+      "6": "GND",
+      "7": "TC1_CS",
+      "8": "GND",
+      "9": "TC2_CS",
+      "10": "GND"
+    },
+    "url": "",
+    "note": "KEY 4: remove header pin 4.",
+    "qty": 1,
+    "sheet": "LINKS",
+    "on_board": true
+  },
+  "J8": {
+    "ref": "J8",
+    "source_ref": "J_CANA",
+    "footprint": "Connector_IDC:IDC-Header_2x03_P2.54mm_Vertical",
+    "display": "CAN / IDC 2x3 KEY 4",
+    "value": "CAN / IDC 2x3 KEY 4",
+    "mpn": "IDC box header 2x3, 2.54 mm, Au",
+    "pins": {
+      "1": "CAN_TX",
+      "2": "GND",
+      "3": "CAN_RX",
+      "4": "NC",
+      "5": "NC",
+      "6": "NC"
+    },
+    "url": "",
+    "note": "User decision 25.09: 2x3 instead of the non-existent 2x2 box header; KEY 4 (remove pin 4); 5-6 NC. H_CAN and P10 follow (6-way ribbon).",
+    "qty": 1,
+    "sheet": "LINKS",
+    "on_board": true
+  },
+  "J9": {
+    "ref": "J9",
+    "source_ref": "J_PANELCOREA",
+    "footprint": "Connector_Molex:Molex_Mini-Fit_Jr_5566-08A_2x04_P4.20mm_Vertical",
+    "display": "PANELCORE / Mini-Fit Jr 8p",
+    "value": "PANELCORE / Mini-Fit Jr 8p",
+    "mpn": "Molex Mini-Fit Jr 5566-08A vertical, Au (39-28-x08x)",
+    "pins": {
+      "1": "GND",
+      "2": "MARK",
+      "3": "TEST_KEY",
+      "4": "LOGGER_CLEAR",
+      "5": "TEST_PRESENT",
+      "6": "NC",
+      "7": "N_J_SCOPE_HOT",
+      "8": "GND"
+    },
+    "url": "http://www.molex.com/pdm_docs/sd/039281083_sd.pdf",
+    "note": "Key PANELCORE per v6.1 connectors.csv.",
+    "qty": 1,
+    "sheet": "LINKS",
+    "on_board": true
+  },
+  "TP1": {
+    "ref": "TP1",
+    "source_ref": "ADDED_TESTPAD",
+    "value": "5V_SYS",
+    "display": "5V_SYS",
+    "pins": {
+      "1": "5V_SYS"
+    },
+    "footprint": "P03:TestPad_1",
+    "mpn": "PCB test pad",
+    "qty": 1,
+    "url": "",
+    "sheet": "POWER",
+    "on_board": true,
+    "note": "Probe access; no circuit function."
+  },
+  "TP2": {
+    "ref": "TP2",
+    "source_ref": "ADDED_TESTPAD",
+    "value": "3V3_CORE",
+    "display": "3V3_CORE",
+    "pins": {
+      "1": "3V3_CORE"
+    },
+    "footprint": "P03:TestPad_1",
+    "mpn": "PCB test pad",
+    "qty": 1,
+    "url": "",
+    "sheet": "POWER",
+    "on_board": true,
+    "note": "Probe access; no circuit function."
+  },
+  "TP3": {
+    "ref": "TP3",
+    "source_ref": "ADDED_TESTPAD",
+    "value": "3V3_IO",
+    "display": "3V3_IO",
+    "pins": {
+      "1": "3V3_IO"
+    },
+    "footprint": "P03:TestPad_1",
+    "mpn": "PCB test pad",
+    "qty": 1,
+    "url": "",
+    "sheet": "POWER",
+    "on_board": true,
+    "note": "Probe access; no circuit function."
+  },
+  "TP4": {
+    "ref": "TP4",
+    "source_ref": "ADDED_TESTPAD",
+    "value": "GND",
+    "display": "GND",
+    "pins": {
+      "1": "GND"
+    },
+    "footprint": "P03:TestPad_1",
+    "mpn": "PCB test pad",
+    "qty": 1,
+    "url": "",
+    "sheet": "POWER",
+    "on_board": true,
+    "note": "Probe access; no circuit function."
+  },
+  "TP5": {
+    "ref": "TP5",
+    "source_ref": "ADDED_TESTPAD",
+    "value": "SUP_N",
+    "display": "SUP_N",
+    "pins": {
+      "1": "SUP_N"
+    },
+    "footprint": "P03:TestPad_1",
+    "mpn": "PCB test pad",
+    "qty": 1,
+    "url": "",
+    "sheet": "POWER",
+    "on_board": true,
+    "note": "Probe access; no circuit function."
+  },
+  "TP6": {
+    "ref": "TP6",
+    "source_ref": "ADDED_TESTPAD",
+    "value": "GND",
+    "display": "GND",
+    "pins": {
+      "1": "GND"
+    },
+    "footprint": "P03:TestPad_1",
+    "mpn": "PCB test pad",
+    "qty": 1,
+    "url": "",
+    "sheet": "LINKS",
+    "on_board": true,
+    "note": "Probe access; no circuit function."
+  },
+  "R15": {
+    "ref": "R15",
+    "source_ref": "ADDED_R2_SOURCE_DEFAULT",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K / 1%",
+    "value": "10K / 1%",
+    "mpn": "MF0207FTE-10K",
+    "pins": {
+      "1": "ADC_CS_SRC",
+      "2": "3V3_CORE"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Source-side reset/boot default. Required even when downstream has a pull resistor.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "R16": {
+    "ref": "R16",
+    "source_ref": "ADDED_R2_SOURCE_DEFAULT",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K / 1%",
+    "value": "10K / 1%",
+    "mpn": "MF0207FTE-10K",
+    "pins": {
+      "1": "ADC_SCLK_SRC",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Source-side reset/boot default. Required even when downstream has a pull resistor.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "R17": {
+    "ref": "R17",
+    "source_ref": "ADDED_R2_SOURCE_DEFAULT",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K / 1%",
+    "value": "10K / 1%",
+    "mpn": "MF0207FTE-10K",
+    "pins": {
+      "1": "ADC_SDI_SRC",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Source-side reset/boot default. Required even when downstream has a pull resistor.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "R18": {
+    "ref": "R18",
+    "source_ref": "ADDED_R2_SOURCE_DEFAULT",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K / 1%",
+    "value": "10K / 1%",
+    "mpn": "MF0207FTE-10K",
+    "pins": {
+      "1": "ADC_CONVST_SRC",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Source-side reset/boot default. Required even when downstream has a pull resistor.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "R19": {
+    "ref": "R19",
+    "source_ref": "ADDED_R2_SOURCE_DEFAULT",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K / 1%",
+    "value": "10K / 1%",
+    "mpn": "MF0207FTE-10K",
+    "pins": {
+      "1": "ADC_RESET_SRC",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Source-side reset/boot default. Required even when downstream has a pull resistor.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "R20": {
+    "ref": "R20",
+    "source_ref": "ADDED_R2_SOURCE_DEFAULT",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K / 1%",
+    "value": "10K / 1%",
+    "mpn": "MF0207FTE-10K",
+    "pins": {
+      "1": "MEAS_EN_SRC",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Source-side reset/boot default. Required even when downstream has a pull resistor.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "R21": {
+    "ref": "R21",
+    "source_ref": "ADDED_R2_SOURCE_DEFAULT",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K / 1%",
+    "value": "10K / 1%",
+    "mpn": "MF0207FTE-10K",
+    "pins": {
+      "1": "SPI3_SCLK_SRC",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Source-side reset/boot default. Required even when downstream has a pull resistor.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "R22": {
+    "ref": "R22",
+    "source_ref": "ADDED_R2_SOURCE_DEFAULT",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K / 1%",
+    "value": "10K / 1%",
+    "mpn": "MF0207FTE-10K",
+    "pins": {
+      "1": "SPI3_MOSI_SRC",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Source-side reset/boot default. Required even when downstream has a pull resistor.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "R23": {
+    "ref": "R23",
+    "source_ref": "ADDED_R2_SOURCE_DEFAULT",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K / 1%",
+    "value": "10K / 1%",
+    "mpn": "MF0207FTE-10K",
+    "pins": {
+      "1": "TC1_CS_SRC",
+      "2": "3V3_CORE"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Source-side reset/boot default. Required even when downstream has a pull resistor.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "R24": {
+    "ref": "R24",
+    "source_ref": "ADDED_R2_SOURCE_DEFAULT",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K / 1%",
+    "value": "10K / 1%",
+    "mpn": "MF0207FTE-10K",
+    "pins": {
+      "1": "TC2_CS_SRC",
+      "2": "3V3_CORE"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Source-side reset/boot default. Required even when downstream has a pull resistor.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "R25": {
+    "ref": "R25",
+    "source_ref": "ADDED_R2_SOURCE_DEFAULT",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K / 1%",
+    "value": "10K / 1%",
+    "mpn": "MF0207FTE-10K",
+    "pins": {
+      "1": "MEAS_BANK",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Source-side reset/boot default. Required even when downstream has a pull resistor.",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "R26": {
+    "ref": "R26",
+    "source_ref": "ADDED_R2_RECEIVER_DEFAULT",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K / 1%",
+    "value": "10K / 1%",
+    "mpn": "MF0207FTE-10K",
+    "pins": {
+      "1": "INTERLOCK",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Receiver-side default before buffer. Not a device-presence detector.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "R27": {
+    "ref": "R27",
+    "source_ref": "ADDED_R2_RECEIVER_DEFAULT",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K / 1%",
+    "value": "10K / 1%",
+    "mpn": "MF0207FTE-10K",
+    "pins": {
+      "1": "TEST_KEY",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Receiver-side default before buffer. Not a device-presence detector.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "R28": {
+    "ref": "R28",
+    "source_ref": "ADDED_R2_RECEIVER_DEFAULT",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K / 1%",
+    "value": "10K / 1%",
+    "mpn": "MF0207FTE-10K",
+    "pins": {
+      "1": "ENA_DIAG",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Receiver-side default before buffer. Not a device-presence detector.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "R29": {
+    "ref": "R29",
+    "source_ref": "ADDED_R2_RECEIVER_DEFAULT",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K / 1%",
+    "value": "10K / 1%",
+    "mpn": "MF0207FTE-10K",
+    "pins": {
+      "1": "ENB_DIAG",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Receiver-side default before buffer. Not a device-presence detector.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "R30": {
+    "ref": "R30",
+    "source_ref": "ADDED_R2_RECEIVER_DEFAULT",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K / 1%",
+    "value": "10K / 1%",
+    "mpn": "MF0207FTE-10K",
+    "pins": {
+      "1": "CAN_RX",
+      "2": "3V3_CORE"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Receiver-side default before buffer. Not a device-presence detector.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "R31": {
+    "ref": "R31",
+    "source_ref": "ADDED_R2_RECEIVER_DEFAULT",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K / 1%",
+    "value": "10K / 1%",
+    "mpn": "MF0207FTE-10K",
+    "pins": {
+      "1": "ADC_BUSY",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Receiver-side default before buffer. Not a device-presence detector.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "R32": {
+    "ref": "R32",
+    "source_ref": "ADDED_R2_RECEIVER_DEFAULT",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K / 1%",
+    "value": "10K / 1%",
+    "mpn": "MF0207FTE-10K",
+    "pins": {
+      "1": "ADC_DOUTA",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Receiver-side default before buffer. Not a device-presence detector.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "R33": {
+    "ref": "R33",
+    "source_ref": "ADDED_R2_RECEIVER_DEFAULT",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K / 1%",
+    "value": "10K / 1%",
+    "mpn": "MF0207FTE-10K",
+    "pins": {
+      "1": "SPI3_MISO",
+      "2": "GND"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Receiver-side default before buffer. Not a device-presence detector.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "U4": {
+    "ref": "U4",
+    "source_ref": "ADDED_R2_RESET_BUFFER",
+    "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+    "display": "SN74LVC1G07DBVR",
+    "value": "SN74LVC1G07DBVR",
+    "mpn": "SN74LVC1G07DBVR",
+    "pins": {
+      "1": "NC",
+      "2": "SUP_RAW_N",
+      "3": "GND",
+      "4": "RESET_DRV_N",
+      "5": "3V3_CORE"
+    },
+    "url": "https://www.ti.com/lit/ds/symlink/sn74lvc1g07.pdf",
+    "note": "DBV SOT23-5, 0.95 mm pitch; direct hand soldering. Non-inverting OD; never substitute push-pull.",
+    "qty": 1,
+    "sheet": "POWER",
+    "on_board": true
+  },
+  "R34": {
+    "ref": "R34",
+    "source_ref": "ADDED_R2_RESET_LIMIT",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "220R / 1%",
+    "value": "220R / 1%",
+    "mpn": "MF0207FTE-220R",
+    "pins": {
+      "1": "RESET_DRV_N",
+      "2": "SUP_N"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Limits discharge of the module EN capacitor to <16 mA at 3.465 V. Final SUP_N goes to MCU EN, MCP reset and P04.",
+    "qty": 1,
+    "sheet": "POWER",
+    "on_board": true
+  },
+  "R35": {
+    "ref": "R35",
+    "source_ref": "ADDED_R2_RESET_PULLUP",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K / 1%",
+    "value": "10K / 1%",
+    "mpn": "MF0207FTE-10K",
+    "pins": {
+      "1": "SUP_N",
+      "2": "3V3_CORE"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Final common reset pull-up, parallel to the module 10K. Module 1 uF EN capacitor retained.",
+    "qty": 1,
+    "sheet": "POWER",
+    "on_board": true
+  },
+  "C12": {
+    "ref": "C12",
+    "source_ref": "ADDED_R2_RESET_DECAP",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
+    "display": "100nF / 50V X7R",
+    "value": "100nF / 50V X7R",
+    "mpn": "GRM31CR71H104KA01L",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "1206, at U4 pin 5, local ground via.",
+    "qty": 1,
+    "sheet": "POWER",
+    "on_board": true
+  },
+  "U5": {
+    "ref": "U5",
+    "source_ref": "ADDED_R2_USB_BLOCK",
+    "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+    "display": "LTC4412IS6",
+    "value": "LTC4412IS6",
+    "mpn": "LTC4412IS6#TRPBF",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "GND",
+      "3": "GND",
+      "4": "NC",
+      "5": "PWR_GATE",
+      "6": "5V_M1"
+    },
+    "url": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4412.pdf",
+    "note": "TSOT23-6, direct hand soldering. CTL=0 always enabled. Reverse-current blocker, not a current limiter.",
+    "qty": 1,
+    "sheet": "POWER",
+    "on_board": true
+  },
+  "Q1": {
+    "ref": "Q1",
+    "source_ref": "ADDED_R2_USB_PMOS",
+    "footprint": "Package_TO_SOT_SMD:SOT-23",
+    "display": "AO3401A",
+    "value": "AO3401A",
+    "mpn": "AO3401A",
+    "pins": {
+      "1": "PWR_GATE",
+      "2": "5V_M1",
+      "3": "5V_SYS"
+    },
+    "url": "https://www.aosmd.com/pdfs/datasheet/AO3401A.pdf",
+    "note": "G=1, S=2 (M1), D=3 (SYS); body diode D to S. Do not reverse source/drain. Direct SOT23 hand soldering.",
+    "qty": 1,
+    "sheet": "POWER",
+    "on_board": true
+  },
+  "C13": {
+    "ref": "C13",
+    "source_ref": "ADDED_R2_PWR_DECAP",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
+    "display": "1uF / 25V X7R",
+    "value": "1uF / 25V X7R",
+    "mpn": "GRM31CR71E105KA12L",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "1206 local bypass. Module bulk capacitance remains.",
+    "qty": 1,
+    "sheet": "POWER",
+    "on_board": true
+  },
+  "C14": {
+    "ref": "C14",
+    "source_ref": "ADDED_R2_PWR_DECAP",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
+    "display": "10uF / 16V X7R",
+    "value": "10uF / 16V X7R",
+    "mpn": "GRM31CR71C106KA12L",
+    "pins": {
+      "1": "5V_M1",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "1206 local bypass. Module bulk capacitance remains.",
+    "qty": 1,
+    "sheet": "POWER",
+    "on_board": true
+  },
+  "R36": {
+    "ref": "R36",
+    "source_ref": "ADDED_R2_SOURCE_TERMINATION",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "33R / 1%",
+    "value": "33R / 1%",
+    "mpn": "MF0207FTE-33R",
+    "pins": {
+      "1": "ADC_SCLK_DRV",
+      "2": "ADC_SCLK"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Source termination at buffer output. Initial 33R; tune 22..47R or 0R only after end-of-link waveform measurement.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "R37": {
+    "ref": "R37",
+    "source_ref": "ADDED_R2_SOURCE_TERMINATION",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "33R / 1%",
+    "value": "33R / 1%",
+    "mpn": "MF0207FTE-33R",
+    "pins": {
+      "1": "ADC_CONVST_DRV",
+      "2": "ADC_CONVST"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Source termination at buffer output. Initial 33R; tune 22..47R or 0R only after end-of-link waveform measurement.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "R38": {
+    "ref": "R38",
+    "source_ref": "ADDED_R2_SOURCE_TERMINATION",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "33R / 1%",
+    "value": "33R / 1%",
+    "mpn": "MF0207FTE-33R",
+    "pins": {
+      "1": "SPI3_SCLK_DRV",
+      "2": "SPI3_SCLK"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Source termination at buffer output. Initial 33R; tune 22..47R or 0R only after end-of-link waveform measurement.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "R39": {
+    "ref": "R39",
+    "source_ref": "ADDED_R2_SOURCE_TERMINATION",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "33R / 1%",
+    "value": "33R / 1%",
+    "mpn": "MF0207FTE-33R",
+    "pins": {
+      "1": "ADC_SDI_DRV",
+      "2": "ADC_SDI"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Source termination at buffer output. Initial 33R; tune 22..47R or 0R only after end-of-link waveform measurement.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "R40": {
+    "ref": "R40",
+    "source_ref": "ADDED_R2_SOURCE_TERMINATION",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "33R / 1%",
+    "value": "33R / 1%",
+    "mpn": "MF0207FTE-33R",
+    "pins": {
+      "1": "SPI3_MOSI_DRV",
+      "2": "SPI3_MOSI"
+    },
+    "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+    "note": "Source termination at buffer output. Initial 33R; tune 22..47R or 0R only after end-of-link waveform measurement.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "TP7": {
+    "ref": "TP7",
+    "source_ref": "ADDED_R2_TESTPAD",
+    "footprint": "P03:TestPad_1",
+    "display": "5V_M1",
+    "value": "5V_M1",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "5V_M1"
+    },
+    "url": "",
+    "note": "Probe access.",
+    "qty": 1,
+    "sheet": "POWER",
+    "on_board": true
+  },
+  "TP8": {
+    "ref": "TP8",
+    "source_ref": "ADDED_R2_TESTPAD",
+    "footprint": "P03:TestPad_1",
+    "display": "SUP_RAW_N",
+    "value": "SUP_RAW_N",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "SUP_RAW_N"
+    },
+    "url": "",
+    "note": "Probe access.",
+    "qty": 1,
+    "sheet": "POWER",
+    "on_board": true
+  }
+}

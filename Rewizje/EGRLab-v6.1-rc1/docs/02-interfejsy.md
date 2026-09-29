@@ -1,0 +1,48 @@
+# Połączenia i GPIO — M2
+
+Kontrakt wykonania: [wiązki i B2B](10-montaz-wiazek.md); tabela końców i długości: [interfejsy.csv](../interfejsy.csv); pełna numeracja: [wiring.csv](../hardware/wiring.csv). Pozycje NC są oddzielnymi, niepodłączonymi pozycjami.
+
+## ESP32: numery GPIO
+
+| GPIO | Funkcja V6 |
+|---|---|
+| 1 | PWM do SAFE |
+| 2 | MOSI/SDI AD7606B |
+| 4 / 5 / 6 | SPI3 SCLK / MOSI / MISO: SD oraz TEMP |
+| 7 / 8 / 16 | CS SD / TC1 / TC2 |
+| 9 / 11 / 12 | SPI2 SCLK / MISO wspólne / CS AD7606B |
+| 13 / 14 | CONVST / BUSY AD7606B |
+| 10 / 15 | I²C SDA / SCL, lokalnie na CORE |
+| 17 / 18 | TX / RX CAN; nadajnik fizycznie silent |
+| 21 | Heartbeat |
+| 38 | CS lokalnego ADC prądu przez 74HC139; odłączyć wbudowaną RGB |
+| 39 / 40 | Żądanie MCU_ARM / odczyt HW_ARMED |
+| 41 | Wyjście SCOPE_TRIG przez 330 Ω |
+| 42 | INTERLOCK |
+
+19/20 USB, 43/44 UART pozostają przeznaczone do obsługi płytki. 0/3/45/46 są pomijane ze względu na boot/strapping. 35–37 zajmuje pamięć. **47/48 nie używamy: w N32R16V domena tych GPIO ma 1,8 V.** Dopasuj footprint do posiadanej rewizji Waveshare po zmierzeniu rozstawu obu listew; nazwy GPIO są kontraktem elektrycznym.
+
+MCP23017, adres 0x20: A0 RESET ADC, A1 MEAS_EN, A2 bank/dekoder CS, A3 SENSOR_ENABLE, **A4 LOGGER_CURRENT_OK wejście**, A5/A6 kierunek, A7 LED. B0 TEST_KEY, B1 SENSOR_HEALTHY, B2/B3 ENA/ENB, B4 LOGGER_CLEAR, B5 TEST_PRESENT, **B6 MARK**, B7 nieużywane wyjście. IODIRA=0x10, IODIRB=0x7f. GPA7/GPB7 nie są używane jako wejścia. Styk pomocniczy NO STOP jest niepodłączony; NC STOP nadal sprzętowo odcina SAFE_N.
+
+Dekoder 74HC139 na CORE: /G=GPIO38, A=MEAS_BANK, B=GND, Y0=CS_ILOG_N, Y1=CS_ITEST_N. Oba ADC korzystają z tego samego urządzenia SPI w firmware. Bank zmienia się wyłącznie po zatrzymaniu akwizycji. Zmiana banku nie wymaga ciągłego przełączania I²C między próbkami.
+
+## Domeny zasilania
+
+Waveshare dostaje 5V_SYS i wytwarza własne 3V3_CORE. MCP23017, dekoder CS, reset CORE i bufory po stronie MCU korzystają z 3V3_CORE. **Nie łącz 3V3_CORE z 3V3_IO przetwornicy.** P06/P07 mają jeszcze własne LDO 3,3 V dla lokalnych ADC.
+
+Bufory 74LVC125AD **Nexperia**, SO14; adapter tylko na płytkach uniwersalnych, mają Ioff według ich dokumentacji. Nie zamieniaj ich automatycznie na dowolny SN74LVC125A innego producenta. MISO jest w stanie wysokiej impedancji, gdy jego CS jest HIGH. Bufory ograniczają zasilanie przez sygnały przy VCC=0; stany przy powolnym zaniku zasilania sprawdza się pomiarem wraz z nadzorami szyn. I²C jest lokalne na CORE, nie przechodzi przez takie bufory jednokierunkowe.
+
+Gotowość jest aktywna HIGH, z pull-downem przed wejściowym buforem SAFE. Przewód odłączony ma dawać 0. Linie open-drain mają lokalny pull-up właściwej domeny; SAFE_N ma jeden pull-up przez STOP. CORE_LINK oznacza obecność zasilania CORE, a watchdog sprawdza działanie programu. PG_LINK jest osobną pętlą obecności P01. Nie jest to układ wykrywający każde możliwe zwarcie przewodu sygnałowego.
+
+
+## Zmiany M2.1 (6.1-rc1)
+
+VSENSE: osobna para P02 → P05, 150mm AWG22, bezpiecznik F_VSENSE F100mA przy odgałęzieniu na P02. Mini-Fit Jr 14p: 1=VPROT_SENSE, 2=GND, 3–14=NC bez żył. Na P05 lutowanie PTH, kotwa 10–15mm. LV05 i pozostałe LV mają bez zmian 5V/GND/3V3/GND. RV1=499k dostaje VPROT_SENSE. Nie zastępować tej wiązki przewodem wpiętym do LV.
+
+SFAULT zachowuje piny i korpus, zmienia semantykę na SENSOR_HEALTHY: 1 oznacza zasilony, gotowy P08 i brak FAULT TPS2553. Lokalny FAULT_N jest podciągnięty na P08, kwalifikowany przez AND i buforowany wolnym kanałem 74LVC125AD. CORE ma pull-down 10k przed buforem. Brak żyły/zasilania = 0 = błąd. MCP23017 GPPUB=0x4c; B1 bez wewnętrznego pull-up.
+
+SENSOR_OK nadal oznacza gotowość lokalnych szyn. Awaria TPS jest ograniczana prądowo lokalnie i powoduje zatrzask FAULT w firmware. Nie deklarujemy niezależnego od CORE zatrzasku dla FAULT TPS. Nie łączymy FAULT wprost z EN: TPS2553 zwalnia FAULT po wyłączeniu EN, co mogłoby tworzyć samoczynne ponawianie. CORE/P08/firmware M2.1 tworzą komplet; nie mieszać z dawnym odbiornikiem SFAULT z pull-up.
+
+PANELSAFE.5/.6 = NC, korpus nadal 10p. PANELCORE.6 = NC, korpus nadal 8p; LED pozostaje na CORE.
+
+VMOTOR: Phoenix Contact PC 4/3-G-7,62 (1804807) na P02 i PC 4/3-ST-7,62 (1804917) na wiązce P07. Pinout nadal VPROT/GND/NC, przewody 2,5mm². Raster 7,62mm odróżnia go mechanicznie od SUPPLY MSTB 5,08mm. To nadal zaciski śrubowe bez nowej zaciskarki.

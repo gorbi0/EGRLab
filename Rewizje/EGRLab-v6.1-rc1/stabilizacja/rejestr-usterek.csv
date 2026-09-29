@@ -1,0 +1,12 @@
+﻿ID;Waga;Moduly;Problem;Warunek_zamkniecia;Status;Dowody
+F01;blocker;P02/P05;Brak fizycznego połączenia VPROT do P05;"Pełna droga od źródła do dzielnika, bez zmiany LV; dedykowany niezamienny port.";VERIFIED_OFFLINE;evidence/electrical-pass.json | ../verification/python-tests.txt
+F02;blocker;P03/P08/firmware;SFAULT po przerwaniu wskazuje brak awarii;"Utrata łącza lub zasilania daje HEALTHY=0; błąd zatrzymuje TEST i nie wznawia ruchu.";VERIFIED_OFFLINE;evidence/electrical-pass.json | ../verification/python-tests.txt
+F03;minor;P04/P11;PANELSAFE niesie dwie kopie sygnałów bez odbiornika;"Piny 5/6 NC; korpus pozostaje 10p i odróżniony od PANELCORE.";VERIFIED_OFFLINE;evidence/electrical-pass.json | ../verification/python-tests.txt
+F04;minor;P01/P02/P07;SUPPLY i VMOTOR można pomylić;"Jednoznaczna mechanika/klucz lub świadomie udokumentowana zgodność; opis koloru nie jest blokadą.";VERIFIED_OFFLINE;evidence/electrical-pass.json | ../verification/python-tests.txt
+F05;documentation;P01;Próg OVP opisany nadmiernie dokładnie;"Próg nominalny około 18V; kalibracja pokojowa i próba temperaturowa.";VERIFIED_OFFLINE;STATUS.md
+T01;blocker;tests;Kontrola zasilania pomijana w teście połączeń;"Każda szyna i masa objęta grafem połączeń; test wykazuje F01 na oryginalnym V6.";VERIFIED_OFFLINE;evidence/electrical-pass.json | ../verification/python-tests.txt
+G01;gate;ALL;Dopuszczenie do layoutu i produkcji;"Oddzielne statusy schematu, layoutu, produkcji i fizycznego odbioru; brak automatycznej zgody po samych testach.";IMPLEMENTED_GATES_NOT_RELEASED;STATUS.md
+F06;blocker;firmware;Brak kontroli wieku zapamiętanych wejść MCP23017;Po 100ms bez odczytu aktywny TEST zatrzymany, INPUTS_STALE, brak automatycznego wznowienia;VERIFIED_OFFLINE;../verification/test_health-results.txt | ../tests/test_v61.py
+F07;minor;P03/P11;Nieużywana kopia STATUS_LED do panelu, dioda znajduje się na CORE;PANELCORE.6 NC po obu stronach, dioda CORE zachowana;VERIFIED_OFFLINE;evidence/F07-before-fix.json | patches/F07.diff | evidence/electrical-pass.json
+T02;test;ALL;Brak kontroli portów bez lokalnego odbiornika;Tylko wyliczone wyjątki: dwie masy ekranu i dwie niewykorzystane pozycje standardowego LV;VERIFIED_OFFLINE;../tests/test_v61.py
+G02;gate;ALL;Import EDA nie jest zatwierdzonym schematem wykonawczym;"Kontrola symboli i footprintów, funkcjonalny układ arkuszy, przegląd niezależny; dopiero potem zamrożenie do layoutu";OPEN;../eda/README.md | bramki-modulow.csv

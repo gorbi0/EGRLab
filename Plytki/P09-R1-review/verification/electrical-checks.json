@@ -1,0 +1,330 @@
+{
+  "checks": [
+    {
+      "id": "MATE-J1",
+      "pass": true
+    },
+    {
+      "id": "MATE-J2",
+      "pass": true
+    },
+    {
+      "id": "U1-INPUT-IOFF",
+      "pass": true
+    },
+    {
+      "id": "U2-MISO-IOFF",
+      "pass": true
+    },
+    {
+      "id": "U3-HC139",
+      "pass": true
+    },
+    {
+      "id": "MPN",
+      "pass": true
+    },
+    {
+      "id": "MODULE-PINOUT-J3",
+      "pass": true
+    },
+    {
+      "id": "VIN-SELECT-J3",
+      "pass": true
+    },
+    {
+      "id": "ISOLATED-J33VO",
+      "pass": true
+    },
+    {
+      "id": "ISOLATED-J3FLT_N",
+      "pass": true
+    },
+    {
+      "id": "ISOLATED-J3DRDY_N",
+      "pass": true
+    },
+    {
+      "id": "MODULE-PINOUT-J4",
+      "pass": true
+    },
+    {
+      "id": "VIN-SELECT-J4",
+      "pass": true
+    },
+    {
+      "id": "ISOLATED-J43VO",
+      "pass": true
+    },
+    {
+      "id": "ISOLATED-J4FLT_N",
+      "pass": true
+    },
+    {
+      "id": "ISOLATED-J4DRDY_N",
+      "pass": true
+    },
+    {
+      "id": "RES-1",
+      "pass": true
+    },
+    {
+      "id": "RES-2",
+      "pass": true
+    },
+    {
+      "id": "RES-3",
+      "pass": true
+    },
+    {
+      "id": "RES-4",
+      "pass": true
+    },
+    {
+      "id": "RES-5",
+      "pass": true
+    },
+    {
+      "id": "RES-6",
+      "pass": true
+    },
+    {
+      "id": "RES-7",
+      "pass": true
+    },
+    {
+      "id": "RES-8",
+      "pass": true
+    },
+    {
+      "id": "RES-9",
+      "pass": true
+    },
+    {
+      "id": "RES-10",
+      "pass": true
+    },
+    {
+      "id": "RES-11",
+      "pass": true
+    },
+    {
+      "id": "RES-12",
+      "pass": true
+    },
+    {
+      "id": "RES-13",
+      "pass": true
+    },
+    {
+      "id": "RES-14",
+      "pass": true
+    },
+    {
+      "id": "RES-15",
+      "pass": true
+    },
+    {
+      "id": "RES-16",
+      "pass": true
+    },
+    {
+      "id": "RES-17",
+      "pass": true
+    },
+    {
+      "id": "RES-18",
+      "pass": true
+    },
+    {
+      "id": "RES-19",
+      "pass": true
+    },
+    {
+      "id": "CAP-1",
+      "pass": true
+    },
+    {
+      "id": "CAP-2",
+      "pass": true
+    },
+    {
+      "id": "CAP-3",
+      "pass": true
+    },
+    {
+      "id": "CAP-4",
+      "pass": true
+    },
+    {
+      "id": "CAP-5",
+      "pass": true
+    },
+    {
+      "id": "CAP-6",
+      "pass": true
+    },
+    {
+      "id": "CAP-7",
+      "pass": true
+    },
+    {
+      "id": "ACTUAL-NETLIST-TRUTH",
+      "pass": true
+    }
+  ],
+  "negative_controls": [
+    {
+      "mutation": "swap-decoder",
+      "detected": true,
+      "by": [
+        "U3-HC139",
+        "ACTUAL-NETLIST-TRUTH"
+      ]
+    },
+    {
+      "mutation": "enable-on-both-CS",
+      "detected": true,
+      "by": [
+        "U3-HC139",
+        "ACTUAL-NETLIST-TRUTH"
+      ]
+    },
+    {
+      "mutation": "unused-input-float",
+      "detected": true,
+      "by": [
+        "U2-MISO-IOFF"
+      ]
+    },
+    {
+      "mutation": "5V-logic",
+      "detected": true,
+      "by": [
+        "U1-INPUT-IOFF"
+      ]
+    },
+    {
+      "mutation": "VIN-output-short",
+      "detected": true,
+      "by": [
+        "MODULE-PINOUT-J3",
+        "ISOLATED-J33VO"
+      ]
+    },
+    {
+      "mutation": "module-reversed",
+      "detected": true,
+      "by": [
+        "MODULE-PINOUT-J4"
+      ]
+    },
+    {
+      "mutation": "wrong-key",
+      "detected": true,
+      "by": [
+        "MATE-J2"
+      ]
+    },
+    {
+      "mutation": "wrong-LV",
+      "detected": true,
+      "by": [
+        "MATE-J1"
+      ]
+    },
+    {
+      "mutation": "bypass-MISO-R",
+      "detected": true,
+      "by": [
+        "RES-11"
+      ]
+    },
+    {
+      "mutation": "missing-CS-pullup",
+      "detected": true,
+      "by": [
+        "RES-1"
+      ]
+    },
+    {
+      "mutation": "wrong-VIN-select",
+      "detected": true,
+      "by": [
+        "VIN-SELECT-J3"
+      ]
+    },
+    {
+      "mutation": "DRDY-bus-short",
+      "detected": true,
+      "by": [
+        "MODULE-PINOUT-J4",
+        "ISOLATED-J4DRDY_N"
+      ]
+    },
+    {
+      "mutation": "R11-value",
+      "detected": true,
+      "by": [
+        "RES-11"
+      ]
+    },
+    {
+      "mutation": "C6-value",
+      "detected": true,
+      "by": [
+        "CAP-6"
+      ]
+    },
+    {
+      "mutation": "U1-mpn",
+      "detected": true,
+      "by": [
+        "MPN"
+      ]
+    }
+  ],
+  "truth_table": [
+    {
+      "CS": [
+        0,
+        0
+      ],
+      "enabled_MISO": [],
+      "expected": []
+    },
+    {
+      "CS": [
+        0,
+        1
+      ],
+      "enabled_MISO": [
+        1
+      ],
+      "expected": [
+        1
+      ]
+    },
+    {
+      "CS": [
+        1,
+        0
+      ],
+      "enabled_MISO": [
+        2
+      ],
+      "expected": [
+        2
+      ]
+    },
+    {
+      "CS": [
+        1,
+        1
+      ],
+      "enabled_MISO": [],
+      "expected": []
+    }
+  ],
+  "hardware_tested": false
+}

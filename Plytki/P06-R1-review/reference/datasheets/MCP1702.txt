@@ -1,0 +1,1680 @@
+
+PAGE 1
+ 2010 Microchip Technology Inc. DS22008E-page 1
+MCP1702
+Features:
+• 2.0 µA Quiescent Current (typical)
+• Input Operating Voltage Range: 2.7V to 13.2V
+• 250 mA Output Current for Output Voltages  2.5V
+• 200 mA Output Current for Output Voltages < 2.5V
+• Low Dropout (LDO) Voltage
+- 625 mV typical @ 250 mA (V OUT = 2.8V)
+• 0.4% Typical Output Voltage Tolerance
+• Standard Output Voltage Options:
+- 1.2V, 1.5V, 1.8V, 2.5V, 2.8V,
+3.0V, 3.3V, 4.0V, 5.0V
+• Output Voltage Range 1.2V to 5.5V in 0.1V 
+Increments (50 mV increments available upon 
+request)
+• Stable with 1.0 µF to 22 µF Output Capacitor
+• Short-Circuit Protection
+• Overtemperature Protection
+Applications:
+• Battery-powered Devices
+• Battery-powered Alarm Circuits
+• Smoke Detectors
+•C O
+2 Detectors
+• Pagers and Cellular Phones
+• Smart Battery Packs
+• Low Quiescent Current Voltage Reference
+•P D A s
+•D i g i t a l  C a m e r a s
+• Microcontroller Power
+• Solar-Powered Instruments
+• Consumer Products
+• Battery Powered Data Loggers
+Related Literature:
+• AN765, “Using Microchip’s Micropower LDOs”, 
+DS00765, Microchip Technology Inc., 2002
+• AN766, “Pin-Compatible CMOS Upgrades to 
+Bipolar LDOs”, DS00766, 
+Microchip Technology Inc., 2002
+• AN792, “A Method to Determine How Much 
+Power a SOT-23 Can Dissipate in an Application”, 
+DS00792, Microchip Technology Inc., 2001
+Description:
+The MCP1702 is a family of CMOS low dropout (LDO)
+voltage regulators that can deliver up to 250 mA of
+current while consuming only 2.0 µA of quiescent
+current (typical). The input operating range is specified
+from 2.7V to 13.2V, making it an ideal choice for two to
+six primary cell battery-powered applications, 9V
+alkaline and one or two cell Li-Ion-powered
+applications.
+The MCP1702 is capable of delivering 250 mA with
+only 625 mV (typical) of input to output voltage
+differential (V
+OUT = 2.8V). The output voltage tolerance
+of the MCP1702 is typically ±0.4% at +25°C and ±3%
+maximum over the operating junction temperature
+range of -40°C to +125°C. Line regulation is ±0.1%
+typical at +25°C.
+Output voltages available for the MCP1702 range from
+1.2V to 5.0V. The LDO output is stable when using only
+1 µF of output capacitance. Ceramic, tantalum or
+aluminum electrolytic capacitors can all be used for
+input and output. Overcurrent limit and
+overtemperature shutdown provide a robust solution
+for any application.
+Package options include the SOT-23A, SOT-89-3, and
+TO-92.
+Package Types
+1
+3
+2
+VIN
+GND V OUT
+MCP1702
+1 2 3
+VINGND V OUT
+MCP1702
+3-Pin SOT-23A 3-Pin SOT-89
+VIN
+3-Pin TO-92
+12
+VOUTVINGND
+Bottom
+View
+3
+250 mA Low Quiescent Current LDO Regulator
+
+PAGE 2
+MCP1702
+DS22008E-page 2  2010 Microchip Technology Inc.
+Functional Block Diagrams
+Typical Application Circuits
++
+-
+MCP1702
+VIN VOUT
+GND
++VIN
+Error Amplifier
+Voltage
+Reference
+Overcurrent
+Overtemperature
+MCP1702
+VIN
+CIN
+1µ F  C e r a m i c
+COUT
+1µ F  C e r a m i c
+VOUT
+VIN
+3.3V
+IOUT
+50 mA
+GND
+VOUT
+9V
+Battery
++
+
+PAGE 3
+ 2010 Microchip Technology Inc. DS22008E-page 3
+MCP1702
+1.0 ELECTRICAL 
+CHARACTERISTICS
+Absolute Maximum Ratings †
+VDD...............................................................................+14.5V
+All inputs and outputs w.r.t. .............(V SS-0.3V) to (VIN+0.3V)
+Peak Output Current ...................................................500 mA
+Storage temperature .....................................-65°C to +150°C
+Maximum Junction Temperature................................... 150°C
+ESD protection on all pins (HBM;MM)  4k V ;   400V
+† Notice:  Stresses above those listed under “Maximum
+Ratings” may cause permanent damage to the device. This is
+a stress rating only and functional operation of the device at
+those or any other conditions above those indicated in the
+operational listings of this s pecification is not implied.
+Exposure to maximum rating conditions for extended periods
+may affect device reliability.
+DC CHARACTERISTICS
+Electrical Specifications: Unless otherwise specified, al l limits are established for VIN = VOUT(MAX) + VDROPOUT(MAX), Note 1, 
+ILOAD = 100 µA, COUT = 1 µF (X7R), CIN = 1 µF (X7R), TA = +25°C.
+Boldface type applies for junction temperatures, T J of -40°C to +125°C. (Note 7)
+Parameters Sym Min Typ Max Units Conditions
+Input / Output Characteristics
+Input Operating Voltage V IN 2.7 — 13.2 V Note 1
+Input Quiescent Current I q —2 . 0 5 µA I L = 0 mA
+Maximum Output Current I OUT_mA 250 — — mA For V R  2.5V
+50 100 — mA For V R < 2.5V, VIN  2.7V
+100 130 — mA For V R < 2.5V, VIN  2.95V
+150 200 — mA For V R < 2.5V, VIN  3.2V
+200 250 — mA For V R < 2.5V, VIN  3.45V
+Output Short Circuit Current I OUT_SC — 400 — mA V IN = VIN(MIN) (Note 1), VOUT = GND,
+Current (average current) measured 
+10 ms after short is applied.
+Output Voltage Regulation V
+OUT VR-3.0% VR±0.4% VR+3.0% V Note 2
+VR-2.0% V R±0.4% V R+2.0% V
+VR-1.0% V R±0.4% V R+1.0% V 1% Custom
+VOUT Temperature 
+Coefficient
+TCVOUT —5 0— p p m / ° C Note 3
+Line Regulation VOUT/
+(VOUTXVIN)
+-0.3 ±0.1 +0.3 %/V (V OUT(MAX) + VDROPOUT(MAX))
+ VIN  13.2V, (Note 1)
+Load Regulation VOUT/VOUT -2.5 ±1.0 +2.5 %I L = 1.0 mA to 250 mA for VR  2.5V
+IL = 1.0 mA to 200 mA for VR  2.5V, 
+VIN = 3.45V (Note 4)
+Note 1: The minimum VIN must meet two conditions: VIN2.7V and VIN VOUT(MAX) + VDROPOUT(MAX).
+2: VR is the nominal regulator output voltage. For example: VR = 1.2V, 1.5V, 1.8V, 2.5V, 2.8V, 3.0V, 3.3V, 4.0V, or 5.0V. The 
+input voltage VIN = VOUT(MAX) + VDROPOUT(MAX) or VIN = 2.7V (whichever is greater); IOUT = 100 µA. 
+3: TCVOUT = (VOUT-HIGH - VOUT-LOW) *106 / (VR * Temperature), VOUT-HIGH = highest voltage measured over the 
+temperature range. VOUT-LOW = lowest voltage measured over the temperature range.
+4: Load regulation is measured at a constant  junction temperature using low duty cycle pulse testing. Changes in output 
+voltage due to heating effects are determined using thermal regulation specification TCV OUT.
+5: Dropout voltage is defined as the input to output differentia l at which the output voltage drops 2% below its measured 
+value with an applied input voltage of V OUT(MAX) + VDROPOUT(MAX) or 2.7V, whichever is greater.
+6: The maximum allowable power dissipation is a function of ambient temperature, the maximum allowable junction 
+temperature and the thermal resistance from junction to air (i.e., T A, TJ, JA). Exceeding the maximum allowable power 
+dissipation will cause the device operati ng junction temperature to exceed the maximum 150°C rating. Sustained 
+junction temperatures above 150°C can impact the device reliability.
+7: The junction temperature is approximated by soaking the device under test at an ambient temperature equal to the 
+desired Junction temperature. The test time is small enough su ch that the rise in the Junction temperature over the 
+ambient temperature is not significant.
+
+PAGE 4
+MCP1702
+DS22008E-page 4  2010 Microchip Technology Inc.
+Dropout Voltage
+(Note 1, Note 5)
+VDROPOUT — 330 650 mV I L = 250 mA, VR = 5.0V
+— 525 725 mV I L = 250 mA, 3.3V  VR < 5.0V
+— 625 975 mV I L = 250 mA, 2.8V  VR < 3.3V
+— 750 1100 mV I L = 250 mA, 2.5V  VR < 2.8V
+——— m V V R < 2.5V, See Maximum Output 
+Current Parameter
+Output Delay Time T DELAY — 1000 — µs V IN = 0V to 6V, VOUT = 90% VR 
+RL = 50 resistive
+Output Noise e N —8— µ V / ( H z ) 1/2 IL = 50 mA, f = 1 kHz, COUT = 1 µF
+Power Supply Ripple 
+Rejection Ratio
+PSRR — 44 — dB f = 100 Hz, C OUT = 1 µF, IL = 50 mA, 
+VINAC = 100 mV pk-pk, CIN = 0 µF, 
+VR =1 . 2 V
+Thermal Shutdown 
+Protection
+TSD — 150 — °C
+DC CHARACTERISTICS (CONTINUED)
+Electrical Specifications: Unless otherwise specified, al l limits are established for VIN = VOUT(MAX) + VDROPOUT(MAX), Note 1, 
+ILOAD = 100 µA, COUT = 1 µF (X7R), CIN = 1 µF (X7R), TA = +25°C.
+Boldface type applies for junction temperatures, T J of -40°C to +125°C. (Note 7)
+Parameters Sym Min Typ Max Units Conditions
+Note 1: The minimum VIN must meet two conditions: VIN2.7V and VIN VOUT(MAX) + VDROPOUT(MAX).
+2: VR is the nominal regulator output voltage. For example: VR = 1.2V, 1.5V, 1.8V, 2.5V, 2.8V, 3.0V, 3.3V, 4.0V, or 5.0V. The 
+input voltage VIN = VOUT(MAX) + VDROPOUT(MAX) or VIN = 2.7V (whichever is greater); IOUT = 100 µA. 
+3: TCVOUT = (VOUT-HIGH - VOUT-LOW) *106 / (VR * Temperature), VOUT-HIGH = highest voltage measured over the 
+temperature range. VOUT-LOW = lowest voltage measured over the temperature range.
+4: Load regulation is measured at a constant  junction temperature using low duty cycle pulse testing. Changes in output 
+voltage due to heating effects are determined using thermal regulation specification TCV OUT.
+5: Dropout voltage is defined as the input to output differentia l at which the output voltage drops 2% below its measured 
+value with an applied input voltage of V OUT(MAX) + VDROPOUT(MAX) or 2.7V, whichever is greater.
+6: The maximum allowable power dissipation is a function of ambient temperature, the maximum allowable junction 
+temperature and the thermal resistance from junction to air (i.e., T A, TJ, JA). Exceeding the maximum allowable power 
+dissipation will cause the device operati ng junction temperature to exceed the maximum 150°C rating. Sustained 
+junction temperatures above 150°C c an impact the device reliability.
+7: The junction temperature is approximated by soaking the device under test at an ambient temperature equal to the 
+desired Junction temperature. The test time is small enough su ch that the rise in the Junction temperature over the 
+ambient temperature is not significant.
+
+PAGE 5
+ 2010 Microchip Technology Inc. DS22008E-page 5
+MCP1702
+TEMPERATURE SPECIFICATIONS (Note 1)
+Parameters Sym Min Typ Max Units Conditions
+Temperature Ranges
+Operating Junction Temperature Range T J -40 +125 °C Steady State
+Maximum Junction Temperature T J — +150 °C Transient
+Storage Temperature Range T A -65 +150 °C
+Thermal Package Resistance (Note 2)
+Thermal Resistance, 3L-SOT-23A JA — 336 — °C/W EIA/JEDEC JESD51-7
+FR-4 0.063   4-Layer Board
+JC —1 1 0— ° C / W
+Thermal Resistance, 3L-SOT-89 JA — 153.3 — °C/W EIA/JEDEC JESD51-7
+FR-4 0.063   4-Layer Board
+JC — 100 — °C/W
+Thermal Resistance, 3L-TO-92 JA — 131.9 — °C/W
+JC — 66.3 — °C/W
+Note 1: The maximum allowable power dissipation is a function of ambient temperature, the maximum allowable junction 
+temperature and the thermal resistance from junction to air (i.e., TA, TJ, JA). Exceeding the maximum allowable power 
+dissipation will cause the device operati ng junction temperature to exceed the maximum 150°C rating. Sustained 
+junction temperatures above 150°C can impact the device reliability.
+2: Thermal Resistance values are subject to change. Please vi sit the Microchip web site for the latest packaging 
+information.
+
+PAGE 6
+MCP1702
+DS22008E-page 6  2010 Microchip Technology Inc.
+2.0 TYPICAL PERFORMANCE CURVES
+Note: Unless otherwise indicated: VR = 2.8V, COUT = 1 µF Ceramic (X7R), CIN = 1 µF Ceramic (X7R), IL = 100 µA,
+TA = +25°C, VIN = VOUT(MAX) + VDROPOUT(MAX).
+Note: Junction Temperature (T J) is approximated by soaking the device under test to an ambient temperature equal to the desired junction
+temperature. The test time is small enough such that the rise in Junction temperature over the Ambient temperature is not signi ficant.
+FIGURE 2-1: Quiescent Current vs. Input 
+Voltage.
+FIGURE 2-2: Quiescent Current vs.Input 
+Voltage.
+FIGURE 2-3: Quiescent Current vs.Input 
+Voltage.
+FIGURE 2-4: Ground Current vs. Load 
+Current.
+FIGURE 2-5: Ground Current vs. Load 
+Current.
+FIGURE 2-6: Quiescent Current vs. 
+Junction Temperature.
+Note: The graphs and tables provided following this note are a statistical summary based on a limited number of
+samples and are provided for informational purposes only. The performance characteristics listed herein
+are not tested or guaranteed. In some graphs or tables, the data presented may be outside the specified
+operating range (e.g., outside specified power supply range) and therefore outside the warranted range.
+0.00
+1.00
+2.00
+3.00
+4.00
+5.00
+2 4 6 8 10 12 14
+Input Voltage (V)
+Quiescent Current (µA)
+VOUT = 1.2V
++25°C
++130°C
+-45°C
+0°C
++90°C
+0.00
+1.00
+2.00
+3.00
+4.00
+5.00
+3579 1 1 1 3
+Input Voltage (V)
+Quiescent Current (µA)
+VOUT = 2.8V
++25°C
++130°C
+-45°C
+0°C
++90°C
+1.00
+2.00
+3.00
+4.00
+5.00
+6789 1 0 1 1 1 2 1 3 1 4
+Input Voltage (V)
+Quiescent Current (µA)
+VOUT = 5.0V
++25°C
++130°C
+-45°C
+0°C
++90°C
+0.00
+20.00
+40.00
+60.00
+80.00
+100.00
+120.00
+0 40 80 120 160 200
+Load Current (mA)
+GND Current (µA)
+Temperature = +25°C
+VOUT = 1.2V
+VIN = 2.7V
+0.00
+20.00
+40.00
+60.00
+80.00
+100.00
+120.00
+0 50 100 150 200 250
+Load Current (mA)
+GND Current (µA)
+Temperature = +25°C
+VOUT = 5.0V
+VIN = 6.0V
+VOUT = 2.8V
+VIN = 3.8V
+0.00
+0.50
+1.00
+1.50
+2.00
+2.50
+3.00
+-45 -20 5 30 55 80 105 130
+Junction Temperature (°C)
+Quiescent Current (µA)
+IOUT = 0 mAVOUT = 5.0V
+VIN = 6.0V
+VOUT = 1.2V
+VIN = 2.7V
+VOUT = 2.8V
+VIN = 3.8V
+
+PAGE 7
+ 2010 Microchip Technology Inc. DS22008E-page 7
+MCP1702
+Note: Unless otherwise indicated: VR = 2.8V, COUT = 1 µF Ceramic (X7R), CIN = 1 µF Ceramic (X7R), IL = 100 µA,
+TA = +25°C, VIN = VOUT(MAX) + VDROPOUT(MAX).
+FIGURE 2-7: Output Voltage vs. Input 
+Voltage.
+FIGURE 2-8: Output Voltage vs. Input 
+Voltage.
+FIGURE 2-9: Output Voltage vs. Input 
+Voltage.
+FIGURE 2-10: Output Voltage vs. Load 
+Current.
+FIGURE 2-11: Output Voltage vs. Load 
+Current.
+FIGURE 2-12: Output Voltage vs. Load 
+Current.
+1.18
+1.19
+1.20
+1.21
+1.22
+1.23
+1.24
+2 4 6 8 10 12 14
+Input Voltage (V)
+Output Voltage (V)
+VOUT = 1.2V
+ILOAD = 0.1 mA
++25°C
++130°C
+-45°C
+0°C
++90°C
+2.77
+2.78
+2.79
+2.80
+2.81
+2.82
+2.83
+2.84
+2.85
+3456789 1 0 1 1 1 2 1 3 1 4
+Input Voltage (V)
+Output Voltage (V)
+VOUT = 2.8V
+ILOAD = 0.1 mA
++25°C
++130°C
+-45°C0°C
++90°C
+4.96
+4.98
+5.00
+5.02
+5.04
+5.06
+6789 1 0 1 1 1 2 1 3 1 4
+Input Voltage (V)
+Output Voltage (V)
+VOUT = 5.0V
+ILOAD = 0.1 mA
++25°C
++130°C
+-45°C0°C
++90°C
+1.18
+1.19
+1.20
+1.21
+1.22
+1.23
+0 2 04 06 08 0 1 0 0
+Load Current (mA)
+Output Voltage (V)
+VOUT = 1.2V
++25°C
++130°C
+-45°C
+0°C
++90°C
+2.77
+2.78
+2.79
+2.80
+2.81
+2.82
+2.83
+0 50 100 150 200 250
+Load Current (mA)
+Output Voltage (V)
+VOUT = 2.8V
++25°C
++130°C
+-45°C
+0°C
++90°C
+4.96
+4.97
+4.98
+4.99
+5.00
+5.01
+5.02
+5.03
+5.04
+0 50 100 150 200 250
+Load Current (mA)
+Output Voltage (V)
+VOUT = 5.0V
++25°C
++130°C
+-45°C
+0°C
++90°C
+
+PAGE 8
+MCP1702
+DS22008E-page 8  2010 Microchip Technology Inc.
+Note: Unless otherwise indicated: VR = 2.8V, COUT = 1 µF Ceramic (X7R), CIN = 1 µF Ceramic (X7R), IL = 100 µA,
+TA = +25°C, VIN = VOUT(MAX) + VDROPOUT(MAX).
+FIGURE 2-13: Dropout Voltage vs. Load 
+Current.
+FIGURE 2-14: Dropout Voltage vs. Load 
+Current.
+FIGURE 2-15: Dropout Voltage vs. Load 
+Current.
+FIGURE 2-16: Dynamic Line Response.
+FIGURE 2-17: Dynamic Line Response.
+FIGURE 2-18: Short Circuit Current vs. 
+Input Voltage.
+0.60
+0.70
+0.80
+0.90
+1.00
+1.10
+1.20
+1.30
+1.40
+100 120 140 160 180 200
+Load Current (mA)
+Dropout Voltage (V)
+VOUT = 1.8V
++25°C
++130°C
+-45°C
+0°C
++90°C
+0.00
+0.10
+0.20
+0.30
+0.40
+0.50
+0.60
+0.70
+0.80
+0.90
+1.00
+0 25 50 75 100 125 150 175 200 225 250
+Load Current (mA)
+Dropout Voltage (V)
+VOUT = 2.8V
++25°C
++130°C
++0°C
+-45°C
++90°C
+0.00
+0.05
+0.10
+0.15
+0.20
+0.25
+0.30
+0.35
+0.40
+0.45
+0.50
+0 25 50 75 100 125 150 175 200 225 250
+Load Current (mA)
+Dropout Voltage (V)
+VOUT = 5.0V
++25°C
++130°C
++0°C
+-45°C
++90°C
+0.00
+100.00
+200.00
+300.00
+400.00
+500.00
+600.00
+4 6 8 10 12 14
+Input Voltage (V)
+Short Circuit Current (mA)
+VOUT = 2.8V
+ROUT < 0.1/g159
+
+PAGE 9
+ 2010 Microchip Technology Inc. DS22008E-page 9
+MCP1702
+Note: Unless otherwise indicated: VR = 2.8V, COUT = 1 µF Ceramic (X7R), CIN = 1 µF Ceramic (X7R), IL = 100 µA,
+TA = +25°C, VIN = VOUT(MAX) + VDROPOUT(MAX).
+FIGURE 2-19: Load Regulation vs. 
+Temperature.
+FIGURE 2-20: Load Regulation vs. 
+Temperature.
+FIGURE 2-21: Load Regulation vs. 
+Temperature.
+FIGURE 2-22: Line Regulation vs. 
+Temperature.
+FIGURE 2-23: Line Regulation vs. 
+Temperature.
+FIGURE 2-24: Line Regulation vs. 
+Temperature.
+-0.30
+-0.25
+-0.20
+-0.15
+-0.10
+-0.05
+0.00
+0.05
+0.10
+0.15
+0.20
+-45 -20 5 30 55 80 105 130
+Temperature (°C)
+Load Regulation (%)VOUT = 1.2V
+ILOAD = 0.1 mA to 200 mA
+VIN = 4V
+VIN = 13.2V
+VIN = 6V
+VIN = 12VVIN = 10V
+-0.60
+-0.50
+-0.40
+-0.30
+-0.20
+-0.10
+0.00
+0.10
+0.20
+0.30
+0.40
+-45 -20 5 30 55 80 105 130
+Temperature (°C)
+Load Regulation (%)
+VOUT = 2.8V
+ILOAD = 1 mA to 250 mA
+VIN = 3.8V VIN = 13.2V
+VIN = 10V
+VIN = 6V
+-0.10
+0.00
+0.10
+0.20
+0.30
+0.40
+-45 -20 5 30 55 80 105 130
+Temperature (°C)
+Load Regulation (%)
+VOUT = 5.0V
+ILOAD = 1 mA to 250 mA
+VIN = 6V
+VIN = 13.2V
+VIN = 8V
+VIN = 10V
+0.00
+0.04
+0.08
+0.12
+0.16
+0.20
+-45 -20 5 30 55 80 105 130
+Temperature (°C)
+Line Regulation (%/V)
+VOUT = 1.2V
+VIN = 2.7V to 13.2V
+1 mA
+100 mA
+0 mA
+0.00
+0.04
+0.08
+0.12
+0.16
+0.20
+-45 -20 5 30 55 80 105 130
+Temperature (°C)
+Line Regulation (%/V)
+VOUT = 2.8V
+VIN = 3.8V to 13.2V
+200 mA
+100 mA
+0 mA
+250 mA
+0.06
+0.08
+0.10
+0.12
+0.14
+0.16
+-45 -20 5 30 55 80 105 130
+Temperature (°C)
+Line Regulation (%/V)
+VOUT = 5.0V
+VIN = 6.0V to 13.2V
+200 mA
+100 mA
+0 mA 250 mA
+
+PAGE 10
+MCP1702
+DS22008E-page 10  2010 Microchip Technology Inc.
+Note: Unless otherwise indicated: VR = 2.8V, COUT = 1 µF Ceramic (X7R), CIN = 1 µF Ceramic (X7R), IL = 100 µA,
+TA = +25°C, VIN = VOUT(MAX) + VDROPOUT(MAX).
+FIGURE 2-25: Power Supply Ripple 
+Rejection vs. Frequency.
+FIGURE 2-26: Power Supply Ripple 
+Rejection vs. Frequency.
+FIGURE 2-27: Output Noise vs. Frequency.
+FIGURE 2-28: Power Up Timing.
+FIGURE 2-29: Dynamic Load Response.
+FIGURE 2-30: Dynamic Load Response.
+-90
+-80
+-70
+-60
+-50
+-40
+-30
+-20
+-10
+0
+0.01 0.1 1 10 100 1000
+Frequency (kHz)
+PSRR (dB)
+VR=1.2V
+COUT=1.0 μF ceramic X7R
+VIN=2.7V
+CIN=0 μF
+IOUT=1.0 mA
+-90
+-80
+-70
+-60
+-50
+-40
+-30
+-20
+-10
+0
+0.01 0.1 1 10 100 1000
+Frequency (kHz)
+PSRR (dB)
+VR=5.0V
+COUT=1.0 μF ceramic X7R
+VIN=6.0V
+CIN=0 μF
+IOUT=1.0 mA
+0.001
+0.01
+0.1
+1
+10
+100
+0.01 0.1 1 10 100 1000
+Frequency (kHz)
+Noise (μV//g165Hz)
+VR=5.0V, VIN=6.0V IOUT=50 mA
+VR=2,8V, VIN=3.8V
+VR=1.2V, VIN=2.7V
+
+
+PAGE 11
+ 2010 Microchip Technology Inc. DS22008E-page 11
+MCP1702
+3.0 PIN DESCRIPTIONS
+The descriptions of the pins are listed in Table 3-1.
+TABLE 3-1: PIN FUNCTION TABLE
+3.1 Ground Terminal (GND)
+Regulator ground. Tie GND to the negative side of the
+output and the negative side of the input capacitor.
+Only the LDO bias current (2.0 µA typical) flows out of
+this pin; there is no high current. The LDO output
+regulation is referenced to this pin. Minimize voltage
+drops between this pin and the negative side of the
+load.
+3.2 Regulated Output Voltage (V OUT)
+Connect VOUT to the positive side of the load and the
+positive terminal of the output capacitor. The positive
+side of the output capacitor should be physically
+located as close to the LDO V OUT pin as is practical.
+The current flowing out of this pin is equal to the DC
+load current.
+3.3 Unregulated Input Voltage Pin 
+(VIN)
+Connect VIN to the input unregulated source voltage.
+Like all LDO linear regulators, low source impedance is
+necessary for the stable operation of the LDO. The
+amount of capacitance required to ensure low source
+impedance will depend on the proximity of the input
+source capacitors or battery type. For most
+applications, 1 µF of capacitance will ensure stable
+operation of the LDO circuit. For applications that have
+load currents below 100 mA, the input capacitance
+requirement can be lowered. The type of capacitor
+used can be ceramic, tantalum or aluminum
+electrolytic. The low ESR characteristics of the ceramic
+will yield better noise and PSRR performance at
+high-frequency.
+Pin No.
+SOT-23A
+Pin No.
+SOT-89
+Pin No.
+TO-92 Symbol Function
+1 1 1 GND Ground Terminal
+233 V
+OUT Regulated Voltage Output
+32 ,  T a b2 V IN Unregulated Supply Voltage
+– – – NC No connection
+
+PAGE 12
+MCP1702
+DS22008E-page 12  2010 Microchip Technology Inc.
+4.0 DETAILED DESCRIPTION
+4.1 Output Regulation
+A portion of the LDO output voltage is fed back to the
+internal error amplifier and compared with the precision
+internal band gap reference. The error amplifier output
+will adjust the amount of current that flows through the
+P-Channel pass transistor, thus regulating the output
+voltage to the desired value. Any changes in input
+voltage or output current will cause the error amplifier
+to respond and adjust the output voltage to the target
+voltage (refer to Figure 4-1).
+4.2 Overcurrent
+The MCP1702 internal circuitry monitors the amount of
+current flowing through the P-Channel pass transistor.
+In the event of a short-circuit or excessive output
+current, the MCP1702 will turn off the P-Channel
+device for a short period, after which the LDO will
+attempt to restart. If the excessive current remains, the
+cycle will repeat itself.
+4.3 Overtemperature
+The internal power dissipation within the LDO is a
+function of input-to-output voltage differential and load
+current. If the power dissipation within the LDO is
+excessive, the internal junction temperature will rise
+above the typical shutdown threshold of 150°C. At that
+point, the LDO will shut down and begin to cool to the
+typical turn-on junction temperature of 130°C. If the
+power dissipation is low enough, the device will
+continue to cool and operate normally. If the power
+dissipation remains high, the thermal shutdown
+protection circuitry will again turn off the LDO,
+protecting it from catastrophic failure.
+FIGURE 4-1: Block Diagram.
++
+-
+MCP1702
+VIN VOUT
+GND
++VIN
+Error Amplifier
+Voltage
+Reference
+Overcurrent
+Overtemperature
+
+PAGE 13
+ 2010 Microchip Technology Inc. DS22008E-page 13
+MCP1702
+5.0 FUNCTIONAL DESCRIPTION
+The MCP1702 CMOS LDO linear regulator is intended
+for applications that need the lowest current
+consumption while maintaining output voltage
+regulation. The operating continuous load range of the
+MCP1702 is from 0 mA to 250 mA (V
+R  2.5V). The
+input operating voltage range is from 2.7V to 13.2V,
+making it capable of operating from two or more
+alkaline cells or single and multiple Li-Ion cell batteries.
+5.1 Input
+The input of the MCP1702 is connected to the source
+of the P-Channel PMOS pass transistor. As with all
+LDO circuits, a relatively low source impedance (10 )
+is needed to prevent the input impedance from causing
+the LDO to become unstable. The size and type of the
+capacitor needed depends heavily on the input source
+type (battery, power supply) and the output current
+range of the application. For most applications (up to
+100 mA), a 1 µF ceramic capacitor will be sufficient to
+ensure circuit stability. Larger values can be used to
+improve circuit AC performance.
+5.2 Output
+The maximum rated continuous output current for the
+MCP1702 is 250 mA (V
+R  2.5V). For applications
+where V R < 2.5V, the maximum output current is
+200 mA.
+A minimum output capacitance of 1.0 µF is required for
+small signal stability in applications that have up to
+250 mA output current capability. The capacitor type
+can be ceramic, tantalum or aluminum electrolytic. The
+esr range on the output capacitor can range from 0 to
+2.0.
+The output capacitor range for ceramic capacitors is
+1 µF to 22 µF. Higher output capacitance values may
+be used for tantalum and electrolytic capacitors. Higher
+output capacitor values pull the pole of the LDO
+transfer function inward that results in higher phase
+shifts which in turn cause a lower crossover frequency.
+The circuit designer should verify the stability by
+applying line step and load step testing to their system
+when using capacitance values greater than 22 µF.
+5.3 Output Rise Time
+When powering up the internal reference output, the
+typical output rise time of 500 µs is controlled to
+prevent overshoot of the output voltage. There is also a
+start-up delay time that ranges from 300 µs to 800 µs
+based on loading. The start-up time is separate from
+and precedes the Output Rise Time. The total output
+delay is the Start-up Delay plus the Output Rise time.
+
+PAGE 14
+MCP1702
+DS22008E-page 14  2010 Microchip Technology Inc.
+6.0 APPLICATION CIRCUITS AND 
+ISSUES
+6.1 Typical Application
+The MCP1702 is most commonly used as a voltage
+regulator. Its low quiescent current and low dropout
+voltage makes it ideal for many battery-powered
+applications.
+FIGURE 6-1: Typical Application Circuit.
+6.1.1 APPLICATION INPUT CONDITIONS
+6.2 Power Calculations
+6.2.1 POWER DISSIPATION
+The internal power dissipation of the MCP1702 is a
+function of input voltage, output voltage and output
+current. The power dissipation, as a result of the
+quiescent current draw, is so low, it is insignificant
+(2.0 µA x V
+IN). The following equation can be used to
+calculate the internal power dissipation of the LDO.
+EQUATION 6-1:
+The maximum continuous operating junction
+temperature specified for the MCP1702 is +125 °C. To
+estimate the internal junction temperature of the
+MCP1702, the total internal power dissipation is
+multiplied by the thermal resistance from junction to
+ambient (R
+JA). The thermal resistance from junction to
+ambient for the SOT-23A pin package is estimated at
+336°C/W.
+EQUATION 6-2:
+The maximum power dissipation capability for a
+package can be calculated given the junction-to-
+ambient thermal resistance and the maximum ambient
+temperature for the application. The following equation
+can be used to determine the package maximum
+internal power dissipation.
+EQUATION 6-3:
+EQUATION 6-4:
+EQUATION 6-5:
+Package Type = SOT-23A
+Input Voltage Range = 2.8V to 3.2V
+VIN maximum = 3.2V
+VOUT typical = 1.8V
+IOUT = 150 mA maximum
+MCP1702
+GND
+VOUT
+VIN
+CIN
+1 µF Ceramic
+COUT
+1µ F  C e r a m i c
+VOUT
+VIN
+(2.8V to 3.2V)
+1.8V
+IOUT
+150 mA
+PLDO VIN MAX  VOUT MIN– IOUT MAX =
+Where:
+PLDO = LDO Pass device internal 
+power dissipation
+VIN(MAX) = Maximum input voltage
+VOUT(MIN) = LDO minimum output voltage
+TJM A X PTOTAL RJA TAMAX+=
+Where:
+TJ(MAX) = Maximum continuous junction 
+temperature
+PTOTAL = Total device power dissipation
+RJA Thermal resistance from 
+junction to ambient
+TAMAX = Maximum ambient temperature
+PDM A X
+TJM A X TAM A X–
+RJA
+---------------------------------------------------=
+Where:
+PD(MAX) = Maximum device power 
+dissipation
+TJ(MAX) = Maximum continuous junction 
+temperature
+TA(MAX) Maximum ambient temperature
+RJA = Thermal resistance from 
+junction to ambient
+TJR I S E PDM A X RJA=
+Where:
+TJ(RISE) = Rise in device junction 
+temperature over the ambient 
+temperature
+P
+TOTAL = Maximum device power 
+dissipation
+RJA Thermal resistance from 
+junction to ambient
+TJ TJR I S E TA+=
+Where:
+TJ = Junction Temperature
+TJ(RISE) = Rise in device junction 
+temperature over the ambient 
+temperature
+TA Ambient temperature
+
+PAGE 15
+ 2010 Microchip Technology Inc. DS22008E-page 15
+MCP1702
+6.3 Voltage Regulator
+Internal power dissipation, junction temperature rise,
+junction temperature and maximum power dissipation
+are calculated in the following example. The power
+dissipation, as a result of ground current, is small
+enough to be neglected.
+6.3.1 POWER DISSIPATION EXAMPLE
+Device Junction Temperature Rise
+The internal junction temperature rise is a function of
+internal power dissipation and the thermal resistance
+from junction to ambient for the application. The
+thermal resistance from junction to ambient (R 
+JA) is
+derived from an EIA/JEDEC standard for measuring
+thermal resistance for small surface mount packages.
+The EIA/JEDEC specification is JESD51-7, “High
+Effective Thermal Conductivity Test Board for Leaded
+Surface Mount Packages”. The standard describes the
+test method and board specifications for measuring the
+thermal resistance from junction to ambient. The actual
+thermal resistance for a particular application can vary
+depending on many factors, such as copper area and
+thickness. Refer to AN792, “A Method to Determine
+How Much Power a SOT-23 Can Dissipate in an
+Application”, (DS00792), for more information
+regarding this subject.
+Junction Temperature Estimate
+To estimate the internal junction temperature, the
+calculated temperature rise is added to the ambient or
+offset temperature. For this example, the worst-case
+junction temperature is estimated below.
+Maximum Package Power Dissipation at +40°C
+Ambient Temperature Assuming Minimal Copper
+Usage.
+6.4 Voltage Reference
+The MCP1702 can be used not only as a regulator, but
+also as a low quiescent current voltage reference. In
+many microcontroller applications, the initial accuracy
+of the reference can be calibrated using production test
+equipment or by using a ratio measurement. When the
+initial accuracy is calibrated, the thermal stability and
+line regulation tolerance are the only errors introduced
+by the MCP1702 LDO. The low-cost, low quiescent
+current and small ceramic output capacitor are all
+advantages when using the MCP1702 as a voltage
+reference.
+FIGURE 6-2: Using the MCP1702 as a 
+Voltage Reference.
+Package
+Package Type = SOT-23A
+Input Voltage
+ VIN = 2.8V to 3.2V
+LDO Output Voltages and Currents
+VOUT =1 . 8 V
+IOUT =1 5 0 m A
+Maximum Ambient Temperature
+TA(MAX) =+ 4 0 ° C
+Internal Power Dissipation
+Internal Power dissipation is the product of the LDO 
+output current times the voltage across the LDO
+(V
+IN to VOUT).
+PLDO(MAX) =( V IN(MAX) - VOUT(MIN)) x 
+IOUT(MAX)
+PLDO = (3.2V - (0.97 x 1.8V)) x 150 mA
+PLDO = 218.1 milli-Watts
+TJ(RISE) =P TOTAL x RqJA
+TJRISE = 218.1 milli-Watts x 336.0 °C/Watt
+TJRISE = 73.3 °C
+TJ =T JRISE + TA(MAX)
+TJ =1 1 3 . 3 ° C
+SOT-23 (336.0°C/Watt = RJA)
+PD(MAX) = (+125°C - 40°C) / 336°C/W
+PD(MAX) = 253 milli-Watts
+SOT-89 (153.3°C/Watt = RJA)
+PD(MAX) = (+125°C - 40°C) / 153.3°C/W
+PD(MAX) = 0.554 Watts
+TO92 (131.9°C/Watt = RJA)
+PD(MAX) = (+125°C - 40°C) / 131.9°C/W
+PD(MAX) = 644 milli-Watts
+PIC®
+MCP1702
+GND
+VINCIN
+1µ F COUT
+1µ F
+Bridge Sensor
+VOUT VREF
+ADO 
+AD1
+Ratio Metric Reference
+2 µA Bias
+Microcontroller
+
+PAGE 16
+MCP1702
+DS22008E-page 16  2010 Microchip Technology Inc.
+6.5 Pulsed Load Applications
+For some applications, there are pulsed load current
+events that may exceed the specified 250 mA
+maximum specification of the MCP1702. The internal
+current limit of the MCP1702 will prevent high peak
+load demands from causing non-recoverable damage.
+The 250 mA rating is a maximum average continuous
+rating. As long as the average current does not exceed
+250 mA, pulsed higher load currents can be applied to
+the MCP1702
+. The typical current limit for the
+MCP1702 is 500 mA (TA +25°C).
+
+PAGE 17
+ 2010 Microchip Technology Inc. DS22008E-page 17
+MCP1702
+7.0 PACKAGING INFORMATION
+7.1 Package Marking Information
+3-Pin SOT-23A
+XXNN
+Standard 
+Extended Temp
+Symbol Voltage * Symbol Voltage *
+HA 1.2 HF 3.0
+HB 1.5 HG 3.3
+HC 1.8 HH 4.0
+HD 2.5 HJ 5.0
+HE 2.8 — —
+Custom
+GA 4.5 GC 2.1
+GB 2.2 GD 4.1
+* Custom output voltages available upon request.
+Contact your local Microchip sales office for more information.
+Example:
+HANN
+Legend: XX...X Customer-specific information
+Y Year code (last digit of calendar year)
+YY Year code (last 2 digits of calendar year)
+WW Week code (week of January 1 is week ‘01’)
+NNN Alphanumeric traceability code
+  Pb-free JEDEC designator for Matte Tin (Sn)
+* This package is Pb-free. The Pb-free JEDEC designator (     )
+can be found on the outer packaging for this package.
+Note: In the event the full Microchip part number cannot be marked on one line, it will
+be carried over to the next line, thus limiting the number of available
+characters for customer-specific information.
+3e
+3e
+Standard 
+Extended Temp
+Symbol Voltage * Symbol Voltage *
+HA 1.2 HF 3.0
+HB 1.5 HG 3.3
+HC 1.8 HK 3.6
+HD 2.5 HH 4.0
+HE 2.8 HJ 5.0
+Custom
+L A2 . 1H 94 . 2
+LB 3.2 — —
+* Custom output voltages available upon request.
+Contact your local Microchip sales office for more information.
+3-Lead SOT-89
+XXXYYWW
+NNN
+Example:
+HA1014
+256
+3-Lead TO-92
+XXXXXX
+XXXXXX
+XXXXXX
+YWWNNN
+Example:
+1702
+1202E
+TO^^
+014256
+3e
+
+PAGE 18
+MCP1702
+DS22008E-page 18  2010 Microchip Technology Inc.
+/g22/g16/g47/g72/g68/g71/g3/g51/g79/g68/g86/g87/g76/g70/g3/g54/g80/g68/g79/g79/g3/g50/g88/g87/g79/g76/g81/g72/g3/g55/g85/g68/g81/g86/g76/g86/g87/g82/g85/g3/g11/g38/g37/g12/g3/g62/g54/g50/g55/g16/g21/g22/g36/g64
+/g49/g82/g87/g72/g86/g29
+/g20/g17 /g39/g76/g80/g72/g81/g86/g76/g82/g81/g86/g3/g39/g3/g68/g81/g71/g3/g40/g20/g3/g71/g82/g3/g81/g82/g87/g3/g76/g81/g70/g79/g88/g71/g72/g3/g80/g82/g79/g71/g3/g73/g79/g68/g86/g75/g3/g82/g85/g3/g83/g85/g82/g87/g85/g88/g86/g76/g82/g81/g86/g17/g3/g48/g82/g79/g71/g3/g73/g79/g68/g86/g75/g3/g82/g85/g3/g83/g85/g82/g87/g85/g88/g86/g76/g82/g81/g86/g3/g86/g75/g68/g79/g79/g3/g81/g82/g87/g3/g72/g91/g70/g72/g72/g71/g3/g19/g17/g20/g21/g26/g3/g80/g80/g3/g83/g72/g85/g3/g86/g76/g71/g72/g17
+/g21/g17 /g39/g76/g80/g72/g81/g86/g76/g82/g81/g76/g81/g74/g3/g68/g81/g71/g3/g87/g82/g79/g72/g85/g68/g81/g70/g76/g81/g74/g3/g83/g72/g85/g3/g36/g54/g48/g40/g3/g60/g20/g23/g17/g24/g48/g17
+/g37/g54/g38/g29 /g37/g68/g86/g76/g70/g3/g39/g76/g80/g72/g81/g86/g76/g82/g81/g17/g3/g55/g75/g72/g82/g85/g72/g87/g76/g70/g68/g79/g79/g92/g3/g72/g91/g68/g70/g87/g3/g89/g68/g79/g88/g72/g3/g86/g75/g82/g90/g81/g3/g90/g76/g87/g75/g82/g88/g87/g3/g87/g82/g79/g72/g85/g68/g81/g70/g72/g86/g17
+/g49/g82/g87/g72/g29/g41/g82/g85/g3/g87/g75/g72/g3/g80/g82/g86/g87/g3/g70/g88/g85/g85/g72/g81/g87/g3/g83/g68/g70/g78/g68/g74/g72/g3/g71/g85/g68/g90/g76/g81/g74/g86/g15/g3/g83/g79/g72/g68/g86/g72/g3/g86/g72/g72/g3/g87/g75/g72/g3/g48/g76/g70/g85/g82/g70/g75/g76/g83/g3/g51/g68/g70/g78/g68/g74/g76/g81/g74/g3/g54/g83/g72/g70/g76/g73/g76/g70/g68/g87/g76/g82/g81/g3/g79/g82/g70/g68/g87/g72/g71/g3/g68/g87/g3
+/g75/g87/g87/g83/g29/g18/g18/g90/g90/g90/g17/g80/g76/g70/g85/g82/g70/g75/g76/g83/g17/g70/g82/g80/g18/g83/g68/g70/g78/g68/g74/g76/g81/g74
+/g56/g81/g76/g87/g86/g48/g44/g47/g47/g44/g48/g40/g55/g40/g53/g54
+/g39/g76/g80/g72/g81/g86/g76/g82/g81/g3/g47/g76/g80/g76/g87/g86 /g48/g44/g49 /g49/g50/g48 /g48/g36/g59
+/g49/g88/g80/g69/g72/g85/g3/g82/g73/g3/g51/g76/g81/g86/g49 /g22
+/g47/g72/g68/g71/g3/g51/g76/g87/g70/g75 /g72 /g19/g17/g28/g24/g3/g37/g54/g38
+/g50/g88/g87/g86/g76/g71/g72/g3/g47/g72/g68/g71/g3/g51/g76/g87/g70/g75 /g72/g20 /g20/g17/g28/g19/g3/g37/g54/g38
+/g50/g89/g72/g85/g68/g79/g79/g3/g43/g72/g76/g74/g75/g87 /g36 /g19/g17/g27/g28 /g177 /g20/g17/g23/g24
+/g48/g82/g79/g71/g72/g71/g3/g51/g68/g70/g78/g68/g74/g72/g3/g55/g75/g76/g70/g78/g81/g72/g86/g86 /g36/g21 /g19/g17/g28/g19 /g177 /g20/g17/g22/g19
+/g54/g87/g68/g81/g71/g82/g73/g73 /g36/g20 /g19/g17/g19/g19 /g177 /g19/g17/g20/g24
+/g50/g89/g72/g85/g68/g79/g79/g3/g58/g76/g71/g87/g75 /g40 /g21/g17/g20/g19 /g177 /g22/g17/g19/g19
+/g48/g82/g79/g71/g72/g71/g3/g51/g68/g70/g78/g68/g74/g72/g3/g58/g76/g71/g87/g75 /g40/g20 /g20/g17/g21/g19 /g177 /g20/g17/g27/g19
+/g50/g89/g72/g85/g68/g79/g79/g3/g47/g72/g81/g74/g87/g75 /g39 /g21/g17/g26/g19 /g177 /g22/g17/g20/g19
+/g41/g82/g82/g87/g3/g47/g72/g81/g74/g87/g75 /g47 /g19/g17/g20/g24 /g177 /g19/g17/g25/g19
+/g41/g82/g82/g87/g3/g36/g81/g74/g79/g72/g73 /g19/g131 /g177 /g22/g19/g131
+/g47/g72/g68/g71/g3/g55/g75/g76/g70/g78/g81/g72/g86/g86 /g70 /g19/g17/g19/g28 /g177 /g19/g17/g21/g25
+/g47/g72/g68/g71/g3/g58/g76/g71/g87/g75 /g69 /g19/g17/g22/g19 /g177 /g19/g17/g24/g20
+D
+e
+e1
+2 1
+E
+E1
+N
+b
+A
+A1
+A2 c
+L
+φ
+/g48/g76/g70/g85/g82/g70/g75/g76/g83 /g55 /g72/g70/g75/g81/g82/g79/g82/g74/g92 /g39/g85/g68/g90/g76/g81/g74 /g38/g19/g23/g16/g20/g22/g19/g37
+
+PAGE 19
+ 2010 Microchip Technology Inc. DS22008E-page 19
+MCP1702
+Note: For the most current package drawings, please see the Microchip Packaging Specification located at 
+http://www.microchip.com/packaging
+
+PAGE 20
+MCP1702
+DS22008E-page 20  2010 Microchip Technology Inc.
+/g22/g16/g47/g72/g68/g71/g3/g51/g79/g68/g86/g87/g76/g70/g3/g54/g80/g68/g79/g79/g3/g50/g88/g87/g79/g76/g81/g72/g3/g55/g85/g68/g81/g86/g76/g86/g87/g82/g85/g3/g43/g72/g68/g71/g72/g85/g3/g11/g48/g37/g12/g3/g62/g54/g50/g55/g16/g27/g28/g64
+/g49/g82/g87/g72/g86/g29
+/g20/g17 /g39/g76/g80/g72/g81/g86/g76/g82/g81/g86/g3/g39/g3/g68/g81/g71/g3/g40/g3/g71/g82/g3/g81/g82/g87/g3/g76/g81/g70/g79/g88/g71/g72/g3/g80/g82/g79/g71/g3/g73/g79/g68/g86/g75/g3/g82/g85/g3/g83/g85/g82/g87/g85/g88/g86/g76/g82/g81/g86/g17/g3/g48/g82/g79/g71/g3/g73/g79/g68/g86/g75/g3/g82/g85/g3/g83/g85/g82/g87/g85/g88/g86/g76/g82/g81/g86/g3/g86/g75/g68/g79/g79/g3/g81/g82/g87/g3/g72/g91/g70/g72/g72/g71/g3/g19/g17/g20/g21/g26/g3/g80/g80/g3/g83/g72/g85/g3/g86/g76/g71/g72/g17
+/g21/g17 /g39/g76/g80/g72/g81/g86/g76/g82/g81/g76/g81/g74/g3/g68/g81/g71/g3/g87/g82/g79/g72/g85/g68/g81/g70/g76/g81/g74/g3/g83/g72/g85/g3/g36/g54/g48/g40/g3/g60/g20/g23/g17/g24/g48/g17
+/g37/g54/g38/g29 /g37/g68/g86/g76/g70/g3/g39/g76/g80/g72/g81/g86/g76/g82/g81/g17/g3/g55/g75/g72/g82/g85/g72/g87/g76/g70/g68/g79/g79/g92/g3/g72/g91/g68/g70/g87/g3/g89/g68/g79/g88/g72/g3/g86/g75/g82/g90/g81/g3/g90/g76/g87/g75/g82/g88/g87/g3/g87/g82/g79/g72/g85/g68/g81/g70/g72/g86/g17
+/g49/g82/g87/g72/g29/g41/g82/g85/g3/g87/g75/g72/g3/g80/g82/g86/g87/g3/g70/g88/g85/g85/g72/g81/g87/g3/g83/g68/g70/g78/g68/g74/g72/g3/g71/g85/g68/g90/g76/g81/g74/g86/g15/g3/g83/g79/g72/g68/g86/g72/g3/g86/g72/g72/g3/g87/g75/g72/g3/g48/g76/g70/g85/g82/g70/g75/g76/g83/g3/g51/g68/g70/g78/g68/g74/g76/g81/g74/g3/g54/g83/g72/g70/g76/g73/g76/g70/g68/g87/g76/g82/g81/g3/g79/g82/g70/g68/g87/g72/g71/g3/g68/g87/g3
+/g75/g87/g87/g83/g29/g18/g18/g90/g90/g90/g17/g80/g76/g70/g85/g82/g70/g75/g76/g83/g17/g70/g82/g80/g18/g83/g68/g70/g78/g68/g74/g76/g81/g74
+/g56/g81/g76/g87/g86/g48/g44/g47/g47/g44/g48/g40/g55/g40/g53/g54
+/g39/g76/g80/g72/g81/g86/g76/g82/g81/g3/g47/g76/g80/g76/g87/g86 /g48/g44/g49 /g48/g36/g59
+/g49/g88/g80/g69/g72/g85/g3/g82/g73/g3/g47/g72/g68/g71/g86/g49 /g22
+/g51/g76/g87/g70/g75 /g72 /g20/g17/g24/g19/g3/g37/g54/g38
+/g50/g88/g87/g86/g76/g71/g72/g3/g47/g72/g68/g71/g3/g51/g76/g87/g70/g75 /g72/g20 /g22/g17/g19/g19/g3/g37/g54/g38
+/g50/g89/g72/g85/g68/g79/g79/g3/g43/g72/g76/g74/g75/g87 /g36 /g20/g17/g23/g19 /g20/g17/g25/g19
+/g50/g89/g72/g85/g68/g79/g79/g3/g58/g76/g71/g87/g75 /g43 /g22/g17/g28/g23 /g23/g17/g21/g24
+/g48/g82/g79/g71/g72/g71/g3/g51/g68/g70/g78/g68/g74/g72/g3/g58/g76/g71/g87/g75/g3/g68/g87/g3/g37/g68/g86/g72 /g40 /g21/g17/g21/g28 /g21/g17/g25/g19
+/g48/g82/g79/g71/g72/g71/g3/g51/g68/g70/g78/g68/g74/g72/g3/g58/g76/g71/g87/g75/g3/g68/g87/g3/g55 /g82/g83 /g40/g20 /g21/g17/g20/g22 /g21/g17/g21/g28
+/g50/g89/g72/g85/g68/g79/g79/g3/g47/g72/g81/g74/g87/g75 /g39 /g23/g17/g22/g28 /g23/g17/g25/g19
+/g55 /g68/g69/g3/g47/g72/g81/g74/g87/g75 /g39/g20 /g20/g17/g23/g19 /g20/g17/g27/g22
+/g41/g82/g82/g87/g3/g47/g72/g81/g74/g87/g75 /g47 /g19/g17/g26/g28 /g20/g17/g21/g19
+/g47/g72/g68/g71/g3/g55/g75/g76/g70/g78/g81/g72/g86/g86 /g70 /g19/g17/g22/g24 /g19/g17/g23/g23
+/g47/g72/g68/g71/g3/g21/g3/g58/g76/g71/g87/g75 /g69 /g19/g17/g23/g20 /g19/g17/g24/g25
+/g47/g72/g68/g71/g86/g3/g20/g3/g9/g3/g22/g3/g58/g76/g71/g87/g75 /g69/g20 /g19/g17/g22/g25 /g19/g17/g23/g27
+D
+D1
+E
+H
+N
+b1
+e1
+b
+21
+e
+b1
+L
+A
+C
+E1
+/g48/g76/g70/g85/g82/g70/g75/g76/g83 /g55 /g72/g70/g75/g81/g82/g79/g82/g74/g92 /g39/g85/g68/g90/g76/g81/g74 /g38/g19/g23/g16/g19/g21/g28/g37
+
+PAGE 21
+ 2010 Microchip Technology Inc. DS22008E-page 21
+MCP1702
+Note: For the most current package drawings, please see the Microchip Packaging Specification located at 
+http://www.microchip.com/packaging
+
+PAGE 22
+MCP1702
+DS22008E-page 22  2010 Microchip Technology Inc.
+/g22/g16/g47/g72/g68/g71/g3/g51/g79/g68/g86/g87/g76/g70/g3/g55/g85/g68/g81/g86/g76/g86/g87/g82/g85/g3/g50/g88/g87/g79/g76/g81/g72/g3/g11/g55/g50/g12/g3/g62/g55/g50/g16/g28/g21/g64
+/g3
+/g49/g82/g87/g72/g86/g29
+/g20/g17 /g39/g76/g80/g72/g81/g86/g76/g82/g81/g86/g3/g36/g3/g68/g81/g71/g3/g40/g3/g71/g82/g3/g81/g82/g87/g3/g76/g81/g70/g79/g88/g71/g72/g3/g80/g82/g79/g71/g3/g73/g79/g68/g86/g75/g3/g82/g85/g3/g83/g85/g82/g87/g85/g88/g86/g76/g82/g81/g86/g17/g3/g48/g82/g79/g71/g3/g73/g79/g68/g86/g75/g3/g82/g85/g3/g83/g85/g82/g87/g85/g88/g86/g76/g82/g81/g86/g3/g86/g75/g68/g79/g79/g3/g81/g82/g87/g3/g72/g91/g70/g72/g72/g71/g3/g17/g19/g19/g24/g5/g3/g83/g72/g85/g3/g86/g76/g71/g72/g17
+/g21/g17 /g39/g76/g80/g72/g81/g86/g76/g82/g81/g76/g81/g74/g3/g68/g81/g71/g3/g87/g82/g79/g72/g85/g68/g81/g70/g76/g81/g74/g3/g83/g72/g85/g3/g36/g54/g48/g40/g3/g60/g20/g23/g17/g24/g48/g17
+/g37/g54/g38/g29 /g37/g68/g86/g76/g70/g3/g39/g76/g80/g72/g81/g86/g76/g82/g81/g17/g3/g55/g75/g72/g82/g85/g72/g87/g76/g70/g68/g79/g79/g92/g3/g72/g91/g68/g70/g87/g3/g89/g68/g79/g88/g72/g3/g86/g75/g82/g90/g81/g3/g90/g76/g87/g75/g82/g88/g87/g3/g87/g82/g79/g72/g85/g68/g81/g70/g72/g86/g17
+/g49/g82/g87/g72/g29/g41/g82/g85/g3/g87/g75/g72/g3/g80/g82/g86/g87/g3/g70/g88/g85/g85/g72/g81/g87/g3/g83/g68/g70/g78/g68/g74/g72/g3/g71/g85/g68/g90/g76/g81/g74/g86/g15/g3/g83/g79/g72/g68/g86/g72/g3/g86/g72/g72/g3/g87/g75/g72/g3/g48/g76/g70/g85/g82/g70/g75/g76/g83/g3/g51/g68/g70/g78/g68/g74/g76/g81/g74/g3/g54/g83/g72/g70/g76/g73/g76/g70/g68/g87/g76/g82/g81/g3/g79/g82/g70/g68/g87/g72/g71/g3/g68/g87/g3
+/g75/g87/g87/g83/g29/g18/g18/g90/g90/g90/g17/g80/g76/g70/g85/g82/g70/g75/g76/g83/g17/g70/g82/g80/g18/g83/g68/g70/g78/g68/g74/g76/g81/g74
+/g56/g81/g76/g87/g86/g44/g49/g38/g43/g40/g54
+/g39/g76/g80/g72/g81/g86/g76/g82/g81/g3/g47/g76/g80/g76/g87/g86 /g48/g44/g49 /g48/g36/g59
+/g49/g88/g80/g69/g72/g85/g3/g82/g73/g3/g51/g76/g81/g86/g49 /g22
+/g51/g76/g87/g70/g75 /g72 /g17/g19/g24/g19/g3/g37/g54/g38
+/g37/g82/g87/g87/g82/g80/g3/g87/g82/g3/g51/g68/g70/g78/g68/g74/g72/g3/g41/g79/g68/g87 /g39 /g17/g20/g21/g24 /g17/g20/g25/g24
+/g50/g89/g72/g85/g68/g79/g79/g3/g58/g76/g71/g87/g75 /g40 /g17/g20/g26/g24 /g17/g21/g19/g24
+/g50/g89/g72/g85/g68/g79/g79/g3/g47/g72/g81/g74/g87/g75 /g36 /g17/g20/g26/g19 /g17/g21/g20/g19
+/g48/g82/g79/g71/g72/g71/g3/g51/g68/g70/g78/g68/g74/g72/g3/g53/g68/g71/g76/g88/g86/g53 /g17/g19/g27/g19 /g17/g20/g19/g24
+/g55/g76/g83/g3/g87/g82/g3/g54/g72/g68/g87/g76/g81/g74/g3/g51/g79/g68/g81/g72 /g47 /g17/g24/g19/g19 /g177
+/g47/g72/g68/g71/g3/g55/g75/g76/g70/g78/g81/g72/g86/g86 /g70 /g17/g19/g20/g23 /g17/g19/g21/g20
+/g47/g72/g68/g71/g3/g58/g76/g71/g87/g75 /g69 /g17/g19/g20/g23 /g17/g19/g21/g21
+E
+A
+N1
+L
+b
+e
+c
+R
+D
+1 2 3
+/g48/g76/g70/g85/g82/g70/g75/g76/g83 /g55 /g72/g70/g75/g81/g82/g79/g82/g74/g92 /g39/g85/g68/g90/g76/g81/g74 /g38/g19/g23/g16/g20/g19/g20/g37
+
+PAGE 23
+ 2010 Microchip Technology Inc. DS22008E-page 23
+MCP1702
+APPENDIX A: REVISION HISTORY
+Revision E (November 2010)
+The following is the list of modifications:
+1. Updated the Thermal Resistance Typical value
+for the SOT-89 package in the Junction
+Temperature Estimate section.
+Revision D (June 2009)
+The following is the list of modifications:
+1. DC Characteristics  table: Updated the V OUT
+Temperature Coefficient’s maximum value.
+2. Section 7.0 “Packaging Information” :
+Updated package outline drawings.
+Revision C (November 2008)
+The following is the list of modifications:
+1. DC Characteristics table: Added row to Output
+Voltage Regulation for 1% custom part.
+2. Temperature Specifications table: Numerous
+changes to table.
+3. Added Note 2 to Temperature Specifications
+table.
+4. Section 5.0 “Functional Description” ,
+Section 5.2 “Output” : Added second
+paragraph.
+5. Section 7.0 “Packaging Information” : Added
+1% custom part information to this section. Also,
+updated package outline drawings.
+6. Product Identification System : Added 1%
+custom part information to this page.
+Revision B (May 2007)
+The following is the list of modifications:
+1. All Pages: Corrected minor errors in document.
+2. Page 4: Added junction-to-case information to
+Temperature Specifications table.
+3. Page 16: Updated Package Outline Drawings in
+Section 7.0 “Packaging Information”.
+4. Page 21: Updated Revision History.
+5. Page 23: Corrected examples in Product
+Identification System.
+Revision A (September 2006)
+• Original Release of this Document.
+
+PAGE 24
+MCP1702
+DS22008E-page 24  2010 Microchip Technology Inc.
+PRODUCT IDENTIFICATION SYSTEM
+To order or obtain information, e.g., on pricing or delivery, refer to the factory or the listed sales office .
+   
+Device: MCP1702: 2 µA Low Dropout Positive Voltage Regulator
+Tape and Reel: T = Tape and Reel
+Output Voltage *: 12 = 1.2V “Standard”
+15 = 1.5V “Standard”
+18 = 1.8V “Standard”
+25 = 2.5V “Standard”
+28 = 2.8V “Standard”
+30 = 3.0V “Standard”
+33 = 3.3V “Standard”
+40 = 4.0V “Standard”
+50 = 5.0V “Standard”
+*Contact factory for other output voltage options.
+Extra Feature Code: 0 = Fixed
+Tolerance: 2 = 2.0% (Standard)
+1 = 1.0% (Custom)
+Temperature: E=  - 4 0 C to +125C
+Package Type: CB = Plastic Small Outline Transistor (SOT-23A) 
+(equivalent to EIAJ SC-59), 3-lead,
+MB = Plastic Small Outline Transistor Header, (SOT-89), 
+3-lead
+TO = Plastic Transistor Outline (TO-92), 3-lead
+PART NO. XXX
+Output Feature
+Code
+Device
+Voltage
+X
+Tolerance
+X/
+Temp.
+XX
+Package
+X-
+Tape
+and Reel
+Examples:
+a) MCP1702T-1202E/CB: 1.2V LDO Positive
+Voltage Regulator,
+SOT-23A-3 pkg.
+b) MCP1702T-1802E/MB: 1.8V LDO Positive
+Voltage Regulator,
+SOT-89-3 pkg.
+c) MCP1702T-2502E/CB: 2.5V LDO Positive
+Voltage Regulator,
+SOT-23A-3 pkg.
+d) MCP1702T-3002E/CB: 3.0V LDO Positive
+Voltage Regulator,
+SOT-23A-3 pkg.
+e) MCP1702T-3002E/MB: 3.0V LDO Positive
+Voltage Regulator,
+SOT-89-3 pkg.
+f) MCP1702T-3302E/CB: 3.3V LDO Positive
+Voltage Regulator,
+SOT-23A-3 pkg.
+g) MCP1702T-3302E/MB: 3.3V LDO Positive
+Voltage Regulator,
+SOT-89-3 pkg.
+h) MCP1702T-4002E/CB: 4.0V LDO Positive
+Voltage Regulator,
+SOT-23A-3 pkg.
+i) MCP1702-5002E/TO: 5.0V LDO Positive
+Voltage Regulator,
+TO-92 pkg.
+j) MCP1702T-5002E/CB: 5.0V LDO Positive
+Voltage Regulator,
+SOT-23A-3 pkg.
+k) MCP1702T-5002E/MB: 5.0V LDO Positive
+Voltage Regulator,
+SOT-89-3 pkg.
+
+PAGE 25
+ 2010 Microchip Technology Inc. DS22008E-page 25
+Information contained in this publication regarding device
+applications and the like is provided only for your convenience
+and may be superseded by updates. It is your responsibility to
+ensure that your application meets with your specifications.
+MICROCHIP MAKES NO REPRESENTATIONS OR
+WARRANTIES OF ANY KIND WHETHER EXPRESS OR
+IMPLIED, WRITTEN OR ORAL, STATUTORY OR
+OTHERWISE, RELATED TO THE INFORMATION,
+INCLUDING BUT NOT LIMITED TO ITS CONDITION,
+QUALITY , PERFORMANCE, MERCHANTABILITY OR
+FITNESS FOR PURPOSE . Microchip disclaims all liability
+arising from this information and its use. Use of Microchip
+devices in life support and/or safety applications is entirely at
+the buyer’s risk, and the buyer agrees to defend, indemnify and
+hold harmless Microchip from any and all damages, claims,
+suits, or expenses resulting from such use. No licenses are
+conveyed, implicitly or otherwise, under any Microchip
+intellectual property rights.
+Trademarks
+The Microchip name and logo, the Microchip logo, dsPIC, 
+KEELOQ, KEELOQ logo, MPLAB, PIC, PICmicro, PICSTART, 
+PIC32 logo, rfPIC and UNI/O are registered trademarks of 
+Microchip Technology Incorporated in the U.S.A. and other 
+countries.
+FilterLab, Hampshire, HI-TECH C, Linear Active Thermistor, 
+MXDEV, MXLAB, SEEVAL and The Embedded Control 
+Solutions Company are registered trademarks of Microchip 
+Technology Incorporated in the U.S.A.
+Analog-for-the-Digital Age, Application Maestro, CodeGuard, 
+dsPICDEM, dsPICDEM.net, dsPICworks, dsSPEAK, ECAN, 
+ECONOMONITOR, FanSense, HI-TIDE, In-Circuit Serial 
+Programming, ICSP, Mindi, MiWi, MPASM, MPLAB Certified 
+logo, MPLIB, MPLINK, mTouch, Omniscient Code 
+Generation, PICC, PICC-18, PICDEM, PICDEM.net, PICkit, 
+PICtail, REAL ICE, rfLAB, Select Mode, Total Endurance, 
+TSHARC, UniWinDriver, WiperLock and ZENA are 
+trademarks of Microchip Technology Incorporated in the 
+U.S.A. and other countries.
+SQTP is a service mark of Microchip Technology Incorporated 
+in the U.S.A.
+All other trademarks mentioned herein are property of their 
+respective companies.
+© 2010, Microchip Technology Incorporated, Printed in the 
+U.S.A., All Rights Reserved.
+ Printed on recycled paper.
+ISBN: 978-1-60932-690-6
+Note the following details of the code protection feature on Microchip devices:
+• Microchip products meet the specification cont ained in their particular Microchip Data Sheet.
+• Microchip believes that its family of products is one of the most secure families of its kind on the market today, when used i n the 
+intended manner and under normal conditions.
+• There are dishonest and possibly illegal methods used to breach the code protection feature. All of these methods, to our 
+knowledge, require using the Microchip products in a manner outside the operating specifications contained in Microchip’s Data 
+Sheets. Most likely, the person doing so is engaged in theft of intellectual property.
+• Microchip is willing to work with the customer who is concerned about the integrity of their code.
+• Neither Microchip nor any other semiconduc tor manufacturer can guarantee the security of their code. Code protection does not 
+mean that we are guaranteeing the product as “unbreakable.”
+Code protection is constantly evolving. We at Microchip are co mmitted to continuously improvin g the code protection features of  our
+products. Attempts to break Microchip’s code protection feature may be a violation of the Digital Millennium Copyright Act. If such acts
+allow unauthorized access to your software or other copyrighted work, you may have a right to sue for relief under that Act.
+Microchip received ISO/TS-16949:2002 certification for its worldwide 
+headquarters, design and wafer fabrication facilities in Chandler and 
+Tempe, Arizona; Gresham, Oregon and design centers in California 
+and India. The Company’s quality system processes and procedures 
+are for its PIC® MCUs and dsPIC® DSCs, KEELOQ® code hopping 
+devices, Serial EEPROMs, microperipherals, nonvolatile memory and 
+analog products. In addition, Microchip’s quality system for the design 
+and manufacture of development systems is ISO 9001:2000 certified.
+
+
+PAGE 26
+DS22008E-page 26  2010 Microchip Technology Inc.
+AMERICAS
+Corporate Office
+2355 West Chandler Blvd.
+Chandler, AZ 85224-6199
+Tel: 480-792-7200 
+Fax: 480-792-7277
+Technical Support: 
+http://support.microchip.com
+Web Address: 
+www.microchip.com
+Atlanta
+Duluth, GA 
+Tel: 678-957-9614 
+Fax: 678-957-1455
+Boston
+Westborough, MA 
+Tel: 774-760-0087 
+Fax: 774-760-0088
+Chicago
+Itasca, IL 
+Tel: 630-285-0071 
+Fax: 630-285-0075
+Cleveland
+Independence, OH 
+Tel: 216-447-0464 
+Fax: 216-447-0643
+Dallas
+Addison, TX 
+Tel: 972-818-7423 
+Fax: 972-818-2924
+Detroit
+Farmington Hills, MI 
+Tel: 248-538-2250
+Fax: 248-538-2260
+Kokomo
+Kokomo, IN 
+Tel: 765-864-8360
+Fax: 765-864-8387
+Los Angeles
+Mission Viejo, CA 
+Tel: 949-462-9523 
+Fax: 949-462-9608
+Santa Clara
+Santa Clara, CA 
+Tel: 408-961-6444
+Fax: 408-961-6445
+Toronto
+Mississauga, Ontario, 
+Canada
+Tel: 905-673-0699 
+Fax: 905-673-6509
+ASIA/PACIFIC
+Asia Pacific Office
+Suites 3707-14, 37th Floor
+Tower 6, The Gateway
+Harbour City, Kowloon
+Hong Kong
+Tel: 852-2401-1200
+Fax: 852-2401-3431
+Australia - Sydney
+Tel: 61-2-9868-6733
+Fax: 61-2-9868-6755
+China - Beijing
+Tel: 86-10-8528-2100 
+Fax: 86-10-8528-2104
+China - Chengdu
+Tel: 86-28-8665-5511
+Fax: 86-28-8665-7889
+China - Chongqing
+Tel: 86-23-8980-9588
+Fax: 86-23-8980-9500
+China - Hong Kong SAR
+Tel: 852-2401-1200 
+Fax: 852-2401-3431
+China - Nanjing
+Tel: 86-25-8473-2460
+Fax: 86-25-8473-2470
+China - Qingdao
+Tel: 86-532-8502-7355
+Fax: 86-532-8502-7205
+China - Shanghai
+Tel: 86-21-5407-5533 
+Fax: 86-21-5407-5066
+China - Shenyang
+Tel: 86-24-2334-2829
+Fax: 86-24-2334-2393
+China - Shenzhen
+Tel: 86-755-8203-2660 
+Fax: 86-755-8203-1760
+China - Wuhan
+Tel: 86-27-5980-5300
+Fax: 86-27-5980-5118
+China - Xian
+Tel: 86-29-8833-7252
+Fax: 86-29-8833-7256
+China - Xiamen
+Tel: 86-592-2388138 
+Fax: 86-592-2388130
+China - Zhuhai
+Tel: 86-756-3210040 
+Fax: 86-756-3210049
+ASIA/PACIFIC
+India - Bangalore
+Tel: 91-80-3090-4444 
+Fax: 91-80-3090-4123
+India - New Delhi
+Tel: 91-11-4160-8631
+Fax: 91-11-4160-8632
+India - Pune
+Tel: 91-20-2566-1512
+Fax: 91-20-2566-1513
+Japan - Yokohama
+Tel: 81-45-471- 6166 
+Fax: 81-45-471-6122
+Korea - Daegu
+Tel: 82-53-744-4301
+Fax: 82-53-744-4302
+Korea - Seoul
+Tel: 82-2-554-7200
+Fax: 82-2-558-5932 or 
+82-2-558-5934
+Malaysia - Kuala Lumpur
+Tel: 60-3-6201-9857
+Fax: 60-3-6201-9859
+Malaysia - Penang
+Tel: 60-4-227-8870
+Fax: 60-4-227-4068
+Philippines - Manila
+Tel: 63-2-634-9065
+Fax: 63-2-634-9069
+Singapore
+Tel: 65-6334-8870
+Fax: 65-6334-8850
+Taiwan - Hsin Chu
+Tel: 886-3-6578-300
+Fax: 886-3-6578-370
+Taiwan - Kaohsiung
+Tel: 886-7-213-7830
+Fax: 886-7-330-9305
+Taiwan - Taipei
+Tel: 886-2-2500-6610 
+Fax: 886-2-2508-0102
+Thailand - Bangkok
+Tel: 66-2-694-1351
+Fax: 66-2-694-1350
+EUROPE
+Austria - Wels
+Tel: 43-7242-2244-39
+Fax: 43-7242-2244-393
+Denmark - Copenhagen
+Tel: 45-4450-2828 
+Fax: 45-4485-2829
+France - Paris
+Tel: 33-1-69-53-63-20 
+Fax: 33-1-69-30-90-79
+Germany - Munich
+Tel: 49-89-627-144-0 
+Fax: 49-89-627-144-44
+Italy - Milan 
+Tel: 39-0331-742611 
+Fax: 39-0331-466781
+Netherlands - Drunen
+Tel: 31-416-690399 
+Fax: 31-416-690340
+Spain - Madrid
+Tel: 34-91-708-08-90
+Fax: 34-91-708-08-91
+UK - Wokingham
+Tel: 44-118-921-5869
+Fax: 44-118-921-5820
+Worldwide Sales and Service
+08/04/10

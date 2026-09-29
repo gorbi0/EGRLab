@@ -1,0 +1,228 @@
+{
+  "kind": "Analytical estimates, NOT hardware measurements",
+  "project_parts": {
+    "P03/U3": {
+      "ref": "U3",
+      "source_ref": "U5",
+      "footprint": "P03:Adapter_SOT23-6_DIP6_W15.24_ChipQuik_PA0085",
+      "display": "TPS3808G33 / PA0085",
+      "value": "TPS3808G33 / PA0085",
+      "mpn": "TPS3808G33DBVR on Chip Quik PA0085",
+      "pins": {
+        "1": "SUP_RAW_N",
+        "2": "GND",
+        "3": "3V3_CORE",
+        "4": "NC",
+        "5": "3V3_CORE",
+        "6": "3V3_CORE"
+      },
+      "url": "https://www.ti.com/lit/ds/symlink/tps3808.pdf",
+      "note": "SOT23-6 on PA0085 (rows 15.24 mm, measured). Pin n = SOT pin n: confirm on the adapter before soldering. CT open = fixed delay.",
+      "qty": 1,
+      "sheet": "POWER",
+      "on_board": true
+    },
+    "P03/U4": {
+      "ref": "U4",
+      "source_ref": "ADDED_R2_RESET_BUFFER",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+      "display": "SN74LVC1G07DBVR",
+      "value": "SN74LVC1G07DBVR",
+      "mpn": "SN74LVC1G07DBVR",
+      "pins": {
+        "1": "NC",
+        "2": "SUP_RAW_N",
+        "3": "GND",
+        "4": "RESET_DRV_N",
+        "5": "3V3_CORE"
+      },
+      "url": "https://www.ti.com/lit/ds/symlink/sn74lvc1g07.pdf",
+      "note": "DBV SOT23-5, 0.95 mm pitch; direct hand soldering. Non-inverting OD; never substitute push-pull.",
+      "qty": 1,
+      "sheet": "POWER",
+      "on_board": true
+    },
+    "P03/U6": {
+      "ref": "U6",
+      "source_ref": "ADDED_R4_RESET_SCHMITT",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+      "display": "SN74LVC1G17DBVR",
+      "value": "SN74LVC1G17DBVR",
+      "mpn": "SN74LVC1G17DBVR",
+      "pins": {
+        "1": "NC",
+        "2": "SUP_N",
+        "3": "GND",
+        "4": "SUP_N_DRV",
+        "5": "3V3_CORE"
+      },
+      "url": "https://www.ti.com/lit/ds/symlink/sn74lvc1g17.pdf",
+      "note": "DBV SOT23-5, 0.95 mm pitch; direct hand soldering. Schmitt-trigger buffer, push-pull. Drives J4.15 (P04 SUP_N) through R41.",
+      "qty": 1,
+      "sheet": "POWER",
+      "on_board": true
+    },
+    "P03/R13": {
+      "ref": "R13",
+      "source_ref": "R_SUP_PU",
+      "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+      "display": "10K / 1%",
+      "value": "10K / 1%",
+      "mpn": "MF0207FTE-10K",
+      "pins": {
+        "1": "SUP_RAW_N",
+        "2": "3V3_CORE"
+      },
+      "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+      "note": "Supervisor pull-up before U4; does not discharge Waveshare EN capacitor.",
+      "qty": 1,
+      "sheet": "POWER",
+      "on_board": true
+    },
+    "P03/R34": {
+      "ref": "R34",
+      "source_ref": "ADDED_R2_RESET_LIMIT",
+      "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+      "display": "220R / 1%",
+      "value": "220R / 1%",
+      "mpn": "MF0207FTE-220R",
+      "pins": {
+        "1": "RESET_DRV_N",
+        "2": "SUP_N"
+      },
+      "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+      "note": "Limits discharge of the module EN capacitor to <16 mA at 3.465 V. Final SUP_N goes to MCU EN, MCP reset and P04.",
+      "qty": 1,
+      "sheet": "POWER",
+      "on_board": true
+    },
+    "P03/R35": {
+      "ref": "R35",
+      "source_ref": "ADDED_R2_RESET_PULLUP",
+      "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+      "display": "10K / 1%",
+      "value": "10K / 1%",
+      "mpn": "MF0207FTE-10K",
+      "pins": {
+        "1": "SUP_N",
+        "2": "3V3_CORE"
+      },
+      "url": "https://www.yageo.com/upload/media/product/productsearch/datasheet/lr/Yageo_LR_MFR_1.pdf",
+      "note": "Final common reset pull-up, parallel to the module 10K. Module 1 uF EN capacitor retained.",
+      "qty": 1,
+      "sheet": "POWER",
+      "on_board": true
+    },
+    "P03/R41": {
+      "ref": "R41",
+      "source_ref": "ADDED_R4_RESET_SERIES",
+      "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+      "display": "220R / 1% 1206",
+      "value": "220R / 1% 1206",
+      "mpn": "RC1206FR-07220RL",
+      "pins": {
+        "1": "SUP_N_DRV",
+        "2": "SUP_N_OUT"
+      },
+      "url": "",
+      "note": "Series resistor U6.4 -> J4.15, 2.8 mm from U6: harness short to GND <= 16 mA (3.465 V). Load = H_SAFE ribbon 150 mm (P04-R2.1) + P04 input, ~20 pF: tau ~4.4 ns, <= 5.5 ns/V over 0.8-2.0 V (P04 74LVC125A limit 10 ns/V, met up to ~36 pF).",
+      "qty": 1,
+      "sheet": "POWER",
+      "on_board": true
+    },
+    "P04/U9": {
+      "ref": "U9",
+      "source_ref": "U_RX2",
+      "footprint": "P04:Adapter_SO14_DIP14_W15.24_Kamami575068",
+      "display": "74LVC125AD / adapter",
+      "value": "74LVC125AD / adapter",
+      "mpn": "74LVC125AD,118 (Nexperia)",
+      "pins": {
+        "7": "GND",
+        "14": "3V3_IO",
+        "1": "GND",
+        "2": "CORE_LINK",
+        "3": "CORE_LINK_P04",
+        "4": "GND",
+        "5": "SUP_N",
+        "6": "SUP_N_P04",
+        "10": "GND",
+        "9": "PSU_OK",
+        "8": "PSU_OK_P04",
+        "13": "GND",
+        "12": "DAQ_OK",
+        "11": "DAQ_OK_P04"
+      },
+      "sheet": "RX",
+      "url": "https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf",
+      "note": "Kamami 575068 SO14 to DIP14 adapter, 18x18 mm, rows 15.24 mm; local 100nF C15..17 on adapter.",
+      "qty": 1,
+      "on_board": true
+    },
+    "P04/R17": {
+      "ref": "R17",
+      "source_ref": "R_EXT_SUP_N",
+      "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+      "display": "100K / 1%",
+      "value": "100K / 1%",
+      "mpn": "MFR-25FRF52-100K",
+      "pins": {
+        "1": "SUP_N",
+        "2": "GND"
+      },
+      "sheet": "RX",
+      "url": "https://yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf",
+      "note": "Connector-side default LOW.",
+      "qty": 1,
+      "on_board": true
+    }
+  },
+  "source_sha256": {
+    "P03-R4-recenzja-Codex\\work\\docs\\parts.json": "bd8325191101791014620ff2816414c90e315e34dbf36c5c59097c2ef015fd3b",
+    "C:\\Users\\tgorbacz\\Documents\\GORBI\\Priv\\Kia\\Sportage\\EGRLab\\Plytki\\P04-R2.1-review\\docs\\parts.json": "e7f9a179af93f9445afd87ea4d792194e61688aaba43b5d689437ee10a53deea"
+  },
+  "U4_rise": {
+    "R13_ohm": 10000,
+    "Ci_typical_only_pF": 4,
+    "Vcc_nominal_V": 3.3,
+    "omitted_capacitance": "TPS3808 output, PCB, test point and probe",
+    "tau_ns": 40.0,
+    "time_0p8_to_2p0_V_ns": 26.157058696266567,
+    "average_ns_per_V": 21.797548913555474,
+    "local_ns_per_V_at_2p0_V": 30.769230769230766,
+    "datasheet_limit_ns_per_V": 10
+  },
+  "P04_default_low": {
+    "assumption": "Conservative same-sign magnitude sum; not a prediction of actual leakage direction or measured voltage",
+    "Ioff_U6_max_uA": 10,
+    "Iin_U9_max_uA_up_to_85C": 5,
+    "Iin_U9_max_uA_up_to_125C": 20,
+    "resistor_tolerance": 0.01,
+    "R17_100k_V_85C": 1.5150000000000001,
+    "R17_100k_V_125C": 3.0300000000000002,
+    "R17_10k_V_85C": 0.1515,
+    "R17_10k_V_125C": 0.303,
+    "VIL_max_V": 0.8
+  },
+  "SUP_N_low": {
+    "assumption": "Conservative VOL=0.4 V; two nominal 10k pull-ups, R34=220 ohm",
+    "V_at_Vcc_3p3": 0.5222222222222223,
+    "V_at_Vcc_3p0": 0.5095785440613027,
+    "V_at_Vcc_3p0_resistor_extremes_1percent": 0.5116971501488728
+  },
+  "R41_ideal_only": {
+    "R_ohm": 220,
+    "C_assumed_pF": 20,
+    "tau_ns": 4.3999999999999995,
+    "t10_90_ns": 9.667788140279367,
+    "C_pF_at_ideal_falling_limit": 36.36363636363637,
+    "omitted": "Driver output impedance, finite slew, nonzero VOL, cable shape, probe load; hence NOT a guaranteed C limit"
+  },
+  "sources": [
+    "https://www.ti.com/lit/ds/symlink/sn74lvc1g07.pdf",
+    "https://www.ti.com/lit/ds/symlink/sn74lvc1g17.pdf",
+    "https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf",
+    "https://www.ti.com/lit/gpn/TPS3808",
+    "https://www.ti.com/lit/gpn/SN74LVC1G37"
+  ]
+}

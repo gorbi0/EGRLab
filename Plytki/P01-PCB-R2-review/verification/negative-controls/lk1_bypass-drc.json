@@ -1,0 +1,153 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-24T18:36:22",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "lk1_bypass.kicad_pcb",
+    "unconnected_items": [],
+    "violations": [
+        {
+            "description": "Tracks crossing",
+            "items": [
+                {
+                    "description": "Ścieżka [/VPROT] na F.Cu, długość 10,0000 mm",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 36.0
+                    },
+                    "uuid": "7a81ad45-0be8-4c97-9821-805970b1d0dd"
+                },
+                {
+                    "description": "Ścieżka [/P01_Q1_DRAIN] na F.Cu, długość 3,9051 mm",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 36.0
+                    },
+                    "uuid": "b0c760e6-121f-4ad1-b553-cc2922b9d03c"
+                }
+            ],
+            "severity": "error",
+            "type": "tracks_crossing"
+        },
+        {
+            "description": "Tracks crossing",
+            "items": [
+                {
+                    "description": "Ścieżka [/VPROT] na F.Cu, długość 10,0000 mm",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 36.0
+                    },
+                    "uuid": "7a81ad45-0be8-4c97-9821-805970b1d0dd"
+                },
+                {
+                    "description": "Ścieżka [/P01_Q1_DRAIN] na F.Cu, długość 4,0311 mm",
+                    "pos": {
+                        "x": 122.0,
+                        "y": 35.5
+                    },
+                    "uuid": "ee4ad3fe-647f-4641-9405-07ede428ab1a"
+                }
+            ],
+            "severity": "error",
+            "type": "tracks_crossing"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci /VPROT oraz /P01_Q1_DRAIN)",
+            "items": [
+                {
+                    "description": "Ścieżka [/VPROT] na F.Cu, długość 10,0000 mm",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 36.0
+                    },
+                    "uuid": "7a81ad45-0be8-4c97-9821-805970b1d0dd"
+                },
+                {
+                    "description": "Pole PTH 1 [/P01_Q1_DRAIN] na LK1",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 36.0
+                    },
+                    "uuid": "bb7a4442-31ed-4f5d-a82f-c1a65aca21af"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [/VPROT] na F.Cu, długość 10,0000 mm",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 36.0
+                    },
+                    "uuid": "7a81ad45-0be8-4c97-9821-805970b1d0dd"
+                },
+                {
+                    "description": "Pole PTH 1 [/P01_Q1_DRAIN] na LK1",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 36.0
+                    },
+                    "uuid": "bb7a4442-31ed-4f5d-a82f-c1a65aca21af"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/VPROT] na F.Cu, długość 10,0000 mm",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 36.0
+                    },
+                    "uuid": "7a81ad45-0be8-4c97-9821-805970b1d0dd"
+                },
+                {
+                    "description": "Pole PTH 1 [/P01_Q1_DRAIN] na LK1",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 36.0
+                    },
+                    "uuid": "bb7a4442-31ed-4f5d-a82f-c1a65aca21af"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        }
+    ]
+}

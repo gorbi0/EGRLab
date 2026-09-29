@@ -1,0 +1,78 @@
+﻿Oznaczenie;Nazwa;Ilosc;Uwagi
+J1;WEJSCIE po zewnetrznym F1 5 A;1;
+J2;WYJSCIE do VPROT;1;
+J3;INHIBIT: zwarcie = OFF;1;"Normalnie bez zworki; tylko styk bezpotencjalowy."
+D1;15KPA24CA;1;"Dwukierunkowy. Zastepuje zewnetrzny SM8S24CA w tym wariancie; nie sumowac ich mocy."
+D2;STPS20100CT;1;1=A1, 2=K+tab, 3=A2. Polaczyc 1 i 3 symetrycznie. Osobny radiator <=5 K/W.
+Q1;SUP53P06-20-E3;1;Vishay, 60 V, RDS max 25 mOhm przy VGS=-4.5 V. 1=G, 2=D+tab, 3=S. Dioda ciala: A=VPROT, K=VS. Radiator <=10 K/W.
+D3;5KP18A;1;Jednokierunkowy: pasek do VPROT. Nie jest stabilizatorem 18 V.
+D4;BZX55C15;1;"Ograniczenie ujemnego VGS; pasek do SOURCE/VS. Krotkie wyprowadzenia."
+C1;10 uF;1;"63 V; 105 C; 1=plus"
+C2;100 nF;1;"100 V; film lub X7R"
+C3;100 uF;1;"50 V; 105 C; 1=plus"
+C4;100 nF;1;"100 V; film lub X7R"
+C5;220 nF;1;"100 V; film; Miller, ograniczenie szybkosci narastania"
+C6;47 nF;1;"100 V; film; odpornoĹ›Ä‡ na zaklocenia bramki"
+R1;150 ohm;1;"2 W; 5%; metal oxide; odporny impulsowo"
+D5;1.5KE18A-E3/54;1;"UWAGA: VWM=15.3 V, VBR=17.1...18.9 V, VC=25.2 V; inna numeracja niz 5KP18A."
+C7;22 uF;1;"35 V; 105 C; 1=plus"
+C8;100 nF;1;"50 V; X7R"
+U1;LM2936Z-5.0/NOPB;1;UWAGA: 1=OUT, 2=GND, 3=IN. Nie pinout 78L05.
+R2;1 ohm;1;"0.25 W; 1%; sztuczny ESR kondensatora C9"
+C9;47 uF;1;"16 V; 105 C; low ESR; 1=plus. ESR C9+R2: 0.3...8 ohm w temperaturze pracy."
+C10;100 nF;1;"50 V; przy U2"
+C11;100 nF;1;"50 V; przy U4"
+R3;820 ohm;1;"0.25 W; 1%"
+R4;10000 ohm;1;"0.25 W; 1%"
+U3;TL431BILP;1;"TI LP: 1=CATHODE, 2=ANODE, 3=REF. Piny 1 i 3 zwarte; bez kondensatora na katodzie."
+U2;LM2903P;1;Klasyczny LM2903P. Wyjscia OC 1 i 7 zwarte z RESET U4.
+U4;MCP120-450DI/TO;1;Wariant D: 1=RESET, 2=VDD, 3=VSS. Open drain, bez wewnetrznego pull-up.
+D6;1N4148;1;"Osobna dioda toru pomiarowego; blokuje ujemne VIN. Jej VF uwzglednia kalibracja OVP."
+R5;54900 ohm;1;"0.25 W; 0.1%; <=25 ppm/K"
+RV1;3296W-1-502LF / 5 kohm;1;"Suwak 2 zwarty z 1. Start od 0 ohm miedzy (1+2) i 3. Nominalnie 2.14 kohm; kalibrowac pomiarem."
+R6;10000 ohm;1;"0.25 W; 0.1%; <=25 ppm/K"
+R7;10000 ohm;1;"0.25 W; 0.1%; <=25 ppm/K"
+R8;220000 ohm;1;"0.25 W; 0.1%; <=25 ppm/K"
+R9;26100 ohm;1;"0.25 W; 0.1%; <=25 ppm/K"
+R10;10000 ohm;1;"0.25 W; 0.1%; <=25 ppm/K"
+R11;249000 ohm;1;"0.25 W; 0.1%; <=25 ppm/K"
+R12;100000 ohm;1;"0.25 W; 1%"
+C12;100 pF;1;"50 V; C0G/NP0; nie zwiekszac bez badania czasu OVP"
+C13;1 nF;1;"50 V; C0G/NP0"
+R13;2200 ohm;1;"0.25 W; 1%"
+R14;4700 ohm;1;"0.25 W; 1%"
+D7;1N4148;1;D7+D8 zapobiegaja uruchomieniu drivera przy stanie LOW i nieustalonym AUX5 <1 V.
+D8;1N4148;1;
+R15;100000 ohm;1;"0.25 W; 1%"
+Q6;2N5551G;1;onsemi: 1=E, 2=B, 3=C. Wtornik, odciaza wspolna linie OK.
+R16;10000 ohm;1;"0.25 W; 1%"
+R17;4700 ohm;1;"0.25 W; 1%"
+R18;47000 ohm;1;"0.25 W; 1%"
+R19;4700 ohm;1;"0.25 W; 1%"
+R20;47000 ohm;1;"0.25 W; 1%"
+Q3;2N5551G;1;Sciaga GATE przez R21 tylko przy ENABLE.
+Q5;2N5551G;1;Wlacza Q4, ktory wylacza szybki pull-up Q2.
+R21;4700 ohm;1;"0.5 W; 1%"
+R22;100000 ohm;1;"0.25 W; 1%"
+Q2;2N5401G;1;Domyslnie ON: zamyka Q1 niezaleznie od AUX5.
+Q4;2N5401G;1;Przy ENABLE: podciaga baze Q2 do VS, blokujac Q2.
+R23;2200 ohm;1;"2 W; 1%; metal oxide"
+R24;100000 ohm;1;"0.25 W; 1%"
+R25;47000 ohm;1;"0.25 W; 1%"
+R26;10000 ohm;1;"0.5 W; 1%"
+R27;47 ohm;1;"0.5 W; 1%; odporny impulsowo"
+R28;4700 ohm;1;"0.5 W; 1%; rozladowanie wyjscia"
+LED1;LED zielona 3 mm;1;Sygnalizuje VPROT, nie stan bezpieczenstwa ani zezwolenie na ruch.
+R29;6800 ohm;1;"0.25 W; 1%"
+J4;SYGNAL BLEDU do EGRLab;1;1=3V3_IO z plyty EGRLab, 2=SAFE_N, 3=wspolna masa. Bez lokalnego pull-up na FAULT_OC.
+Q7;2N5551G;1;"Otwarty kolektor sciaga SAFE_N przy braku ENABLE; uzbrojenie po bledzie wymaga ARM."
+Q8;2N5551G;1;Przy ENABLE blokuje Q7. Zasilanie polaryzacji Q7 z 3V3_IO odbiornika.
+R30;10000 ohm;1;"0.25 W; 1%"
+R31;100000 ohm;1;"0.25 W; 1%"
+R32;10000 ohm;1;"0.25 W; 1%"
+R33;47000 ohm;1;"0.25 W; 1%"
+J_PRES;Obecnosc P01 - petla 2-pin;1;"Zewrzec styki na PCB P01; niezaleznie od J4 FAULT."
+W_PRES;0R;1;
+J_PGB;MicroFit-6 6p;1;PG
+J_SUPPLYA;MSTB 5.08 >=12A 3p;1;SUPPLY
+J_BATB;MSTB 5.08 >=12A black 2p;1;BAT

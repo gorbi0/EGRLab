@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 620" width="980" height="620" font-family="system-ui, sans-serif">
+  <style>
+    .box { fill: #fff; stroke: #333; stroke-width: 1.6; rx: 6; }
+    .car { fill: #f3f0e7; stroke: #8a7a4a; }
+    .pwr { fill: #fdf0ef; stroke: #a05a52; }
+    .safe { fill: #eef5ee; stroke: #4d7a4d; }
+    .meas { fill: #eef2fa; stroke: #4a6a9a; }
+    t, text { font-size: 12.5px; fill: #111; }
+    .t { font-size: 12.5px; fill: #111; }
+    .s { font-size: 11px; fill: #555; }
+    .h { font-size: 13px; font-weight: 600; fill: #111; }
+    .w { stroke: #555; stroke-width: 1.4; fill: none; }
+    .wd { stroke: #999; stroke-width: 1.2; fill: none; stroke-dasharray: 4 3; }
+  </style>
+  <defs>
+    <marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <text class="h" x="16" y="24">EGRLab v2 — schemat blokowy</text>
+  <text class="s" x="16" y="42">Adaptery L1/L2/T są fizycznie wyłączne. Jedna masa, wyprowadzona na minus akumulatora.</text>
+
+  <!-- samochod -->
+  <rect class="box car" x="16" y="64" width="150" height="90"/>
+  <text class="h" x="30" y="86">ECU EDC17C08</text>
+  <text class="s" x="30" y="104">piny 1,3 — napęd</text>
+  <text class="s" x="30" y="120">piny 4,5,6 — czujnik</text>
+  <text class="s" x="30" y="136">(mapowanie z IDENTIFY)</text>
+
+  <rect class="box car" x="16" y="196" width="150" height="70"/>
+  <text class="h" x="30" y="218">Zawór EGR</text>
+  <text class="s" x="30" y="236">28410-2A850</text>
+  <text class="s" x="30" y="252">CUD87, 6 styków</text>
+
+  <rect class="box car" x="16" y="300" width="150" height="62"/>
+  <text class="h" x="30" y="322">Punkt AUX</text>
+  <text class="s" x="30" y="340">ECV klimatyzacji (H7)</text>
+  <text class="s" x="30" y="356">albo masa GUD09 (H2)</text>
+
+  <!-- adaptery -->
+  <rect class="box" x="206" y="64" width="150" height="86"/>
+  <text class="h" x="220" y="86">Adapter L1 / L2</text>
+  <text class="s" x="220" y="104">L2: back-probe, bez</text>
+  <text class="s" x="220" y="120">ruszania złącza</text>
+  <text class="s" x="220" y="136">L1: inline + bocznik 5 mΩ</text>
+
+  <rect class="box" x="206" y="176" width="150" height="86"/>
+  <text class="h" x="220" y="198">Adapter T</text>
+  <text class="s" x="220" y="216">JP_SENSOR: zworki</text>
+  <text class="s" x="220" y="232">polaryzacji czujnika</text>
+  <text class="s" x="220" y="248">pętla TEST_PRESENT</text>
+
+  <!-- front-end -->
+  <rect class="box meas" x="400" y="64" width="176" height="128"/>
+  <text class="h" x="414" y="86">Front-end analogowy</text>
+  <text class="s" x="414" y="106">rezystory przy złączu EGR</text>
+  <text class="s" x="414" y="122">wspólny węzeł + K_MEAS (NO)</text>
+  <text class="s" x="414" y="138">INA240A2 ×2 → mux banku</text>
+  <text class="s" x="414" y="154">dzielnik VBAT</text>
+  <text class="s" x="414" y="174">AUX: zworka HI ±40 V / LO ±2,5 V</text>
+
+  <rect class="box meas" x="400" y="212" width="176" height="86"/>
+  <text class="h" x="414" y="234">AD7606B</text>
+  <text class="s" x="414" y="252">8 kanałów jednocześnie</text>
+  <text class="s" x="414" y="268">software mode: zakres/kanał</text>
+  <text class="s" x="414" y="284">fallback: hardware ±10 V</text>
+
+  <!-- moc -->
+  <rect class="box pwr" x="206" y="300" width="150" height="86"/>
+  <text class="h" x="220" y="322">VNH5019</text>
+  <text class="s" x="220" y="340">mostek + RSH_T</text>
+  <text class="s" x="220" y="356">K_PWR odcina VMOTOR</text>
+  <text class="s" x="220" y="372">EN z MOTOR_PERMIT</text>
+
+  <rect class="box pwr" x="16" y="404" width="340" height="80"/>
+  <text class="h" x="30" y="426">Zasilanie</text>
+  <text class="s" x="30" y="444">12 V → F1 10 A → TVS → P-MOS → VPROT</text>
+  <text class="s" x="30" y="460">TSR 2-2450 → 5 V · TSR 2-2433 → 3,3 V</text>
+  <text class="s" x="30" y="476">TPS2553 → K_SENSOR → 5 V czujnika (oba przewody)</text>
+
+  <!-- bezpieczenstwo -->
+  <rect class="box safe" x="400" y="320" width="176" height="164"/>
+  <text class="h" x="414" y="342">Bezpieczeństwo (sprzęt)</text>
+  <text class="s" x="414" y="362">E-STOP NC w pull-upie</text>
+  <text class="s" x="414" y="378">komparator prądu ±4 A</text>
+  <text class="s" x="414" y="394">watchdog 74HC123</text>
+  <text class="s" x="414" y="410">supervisor 3V3</text>
+  <text class="s" x="414" y="426">interlock adapterów</text>
+  <text class="s" x="414" y="446">wire-AND → SAFE_N</text>
+  <text class="s" x="414" y="462">74HC74: ARM bez</text>
+  <text class="s" x="414" y="478">automatycznego wznowienia</text>
+
+  <!-- MCU -->
+  <rect class="box" x="620" y="64" width="180" height="234"/>
+  <text class="h" x="634" y="86">ESP32-S3 N32R16</text>
+  <text class="s" x="634" y="106">akwizycja 2 kS/s (start)</text>
+  <text class="s" x="634" y="122">control.c — stany i limity</text>
+  <text class="s" x="634" y="138">trigger.c — 6 detektorów</text>
+  <text class="s" x="634" y="154">kampania HOT-SOAK</text>
+  <text class="s" x="634" y="170">heartbeat → watchdog</text>
+  <text class="s" x="634" y="186">MCU_ARM (nie uzbraja sam)</text>
+  <text class="s" x="634" y="206">konsola USB</text>
+  <text class="s" x="634" y="222">SoftAP tylko poza LOGGER</text>
+  <text class="s" x="634" y="242">TWAI listen-only</text>
+  <text class="s" x="634" y="258">2 × MAX31856 (TC1/TC2)</text>
+  <text class="s" x="634" y="278">karta SD, sesja na katalog</text>
+
+  <rect class="box" x="838" y="64" width="126" height="70"/>
+  <text class="h" x="852" y="86">Karta SD</text>
+  <text class="s" x="852" y="104">samples.egr</text>
+  <text class="s" x="852" y="120">events.ndjson</text>
+
+  <rect class="box" x="838" y="160" width="126" height="86"/>
+  <text class="h" x="852" y="182">DHO804</text>
+  <text class="s" x="852" y="200">SCOPE_TRIG</text>
+  <text class="s" x="852" y="216">impuls 20 µs</text>
+  <text class="s" x="852" y="232">przy każdym triggerze</text>
+
+  <rect class="box" x="838" y="272" width="126" height="70"/>
+  <text class="h" x="852" y="294">Telefon</text>
+  <text class="s" x="852" y="312">podgląd i przyciski</text>
+  <text class="s" x="852" y="328">ARM nadal fizyczny</text>
+
+  <!-- polaczenia -->
+  <path class="w" d="M166,104 L206,104" marker-end="url(#a)"/>
+  <path class="w" d="M166,226 L206,226" marker-end="url(#a)"/>
+  <path class="w" d="M281,150 L281,176" marker-end="url(#a)"/>
+  <path class="w" d="M356,104 L400,104" marker-end="url(#a)"/>
+  <path class="w" d="M356,206 L378,206 L378,128 L400,128" marker-end="url(#a)"/>
+  <path class="w" d="M166,330 L378,330 L378,168 L400,168" marker-end="url(#a)"/>
+  <path class="w" d="M356,340 L356,240 L400,240" marker-end="url(#a)" stroke-dasharray="4 3"/>
+  <path class="w" d="M488,192 L488,212" marker-end="url(#a)"/>
+  <path class="w" d="M576,255 L598,255 L598,180 L620,180" marker-end="url(#a)"/>
+  <path class="w" d="M576,400 L598,400 L598,230 L620,230" marker-end="url(#a)"/>
+  <path class="w" d="M620,250 L598,250 L598,402 L576,402" marker-end="url(#a)"/>
+  <path class="w" d="M281,300 L281,262" marker-end="url(#a)"/>
+  <path class="w" d="M800,100 L838,100" marker-end="url(#a)"/>
+  <path class="w" d="M800,196 L838,196" marker-end="url(#a)"/>
+  <path class="wd" d="M800,300 L838,300" marker-end="url(#a)"/>
+
+  <text class="s" x="596" y="480">Linia przerywana: połączenie opcjonalne. Wspólna masa nie jest izolacją galwaniczną.</text>
+
+  <rect class="box" x="16" y="510" width="948" height="92"/>
+  <text class="h" x="30" y="532">Osiem kanałów w jednym przechwyceniu — to jest przewaga nad czterokanałowym oscyloskopem</text>
+  <text class="s" x="30" y="554">ch1 pin 1 · ch2 pin 3 · ch3 pin 4 · ch4 pin 5 · ch5 pin 6 (±2,5 V po IDENTIFY) · ch6 prąd aktywnego banku · ch7 VBAT · ch8 AUX</text>
+  <text class="s" x="30" y="572">Kanał masy czujnika: 76 µV/LSB w software mode — próg 30 mV z Kroku 2 procedury v3 to około 400 działek przetwornika.</text>
+  <text class="s" x="30" y="590">Skop dostaje z SCOPE_TRIG informację, KIEDY patrzeć; rejestrator dostaje ze skopu pasmo, którego sam nie ma.</text>
+</svg>

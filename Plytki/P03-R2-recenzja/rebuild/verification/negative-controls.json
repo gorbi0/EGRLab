@@ -1,0 +1,147 @@
+[
+  {
+    "control": "c3_at_wrong_pin",
+    "expected_failing_check": "TPS3808 C3 is at VDD 6",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "100 nF at every IC: <= 8 mm straight and <= 20 mm routed to the VCC pin (74LVC125 pin 14, MCP23017 pin 9, 74HC139 pin 16, TPS3808 VDD)",
+      "TPS3808 C3 is at VDD 6, not MR 3"
+    ]
+  },
+  {
+    "control": "m1_rotated",
+    "expected_failing_check": "M1 Waveshare",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "M1 Waveshare: two 1x22 rows 22.86 mm apart (J1 row towards the board, J3 row at the left), USB-C end at the top edge (<= 0.5 mm)",
+      "ANTENNA keepout: M1 antenna end + 3 mm sides + 8 mm beyond, both layers, no track / via / pour; no other part inside",
+      "Power feed physically terminates on Q1 drain/source and M1",
+      "Every visible reference outside other courtyards and nearest to its own part"
+    ]
+  },
+  {
+    "control": "j1_inward",
+    "expected_failing_check": "J1 DAQ",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "J1 DAQ (right-angle 2x8 socket to P05): mating face 0-0.5 mm inside the right edge; H2 and H5 on both sides within 25 mm; key position 2 NC",
+      "Every board legend outside all courtyards (visible after assembly); the M1 / SD1 module outlines excepted"
+    ]
+  },
+  {
+    "control": "hole_shift",
+    "expected_failing_check": "Five NPTH 3.2 mm holes",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "Five NPTH 3.2 mm holes: the four P01/P02 corners + H5 (155, 38) next to the DAQ socket; copper keepouts on both layers"
+    ]
+  },
+  {
+    "control": "ref_inside_other",
+    "expected_failing_check": "Every visible reference",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "Every visible reference outside other courtyards and nearest to its own part"
+    ]
+  },
+  {
+    "control": "decap_far",
+    "expected_failing_check": "100 nF at every IC",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "100 nF at every IC: <= 8 mm straight and <= 20 mm routed to the VCC pin (74LVC125 pin 14, MCP23017 pin 9, 74HC139 pin 16, TPS3808 VDD)",
+      "Every visible reference outside other courtyards and nearest to its own part"
+    ]
+  },
+  {
+    "control": "key_swap",
+    "expected_failing_check": "KEY n beside",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "KEY n beside every IDC header, in line with its key pin (<= 1.5 mm along the header), <= 3 mm outside the box, nearest to its own header"
+    ]
+  },
+  {
+    "control": "name_swap",
+    "expected_failing_check": "Connector names",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "Every board legend outside all courtyards (visible after assembly); the M1 / SD1 module outlines excepted",
+      "Connector names DAQ, ILOG, ITEST, SAFE, DIR, SFAULT, TEMP, CAN, PANELCORE, LV03 next to their own connector (<= 4 mm, nearest connector)"
+    ]
+  },
+  {
+    "control": "thin_supply",
+    "expected_failing_check": "Every pre-routed (locked) segment",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "Every pre-routed (locked) segment and via retained with its width and layer (5V_SYS feed 1.0 mm, decoupling stubs and capacitor GND vias)"
+    ]
+  },
+  {
+    "control": "antenna_track",
+    "expected_failing_check": "ANTENNA keepout",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "ANTENNA keepout: M1 antenna end + 3 mm sides + 8 mm beyond, both layers, no track / via / pour; no other part inside"
+    ]
+  },
+  {
+    "control": "sd_off_edge",
+    "expected_failing_check": "SD1 Adafruit 4682",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "SD1 Adafruit 4682: card end at a board edge (card tip <= 0.6 mm inside), M2.5 stand-off keepouts r 3 mm around both holes, both layers"
+    ]
+  },
+  {
+    "control": "idc_rotated",
+    "expected_failing_check": "IDC box headers",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "IDC box headers J2..J8: at an edge (courtyard <= 0.5 mm), long axis along it, odd (signal) row inside, key pin NC (v6.1 keys)",
+      "Every board legend outside all courtyards (visible after assembly); the M1 / SD1 module outlines excepted",
+      "KEY n beside every IDC header, in line with its key pin (<= 1.5 mm along the header), <= 3 mm outside the box, nearest to its own header"
+    ]
+  },
+  {
+    "control": "tp_swap",
+    "expected_failing_check": "J10 LV03 pigtail",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "J10 LV03 pigtail: 1=5V_SYS 2=GND 3=3V3_IO 4=GND; anchors 12.5 mm from the solder row towards the edge; no copper under the tie band; the test pad under each LV03 pad has its net"
+    ]
+  },
+  {
+    "control": "pour_split",
+    "expected_failing_check": "GND pours",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "GND pours on both layers, island removal on; largest island >= 75 % of each pour; layers stitched by >= 40 GND vias (8 mm grid)"
+    ]
+  },
+  {
+    "control": "dangling_lock",
+    "expected_failing_check": "Fresh native DRC",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "Every pre-routed (locked) segment and via retained with its width and layer (5V_SYS feed 1.0 mm, decoupling stubs and capacitor GND vias)",
+      "Power feed physically terminates on Q1 drain/source and M1"
+    ]
+  }
+]

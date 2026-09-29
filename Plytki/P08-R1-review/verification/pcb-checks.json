@@ -1,0 +1,240 @@
+{
+  "checks": [
+    {
+      "id": "BOARD-SIZE",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "TWO-LAYER-1.6",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "TIE-J1",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "PTH-J1",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "TIE-J2",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "PTH-J2",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "TIE-J3",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "PTH-J3",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "RELAY-ROW-COORDS",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "RELAY-OPPOSITE-ROW",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "RELAY-DRILL",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "MINIFIT-ROW-SPACING",
+      "pass": true,
+      "note": "Molex SD-5566-002: PCB rows 5.5 mm; 4.2 mm is mating pitch."
+    },
+    {
+      "id": "MINIFIT-DRILL",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "TPS-DECOUPLING",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "LOGIC-DECOUPLING",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "TO92-DECOUPLING",
+      "pass": true,
+      "note": "6mm allowance for TO92 body/lead spread; copper path also locally locked."
+    },
+    {
+      "id": "COIL-CAP-NEAR",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "FLYBACK-NEAR",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "ILIM-LOCAL",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "MIN-TRACK",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "NO-SENSOR-GROUND-POUR",
+      "pass": true,
+      "note": "AGND_SENSOR remains a separate routed return, never a GND pour."
+    },
+    {
+      "id": "PCB-PAD-PARITY",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "ALL-REFS-VISIBLE",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "M3-HOLES",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "THT-RESISTORS",
+      "pass": true,
+      "note": ""
+    }
+  ],
+  "negative_controls": [
+    {
+      "mutation": "relay-pitch-regression",
+      "detected": true,
+      "by": [
+        "RELAY-ROW-COORDS",
+        "RELAY-OPPOSITE-ROW"
+      ]
+    },
+    {
+      "mutation": "wrong-MiniFit-pitch",
+      "detected": true,
+      "by": [
+        "MINIFIT-ROW-SPACING"
+      ]
+    },
+    {
+      "mutation": "sensor-ground-short",
+      "detected": true,
+      "by": [
+        "PCB-PAD-PARITY"
+      ]
+    },
+    {
+      "mutation": "ground-pour-bypass",
+      "detected": true,
+      "by": [
+        "NO-SENSOR-GROUND-POUR"
+      ]
+    },
+    {
+      "mutation": "missing-anchor",
+      "detected": true,
+      "by": [
+        "TIE-J2"
+      ]
+    },
+    {
+      "mutation": "no-tie-keepout",
+      "detected": true,
+      "by": [
+        "TIE-J3"
+      ]
+    },
+    {
+      "mutation": "M3-no-keepout",
+      "detected": true,
+      "by": [
+        "M3-HOLES"
+      ]
+    },
+    {
+      "mutation": "wrong-drill",
+      "detected": true,
+      "by": [
+        "PTH-J1"
+      ]
+    },
+    {
+      "mutation": "missing-ref",
+      "detected": true,
+      "by": [
+        "ALL-REFS-VISIBLE"
+      ]
+    },
+    {
+      "mutation": "remote-TPS-cap",
+      "detected": true,
+      "by": [
+        "TPS-DECOUPLING"
+      ]
+    },
+    {
+      "mutation": "remote-supervisor-cap",
+      "detected": true,
+      "by": [
+        "TO92-DECOUPLING"
+      ]
+    },
+    {
+      "mutation": "remote-flyback",
+      "detected": true,
+      "by": [
+        "FLYBACK-NEAR"
+      ]
+    },
+    {
+      "mutation": "unlocked-ILIM",
+      "detected": true,
+      "by": [
+        "ILIM-LOCAL"
+      ]
+    },
+    {
+      "mutation": "thin-track",
+      "detected": true,
+      "by": [
+        "MIN-TRACK"
+      ]
+    },
+    {
+      "mutation": "4-layer",
+      "detected": true,
+      "by": [
+        "TWO-LAYER-1.6"
+      ]
+    }
+  ],
+  "tracks": 473,
+  "footprints": 59,
+  "hardware_tested": false
+}

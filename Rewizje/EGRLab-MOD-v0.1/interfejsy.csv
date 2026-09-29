@@ -1,0 +1,26 @@
+﻿Wiązka;Końce;Sygnały / funkcja;Proponowane wykonanie
+P-IN;F1 → P01;BAT_FUSED, GND;"Para mocy, złącze blokowane; F1 przy źródle"
+P-OUT;P01 → P02;VPROT, GND;Para mocy, obciążalność z zapasem powyżej 5 A
+P-MOTOR;P02 → P07;VPROT, PGND;"Dedykowana gruba para; F4 i KPWR na P07"
+P-LOGIC;P02 → P03/P04/P05/P08/P09/P10;Potrzebne 5V_SYS i/lub 3V3_IO oraz GND;"Osobne wyjścia gwiazdowe; złącza bezpieczne przy zamianie identycznych gałęzi"
+P-DRIVE-LOGIC;P02 → P07;5V_SYS, 3V3_IO, GND;"Osobno od VMOTOR; obecność szyn warunkiem DRIVE_OK"
+A-LOGGER;P05 ↔ P06;5V_A, GND odniesienia, I_L_OUT po RO2, LOGGER_CURRENT_OK;"Krótka kodowana wiązka, analog z własnym powrotem; nie podawać surowych końców Kelvin"
+A-TEST;P05 ↔ P07;5V_A, GND odniesienia, I_T_OUT po RO1;"Krótka kodowana wiązka; lokalne OC przed RO1"
+C-ADC;P03 ↔ P05;SPI ADC, CONVST/BUSY/RESET, MEAS_EN, MEAS_BANK, LOGGER_CURRENT_OK;IDC20, sygnał/GND, docelowo ≤10 cm
+C-SAFE;P03 ↔ P04;"PWM, HEARTBEAT, MCU_ARM, HW_ARMED, INTERLOCK, SENSOR_ENABLE, MOTOR_INA/B, ENA/B_DIAG, SENSOR_FAULT_N, TEST_KEY, LOGGER_CLEAR, TEST_PRESENT, STOP_PRESSED; pętla obecności CORE";"IDC z rezerwą, około 36 styków, każda funkcja z GND; docelowo ≤20 cm"
+C-DRIVE;P04 ↔ P07;PWM_OUT, MOTOR_PERMIT, MOTOR_INA/B, ENA/B_DIAG, DRIVE_OK, DRIVE_FAULT_OC;"IDC16 kodowane, sygnał/GND, ≤20 cm; wszystkie polecenia P07 w jednej wiązce"
+C-SENSOR;P04 ↔ P08;SENSOR_PERMIT, SENSOR_FAULT_N, SENSOR_OK;"IDC6 kodowane lub blokowane 6p; sygnał/GND"
+C-DAQ-SAFE;P05 ↔ P04;DAQ_OK, DAQ_FAULT_OC;Kodowane 4p z dwoma przewodami GND
+C-PSU-SAFE;P02 ↔ P04;PSU_OK oraz pętla obecności złącza;Nadzór 5V_SYS/3V3_IO, stan po wypięciu = 0
+C-PG-SAFE;P01 ↔ P04;"Z istniejącego PG.J4: 3V3_IO, FAULT_OC, GND; dodatkowo pętla obecności w modularnym złączu";"Przy projektowaniu PCB P01 dodać dwa styki pętli do dotychczasowych trzech; nie zmieniać toru OVP"
+C-TEMP;P03 ↔ P09;SCLK, MOSI, MISO, TC1_CS, TC2_CS;"IDC10 kodowane, sygnał/GND, ≤10 cm; napięcie osobno"
+C-CAN;P03 ↔ P10;CAN_TX, CAN_RX;"Kodowane 4p z GND; silent lokalnie na P10"
+C-PANEL;P11 / przyciski ↔ P04;Surowe styki STOP NC/NO, ARM, KEY, LOG1/LOG2 A/B, TEST presence i pętla T;"Oddzielne kodowane złącza; wymagane styki mechaniczne, niezależne od MCP"
+C-MARK;Przycisk panelu ↔ P03;MARK, GND;GPIO41, lokalny pull-up i filtr na P03
+A-TAPS;T/L1/L2 → P05;TAP_P1/P3/P4/P5/P6 i ekran zgodnie z adapterem;"Krótki odcinek wewnętrzny, ≤5 cm jako cel; brak zasilania w tym złączu"
+A-AUX;Panel → P05;AUX HOT i ekran AGND;"Krótki przewód; DPDT zakresów i dzielniki na P05 przy panelu"
+M-TEST;P07 → T;MOTOR_A po RSH_T, MOTOR_B;Para mocy, bez IDC
+M-L1;L1 ↔ P06;ECU_P1, EGR_P1;"Krótki tor szeregowy; brak połączenia do VPROT lub mostka"
+S-TEST;P08 → T;5V_SENSOR, AGND_SENSOR;"Osobne kodowane 2p; oba przewody odłączane przez KSENSOR"
+CAN-BUS;P10 → OBD;CAN_H, CAN_L;"Skręcona para; OBD tylko 6/14, bez 4/5/16"
+TC-K;Termopary → P09;TC1+/-, TC2+/-;Złącza K i przewody kompensacyjne, bez zwykłego IDC

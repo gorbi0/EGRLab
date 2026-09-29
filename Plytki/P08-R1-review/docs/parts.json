@@ -1,0 +1,1063 @@
+{
+  "U1": {
+    "ref": "U1",
+    "source_ref": "U11",
+    "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+    "display": "TPS2553DBVR",
+    "value": "TPS2553DBVR",
+    "mpn": "TPS2553DBVR",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "GND",
+      "3": "TPS_EN",
+      "4": "SENSOR_FAULT_LOCAL_N",
+      "5": "ILIM_232K",
+      "6": "SENSOR_LIMITED"
+    },
+    "sheet": "P08",
+    "url": "https://www.ti.com/lit/ds/symlink/tps2553.pdf",
+    "note": "Active-high constant-current version. TPS2552 and TPS2553-1 are not approved substitutes.",
+    "qty": 1,
+    "on_board": true
+  },
+  "U2": {
+    "ref": "U2",
+    "source_ref": "U_RELAY",
+    "footprint": "Package_DIP:DIP-18_W7.62mm",
+    "display": "TBD62083APG",
+    "value": "TBD62083APG",
+    "mpn": "TBD62083APG",
+    "pins": {
+      "1": "SENSOR_LOCAL",
+      "2": "GND",
+      "3": "GND",
+      "4": "GND",
+      "5": "GND",
+      "6": "GND",
+      "7": "GND",
+      "8": "GND",
+      "9": "GND",
+      "10": "5V_SYS",
+      "11": "NC",
+      "12": "NC",
+      "13": "NC",
+      "14": "NC",
+      "15": "NC",
+      "16": "NC",
+      "17": "NC",
+      "18": "SENSOR_COIL_LOW"
+    },
+    "sheet": "P08",
+    "url": "https://toshiba.semicon-storage.com/info/docget.jsp?did=29893&prodName=TBD62083APG",
+    "note": "Internal flyback COMMON to 5V_SYS; external D1 at coil. Not a ULN2803 substitution.",
+    "qty": 1,
+    "on_board": true
+  },
+  "U3": {
+    "ref": "U3",
+    "source_ref": "U_READY",
+    "footprint": "Package_DIP:DIP-14_W7.62mm",
+    "display": "SN74HC08N",
+    "value": "SN74HC08N",
+    "mpn": "SN74HC08N",
+    "pins": {
+      "1": "SUP3_N",
+      "2": "SUP5_N",
+      "3": "SENSOR_OK_LOCAL",
+      "4": "PERMIT_LOCAL",
+      "5": "SENSOR_OK_LOCAL",
+      "6": "SENSOR_LOCAL",
+      "7": "GND",
+      "8": "SENSOR_HEALTH_LOCAL",
+      "9": "SENSOR_OK_LOCAL",
+      "10": "SENSOR_FAULT_LOCAL_N",
+      "11": "NC",
+      "12": "GND",
+      "13": "GND",
+      "14": "3V3_IO"
+    },
+    "sheet": "LOGIC",
+    "url": "https://www.ti.com/lit/ds/symlink/sn74hc08.pdf",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "U4": {
+    "ref": "U4",
+    "source_ref": "U_SUPBUF",
+    "footprint": "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm",
+    "display": "74LVC125AD",
+    "value": "74LVC125AD",
+    "mpn": "74LVC125AD,118 (Nexperia)",
+    "pins": {
+      "1": "GND",
+      "2": "SUP5_RAW",
+      "3": "SUP5_N",
+      "4": "GND",
+      "5": "SENSOR_OK_LOCAL",
+      "6": "SENSOR_OK_TX",
+      "7": "GND",
+      "8": "NC",
+      "9": "GND",
+      "10": "3V3_IO",
+      "11": "NC",
+      "12": "GND",
+      "13": "3V3_IO",
+      "14": "3V3_IO"
+    },
+    "sheet": "LOGIC",
+    "url": "https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf",
+    "note": "5V tolerant input and Ioff. Spare channel buffers outgoing READY.",
+    "qty": 1,
+    "on_board": true
+  },
+  "U5": {
+    "ref": "U5",
+    "source_ref": "U_RX1",
+    "footprint": "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm",
+    "display": "74LVC125AD",
+    "value": "74LVC125AD",
+    "mpn": "74LVC125AD,118 (Nexperia)",
+    "pins": {
+      "1": "GND",
+      "2": "SENSOR_PERMIT",
+      "3": "PERMIT_LOCAL",
+      "4": "GND",
+      "5": "SENSOR_HEALTH_LOCAL",
+      "6": "SENSOR_HEALTH_TX",
+      "7": "GND",
+      "8": "NC",
+      "9": "GND",
+      "10": "3V3_IO",
+      "11": "NC",
+      "12": "GND",
+      "13": "3V3_IO",
+      "14": "3V3_IO"
+    },
+    "sheet": "LOGIC",
+    "url": "https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf",
+    "note": "Ioff required on inter-board signals.",
+    "qty": 1,
+    "on_board": true
+  },
+  "U6": {
+    "ref": "U6",
+    "source_ref": "U_SUP3",
+    "footprint": "Package_TO_SOT_THT:TO-92_Inline_Wide",
+    "display": "MCP120-300DI/TO",
+    "value": "MCP120-300DI/TO",
+    "mpn": "MCP120-300DI/TO",
+    "pins": {
+      "1": "SUP3_N",
+      "2": "3V3_IO",
+      "3": "GND"
+    },
+    "sheet": "LOGIC",
+    "url": "https://ww1.microchip.com/downloads/en/DeviceDoc/11184d.pdf",
+    "note": "D bondout: RESET=1, VDD=2, VSS=3. MCP120 only, no internal pull-up.",
+    "qty": 1,
+    "on_board": true
+  },
+  "U7": {
+    "ref": "U7",
+    "source_ref": "U_SUP5",
+    "footprint": "Package_TO_SOT_THT:TO-92_Inline_Wide",
+    "display": "MCP120-450DI/TO",
+    "value": "MCP120-450DI/TO",
+    "mpn": "MCP120-450DI/TO",
+    "pins": {
+      "1": "SUP5_RAW",
+      "2": "5V_SYS",
+      "3": "GND"
+    },
+    "sheet": "LOGIC",
+    "url": "https://ww1.microchip.com/downloads/en/DeviceDoc/11184d.pdf",
+    "note": "D bondout: RESET=1, VDD=2, VSS=3. MCP120 only, no internal pull-up.",
+    "qty": 1,
+    "on_board": true
+  },
+  "U8": {
+    "ref": "U8",
+    "source_ref": "ADD_EN_GUARD",
+    "footprint": "Package_TO_SOT_THT:TO-92_Inline_Wide",
+    "display": "MCP120-300DI/TO",
+    "value": "MCP120-300DI/TO",
+    "mpn": "MCP120-300DI/TO",
+    "pins": {
+      "1": "TPS_EN",
+      "2": "3V3_IO",
+      "3": "GND"
+    },
+    "sheet": "P08",
+    "url": "https://ww1.microchip.com/downloads/en/DeviceDoc/11184d.pdf",
+    "note": "D bondout: RESET=1, VDD=2, VSS=3. MCP120 only, no internal pull-up.",
+    "qty": 1,
+    "on_board": true
+  },
+  "K1": {
+    "ref": "K1",
+    "source_ref": "KSENSOR",
+    "footprint": "P08:G6K_2P_Y_verified",
+    "display": "G6K-2P-Y DC5",
+    "value": "G6K-2P-Y DC5",
+    "mpn": "G6K-2P-Y DC5",
+    "pins": {
+      "1": "5V_SYS",
+      "8": "SENSOR_COIL_LOW",
+      "3": "SENSOR_LIMITED",
+      "2": "NC",
+      "4": "5V_SENSOR",
+      "6": "GND",
+      "7": "NC",
+      "5": "AGND_SENSOR"
+    },
+    "sheet": "P08",
+    "url": "https://omronfs.omron.com/en_US/ecb/products/pdf/en-g6k.pdf",
+    "note": "THT monostable; coil polarized. Library pad 2/7 corrected from 3.0 to 3.2 mm per Omron p6.",
+    "qty": 1,
+    "on_board": true
+  },
+  "D1": {
+    "ref": "D1",
+    "source_ref": "D8",
+    "footprint": "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal",
+    "display": "1N4148",
+    "value": "1N4148",
+    "mpn": "1N4148",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "SENSOR_COIL_LOW"
+    },
+    "sheet": "P08",
+    "url": "https://www.vishay.com/docs/81857/1n4148.pdf",
+    "note": "Cathode to coil positive. Release time with diode must be measured.",
+    "qty": 1,
+    "on_board": true
+  },
+  "R1": {
+    "ref": "R1",
+    "source_ref": "R_ILIM",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "232K",
+    "value": "232K",
+    "mpn": "Metal film 232K 1% 0.25W",
+    "pins": {
+      "1": "ILIM_232K",
+      "2": "GND"
+    },
+    "sheet": "P08",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 232000,
+    "tolerance": 0.01,
+    "power_w": 0.25
+  },
+  "R2": {
+    "ref": "R2",
+    "source_ref": "R_FAULT_PU",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K",
+    "value": "10K",
+    "mpn": "Metal film 10K 1% 0.25W",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "SENSOR_FAULT_LOCAL_N"
+    },
+    "sheet": "LOGIC",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 10000,
+    "tolerance": 0.01,
+    "power_w": 0.25
+  },
+  "R3": {
+    "ref": "R3",
+    "source_ref": "R_SUP3",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K",
+    "value": "10K",
+    "mpn": "Metal film 10K 1% 0.25W",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "SUP3_N"
+    },
+    "sheet": "LOGIC",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 10000,
+    "tolerance": 0.01,
+    "power_w": 0.25
+  },
+  "R4": {
+    "ref": "R4",
+    "source_ref": "R_SUP5",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K",
+    "value": "10K",
+    "mpn": "Metal film 10K 1% 0.25W",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "SUP5_RAW"
+    },
+    "sheet": "LOGIC",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 10000,
+    "tolerance": 0.01,
+    "power_w": 0.25
+  },
+  "R5": {
+    "ref": "R5",
+    "source_ref": "ADD_SUP5_PD",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K",
+    "value": "10K",
+    "mpn": "Metal film 10K 1% 0.25W",
+    "pins": {
+      "1": "SUP5_N",
+      "2": "GND"
+    },
+    "sheet": "LOGIC",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 10000,
+    "tolerance": 0.01,
+    "power_w": 0.25
+  },
+  "R6": {
+    "ref": "R6",
+    "source_ref": "R_PERMIT_PD+R_DEFAULT_SENSOR_PERMIT",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K",
+    "value": "10K",
+    "mpn": "Metal film 10K 1% 0.25W",
+    "pins": {
+      "1": "PERMIT_LOCAL",
+      "2": "GND"
+    },
+    "sheet": "LOGIC",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 10000,
+    "tolerance": 0.01,
+    "power_w": 0.25
+  },
+  "R7": {
+    "ref": "R7",
+    "source_ref": "R_EXT_SENSOR",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K",
+    "value": "10K",
+    "mpn": "Metal film 10K 1% 0.25W",
+    "pins": {
+      "1": "SENSOR_PERMIT",
+      "2": "GND"
+    },
+    "sheet": "LOGIC",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 10000,
+    "tolerance": 0.01,
+    "power_w": 0.25
+  },
+  "R8": {
+    "ref": "R8",
+    "source_ref": "R_READY_PD",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K",
+    "value": "10K",
+    "mpn": "Metal film 10K 1% 0.25W",
+    "pins": {
+      "1": "SENSOR_OK_LOCAL",
+      "2": "GND"
+    },
+    "sheet": "LOGIC",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 10000,
+    "tolerance": 0.01,
+    "power_w": 0.25
+  },
+  "R9": {
+    "ref": "R9",
+    "source_ref": "ADD_EN_PD",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K",
+    "value": "10K",
+    "mpn": "Metal film 10K 1% 0.25W",
+    "pins": {
+      "1": "SENSOR_LOCAL",
+      "2": "GND"
+    },
+    "sheet": "LOGIC",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 10000,
+    "tolerance": 0.01,
+    "power_w": 0.25
+  },
+  "R10": {
+    "ref": "R10",
+    "source_ref": "ADD_HEALTH_PD",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K",
+    "value": "10K",
+    "mpn": "Metal film 10K 1% 0.25W",
+    "pins": {
+      "1": "SENSOR_HEALTH_LOCAL",
+      "2": "GND"
+    },
+    "sheet": "LOGIC",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 10000,
+    "tolerance": 0.01,
+    "power_w": 0.25
+  },
+  "R11": {
+    "ref": "R11",
+    "source_ref": "ADD_READY_SER",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "100R",
+    "value": "100R",
+    "mpn": "Metal film 100R 1% 0.25W",
+    "pins": {
+      "1": "SENSOR_OK_TX",
+      "2": "SENSOR_OK"
+    },
+    "sheet": "LOGIC",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 100,
+    "tolerance": 0.01,
+    "power_w": 0.25
+  },
+  "R12": {
+    "ref": "R12",
+    "source_ref": "ADD_READY_EXT_PD",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K",
+    "value": "10K",
+    "mpn": "Metal film 10K 1% 0.25W",
+    "pins": {
+      "1": "SENSOR_OK",
+      "2": "GND"
+    },
+    "sheet": "LOGIC",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 10000,
+    "tolerance": 0.01,
+    "power_w": 0.25
+  },
+  "R13": {
+    "ref": "R13",
+    "source_ref": "ADD_HEALTH_SER",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "100R",
+    "value": "100R",
+    "mpn": "Metal film 100R 1% 0.25W",
+    "pins": {
+      "1": "SENSOR_HEALTH_TX",
+      "2": "SENSOR_HEALTHY"
+    },
+    "sheet": "LOGIC",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 100,
+    "tolerance": 0.01,
+    "power_w": 0.25
+  },
+  "R14": {
+    "ref": "R14",
+    "source_ref": "ADD_HEALTH_EXT_PD",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K",
+    "value": "10K",
+    "mpn": "Metal film 10K 1% 0.25W",
+    "pins": {
+      "1": "SENSOR_HEALTHY",
+      "2": "GND"
+    },
+    "sheet": "LOGIC",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 10000,
+    "tolerance": 0.01,
+    "power_w": 0.25
+  },
+  "R15": {
+    "ref": "R15",
+    "source_ref": "ADD_GUARD_SER",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "4K7",
+    "value": "4K7",
+    "mpn": "Metal film 4K7 1% 0.25W",
+    "pins": {
+      "1": "SENSOR_LOCAL",
+      "2": "TPS_EN"
+    },
+    "sheet": "P08",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 4700,
+    "tolerance": 0.01,
+    "power_w": 0.25
+  },
+  "R16": {
+    "ref": "R16",
+    "source_ref": "ADD_GUARD_PD",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "6K8",
+    "value": "6K8",
+    "mpn": "Metal film 6K8 1% 0.25W",
+    "pins": {
+      "1": "TPS_EN",
+      "2": "GND"
+    },
+    "sheet": "P08",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 6800,
+    "tolerance": 0.01,
+    "power_w": 0.25
+  },
+  "R17": {
+    "ref": "R17",
+    "source_ref": "ADD_LOCAL_DISCHARGE",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K",
+    "value": "10K",
+    "mpn": "Metal film 10K 1% 0.25W",
+    "pins": {
+      "1": "SENSOR_LIMITED",
+      "2": "GND"
+    },
+    "sheet": "P08",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 10000,
+    "tolerance": 0.01,
+    "power_w": 0.25
+  },
+  "R18": {
+    "ref": "R18",
+    "source_ref": "ADD_OUTPUT_DISCHARGE",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "10K",
+    "value": "10K",
+    "mpn": "Metal film 10K 1% 0.25W",
+    "pins": {
+      "1": "5V_SENSOR",
+      "2": "AGND_SENSOR"
+    },
+    "sheet": "P08",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "ohms": 10000,
+    "tolerance": 0.01,
+    "power_w": 0.25
+  },
+  "C1": {
+    "ref": "C1",
+    "source_ref": "C_SIN",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "display": "1u",
+    "value": "1u",
+    "mpn": "X7R 25V 10% 0805 1u",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "GND"
+    },
+    "sheet": "P08",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "farads": 1e-06
+  },
+  "C2": {
+    "ref": "C2",
+    "source_ref": "C_SOUT",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "display": "1u",
+    "value": "1u",
+    "mpn": "X7R 25V 10% 0805 1u",
+    "pins": {
+      "1": "SENSOR_LIMITED",
+      "2": "GND"
+    },
+    "sheet": "P08",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "farads": 1e-06
+  },
+  "C3": {
+    "ref": "C3",
+    "source_ref": "DEC_U3",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "display": "100n",
+    "value": "100n",
+    "mpn": "X7R 25V 10% 0805 100n",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "GND"
+    },
+    "sheet": "P08",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "farads": 1e-07
+  },
+  "C4": {
+    "ref": "C4",
+    "source_ref": "DEC_U4",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "display": "100n",
+    "value": "100n",
+    "mpn": "X7R 25V 10% 0805 100n",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "GND"
+    },
+    "sheet": "P08",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "farads": 1e-07
+  },
+  "C5": {
+    "ref": "C5",
+    "source_ref": "DEC_U5",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "display": "100n",
+    "value": "100n",
+    "mpn": "X7R 25V 10% 0805 100n",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "GND"
+    },
+    "sheet": "P08",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "farads": 1e-07
+  },
+  "C6": {
+    "ref": "C6",
+    "source_ref": "DEC_U6",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "display": "100n",
+    "value": "100n",
+    "mpn": "X7R 25V 10% 0805 100n",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "GND"
+    },
+    "sheet": "P08",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "farads": 1e-07
+  },
+  "C7": {
+    "ref": "C7",
+    "source_ref": "DEC_U7",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "display": "100n",
+    "value": "100n",
+    "mpn": "X7R 25V 10% 0805 100n",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "GND"
+    },
+    "sheet": "P08",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "farads": 1e-07
+  },
+  "C8": {
+    "ref": "C8",
+    "source_ref": "DEC_U8",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "display": "100n",
+    "value": "100n",
+    "mpn": "X7R 25V 10% 0805 100n",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "GND"
+    },
+    "sheet": "P08",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "farads": 1e-07
+  },
+  "C9": {
+    "ref": "C9",
+    "source_ref": "ADD_COIL_DECOUPLING",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "display": "1u",
+    "value": "1u",
+    "mpn": "X7R 25V 10% 0805 1u",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "GND"
+    },
+    "sheet": "P08",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true,
+    "farads": 1e-06
+  },
+  "C10": {
+    "ref": "C10",
+    "source_ref": "ADD_LV_BULK",
+    "footprint": "Capacitor_THT:CP_Radial_D5.0mm_P2.00mm",
+    "display": "22u / 25V",
+    "value": "22u / 25V",
+    "mpn": "EEUFR1E220",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "GND"
+    },
+    "sheet": "P08",
+    "url": "",
+    "note": "D5 pitch2 mm; verify actual height.",
+    "qty": 1,
+    "on_board": true,
+    "farads": 2.2e-05
+  },
+  "J1": {
+    "ref": "J1",
+    "source_ref": "J_LV08B",
+    "footprint": "P08:PTH_LV08",
+    "display": "LV08 / PTH",
+    "value": "LV08 / PTH",
+    "mpn": "Soldered harness",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "GND",
+      "3": "3V3_IO",
+      "4": "GND"
+    },
+    "sheet": "CONNECT",
+    "url": "",
+    "note": "One soldered end, tie anchor 12 mm; see WIAZKI.md.",
+    "qty": 1,
+    "on_board": true
+  },
+  "J2": {
+    "ref": "J2",
+    "source_ref": "J_SENSORB",
+    "footprint": "P08:PTH_IDC6",
+    "display": "SENSOR M2.2 / PTH",
+    "value": "SENSOR M2.2 / PTH",
+    "mpn": "Soldered harness",
+    "pins": {
+      "1": "SENSOR_PERMIT",
+      "2": "NC",
+      "3": "SENSOR_OK",
+      "4": "GND",
+      "5": "NC",
+      "6": "NC"
+    },
+    "sheet": "CONNECT",
+    "url": "",
+    "note": "One soldered end, tie anchor 12 mm; see WIAZKI.md.",
+    "qty": 1,
+    "on_board": true
+  },
+  "J3": {
+    "ref": "J3",
+    "source_ref": "J_SFAULTB",
+    "footprint": "P08:PTH_IDC6",
+    "display": "SFAULT / PTH",
+    "value": "SFAULT / PTH",
+    "mpn": "Soldered harness",
+    "pins": {
+      "1": "SENSOR_HEALTHY",
+      "2": "GND",
+      "3": "NC",
+      "4": "NC",
+      "5": "NC",
+      "6": "NC"
+    },
+    "sheet": "CONNECT",
+    "url": "",
+    "note": "One soldered end, tie anchor 12 mm; see WIAZKI.md.",
+    "qty": 1,
+    "on_board": true
+  },
+  "J4": {
+    "ref": "J4",
+    "source_ref": "J_TSENSORA",
+    "footprint": "Connector_Molex:Molex_Mini-Fit_Jr_5566-02A_2x01_P4.20mm_Vertical",
+    "display": "TSENSOR / Mini-Fit 2p",
+    "value": "TSENSOR / Mini-Fit 2p",
+    "mpn": "Molex 39-29-6028",
+    "pins": {
+      "1": "5V_SENSOR",
+      "2": "AGND_SENSOR"
+    },
+    "sheet": "CONNECT",
+    "url": "https://www.molex.com/en-us/products/part-detail/39296028",
+    "note": "Vertical Au, no snap pegs; mating harness soldered at P11. Physical fit M01 before fabrication.",
+    "qty": 1,
+    "on_board": true
+  },
+  "TP1": {
+    "ref": "TP1",
+    "source_ref": "ADD_TESTPAD",
+    "footprint": "P08:TestPad_1",
+    "display": "5V_SYS",
+    "value": "5V_SYS",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "5V_SYS"
+    },
+    "sheet": "CONNECT",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "TP2": {
+    "ref": "TP2",
+    "source_ref": "ADD_TESTPAD",
+    "footprint": "P08:TestPad_1",
+    "display": "3V3_IO",
+    "value": "3V3_IO",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "3V3_IO"
+    },
+    "sheet": "CONNECT",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "TP3": {
+    "ref": "TP3",
+    "source_ref": "ADD_TESTPAD",
+    "footprint": "P08:TestPad_1",
+    "display": "GND",
+    "value": "GND",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "GND"
+    },
+    "sheet": "CONNECT",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "TP4": {
+    "ref": "TP4",
+    "source_ref": "ADD_TESTPAD",
+    "footprint": "P08:TestPad_1",
+    "display": "SUP3_N",
+    "value": "SUP3_N",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "SUP3_N"
+    },
+    "sheet": "CONNECT",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "TP5": {
+    "ref": "TP5",
+    "source_ref": "ADD_TESTPAD",
+    "footprint": "P08:TestPad_1",
+    "display": "SUP5_N",
+    "value": "SUP5_N",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "SUP5_N"
+    },
+    "sheet": "CONNECT",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "TP6": {
+    "ref": "TP6",
+    "source_ref": "ADD_TESTPAD",
+    "footprint": "P08:TestPad_1",
+    "display": "SENSOR_LOCAL",
+    "value": "SENSOR_LOCAL",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "SENSOR_LOCAL"
+    },
+    "sheet": "CONNECT",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "TP7": {
+    "ref": "TP7",
+    "source_ref": "ADD_TESTPAD",
+    "footprint": "P08:TestPad_1",
+    "display": "TPS_EN",
+    "value": "TPS_EN",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "TPS_EN"
+    },
+    "sheet": "CONNECT",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "TP8": {
+    "ref": "TP8",
+    "source_ref": "ADD_TESTPAD",
+    "footprint": "P08:TestPad_1",
+    "display": "SENSOR_LIMITED",
+    "value": "SENSOR_LIMITED",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "SENSOR_LIMITED"
+    },
+    "sheet": "CONNECT",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "TP9": {
+    "ref": "TP9",
+    "source_ref": "ADD_TESTPAD",
+    "footprint": "P08:TestPad_1",
+    "display": "SENSOR_FAULT_LOCAL_N",
+    "value": "SENSOR_FAULT_LOCAL_N",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "SENSOR_FAULT_LOCAL_N"
+    },
+    "sheet": "CONNECT",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "TP10": {
+    "ref": "TP10",
+    "source_ref": "ADD_TESTPAD",
+    "footprint": "P08:TestPad_1",
+    "display": "SENSOR_OK",
+    "value": "SENSOR_OK",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "SENSOR_OK"
+    },
+    "sheet": "CONNECT",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "TP11": {
+    "ref": "TP11",
+    "source_ref": "ADD_TESTPAD",
+    "footprint": "P08:TestPad_1",
+    "display": "SENSOR_HEALTHY",
+    "value": "SENSOR_HEALTHY",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "SENSOR_HEALTHY"
+    },
+    "sheet": "CONNECT",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "TP12": {
+    "ref": "TP12",
+    "source_ref": "ADD_TESTPAD",
+    "footprint": "P08:TestPad_1",
+    "display": "5V_SENSOR",
+    "value": "5V_SENSOR",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "5V_SENSOR"
+    },
+    "sheet": "CONNECT",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  },
+  "TP13": {
+    "ref": "TP13",
+    "source_ref": "ADD_TESTPAD",
+    "footprint": "P08:TestPad_1",
+    "display": "AGND_SENSOR",
+    "value": "AGND_SENSOR",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "AGND_SENSOR"
+    },
+    "sheet": "CONNECT",
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "on_board": true
+  }
+}

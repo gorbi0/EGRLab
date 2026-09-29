@@ -1,0 +1,233 @@
+> C:/Users/tgorbacz/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe -c import reportlab, PIL
+> C:\Program Files\KiCad\10.0\bin\python.exe build_schematic.py
+98 parts; six A3 sheets
+> C:\Program Files\KiCad\10.0\bin\python.exe set_rules.py
+Applied explicit 0.25 mm net clearance; no DRC exclusions.
+> C:\Program Files\KiCad\10.0\bin\python.exe make_tables.py
+BOM, harnesses, pinout and interface scope generated.
+> C:/Program Files/KiCad/10.0/bin/kicad-cli.exe sch erc --severity-all --format json -o verification/erc.json eda/P04.kicad_sch
+> C:/Program Files/KiCad/10.0/bin/kicad-cli.exe sch export netlist --format kicadxml -o verification/P04.xml eda/P04.kicad_sch
+> C:\Program Files\KiCad\10.0\bin\python.exe verify_schematic.py
+{"components": 98, "parts": 98, "pin_checks": 355, "extra": [], "erc_sheets": 6, "erc_violations": 0, "nets": 92} errors 0
+> C:\Program Files\KiCad\10.0\bin\python.exe verify_electrical.py
+Electrical 22 / 22 Mutation detections 14 / 14
+> C:/Program Files/KiCad/10.0/bin/kicad-cli.exe sch export pdf -o output/pdf/P04-R2-schemat.pdf eda/P04.kicad_sch
+> C:/Users/tgorbacz/.cache/codex-runtimes/codex-primary-runtime/dependencies/native/poppler/Library/bin/pdftoppm.exe -png -scale-to 2200 output/pdf/P04-R2-schemat.pdf output/previews/sch-1
+> C:\Program Files\KiCad\10.0\bin\python.exe run_layout.py --reuse-ses
+> C:\Program Files\KiCad\10.0\bin\python.exe build_board.py
+Created P04 board: 95 footprints + 4 M3 holes
+> C:\Program Files\KiCad\10.0\bin\python.exe set_stackup.py
+2-layer stackup: Cu35/FR4 1.53/Cu35; nominal laminate incl Cu = 1.60 mm, mask separate.
+> C:\Program Files\KiCad\10.0\bin\python.exe route_critical.py
+Critical analog and local VDD tracks locked; DSN exported.
+> C:\Program Files\KiCad\10.0\bin\python.exe prepare_routing.py
+Applied explicit 0.25 mm net clearance; no DRC exclusions.
+> C:/Program Files/KiCad/10.0/bin/kicad-cli.exe pcb drc --format json --severity-all -o routing/critical-drc.json eda/P04.kicad_pcb
+> C:\Program Files\KiCad\10.0\bin\python.exe import_routing.py
+SES imported; GND planes filled; saved native board.
+> C:\Program Files\KiCad\10.0\bin\python.exe set_rules.py
+Applied explicit 0.25 mm net clearance; no DRC exclusions.
+> C:\Program Files\KiCad\10.0\bin\python.exe complete_routes.py
+> C:\Program Files\KiCad\10.0\bin\python.exe set_rules.py
+Applied explicit 0.25 mm net clearance; no DRC exclusions.
+> C:/Program Files/KiCad/10.0/bin/kicad-cli.exe pcb drc --format json --severity-all --schematic-parity --all-track-errors --refill-zones -o routing/postroute-drc.json eda/P04.kicad_pcb
+
+Fontconfig error: No writable cache directories
+	C:/WINDOWS/Cache/Fontcache
+routing/postroute-drc.json {'starved_thermal': 1, 'track_dangling': 8, 'silk_over_copper': 1, 'silk_overlap': 27} unconnected 0 parity 0
+> C:\Program Files\KiCad\10.0\bin\python.exe cleanup.py U9.1
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+removed 0 redundant free items [] ; dropped 3 tiny; joined 3 near-miss ends; 16 duplicate and 8 dead-end items; unconnected 0; solid zone connection: ['U9.1']
+> C:\Program Files\KiCad\10.0\bin\python.exe set_rules.py
+Applied explicit 0.25 mm net clearance; no DRC exclusions.
+> C:\Program Files\KiCad\10.0\bin\python.exe stitch.py
+GND stitching: 55 grid vias, pour islands {'F.Cu': 26, 'B.Cu': 34} -> {'F.Cu': 26, 'B.Cu': 34} | rescue: 14 vias, pour mm2 {'F.Cu': 14201.6, 'B.Cu': 13768.8} -> {'F.Cu': 14695.4, 'B.Cu': 14150.7} islands {'F.Cu': 34, 'B.Cu': 40}
+> C:\Program Files\KiCad\10.0\bin\python.exe set_rules.py
+Applied explicit 0.25 mm net clearance; no DRC exclusions.
+> C:/Program Files/KiCad/10.0/bin/kicad-cli.exe pcb drc --format json --severity-all --schematic-parity --all-track-errors --refill-zones -o routing/postclean-drc.json eda/P04.kicad_pcb
+
+Fontconfig error: No writable cache directories
+	C:/WINDOWS/Cache/Fontcache
+routing/postclean-drc.json {'silk_over_copper': 1, 'silk_overlap': 27} unconnected 0 parity 0
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+> C:\Program Files\KiCad\10.0\bin\python.exe silkscreen.py
+references 95 max shift 13.94 | legends 16 max shift 2.0
+> C:\Program Files\KiCad\10.0\bin\python.exe set_rules.py
+Applied explicit 0.25 mm net clearance; no DRC exclusions.
+> C:\Program Files\KiCad\10.0\bin\python.exe verify_pcb.py
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+PCB 26 / 26 negative 11 / 11
+> C:\Program Files\KiCad\10.0\bin\python.exe board_fingerprint.py
+Geometry fingerprint f0fce2a888eb70ec665931646b2bcf318d285e02862fcfe95ece519c0f3d1cab
+> C:/Program Files/KiCad/10.0/bin/kicad-cli.exe pcb render --side top --width 2400 --height 1800 --quality basic -o output/previews/render-top.png eda/P04.kicad_pcb
+> C:\Program Files\KiCad\10.0\bin\python.exe make_pdf.py
+Four PCB PDF pages generated.
+> C:/Users/tgorbacz/.cache/codex-runtimes/codex-primary-runtime/dependencies/native/poppler/Library/bin/pdftoppm.exe -png -scale-to 1800 output/pdf/P04-R2-PCB.pdf output/previews/exported-pcb
+P04-R2 generation and automated checks complete. Physical fit and bench acceptance remain pending.
+exit 0

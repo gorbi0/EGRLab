@@ -1,0 +1,20 @@
+﻿ref;source_ref;display;mpn;qty;footprint;on_board;url;note
+U1;U16;TCAN1051V;TCAN1051VDRQ1;1;Package_SO:SOIC-8_3.9x4.9mm_P1.27mm;True;https://www.ti.com/lit/ds/symlink/tcan1051-q1.pdf;S and TXD hardwired to VIO. No MCU transmit connection and no mode jumper. V variant required.
+U2;ADDED_RX_IOFF;74LVC125AD;74LVC125AD,118 Nexperia;1;Package_SO:SOIC-14_3.9x8.7mm_P1.27mm;True;https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf;Ioff protects dead P10 from P03 receiver pull-up. HC125 is not a substitute.
+D1;D3;PESD2CAN;PESD2CAN,215 Nexperia;1;Package_TO_SOT_SMD:SOT-23;True;https://assets.nexperia.com/documents/data-sheet/PESD2CAN.pdf;"Pins1/2 are identical protected lines; pin3 common to GND. Routed at cable entry. Not a TVS for the supply rail."
+R1;P10_R1;100R;Metal film 100R 1% 0.25W;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;
+R2;P10_R1;10K;Metal film 10K 1% 0.25W;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;
+C1;DECOUPLING;100n;X7R 25V 10% 0805 100n;1;Capacitor_SMD:C_0805_2012Metric;True;;
+C2;DECOUPLING;100n;X7R 25V 10% 0805 100n;1;Capacitor_SMD:C_0805_2012Metric;True;;
+C3;DECOUPLING;100n;X7R 25V 10% 0805 100n;1;Capacitor_SMD:C_0805_2012Metric;True;;
+C4;DECOUPLING;4u7;X7R 25V 10% 0805 4u7;1;Capacitor_SMD:C_0805_2012Metric;True;;
+C5;DECOUPLING;4u7;X7R 25V 10% 0805 4u7;1;Capacitor_SMD:C_0805_2012Metric;True;;
+J1;J_LV10B;LV10 / PTH;Soldered harness;1;P10:PTH_LV10;True;;
+J2;J_CANB;CORE CAN / PTH KEY4;Soldered ribbon 6p;1;P10:PTH_CAN_CORE;True;;"P03-R2/J8. CAN_TX only to TP6; no path to transceiver. Wires4/5/6 insulated at P10."
+J3;J_OBD_TAIL;OBD / PTH;Soldered 120ohm twisted pair;1;P10:PTH_OBD;True;;300mm cable to OBD male typeA pins6/14. All other OBD pins NC, including4/5/16. Device GND from its power input only.
+TP1;TESTPAD;5V_SYS;PCB test pad;1;P10:TestPad_1;True;;
+TP2;TESTPAD;3V3_IO;PCB test pad;1;P10:TestPad_1;True;;
+TP3;TESTPAD;GND;PCB test pad;1;P10:TestPad_1;True;;
+TP4;TESTPAD;RX_RAW;PCB test pad;1;P10:TestPad_1;True;;
+TP5;TESTPAD;CAN_RX;PCB test pad;1;P10:TestPad_1;True;;
+TP6;TESTPAD;CAN_TX;PCB test pad;1;P10:TestPad_1;True;;

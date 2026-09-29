@@ -1,0 +1,611 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-25T14:42:49",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P00.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole PTH 1 [/P00_V33] na C3",
+                    "pos": {
+                        "x": 84.5,
+                        "y": 25.0
+                    },
+                    "uuid": "63050e2b-ffa5-486c-a964-446a1d839237"
+                },
+                {
+                    "description": "Ścieżka [/P00_V33] na B.Cu, długość 13,8362 mm",
+                    "pos": {
+                        "x": 74.0,
+                        "y": 24.0
+                    },
+                    "uuid": "deb14f86-887b-4437-8f11-a3cf8ae736e3"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci /P00_RESET oraz /P00_V33)",
+            "items": [
+                {
+                    "description": "Ścieżka [/P00_RESET] na F.Cu, długość 2,6022 mm",
+                    "pos": {
+                        "x": 84.16,
+                        "y": 24.0
+                    },
+                    "uuid": "018097e4-cc91-4360-bfed-faac222da882"
+                },
+                {
+                    "description": "Pole PTH 1 [/P00_V33] na C3",
+                    "pos": {
+                        "x": 84.5,
+                        "y": 25.0
+                    },
+                    "uuid": "63050e2b-ffa5-486c-a964-446a1d839237"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci /P00_RESET oraz /P00_V33)",
+            "items": [
+                {
+                    "description": "Ścieżka [/P00_RESET] na B.Cu, długość 16,8990 mm",
+                    "pos": {
+                        "x": 96.1094,
+                        "y": 35.9494
+                    },
+                    "uuid": "446a7f18-2635-431d-abb5-2ed61f609374"
+                },
+                {
+                    "description": "Pole PTH 1 [/P00_V33] na C3",
+                    "pos": {
+                        "x": 84.5,
+                        "y": 25.0
+                    },
+                    "uuid": "63050e2b-ffa5-486c-a964-446a1d839237"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [/P00_RESET] na B.Cu, długość 16,8990 mm",
+                    "pos": {
+                        "x": 96.1094,
+                        "y": 35.9494
+                    },
+                    "uuid": "446a7f18-2635-431d-abb5-2ed61f609374"
+                },
+                {
+                    "description": "Pole PTH 1 [/P00_V33] na C3",
+                    "pos": {
+                        "x": 84.5,
+                        "y": 25.0
+                    },
+                    "uuid": "63050e2b-ffa5-486c-a964-446a1d839237"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci /P00_OSC oraz GND)",
+            "items": [
+                {
+                    "description": "Ścieżka [/P00_OSC] na F.Cu, długość 6,2722 mm",
+                    "pos": {
+                        "x": 88.9007,
+                        "y": 20.9807
+                    },
+                    "uuid": "4b27ad13-4ca7-44f5-879e-d231e052a6bc"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na C3",
+                    "pos": {
+                        "x": 89.5,
+                        "y": 25.0
+                    },
+                    "uuid": "74ae261d-cdc8-4a84-aa3f-264aa1cafcf0"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [/P00_OSC] na F.Cu, długość 6,2722 mm",
+                    "pos": {
+                        "x": 88.9007,
+                        "y": 20.9807
+                    },
+                    "uuid": "4b27ad13-4ca7-44f5-879e-d231e052a6bc"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na C3",
+                    "pos": {
+                        "x": 89.5,
+                        "y": 25.0
+                    },
+                    "uuid": "74ae261d-cdc8-4a84-aa3f-264aa1cafcf0"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci /P00_V33 oraz /P00_RESET)",
+            "items": [
+                {
+                    "description": "Pole PTH 1 [/P00_V33] na C3",
+                    "pos": {
+                        "x": 84.5,
+                        "y": 25.0
+                    },
+                    "uuid": "63050e2b-ffa5-486c-a964-446a1d839237"
+                },
+                {
+                    "description": "Pole PTH 2 [/P00_RESET] na R4",
+                    "pos": {
+                        "x": 84.16,
+                        "y": 24.0
+                    },
+                    "uuid": "e7a2195e-f24b-4d73-be98-dbfcfc5f0792"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci /P00_V33 oraz /P00_RESET)",
+            "items": [
+                {
+                    "description": "Pole PTH 1 [/P00_V33] na C3",
+                    "pos": {
+                        "x": 84.5,
+                        "y": 25.0
+                    },
+                    "uuid": "63050e2b-ffa5-486c-a964-446a1d839237"
+                },
+                {
+                    "description": "Pole PTH 2 [/P00_RESET] na R4",
+                    "pos": {
+                        "x": 84.16,
+                        "y": 24.0
+                    },
+                    "uuid": "e7a2195e-f24b-4d73-be98-dbfcfc5f0792"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint C3",
+                    "pos": {
+                        "x": 84.5,
+                        "y": 25.0
+                    },
+                    "uuid": "8d74522c-dcfc-4e2b-af4f-b5686e066da8"
+                },
+                {
+                    "description": "Footprint R4",
+                    "pos": {
+                        "x": 74.0,
+                        "y": 24.0
+                    },
+                    "uuid": "b8736066-af4d-43a1-894d-a3b0219a3e0e"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [/P00_RESET] na R4",
+                    "pos": {
+                        "x": 84.16,
+                        "y": 24.0
+                    },
+                    "uuid": "e7a2195e-f24b-4d73-be98-dbfcfc5f0792"
+                },
+                {
+                    "description": "Footprint C3",
+                    "pos": {
+                        "x": 84.5,
+                        "y": 25.0
+                    },
+                    "uuid": "8d74522c-dcfc-4e2b-af4f-b5686e066da8"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 1 [/P00_V33] na C3",
+                    "pos": {
+                        "x": 84.5,
+                        "y": 25.0
+                    },
+                    "uuid": "63050e2b-ffa5-486c-a964-446a1d839237"
+                },
+                {
+                    "description": "Footprint R4",
+                    "pos": {
+                        "x": 74.0,
+                        "y": 24.0
+                    },
+                    "uuid": "b8736066-af4d-43a1-894d-a3b0219a3e0e"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/P00_OSC] na F.Cu, długość 6,2722 mm",
+                    "pos": {
+                        "x": 88.9007,
+                        "y": 20.9807
+                    },
+                    "uuid": "4b27ad13-4ca7-44f5-879e-d231e052a6bc"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na C3",
+                    "pos": {
+                        "x": 89.5,
+                        "y": 25.0
+                    },
+                    "uuid": "74ae261d-cdc8-4a84-aa3f-264aa1cafcf0"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/P00_RESET] na F.Cu, długość 2,6022 mm",
+                    "pos": {
+                        "x": 84.16,
+                        "y": 24.0
+                    },
+                    "uuid": "018097e4-cc91-4360-bfed-faac222da882"
+                },
+                {
+                    "description": "Pole PTH 1 [/P00_V33] na C3",
+                    "pos": {
+                        "x": 84.5,
+                        "y": 25.0
+                    },
+                    "uuid": "63050e2b-ffa5-486c-a964-446a1d839237"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [/P00_RESET] na R4",
+                    "pos": {
+                        "x": 84.16,
+                        "y": 24.0
+                    },
+                    "uuid": "e7a2195e-f24b-4d73-be98-dbfcfc5f0792"
+                },
+                {
+                    "description": "Pole PTH 1 [/P00_V33] na C3",
+                    "pos": {
+                        "x": 84.5,
+                        "y": 25.0
+                    },
+                    "uuid": "63050e2b-ffa5-486c-a964-446a1d839237"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [/P00_RESET] na R4",
+                    "pos": {
+                        "x": 84.16,
+                        "y": 24.0
+                    },
+                    "uuid": "e7a2195e-f24b-4d73-be98-dbfcfc5f0792"
+                },
+                {
+                    "description": "Pole PTH 1 [/P00_V33] na C3",
+                    "pos": {
+                        "x": 84.5,
+                        "y": 25.0
+                    },
+                    "uuid": "63050e2b-ffa5-486c-a964-446a1d839237"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/P00_RESET] na B.Cu, długość 16,8990 mm",
+                    "pos": {
+                        "x": 96.1094,
+                        "y": 35.9494
+                    },
+                    "uuid": "446a7f18-2635-431d-abb5-2ed61f609374"
+                },
+                {
+                    "description": "Pole PTH 1 [/P00_V33] na C3",
+                    "pos": {
+                        "x": 84.5,
+                        "y": 25.0
+                    },
+                    "uuid": "63050e2b-ffa5-486c-a964-446a1d839237"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Otwory na wylot zbyt blisko siebie (ograniczenia w konfiguracji płytki minimum 0,3000 mm; obecnie 0,2062 mm)",
+            "items": [
+                {
+                    "description": "Pole PTH 1 [/P00_V33] na C3",
+                    "pos": {
+                        "x": 84.5,
+                        "y": 25.0
+                    },
+                    "uuid": "63050e2b-ffa5-486c-a964-446a1d839237"
+                },
+                {
+                    "description": "Pole PTH 2 [/P00_RESET] na R4",
+                    "pos": {
+                        "x": 84.16,
+                        "y": 24.0
+                    },
+                    "uuid": "e7a2195e-f24b-4d73-be98-dbfcfc5f0792"
+                }
+            ],
+            "severity": "warning",
+            "type": "hole_to_hole"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P00'",
+            "items": [
+                {
+                    "description": "Footprint C5",
+                    "pos": {
+                        "x": 33.0,
+                        "y": 13.5
+                    },
+                    "uuid": "13cfad09-e1f8-4e54-8a85-ead8d7393d35"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P00'",
+            "items": [
+                {
+                    "description": "Footprint C2",
+                    "pos": {
+                        "x": 93.5,
+                        "y": 25.0
+                    },
+                    "uuid": "358c606f-ca08-4a36-a941-f263e6b9af62"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P00'",
+            "items": [
+                {
+                    "description": "Footprint C1",
+                    "pos": {
+                        "x": 104.0,
+                        "y": 22.3
+                    },
+                    "uuid": "3650b05d-3d9b-4edb-a0a4-bd3c4323c8ac"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P00'",
+            "items": [
+                {
+                    "description": "Footprint C7",
+                    "pos": {
+                        "x": 45.0,
+                        "y": 13.5
+                    },
+                    "uuid": "80596c75-3e92-4208-96b4-332469d0f7f9"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P00'",
+            "items": [
+                {
+                    "description": "Footprint C3",
+                    "pos": {
+                        "x": 84.5,
+                        "y": 25.0
+                    },
+                    "uuid": "8d74522c-dcfc-4e2b-af4f-b5686e066da8"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P00'",
+            "items": [
+                {
+                    "description": "Footprint U2",
+                    "pos": {
+                        "x": 37.0,
+                        "y": 20.0
+                    },
+                    "uuid": "96db453a-28e0-4562-9aa4-e99e970d2d64"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P00'",
+            "items": [
+                {
+                    "description": "Footprint TP2",
+                    "pos": {
+                        "x": 61.0,
+                        "y": 26.0
+                    },
+                    "uuid": "a0d800c9-6a26-4096-a5d2-6729b6357422"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P00'",
+            "items": [
+                {
+                    "description": "Footprint TP1",
+                    "pos": {
+                        "x": 57.0,
+                        "y": 26.0
+                    },
+                    "uuid": "bdb878e9-9b74-40a2-a6c3-e382b1d2a3f7"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P00'",
+            "items": [
+                {
+                    "description": "Footprint TP3",
+                    "pos": {
+                        "x": 22.0,
+                        "y": 26.0
+                    },
+                    "uuid": "ed1a18b8-5975-411a-9414-d89399b1e664"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,1058 mm)",
+            "items": [
+                {
+                    "description": "Segment z U1 na F.Silkscreen",
+                    "pos": {
+                        "x": 87.16,
+                        "y": 21.95
+                    },
+                    "uuid": "bbb259e5-aa90-455e-86d8-6f199bf7e3f0"
+                },
+                {
+                    "description": "Pole odnośnika do C3",
+                    "pos": {
+                        "x": 87.0,
+                        "y": 22.355
+                    },
+                    "uuid": "eb16c0b8-92c9-4e2d-8407-22a4321fb79c"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Segment z U1 na F.Silkscreen",
+                    "pos": {
+                        "x": 87.16,
+                        "y": 11.67
+                    },
+                    "uuid": "4ad84c9e-7371-48cf-8de4-9926f61023b7"
+                },
+                {
+                    "description": "Pole odnośnika do C3",
+                    "pos": {
+                        "x": 87.0,
+                        "y": 22.355
+                    },
+                    "uuid": "eb16c0b8-92c9-4e2d-8407-22a4321fb79c"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        }
+    ]
+}

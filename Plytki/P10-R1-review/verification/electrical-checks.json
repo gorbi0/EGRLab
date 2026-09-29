@@ -1,0 +1,262 @@
+{
+  "checks": [
+    {
+      "id": "MATE-J1",
+      "pass": true
+    },
+    {
+      "id": "MATE-J2",
+      "pass": true
+    },
+    {
+      "id": "TCAN-PINOUT",
+      "pass": true
+    },
+    {
+      "id": "TCAN-V-SUFFIX",
+      "pass": true
+    },
+    {
+      "id": "RX-IOFF-BUFFER",
+      "pass": true
+    },
+    {
+      "id": "RX-IOFF-MPN",
+      "pass": true
+    },
+    {
+      "id": "TVS-PINOUT",
+      "pass": true
+    },
+    {
+      "id": "OBD-TWO-WIRES",
+      "pass": true
+    },
+    {
+      "id": "TX-ONLY-TESTPAD",
+      "pass": true
+    },
+    {
+      "id": "RX-NO-BUFFER-BYPASS",
+      "pass": true
+    },
+    {
+      "id": "NO-TERM-NO-EXTRA-CAN-LOAD",
+      "pass": true
+    },
+    {
+      "id": "RES-R1",
+      "pass": true
+    },
+    {
+      "id": "RES-R2",
+      "pass": true
+    },
+    {
+      "id": "CAP-1",
+      "pass": true
+    },
+    {
+      "id": "CAP-2",
+      "pass": true
+    },
+    {
+      "id": "CAP-3",
+      "pass": true
+    },
+    {
+      "id": "CAP-4",
+      "pass": true
+    },
+    {
+      "id": "CAP-5",
+      "pass": true
+    },
+    {
+      "id": "TP-1",
+      "pass": true
+    },
+    {
+      "id": "TP-2",
+      "pass": true
+    },
+    {
+      "id": "TP-3",
+      "pass": true
+    },
+    {
+      "id": "TP-4",
+      "pass": true
+    },
+    {
+      "id": "TP-5",
+      "pass": true
+    },
+    {
+      "id": "TP-6",
+      "pass": true
+    },
+    {
+      "id": "ACTUAL-NETS-SILENT",
+      "pass": true
+    },
+    {
+      "id": "ACTUAL-NETS-RX",
+      "pass": true
+    }
+  ],
+  "negative_controls": [
+    {
+      "mutation": "silent-low",
+      "detected": true,
+      "by": [
+        "TCAN-PINOUT",
+        "ACTUAL-NETS-SILENT"
+      ]
+    },
+    {
+      "mutation": "MCU-to-TXD",
+      "detected": true,
+      "by": [
+        "TCAN-PINOUT",
+        "TX-ONLY-TESTPAD",
+        "ACTUAL-NETS-SILENT"
+      ]
+    },
+    {
+      "mutation": "swap-CAN",
+      "detected": true,
+      "by": [
+        "TCAN-PINOUT",
+        "NO-TERM-NO-EXTRA-CAN-LOAD"
+      ]
+    },
+    {
+      "mutation": "TVS-common-wrong",
+      "detected": true,
+      "by": [
+        "TVS-PINOUT"
+      ]
+    },
+    {
+      "mutation": "RX-buffer-bypass",
+      "detected": true,
+      "by": [
+        "TCAN-PINOUT",
+        "RX-NO-BUFFER-BYPASS"
+      ]
+    },
+    {
+      "mutation": "RX-OE-wrong",
+      "detected": true,
+      "by": [
+        "RX-IOFF-BUFFER",
+        "ACTUAL-NETS-RX"
+      ]
+    },
+    {
+      "mutation": "unused-input-float",
+      "detected": true,
+      "by": [
+        "RX-IOFF-BUFFER"
+      ]
+    },
+    {
+      "mutation": "wrong-KEY4",
+      "detected": true,
+      "by": [
+        "MATE-J2"
+      ]
+    },
+    {
+      "mutation": "wrong-LV",
+      "detected": true,
+      "by": [
+        "MATE-J1"
+      ]
+    },
+    {
+      "mutation": "missing-RX-pullup",
+      "detected": true,
+      "by": [
+        "RES-R2"
+      ]
+    },
+    {
+      "mutation": "RX-R-bypass",
+      "detected": true,
+      "by": [
+        "RX-NO-BUFFER-BYPASS",
+        "RES-R1",
+        "ACTUAL-NETS-RX"
+      ]
+    },
+    {
+      "mutation": "U1-mpn",
+      "detected": true,
+      "by": [
+        "TCAN-V-SUFFIX"
+      ]
+    },
+    {
+      "mutation": "U2-mpn",
+      "detected": true,
+      "by": [
+        "RX-IOFF-MPN"
+      ]
+    },
+    {
+      "mutation": "C2-value",
+      "detected": true,
+      "by": [
+        "CAP-2"
+      ]
+    },
+    {
+      "mutation": "R1-value",
+      "detected": true,
+      "by": [
+        "RES-R1"
+      ]
+    },
+    {
+      "mutation": "extra-120R",
+      "detected": true,
+      "by": [
+        "NO-TERM-NO-EXTRA-CAN-LOAD"
+      ]
+    }
+  ],
+  "truth_table": [
+    {
+      "core_tx": 0,
+      "bus_rx": 0,
+      "core_rx": 0,
+      "silent": 1,
+      "txd": 1
+    },
+    {
+      "core_tx": 0,
+      "bus_rx": 1,
+      "core_rx": 1,
+      "silent": 1,
+      "txd": 1
+    },
+    {
+      "core_tx": 1,
+      "bus_rx": 0,
+      "core_rx": 0,
+      "silent": 1,
+      "txd": 1
+    },
+    {
+      "core_tx": 1,
+      "bus_rx": 1,
+      "core_rx": 1,
+      "silent": 1,
+      "txd": 1
+    }
+  ],
+  "scope": "Static pin topology and steady-state digital transfer only; no simulated transient protection or power sequencing.",
+  "hardware_tested": false
+}

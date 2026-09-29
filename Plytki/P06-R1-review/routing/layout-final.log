@@ -1,0 +1,66 @@
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe build_board.py
+Created P06 board: 73 footprints + 4 M3 holes
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe set_stackup.py
+2-layer stackup: Cu70/FR4 1.46/Cu70; nominal laminate incl Cu = 1.60 mm, mask separate.
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe route_critical.py
+Force/Kelvin/analog paths locked, DSN exported.
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe prepare_routing.py
+Applied explicit 0.25 mm net clearance; no DRC exclusions.
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\kicad-cli.exe pcb drc --format json --severity-all -o routing/critical-drc.json eda/P06.kicad_pcb
+08:49:38: Error: Can't create registry key 'HKCU\Software\kicad-cli' (error 5: Odmowa dost?pu.)
+08:49:38: Error: Can't open registry key 'HKCU\Software\kicad-cli' (error 2: Nie mo?na odnale?? okre?lonego pliku.)
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe import_routing.py
+SES imported; GND planes filled; saved native board.
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe set_rules.py
+Applied explicit 0.25 mm net clearance; no DRC exclusions.
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe complete_routes.py
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe set_rules.py
+Applied explicit 0.25 mm net clearance; no DRC exclusions.
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\kicad-cli.exe pcb drc --format json --severity-all --schematic-parity --all-track-errors --refill-zones -o routing/postroute-drc.json eda/P06.kicad_pcb
+08:49:41: Error: Can't create registry key 'HKCU\Software\kicad-cli' (error 5: Odmowa dost?pu.)
+08:49:41: Error: Can't open registry key 'HKCU\Software\kicad-cli' (error 2: Nie mo?na odnale?? okre?lonego pliku.)
+
+Fontconfig error: No writable cache directories
+	C:/WINDOWS/Cache/Fontcache
+routing/postroute-drc.json {'track_dangling': 5, 'silk_over_copper': 8, 'silk_overlap': 13} unconnected 0 parity 0
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe cleanup.py
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+removed 2 redundant free items ['3V3_P06', 'I_L_OUT'] ; dropped 2 tiny; joined 3 near-miss ends; 8 duplicate and 6 dead-end items; unconnected 0; solid zone connection: none
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe set_rules.py
+Applied explicit 0.25 mm net clearance; no DRC exclusions.
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe stitch.py
+GND stitching: 21 grid vias, pour islands {'F.Cu': 6, 'B.Cu': 5} -> {'F.Cu': 6, 'B.Cu': 5} | rescue: 1 vias, pour mm2 {'F.Cu': 7681.9, 'B.Cu': 8081.1} -> {'F.Cu': 7810.6, 'B.Cu': 8081.1} islands {'F.Cu': 7, 'B.Cu': 5}
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe set_rules.py
+Applied explicit 0.25 mm net clearance; no DRC exclusions.
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\kicad-cli.exe pcb drc --format json --severity-all --schematic-parity --all-track-errors --refill-zones -o routing/postclean-drc.json eda/P06.kicad_pcb
+08:49:57: Error: Can't create registry key 'HKCU\Software\kicad-cli' (error 5: Odmowa dost?pu.)
+08:49:57: Error: Can't open registry key 'HKCU\Software\kicad-cli' (error 2: Nie mo?na odnale?? okre?lonego pliku.)
+
+Fontconfig error: No writable cache directories
+	C:/WINDOWS/Cache/Fontcache
+routing/postclean-drc.json {'silk_over_copper': 8, 'silk_overlap': 13} unconnected 0 parity 0
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'

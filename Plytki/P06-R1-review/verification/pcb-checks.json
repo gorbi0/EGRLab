@@ -1,0 +1,187 @@
+{
+  "checks": [
+    {
+      "id": "BOARD-SIZE",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "TWO-LAYER-1.6",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "OFFBOARD-SW",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "PTH-FORCE",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "PBV-GEOMETRY",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "TIE-J1",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "TIE-J2",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "TIE-J3",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "TIE-J4",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "TIE-J5",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "FORCE-J31",
+      "pass": true,
+      "note": "Locked 6mm route required; vias cannot carry motor current."
+    },
+    {
+      "id": "FORCE-J32",
+      "pass": true,
+      "note": "Locked 6mm route required; vias cannot carry motor current."
+    },
+    {
+      "id": "FORCE-J41",
+      "pass": true,
+      "note": "Locked 6mm route required; vias cannot carry motor current."
+    },
+    {
+      "id": "FORCE-J42",
+      "pass": true,
+      "note": "Locked 6mm route required; vias cannot carry motor current."
+    },
+    {
+      "id": "NO-FORCE-VIAS",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "KELVIN-K_PLUS",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "KELVIN-K_MINUS",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "KELVIN-NO-CONNECTOR",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "CREF-NEAR",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "LOCAL-DECOUPLING",
+      "pass": true,
+      "note": "Power pad to cap pad geometry; ground connectivity separately audited."
+    },
+    {
+      "id": "LDO-INPUT-DECOUPLING",
+      "pass": true,
+      "note": "C9 is 6.94mm from VIN, not included in the 5mm IC group."
+    },
+    {
+      "id": "WETTING-HEAT-DISTANCE",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "SCHEMATIC-PAD-PARITY",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "ALL-REFERENCES",
+      "pass": true,
+      "note": ""
+    }
+  ],
+  "negative_controls": [
+    {
+      "mutation": "narrow_force",
+      "caught": true,
+      "checks": [
+        "FORCE-J31",
+        "FORCE-J41"
+      ]
+    },
+    {
+      "mutation": "missing_kelvin",
+      "caught": true,
+      "checks": [
+        "KELVIN-K_PLUS"
+      ]
+    },
+    {
+      "mutation": "bad_shunt_pitch",
+      "caught": true,
+      "checks": [
+        "PBV-GEOMETRY",
+        "KELVIN-K_PLUS"
+      ]
+    },
+    {
+      "mutation": "small_wire_hole",
+      "caught": true,
+      "checks": [
+        "PTH-FORCE"
+      ]
+    },
+    {
+      "mutation": "bad_anchor",
+      "caught": true,
+      "checks": [
+        "TIE-J2"
+      ]
+    },
+    {
+      "mutation": "bad_ref_distance",
+      "caught": true,
+      "checks": [
+        "CREF-NEAR"
+      ]
+    },
+    {
+      "mutation": "wrong_pad_net",
+      "caught": true,
+      "checks": [
+        "SCHEMATIC-PAD-PARITY"
+      ]
+    },
+    {
+      "mutation": "hidden_ref",
+      "caught": true,
+      "checks": [
+        "ALL-REFERENCES"
+      ]
+    }
+  ],
+  "footprints": 77,
+  "track_items": 545,
+  "vias": 34
+}

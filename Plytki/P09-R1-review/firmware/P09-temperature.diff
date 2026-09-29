@@ -1,0 +1,62 @@
+--- a/firmware/main/board.c
++++ b/firmware/main/board.c
+@@ -272,7 +272,8 @@
+     #if CONFIG_EGR_TEMP_PRESENT
+     for (int i = 0; i < 2; i++) {
+         spi_device_interface_config_t t = {.clock_speed_hz = 1000000, .mode = 1,
+-            .spics_io_num = i ? 16 : 8, .queue_size = 1};
++            .spics_io_num = i ? 16 : 8, .queue_size = 1,
++            .cs_ena_pretrans = 2, .cs_ena_posttrans = 2};
+         ESP_ERROR_CHECK(spi_bus_add_device(SPI3_HOST, &t, &tc[i]));
+         spi_transaction_t w = {.length = 16, .flags = SPI_TRANS_USE_TXDATA};
+         w.tx_data[0] = 0x81; w.tx_data[1] = 0x03;  /* CR1: typ K, bez usredniania */
+@@ -280,6 +281,8 @@
+         w.tx_data[0] = 0x80; w.tx_data[1] = 0x91;  /* CR0: ciagle, detekcja OC, 50 Hz */
+         ESP_ERROR_CHECK(spi_device_polling_transmit(tc[i], &w));
+     }
++    /* First 50 Hz conversion plus open-circuit check; no valid sample before this. */
++    vTaskDelay(pdMS_TO_TICKS(300));
+     #endif
+     #if CONFIG_EGR_CAN_PRESENT
+     twai_general_config_t tg = TWAI_GENERAL_CONFIG_DEFAULT(17, 18, TWAI_MODE_LISTEN_ONLY);
+@@ -388,16 +391,31 @@
+     return ESP_OK;
+ }
+ esp_err_t board_temperature(int ch, float *value, uint8_t *fault) {
++    if (!value || !fault) return ESP_ERR_INVALID_ARG;
++    *value = NAN; *fault = 255;
+     if (ch < 0 || ch > 1) return ESP_ERR_INVALID_ARG;
+-    if(!tc[ch]) return ESP_ERR_NOT_FOUND;
+-    uint8_t tx[6] = {0x0a, 0, 0, 0, 0, 0}, rx[6] = {0};
+-    spi_transaction_t t = {.length = 48, .tx_buffer = tx, .rx_buffer = rx};
+-    esp_err_t e = spi_device_polling_transmit(tc[ch], &t);
++    if (!tc[ch]) return ESP_ERR_NOT_FOUND;
++    /* Read back configuration on every call. Floating/stuck MISO=0 must not
++     * become a valid 0 degC measurement; loss of module power resets CR0. */
++    uint8_t cfg_tx[3] = {0x00, 0, 0}, cfg_rx[3] = {0};
++    spi_transaction_t c = {.length = 24, .tx_buffer = cfg_tx, .rx_buffer = cfg_rx};
++    /* A single TEMP task owns tc[0..1]; both CS high during this gap. */
++    esp_rom_delay_us(1);
++    esp_err_t e = spi_device_polling_transmit(tc[ch], &c);
+     if (e != ESP_OK) return e;
+-    /* Rejestry 0A CJTL, 0B LTCBH, 0C LTCBM, 0D LTCBL, 0E SR. */
+-    int32_t raw = ((int32_t)rx[2] << 16) | ((int32_t)rx[3] << 8) | rx[4];
+-    if (raw & 0x800000) raw |= (int32_t)0xff000000;
+-    *fault = rx[5];
+-    *value = *fault ? NAN : (float)(raw >> 5) / 128.0f;
++    if (cfg_rx[1] != 0x91 || cfg_rx[2] != 0x03) return ESP_ERR_INVALID_RESPONSE;
++    /* MAX31856 Rev0 pp18,24-26: 0C LTCBH, 0D LTCBM, 0E LTCBL, 0F SR.
++     * Byte zero returned during the address phase is not register data. */
++    uint8_t tx[5] = {0x0c, 0, 0, 0, 0}, rx[5] = {0};
++    spi_transaction_t t = {.length = 40, .tx_buffer = tx, .rx_buffer = rx};
++    esp_rom_delay_us(1);
++    e = spi_device_polling_transmit(tc[ch], &t);
++    if (e != ESP_OK) return e;
++    if (rx[3] & 0x1f) return ESP_ERR_INVALID_RESPONSE;
++    *fault = rx[4];
++    uint32_t bits = ((uint32_t)rx[1] << 16) | ((uint32_t)rx[2] << 8) | rx[3];
++    int32_t raw = (int32_t)(bits >> 5);
++    if (raw & 0x40000) raw -= 0x80000;
++    if (!*fault) *value = (float)raw / 128.0f;
+     return ESP_OK;
+ }

@@ -1,0 +1,21 @@
+- [P01-R1 gate coupling](p01-r1-gate-coupling.md) — blokujący błąd C5/C6 w P01-R1; naprawiony w R2
+- [P01-R2 review](p01-r2-review.md) — R2 bez blokera; decyzje R2-01 (restart po krótkim OVP) i R2-02 (mierzalność ODBIOR)
+- [P01 PCB R1 review](p01-pcb-r1-review.md) — layout: radiatory na miedzi innych sieci, brak orientacji Q2; DRC czysty
+- [EGRLab review rules](egrlab-review-rules.md) — zakres recenzji, ograniczenia montażu/PCB, sprawdzaj poprawki liczbowo
+- [EGRLab purchasing state](egrlab-purchasing-state.md) — rejestr Zamowione/ (24.09); lista 2 z 28.09 w Plytki/Zakupy-2 (niezamówiona, wszystko na stanie po zamianach 1:1: REF5025, LVC1G37Q1, 5k11, 39-29-6128); termin: wylot 23.10.2026, PCB fabrykapcb.pl 2 dni, reguła „niedostępne w 2–3 tyg. → zamiennik”
+- [TME/Mouser/Farnell lookup](tme-mouser-lookup.md) — ajax TME, Farnell/Mouser blokują po ~15 zapytaniach, Mouser nie sprzedaje ADR4525 do PL, TME bez Würtha; dostępność Kamami z #product-availability; progi wysyłki
+- [P01 PCB state](p01-pcb-r2-state.md) — R1 Astra → R2 Claude → R3 Astra → R3.1 (moje poprawki, płytka = R3); do przymiarki używać R3.1
+- [User PCB background](user-pcb-background.md) — user wrócił do PCB po 20 latach; Claude i Astra (Codex) projektują i recenzują na zmianę; o Astrze pisać neutralnie
+- [KiCad pipeline quirks](kicad-pipeline-quirks.md) — pułapki pcbnew/Freerouting: Remove() psuje SWIG, assert GetFilledPolysList, kolejność UUID, Gerbery semantycznie, próba zerowa, lokalna zmiana przez zasianie SES (P03 R4)
+- [EGRLab toolchains u Codexa](egrlab-codex-toolchains.md) — ESP-IDF/KiCad/Freerouting, buildy .b4–.b61 (~11 GB); runtime Codexa (reportlab/node/sharp) dla run_release P01
+- [Claude MSIX AppData](claude-msix-appdata-view.md) — %APPDATA%\Claude = LocalCache pakietu MSIX; przy skanie dysku nie sumować obu
+- [P02 state](p02-r1-state.md) — P02: R1 Claude → R2 Astra → moja recenzja R2 + R3 zamykająca (26.09, zip 215d7e53); ZAMKNIĘTA; F2/F3 SPT T1A, F4 T0,5A
+- [P00 state](p00-r1-state.md) — P00: R1 Claude → R2 Astra → moja recenzja R2 + R3 zamykająca (27.09, zip 97783cea); błąd w ZAKUPY-P00 R3: wiązka do P04 wymaga męskiego IDC16 i Mini-Fit 4p
+- [P03 state](p03-r1-state.md) — P03 CORE: R1 Claude → R2 Astra → R3 zamykająca → R4 (27.09, bufor Schmitta U6 do P04, miedź = R3 + zmiana przy J4, zip 36d73f76); 28.09 pojawiły się P03-R5/P04-R2.2 (U4 1G37, R17 10k)
+- [P04 R1 review](p04-r1-review.md) — recenzja P04 Astry 26.09: bez blokera; MCP100-315→-300, watchdog tylko przez Q1, 3V3_IO bez ograniczenia; CORE_LINK 0R w moim P03
+- [P04 R2 state](p04-r2-state.md) — P04 R2 (Claude 26.09) → R2.1 Astry (zamknięta) → R2.2 (R17 10k, miedź = R2.1); paczka zamówieniowa R2.2 ZIP 1f7e9b84 (28.09)
+- [P05 R1 review](p05-r1-review.md) — recenzja P05 Astry 27–28.09: przed PCB odsprzęganie AD7606B + DOUT pod U1, okno DAQ_OK (R5 6,04k, R7 5,11k); karta AD7606B Rev. B lokalnie
+- [PCB fab: Satland](pcb-fab-satland.md) — Satland lub JLCPCB (najtaniej); 35 µm (decyzja: koszt), próba nagrzewania 5 A przed P07; Plytki/Zamowienie-Satland: P00, P01, P02, P04; skrypty pakowania z P04-PCB-R2.2-zamowienie/src
+- [Kaseta R1](kaseta-r1.md) — obudowa 29.09: LOGGER 361×209×151 mm, pełny 361×265×151; wiązki v6.1 do wydłużenia; J7 TAPS na P11 przenieść; kabina, nie komora silnika
+- [Zasilanie z ogniw 18650](zasilanie-ogniwa-18650.md) — decyzja 29.09: pakiet 4S, P01/HOLD zbędne, PCB P01/P02 wstrzymane, zamienniki przyjęte; specyfikacja P02 R4 w Plytki/P02-R4-specyfikacja (czeka na D-01…D-07)
+- [Repozytorium i chmura](repo-chmura.md) — git w EGRLab (29.09): * -text, zipy recenzji poza repo, 15 plików AUX/CON jako skip-worktree; docs/CHMURA.md; push i kredyt robi użytkownik

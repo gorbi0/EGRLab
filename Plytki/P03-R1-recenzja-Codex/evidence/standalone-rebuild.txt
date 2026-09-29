@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\P03-audit-20260925\rebuild-probe\src\build_schematic.py", line 5, in <module>
+    from parts import *
+  File "C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\P03-audit-20260925\rebuild-probe\src\parts.py", line 105, in <module>
+    ADP = copyp02('Adapter_SO14_DIP14_W15.24_Kamami575068'); C100N = copyp02('C_Vishay_K15_H5_P5'); TPFP = copyp02('TestPad_1')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\P03-audit-20260925\rebuild-probe\src\parts.py", line 25, in copyp02
+    shutil.copy2(P02LIB / (name + '.kicad_mod'), FP / (name + '.kicad_mod')); return 'P03:' + name
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\Lib\shutil.py", line 436, in copy2
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+  File "C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\Lib\shutil.py", line 256, in copyfile
+    with open(src, 'rb') as fsrc:
+         ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\tgorbacz\\.codex\\.chatgpt-projects\\g-p-6a8827e57cc881919b26f761377a7bd3\\P03-audit-20260925\\P02-R1-review\\eda\\libraries\\P02.pretty\\Adapter_SO14_DIP14_W15.24_Kamami575068.kicad_mod'

@@ -1,0 +1,20 @@
+schematic-build PASS
+erc PASS
+netlist PASS
+schematic-check PASS
+electrical-check PASS
+layout PASS
+silk PASS
+rules PASS
+models PASS
+revision-check PASS
+Traceback (most recent call last):
+  File "C:\Users\tgorbacz\Documents\GORBI\Priv\Kia\Sportage\EGRLab\Plytki\P02-R2-recenzja\work\src\run_release.py", line 1, in <module>
+    from release_r2 import *
+  File "C:\Users\tgorbacz\Documents\GORBI\Priv\Kia\Sportage\EGRLab\Plytki\P02-R2-recenzja\work\src\release_r2.py", line 27, in <module>
+    run('pcb-check',PY,'src/verify_pcb.py');run('negative-controls',PY,'src/negative_controls.py')
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tgorbacz\Documents\GORBI\Priv\Kia\Sportage\EGRLab\Plytki\P02-R2-recenzja\work\src\release_r2.py", line 15, in run
+    if r.returncode:raise RuntimeError(name+' FAILED; see verification/run-'+name+'.log')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: pcb-check FAILED; see verification/run-pcb-check.log

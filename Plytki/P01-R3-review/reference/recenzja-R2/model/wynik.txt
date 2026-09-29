@@ -1,0 +1,21 @@
+# Wyniki modeli do RECENZJA-P01-R2.md — 2026-09-23
+
+## powtorzenie_talii.py — talie autora, własne wywołanie ngspice
+hot_48_1e-06_1         VSG szczyt   0.595 V, Id szczyt   0.001 A, wyłączenie None us, start 95% None ms
+off_1                  VSG szczyt  13.905 V, Id szczyt   1.501 A, wyłączenie 64.23 us, start 95% None ms
+start_slow_corner      VSG szczyt   7.290 V, Id szczyt   1.933 A, wyłączenie None us, start 95% 74.3 ms
+ovp_17_24_delay20us    VSG szczyt  13.908 V, Id szczyt  96.698 A, wyłączenie 77.97 us, start 95% None ms
+
+## tor_enable.py — ENABLE idealne vs rzeczywisty tor OK→Q6→ENABLE (R16, bazy Q3/Q5/Q8)
+off_0 | ENABLE idealne (autor)        : ENABLE<1 V  0.00 us, <0,3 V 0.0 us, ENABLE 2-4 us po zboczu ~0.00 V, baza Q5<0,4 V 1.7 us, Q2 VGS<-3 V 15.1 us, VSG(Q1)<0,5 V 42.9 us
+off_0 | tor rzeczywisty OK→Q6→ENABLE  : ENABLE<1 V  0.37 us, <0,3 V 3.9 us, ENABLE 2-4 us po zboczu ~0.45 V, baza Q5<0,4 V 3.8 us, Q2 VGS<-3 V 16.6 us, VSG(Q1)<0,5 V 44.4 us, SAFE_N<0,8 V po   2.7 us
+off_1 | ENABLE idealne (autor)        : ENABLE<1 V  0.00 us, <0,3 V 0.0 us, ENABLE 2-4 us po zboczu ~0.00 V, baza Q5<0,4 V 3.6 us, Q2 VGS<-3 V 19.8 us, VSG(Q1)<0,5 V 64.3 us
+off_1 | tor rzeczywisty OK→Q6→ENABLE  : ENABLE<1 V  0.32 us, <0,3 V 7.4 us, ENABLE 2-4 us po zboczu ~0.52 V, baza Q5<0,4 V 6.7 us, Q2 VGS<-3 V 22.2 us, VSG(Q1)<0,5 V 66.6 us, SAFE_N<0,8 V po   6.1 us
+
+## krotkie_zadzialanie.py — ENABLE niskie przez 50 us, 220 uF + odbiornik 3 W (stop < 6,5 V)
+R1 Vt=1 V BF=50 TR=1us: Q1 wył. przez   0.12 ms, VPROT min 13.90 V; VPROT nie spada poniżej 6,5 V
+R1 Vt=2 V BF=50 TR=1us: Q1 wył. przez   0.23 ms, VPROT min 13.80 V; VPROT nie spada poniżej 6,5 V
+R1 Vt=3 V BF=30 TR=3us: Q1 wył. przez   0.32 ms, VPROT min 13.73 V; VPROT nie spada poniżej 6,5 V
+R2 Vt=1 V BF=50 TR=1us: Q1 wył. przez  10.38 ms, VPROT min  6.50 V; VPROT < 6,5 V (TSR stop) od   5.7 ms do  10.8 ms
+R2 Vt=2 V BF=50 TR=1us: Q1 wył. przez  18.96 ms, VPROT min  6.50 V; VPROT < 6,5 V (TSR stop) od   5.6 ms do  19.2 ms
+R2 Vt=3 V BF=30 TR=3us: Q1 wył. przez  27.31 ms, VPROT min  6.50 V; VPROT < 6,5 V (TSR stop) od   5.7 ms do  27.3 ms

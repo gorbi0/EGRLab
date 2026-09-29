@@ -1,0 +1,593 @@
+{
+  "source": "verification/P04.xml",
+  "checks": [
+    {
+      "name": "Watchdog pinout and independent clear",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Watchdog capacitor is between 15 and 14, never ground",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Local supervisor D bondout",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Both supervisors qualify watchdog",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Latch and Schmitt conditioning",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "ARM contact topology",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "SAFE_N has only one passive pull-up and open collectors",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "All command/READY ports mapped",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Input and post-adapter pull-downs",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Exact Ioff buffer and unused channel safe",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "One carrier decoupler per IC and 3 adapter capacitors",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "SENSOR 6-way contract and key positions",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Truth table INTERLOCK",
+      "pass": true,
+      "detail": {
+        "rows": 131072,
+        "expected_high_rows": 512,
+        "actual_high_rows": 512,
+        "first_failing_row": null,
+        "inputs": null
+      }
+    },
+    {
+      "name": "Truth table SAFE_N",
+      "pass": true,
+      "detail": {
+        "rows": 131072,
+        "expected_high_rows": 16,
+        "actual_high_rows": 16,
+        "first_failing_row": null,
+        "inputs": null
+      }
+    },
+    {
+      "name": "Truth table HW_ARMED",
+      "pass": true,
+      "detail": {
+        "rows": 131072,
+        "expected_high_rows": 8,
+        "actual_high_rows": 8,
+        "first_failing_row": null,
+        "inputs": null
+      }
+    },
+    {
+      "name": "Truth table MOTOR_PERMIT",
+      "pass": true,
+      "detail": {
+        "rows": 131072,
+        "expected_high_rows": 4,
+        "actual_high_rows": 4,
+        "first_failing_row": null,
+        "inputs": null
+      }
+    },
+    {
+      "name": "Truth table PWM_OUT",
+      "pass": true,
+      "detail": {
+        "rows": 131072,
+        "expected_high_rows": 2,
+        "actual_high_rows": 2,
+        "first_failing_row": null,
+        "inputs": null
+      }
+    },
+    {
+      "name": "Truth table SENSOR_PERMIT",
+      "pass": true,
+      "detail": {
+        "rows": 131072,
+        "expected_high_rows": 8,
+        "actual_high_rows": 8,
+        "first_failing_row": null,
+        "inputs": null
+      }
+    },
+    {
+      "name": "Fault recovery never automatically rearms",
+      "pass": true,
+      "detail": [
+        {
+          "event": "boot",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "press ARM",
+          "armed": 1,
+          "expected": 1,
+          "pass": true
+        },
+        {
+          "event": "release ARM",
+          "armed": 1,
+          "expected": 1,
+          "pass": true
+        },
+        {
+          "event": "WD_ALIVE fault",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "WD_ALIVE restored, ARM held",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "WD_ALIVE release",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "WD_ALIVE fresh ARM",
+          "armed": 1,
+          "expected": 1,
+          "pass": true
+        },
+        {
+          "event": "WD_ALIVE release after arm",
+          "armed": 1,
+          "expected": 1,
+          "pass": true
+        },
+        {
+          "event": "SUP_N fault",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "SUP_N restored, ARM held",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "SUP_N release",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "SUP_N fresh ARM",
+          "armed": 1,
+          "expected": 1,
+          "pass": true
+        },
+        {
+          "event": "SUP_N release after arm",
+          "armed": 1,
+          "expected": 1,
+          "pass": true
+        },
+        {
+          "event": "LOCAL_SUP fault",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "LOCAL_SUP restored, ARM held",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "LOCAL_SUP release",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "LOCAL_SUP fresh ARM",
+          "armed": 1,
+          "expected": 1,
+          "pass": true
+        },
+        {
+          "event": "LOCAL_SUP release after arm",
+          "armed": 1,
+          "expected": 1,
+          "pass": true
+        },
+        {
+          "event": "STOP_CLOSED fault",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "STOP_CLOSED restored, ARM held",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "STOP_CLOSED release",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "STOP_CLOSED fresh ARM",
+          "armed": 1,
+          "expected": 1,
+          "pass": true
+        },
+        {
+          "event": "STOP_CLOSED release after arm",
+          "armed": 1,
+          "expected": 1,
+          "pass": true
+        },
+        {
+          "event": "PSU_OK fault",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "PSU_OK restored, ARM held",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "PSU_OK release",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "PSU_OK fresh ARM",
+          "armed": 1,
+          "expected": 1,
+          "pass": true
+        },
+        {
+          "event": "PSU_OK release after arm",
+          "armed": 1,
+          "expected": 1,
+          "pass": true
+        },
+        {
+          "event": "DAQ_OK fault",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "DAQ_OK restored, ARM held",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "DAQ_OK release",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "DAQ_OK fresh ARM",
+          "armed": 1,
+          "expected": 1,
+          "pass": true
+        },
+        {
+          "event": "DAQ_OK release after arm",
+          "armed": 1,
+          "expected": 1,
+          "pass": true
+        },
+        {
+          "event": "DRIVE_OK fault",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "DRIVE_OK restored, ARM held",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "DRIVE_OK release",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "DRIVE_OK fresh ARM",
+          "armed": 1,
+          "expected": 1,
+          "pass": true
+        },
+        {
+          "event": "DRIVE_OK release after arm",
+          "armed": 1,
+          "expected": 1,
+          "pass": true
+        },
+        {
+          "event": "SENSOR_OK fault",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "SENSOR_OK restored, ARM held",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "SENSOR_OK release",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "SENSOR_OK fresh ARM",
+          "armed": 1,
+          "expected": 1,
+          "pass": true
+        },
+        {
+          "event": "SENSOR_OK release after arm",
+          "armed": 1,
+          "expected": 1,
+          "pass": true
+        },
+        {
+          "event": "CORE_LINK fault",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "CORE_LINK restored, ARM held",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "CORE_LINK release",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "CORE_LINK fresh ARM",
+          "armed": 1,
+          "expected": 1,
+          "pass": true
+        },
+        {
+          "event": "CORE_LINK release after arm",
+          "armed": 1,
+          "expected": 1,
+          "pass": true
+        },
+        {
+          "event": "PG_LINK fault",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "PG_LINK restored, ARM held",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "PG_LINK release",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "PG_LINK fresh ARM",
+          "armed": 1,
+          "expected": 1,
+          "pass": true
+        },
+        {
+          "event": "PG_LINK release after arm",
+          "armed": 1,
+          "expected": 1,
+          "pass": true
+        },
+        {
+          "event": "TEST_KEY fault",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "TEST_KEY restored, ARM held",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "TEST_KEY release",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "TEST_KEY fresh ARM",
+          "armed": 1,
+          "expected": 1,
+          "pass": true
+        },
+        {
+          "event": "TEST_KEY release after arm",
+          "armed": 1,
+          "expected": 1,
+          "pass": true
+        },
+        {
+          "event": "MECH_OK fault",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "MECH_OK restored, ARM held",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "MECH_OK release",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "MECH_OK fresh ARM",
+          "armed": 1,
+          "expected": 1,
+          "pass": true
+        },
+        {
+          "event": "MECH_OK release after arm",
+          "armed": 1,
+          "expected": 1,
+          "pass": true
+        },
+        {
+          "event": "external OC",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "OC released, ARM held",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "release",
+          "armed": 0,
+          "expected": 0,
+          "pass": true
+        },
+        {
+          "event": "fresh press",
+          "armed": 1,
+          "expected": 1,
+          "pass": true
+        }
+      ]
+    }
+  ],
+  "truth_table_rows": 131072,
+  "negative_controls": [
+    {
+      "mutation": "watchdog CLR on SAFE_N",
+      "target_check": "Watchdog pinout and independent clear",
+      "detected": true
+    },
+    {
+      "mutation": "watchdog Cext to ground",
+      "target_check": "Watchdog capacitor is between 15 and 14, never ground",
+      "detected": true
+    },
+    {
+      "mutation": "bypassed local supervisor",
+      "target_check": "Both supervisors qualify watchdog",
+      "detected": true
+    },
+    {
+      "mutation": "MCP100 pins reversed",
+      "target_check": "Local supervisor D bondout",
+      "detected": true
+    },
+    {
+      "mutation": "missing TEST_KEY gate",
+      "target_check": "Truth table INTERLOCK",
+      "detected": true
+    },
+    {
+      "mutation": "bypassed MCU arm",
+      "target_check": "Truth table MOTOR_PERMIT",
+      "detected": true
+    },
+    {
+      "mutation": "sensor incorrectly requires manual ARM",
+      "target_check": "Truth table SENSOR_PERMIT",
+      "detected": true
+    },
+    {
+      "mutation": "no SAFE conditioning",
+      "target_check": "Latch and Schmitt conditioning",
+      "detected": true
+    },
+    {
+      "mutation": "push-pull output on shared SAFE",
+      "target_check": "SAFE_N has only one passive pull-up and open collectors",
+      "detected": true
+    },
+    {
+      "mutation": "missing receiver default",
+      "target_check": "Input and post-adapter pull-downs",
+      "detected": true
+    }
+  ],
+  "limitations": "Ideal steady-state logic and ideal sequential edges; analog timing, debounce, simultaneous edges and physical fault testing remain NOT TESTED."
+}

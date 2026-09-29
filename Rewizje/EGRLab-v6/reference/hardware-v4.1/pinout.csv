@@ -1,0 +1,28 @@
+﻿GPIO;signal;direction;notes
+1;PWM;out;"AND z MOTOR_PERMIT; LEDC 1 kHz start"
+2;ADC_SDI;out;"software mode AD7606B (zworki OS=111); w hardware mode na stale 0"
+38;SCOPE_TRIG;out;"impuls 20 us; DHO804 nie ma wejscia EXT - sygnal zajmuje kanal analogowy; odlaczyc DIN pokladowego RGB"
+4;SPI3_SCLK;out;SD i MAX31856
+5;SPI3_MOSI;out;SD i MAX31856
+6;SPI3_MISO;in;SD i MAX31856
+7;SD_CS;out;10k pullup
+8;TC1_CS;out;10k pullup
+16;TC2_CS;out;10k pullup
+9;ADC_SCLK;out;SPI2 mode 2
+11;ADC_DOUTA;in;"VDRIVE 3.3V; bez translatorow"
+12;ADC_CS;out;1 ramka 128-bit (SW) albo 8 ramek 16-bit (HW)
+13;ADC_CONVST;out;AD7606B pin 9 CONVST / pin 10 WR do 3V3_IO
+14;ADC_BUSY;in;"timeout 200 us; konfiguracja tylko przy zatrzymanej akwizycji"
+10;I2C_SDA;in/out;4.7k pullup do 3V3_IO
+15;I2C_SCL;out;4.7k pullup do 3V3_IO
+17;CAN_TX;out;"TWAI listen only; transceiver dodatkowo w silent"
+18;CAN_RX;in;TCAN1051V, VIO 3.3V
+21;HEARTBEAT;out;"do 74HC123; zmieniany tylko przy swiezych danych ADC"
+39;MCU_ARM;out;zewnetrzny 47k pulldown
+40;HW_ARMED;in;Q latcha 74HC74, 10k pulldown
+41;MARK;in;przycisk do GND, 10k pullup, 100 nF
+42;INTERLOCK;in;wysoki tylko przy dozwolonym TEST, 10k pulldown
+43;UART0_TX;reserved;pokladowy CH343
+44;UART0_RX;reserved;pokladowy CH343
+19;USB_D-;reserved;plytka
+20;USB_D+;reserved;plytka

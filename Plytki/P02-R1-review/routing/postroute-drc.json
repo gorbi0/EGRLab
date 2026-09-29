@@ -1,0 +1,1355 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-25T13:35:31",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P02.kicad_pcb",
+    "unconnected_items": [],
+    "violations": [
+        {
+            "description": "Niekompletne łączenie termiczne ze strefą (warstwa B.Cu; 1 łącz połączonych z izolowanym polem)",
+            "items": [
+                {
+                    "description": "Strefa [GND] na B.Cu, priorytet 0",
+                    "pos": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "uuid": "c6ee32df-4e21-47ee-bea6-8cd5b8cf497b"
+                },
+                {
+                    "description": "Pole PTH 12 [GND] na U5",
+                    "pos": {
+                        "x": 90.24,
+                        "y": 55.08
+                    },
+                    "uuid": "14f6d4b6-8765-41b7-8384-8e8ca946a576"
+                }
+            ],
+            "severity": "error",
+            "type": "starved_thermal"
+        },
+        {
+            "description": "Niekompletne łączenie termiczne ze strefą (warstwa F.Cu; strefa min. liczba łącz 2; obecnie 1)",
+            "items": [
+                {
+                    "description": "Strefa [GND] na F.Cu, priorytet 0",
+                    "pos": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "uuid": "5211d25d-e3fe-4653-b922-32365a8bbfa5"
+                },
+                {
+                    "description": "Pole PTH 12 [GND] na U5",
+                    "pos": {
+                        "x": 90.24,
+                        "y": 55.08
+                    },
+                    "uuid": "14f6d4b6-8765-41b7-8384-8e8ca946a576"
+                }
+            ],
+            "severity": "error",
+            "type": "starved_thermal"
+        },
+        {
+            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Segment na Edge.Cuts",
+                    "pos": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "uuid": "4b3be56d-a349-44b5-b2eb-aa5cf2c79a8f"
+                },
+                {
+                    "description": "Pole odnośnika do J13",
+                    "pos": {
+                        "x": 28.54,
+                        "y": 0.375
+                    },
+                    "uuid": "a553072f-d1fd-4ea6-b838-eeb071481823"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C6",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 61.125
+                    },
+                    "uuid": "0fc233bc-5fb6-4641-8d04-d1bb123d2c6e"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C8",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 77.125
+                    },
+                    "uuid": "75fddbc2-b86b-4a56-a71a-6030ba16fdcb"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Pole odnośnika do R3",
+                    "pos": {
+                        "x": 68.5,
+                        "y": 56.324999
+                    },
+                    "uuid": "1f8bab46-af3d-4568-bbf5-1176ad1a7a61"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C15",
+                    "pos": {
+                        "x": 111.5,
+                        "y": 80.775
+                    },
+                    "uuid": "6729b0cd-a601-4430-8a6f-2c6fd55456e4"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C11",
+                    "pos": {
+                        "x": 94.5,
+                        "y": 46.775
+                    },
+                    "uuid": "639f2dc4-4359-4fbf-a799-e29c88918233"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do R5",
+                    "pos": {
+                        "x": 102.08,
+                        "y": 92.375
+                    },
+                    "uuid": "2050b0d1-e51b-4512-ad08-cd5cd5488de4"
+                },
+                {
+                    "description": "Łuk z U8 na F.Silkscreen",
+                    "pos": {
+                        "x": 103.04,
+                        "y": 90.0
+                    },
+                    "uuid": "5535fbbd-9502-4711-8a83-09a59ce750fd"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do R5",
+                    "pos": {
+                        "x": 102.08,
+                        "y": 92.375
+                    },
+                    "uuid": "2050b0d1-e51b-4512-ad08-cd5cd5488de4"
+                },
+                {
+                    "description": "Segment z U8 na F.Silkscreen",
+                    "pos": {
+                        "x": 101.24,
+                        "y": 91.85
+                    },
+                    "uuid": "bd4ef515-5683-4846-9ab7-dba5ae3a8faf"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C6",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 61.125
+                    },
+                    "uuid": "0fc233bc-5fb6-4641-8d04-d1bb123d2c6e"
+                },
+                {
+                    "description": "Segment z C5 na F.Silkscreen",
+                    "pos": {
+                        "x": 62.783,
+                        "y": 61.6
+                    },
+                    "uuid": "e5a0bae6-bfee-4a45-8fa4-063bbaf0f8d8"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C6",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 61.125
+                    },
+                    "uuid": "0fc233bc-5fb6-4641-8d04-d1bb123d2c6e"
+                },
+                {
+                    "description": "Segment z C5 na F.Silkscreen",
+                    "pos": {
+                        "x": 63.017,
+                        "y": 61.56
+                    },
+                    "uuid": "a4196328-065a-418d-a9cf-10687ce138ca"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C6",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 61.125
+                    },
+                    "uuid": "0fc233bc-5fb6-4641-8d04-d1bb123d2c6e"
+                },
+                {
+                    "description": "Segment z C5 na F.Silkscreen",
+                    "pos": {
+                        "x": 63.177,
+                        "y": 61.52
+                    },
+                    "uuid": "64ced596-4679-4bf7-b86f-61dc146dd146"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C6",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 61.125
+                    },
+                    "uuid": "0fc233bc-5fb6-4641-8d04-d1bb123d2c6e"
+                },
+                {
+                    "description": "Segment z C5 na F.Silkscreen",
+                    "pos": {
+                        "x": 63.305,
+                        "y": 61.48
+                    },
+                    "uuid": "e85b6d73-5b87-4c93-b933-6eea98060920"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C6",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 61.125
+                    },
+                    "uuid": "0fc233bc-5fb6-4641-8d04-d1bb123d2c6e"
+                },
+                {
+                    "description": "Segment z C5 na F.Silkscreen",
+                    "pos": {
+                        "x": 63.414,
+                        "y": 61.44
+                    },
+                    "uuid": "75bdf358-6428-4795-bb46-87854c4c882f"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C6",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 61.125
+                    },
+                    "uuid": "0fc233bc-5fb6-4641-8d04-d1bb123d2c6e"
+                },
+                {
+                    "description": "Segment z C5 na F.Silkscreen",
+                    "pos": {
+                        "x": 63.511,
+                        "y": 61.4
+                    },
+                    "uuid": "ecfabf68-bbd4-44f8-8b1b-df2ceabb9205"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C6",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 61.125
+                    },
+                    "uuid": "0fc233bc-5fb6-4641-8d04-d1bb123d2c6e"
+                },
+                {
+                    "description": "Segment z C5 na F.Silkscreen",
+                    "pos": {
+                        "x": 63.598,
+                        "y": 61.36
+                    },
+                    "uuid": "e7ed2c86-e3e1-48b2-80e6-8b8a6774f9be"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0296 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C6",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 61.125
+                    },
+                    "uuid": "0fc233bc-5fb6-4641-8d04-d1bb123d2c6e"
+                },
+                {
+                    "description": "Segment z C5 na F.Silkscreen",
+                    "pos": {
+                        "x": 63.677,
+                        "y": 61.32
+                    },
+                    "uuid": "2e5c4e44-0a45-4cba-a863-3d3b1cb65859"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0696 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C6",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 61.125
+                    },
+                    "uuid": "0fc233bc-5fb6-4641-8d04-d1bb123d2c6e"
+                },
+                {
+                    "description": "Segment z C5 na F.Silkscreen",
+                    "pos": {
+                        "x": 63.751,
+                        "y": 61.28
+                    },
+                    "uuid": "1fdc8142-438c-48f4-946f-da73c9e6c2f1"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,1096 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C6",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 61.125
+                    },
+                    "uuid": "0fc233bc-5fb6-4641-8d04-d1bb123d2c6e"
+                },
+                {
+                    "description": "Segment z C5 na F.Silkscreen",
+                    "pos": {
+                        "x": 63.819,
+                        "y": 61.24
+                    },
+                    "uuid": "ce9a2e41-b51c-44b3-b764-1d848f3adf09"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C6",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 61.125
+                    },
+                    "uuid": "0fc233bc-5fb6-4641-8d04-d1bb123d2c6e"
+                },
+                {
+                    "description": "Okrąg z C5 na F.Silkscreen",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 59.0
+                    },
+                    "uuid": "a9a72795-ca49-47d8-bf9a-58fbfa07efb4"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,1496 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C6",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 61.125
+                    },
+                    "uuid": "0fc233bc-5fb6-4641-8d04-d1bb123d2c6e"
+                },
+                {
+                    "description": "Segment z C5 na F.Silkscreen",
+                    "pos": {
+                        "x": 63.883,
+                        "y": 61.2
+                    },
+                    "uuid": "8cfd7b89-8770-4439-944a-b8e7b7fa71c8"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,1420 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C6",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 61.125
+                    },
+                    "uuid": "0fc233bc-5fb6-4641-8d04-d1bb123d2c6e"
+                },
+                {
+                    "description": "Segment z C5 na F.Silkscreen",
+                    "pos": {
+                        "x": 63.943,
+                        "y": 61.16
+                    },
+                    "uuid": "8be40656-65cb-42cd-bef3-1ecf9fbe2b9f"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0867 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C6",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 61.125
+                    },
+                    "uuid": "0fc233bc-5fb6-4641-8d04-d1bb123d2c6e"
+                },
+                {
+                    "description": "Segment z C5 na F.Silkscreen",
+                    "pos": {
+                        "x": 63.999,
+                        "y": 61.12
+                    },
+                    "uuid": "587ed79b-916d-4fa4-b816-dd31c0b8d93c"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,1267 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C6",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 61.125
+                    },
+                    "uuid": "0fc233bc-5fb6-4641-8d04-d1bb123d2c6e"
+                },
+                {
+                    "description": "Segment z C5 na F.Silkscreen",
+                    "pos": {
+                        "x": 64.053,
+                        "y": 61.08
+                    },
+                    "uuid": "63c3c295-a51b-40ae-9f42-ac5431d24c8e"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C6",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 61.125
+                    },
+                    "uuid": "0fc233bc-5fb6-4641-8d04-d1bb123d2c6e"
+                },
+                {
+                    "description": "Segment z C5 na F.Silkscreen",
+                    "pos": {
+                        "x": 64.104,
+                        "y": 61.04
+                    },
+                    "uuid": "0fe5e86e-5b71-4d1c-8629-cc1c7e6a64e2"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,1499 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C6",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 61.125
+                    },
+                    "uuid": "0fc233bc-5fb6-4641-8d04-d1bb123d2c6e"
+                },
+                {
+                    "description": "Segment z C5 na F.Silkscreen",
+                    "pos": {
+                        "x": 61.46,
+                        "y": 60.88
+                    },
+                    "uuid": "66bcfbf2-491f-4557-8ce2-0f5d8d513a68"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,1342 mm)",
+            "items": [
+                {
+                    "description": "Segment z C5 na F.Silkscreen",
+                    "pos": {
+                        "x": 61.46,
+                        "y": 60.92
+                    },
+                    "uuid": "003e2c3e-1ab6-4a80-942f-3c69b382679c"
+                },
+                {
+                    "description": "Pole odnośnika do C6",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 61.125
+                    },
+                    "uuid": "0fc233bc-5fb6-4641-8d04-d1bb123d2c6e"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,1238 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C6",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 61.125
+                    },
+                    "uuid": "0fc233bc-5fb6-4641-8d04-d1bb123d2c6e"
+                },
+                {
+                    "description": "Segment z C5 na F.Silkscreen",
+                    "pos": {
+                        "x": 61.46,
+                        "y": 60.96
+                    },
+                    "uuid": "93cd2369-ef5a-45d7-8ed4-4d82e1616fa8"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,1194 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C6",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 61.125
+                    },
+                    "uuid": "0fc233bc-5fb6-4641-8d04-d1bb123d2c6e"
+                },
+                {
+                    "description": "Segment z C5 na F.Silkscreen",
+                    "pos": {
+                        "x": 61.46,
+                        "y": 61.0
+                    },
+                    "uuid": "4b6bd5f2-c392-47c5-8a84-35da63a970ab"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Segment z U1 na F.Silkscreen",
+                    "pos": {
+                        "x": 59.22,
+                        "y": 68.19
+                    },
+                    "uuid": "2995f095-9cec-49dc-9c90-e4e2e13203f4"
+                },
+                {
+                    "description": "Pole odnośnika do U2",
+                    "pos": {
+                        "x": 54.86,
+                        "y": 67.705
+                    },
+                    "uuid": "660529a2-821d-481d-ba35-fe6d688b485f"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,1390 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C8",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 77.125
+                    },
+                    "uuid": "75fddbc2-b86b-4a56-a71a-6030ba16fdcb"
+                },
+                {
+                    "description": "Segment z C7 na F.Silkscreen",
+                    "pos": {
+                        "x": 64.243,
+                        "y": 76.92
+                    },
+                    "uuid": "bc54cd24-35ae-4254-8909-c7db102211d2"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,1419 mm)",
+            "items": [
+                {
+                    "description": "Segment z C7 na F.Silkscreen",
+                    "pos": {
+                        "x": 64.285,
+                        "y": 76.88
+                    },
+                    "uuid": "6e082406-fea3-4e57-8c59-f71719337757"
+                },
+                {
+                    "description": "Pole odnośnika do C8",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 77.125
+                    },
+                    "uuid": "75fddbc2-b86b-4a56-a71a-6030ba16fdcb"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,1287 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C8",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 77.125
+                    },
+                    "uuid": "75fddbc2-b86b-4a56-a71a-6030ba16fdcb"
+                },
+                {
+                    "description": "Segment z C7 na F.Silkscreen",
+                    "pos": {
+                        "x": 64.325,
+                        "y": 76.84
+                    },
+                    "uuid": "f1559347-2c56-4404-a535-d93847de52c5"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,1210 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C8",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 77.125
+                    },
+                    "uuid": "75fddbc2-b86b-4a56-a71a-6030ba16fdcb"
+                },
+                {
+                    "description": "Segment z C7 na F.Silkscreen",
+                    "pos": {
+                        "x": 64.364,
+                        "y": 76.8
+                    },
+                    "uuid": "a5844c64-f89a-4a06-95dd-30e522b33c74"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,1195 mm)",
+            "items": [
+                {
+                    "description": "Segment z C7 na F.Silkscreen",
+                    "pos": {
+                        "x": 64.401,
+                        "y": 76.76
+                    },
+                    "uuid": "1f7dcaf9-cca1-4b1a-9823-11ccd08c35da"
+                },
+                {
+                    "description": "Pole odnośnika do C8",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 77.125
+                    },
+                    "uuid": "75fddbc2-b86b-4a56-a71a-6030ba16fdcb"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,1242 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C8",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 77.125
+                    },
+                    "uuid": "75fddbc2-b86b-4a56-a71a-6030ba16fdcb"
+                },
+                {
+                    "description": "Segment z C7 na F.Silkscreen",
+                    "pos": {
+                        "x": 64.436,
+                        "y": 76.72
+                    },
+                    "uuid": "8755dbbc-0437-4d96-8744-6b14bafdd747"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,1348 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C8",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 77.125
+                    },
+                    "uuid": "75fddbc2-b86b-4a56-a71a-6030ba16fdcb"
+                },
+                {
+                    "description": "Segment z C7 na F.Silkscreen",
+                    "pos": {
+                        "x": 64.47,
+                        "y": 76.68
+                    },
+                    "uuid": "a719d699-6a51-448f-ba15-1a8bf86fcf2e"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C8",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 77.125
+                    },
+                    "uuid": "75fddbc2-b86b-4a56-a71a-6030ba16fdcb"
+                },
+                {
+                    "description": "Okrąg z C7 na F.Silkscreen",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 75.0
+                    },
+                    "uuid": "dfc5c1b1-e47a-4758-b463-5752b2aadc41"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C8",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 77.125
+                    },
+                    "uuid": "75fddbc2-b86b-4a56-a71a-6030ba16fdcb"
+                },
+                {
+                    "description": "Segment z C7 na F.Silkscreen",
+                    "pos": {
+                        "x": 62.783,
+                        "y": 77.6
+                    },
+                    "uuid": "a22973a8-ed13-4457-84e0-5f62924acafe"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Segment z C7 na F.Silkscreen",
+                    "pos": {
+                        "x": 63.017,
+                        "y": 77.56
+                    },
+                    "uuid": "720cb680-680d-44da-b13e-3e3c52df729a"
+                },
+                {
+                    "description": "Pole odnośnika do C8",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 77.125
+                    },
+                    "uuid": "75fddbc2-b86b-4a56-a71a-6030ba16fdcb"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Segment z C7 na F.Silkscreen",
+                    "pos": {
+                        "x": 63.177,
+                        "y": 77.52
+                    },
+                    "uuid": "550b0bb2-15ee-4d14-b2b6-0138a33e7799"
+                },
+                {
+                    "description": "Pole odnośnika do C8",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 77.125
+                    },
+                    "uuid": "75fddbc2-b86b-4a56-a71a-6030ba16fdcb"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C8",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 77.125
+                    },
+                    "uuid": "75fddbc2-b86b-4a56-a71a-6030ba16fdcb"
+                },
+                {
+                    "description": "Segment z C7 na F.Silkscreen",
+                    "pos": {
+                        "x": 63.305,
+                        "y": 77.48
+                    },
+                    "uuid": "8e986994-34f3-4a7a-acee-cf3029e8c7ae"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Segment z C7 na F.Silkscreen",
+                    "pos": {
+                        "x": 63.414,
+                        "y": 77.44
+                    },
+                    "uuid": "6e4c8e2e-c83f-4252-ade0-a748adaffff4"
+                },
+                {
+                    "description": "Pole odnośnika do C8",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 77.125
+                    },
+                    "uuid": "75fddbc2-b86b-4a56-a71a-6030ba16fdcb"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C8",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 77.125
+                    },
+                    "uuid": "75fddbc2-b86b-4a56-a71a-6030ba16fdcb"
+                },
+                {
+                    "description": "Segment z C7 na F.Silkscreen",
+                    "pos": {
+                        "x": 63.511,
+                        "y": 77.4
+                    },
+                    "uuid": "8c1b55e5-1f2f-4965-97d9-d035044c97d0"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Segment z C7 na F.Silkscreen",
+                    "pos": {
+                        "x": 63.598,
+                        "y": 77.36
+                    },
+                    "uuid": "2542b8d3-ed25-4ad3-9b43-58bc00846d71"
+                },
+                {
+                    "description": "Pole odnośnika do C8",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 77.125
+                    },
+                    "uuid": "75fddbc2-b86b-4a56-a71a-6030ba16fdcb"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0296 mm)",
+            "items": [
+                {
+                    "description": "Segment z C7 na F.Silkscreen",
+                    "pos": {
+                        "x": 63.677,
+                        "y": 77.32
+                    },
+                    "uuid": "67f76819-9e2d-4be1-8163-ca3f6e40e891"
+                },
+                {
+                    "description": "Pole odnośnika do C8",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 77.125
+                    },
+                    "uuid": "75fddbc2-b86b-4a56-a71a-6030ba16fdcb"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0696 mm)",
+            "items": [
+                {
+                    "description": "Segment z C7 na F.Silkscreen",
+                    "pos": {
+                        "x": 63.751,
+                        "y": 77.28
+                    },
+                    "uuid": "1e6e0368-61f3-4072-9474-b60c0098ce25"
+                },
+                {
+                    "description": "Pole odnośnika do C8",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 77.125
+                    },
+                    "uuid": "75fddbc2-b86b-4a56-a71a-6030ba16fdcb"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,1096 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C8",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 77.125
+                    },
+                    "uuid": "75fddbc2-b86b-4a56-a71a-6030ba16fdcb"
+                },
+                {
+                    "description": "Segment z C7 na F.Silkscreen",
+                    "pos": {
+                        "x": 63.819,
+                        "y": 77.24
+                    },
+                    "uuid": "b1f67310-af33-483c-aedb-4c82faf01686"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,1496 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C8",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 77.125
+                    },
+                    "uuid": "75fddbc2-b86b-4a56-a71a-6030ba16fdcb"
+                },
+                {
+                    "description": "Segment z C7 na F.Silkscreen",
+                    "pos": {
+                        "x": 63.883,
+                        "y": 77.2
+                    },
+                    "uuid": "dd40f008-6366-4278-b0c6-f8791f93468b"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,1420 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C8",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 77.125
+                    },
+                    "uuid": "75fddbc2-b86b-4a56-a71a-6030ba16fdcb"
+                },
+                {
+                    "description": "Segment z C7 na F.Silkscreen",
+                    "pos": {
+                        "x": 63.943,
+                        "y": 77.16
+                    },
+                    "uuid": "a7c5d33e-040f-4944-8c42-63487cee4c6b"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0867 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C8",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 77.125
+                    },
+                    "uuid": "75fddbc2-b86b-4a56-a71a-6030ba16fdcb"
+                },
+                {
+                    "description": "Segment z C7 na F.Silkscreen",
+                    "pos": {
+                        "x": 63.999,
+                        "y": 77.12
+                    },
+                    "uuid": "acbe4d9c-db28-4711-b6da-0e94393a0960"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,1267 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C8",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 77.125
+                    },
+                    "uuid": "75fddbc2-b86b-4a56-a71a-6030ba16fdcb"
+                },
+                {
+                    "description": "Segment z C7 na F.Silkscreen",
+                    "pos": {
+                        "x": 64.053,
+                        "y": 77.08
+                    },
+                    "uuid": "e91ee18a-f298-48bd-8c01-cabbb071de64"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C8",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 77.125
+                    },
+                    "uuid": "75fddbc2-b86b-4a56-a71a-6030ba16fdcb"
+                },
+                {
+                    "description": "Segment z C7 na F.Silkscreen",
+                    "pos": {
+                        "x": 64.104,
+                        "y": 77.04
+                    },
+                    "uuid": "ccbbd079-9b69-4af2-97ae-9c3ef07903cc"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,1499 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C8",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 77.125
+                    },
+                    "uuid": "75fddbc2-b86b-4a56-a71a-6030ba16fdcb"
+                },
+                {
+                    "description": "Segment z C7 na F.Silkscreen",
+                    "pos": {
+                        "x": 61.46,
+                        "y": 76.88
+                    },
+                    "uuid": "8314c9be-3328-44e8-bbb9-b335eaca899d"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,1342 mm)",
+            "items": [
+                {
+                    "description": "Segment z C7 na F.Silkscreen",
+                    "pos": {
+                        "x": 61.46,
+                        "y": 76.92
+                    },
+                    "uuid": "6c610d2e-4fb7-452d-a2db-bd1d26630d03"
+                },
+                {
+                    "description": "Pole odnośnika do C8",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 77.125
+                    },
+                    "uuid": "75fddbc2-b86b-4a56-a71a-6030ba16fdcb"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,1238 mm)",
+            "items": [
+                {
+                    "description": "Segment z C7 na F.Silkscreen",
+                    "pos": {
+                        "x": 61.46,
+                        "y": 76.96
+                    },
+                    "uuid": "5c5fe280-2b63-4aae-966c-87cb4ed6d883"
+                },
+                {
+                    "description": "Pole odnośnika do C8",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 77.125
+                    },
+                    "uuid": "75fddbc2-b86b-4a56-a71a-6030ba16fdcb"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,1194 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C8",
+                    "pos": {
+                        "x": 62.5,
+                        "y": 77.125
+                    },
+                    "uuid": "75fddbc2-b86b-4a56-a71a-6030ba16fdcb"
+                },
+                {
+                    "description": "Segment z C7 na F.Silkscreen",
+                    "pos": {
+                        "x": 61.46,
+                        "y": 77.0
+                    },
+                    "uuid": "cf0706ad-e797-40e7-8860-76911421ffbf"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,1308 mm)",
+            "items": [
+                {
+                    "description": "Tekst footprintu J13 (TIE / 12.5 mm)",
+                    "pos": {
+                        "x": 28.54,
+                        "y": 1.0
+                    },
+                    "uuid": "3dea2d23-ec35-456e-9f5f-0e59841c3e8a"
+                },
+                {
+                    "description": "Pole odnośnika do J13",
+                    "pos": {
+                        "x": 28.54,
+                        "y": 0.375
+                    },
+                    "uuid": "a553072f-d1fd-4ea6-b838-eeb071481823"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        }
+    ]
+}

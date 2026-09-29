@@ -1,0 +1,90 @@
+{
+  "checks": [
+    {
+      "check": "Declared J10 range keeps U2 above 4.75 V after D1 budget",
+      "pass": true
+    },
+    {
+      "check": "Correct regulator variant in exported netlist",
+      "pass": true
+    },
+    {
+      "check": "Preload physically connects V33 to GND in exported netlist",
+      "pass": true
+    },
+    {
+      "check": "Preload alone meets 5 mA including tolerance and TCR",
+      "pass": true
+    },
+    {
+      "check": "Preload dissipation below one quarter of resistor rating",
+      "pass": true
+    },
+    {
+      "check": "C6 is the confirmed Panasonic 22uF 50V D5 P2 part",
+      "pass": true
+    },
+    {
+      "check": "COUT capacitance includes minus 20 percent tolerance",
+      "pass": true
+    },
+    {
+      "check": "C6 return is connected only to R6, and R6 to GND",
+      "pass": true
+    },
+    {
+      "check": "Series resistance places C6 branch inside 0.01..3 ohm at reference conditions",
+      "pass": true
+    },
+    {
+      "check": "BOM matches netlist MPN values and has no invalid C6 code",
+      "pass": true
+    },
+    {
+      "check": "Thermal budget estimate below 125C; physical test still required",
+      "pass": true
+    },
+    {
+      "check": "Load topology assumed by the worst-case sum matches the netlist",
+      "pass": true
+    },
+    {
+      "check": "Thermal budget IOUT covers the worst-case load computed from the netlist",
+      "pass": true
+    },
+    {
+      "check": "Heartbeat H at the P04 input >= 2.4 V with a typical TLC555 output (min-VOH corner reported; ODBIOR decides)",
+      "pass": true
+    }
+  ],
+  "passed": 14,
+  "total": 14,
+  "calculations": {
+    "R5_min_mA": 5.5433116237948585,
+    "R5_max_mW": 21.62623444546329,
+    "VIN_at_U2_budget_min_V": 5.4,
+    "C6_branch_min_ohm": 0.988515,
+    "C6_branch_at_20C_100kHz_max_ohm": 1.3515150000000002,
+    "heartbeat_nominal_Hz": 102.3454157782516,
+    "H_static_into_10k_V": 3.0,
+    "H_static_into_5k_V": 2.75,
+    "ground_short_max_mA": 3.500199794641457,
+    "U2_dissipation_budget_W": 1.0709,
+    "U2_junction_estimate_C": 123.42311000000001,
+    "IOUT_worst_mA": 57.10325986815721,
+    "IOUT_worst_parts_mA": {
+      "R5": 6.25,
+      "LED10": 1.882,
+      "LED1..8": 15.053,
+      "J1..J8 shorted to GND": 28.002,
+      "U1 IDD": 0.5,
+      "U1 output H: LED9 + J9 shorted": 5.382,
+      "R4 (STOP)": 0.035
+    },
+    "HB_H_at_P04_typ_min_V": 2.4491864497199254,
+    "HB_H_at_P04_min_VOH_corner_V": 1.873048638885305,
+    "P04_LVC_VIH_V": 2.0
+  },
+  "hardware_verified": false,
+  "limits": "C6 ESR bound is at 20C/100kHz. Thermal result is an estimate using the explicitly assumed IG. See bench test sheet."
+}

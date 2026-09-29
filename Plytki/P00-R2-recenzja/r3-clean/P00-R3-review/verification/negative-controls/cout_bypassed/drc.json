@@ -1,0 +1,107 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-27T09:08:53",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P00.kicad_pcb",
+    "unconnected_items": [],
+    "violations": [
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz /P00_COUT_RET)",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [GND] na C6",
+                    "pos": {
+                        "x": 49.0,
+                        "y": 26.0
+                    },
+                    "uuid": "17c4dde2-61a4-4fd6-8485-0687ff6985cf"
+                },
+                {
+                    "description": "Ścieżka [/P00_COUT_RET] na F.Cu, długość 3,5000 mm",
+                    "pos": {
+                        "x": 49.0,
+                        "y": 26.0
+                    },
+                    "uuid": "fe7cc5c1-6f00-47b8-9a80-98b831abc832"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [/P00_COUT_RET] na F.Cu, długość 3,5000 mm",
+                    "pos": {
+                        "x": 49.0,
+                        "y": 26.0
+                    },
+                    "uuid": "fe7cc5c1-6f00-47b8-9a80-98b831abc832"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na C6",
+                    "pos": {
+                        "x": 49.0,
+                        "y": 26.0
+                    },
+                    "uuid": "17c4dde2-61a4-4fd6-8485-0687ff6985cf"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/P00_COUT_RET] na F.Cu, długość 3,5000 mm",
+                    "pos": {
+                        "x": 49.0,
+                        "y": 26.0
+                    },
+                    "uuid": "fe7cc5c1-6f00-47b8-9a80-98b831abc832"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na C6",
+                    "pos": {
+                        "x": 49.0,
+                        "y": 26.0
+                    },
+                    "uuid": "17c4dde2-61a4-4fd6-8485-0687ff6985cf"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        }
+    ]
+}

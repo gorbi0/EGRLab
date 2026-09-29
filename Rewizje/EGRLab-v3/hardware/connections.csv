@@ -1,0 +1,171 @@
+from;to;note
+# --- wejscie zasilania (F02: modul OVP jako wariant bazowy) ---
+J_PWR.BAT+;F1;bezpiecznik 10A blisko zrodla
+F1;D1.a;TVS SM8S24CA dwukierunkowy przy zlaczu
+F1;M5.IN+;LM74800EVM-CD: odwrotna polaryzacja + odciecie nadnapieciowe
+J_PWR.BAT-;GND_STAR;jedyny punkt polaczenia mas
+M5.OUT+;VPROT;szyna po ochronie
+M5.OVP_divider;ustawic i ZMIERZYC 17.5-18.5V;nastawa fabryczna nie jest zalozeniem
+# wariant alternatywny bez modulu (udokumentowany, NIE domyslny):
+# F1;Q1.drain;P-MOS: DREN od akumulatora
+# Q1.source;VPROT;ZRODLO od strony chronionej - odwrotnie niz w v2
+# Q1.gate;GND przez 100k + Zener 15V;brama do masy, ogranicznik Vgs
+# --- przetwornice ---
+VPROT;F2;galaz 5V
+F2;M3.VIN;TSR 2-2450
+M3.VOUT;5V_SYS;
+5V_SYS;R_FILT 1R;do 5V_A
+R_FILT 1R;5V_A;470uF low ESR
+VPROT;F3;galaz 3V3
+F3;M4.VIN;TSR 2-2433
+M4.VOUT;3V3_IO;VDRIVE ADC, SD, MCP, CAN VIO
+VPROT;F4;galaz mocy TEST
+F4;KPWR.COM;przekaznik odciecia VMOTOR
+KPWR.NO;VMOTOR;1000uF + 1uF + 100nF + SMCJ18A + 2.2k rozladowczy
+VMOTOR;M2.VIN;Pololu 1451
+5V_SYS;U11.IN;TPS2553
+U11.OUT;KSENSOR.COM1;limit pradu czujnika
+KSENSOR.NO1;5V_SENSOR;do JP_SENSOR na adapterze TEST
+AGND;KSENSOR.COM2;drugi biegun odcinany
+KSENSOR.NO2;AGND_SENSOR;do JP_SENSOR na adapterze TEST
+# --- naped ---
+M2.OUTA;RSH_T.p1;bocznik TEST
+RSH_T.p2;J_TEST.pin1;naped A
+M2.OUTB;J_TEST.pin3;naped B
+# --- adapter LOGGER ---
+J_LOG_ECU.pin1;RSH_L.p1;bocznik LOGGER po stronie ECU
+RSH_L.p2;J_LOG_EGR.pin1;po stronie zaworu
+RSH_L.bridge;zworka serwisowa;zalozona = prad LOGGER niewazny (komenda bypass 1)
+J_LOG_ECU.pin3;J_LOG_EGR.pin3;przewod wprost
+J_LOG_ECU.pin4;J_LOG_EGR.pin4;przewod wprost
+J_LOG_ECU.pin5;J_LOG_EGR.pin5;przewod wprost
+J_LOG_ECU.pin6;J_LOG_EGR.pin6;przewod wprost
+# --- odczepy: rezystory PRZY ZLACZU EGR, wspolny wezel, jeden bank ---
+TAP_LOG_P1;RM1+RM2;2x150k przy zlaczu EGR
+TAP_TEST_P1;RM3+RM4;2x150k przy zlaczu EGR
+RM2;NODE_CH1;wezel wspolny obu adapterow
+RM4;NODE_CH1;wezel wspolny obu adapterow
+TAP_LOG_P3;RM5+RM6;2x150k
+TAP_TEST_P3;RM7+RM8;2x150k
+RM6;NODE_CH2;
+RM8;NODE_CH2;
+TAP_LOG_P4;RS1+RS2;2x49.9k
+TAP_TEST_P4;RS3+RS4;2x49.9k
+RS2;NODE_CH3;
+RS4;NODE_CH3;
+TAP_LOG_P5;RS5+RS6;2x49.9k
+TAP_TEST_P5;RS7+RS8;2x49.9k
+RS6;NODE_CH4;
+RS8;NODE_CH4;
+TAP_LOG_P6;RS9+RS10;2x49.9k
+TAP_TEST_P6;RS11+RS12;2x49.9k
+RS10;NODE_CH5;
+RS12;NODE_CH5;
+NODE_CH1;KMEAS1.NO_A;styk NO - odlaczone przy braku zasilania
+KMEAS1.COM_A;U1.V1;ADC kanal 1 + RB1 100k + CF1 220pF
+NODE_CH2;KMEAS1.NO_B;
+KMEAS1.COM_B;U1.V2;ADC kanal 2 + RB2 100k + CF2
+NODE_CH3;KMEAS2.NO_A;
+KMEAS2.COM_A;U1.V3;ADC kanal 3 + CF3
+NODE_CH4;KMEAS2.NO_B;
+KMEAS2.COM_B;U1.V4;ADC kanal 4 + CF4
+NODE_CH5;KMEAS3.NO_A;
+KMEAS3.COM_A;U1.V5;ADC kanal 5 + CF5
+KMEAS3.NO_B;NIEOBSADZONE;drugi biegun KMEAS3 wolny - rezerwa
+# --- F03: multiplekser pradu ma WLASNY przekaznik z wlasna cewka ---
+U2.OUT;RO1;INA TEST przez 100R
+U3.OUT;RO2;INA LOGGER przez 100R
+RO1;KCUR.NO;pozycja TEST
+RO2;KCUR.NC;pozycja LOGGER (stan bez zasilania)
+KCUR.COM;U1.V6;ADC kanal 6
+MCP.A2;KCUR.coil;MEAS_BANK przez 2N7002 - osobna cewka, nie wspoldzielona
+# --- VBAT ---
+VPROT;RV1+RV2;dzielnik VBAT 2x249k
+RV2;U1.V7;ADC kanal 7 + RB3 100k + CF6
+# --- F12: AUX przelaczany DWUBIEGUNOWO, razem z dolnym rezystorem ---
+J_AUX.hot;JP_AUX.COM_A;zworka/przelacznik DPDT
+JP_AUX.HI_A;RA1+RA2;galaz HI: 2x150k
+JP_AUX.LO_A;RA3+RA4;galaz LO: 2x49.9k
+RA2;U1.V8;ADC kanal 8 + CF7
+RA4;U1.V8;ten sam wezel wejsciowy
+JP_AUX.COM_B;RB4;dolny rezystor 100k galezi HI
+JP_AUX.HI_B;AGND;w pozycji HI dzielnik zamkniety do masy
+JP_AUX.LO_B;NIEPODLACZONE;w pozycji LO RB4 ODLACZONY - inaczej mnoznik ~2.0
+J_AUX.gnd;AGND;masa krokodylka AUX
+# --- prad: boczniki i wzmacniacze ---
+RSH_T;U2.IN+/IN-;Kelvin przez RC1/RC2 10R
+RSH_L;U3.IN+/IN-;Kelvin przez RC3/RC4 10R
+U2.VS;5V_A;REF1=5V_A, REF2=AGND -> srodek 2.5V
+U3.VS;5V_A;j.w.
+# --- F01: SAFE_N ma DOKLADNIE JEDEN pull-up, przez styk NC grzybka ---
+3V3;SW_STOP.NC;grzybek zwolniony = obwod zamkniety
+SW_STOP.NC;R_PU 10k;jedyny pull-up wezla SAFE_N
+R_PU 10k;SAFE_N;wezel z R_PD 100k do GND: przerwany przewod = stan niski
+SAFE_N;R_PD 100k;definiuje stan przy otwartym grzybku
+U4.OUT_low;SAFE_N;TLV1702 kanal pradu LOW, open collector
+U4.OUT_high;SAFE_N;TLV1702 kanal pradu HIGH, open collector
+U6.OUT_low;SAFE_N;TLV1702 okno 5V_A LOW, open collector
+U6.OUT_high;SAFE_N;TLV1702 okno 5V_A HIGH, open collector
+U5.RESET_N;SAFE_N;TPS3808G33 na 3V3_IO, open drain
+Q8.drain;SAFE_N;2N7002 zamienia push-pull watchdoga na wyjscie otwarte
+U8a.Y;Q8.gate;74HC14: HEART_OK=0 -> brama wysoko -> SAFE_N w dol
+U7.Q;U8a.A;wyjscie monostabilnego 74HC123
+INTERLOCK_LOOP;SAFE_N;petla adapterow, zwiera do masy przy rozwarciu
+SAFE_N;U9.CLR_N;74HC74 reset asynchroniczny
+# --- ARM i zezwolenia (bramka po bramce) ---
+SW_ARM;U8b.A;74HC14 debounce 10k/100nF
+U8b.Y;U9.CLK;zbocze uzbrajajace; D=3V3, PRE_N=3V3
+U9.Q;GPIO40;HW_ARMED do MCU (tylko odczyt)
+U9.Q;U10a.A;bramka 1: HW_ARMED
+GPIO39;U10a.B;bramka 1: MCU_ARM
+U10a.Y;U10b.A;bramka 2: wynik bramki 1
+GPIO42;U10b.B;bramka 2: INTERLOCK
+U10b.Y;MOTOR_PERMIT;PERMIT = HW_ARMED AND MCU_ARM AND INTERLOCK
+GPIO1;U10c.A;bramka 3: PWM z MCU
+MOTOR_PERMIT;U10c.B;bramka 3
+U10c.Y;M2.PWM;przez 330R, 47k do GND
+MOTOR_PERMIT;M2.VDD;zasila pull-upy ENA/ENB modulu mostka
+MOTOR_PERMIT;Q7.gate_driver;cewka K_PWR
+MCP.A3;U10d.A;bramka 4: SENSOR_ENABLE z firmware
+MCP.B0;U10d.B;bramka 4: TEST_KEY
+U10d.Y;U12a.A;bramka 5
+GPIO42;U12a.B;bramka 5: INTERLOCK
+U12a.Y;U12b.A;bramka 6
+SAFE_N;U12b.B;bramka 6: linia bezpieczenstwa
+U12b.Y;KSENSOR.coil_driver;zezwolenie = ENABLE AND KEY AND INTERLOCK AND SAFE_N
+# --- ekspander ---
+MCP.A0;U1.RESET;impuls >=10us przy starcie
+MCP.A1;KMEAS1-3.coils;MEAS_EN przez 2N7002 (jedna funkcja, jedna cewka)
+MCP.A5;M2.INA;przez 330R, 47k do GND
+MCP.A6;M2.INB;przez 330R, 47k do GND
+MCP.A7;STATUS_LED;przez 1k
+MCP.B1;U11.FAULT_N;SENSOR_FAULT_N
+MCP.B2;M2.ENA;diagnostyka mostka (tylko odczyt)
+MCP.B3;M2.ENB;diagnostyka mostka (tylko odczyt)
+MCP.B4;SW_LOG1+SW_LOG2;LOG_PRESENT_N, krancowki szeregowo
+MCP.B5;J_TEST.loop;TEST_PRESENT, petla zamykana adapterem
+MCP.B7;SW_STOP.aux;podglad stanu grzybka
+# --- odniesienie i progi ---
+U13;ADR4525;odniesienie 2.5V dla okna 5V_A
+5V_A;dzielnik 15k/10k;0.4 x 5V_A na wejscia okna
+ADR4525;dzielniki 6k/19k i 4k/21k;progi 1.9V i 2.1V
+U2.OUT;U4.IN;przez 1k + 1nF, dzielniki 7k/3k i 3k/7k z 5V_A
+# --- ADC ---
+U1.OS0;JP_OS;zworki; software mode wymaga OS[2:0]=111
+U1.OS1;JP_OS;
+U1.OS2;JP_OS;
+U1.PAR_SER_SEL;3V3_IO;tryb szeregowy
+U1.RANGE;3V3_IO;istotne tylko w hardware mode (+-10V)
+U1.REFSEL;3V3_IO;odniesienie wewnetrzne
+U1.CONVST_A;GPIO13;CONVST_A i CONVST_B zwarte
+U1.CONVST_B;GPIO13;
+U1.BUSY;GPIO14;krotki przewod
+U1.SDI;GPIO2;software mode; w hardware mode na stale 0
+U1.DOUTA;GPIO11;pozostale DOUT niepodlaczone
+U1.SCLK;GPIO9;SPI2 mode 2
+U1.CS;GPIO12;
+# --- pozostale ---
+GPIO38;R 330R;SCOPE_TRIG
+R 330R;J_BNC.center;do kanalu wyzwalajacego oscyloskopu (DHO804: kosztuje kanal)
+J_BNC.shield;AGND;jedyne dodatkowe polaczenie galwaniczne - skop z power banku
+AGND;B-;jedyny punkt polaczenia mas, przy wejsciu zasilania

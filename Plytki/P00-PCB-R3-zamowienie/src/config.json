@@ -1,0 +1,28 @@
+{
+  "name": "P00",
+  "source": "P00-R3-review",
+  "revision": "R3",
+  "silk_label": "PCB R3",
+  "board_mm": [
+    115,
+    70
+  ],
+  "thickness_mm": 1.6,
+  "copper_um": 35,
+  "layers": [
+    "F.Cu",
+    "B.Cu",
+    "F.Mask",
+    "B.Mask",
+    "F.SilkS",
+    "Edge.Cuts"
+  ],
+  "silk": "tylko góra (B.SilkS w projekcie jest pusty)",
+  "pdf": "P00-R3-PCB.pdf",
+  "odbior": "docs/ODBIOR-P00-R2.md",
+  "extra": {
+    "checks": "Dodatkowo porównano z Gerberami wydania R3 (`projekt/output/fabrication`): wiercenia, maski, ścieżki, obrys i wylewki identyczne; pola te same co do położenia i sieci. Wydanie R3 zapisało 5 pól z zaokrąglonym narożnikiem jako makra apertur, ten eksport — jak P01 — jako regiony (`verification/porownanie-z-wydaniem-R3.json`).",
+    "qa": "- Porównanie z Gerberami wydania R3: wiercenia, maski, ścieżki, obrys i wylewki identyczne; położenie i sieci pól identyczne; różnica wyłącznie w zapisie 5 pól RoundRect (makro w R3, region tutaj) i w odjęciu maski od opisu (`porownanie-z-wydaniem-R3.json`).\n",
+    "assembly": "Montaż i uruchomienie: `projekt/docs/LAYOUT.md` i `projekt/docs/ODBIOR-P00-R2.md`. W `projekt/output/pdf` leżą też stare PDF R2 — do wydruku brać `P00-R3-PCB.pdf`. Lista wyposażenia wiązki stanowiskowej w `projekt/docs/ZAKUPY-P00.md` ma błąd (J1 i J2 po stronie P00 muszą być męskie); poprawka w `Plytki/Zakupy-2/ZAKUPY-2.md`. Płytki to nie dotyczy."
+  }
+}

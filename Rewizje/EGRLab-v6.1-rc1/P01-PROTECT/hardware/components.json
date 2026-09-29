@@ -1,0 +1,814 @@
+{
+  "J1": {
+    "value": "WEJSCIE po zewnetrznym F1 5 A",
+    "kind": "J",
+    "pins": {
+      "1": "BAT_FUSED",
+      "2": "GND"
+    },
+    "package": "THT 2-pin 5.08 mm >=10 A",
+    "note": "",
+    "rating": null
+  },
+  "J2": {
+    "value": "WYJSCIE do VPROT",
+    "kind": "J",
+    "pins": {
+      "1": "VPROT",
+      "2": "GND"
+    },
+    "package": "THT 2-pin 5.08 mm >=10 A",
+    "note": "",
+    "rating": null
+  },
+  "J3": {
+    "value": "INHIBIT: zwarcie = OFF",
+    "kind": "J",
+    "pins": {
+      "1": "OK",
+      "2": "GND"
+    },
+    "package": "THT 2-pin 2.54 mm",
+    "note": "Normalnie bez zworki; tylko styk bezpotencjalowy.",
+    "rating": null
+  },
+  "D1": {
+    "value": "15KPA24CA",
+    "kind": "TVS",
+    "pins": {
+      "1": "BAT_FUSED",
+      "2": "GND"
+    },
+    "package": "P600 axial",
+    "note": "Dwukierunkowy. Zastepuje zewnetrzny SM8S24CA w tym wariancie; nie sumowac ich mocy.",
+    "rating": null
+  },
+  "D2": {
+    "value": "STPS20100CT",
+    "kind": "DUAL_D",
+    "pins": {
+      "1": "BAT_FUSED",
+      "2": "VS",
+      "3": "BAT_FUSED"
+    },
+    "package": "TO-220AB",
+    "note": "1=A1, 2=K+tab, 3=A2. Polaczyc 1 i 3 symetrycznie. Osobny radiator <=5 K/W.",
+    "rating": null
+  },
+  "Q1": {
+    "value": "SUP53P06-20-E3",
+    "kind": "PMOS",
+    "pins": {
+      "1": "GATE",
+      "2": "VPROT",
+      "3": "VS"
+    },
+    "package": "TO-220AB",
+    "note": "Vishay, 60 V, RDS max 25 mOhm przy VGS=-4.5 V. 1=G, 2=D+tab, 3=S. Dioda ciala: A=VPROT, K=VS. Radiator <=10 K/W.",
+    "rating": null
+  },
+  "D3": {
+    "value": "5KP18A",
+    "kind": "D",
+    "pins": {
+      "A": "GND",
+      "K": "VPROT"
+    },
+    "package": "P600 axial",
+    "note": "Jednokierunkowy: pasek do VPROT. Nie jest stabilizatorem 18 V.",
+    "rating": null
+  },
+  "D4": {
+    "value": "BZX55C15",
+    "kind": "D",
+    "pins": {
+      "A": "GATE",
+      "K": "VS"
+    },
+    "package": "DO-35",
+    "note": "Ograniczenie ujemnego VGS; pasek do SOURCE/VS. Krotkie wyprowadzenia.",
+    "rating": null
+  },
+  "C1": {
+    "value": "10 uF",
+    "kind": "C",
+    "pins": {
+      "1": "VS",
+      "2": "GND"
+    },
+    "package": "THT radial",
+    "note": "63 V; 105 C; 1=plus",
+    "rating": null
+  },
+  "C2": {
+    "value": "100 nF",
+    "kind": "C",
+    "pins": {
+      "1": "VS",
+      "2": "GND"
+    },
+    "package": "THT radial",
+    "note": "100 V; film lub X7R",
+    "rating": null
+  },
+  "C3": {
+    "value": "100 uF",
+    "kind": "C",
+    "pins": {
+      "1": "VPROT",
+      "2": "GND"
+    },
+    "package": "THT radial",
+    "note": "50 V; 105 C; 1=plus",
+    "rating": null
+  },
+  "C4": {
+    "value": "100 nF",
+    "kind": "C",
+    "pins": {
+      "1": "VPROT",
+      "2": "GND"
+    },
+    "package": "THT radial",
+    "note": "100 V; film lub X7R",
+    "rating": null
+  },
+  "C5": {
+    "value": "220 nF",
+    "kind": "C",
+    "pins": {
+      "1": "GATE",
+      "2": "VPROT"
+    },
+    "package": "THT radial",
+    "note": "100 V; film; Miller, ograniczenie szybkosci narastania",
+    "rating": null
+  },
+  "C6": {
+    "value": "47 nF",
+    "kind": "C",
+    "pins": {
+      "1": "GATE",
+      "2": "VS"
+    },
+    "package": "THT radial",
+    "note": "100 V; film; odporność na zaklocenia bramki",
+    "rating": null
+  },
+  "R1": {
+    "value": "150 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "VS",
+      "2": "AUX_IN"
+    },
+    "package": "THT axial",
+    "note": "2 W; 5%; metal oxide; odporny impulsowo",
+    "rating": 150
+  },
+  "D5": {
+    "value": "1.5KE18A-E3/54",
+    "kind": "D",
+    "pins": {
+      "A": "GND",
+      "K": "AUX_IN"
+    },
+    "package": "DO-201",
+    "note": "UWAGA: VWM=15.3 V, VBR=17.1...18.9 V, VC=25.2 V; inna numeracja niz 5KP18A.",
+    "rating": null
+  },
+  "C7": {
+    "value": "22 uF",
+    "kind": "C",
+    "pins": {
+      "1": "AUX_IN",
+      "2": "GND"
+    },
+    "package": "THT radial",
+    "note": "35 V; 105 C; 1=plus",
+    "rating": null
+  },
+  "C8": {
+    "value": "100 nF",
+    "kind": "C",
+    "pins": {
+      "1": "AUX_IN",
+      "2": "GND"
+    },
+    "package": "THT radial",
+    "note": "50 V; X7R",
+    "rating": null
+  },
+  "U1": {
+    "value": "LM2936Z-5.0/NOPB",
+    "kind": "IC",
+    "pins": {
+      "1": "AUX5",
+      "2": "GND",
+      "3": "AUX_IN"
+    },
+    "package": "TO-92",
+    "note": "UWAGA: 1=OUT, 2=GND, 3=IN. Nie pinout 78L05.",
+    "rating": null
+  },
+  "R2": {
+    "value": "1 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "AUX5",
+      "2": "C_AUX_TOP"
+    },
+    "package": "THT axial",
+    "note": "0.25 W; 1%; sztuczny ESR kondensatora C9",
+    "rating": 1
+  },
+  "C9": {
+    "value": "47 uF",
+    "kind": "C",
+    "pins": {
+      "1": "C_AUX_TOP",
+      "2": "GND"
+    },
+    "package": "THT radial",
+    "note": "16 V; 105 C; low ESR; 1=plus. ESR C9+R2: 0.3...8 ohm w temperaturze pracy.",
+    "rating": null
+  },
+  "C10": {
+    "value": "100 nF",
+    "kind": "C",
+    "pins": {
+      "1": "AUX5",
+      "2": "GND"
+    },
+    "package": "THT radial",
+    "note": "50 V; przy U2",
+    "rating": null
+  },
+  "C11": {
+    "value": "100 nF",
+    "kind": "C",
+    "pins": {
+      "1": "AUX5",
+      "2": "GND"
+    },
+    "package": "THT radial",
+    "note": "50 V; przy U4",
+    "rating": null
+  },
+  "R3": {
+    "value": "820 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "AUX5",
+      "2": "REF"
+    },
+    "package": "THT axial",
+    "note": "0.25 W; 1%",
+    "rating": 820
+  },
+  "R4": {
+    "value": "10000 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "REF",
+      "2": "GND"
+    },
+    "package": "THT axial",
+    "note": "0.25 W; 1%",
+    "rating": 10000
+  },
+  "U3": {
+    "value": "TL431BILP",
+    "kind": "IC",
+    "pins": {
+      "1": "REF",
+      "2": "GND",
+      "3": "REF"
+    },
+    "package": "TO-92",
+    "note": "TI LP: 1=CATHODE, 2=ANODE, 3=REF. Piny 1 i 3 zwarte; bez kondensatora na katodzie.",
+    "rating": null
+  },
+  "U2": {
+    "value": "LM2903P",
+    "kind": "IC",
+    "pins": {
+      "1": "OK",
+      "2": "OV_SENSE",
+      "3": "OV_REF",
+      "4": "GND",
+      "5": "UV_SENSE",
+      "6": "REF",
+      "7": "OK",
+      "8": "AUX5"
+    },
+    "package": "DIP-8",
+    "note": "Klasyczny LM2903P. Wyjscia OC 1 i 7 zwarte z RESET U4.",
+    "rating": null
+  },
+  "U4": {
+    "value": "MCP120-450DI/TO",
+    "kind": "IC",
+    "pins": {
+      "1": "OK",
+      "2": "AUX5",
+      "3": "GND"
+    },
+    "package": "TO-92",
+    "note": "Wariant D: 1=RESET, 2=VDD, 3=VSS. Open drain, bez wewnetrznego pull-up.",
+    "rating": null
+  },
+  "D6": {
+    "value": "1N4148",
+    "kind": "D",
+    "pins": {
+      "A": "BAT_FUSED",
+      "K": "SENSE_RAW"
+    },
+    "package": "DO-35",
+    "note": "Osobna dioda toru pomiarowego; blokuje ujemne VIN. Jej VF uwzglednia kalibracja OVP.",
+    "rating": null
+  },
+  "R5": {
+    "value": "54900 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "SENSE_RAW",
+      "2": "OV_TRIM_TOP"
+    },
+    "package": "THT axial",
+    "note": "0.25 W; 0.1%; <=25 ppm/K",
+    "rating": 54900
+  },
+  "RV1": {
+    "value": "3296W-1-502LF / 5 kohm",
+    "kind": "POT",
+    "pins": {
+      "1": "OV_TRIM_TOP",
+      "2": "OV_TRIM_TOP",
+      "3": "OV_SENSE"
+    },
+    "package": "THT multiturn",
+    "note": "Suwak 2 zwarty z 1. Start od 0 ohm miedzy (1+2) i 3. Nominalnie 2.14 kohm; kalibrowac pomiarem.",
+    "rating": null
+  },
+  "R6": {
+    "value": "10000 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "OV_SENSE",
+      "2": "GND"
+    },
+    "package": "THT axial",
+    "note": "0.25 W; 0.1%; <=25 ppm/K",
+    "rating": 10000
+  },
+  "R7": {
+    "value": "10000 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "REF",
+      "2": "OV_REF"
+    },
+    "package": "THT axial",
+    "note": "0.25 W; 0.1%; <=25 ppm/K",
+    "rating": 10000
+  },
+  "R8": {
+    "value": "220000 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "OK",
+      "2": "OV_REF"
+    },
+    "package": "THT axial",
+    "note": "0.25 W; 0.1%; <=25 ppm/K",
+    "rating": 220000
+  },
+  "R9": {
+    "value": "26100 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "SENSE_RAW",
+      "2": "UV_SENSE"
+    },
+    "package": "THT axial",
+    "note": "0.25 W; 0.1%; <=25 ppm/K",
+    "rating": 26100
+  },
+  "R10": {
+    "value": "10000 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "UV_SENSE",
+      "2": "GND"
+    },
+    "package": "THT axial",
+    "note": "0.25 W; 0.1%; <=25 ppm/K",
+    "rating": 10000
+  },
+  "R11": {
+    "value": "249000 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "OK",
+      "2": "UV_SENSE"
+    },
+    "package": "THT axial",
+    "note": "0.25 W; 0.1%; <=25 ppm/K",
+    "rating": 249000
+  },
+  "R12": {
+    "value": "100000 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "SENSE_RAW",
+      "2": "GND"
+    },
+    "package": "THT axial",
+    "note": "0.25 W; 1%",
+    "rating": 100000
+  },
+  "C12": {
+    "value": "100 pF",
+    "kind": "C",
+    "pins": {
+      "1": "OV_SENSE",
+      "2": "GND"
+    },
+    "package": "THT radial",
+    "note": "50 V; C0G/NP0; nie zwiekszac bez badania czasu OVP",
+    "rating": null
+  },
+  "C13": {
+    "value": "1 nF",
+    "kind": "C",
+    "pins": {
+      "1": "UV_SENSE",
+      "2": "GND"
+    },
+    "package": "THT radial",
+    "note": "50 V; C0G/NP0",
+    "rating": null
+  },
+  "R13": {
+    "value": "2200 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "AUX5",
+      "2": "OK"
+    },
+    "package": "THT axial",
+    "note": "0.25 W; 1%",
+    "rating": 2200
+  },
+  "R14": {
+    "value": "4700 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "OK",
+      "2": "BUF_D1"
+    },
+    "package": "THT axial",
+    "note": "0.25 W; 1%",
+    "rating": 4700
+  },
+  "D7": {
+    "value": "1N4148",
+    "kind": "D",
+    "pins": {
+      "A": "BUF_D1",
+      "K": "BUF_D2"
+    },
+    "package": "DO-35",
+    "note": "D7+D8 zapobiegaja uruchomieniu drivera przy stanie LOW i nieustalonym AUX5 <1 V.",
+    "rating": null
+  },
+  "D8": {
+    "value": "1N4148",
+    "kind": "D",
+    "pins": {
+      "A": "BUF_D2",
+      "K": "BUF_BASE"
+    },
+    "package": "DO-35",
+    "note": "",
+    "rating": null
+  },
+  "R15": {
+    "value": "100000 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "BUF_BASE",
+      "2": "GND"
+    },
+    "package": "THT axial",
+    "note": "0.25 W; 1%",
+    "rating": 100000
+  },
+  "Q6": {
+    "value": "2N5551G",
+    "kind": "NPN",
+    "pins": {
+      "1": "ENABLE",
+      "2": "BUF_BASE",
+      "3": "AUX5"
+    },
+    "package": "TO-92",
+    "note": "onsemi: 1=E, 2=B, 3=C. Wtornik, odciaza wspolna linie OK.",
+    "rating": null
+  },
+  "R16": {
+    "value": "10000 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "ENABLE",
+      "2": "GND"
+    },
+    "package": "THT axial",
+    "note": "0.25 W; 1%",
+    "rating": 10000
+  },
+  "R17": {
+    "value": "4700 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "ENABLE",
+      "2": "ON_BASE"
+    },
+    "package": "THT axial",
+    "note": "0.25 W; 1%",
+    "rating": 4700
+  },
+  "R18": {
+    "value": "47000 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "ON_BASE",
+      "2": "GND"
+    },
+    "package": "THT axial",
+    "note": "0.25 W; 1%",
+    "rating": 47000
+  },
+  "R19": {
+    "value": "4700 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "ENABLE",
+      "2": "RELEASE_BASE"
+    },
+    "package": "THT axial",
+    "note": "0.25 W; 1%",
+    "rating": 4700
+  },
+  "R20": {
+    "value": "47000 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "RELEASE_BASE",
+      "2": "GND"
+    },
+    "package": "THT axial",
+    "note": "0.25 W; 1%",
+    "rating": 47000
+  },
+  "Q3": {
+    "value": "2N5551G",
+    "kind": "NPN",
+    "pins": {
+      "1": "GND",
+      "2": "ON_BASE",
+      "3": "ON_COL"
+    },
+    "package": "TO-92",
+    "note": "Sciaga GATE przez R21 tylko przy ENABLE.",
+    "rating": null
+  },
+  "Q5": {
+    "value": "2N5551G",
+    "kind": "NPN",
+    "pins": {
+      "1": "GND",
+      "2": "RELEASE_BASE",
+      "3": "RELEASE_COL"
+    },
+    "package": "TO-92",
+    "note": "Wlacza Q4, ktory wylacza szybki pull-up Q2.",
+    "rating": null
+  },
+  "R21": {
+    "value": "4700 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "GATE",
+      "2": "ON_COL"
+    },
+    "package": "THT axial",
+    "note": "0.5 W; 1%",
+    "rating": 4700
+  },
+  "R22": {
+    "value": "100000 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "GATE",
+      "2": "VS"
+    },
+    "package": "THT axial",
+    "note": "0.25 W; 1%",
+    "rating": 100000
+  },
+  "Q2": {
+    "value": "2N5401G",
+    "kind": "PNP",
+    "pins": {
+      "1": "VS",
+      "2": "OFF_BASE",
+      "3": "OFF_COL"
+    },
+    "package": "TO-92",
+    "note": "Domyslnie ON: zamyka Q1 niezaleznie od AUX5.",
+    "rating": null
+  },
+  "Q4": {
+    "value": "2N5401G",
+    "kind": "PNP",
+    "pins": {
+      "1": "VS",
+      "2": "RELEASE_PBASE",
+      "3": "OFF_BASE"
+    },
+    "package": "TO-92",
+    "note": "Przy ENABLE: podciaga baze Q2 do VS, blokujac Q2.",
+    "rating": null
+  },
+  "R23": {
+    "value": "2200 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "OFF_BASE",
+      "2": "GND"
+    },
+    "package": "THT axial",
+    "note": "2 W; 1%; metal oxide",
+    "rating": 2200
+  },
+  "R24": {
+    "value": "100000 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "OFF_BASE",
+      "2": "VS"
+    },
+    "package": "THT axial",
+    "note": "0.25 W; 1%",
+    "rating": 100000
+  },
+  "R25": {
+    "value": "47000 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "RELEASE_PBASE",
+      "2": "VS"
+    },
+    "package": "THT axial",
+    "note": "0.25 W; 1%",
+    "rating": 47000
+  },
+  "R26": {
+    "value": "10000 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "RELEASE_PBASE",
+      "2": "RELEASE_COL"
+    },
+    "package": "THT axial",
+    "note": "0.5 W; 1%",
+    "rating": 10000
+  },
+  "R27": {
+    "value": "47 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "OFF_COL",
+      "2": "GATE"
+    },
+    "package": "THT axial",
+    "note": "0.5 W; 1%; odporny impulsowo",
+    "rating": 47
+  },
+  "R28": {
+    "value": "4700 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "VPROT",
+      "2": "GND"
+    },
+    "package": "THT axial",
+    "note": "0.5 W; 1%; rozladowanie wyjscia",
+    "rating": 4700
+  },
+  "LED1": {
+    "value": "LED zielona 3 mm",
+    "kind": "D",
+    "pins": {
+      "A": "LED_A",
+      "K": "GND"
+    },
+    "package": "THT",
+    "note": "Sygnalizuje VPROT, nie stan bezpieczenstwa ani zezwolenie na ruch.",
+    "rating": null
+  },
+  "R29": {
+    "value": "6800 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "VPROT",
+      "2": "LED_A"
+    },
+    "package": "THT axial",
+    "note": "0.25 W; 1%",
+    "rating": 6800
+  },
+  "J4": {
+    "value": "SYGNAL BLEDU do EGRLab",
+    "kind": "J",
+    "pins": {
+      "1": "BOARD_3V3",
+      "2": "FAULT_OC",
+      "3": "GND"
+    },
+    "package": "THT 3-pin 2.54 mm",
+    "note": "1=3V3_IO z plyty EGRLab, 2=SAFE_N, 3=wspolna masa. Bez lokalnego pull-up na FAULT_OC.",
+    "rating": null
+  },
+  "Q7": {
+    "value": "2N5551G",
+    "kind": "NPN",
+    "pins": {
+      "1": "GND",
+      "2": "FAULT_BASE",
+      "3": "FAULT_OC"
+    },
+    "package": "TO-92",
+    "note": "Otwarty kolektor sciaga SAFE_N przy braku ENABLE; uzbrojenie po bledzie wymaga ARM.",
+    "rating": null
+  },
+  "Q8": {
+    "value": "2N5551G",
+    "kind": "NPN",
+    "pins": {
+      "1": "GND",
+      "2": "FAULT_RELEASE_BASE",
+      "3": "FAULT_BASE"
+    },
+    "package": "TO-92",
+    "note": "Przy ENABLE blokuje Q7. Zasilanie polaryzacji Q7 z 3V3_IO odbiornika.",
+    "rating": null
+  },
+  "R30": {
+    "value": "10000 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "BOARD_3V3",
+      "2": "FAULT_BASE"
+    },
+    "package": "THT axial",
+    "note": "0.25 W; 1%",
+    "rating": 10000
+  },
+  "R31": {
+    "value": "100000 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "FAULT_BASE",
+      "2": "GND"
+    },
+    "package": "THT axial",
+    "note": "0.25 W; 1%",
+    "rating": 100000
+  },
+  "R32": {
+    "value": "10000 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "ENABLE",
+      "2": "FAULT_RELEASE_BASE"
+    },
+    "package": "THT axial",
+    "note": "0.25 W; 1%",
+    "rating": 10000
+  },
+  "R33": {
+    "value": "47000 ohm",
+    "kind": "R",
+    "pins": {
+      "1": "FAULT_RELEASE_BASE",
+      "2": "GND"
+    },
+    "package": "THT axial",
+    "note": "0.25 W; 1%",
+    "rating": 47000
+  }
+}

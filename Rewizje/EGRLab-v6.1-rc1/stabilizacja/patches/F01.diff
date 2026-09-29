@@ -1,0 +1,303 @@
+--- F01-before
++++ F01-after
+@@ -1723,6 +1723,17 @@
+       "ref": "F3",
+       "value": "1 A"
+     },
++    "P02_F_VSENSE": {
++      "board": "P02",
++      "kind": "fuse",
++      "note": "Przy odgałęzieniu VPROT, przed wiązką. Spadek na bezpieczniku objęty kalibracją całego toru VBAT.",
++      "pins": {
++        "1": "VPROT",
++        "2": "VPROT_SENSE"
++      },
++      "ref": "F_VSENSE",
++      "value": "Bezpiecznik F 100mA 5x20mm >=32V DC + oprawka PTH"
++    },
+     "P02_J_LV03A": {
+       "board": "P02",
+       "kind": "connector",
+@@ -1864,6 +1875,29 @@
+       },
+       "ref": "J_VMOTORA",
+       "value": "MSTB 5.08 gniazdo 3p >=12A, KEY VMOTOR"
++    },
++    "P02_J_VSENSEA": {
++      "board": "P02",
++      "kind": "connector",
++      "note": "VSENSE; dedykowany korpus 14p, niezgodny z LV 4p; tylko piny 1/2 obsadzone",
++      "pins": {
++        "1": "VPROT_SENSE",
++        "10": "NC",
++        "11": "NC",
++        "12": "NC",
++        "13": "NC",
++        "14": "NC",
++        "2": "GND",
++        "3": "NC",
++        "4": "NC",
++        "5": "NC",
++        "6": "NC",
++        "7": "NC",
++        "8": "NC",
++        "9": "NC"
++      },
++      "ref": "J_VSENSEA",
++      "value": "Mini-Fit Jr stałe gniazdo męskie 14p Au, VSENSE"
+     },
+     "P02_M3": {
+       "board": "P02",
+@@ -4087,6 +4121,29 @@
+       "ref": "J_TAPSB",
+       "value": "PTH lutowane H_TAPS, 12 pozycji (nie kupować złącza)"
+     },
++    "P05_J_VSENSEB": {
++      "board": "P05",
++      "kind": "termination",
++      "note": "Para AWG22, 150mm; kotwa 10–15mm od lutów; piny 3..14 NC bez przewodów",
++      "pins": {
++        "1": "VPROT_SENSE",
++        "10": "NC",
++        "11": "NC",
++        "12": "NC",
++        "13": "NC",
++        "14": "NC",
++        "2": "GND",
++        "3": "NC",
++        "4": "NC",
++        "5": "NC",
++        "6": "NC",
++        "7": "NC",
++        "8": "NC",
++        "9": "NC"
++      },
++      "ref": "J_VSENSEB",
++      "value": "PTH lutowane H_VSENSE, 14 pozycji (nie kupować złącza)"
++    },
+     "P05_KMEAS1": {
+       "board": "P05",
+       "kind": "relay",
+@@ -4209,7 +4266,7 @@
+       "kind": "res",
+       "note": "V6: jeden większy rezystor zamiast pary. Nie zachowuje redundancji dwóch elementów; patrz docs/09-zmiany-v6.md.",
+       "pins": {
+-        "1": "VPROT",
++        "1": "VPROT_SENSE",
+         "2": "ADC_CH7"
+       },
+       "ref": "RV1",
+@@ -7921,6 +7978,15 @@
+       "family": "MSTB 5.08 power",
+       "key_pin": "",
+       "positions": 2
++    },
++    {
++      "blocking": "Dedykowany pełny korpus 14p z zatrzaskiem; LV ma 4p",
++      "cable": "VSENSE",
++      "compatible_group": "VSENSE",
++      "ends": "P02/P05",
++      "family": "Mini-Fit Jr 4.2",
++      "key_pin": "",
++      "positions": 14
+     }
+   ],
+   "interfaces": [
+@@ -8451,6 +8517,22 @@
+       "wersja": "M2",
+       "wlasciciel_wiazki": "P01",
+       "zakonczenie": "Przewody do PTH; 2 otwory kotwy + opaska; bez pól SMD"
++    },
++    {
++      "dlugosc_mm": 150,
++      "klucz": "",
++      "koniec_A": "P02/J_VSENSEA",
++      "koniec_B": "P05/J_VSENSEB",
++      "koniec_lutowany": "P05/J_VSENSEB",
++      "kotwa_mm": "10–15",
++      "lacze": "VSENSE",
++      "pozycje": 14,
++      "przewod": "para AWG22: VPROT_SENSE/GND; tylko 2 styki Au; NC bez żył",
++      "rodzina": "Mini-Fit Jr 4.2",
++      "typ_wtyku": "Mini-Fit Jr żeński 14p Au VSENSE; bez zamienności z LV",
++      "wersja": "M2.1",
++      "wlasciciel_wiazki": "P05",
++      "zakonczenie": "PTH lutowane; kotwa + opaska; zabezpieczenie 100mA na P02"
+     }
+   ],
+   "wiring": [
+@@ -10985,6 +11067,174 @@
+       "to_board": "P05",
+       "to_pin": "12",
+       "to_ref": "J_TAPSB"
++    },
++    {
++      "cable": "VSENSE",
++      "connector": "Mini-Fit Jr 4.2",
++      "from_board": "P02",
++      "from_pin": "1",
++      "from_ref": "J_VSENSEA",
++      "max_cm": 15,
++      "net": "VPROT_SENSE",
++      "to_board": "P05",
++      "to_pin": "1",
++      "to_ref": "J_VSENSEB"
++    },
++    {
++      "cable": "VSENSE",
++      "connector": "Mini-Fit Jr 4.2",
++      "from_board": "P02",
++      "from_pin": "2",
++      "from_ref": "J_VSENSEA",
++      "max_cm": 15,
++      "net": "GND",
++      "to_board": "P05",
++      "to_pin": "2",
++      "to_ref": "J_VSENSEB"
++    },
++    {
++      "cable": "VSENSE",
++      "connector": "Mini-Fit Jr 4.2",
++      "from_board": "P02",
++      "from_pin": "3",
++      "from_ref": "J_VSENSEA",
++      "max_cm": 15,
++      "net": "NC",
++      "to_board": "P05",
++      "to_pin": "3",
++      "to_ref": "J_VSENSEB"
++    },
++    {
++      "cable": "VSENSE",
++      "connector": "Mini-Fit Jr 4.2",
++      "from_board": "P02",
++      "from_pin": "4",
++      "from_ref": "J_VSENSEA",
++      "max_cm": 15,
++      "net": "NC",
++      "to_board": "P05",
++      "to_pin": "4",
++      "to_ref": "J_VSENSEB"
++    },
++    {
++      "cable": "VSENSE",
++      "connector": "Mini-Fit Jr 4.2",
++      "from_board": "P02",
++      "from_pin": "5",
++      "from_ref": "J_VSENSEA",
++      "max_cm": 15,
++      "net": "NC",
++      "to_board": "P05",
++      "to_pin": "5",
++      "to_ref": "J_VSENSEB"
++    },
++    {
++      "cable": "VSENSE",
++      "connector": "Mini-Fit Jr 4.2",
++      "from_board": "P02",
++      "from_pin": "6",
++      "from_ref": "J_VSENSEA",
++      "max_cm": 15,
++      "net": "NC",
++      "to_board": "P05",
++      "to_pin": "6",
++      "to_ref": "J_VSENSEB"
++    },
++    {
++      "cable": "VSENSE",
++      "connector": "Mini-Fit Jr 4.2",
++      "from_board": "P02",
++      "from_pin": "7",
++      "from_ref": "J_VSENSEA",
++      "max_cm": 15,
++      "net": "NC",
++      "to_board": "P05",
++      "to_pin": "7",
++      "to_ref": "J_VSENSEB"
++    },
++    {
++      "cable": "VSENSE",
++      "connector": "Mini-Fit Jr 4.2",
++      "from_board": "P02",
++      "from_pin": "8",
++      "from_ref": "J_VSENSEA",
++      "max_cm": 15,
++      "net": "NC",
++      "to_board": "P05",
++      "to_pin": "8",
++      "to_ref": "J_VSENSEB"
++    },
++    {
++      "cable": "VSENSE",
++      "connector": "Mini-Fit Jr 4.2",
++      "from_board": "P02",
++      "from_pin": "9",
++      "from_ref": "J_VSENSEA",
++      "max_cm": 15,
++      "net": "NC",
++      "to_board": "P05",
++      "to_pin": "9",
++      "to_ref": "J_VSENSEB"
++    },
++    {
++      "cable": "VSENSE",
++      "connector": "Mini-Fit Jr 4.2",
++      "from_board": "P02",
++      "from_pin": "10",
++      "from_ref": "J_VSENSEA",
++      "max_cm": 15,
++      "net": "NC",
++      "to_board": "P05",
++      "to_pin": "10",
++      "to_ref": "J_VSENSEB"
++    },
++    {
++      "cable": "VSENSE",
++      "connector": "Mini-Fit Jr 4.2",
++      "from_board": "P02",
++      "from_pin": "11",
++      "from_ref": "J_VSENSEA",
++      "max_cm": 15,
++      "net": "NC",
++      "to_board": "P05",
++      "to_pin": "11",
++      "to_ref": "J_VSENSEB"
++    },
++    {
++      "cable": "VSENSE",
++      "connector": "Mini-Fit Jr 4.2",
++      "from_board": "P02",
++      "from_pin": "12",
++      "from_ref": "J_VSENSEA",
++      "max_cm": 15,
++      "net": "NC",
++      "to_board": "P05",
++      "to_pin": "12",
++      "to_ref": "J_VSENSEB"
++    },
++    {
++      "cable": "VSENSE",
++      "connector": "Mini-Fit Jr 4.2",
++      "from_board": "P02",
++      "from_pin": "13",
++      "from_ref": "J_VSENSEA",
++      "max_cm": 15,
++      "net": "NC",
++      "to_board": "P05",
++      "to_pin": "13",
++      "to_ref": "J_VSENSEB"
++    },
++    {
++      "cable": "VSENSE",
++      "connector": "Mini-Fit Jr 4.2",
++      "from_board": "P02",
++      "from_pin": "14",
++      "from_ref": "J_VSENSEA",
++      "max_cm": 15,
++      "net": "NC",
++      "to_board": "P05",
++      "to_pin": "14",
++      "to_ref": "J_VSENSEB"
+     }
+   ]
+ }

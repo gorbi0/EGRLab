@@ -1,0 +1,24 @@
+# Źródła P00 (R2, uzupełnione w R3)
+
+Źródła producentów sprawdzone 25.09.2026. Historyczne materiały R1 są zachowane oddzielnie; poniższa lista dotyczy bieżącego doboru.
+
+- TI LM2937-2.5/-3.3, **SNVS015F**, strony 4-5 i 11-12: https://www.mouser.com/datasheet/2/405/lm2937-3.3-484674.pdf . To dokument TI w kopii dystrybutora. Nie przenosić tabeli innego wariantu LM2937. Granice i ich zastosowanie zapisano w requirements/electrical.json.
+- Panasonic EEUFR1H220: https://industrial.panasonic.com/ww/products/pt/aluminum-cap-lead/models/EEUFR1H220 . 22 µF / 50 V, D5 x L11, raster 2 mm.
+- Panasonic FR-A, tabela 50 V: https://industrial.panasonic.com/cdbs/www-data/pdf/RDF0000/ABA0000C1259.pdf . Dla C6 Zmax = 0,340 Ω przy 100 kHz / 20°C. Karta serii jest źródłem jednostki Ω; na stronie WWW jednostka tabeli jest niespójna.
+- Yageo MFR, kwiecień 2024, strony 2-3: https://yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf . Rodzina MFR-25, 0,25 W, normalny korpus 6,3 x 2,4 mm, zakres od 1 Ω; składnia MFR-25FRF52-.... Nie używać miniaturowego MFR25S jako podstawy wymiarów.
+- TI TLC555: https://www.ti.com/lit/ds/symlink/tlc555.pdf . Układ astabilny i działanie RESET; wyjście obciążone podlega pomiarowi.
+- Würth 450301014042: https://www.we-online.com/en/components/products/datasheet/450301014042.pdf . COM na środkowym pinie 1, połączenie z kontaktem przeciwnym do położenia suwaka.
+- Kingbright L-934YD, dokument producenta w kopii: https://www.activecomponents.com/dbdocument/1208518/K491106-DS.pdf . Dotyczy LED9.
+- Kingbright L-934ID, dokument producenta w kopii: https://asset.conrad.com/media10/add/160267/c1/-/gl/812265765DS00/datenblatt-2888735-kingbright-l-934id-led-bedrahtet-rot-rund-3-mm-20-mcd-40-30-ma-2-v.pdf . Dotyczy LED10; wersja bez wbudowanego rezystora.
+- Vishay 1N5819: https://www.vishay.com/docs/88525/1n5817.pdf . Dioda szeregowa D1. Budżet 0,6 V przyjęto do obliczeń projektu; TP3 podlega pomiarowi.
+- Phoenix 1715721: https://www.phoenixcontact.com/en-pl/products/pcb-terminal-block-mkds-15-2-508-1715721 . J10.
+- P00/P04 v6.1-rc1: kopie importu P00 i mapy P04 w reference/. Mapa wiązki wymaga ponownego potwierdzenia przy zatwierdzeniu finalnej PCB P04.
+
+Pliki PDF zewnętrznych producentów nie są warunkiem wykonania generatora. Wartości wymagań zapisano jawnie, a strony i linki pozwalają je niezależnie sprawdzić.
+
+## Uzupełnienia R3 (27.09.2026)
+
+- TI TLC555, **SLFS043K** (rev. styczeń 2026), tabele 5.5 i 5.6: VOH min 1,5 V / typ 1,9 V przy VDD 2 V i IOH −300 µA; min 4,1 V / typ 4,8 V przy VDD 5 V i IOH −1 mA; IDD maks. 500 µA przy 5 V (TLC555C). Źródło modelu wyjścia U1 w `requirements/electrical.json`. https://www.ti.com/lit/ds/symlink/tlc555.pdf
+- Nexperia 74LVC125A, Rev. 12 (2 maja 2025), tabela 6: VIH min 2,0 V, VIL maks. 0,8 V dla VCC 2,7–3,6 V. Wejścia P04 odbierające kanały P00. https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf
+- P04-R2.1: zamrożone kopie `docs/parts.json`, `docs/pinout.csv`, `docs/P00-P04.md` i `docs/ODBIOR.md` w `reference/P04-R2.1-*`; SHA256 równe manifestowi wydania P04-R2.1 (`reference/P04-R2.1-source.json`).
+- LM2937-3.3 (SNVS015F): liczby jak w R2. W R3 kopia u dystrybutora nie odpowiadała (limit czasu), a linki TI zwracały 404, więc wartości VIN ≥ 4,75 V, IOUT ≥ 5 mA, ESR 0,01–3 Ω i RθJA 77,9 K/W nie zostały ponownie porównane z kartą.

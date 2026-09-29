@@ -1,0 +1,75 @@
+[
+  {
+    "control": "sw_rotated",
+    "expected_failing_check": "Wurth WS-SLTV switches",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "Wurth WS-SLTV switches: COM = middle pin 1, pin 2 = 3V3, pin 3 = GND, pin 3 above pin 2 on all nine (opposite-side contact: slider up = H/RUN, as printed)"
+    ]
+  },
+  {
+    "control": "header_flipped",
+    "expected_failing_check": "Headers J1..J9",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "Headers J1..J9: left pin GND, right pin signal (as printed), same row"
+    ]
+  },
+  {
+    "control": "mount_shift",
+    "expected_failing_check": "Four NPTH 3.2 mm holes",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "Four NPTH 3.2 mm holes 5 mm from the corners, copper keepouts on both layers"
+    ]
+  },
+  {
+    "control": "ref_inside_other",
+    "expected_failing_check": "Every visible reference",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "Every visible reference outside other courtyards and nearest to its own part"
+    ]
+  },
+  {
+    "control": "decap_far",
+    "expected_failing_check": "Capacitors at their pins",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "Capacitors at their pins: LM2937 in/out <= 10 mm, 555 VCC and CTRL <= 8 mm",
+      "Every visible reference outside other courtyards and nearest to its own part"
+    ]
+  },
+  {
+    "control": "label_swap",
+    "expected_failing_check": "Channel numbers",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "Channel numbers 1..8 and HB beside their own LED (<= 5 mm, nearest LED is their own)"
+    ]
+  },
+  {
+    "control": "thin_supply",
+    "expected_failing_check": "Every pre-routed (locked) segment",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "Every pre-routed (locked) segment and via retained with its width and layer (supply, 3V3 rail, channels)"
+    ]
+  },
+  {
+    "control": "dangling_lock",
+    "expected_failing_check": "Fresh native DRC",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "Every pre-routed (locked) segment and via retained with its width and layer (supply, 3V3 rail, channels)"
+    ]
+  }
+]

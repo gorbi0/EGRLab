@@ -1,0 +1,100 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-27T17:35:28",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P03.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [3V3_CORE] z C15 na F.Cu",
+                    "pos": {
+                        "x": 23.4375,
+                        "y": 74.0
+                    },
+                    "uuid": "a3420792-ca92-4d3f-bb94-7cad173a5a32"
+                },
+                {
+                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 2,3335 mm",
+                    "pos": {
+                        "x": 28.79,
+                        "y": 75.75
+                    },
+                    "uuid": "a64b9641-6692-42e6-89c7-94ad0b661975"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Pole odnośnika do U12",
+                    "pos": {
+                        "x": 22.82,
+                        "y": 74.325
+                    },
+                    "uuid": "e8248416-5fb7-42c3-ac8b-876c4d35c2e1"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0896 mm)",
+            "items": [
+                {
+                    "description": "Segment z C15 na F.Silkscreen",
+                    "pos": {
+                        "x": 24.288748,
+                        "y": 74.91
+                    },
+                    "uuid": "a4a0dbf5-1c67-42db-b140-d12310e8e7ef"
+                },
+                {
+                    "description": "Pole odnośnika do U12",
+                    "pos": {
+                        "x": 22.82,
+                        "y": 74.325
+                    },
+                    "uuid": "e8248416-5fb7-42c3-ac8b-876c4d35c2e1"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        }
+    ]
+}

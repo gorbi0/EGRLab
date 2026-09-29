@@ -1,0 +1,813 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-27T12:59:03",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P03.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                },
+                {
+                    "description": "Pole PTH 1 [MARK] na C4",
+                    "pos": {
+                        "x": 122.15,
+                        "y": 77.34
+                    },
+                    "uuid": "e2ec0b2d-2585-450e-8c5c-3988143f76ba"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci /MEAS_BANK oraz MARK)",
+            "items": [
+                {
+                    "description": "Pole PTH 1 [/MEAS_BANK] na R25",
+                    "pos": {
+                        "x": 87.5,
+                        "y": 57.5
+                    },
+                    "uuid": "9c7a0bcb-4d9b-430f-b209-37920ed04413"
+                },
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                },
+                {
+                    "description": "Pole PTH 1 [/MEAS_BANK] na R25",
+                    "pos": {
+                        "x": 87.5,
+                        "y": 57.5
+                    },
+                    "uuid": "9c7a0bcb-4d9b-430f-b209-37920ed04413"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci 3V3_IO oraz MARK)",
+            "items": [
+                {
+                    "description": "Pole PTH 10 [3V3_IO] na U14",
+                    "pos": {
+                        "x": 107.29,
+                        "y": 56.36
+                    },
+                    "uuid": "7e66ce4a-be1c-436a-8a51-5a595f29d100"
+                },
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                },
+                {
+                    "description": "Pole PTH 10 [3V3_IO] na U14",
+                    "pos": {
+                        "x": 107.29,
+                        "y": 56.36
+                    },
+                    "uuid": "7e66ce4a-be1c-436a-8a51-5a595f29d100"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz MARK)",
+            "items": [
+                {
+                    "description": "Pole PTH 5 [GND] na U14",
+                    "pos": {
+                        "x": 92.05,
+                        "y": 56.36
+                    },
+                    "uuid": "84056902-2ed2-4363-9683-8a6d242ce604"
+                },
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                },
+                {
+                    "description": "Pole PTH 5 [GND] na U14",
+                    "pos": {
+                        "x": 92.05,
+                        "y": 56.36
+                    },
+                    "uuid": "84056902-2ed2-4363-9683-8a6d242ce604"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz MARK)",
+            "items": [
+                {
+                    "description": "Pole PTH J3-1 [GND] na M1",
+                    "pos": {
+                        "x": 11.43,
+                        "y": 56.75
+                    },
+                    "uuid": "841bfed6-9bc0-4163-9df1-79fba7602a93"
+                },
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                },
+                {
+                    "description": "Pole PTH J3-1 [GND] na M1",
+                    "pos": {
+                        "x": 11.43,
+                        "y": 56.75
+                    },
+                    "uuid": "841bfed6-9bc0-4163-9df1-79fba7602a93"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci 3V3_CORE oraz MARK)",
+            "items": [
+                {
+                    "description": "Pole PTH J1-1 [3V3_CORE] na M1",
+                    "pos": {
+                        "x": 34.29,
+                        "y": 56.75
+                    },
+                    "uuid": "74079402-baa6-4a2a-81d2-d42e21980198"
+                },
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                },
+                {
+                    "description": "Pole PTH J1-1 [3V3_CORE] na M1",
+                    "pos": {
+                        "x": 34.29,
+                        "y": 56.75
+                    },
+                    "uuid": "74079402-baa6-4a2a-81d2-d42e21980198"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Tracks crossing",
+            "items": [
+                {
+                    "description": "Ścieżka [LOGGER_CURRENT_OK] na B.Cu, długość 7,8066 mm",
+                    "pos": {
+                        "x": 59.5,
+                        "y": 53.5
+                    },
+                    "uuid": "9e4878ca-2679-49e6-b44b-dfa600a80127"
+                },
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                }
+            ],
+            "severity": "error",
+            "type": "tracks_crossing"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci 3V3_CORE oraz MARK)",
+            "items": [
+                {
+                    "description": "Pole PTH 1 [3V3_CORE] na C11",
+                    "pos": {
+                        "x": 49.35,
+                        "y": 56.96
+                    },
+                    "uuid": "8e00adb9-5ff6-469c-840d-2d7e4019a817"
+                },
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                },
+                {
+                    "description": "Pole PTH 1 [3V3_CORE] na C11",
+                    "pos": {
+                        "x": 49.35,
+                        "y": 56.96
+                    },
+                    "uuid": "8e00adb9-5ff6-469c-840d-2d7e4019a817"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci MARK oraz GND)",
+            "items": [
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na C11",
+                    "pos": {
+                        "x": 44.35,
+                        "y": 56.96
+                    },
+                    "uuid": "d0b33eb1-1c28-44e3-a635-7e25a00cd0b6"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na C11",
+                    "pos": {
+                        "x": 44.35,
+                        "y": 56.96
+                    },
+                    "uuid": "d0b33eb1-1c28-44e3-a635-7e25a00cd0b6"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Tracks crossing",
+            "items": [
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                },
+                {
+                    "description": "Ścieżka [SUP_N] na B.Cu, długość 15,6886 mm",
+                    "pos": {
+                        "x": 82.7247,
+                        "y": 63.1002
+                    },
+                    "uuid": "cfec4de8-8b45-4480-9e51-545a2f61dde8"
+                }
+            ],
+            "severity": "error",
+            "type": "tracks_crossing"
+        },
+        {
+            "description": "Tracks crossing",
+            "items": [
+                {
+                    "description": "Ścieżka [SUP_N] na B.Cu, długość 3,8929 mm",
+                    "pos": {
+                        "x": 6.5,
+                        "y": 58.2327
+                    },
+                    "uuid": "b96b0592-a8f8-4fc3-95fc-e1ae5a2c1a1f"
+                },
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                }
+            ],
+            "severity": "error",
+            "type": "tracks_crossing"
+        },
+        {
+            "description": "Naruszenie prześwitu (klasa sieci 'Power' prześwit 0,3000 mm; obecnie 0,1900 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                },
+                {
+                    "description": "Ścieżka [3V3_IO] na B.Cu, długość 1,4517 mm",
+                    "pos": {
+                        "x": 107.29,
+                        "y": 56.36
+                    },
+                    "uuid": "db632aaa-5aca-401c-b09b-bc395112c134"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu (klasa sieci 'Power' prześwit 0,3000 mm; obecnie 0,1900 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_IO] na B.Cu, długość 3,5921 mm",
+                    "pos": {
+                        "x": 105.8383,
+                        "y": 56.36
+                    },
+                    "uuid": "00c5ec6f-8edd-4143-937a-74f433630d0a"
+                },
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Tracks crossing",
+            "items": [
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                },
+                {
+                    "description": "Ścieżka [GND] na B.Cu, długość 2,1069 mm",
+                    "pos": {
+                        "x": 43.6398,
+                        "y": 58.4498
+                    },
+                    "uuid": "f653c346-3261-4a79-8f88-b2f13771e4c6"
+                }
+            ],
+            "severity": "error",
+            "type": "tracks_crossing"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz MARK)",
+            "items": [
+                {
+                    "description": "Przelotka [GND] na F.Cu - B.Cu",
+                    "pos": {
+                        "x": 42.15,
+                        "y": 56.96
+                    },
+                    "uuid": "5c01139d-ac84-4195-b88b-12e73b870f6d"
+                },
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                },
+                {
+                    "description": "Przelotka [GND] na F.Cu - B.Cu",
+                    "pos": {
+                        "x": 42.15,
+                        "y": 56.96
+                    },
+                    "uuid": "5c01139d-ac84-4195-b88b-12e73b870f6d"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Tracks crossing",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_CORE] na B.Cu, długość 9,1358 mm",
+                    "pos": {
+                        "x": 127.18,
+                        "y": 61.8
+                    },
+                    "uuid": "4713c1b4-cc1e-42dc-adad-1df57a62b25e"
+                },
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                }
+            ],
+            "severity": "error",
+            "type": "tracks_crossing"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci 3V3_CORE oraz MARK)",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_CORE] na B.Cu, długość 3,8891 mm",
+                    "pos": {
+                        "x": 46.6,
+                        "y": 54.21
+                    },
+                    "uuid": "33eced16-8f9a-4269-8161-1b4d4caf4a1b"
+                },
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Niekompletne łączenie termiczne ze strefą (warstwa B.Cu; strefa min. liczba łącz 2; obecnie 1)",
+            "items": [
+                {
+                    "description": "Strefa [GND] na B.Cu, priorytet 0",
+                    "pos": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "uuid": "33a1d91a-8f6c-40bc-a081-39d7699b03ca"
+                },
+                {
+                    "description": "Pole PTH J3-1 [GND] na M1",
+                    "pos": {
+                        "x": 11.43,
+                        "y": 56.75
+                    },
+                    "uuid": "841bfed6-9bc0-4163-9df1-79fba7602a93"
+                }
+            ],
+            "severity": "error",
+            "type": "starved_thermal"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                },
+                {
+                    "description": "Pole PTH 10 [3V3_IO] na U14",
+                    "pos": {
+                        "x": 107.29,
+                        "y": 56.36
+                    },
+                    "uuid": "7e66ce4a-be1c-436a-8a51-5a595f29d100"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                },
+                {
+                    "description": "Pole PTH 1 [/MEAS_BANK] na R25",
+                    "pos": {
+                        "x": 87.5,
+                        "y": 57.5
+                    },
+                    "uuid": "9c7a0bcb-4d9b-430f-b209-37920ed04413"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                },
+                {
+                    "description": "Pole PTH 5 [GND] na U14",
+                    "pos": {
+                        "x": 92.05,
+                        "y": 56.36
+                    },
+                    "uuid": "84056902-2ed2-4363-9683-8a6d242ce604"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                },
+                {
+                    "description": "Pole PTH J1-1 [3V3_CORE] na M1",
+                    "pos": {
+                        "x": 34.29,
+                        "y": 56.75
+                    },
+                    "uuid": "74079402-baa6-4a2a-81d2-d42e21980198"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                },
+                {
+                    "description": "Pole PTH J3-1 [GND] na M1",
+                    "pos": {
+                        "x": 11.43,
+                        "y": 56.75
+                    },
+                    "uuid": "841bfed6-9bc0-4163-9df1-79fba7602a93"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na C11",
+                    "pos": {
+                        "x": 44.35,
+                        "y": 56.96
+                    },
+                    "uuid": "d0b33eb1-1c28-44e3-a635-7e25a00cd0b6"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                },
+                {
+                    "description": "Pole PTH 1 [3V3_CORE] na C11",
+                    "pos": {
+                        "x": 49.35,
+                        "y": 56.96
+                    },
+                    "uuid": "8e00adb9-5ff6-469c-840d-2d7e4019a817"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [MARK] na B.Cu, długość 157,0000 mm",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 57.0
+                    },
+                    "uuid": "ba85313a-d3a1-4715-b57e-d654aabc2f79"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        }
+    ]
+}

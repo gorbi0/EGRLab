@@ -1,0 +1,182 @@
+{
+  "checks": [
+    {
+      "name": "Native all-severity DRC, unconnected and parity",
+      "pass": true,
+      "detail": {
+        "violations": 0,
+        "unconnected_items": 0,
+        "schematic_parity": 0
+      }
+    },
+    {
+      "name": "Two layers, 160x120, thickness 1.6",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "M3 mounting grid",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Complete board inventory",
+      "pass": true,
+      "detail": {
+        "footprints": 114
+      }
+    },
+    {
+      "name": "Every pad matches schematic export",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "Tie distance 10..15 mm on all five harnesses",
+      "pass": true,
+      "detail": {
+        "J2": [
+          11.5,
+          15.0
+        ],
+        "J3": [
+          11.5,
+          14.04
+        ],
+        "J4": [
+          11.5,
+          15.0
+        ],
+        "J5": [
+          11.5,
+          15.0
+        ],
+        "J6": [
+          11.5,
+          15.0
+        ]
+      }
+    },
+    {
+      "name": "Harness PTH drill and anchor count",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "No copper beneath ties or M3 washers",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Analog bottom-plane protection",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "C1 actual 470uF Panasonic pitch",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Switch C-terminal drill and pitch",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "AD7606B reference pins and VDRIVE",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "B2B pin1 in far column matching P03 height",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "ADC local capacitors within 15 mm",
+      "pass": true,
+      "detail": {
+        "C4": 2.35,
+        "C5": 10.453,
+        "C6": 12.299,
+        "C7": 5.948,
+        "C8": 3.55,
+        "C9": 8.044,
+        "C10": 13.563,
+        "C11": 13.736,
+        "C13": 10.686
+      }
+    },
+    {
+      "name": "Reference and regulator traces have no vias",
+      "pass": true,
+      "detail": {
+        "REGCAP_A": {
+          "length_mm": 13.73185424949238,
+          "vias": 0
+        },
+        "REGCAP_D": {
+          "length_mm": 31.715341312596074,
+          "vias": 0
+        },
+        "REFCAP": {
+          "length_mm": 19.589843723928585,
+          "vias": 0
+        },
+        "ADC_REF": {
+          "length_mm": 27.62322252947088,
+          "vias": 0
+        }
+      }
+    },
+    {
+      "name": "Track fabrication minima",
+      "pass": true,
+      "detail": {
+        "minimum_mm": 0.15
+      }
+    },
+    {
+      "name": "Ground pours both faces, isolated islands removed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Harness grounds retain thermals",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "No DRC exclusions",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "All component references visible",
+      "pass": true,
+      "detail": null
+    }
+  ],
+  "negative_controls": [
+    {
+      "mutation": "Wrong C1 footprint",
+      "detected": true
+    },
+    {
+      "mutation": "Disabled analog plane rule",
+      "detected": true
+    },
+    {
+      "mutation": "Disabled cable tie rule",
+      "detected": true
+    },
+    {
+      "mutation": "Capacitor far from ADC",
+      "detected": true
+    },
+    {
+      "mutation": "Hidden component reference",
+      "detected": true
+    }
+  ]
+}

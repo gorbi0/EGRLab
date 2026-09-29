@@ -1,0 +1,37 @@
+﻿nazwa;MPN;ilosc;jednostka;referencje;uwaga
+CD74HC123E;CD74HC123E;1;szt.;U1;
+SN74HC14N;SN74HC14N;1;szt.;U2;Two spare Schmitt gates regenerate SAFE_N before HC74 CLR and permit logic.
+SN74HC74N;SN74HC74N;1;szt.;U3;
+SN74HC08N;SN74HC08N;4;szt.;U4, U5, U6, U7;
+74LVC125AD / adapter;74LVC125AD,118 (Nexperia);3;szt.;U8, U9, U10;"Kamami 575068 SO14 to DIP14 adapter, 18x18 mm, rows 15.24 mm; local 100nF C15..17 on adapter."
+MCP100-300DI/TO;MCP100-300DI/TO;1;szt.;U11;D bondout: 1=/RESET, 2=VDD, 3=VSS. Do not substitute H variant. 2.85..3.00V trip, reset delay 150..700 ms (MCP1X0 -300). R2: -315 (release up to 3.20 V) was above the 3.18 V worst-case 3V3_IO of TSR 2-2433 (review R4-01).
+220K / 1%;MFR-25FRF52-220K;1;szt.;R1;
+10K / 1%;MFR-25FRF52-10K;25;szt.;R2, R4, R6, R7, R8, R12, R13, R14, R15, R16, R18, R19, R20, R21, R22, R23, R24, R25, R29, R31, R32, R33, R34, R35, R36;"R4: Only pull-up of the shared SAFE_N net; supply through physical STOP NC. | R12, R13, R14, R15, R16, R18, R19, R20, R21, R22: Connector-side default LOW. | R23: Gate side of R41: an open R41 leaves the gate LOW. | R24: One 10k replaces the two parallel 10k in v6.1; gate side of R42. | R25, R29, R31, R32, R33, R34, R35: Default LOW after removable adapter; no floating gate if adapter absent."
+1K / 1%;MFR-25FRF52-1K;6;szt.;R3, R37, R38, R39, R41, R42;"R3: Was 100R; with C2=1u gives about 10ms release RC and limits discharge current. | R38: R2: was 0R. Limits a PG_SEND short in the PG harness to 3.3 mA; PG_LINK = 3.0 V with R22 10k (P01 loop R34 0R). | R39: R2 (R4-03): 3V3_IO to P01 (J7.1, bias of P01 Q7 via its R30 10k) through 1k; a harness short no longer collapses 3V3_IO. | R41: R2 (R4-07): series resistor between the 300 mm panel line and the HC08 inputs. | R42: R2 (R4-07): series resistor between the 300 mm panel line and the HC08 input."
+100K / 1%;MFR-25FRF52-100K;7;szt.;R5, R9, R10, R11, R17, R28, R30;"R17: Connector-side default LOW. | R28, R30: Default LOW after removable adapter; no floating gate if adapter absent."
+2N3904;2N3904BU;3;szt.;Q1, Q2, Q3;"Open collector sink replaces SOT23 2N7002. TO92 pins 1 E,2 B,3 C; 10k series base resistor."
+47K / 1%;MFR-25FRF52-47K;2;szt.;R26, R27;"Default LOW after removable adapter; no floating gate if adapter absent."
+100R / 1%;MFR-25FRF52-100R;1;szt.;R40;"R2 (R4-03): 3V3_IO to the panel contacts (J8.1: STOP, KEY, MECH) through 100R; short-circuit current 33 mA."
+1n / C0G;K102J15C0GF53H5;1;szt.;C18;"R2 (R4-04): 1 nF C0G at the Schmitt input; rise tau 10 us, STOP-open fall to the HC14 threshold ~55-160 us; no DC change."
+1u / PET;MKS2C041001F00KSSD;2;szt.;C1, C2;"PET 1uF / 63V / 10%; L7.2 W5 H10 P5 mm"
+10u / 50V;EEUFR1H100;1;szt.;C3;
+100n / X7R;K104K15X7RF53H5;14;szt.;C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17;"C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14: 100nF local decoupling | C15, C16, C17: 100nF at IC supply pins; assembly mounted on SO14 adapter"
+POWER / green;L-934GD;1;szt.;LED1;
+DRIVE / IDC10;61201021621;1;szt.;J3;Key 2: remove header pin / block matching socket position, leave PCB pad electrically NC. 
+SENSOR / IDC6 M2.2;61200621621;3;szt.;J4, J5, J6;"J4: Key 2: remove header pin / block matching socket position, leave PCB pad electrically NC. SENSOR expands 4 to 6 positions; original signals 1..4 unchanged; 5/6 NC. Matching P08 harness must be 6-way M2.2. | J5: Key 4: remove header pin / block matching socket position, leave PCB pad electrically NC.  | J6: Key 5: remove header pin / block matching socket position, leave PCB pad electrically NC. "
+PG / Mini-Fit 6;39-29-9069;1;szt.;J7;
+PANELSAFE / Mini-Fit 10;39-29-9109;1;szt.;J8;
+PCB P04-R2 160x120 2L 35um;wg KiCad po recenzji;1;szt.;montaż;Nie zamawiać przed przymiarką
+Podstawka DIP14 7.62 mm;precyzyjna / złocone styki;6;szt.;montaż;"U2-U7; sprawdzić gabaryt"
+Podstawka DIP16 7.62 mm;precyzyjna / złocone styki;1;szt.;montaż;U1
+Adapter SO14 / 15.24mm;Kamami 575068;3;szt.;montaż;"U8-U10; 18x18mm; przymiarka wymagana"
+Listwa męska 1x7 2.54 mm;złocona, prosta;6;szt.;montaż;"Ogonki adapterów; dobrać do listew żeńskich"
+Listwa żeńska 1x7 2.54 mm;złocona, prosta;6;szt.;montaż;"U8-U10; nie standardowa wąska podstawka DIP14"
+Obudowa wtyku LV04 4p;Molex 39-01-2040;1;szt.;montaż;H_LV04, druga strona wtyku do P02
+Styk żeński Au AWG18-24;Molex 39-00-0074;4;szt.;montaż;"H_LV04 AWG22; zapas osobno"
+Wtyk żeński IDC16 Au;Würth 61201623021;1;szt.;montaż;"H_SAFE; zaślepka pozycji 4; mechanika odciążki do sprawdzenia"
+Zaślepka klucza IDC;dopasowana do gniazda;1;szt.;montaż;H_SAFE pin 4
+Opaska kablowa 2.5 mm;nylon + miękka podkładka;2;szt.;montaż;Kotwy J1/J2
+Dystans i śruba M3;nylon lub metal z izolacyjną podkładką;4;szt.;montaż;"Minimum 8 mm prześwitu pod PCB; pod opaską musi zostać miejsce"
+Linka AWG22 / izolacja odpowiednia do Mini-Fit;4 kolory lub oznaczniki;0.8;m;H_LV04;"4 x 200 mm długości gotowej; zakupić z zapasem na obróbkę"
+Taśma 16 żył AWG28, raster 1.27 mm;czerwony znacznik żyły 1;0.15;m;H_SAFE;"150 mm długości gotowej; zakupić z zapasem"

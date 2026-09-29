@@ -1,0 +1,104 @@
+{
+  "checks": [
+    {
+      "check": "Every exported functional pin agrees with explicit parts contract",
+      "pass": true
+    },
+    {
+      "check": "Feedback isolated from C14/C15 by R18/R19",
+      "pass": true
+    },
+    {
+      "check": "Protected TP3 has 1k/2W series element; raw rail not on any TP",
+      "pass": true
+    },
+    {
+      "check": "Bank falling >=9.60V, rising <=10.50V across declared corners",
+      "pass": true
+    },
+    {
+      "check": "VPROT falling >=11.57V, rising <=12.65V across declared corners",
+      "pass": true
+    },
+    {
+      "check": "Feedback step >=20mV; RC time constant <=110us",
+      "pass": true
+    },
+    {
+      "check": "Conservative energy model at bank9.5V gives >=50ms",
+      "pass": true
+    },
+    {
+      "check": "TP3 sustained short at32V <=35mA and <=1.1W",
+      "pass": true
+    },
+    {
+      "check": "Fuse links time-lag and DC-rated: F1 T2A, F2/F3 T1A, F4 T500mA (Schurter SPT 300 VDC)",
+      "pass": true
+    },
+    {
+      "check": "LED1 current 1.5..4 mA (U6C VOH 3.0..3.3 V, Vf 1.8..2.2 V, R16 +/-1%)",
+      "pass": true
+    },
+    {
+      "check": "Open F1: bank discharged by R1 || divider, BANK_OK off within 180 s from 13.5 V (C +20%)",
+      "pass": true
+    }
+  ],
+  "bank": {
+    "rise_V": [
+      9.804632240117428,
+      10.474354230915363
+    ],
+    "fall_V": [
+      9.612075355242608,
+      10.252103477063354
+    ],
+    "hysteresis_V": [
+      0.16610346431628642,
+      0.24795770522896277
+    ],
+    "instant_feedback_min_V": 0.023355130078358117,
+    "nominal_rise_V": 10.169569,
+    "nominal_fall_V": 9.948998514851484,
+    "filter_tau_max_us": 96.86118327532962,
+    "corners": 1024
+  },
+  "vprot": {
+    "rise_V": [
+      11.810416777825477,
+      12.62327350876009
+    ],
+    "fall_V": [
+      11.572895536312776,
+      12.349112688915199
+    ],
+    "hysteresis_V": [
+      0.20492966056261963,
+      0.30585416277461874
+    ],
+    "instant_feedback_min_V": 0.023355130078358117,
+    "nominal_rise_V": 12.253927000000001,
+    "nominal_fall_V": 11.981827227722773,
+    "filter_tau_max_us": 102.2818614489688,
+    "corners": 1024
+  },
+  "pin_mismatches": [],
+  "led_mA": [
+    1.69,
+    3.22
+  ],
+  "f1_open_led_off_s_max": 113.2,
+  "hold_model_seconds_at9V5": 0.08538146341463422,
+  "bank_energy_max_J": 40.5504,
+  "bleed_to1V_seconds": 1302.986387782752,
+  "tp3_short_mA": 33.90728476821192,
+  "tp3_short_W": 1.0850331125827815,
+  "limits": "0..50C; 3V3_IO +/-5%; regulator/diode/ESR path loss <=1.2V by bench; NOT_TESTED hardware",
+  "inputs_sha256": {
+    "verification/P02.xml": "55c9141677919d3ba57f0da7a7cd77d7ae2ea18be92e875d6e0e718419dc5be7",
+    "docs/parts.json": "c56b0a26b5a49b444a44027c8285777794df796470f3a928ed5658791593cbde",
+    "src/check_electrical.py": "12100bb38ae8a2ddde6a08000347b2ae0daef66928cbd6411afca345ddbdd415"
+  },
+  "passed": true
+}

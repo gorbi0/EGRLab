@@ -1,0 +1,1137 @@
+{
+  "J10": {
+    "ref": "J10",
+    "source_ref": "J_PWR",
+    "footprint": "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal",
+    "display": "VIN 6-15V / MKDS 2p",
+    "value": "VIN 6-15V / MKDS 2p",
+    "mpn": "Phoenix MKDS 1,5/2-5,08 (1715721)",
+    "pins": {
+      "1": "P00_VIN",
+      "2": "GND"
+    },
+    "url": "https://www.phoenixcontact.com/en-pl/products/pcb-terminal-block-mkds-15-2-508-1715721",
+    "note": "R2 correction after review: bench supply 6..15 V; recommended 9..12 V. 1 = +VIN, 2 = GND.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "D1": {
+    "ref": "D1",
+    "source_ref": "ADDED_P00R1_LDO",
+    "footprint": "Diode_THT:D_DO-41_SOD81_P10.16mm_Horizontal",
+    "display": "1N5819",
+    "value": "1N5819",
+    "mpn": "1N5819",
+    "pins": {
+      "1": "P00_VIN_P",
+      "2": "P00_VIN"
+    },
+    "url": "https://www.vishay.com/docs/88525/1n5817.pdf",
+    "note": "Reverse-polarity protection of C4 and the rail (LM2937 itself survives reverse input). Band = cathode.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "C4": {
+    "ref": "C4",
+    "source_ref": "ADDED_P00R1_LDO",
+    "footprint": "Capacitor_THT:CP_Radial_D5.0mm_P2.00mm",
+    "display": "10u / 50V",
+    "value": "10u / 50V",
+    "mpn": "EEUFR1H100",
+    "pins": {
+      "1": "P00_VIN_P",
+      "2": "GND"
+    },
+    "url": "https://industrial.panasonic.com/sa/products/pt/aluminum-cap-lead",
+    "note": "Input bulk after D1.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "C5": {
+    "ref": "C5",
+    "source_ref": "ADDED_P00R1_LDO",
+    "footprint": "P00:C_Vishay_K15_H5_P5",
+    "display": "100nF / X7R",
+    "value": "100nF / X7R",
+    "mpn": "K104K15X7RF53H5",
+    "pins": {
+      "1": "P00_VIN_P",
+      "2": "GND"
+    },
+    "url": "https://www.vishay.com/docs/45171/kseries.pdf",
+    "note": "At U2 input (datasheet: 0.1 uF).",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "U2": {
+    "ref": "U2",
+    "source_ref": "ADDED_P00R1_LDO",
+    "footprint": "P00:TO220_3_P2.54_Drill1.4",
+    "display": "LM2937ET-3.3",
+    "value": "LM2937ET-3.3",
+    "mpn": "LM2937ET-3.3/NOPB",
+    "pins": {
+      "1": "P00_VIN_P",
+      "2": "GND",
+      "3": "P00_V33"
+    },
+    "url": "https://www.mouser.com/datasheet/2/405/lm2937-3.3-484674.pdf",
+    "note": "TO-220: 1 = IN, 2 = GND (tab), 3 = OUT. TI SNVS015F: VIN at U2 >= 4.75 V, IOUT >= 5 mA. J10 range 6..15 V; Cout >= 10 uF, branch ESR 0.01..3 ohm.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "C6": {
+    "ref": "C6",
+    "source_ref": "ADDED_P00R1_LDO",
+    "footprint": "Capacitor_THT:CP_Radial_D5.0mm_P2.00mm",
+    "display": "22u / 50V",
+    "value": "22u / 50V",
+    "mpn": "EEUFR1H220",
+    "pins": {
+      "1": "P00_V33",
+      "2": "P00_COUT_RET"
+    },
+    "url": "https://industrial.panasonic.com/ww/products/pt/aluminum-cap-lead/models/EEUFR1H220",
+    "note": "D5 x L11, pitch 2 mm. R6 adds 1 ohm series resistance in the C6 return; qualify stability at the bench.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "C7": {
+    "ref": "C7",
+    "source_ref": "ADDED_P00R1_LDO",
+    "footprint": "P00:C_Vishay_K15_H5_P5",
+    "display": "100nF / X7R",
+    "value": "100nF / X7R",
+    "mpn": "K104K15X7RF53H5",
+    "pins": {
+      "1": "P00_V33",
+      "2": "GND"
+    },
+    "url": "https://www.vishay.com/docs/45171/kseries.pdf",
+    "note": "At U2 output.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "RL10": {
+    "ref": "RL10",
+    "source_ref": "ADDED_P00R1_LED",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "1K / 1%",
+    "value": "1K / 1%",
+    "mpn": "MFR-25FRF52-1K",
+    "pins": {
+      "1": "P00_V33",
+      "2": "P00_LED_PWR"
+    },
+    "url": "https://yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf",
+    "note": "Power LED ~1.4 mA.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "LED10": {
+    "ref": "LED10",
+    "source_ref": "ADDED_P00R1_LED",
+    "footprint": "LED_THT:LED_D3.0mm",
+    "display": "RED 3mm / 3V3",
+    "value": "RED 3mm / 3V3",
+    "mpn": "L-934ID",
+    "pins": {
+      "1": "GND",
+      "2": "P00_LED_PWR"
+    },
+    "url": "https://asset.conrad.com/media10/add/160267/c1/-/gl/812265765DS00/datenblatt-2888735-kingbright-l-934id-led-bedrahtet-rot-rund-3-mm-20-mcd-40-30-ma-2-v.pdf",
+    "note": "On = 3.3 V present.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "R5": {
+    "ref": "R5",
+    "source_ref": "ADDED_P00R2_PRELOAD",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "560R / 1%",
+    "value": "560R / 1%",
+    "mpn": "MFR-25FRF52-560R",
+    "pins": {
+      "1": "P00_V33",
+      "2": "GND"
+    },
+    "url": "https://yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf",
+    "note": "Permanent minimum load. >= 5.55 mA at 3.14 V and +1% R; 0.25 W DIN0207.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "R6": {
+    "ref": "R6",
+    "source_ref": "ADDED_P00R2_COUT_ESR",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "1R / 1%",
+    "value": "1R / 1%",
+    "mpn": "MFR-25FRF52-1R",
+    "pins": {
+      "1": "P00_COUT_RET",
+      "2": "GND"
+    },
+    "url": "https://yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf",
+    "note": "1 ohm in C6 return sets a positive lower bound of branch ESR. Not in the DC supply path. 0.25 W DIN0207.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "U1": {
+    "ref": "U1",
+    "source_ref": "U1",
+    "footprint": "Package_DIP:DIP-8_W7.62mm",
+    "display": "TLC555CP",
+    "value": "TLC555CP",
+    "mpn": "TLC555CP",
+    "pins": {
+      "1": "GND",
+      "2": "P00_RC",
+      "3": "P00_OSC",
+      "4": "P00_RESET",
+      "5": "P00_CTRL",
+      "6": "P00_RC",
+      "7": "P00_DIS",
+      "8": "P00_V33"
+    },
+    "url": "https://www.ti.com/lit/ds/symlink/tlc555.pdf",
+    "note": "In a DIP8 socket (insert after checking the 3.3 V rail). f = 1.44/((R1 + 2 R2) C1) = 102 Hz.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "R1": {
+    "ref": "R1",
+    "source_ref": "R1",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "4K7 / 1%",
+    "value": "4K7 / 1%",
+    "mpn": "MFR-25FRF52-4K7",
+    "pins": {
+      "1": "P00_V33",
+      "2": "P00_DIS"
+    },
+    "url": "https://yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf",
+    "note": "",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "R2": {
+    "ref": "R2",
+    "source_ref": "R2",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "68K / 1%",
+    "value": "68K / 1%",
+    "mpn": "MFR-25FRF52-68K",
+    "pins": {
+      "1": "P00_DIS",
+      "2": "P00_RC"
+    },
+    "url": "https://yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf",
+    "note": "",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "C1": {
+    "ref": "C1",
+    "source_ref": "C1",
+    "footprint": "P00:C_Vishay_K15_H5_P5",
+    "display": "100nF / X7R",
+    "value": "100nF / X7R",
+    "mpn": "K104K15X7RF53H5",
+    "pins": {
+      "1": "P00_RC",
+      "2": "GND"
+    },
+    "url": "https://www.vishay.com/docs/45171/kseries.pdf",
+    "note": "Timing; X7R +-10 %: measure f (ODBIOR P00).",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "C2": {
+    "ref": "C2",
+    "source_ref": "C2",
+    "footprint": "P00:C_Vishay_K15_H5_P5",
+    "display": "10nF / X7R",
+    "value": "10nF / X7R",
+    "mpn": "K103K15X7RF53H5",
+    "pins": {
+      "1": "P00_CTRL",
+      "2": "GND"
+    },
+    "url": "https://www.vishay.com/docs/45171/kseries.pdf",
+    "note": "",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "C3": {
+    "ref": "C3",
+    "source_ref": "C3",
+    "footprint": "P00:C_Vishay_K15_H5_P5",
+    "display": "100nF / X7R",
+    "value": "100nF / X7R",
+    "mpn": "K104K15X7RF53H5",
+    "pins": {
+      "1": "P00_V33",
+      "2": "GND"
+    },
+    "url": "https://www.vishay.com/docs/45171/kseries.pdf",
+    "note": "At U1 pin 8.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "R3": {
+    "ref": "R3",
+    "source_ref": "R3",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "1K / 1%",
+    "value": "1K / 1%",
+    "mpn": "MFR-25FRF52-1K",
+    "pins": {
+      "1": "P00_OSC",
+      "2": "P00_HEART"
+    },
+    "url": "https://yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf",
+    "note": "Series 1 k of the heartbeat output (v6.1).",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "R4": {
+    "ref": "R4",
+    "source_ref": "ADDED_P00R1_HBSTOP",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "100K / 1%",
+    "value": "100K / 1%",
+    "mpn": "MFR-25FRF52-100K",
+    "pins": {
+      "1": "P00_V33",
+      "2": "P00_RESET"
+    },
+    "url": "https://yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf",
+    "note": "Keeps RESET high while SW9 moves (break-before-make).",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "SW9": {
+    "ref": "SW9",
+    "source_ref": "ADDED_P00R1_HBSTOP",
+    "footprint": "Button_Switch_THT:SW_Slide-03_Wuerth-WS-SLTV_10x2.5x6.4_P2.54mm",
+    "display": "HEART RUN/STOP",
+    "value": "HEART RUN/STOP",
+    "mpn": "Wurth 450301014042 (WS-SLTV)",
+    "pins": {
+      "1": "P00_RESET",
+      "2": "P00_V33",
+      "3": "GND"
+    },
+    "url": "https://www.we-online.com/components/products/datasheet/450301014042.pdf",
+    "note": "R1 addition: RUN = RESET high (v6.1 behaviour), STOP = RESET low -> output held LOW (stuck heartbeat for the watchdog test).",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "RL9": {
+    "ref": "RL9",
+    "source_ref": "ADDED_P00R1_LED",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "1K / 1%",
+    "value": "1K / 1%",
+    "mpn": "MFR-25FRF52-1K",
+    "pins": {
+      "1": "P00_OSC",
+      "2": "P00_LED_HB"
+    },
+    "url": "https://yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf",
+    "note": "Heartbeat LED on the 555 output, before R3.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "LED9": {
+    "ref": "LED9",
+    "source_ref": "ADDED_P00R1_LED",
+    "footprint": "LED_THT:LED_D3.0mm",
+    "display": "YELLOW 3mm / HEART",
+    "value": "YELLOW 3mm / HEART",
+    "mpn": "L-934YD",
+    "pins": {
+      "1": "GND",
+      "2": "P00_LED_HB"
+    },
+    "url": "https://www.activecomponents.com/dbdocument/1208518/K491106-DS.pdf",
+    "note": "Lit at ~50 % while running.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "J9": {
+    "ref": "J9",
+    "source_ref": "J_HEART",
+    "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+    "display": "HEART / pin header 1x2",
+    "value": "HEART / pin header 1x2",
+    "mpn": "pin header 1x2, 2.54 mm (goldpin)",
+    "pins": {
+      "1": "P00_HEART",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "R1 (user 25.09): 2.54 mm header for Dupont leads. 1 = heartbeat via 1 k, 2 = GND.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "SW1": {
+    "ref": "SW1",
+    "source_ref": "SW1",
+    "footprint": "Button_Switch_THT:SW_Slide-03_Wuerth-WS-SLTV_10x2.5x6.4_P2.54mm",
+    "display": "CH1 H/L",
+    "value": "CH1 H/L",
+    "mpn": "Wurth 450301014042 (WS-SLTV)",
+    "pins": {
+      "1": "P00_S1",
+      "2": "P00_V33",
+      "3": "GND"
+    },
+    "url": "https://www.we-online.com/components/products/datasheet/450301014042.pdf",
+    "note": "COM = pin 1 (middle). Opposite-side connection: slider towards pin 3 = COM-pin 2 (3V3) = H.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "RS1": {
+    "ref": "RS1",
+    "source_ref": "RS1",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "1K / 1%",
+    "value": "1K / 1%",
+    "mpn": "MFR-25FRF52-1K",
+    "pins": {
+      "1": "P00_S1",
+      "2": "P00_OUT1"
+    },
+    "url": "https://yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf",
+    "note": "Series 1 k: nominal ground-short current 3.3 mA; <= 3.51 mA including voltage, 1% tolerance and 100ppm/C over 10..40C. Intended for 3.3 V logic inputs.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "RL1": {
+    "ref": "RL1",
+    "source_ref": "ADDED_P00R1_LED",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "1K / 1%",
+    "value": "1K / 1%",
+    "mpn": "MFR-25FRF52-1K",
+    "pins": {
+      "1": "P00_S1",
+      "2": "P00_LED1"
+    },
+    "url": "https://yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf",
+    "note": "State LED from the switch node, not from the output.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "LED1": {
+    "ref": "LED1",
+    "source_ref": "ADDED_P00R1_LED",
+    "footprint": "LED_THT:LED_D3.0mm",
+    "display": "GREEN 3mm / CH1",
+    "value": "GREEN 3mm / CH1",
+    "mpn": "L-934GD",
+    "pins": {
+      "1": "GND",
+      "2": "P00_LED1"
+    },
+    "url": "https://www.kingbrightusa.com/images/catalog/SPEC/L-934GD.pdf",
+    "note": "On = channel HIGH.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "J1": {
+    "ref": "J1",
+    "source_ref": "J1",
+    "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+    "display": "CH1 / pin header 1x2",
+    "value": "CH1 / pin header 1x2",
+    "mpn": "pin header 1x2, 2.54 mm (goldpin)",
+    "pins": {
+      "1": "P00_OUT1",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "R1 (user 25.09): 2.54 mm header for Dupont leads. 1 = output via 1 k, 2 = GND.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "SW2": {
+    "ref": "SW2",
+    "source_ref": "SW2",
+    "footprint": "Button_Switch_THT:SW_Slide-03_Wuerth-WS-SLTV_10x2.5x6.4_P2.54mm",
+    "display": "CH2 H/L",
+    "value": "CH2 H/L",
+    "mpn": "Wurth 450301014042 (WS-SLTV)",
+    "pins": {
+      "1": "P00_S2",
+      "2": "P00_V33",
+      "3": "GND"
+    },
+    "url": "https://www.we-online.com/components/products/datasheet/450301014042.pdf",
+    "note": "COM = pin 1 (middle). Opposite-side connection: slider towards pin 3 = COM-pin 2 (3V3) = H.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "RS2": {
+    "ref": "RS2",
+    "source_ref": "RS2",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "1K / 1%",
+    "value": "1K / 1%",
+    "mpn": "MFR-25FRF52-1K",
+    "pins": {
+      "1": "P00_S2",
+      "2": "P00_OUT2"
+    },
+    "url": "https://yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf",
+    "note": "Series 1 k: nominal ground-short current 3.3 mA; <= 3.51 mA including voltage, 1% tolerance and 100ppm/C over 10..40C. Intended for 3.3 V logic inputs.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "RL2": {
+    "ref": "RL2",
+    "source_ref": "ADDED_P00R1_LED",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "1K / 1%",
+    "value": "1K / 1%",
+    "mpn": "MFR-25FRF52-1K",
+    "pins": {
+      "1": "P00_S2",
+      "2": "P00_LED2"
+    },
+    "url": "https://yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf",
+    "note": "State LED from the switch node, not from the output.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "LED2": {
+    "ref": "LED2",
+    "source_ref": "ADDED_P00R1_LED",
+    "footprint": "LED_THT:LED_D3.0mm",
+    "display": "GREEN 3mm / CH2",
+    "value": "GREEN 3mm / CH2",
+    "mpn": "L-934GD",
+    "pins": {
+      "1": "GND",
+      "2": "P00_LED2"
+    },
+    "url": "https://www.kingbrightusa.com/images/catalog/SPEC/L-934GD.pdf",
+    "note": "On = channel HIGH.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "J2": {
+    "ref": "J2",
+    "source_ref": "J2",
+    "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+    "display": "CH2 / pin header 1x2",
+    "value": "CH2 / pin header 1x2",
+    "mpn": "pin header 1x2, 2.54 mm (goldpin)",
+    "pins": {
+      "1": "P00_OUT2",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "R1 (user 25.09): 2.54 mm header for Dupont leads. 1 = output via 1 k, 2 = GND.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "SW3": {
+    "ref": "SW3",
+    "source_ref": "SW3",
+    "footprint": "Button_Switch_THT:SW_Slide-03_Wuerth-WS-SLTV_10x2.5x6.4_P2.54mm",
+    "display": "CH3 H/L",
+    "value": "CH3 H/L",
+    "mpn": "Wurth 450301014042 (WS-SLTV)",
+    "pins": {
+      "1": "P00_S3",
+      "2": "P00_V33",
+      "3": "GND"
+    },
+    "url": "https://www.we-online.com/components/products/datasheet/450301014042.pdf",
+    "note": "COM = pin 1 (middle). Opposite-side connection: slider towards pin 3 = COM-pin 2 (3V3) = H.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "RS3": {
+    "ref": "RS3",
+    "source_ref": "RS3",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "1K / 1%",
+    "value": "1K / 1%",
+    "mpn": "MFR-25FRF52-1K",
+    "pins": {
+      "1": "P00_S3",
+      "2": "P00_OUT3"
+    },
+    "url": "https://yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf",
+    "note": "Series 1 k: nominal ground-short current 3.3 mA; <= 3.51 mA including voltage, 1% tolerance and 100ppm/C over 10..40C. Intended for 3.3 V logic inputs.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "RL3": {
+    "ref": "RL3",
+    "source_ref": "ADDED_P00R1_LED",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "1K / 1%",
+    "value": "1K / 1%",
+    "mpn": "MFR-25FRF52-1K",
+    "pins": {
+      "1": "P00_S3",
+      "2": "P00_LED3"
+    },
+    "url": "https://yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf",
+    "note": "State LED from the switch node, not from the output.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "LED3": {
+    "ref": "LED3",
+    "source_ref": "ADDED_P00R1_LED",
+    "footprint": "LED_THT:LED_D3.0mm",
+    "display": "GREEN 3mm / CH3",
+    "value": "GREEN 3mm / CH3",
+    "mpn": "L-934GD",
+    "pins": {
+      "1": "GND",
+      "2": "P00_LED3"
+    },
+    "url": "https://www.kingbrightusa.com/images/catalog/SPEC/L-934GD.pdf",
+    "note": "On = channel HIGH.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "J3": {
+    "ref": "J3",
+    "source_ref": "J3",
+    "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+    "display": "CH3 / pin header 1x2",
+    "value": "CH3 / pin header 1x2",
+    "mpn": "pin header 1x2, 2.54 mm (goldpin)",
+    "pins": {
+      "1": "P00_OUT3",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "R1 (user 25.09): 2.54 mm header for Dupont leads. 1 = output via 1 k, 2 = GND.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "SW4": {
+    "ref": "SW4",
+    "source_ref": "SW4",
+    "footprint": "Button_Switch_THT:SW_Slide-03_Wuerth-WS-SLTV_10x2.5x6.4_P2.54mm",
+    "display": "CH4 H/L",
+    "value": "CH4 H/L",
+    "mpn": "Wurth 450301014042 (WS-SLTV)",
+    "pins": {
+      "1": "P00_S4",
+      "2": "P00_V33",
+      "3": "GND"
+    },
+    "url": "https://www.we-online.com/components/products/datasheet/450301014042.pdf",
+    "note": "COM = pin 1 (middle). Opposite-side connection: slider towards pin 3 = COM-pin 2 (3V3) = H.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "RS4": {
+    "ref": "RS4",
+    "source_ref": "RS4",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "1K / 1%",
+    "value": "1K / 1%",
+    "mpn": "MFR-25FRF52-1K",
+    "pins": {
+      "1": "P00_S4",
+      "2": "P00_OUT4"
+    },
+    "url": "https://yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf",
+    "note": "Series 1 k: nominal ground-short current 3.3 mA; <= 3.51 mA including voltage, 1% tolerance and 100ppm/C over 10..40C. Intended for 3.3 V logic inputs.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "RL4": {
+    "ref": "RL4",
+    "source_ref": "ADDED_P00R1_LED",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "1K / 1%",
+    "value": "1K / 1%",
+    "mpn": "MFR-25FRF52-1K",
+    "pins": {
+      "1": "P00_S4",
+      "2": "P00_LED4"
+    },
+    "url": "https://yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf",
+    "note": "State LED from the switch node, not from the output.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "LED4": {
+    "ref": "LED4",
+    "source_ref": "ADDED_P00R1_LED",
+    "footprint": "LED_THT:LED_D3.0mm",
+    "display": "GREEN 3mm / CH4",
+    "value": "GREEN 3mm / CH4",
+    "mpn": "L-934GD",
+    "pins": {
+      "1": "GND",
+      "2": "P00_LED4"
+    },
+    "url": "https://www.kingbrightusa.com/images/catalog/SPEC/L-934GD.pdf",
+    "note": "On = channel HIGH.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "J4": {
+    "ref": "J4",
+    "source_ref": "J4",
+    "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+    "display": "CH4 / pin header 1x2",
+    "value": "CH4 / pin header 1x2",
+    "mpn": "pin header 1x2, 2.54 mm (goldpin)",
+    "pins": {
+      "1": "P00_OUT4",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "R1 (user 25.09): 2.54 mm header for Dupont leads. 1 = output via 1 k, 2 = GND.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "SW5": {
+    "ref": "SW5",
+    "source_ref": "SW5",
+    "footprint": "Button_Switch_THT:SW_Slide-03_Wuerth-WS-SLTV_10x2.5x6.4_P2.54mm",
+    "display": "CH5 H/L",
+    "value": "CH5 H/L",
+    "mpn": "Wurth 450301014042 (WS-SLTV)",
+    "pins": {
+      "1": "P00_S5",
+      "2": "P00_V33",
+      "3": "GND"
+    },
+    "url": "https://www.we-online.com/components/products/datasheet/450301014042.pdf",
+    "note": "COM = pin 1 (middle). Opposite-side connection: slider towards pin 3 = COM-pin 2 (3V3) = H.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "RS5": {
+    "ref": "RS5",
+    "source_ref": "RS5",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "1K / 1%",
+    "value": "1K / 1%",
+    "mpn": "MFR-25FRF52-1K",
+    "pins": {
+      "1": "P00_S5",
+      "2": "P00_OUT5"
+    },
+    "url": "https://yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf",
+    "note": "Series 1 k: nominal ground-short current 3.3 mA; <= 3.51 mA including voltage, 1% tolerance and 100ppm/C over 10..40C. Intended for 3.3 V logic inputs.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "RL5": {
+    "ref": "RL5",
+    "source_ref": "ADDED_P00R1_LED",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "1K / 1%",
+    "value": "1K / 1%",
+    "mpn": "MFR-25FRF52-1K",
+    "pins": {
+      "1": "P00_S5",
+      "2": "P00_LED5"
+    },
+    "url": "https://yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf",
+    "note": "State LED from the switch node, not from the output.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "LED5": {
+    "ref": "LED5",
+    "source_ref": "ADDED_P00R1_LED",
+    "footprint": "LED_THT:LED_D3.0mm",
+    "display": "GREEN 3mm / CH5",
+    "value": "GREEN 3mm / CH5",
+    "mpn": "L-934GD",
+    "pins": {
+      "1": "GND",
+      "2": "P00_LED5"
+    },
+    "url": "https://www.kingbrightusa.com/images/catalog/SPEC/L-934GD.pdf",
+    "note": "On = channel HIGH.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "J5": {
+    "ref": "J5",
+    "source_ref": "J5",
+    "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+    "display": "CH5 / pin header 1x2",
+    "value": "CH5 / pin header 1x2",
+    "mpn": "pin header 1x2, 2.54 mm (goldpin)",
+    "pins": {
+      "1": "P00_OUT5",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "R1 (user 25.09): 2.54 mm header for Dupont leads. 1 = output via 1 k, 2 = GND.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "SW6": {
+    "ref": "SW6",
+    "source_ref": "SW6",
+    "footprint": "Button_Switch_THT:SW_Slide-03_Wuerth-WS-SLTV_10x2.5x6.4_P2.54mm",
+    "display": "CH6 H/L",
+    "value": "CH6 H/L",
+    "mpn": "Wurth 450301014042 (WS-SLTV)",
+    "pins": {
+      "1": "P00_S6",
+      "2": "P00_V33",
+      "3": "GND"
+    },
+    "url": "https://www.we-online.com/components/products/datasheet/450301014042.pdf",
+    "note": "COM = pin 1 (middle). Opposite-side connection: slider towards pin 3 = COM-pin 2 (3V3) = H.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "RS6": {
+    "ref": "RS6",
+    "source_ref": "RS6",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "1K / 1%",
+    "value": "1K / 1%",
+    "mpn": "MFR-25FRF52-1K",
+    "pins": {
+      "1": "P00_S6",
+      "2": "P00_OUT6"
+    },
+    "url": "https://yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf",
+    "note": "Series 1 k: nominal ground-short current 3.3 mA; <= 3.51 mA including voltage, 1% tolerance and 100ppm/C over 10..40C. Intended for 3.3 V logic inputs.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "RL6": {
+    "ref": "RL6",
+    "source_ref": "ADDED_P00R1_LED",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "1K / 1%",
+    "value": "1K / 1%",
+    "mpn": "MFR-25FRF52-1K",
+    "pins": {
+      "1": "P00_S6",
+      "2": "P00_LED6"
+    },
+    "url": "https://yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf",
+    "note": "State LED from the switch node, not from the output.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "LED6": {
+    "ref": "LED6",
+    "source_ref": "ADDED_P00R1_LED",
+    "footprint": "LED_THT:LED_D3.0mm",
+    "display": "GREEN 3mm / CH6",
+    "value": "GREEN 3mm / CH6",
+    "mpn": "L-934GD",
+    "pins": {
+      "1": "GND",
+      "2": "P00_LED6"
+    },
+    "url": "https://www.kingbrightusa.com/images/catalog/SPEC/L-934GD.pdf",
+    "note": "On = channel HIGH.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "J6": {
+    "ref": "J6",
+    "source_ref": "J6",
+    "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+    "display": "CH6 / pin header 1x2",
+    "value": "CH6 / pin header 1x2",
+    "mpn": "pin header 1x2, 2.54 mm (goldpin)",
+    "pins": {
+      "1": "P00_OUT6",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "R1 (user 25.09): 2.54 mm header for Dupont leads. 1 = output via 1 k, 2 = GND.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "SW7": {
+    "ref": "SW7",
+    "source_ref": "SW7",
+    "footprint": "Button_Switch_THT:SW_Slide-03_Wuerth-WS-SLTV_10x2.5x6.4_P2.54mm",
+    "display": "CH7 H/L",
+    "value": "CH7 H/L",
+    "mpn": "Wurth 450301014042 (WS-SLTV)",
+    "pins": {
+      "1": "P00_S7",
+      "2": "P00_V33",
+      "3": "GND"
+    },
+    "url": "https://www.we-online.com/components/products/datasheet/450301014042.pdf",
+    "note": "COM = pin 1 (middle). Opposite-side connection: slider towards pin 3 = COM-pin 2 (3V3) = H.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "RS7": {
+    "ref": "RS7",
+    "source_ref": "RS7",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "1K / 1%",
+    "value": "1K / 1%",
+    "mpn": "MFR-25FRF52-1K",
+    "pins": {
+      "1": "P00_S7",
+      "2": "P00_OUT7"
+    },
+    "url": "https://yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf",
+    "note": "Series 1 k: nominal ground-short current 3.3 mA; <= 3.51 mA including voltage, 1% tolerance and 100ppm/C over 10..40C. Intended for 3.3 V logic inputs.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "RL7": {
+    "ref": "RL7",
+    "source_ref": "ADDED_P00R1_LED",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "1K / 1%",
+    "value": "1K / 1%",
+    "mpn": "MFR-25FRF52-1K",
+    "pins": {
+      "1": "P00_S7",
+      "2": "P00_LED7"
+    },
+    "url": "https://yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf",
+    "note": "State LED from the switch node, not from the output.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "LED7": {
+    "ref": "LED7",
+    "source_ref": "ADDED_P00R1_LED",
+    "footprint": "LED_THT:LED_D3.0mm",
+    "display": "GREEN 3mm / CH7",
+    "value": "GREEN 3mm / CH7",
+    "mpn": "L-934GD",
+    "pins": {
+      "1": "GND",
+      "2": "P00_LED7"
+    },
+    "url": "https://www.kingbrightusa.com/images/catalog/SPEC/L-934GD.pdf",
+    "note": "On = channel HIGH.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "J7": {
+    "ref": "J7",
+    "source_ref": "J7",
+    "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+    "display": "CH7 / pin header 1x2",
+    "value": "CH7 / pin header 1x2",
+    "mpn": "pin header 1x2, 2.54 mm (goldpin)",
+    "pins": {
+      "1": "P00_OUT7",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "R1 (user 25.09): 2.54 mm header for Dupont leads. 1 = output via 1 k, 2 = GND.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "SW8": {
+    "ref": "SW8",
+    "source_ref": "SW8",
+    "footprint": "Button_Switch_THT:SW_Slide-03_Wuerth-WS-SLTV_10x2.5x6.4_P2.54mm",
+    "display": "CH8 H/L",
+    "value": "CH8 H/L",
+    "mpn": "Wurth 450301014042 (WS-SLTV)",
+    "pins": {
+      "1": "P00_S8",
+      "2": "P00_V33",
+      "3": "GND"
+    },
+    "url": "https://www.we-online.com/components/products/datasheet/450301014042.pdf",
+    "note": "COM = pin 1 (middle). Opposite-side connection: slider towards pin 3 = COM-pin 2 (3V3) = H.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "RS8": {
+    "ref": "RS8",
+    "source_ref": "RS8",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "1K / 1%",
+    "value": "1K / 1%",
+    "mpn": "MFR-25FRF52-1K",
+    "pins": {
+      "1": "P00_S8",
+      "2": "P00_OUT8"
+    },
+    "url": "https://yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf",
+    "note": "Series 1 k: nominal ground-short current 3.3 mA; <= 3.51 mA including voltage, 1% tolerance and 100ppm/C over 10..40C. Intended for 3.3 V logic inputs.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "RL8": {
+    "ref": "RL8",
+    "source_ref": "ADDED_P00R1_LED",
+    "footprint": "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal",
+    "display": "1K / 1%",
+    "value": "1K / 1%",
+    "mpn": "MFR-25FRF52-1K",
+    "pins": {
+      "1": "P00_S8",
+      "2": "P00_LED8"
+    },
+    "url": "https://yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf",
+    "note": "State LED from the switch node, not from the output.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "LED8": {
+    "ref": "LED8",
+    "source_ref": "ADDED_P00R1_LED",
+    "footprint": "LED_THT:LED_D3.0mm",
+    "display": "GREEN 3mm / CH8",
+    "value": "GREEN 3mm / CH8",
+    "mpn": "L-934GD",
+    "pins": {
+      "1": "GND",
+      "2": "P00_LED8"
+    },
+    "url": "https://www.kingbrightusa.com/images/catalog/SPEC/L-934GD.pdf",
+    "note": "On = channel HIGH.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "J8": {
+    "ref": "J8",
+    "source_ref": "J8",
+    "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+    "display": "CH8 / pin header 1x2",
+    "value": "CH8 / pin header 1x2",
+    "mpn": "pin header 1x2, 2.54 mm (goldpin)",
+    "pins": {
+      "1": "P00_OUT8",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "R1 (user 25.09): 2.54 mm header for Dupont leads. 1 = output via 1 k, 2 = GND.",
+    "qty": 1,
+    "sheet": "P00",
+    "on_board": true
+  },
+  "TP1": {
+    "ref": "TP1",
+    "source_ref": "ADDED_TESTPAD",
+    "value": "P00_V33",
+    "display": "V33",
+    "pins": {
+      "1": "P00_V33"
+    },
+    "footprint": "P00:TestPad_1",
+    "mpn": "PCB test pad",
+    "qty": 1,
+    "url": "",
+    "sheet": "P00",
+    "on_board": true,
+    "note": "Probe access; no circuit function."
+  },
+  "TP2": {
+    "ref": "TP2",
+    "source_ref": "ADDED_TESTPAD",
+    "value": "GND",
+    "display": "GND",
+    "pins": {
+      "1": "GND"
+    },
+    "footprint": "P00:TestPad_1",
+    "mpn": "PCB test pad",
+    "qty": 1,
+    "url": "",
+    "sheet": "P00",
+    "on_board": true,
+    "note": "Probe access; no circuit function."
+  },
+  "TP3": {
+    "ref": "TP3",
+    "source_ref": "ADDED_TESTPAD",
+    "value": "P00_VIN_P",
+    "display": "VIN_P",
+    "pins": {
+      "1": "P00_VIN_P"
+    },
+    "footprint": "P00:TestPad_1",
+    "mpn": "PCB test pad",
+    "qty": 1,
+    "url": "",
+    "sheet": "P00",
+    "on_board": true,
+    "note": "Probe access; no circuit function."
+  }
+}

@@ -1,0 +1,116 @@
+--- V6/firmware/main/board.c
++++ 6.1-rc1/firmware/main/board.c
+@@ -30,7 +30,7 @@
+        A_SENSOR_EN = 1 << 3, A_LOGGER_CURRENT_OK = 1 << 4, A_INA = 1 << 5, A_INB = 1 << 6,
+        A_LED = 1 << 7 };
+ /* MCP23017 port B (wejscia) */
+-enum { B_TEST_KEY = 1 << 0, B_SENSOR_FAULT_N = 1 << 1, B_ENA_DIAG = 1 << 2,
++enum { B_TEST_KEY = 1 << 0, B_SENSOR_HEALTHY = 1 << 1, B_ENA_DIAG = 1 << 2,
+        B_ENB_DIAG = 1 << 3, B_LOG_PRESENT_N = 1 << 4, B_TEST_PRESENT = 1 << 5, B_MARK_N = 1 << 6 };
+ 
+ /* --- AD7606B: dostep do rejestrow --------------------------------------
+@@ -248,7 +248,7 @@
+     ESP_ERROR_CHECK(mcp_write(0x14, 0));
+     ESP_ERROR_CHECK(mcp_write(0x00, 0x10));   /* GPA4 input; GPA7/GPB7 always outputs */
+     ESP_ERROR_CHECK(mcp_write(0x01, 0x7f));   /* B7 output unused: avoid MCP23017 input erratum */
+-    ESP_ERROR_CHECK(mcp_write(0x0d, 0x4e));   /* only open-drain fault pins; B0/B4/B5/B6 external pull-downs */
++    ESP_ERROR_CHECK(mcp_write(0x0d, 0x4c));   /* B1 HEALTHY: external pull-down before Ioff buffer, no pull-up */
+     mcp_ready = true;
+     ESP_ERROR_CHECK(porta_set(A_ADC_RESET, true)); esp_rom_delay_us(20);
+     ESP_ERROR_CHECK(porta_set(A_ADC_RESET, false)); vTaskDelay(pdMS_TO_TICKS(10));
+@@ -382,7 +382,7 @@
+     last_inputs_time=e==ESP_OK?(uint64_t)esp_timer_get_time():0;
+     xSemaphoreGive(io_lock);
+     if (e != ESP_OK) { *sensor_fault = true; *log_present = true; *test_present = false; return e; }
+-    *sensor_fault = !(b & B_SENSOR_FAULT_N);
++    *sensor_fault = !(b & B_SENSOR_HEALTHY);
+     *log_present = !(b & B_LOG_PRESENT_N);   /* HIGH = empty NC diagnostic chain; external 10k pull-down */
+     *test_present = (b & B_TEST_PRESENT) != 0;
+     return ESP_OK;
+--- V6/firmware/main/control.c
++++ 6.1-rc1/firmware/main/control.c
+@@ -208,6 +208,12 @@
+     if (!ok) fail(c, "CAMPAIGN_REJECTED");
+ }
+ 
++void control_guard_io(inputs_t *in, uint64_t inputs_time) {
++    in->io_stale = !inputs_time || in->now < inputs_time || in->now-inputs_time > 100000;
++    if (in->io_stale) {
++        in->sensor_fault=true; in->log_present=true; in->test_present=false;
++    }
++}
+ void control_step(control_t *c, const inputs_t *in) {
+     c->duty = 0;
+     bool fresh = in->now >= in->sample_time && in->now - in->sample_time <= 10000;
+@@ -232,6 +238,7 @@
+     }
+     if (c->state == SAFE || c->state == LOGGER || c->state == FAULT) return;
+     if (!fresh)            { fail(c, "ADC_STALE"); return; }
++    if (in->io_stale)      { fail(c, "INPUTS_STALE"); return; }
+     /* Niepotwierdzona konfiguracja przetwornika = nieznana skala napięć.
+      * W v2 dane leciały dalej i wyglądały wiarygodnie. */
+     if (!in->adc_ok)       { fail(c, "ADC_CONFIG"); return; }
+@@ -243,6 +250,8 @@
+     if (!isfinite(in->v[CH_VBAT]) || in->v[CH_VBAT] < 9 || in->v[CH_VBAT] > 16.5f) {
+         fail(c, "SUPPLY"); return;
+     }
++    /* TPS fault is distinct from an analog sensor still settling at start-up. */
++    if (in->sensor_fault) { fail(c, "SENSOR_HEALTH"); return; }
+     if (c->state == SENSOR_CHECK) {
+         if (sensor_valid(c, in)) {
+             if (!c->stable_since) c->stable_since = in->now;
+--- V6/firmware/main/control.h
++++ 6.1-rc1/firmware/main/control.h
+@@ -88,7 +88,7 @@
+     bool current_window_valid;
+     uint16_t config_id;
+     uint8_t saturation_mask;
+-    bool interlock, hw_armed, storage_ok, sensor_fault, tc_ok;
++    bool interlock, hw_armed, storage_ok, sensor_fault, tc_ok, io_stale;
+     bool log_present, test_present;
+     bool adc_ok;      /* konfiguracja przetwornika potwierdzona odczytem */
+     bool drive_ok;    /* ostatnie sterowanie kierunkiem potwierdzone sprzętowo */
+@@ -119,6 +119,8 @@
+ void control_stop(control_t *c);
+ bool control_command(control_t *c, const char *cmd, float a, int b, uint64_t now);
+ void control_step(control_t *c, const inputs_t *in);
++/* Timestamp and cached input values must come from the same protected snapshot. */
++void control_guard_io(inputs_t *in, uint64_t inputs_time);
+ float control_ratio(const control_t *c, const inputs_t *in);
+ float control_position(const control_t *c, const inputs_t *in);
+ float control_current(const control_t *c, const inputs_t *in);
+--- V6/firmware/main/app_main.c
++++ 6.1-rc1/firmware/main/app_main.c
+@@ -39,15 +39,17 @@
+ static _Atomic uint32_t stop_epoch, lost_ticks, trigger_count;
+ static bool adc_paused; /* command manager only */
+ static bool tc_valid;
+-static uint64_t tc_time;
++static uint64_t tc_time, inputs_time;
+ static const char *TAG="EGRLab-v6";
+ 
+ static inputs_t snapshot(void) {
+-    portENTER_CRITICAL(&data_mux); inputs_t i=latest; bool valid=tc_valid; uint64_t tt=tc_time; portEXIT_CRITICAL(&data_mux);
++    portENTER_CRITICAL(&data_mux); inputs_t i=latest; bool valid=tc_valid;
++    uint64_t tt=tc_time, it=inputs_time; portEXIT_CRITICAL(&data_mux);
+     i.now=esp_timer_get_time(); i.interlock=board_interlock(); i.hw_armed=board_armed();
+     i.storage_ok=storage_ok() && acquisition_healthy;
+     i.adc_ok=board_adc_config_ok(); i.drive_ok=board_drive_ok();
+     i.tc_ok=valid && i.now>=tt && i.now-tt<1000000;
++    control_guard_io(&i,it);
+     return i;
+ }
+ static void tick(void *unused) { (void)unused; if(!pause_requested) xTaskNotifyGive(adc_task); }
+@@ -271,8 +273,11 @@
+         uint64_t now=esp_timer_get_time();
+         if(now-last_io>=20000) {
+             bool fault=true,log=true,test=false;
+-            if(board_inputs(&fault,&log,&test)!=ESP_OK) { fault=true; log=true; test=false; }
++            bool io_ok=board_inputs(&fault,&log,&test)==ESP_OK;
++            if(!io_ok) { fault=true; log=true; test=false; }
++            uint64_t completed=io_ok?esp_timer_get_time():0;
+             portENTER_CRITICAL(&data_mux); latest.sensor_fault=fault; latest.log_present=log; latest.test_present=test;
++            inputs_time=completed;
+             portEXIT_CRITICAL(&data_mux); last_io=now;
+         }
+         #if CONFIG_EGR_CAN_PRESENT

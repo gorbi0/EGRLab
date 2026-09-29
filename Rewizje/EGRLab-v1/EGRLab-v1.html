@@ -1,0 +1,377 @@
+<!doctype html><html lang="pl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>EGRLab v1 — dokumentacja</title><style>
+body{margin:0;background:#eef2f7;color:#172439;font:16px/1.65 system-ui,Segoe UI,sans-serif}header{background:#11253c;color:white;padding:48px max(24px,calc((100vw - 1080px)/2))}header h1{font-size:44px;margin:0}header p{color:#bdd5ee}main{max-width:1080px;margin:28px auto;background:white;padding:40px;box-shadow:0 3px 20px #132d4810}h2{font-size:30px;margin-top:48px;border-bottom:2px solid #dbe4ef;padding-bottom:12px}h3{font-size:23px;margin-top:36px}a{color:#145ca3}table{border-collapse:collapse;width:100%;font-size:14px;margin:24px 0}th{background:#e6edf5;text-align:left}th,td{border:1px solid #cbd5e1;padding:9px;vertical-align:top}pre{overflow:auto;padding:22px;background:#122638;color:#d6eaff;font:13px/1.6 Consolas,monospace}code{background:#e8eef5;padding:2px 5px}img{width:100%;height:auto}.notice{border-left:5px solid #cb8a22;background:#fff5df;padding:18px}nav{display:flex;gap:16px;flex-wrap:wrap}@media print{body{background:white}header{padding:20px;color:black;background:white}header p{color:black}main{box-shadow:none;margin:0;padding:0}h2{break-before:page}pre{white-space:pre-wrap;color:black;background:#eee}table{font-size:10px}tr{break-inside:avoid}}
+</style><header><h1>EGRLab v1</h1><p>Pakiet konstrukcyjny • Kia Sportage 1.7 CRDi 2013 • EGR28410-2A850</p><nav><a style="color:white" href="#projekt">Elektronika</a><a style="color:white" href="#procedury">Procedury</a><a style="color:white" href="#uruchomienie">Etapy</a><a style="color:white" href="#firmware">Firmware</a></nav></header><main><p class="notice">Rewizja warsztatowa A. Schematy i źródła do budowy oraz weryfikacji. Brak wykonanej PCB, kompilacji ESP-IDF i odbioru sprzętowego. Aktywny TEST domyślnie zablokowany.</p><img src="hardware/architecture.svg" alt="Schemat blokowy EGRLab v1"><section id="projekt"><h2>Projekt elektryczny EGRLab v1, rewizja A</h2>
+<h3>1. Zakres i parametry</h3>
+<p>Samochód: Kia Sportage 1.7 CRDi, 2013 r.; EGR28410-2A850.</p>
+<p>Przyrząd do diagnostyki, bez emulatora EGR i bez modyfikacji strategii ECU. TEST wymaga odłączenia zaworu od samochodowej wiązki. LOGGER przepuszcza wszystkie pięć przewodów do zaworu nawet po utracie własnego zasilania. E-STOP działa wyłącznie na źródło energii TEST; nie rozłącza EGR sterowanego przez ECU.</p>
+<table>
+<tr><th>Parametr</th><th>Projekt</th></tr>
+<tr><td>MCU</td><td>posiadana płytka Waveshare N32R16-M, moduł WROOM-2-N32R16 V</td></tr>
+<tr><td>Zasilanie LOGGER</td><td>instalacja 12 V, normalnie 9–16 V; możliwy restart podczas rozruchu</td></tr>
+<tr><td>Zasilanie TEST</td><td>zasilacz laboratoryjny 12 V z ograniczeniem prądu, później chronione 12 V</td></tr>
+<tr><td>ADC</td><td>AD7606B, 8 jednoczesnych kanałów, hardware mode ±10 V</td></tr>
+<tr><td>Próbkowanie</td><td>uruchomienie 2 kS/s; cel normalny 20 kS/s/kanał</td></tr>
+<tr><td>PWM TEST</td><td>początkowo 1 kHz; 200 Hz–20 kHz po porównaniu z ECU</td></tr>
+<tr><td>Prąd</td><td>dwa boczniki 5 mΩ; INA240A2; 0,25 V/A; orientacyjnie ±8 A</td></tr>
+<tr><td>Temperatura</td><td>2 × MAX31856 + izolowana termopara K; ~5 Hz odczyt</td></tr>
+<tr><td>CAN</td><td>klasyczny CAN 2.0, domyślnie tylko odbiór; bez CAN FD</td></tr>
+<tr><td>Interfejs użytkownika</td><td>konsola USB/UART, STOP, ARM, MARK; opcjonalny OLED I²C</td></tr>
+<tr><td>Pliki</td><td>binarne próbki + JSON metadanych + NDJSON CAN/temperatura/zdarzenia</td></tr>
+</table>
+<p>Żaden zakres prądu ani temperatury w tym projekcie nie jest specyfikacją zaworu 28410-2A850. Przed rozszerzaniem testów określ dopuszczalne obciążenie z pomiarów sprawnego egzemplarza i danych serwisowych.</p>
+<h3>2. Architektura</h3>
+<pre>ECU ─ J_LOG_ECU ─ przewody 4/5/6 i 3 wprost ─ J_LOG_EGR ─ EGR
+                    pin1 ─ RSH_L 5mΩ ─ pin1
+                    │ odczepy R ograniczające przy samym złączu
+                    └─ K_MEAS_L (NO) ─ front-end ─┐
+                                               │
+J_TEST ─ RSH_T / VNH5019 ─ K_PWR ─ 12V_PROT      ├─ AD7606B ─ SPI2 ─ ESP32
+  4/5/6 ─ K_POL + K_SENSOR ─ 5V_SENSOR           │                ├─ PSRAM
+   └─ odczepy ─ K_MEAS_T (NO) ─ front-end ───────┘                ├─ SD SPI3
+                                                                ├─ 2 × TC K
+12V ─ fuse ─ TVS ─ LM74800EVM-CD ─ rozdział zasilania              ├─ CAN RX
+                                                                └─ konsola/UI
+STOP + interlock + watchdog + prąd + napięcia ─ latch ─ EN/PWM/K_PWR</pre>
+<p>Dwie płytki mocy/wiązki i wspólna płytka pomiarowo-sterująca. Elektronika i SD w kabinie lub na stole; w komorze silnika wyłącznie wiązka i sondy temperatury. Wariant modułowy stosuje gotowy moduł mostka, ochrony wejścia i DC/DC. Nie wymaga wykonania przetwornicy impulsowej na płytce uniwersalnej.</p>
+<h3>3. Wiązki, identyfikacja i masa</h3>
+<table>
+<tr><th>Styk EGR</th><th>J_LOG_ECU → J_LOG_EGR</th><th>J_TEST</th></tr>
+<tr><td>1</td><td>szeregowo bocznik LOGGER, opcjonalny bocznikujący mostek serwisowy</td><td>RSH_T od OUTA</td></tr>
+<tr><td>2</td><td>brak obsadzenia według założenia; nie zwierać</td><td>NC</td></tr>
+<tr><td>3</td><td>przewód wprost</td><td>OUTB</td></tr>
+<tr><td>4</td><td>przewód wprost + odczep pomiarowy</td><td>feedback, tylko pomiar</td></tr>
+<tr><td>5</td><td>przewód wprost + odczep pomiarowy</td><td>COM1 K_POL</td></tr>
+<tr><td>6</td><td>przewód wprost + odczep pomiarowy</td><td>COM2 K_POL</td></tr>
+</table>
+<p>Nie istnieje wspólny przełączany przewód silnika między LOGGER a TEST. Użyj różnych, mechanicznie niepasujących złączy na obudowie: LOGGER 12-stykowe, TEST 8-stykowe; oba adaptery kończą się odpowiednią wtyczką EGR. Styki mocy i przewody minimum 1,5 mm², sygnały 0,35–0,5 mm², izolacja do temperatury miejsca montażu. Typ złączy OEM dobierz po fotografii oznaczeń/mierzeniu — numer części EGR nie identyfikuje pewnie obudowy konektora.</p>
+<p>Dodatkowa pętla TEST_PRESENT zamyka się tylko przez dedykowany adapter TEST. Każde z dwóch gniazd LOGGER ma krańcówkę NC rozwieraną po włożeniu wtyku. Połącz je szeregowo z TEST_PRESENT i kluczem TEST. Przerwany przewód blokady = brak zezwolenia. Sama identyfikacja rezystorem i firmware nie wystarczają. Włożenie adaptera LOGGER uniemożliwia uzbrojenie TEST także przy awarii programu.</p>
+<p>AGND i DGND mają ciągłą płaszczyznę na płytce pomiarowej; jej jedyne połączenie z powrotem mocy jest przy wejściu B−. Prąd silnika nie płynie przez masę ADC. SENSOR_GND ECU <strong>nie łączy się</strong> z AGND; mierzymy jego napięcie. CAN reference i zasilanie prowadzić do tego samego odniesienia B−, nie robić dodatkowej pętli przez OBD pin 5. W LOGGER nie podłączaj uziemionego USB/oscyloskopu do innego punktu masy; do programowania na samochodzie stosuj izolowany USB lub laptop bez przewodowych połączeń z siecią/instrumentami. To wynika ze wspólnej masy urządzenia.</p>
+<h3>4. Zasilanie — wersja modułowa do złożenia</h3>
+<pre>J_PWR BAT+ ─ F1 10A ──+── LM74800EVM-CD IN+ → OUT+ = VPROT
+                     D1 SM8S24CA
+                      |
+J_PWR BAT− ────────────+────────────────────────── GND_STAR
+
+VPROT ─ F2 1A ─ TSR 2-2450 → +5V_SYS → 1Ω / 470µF → +5V_A
+VPROT ─ F3 1A ─ TSR 2-2433 → +3V3_IO (ADC VDRIVE, SD, MCP, CAN VIO)
++5V_SYS → Waveshare pin oznaczony 5V/VBUS (przez rozłączny jumper)
+VPROT ─ F4 5A ─ K_PWR NO 12V/20A ─ VMOTOR → Pololu 1451 VIN
++5V_SYS ─ TPS2553 (ILIM 249kΩ) ─ K_SENSOR NO ─ +5V_SENSOR</pre>
+<p>EVM LM74800 stanowi kompletny blok odwrotnej polaryzacji i odcięcia nadnapięciowego, z dwoma MOSFET-ami. <strong>Przed obciążeniem ustaw i zmierz OVP 17,5–18,5 V</strong> zgodnie z instrukcją EVM; ustawienie fabryczne nie jest tutaj zakładane. Wyjście ma się odłączyć, nie ograniczać napięcia liniowo. Stosuj wersję CD z dokumentacją producenta, nie dowolną płytkę „ideal diode”. Dzielnik OVP dobierz z rzeczywistego V_OV danej rewizji: R_top/R_bottom = V_trip/V_OV − 1; odbiór rzeczywistego progu i tolerancji jest obowiązkowy. Na BOM jest cały EVM, nie niekompletny zestaw jego części.</p>
+<p>D1 dwukierunkowy nie zwiera trwale odwrotnie podłączonego 12 V. Jego VRWM 24 V nie oznacza clamp 24 V. Granicę napięcia na EVM ustala katalogowy clamp przy danym impulsie, impedancja instalacji, energia i temperatura. Nie deklarujemy odporności na nieograniczony load dump. Zasilanie przez długie przewody, test −14 V, przejściowe przepięcia i pulsowe próby należy odebrać przed samochodem. Testy ISO wymagają generatora impulsów i określonej klasy instalacji. Sam znaczek Q1 lub TVS nie kwalifikuje całości.</p>
+<p>TSR 2-2450 ma dolne wejście 6,5 V, więc brak gwarancji ciągłości podczas cold crank. Nie trzeba utrzymać sterowania TEST przy spadku napięcia: ma się bezpiecznie wyłączyć. Zabezpieczenie danych zapewnia format odporny na urwany ostatni blok; 470µF nie podtrzyma SD na czas dowolnego zapisu. Do rejestracji samego rozruchu potrzebny byłby dodatkowy bufor energii lub osobne zasilanie.</p>
+<p>Budżet 5 V: Waveshare 0,7 A peak, analog 0,15 A, przekaźniki 0,2 A, CAN 0,1 A, czujnik do 0,1 A → 1,25 A, zapas w module 2 A. Budżet 3,3 V: SD 0,3 A peak, logika/TC 0,1 A. Nie łącz +3V3_IO z wyjściem regulatora Waveshare; GPIO łączy się przez wspólną masę. Na każdej szynie 100 nF przy układzie, 10µF przy złączu; SD dodatkowo 100µF. PGOOD sprzętowo nadzoruje obie szyny 3,3 V oraz 5V_A, w tym rzeczywistą ESP_3V3.</p>
+<p>VMOTOR: 1000µF/50 V low ESR + 1µF + 100nF przy mostku; rezystor 2,2kΩ/0,5 W rozładowuje kondensator. TVS SMCJ18 A VMOTOR–GND ogranicza krótkie impulsy regeneracyjne. Nie pochłonie dowolnej energii mechanicznej: warunek projektu E = ½L·I² + energia zwrotna &lt; zdolności kondensatora/TVS przy dozwolonym wzroście napięcia. Zmierz szynę przy zmianach kierunku. Powyżej 17 V komparator wyłącza EN/PWM, a latch zapamiętuje błąd. Przy komendzie STOP najpierw EN/PWM=0, potem K_PWR OFF; w awarii oba wyłączają się sprzętowo. F4 i limit początkowy nie są dobierane do rzekomego „30 A zaworu”.</p>
+<p>TPS2553 to ogranicznik około 0,1 A, nie precyzyjne źródło 20 mA; R_ILIM=249kΩ należy sprawdzić pomiarem zwarcia. Pierwsze zasilanie czujnika wykonaj ze stołowym limitem 20 mA, zwiększając dopiero po potwierdzeniu normalnego poboru. FAULT TPS2553 należy do blokady TEST. K_SENSOR rozłącza <strong>oba</strong> przewody zasilania: 5 V i powrót AGND. Samo EN regulatora nie gwarantuje separacji od nieaktywnego wyjścia.</p>
+<h3>5. Mostek i hardware safety</h3>
+<p>Moduł Pololu 1451 z VNH5019: OUTA → RSH_T → pin1; OUTB → pin3. INA, INB, PWM przez 330Ω, każde z 47kΩ do GND. ENA i ENB są jednocześnie wejściami enable i wyjściami open-drain diagnostyki. Nie steruj ich bezpośrednio push-pull HIGH.</p>
+<p>W tym konkretnym module VDD zasila wyłącznie pull-upy ENA/ENB. Podłącz <strong>VDD modułu do MOTOR_PERMIT</strong>, nie stale do 3,3 V. Dodaj 47kΩ ENA–GND i ENB–GND oraz 100kΩ VDD–GND. Bramka 74HC08 dostarcza prąd pull-upów; sprawdź jej VOH przy tym obciążeniu. Gdy PERMIT=0 albo logika jest odłączona, oba EN opadają do zera. Przy PERMIT=1 diagnostyka układu może swobodnie ściągnąć EN do zera bez walki z GPIO. Nie stosuj tego sposobu z innym modułem, którego VDD pełni inną funkcję. PWM dodatkowo przechodzi przez AND z MOTOR_PERMIT.</p>
+<table>
+<tr><th>Rozkaz</th><th>INA</th><th>INB</th><th>PWM</th><th>ENA/ENB</th></tr>
+<tr><td>kierunek +</td><td>1</td><td>0</td><td>duty</td><td>zwolnione, pull-up</td></tr>
+<tr><td>kierunek −</td><td>0</td><td>1</td><td>duty</td><td>zwolnione, pull-up</td></tr>
+<tr><td>bezpieczny STOP</td><td>0</td><td>0</td><td>0</td><td>wymuszone 0</td></tr>
+</table>
+<p>Nie utożsamiamy PWM=0 z pełnym odłączeniem napędu: w VNH5019 ten sygnał wyłącza dolne klucze. STOP obejmuje ENA/ENB i zasilanie. Kierunek + oznacza dodatnie U(pin1)−U(pin3), nie automatycznie OPEN. Zmiana kierunku: duty=0, EN=0, 5 ms oczekiwania, zmiana INA/INB, dopiero ramp-up.</p>
+<p>Schemat logiczny blokady (3,3 V HC/LVC, komparatory z open collector):</p>
+<pre>CURRENT_OK ─┐
+VPROT_OK ───┤
+SUPPLY_OK ──┤
+ESTOP_NC ───┤ AND ─ SAFE_CLEAR_N ─ /CLR 74HC74
+INTERLOCK ──┤                      D=1, /PRE=1
+HEART_OK ───┤                      CLK=fizyczny ARM po debounce
+SENSOR_OK ──┘                      Q=HW_ARMED → GPIO40
+
+MOTOR_PERMIT = HW_ARMED AND MCU_ARM(GPIO39) AND INTERLOCK
+PWM_OUT = GPIO1 AND MOTOR_PERMIT
+MOTOR_PERMIT → VDD pull-upów modułu; ENA/ENB mają stałe pull-downy
+MOTOR_PERMIT → sterownik cewki K_PWR</pre>
+<p>74HC74 resetuje się asynchronicznie do Q=0. Każdy błąd odwołuje zezwolenie; ustąpienie błędu <strong>nie uzbraja</strong> go ponownie. CLOCK pochodzi z fizycznego przycisku: 10kΩ/100nF + 74HC14; przycisk nie może podawać stale powtarzających się zboczy. Sprzętowy STOP NC jest bezpośrednio w SAFE_CLEAR_N. Program nie ma wyjścia resetującego ten latch do stanu armed.</p>
+<p>HEART_OK: retriggerowalny 74HC123, A=0, B=GPIO21, /CLR=SUPPLY_OK. R=220kΩ, C=1µF to punkt startowy ~0,1 s, <strong>zmierzyć</strong> timeout w temperaturze i dobrać do 50–150 ms. Druga połówka układu z wejściami ustalonymi. Heartbeat zmieniany przez task bezpieczeństwa co 10 ms wyłącznie po otrzymaniu świeżych danych ADC i zdrowym stanie. Nie generuj go niezależnym LEDC, który przeżyje zawieszenie taska. Hardware OC działa znacznie szybciej niż heartbeat.</p>
+<p>Prąd: INA240A2 OUT → 1kΩ → I_FILT; 1nF I_FILT–GND. TLV1702-Q1 na 5V_A:</p>
+<ul>
+<li>kanał LOW: IN+=I_FILT, IN−=V_LOW;</li>
+<li>kanał HIGH: IN+=V_HIGH, IN−=I_FILT;</li>
+<li>wyjścia open collector wspólne CURRENT_OK, pull-up 10kΩ do 3,3 V.</li>
+</ul>
+<p>Dzielniki z 5V_A: LOW=1,5 V przez 7kΩ/3kΩ, HIGH=3,5 V przez 3kΩ/7kΩ (0,1%, 10nF). REF INA240: REF1=5V_A, REF2=AGND → środek 2,5 V. Nominalny twardy próg ±4 A. Zworka serwisowa ±8 A: 9kΩ/1kΩ i 1kΩ/9kΩ, wyłącznie po kwalifikacji prądu zaworu. Rozrzut szyny 5 V skaluje próg, dolicz tolerancje INA, shunta, dzielników i komparatora. Pomiar wstrzykiwanego sygnału jest kryterium odbioru. Cel: wyłączenie bramki &lt;20 µs od utrzymanego przekroczenia. Filtr nie może ukrywać zwarcia.</p>
+<p>VPROT_OK: drugi TLV1702, dzielnik VPROT 100kΩ/20kΩ, okno 9–17 V uzyskane progami 1,50/2,833 V. W odniesieniu 5 V: dzielniki 7k/3k i 13k/17k. Monitorowanie dolnego progu odbywa się <strong>przed K_PWR</strong>, aby nie powstała blokada: brak VMOTOR → brak ARM → K_PWR nie załącza. Dodatkowy komparator monitoruje tylko górny próg VMOTOR 17 V za stykiem (100k/20k kontra2,833 V); zero VMOTOR nie jest błędem przed ARM. Wymagane nadzorowanie 5V_A (4,75–5,25 V) i 3V3 (3,0–3,6 V) niezależnymi supervisorami/komparatorami. Do budowy użyj TLV1704 i ADR4525 jako wspólnego odniesienia 2,5 V; zasilanie komparatorów 5V_SYS, wyjścia pull-up 3V3, przy zaniku 5V_SYS supervisor 3V3/5 V musi wymusić CLEAR. Schemat dzielników: 5V_A /2 kontra 2,375 i 2,625 V wymaga górnego odniesienia ponad 2,5 V; prostsze skalowanie obu wejść: 5V_A×0,4 kontra 1,9/2,1 V z ADR4525. Rezystory 15k/10k; odniesienia 6k/19k i 4k/21k. Dla 3V3_IO i ESP_3V3 stosuj po jednym TPS3808G33, aktywne LOW wyjścia razem; powyżej 3,6 V odcięcie głównej szyny wymaga osobnego komparatora z dzielnikiem 11k/25k kontra 2,5 V. Dodatkowy TPS3808G01, zasilany z 3V3_IO, monitoruje 5V_A dzielnikiem107kΩ/10kΩ na SENSE (nominalnie około 4,74 V przy odniesieniu0,405 V). Jego /RESET wymusza CLEAR, także gdy komparatory5 V przestały być zasilane. Sprawdź progi konkretnego wariantu. Nie uzależniaj bezpieczeństwa od przypadkowego stanu niezasylanego komparatora.</p>
+<p>Cewki: 2N7002 dla przekaźników małosygnałowych, logic-level MOSFET dla K_PWR; rezystor bramki 100Ω + pull-down 100kΩ. Przy cewkach małych 1N4148/1N4007. K_PWR zastosuj diodę + Zener 18 V zamiast samej diody, jeśli potrzeba szybszego opadania; uwzględnij VDS sterownika min.60 V. K_PWR nie zastępuje szybkiego wyłączenia EN.</p>
+<h3>6. Analog — odczepy odporne na wyłączone urządzenie</h3>
+<p>Najważniejsza zasada: zabezpieczenie odczepu montujemy przy złączu EGR, <strong>przed</strong> długim przewodem i przekaźnikiem. Zwarcie w elektronice nie może bezpośrednio zwierać 5 V ECU. K_MEAS_L i K_MEAS_T mają styki NO, odłączają się przy braku zasilania. Interlock sprzętowo wyklucza włączenie obu banków. Nie stosuj wspólnego przełącznika łączącego surowe przewody TEST i LOGGER.</p>
+<p>Dla każdego źródła oddzielne rezystory, filtr wspólny za bankiem przekaźników:</p>
+<pre>M_A, M_B:  przewód ─ 2 × 150kΩ/0,1%/200V ─ K_NO ─ X ─ 100kΩ ─ AGND
+                                                     ├─ 220pF ─ AGND
+                                                     └─ ADC wejście
+pin4/5/6: przewód ─ 2 × 49,9kΩ/0,1% ─ K_NO ─ X ─ 220pF ─ AGND
+                                                  └─ ADC wejście
+VBAT: VPROT ─ 2 × 249kΩ ─ X ─ 100kΩ ─ AGND; 220pF X–AGND</pre>
+<p>AD7606B ma typowe R_IN=5MΩ: motor gain=4,06 (nie 4,00), sensor gain=1,01996, VBAT gain=6,0796. Wartości te są nominalne, zależne od rzeczywistego R_IN; wykonaj kalibrację całego toru w co najmniej 3 punktach, nie tylko przeliczenie rezystorów. Gain wejściowy jest parametrem pliku kalibracji, osobnym dla LOGGER i TEST. Zmiana banku ma 100 ms blanking i reset kwalifikacji danych.</p>
+<p>Motor: impedancja wejściowa około 398kΩ, obciążenie ~35µA przy 14 V. Sensor: około 5,1MΩ, &lt;1µA przy 5 V. Zwarcie odczepu sensora za rezystorami ogranicza prąd do ~50µA przy 5 V. Napięcia przejściowe i zakłócenia przy odpiętej masie nadal wymagają badania. Sam ±21 V clamp AD7606B nie gwarantuje bezpiecznego backfeed przy wyłączonym ADC; dlatego są przekaźniki NO. Do X można dodać BAV199/TVS o niskim upływie do dedykowanego clampu ±10–12 V, <strong>nie</strong> zwykły Zener5 V na pinach ECU; wersja podstawowa korzysta z rezystorów ograniczających i wewnętrznego clampu ADC, z badaniem prądu wstrzykiwanego według datasheet.</p>
+<p>Pasmo jednego RC motor około 9,8 kHz, sensora około 7,4 kHz; dodatkowo działa filtr analogowy ADC. Przy20 kS/s nie jest to pomiar EMC ani gwarantowany antyalias dla dowolnego PWM. Do wyznaczania prądu/pozycji używaj filtracji cyfrowej; częstotliwość i zbocza PWM potwierdź oscyloskopem. Przy PWM20 kHz próbkowanie20 kS/s jest niewystarczające do kształtu impulsów: przejdź na kwalifikowany burst≥100 kS/s lub użyj oscyloskopu. Firmware bazowe takiego burstu nie deklaruje.</p>
+<p>Prądy: RSH_L/RSH_T 5mΩ, 4-terminal, 2 W, 1% lub lepiej, TCR≤50ppm/K. Kelvin do INA240A2 IN+/IN− przez dopasowane10Ω; opcjonalnie1nF różnicowo między wejściami, bez asymetrycznych dużych kondensatorów do masy. LOGGER IN+ po stronie ECU pin1, IN− po stronie EGR pin1; TEST IN+ od OUTA. INA VS=5V_A, REF1=5V_A, REF2=AGND. OUT przez 100Ω do ADC, 1nF doAGND. To pomiar prądu uzwojenia w jednym przewodzie, obejmuje recyrkulację; pomiar tylko zasilania mostka jej nie obejmuje.</p>
+<p>I=(V_OUT−V_ZERO)/0,25. V_ZERO zapisuj po rozgrzaniu toru i pewnym zerowym prądzie, nie automatycznie podczas pracy ECU. Przy8 A: spadek40 mV, moc0,32 W. LOGGER zmienia obwód o shunt, złącza i przewody — nie jest idealnie nieinwazyjny. Ujemny impuls common-mode poniżej−4 V wykracza poza zakres pracy INA240; oceń oscyloskopem w aucie. Nie dodawaj clampu na wyjściu ECU bez oceny sterownika.</p>
+<h3>7. AD7606B i mapa kanałów</h3>
+<table>
+<tr><th>Kanał</th><th>Sygnał</th><th>Przeliczenie nominalne po odczycie kodu signed16</th></tr>
+<tr><td>1</td><td>M_A wybranego banku</td><td>code ×10/32768 ×4,06</td></tr>
+<tr><td>2</td><td>M_B wybranego banku</td><td>j.w.</td></tr>
+<tr><td>3</td><td>pin4</td><td>code ×10/32768 ×1,01996</td></tr>
+<tr><td>4</td><td>pin5</td><td>j.w.</td></tr>
+<tr><td>5</td><td>pin6</td><td>j.w.</td></tr>
+<tr><td>6</td><td>I_TEST</td><td>(code ×10/32768−zero_T)/0,25</td></tr>
+<tr><td>7</td><td>I_LOGGER</td><td>(code ×10/32768−zero_L)/0,25</td></tr>
+<tr><td>8</td><td>VPROT</td><td>code ×10/32768 ×6,0796</td></tr>
+</table>
+<p>AVCC=5V_A, VDRIVE=3V3_IO, wszystkie AGND do AGND; PAR/SER SEL=1, RANGE=1, OS[2:0]=000, STBY=1, REF SELECT=1 (wewnętrzne odniesienie), CONVST_A i B zwarte. SDI=0. DOUTA jedyne używane, reszta DOUT NC. RESET impuls HIGH≥10 µs na start, potem LOW. REGCAP, REFIN/REFOUT, REFCAPA/B kondensatory dokładnie według rysunku typowej aplikacji ADI: uwzględnić kondensatory przy każdym AVCC/VDRIVE, 1µF REGCAP, 10µF bufora odniesienia i właściwe połączenie REFCAPA/B. Nie mylić płytki AD7606 z AD7606B — pierwsza ma inną impedancję i wymaga innej kalibracji.</p>
+<p>W hardware mode wszystkie kanały mają wspólny zakres. Nie konfigurujemy indywidualnego ±2,5 V, bo wymaga to software mode. SPI mode2: zegar spoczynkowo HIGH, odczyt na falling; ADC zmienia kolejne bity na rising. Odczyt DOUTA wymaga <strong>ośmiu oddzielnych ramek po 16bit z CS pomiędzy</strong>, nie jednej ramki128bit. To istotna różnica względem software mode. Początek konwersji oraz czas rzeczywistego odczytu zapisane w logu; wykrywanie BUSY timeout i utraconych terminów obowiązkowe.</p>
+<h3>8. ESP32 i rozszerzenia</h3>
+<table>
+<tr><th>Funkcja</th><th>GPIO</th><th>Uwagi</th></tr>
+<tr><td>PWM/INA/INB TEST</td><td>1 / 2 / 38</td><td>GPIO38 jest także wejściem pokładowego RGB; nie używać sterownika LED</td></tr>
+<tr><td>SD/TC SCLK/MOSI/MISO</td><td>4 / 5 / 6</td><td>SPI3, CS wszystkich slave HIGH przy starcie</td></tr>
+<tr><td>SD CS</td><td>7</td><td>10k pull-up</td></tr>
+<tr><td>TC1 CS / TC2 CS</td><td>8 / 16</td><td>10k pull-up</td></tr>
+<tr><td>ADC SCLK/MISO/CS</td><td>9 / 11 / 12</td><td>SPI2, MISO bez translatorów5 V</td></tr>
+<tr><td>ADC CONVST/BUSY</td><td>13 / 14</td><td>BUSY wejście3V3, krótki przewód</td></tr>
+<tr><td>I²C SDA/SCL</td><td>10 / 15</td><td>pull-up4,7k do 3V3_IO</td></tr>
+<tr><td>CAN TX/RX</td><td>17 / 18</td><td>TCAN1051 V-Q1</td></tr>
+<tr><td>heartbeat</td><td>21</td><td>hardware monostable</td></tr>
+<tr><td>MCU_ARM</td><td>39</td><td>zewnętrzny47k pull-down</td></tr>
+<tr><td>HW_ARMED</td><td>40</td><td>Q latch, wejście z10k pull-down</td></tr>
+<tr><td>MARK</td><td>41</td><td>przycisk doGND, pull-up10k,100nF</td></tr>
+<tr><td>INTERLOCK</td><td>42</td><td>wysoki tylko przy dozwolonym TEST</td></tr>
+<tr><td>UART0</td><td>43 / 44</td><td>zarezerwowane dla pokładowego CH343</td></tr>
+<tr><td>USB</td><td>19 / 20</td><td>zarezerwowane</td></tr>
+</table>
+<p>0/3/45/46 nie używamy (strap). 35/36/37 na tym module NC. 47/48 mają1,8 V — nie podłączamy do 3,3 V. Oznaczenia z tabeli to <strong>GPIO</strong>, nie numery pinów listwy. Waveshare udostępnia wspólny schemat rodziny N8R8; sprawdź rewizję swojej płytki i ciągłość do modułu przed montażem podstawki. RGB na38 jest tylko dodatkowym obciążeniem wejściowym, nie wyjściem sterującym GPIO; jeśli świeci przypadkowo, odłącz jego linię DIN po identyfikacji rewizji. Nie przecinaj połączeń na podstawie numeracji z innej płytki.</p>
+<p>MCP23017 adres0x20, A0–A2=GND, RESET pull-up10k. PortA wyjścia: A0 ADC_RESET, A1 MEAS_LOG, A2 MEAS_TEST, A3 SENSOR_ENABLE, A4 POLARITY (0:+5→pin5), A5 SENSOR_RELAY, A6 STATUS_LED, A7 rezerwa. PortB wejścia: B0 SELECT_TEST (klucz), B1 SENSOR_FAULT_N, B2 ENA_DIAG, B3 ENB_DIAG, B4 OPEN button, B5 CLOSE button, B6 RUN button, B7 STOP status. Każde aktywujące wyjście ma pull-down100k i stopień tranzystorowy; ekspander nie zasila cewek. K_POL wolno zmieniać tylko przy K_SENSOR OFF i rozładowanym wyjściu;100 ms przerwy. E-STOP, GPIO39 i blokady nie zależą od I²C.</p>
+<p>OLED SSD1306 128×64 na0x3C można dołożyć; podstawowy firmware używa konsoli, więc ekran nie blokuje uruchomienia. Opcjonalny RTC DS3231 na0x68: UTC tylko opisuje sesję, korelacja używa monotonicznego licznika. Zwykłe moduły RTC z obwodem ładowania nie mogą ładować baterii CR2032.</p>
+<h3>9. Temperatura i CAN/OBD</h3>
+<p>MAX31856 ×2 na SPI3, mode1,≤1 MHz. AVDD/DVDD3V3,100nF każde; typK, filtr50 Hz, ciągłe konwersje. T+/T− zgodnie z polaryzacją przewodu termoparowego, BIAS według aplikacji producenta,10nF wspólnie i100nF różnicowo według rysunku typowego. Stosuj sondy z izolowanym złączem pomiarowym; ekran jednostronnie do obudowy przy wejściu. TC1 na korpusie napędu, TC2 na części gazowej/kołnierzu; nie mylić z temperaturą uzwojenia. Złącze kompensacyjne blisko MAX, poza nawiewem i przetwornicą. Błędy open-circuit/SR logować, nie zastępować zerem.</p>
+<p>TCAN1051 V-Q1: VCC5V_SYS, VIO3V3, TXD17, RXD18; S pull-up10k doVIO. Pozycja przełącznika LISTEN fizycznie wymusza S=1. ACTIVE pozwala S=0 tylko przy LOGGER i osobnym zezwoleniu operatora. MCU TWAI pracuje dodatkowo w LISTEN_ONLY. OBD16 <strong>nie zasila mostka</strong>; podstawowo niepodłączony. OBD6=CANH,14=CANL,4=masa odniesienia,5 bez połączenia; ochronnik PESD2CAN do lokalnej masy przy złączu. Brak dołączanej terminacji120Ω w samochodzie. Terminacja testowa wyłącznie na odłączonym stanowisku CAN. Krótki odczep, skrętka, bez gwiazdy wielometrowych kabli.</p>
+<p>500kbit/s jest punktem startowym;250k i inne stawki tylko po sprawdzeniu. Nie znamy VIN/rocznika/kodu ECU, więc nie wymyślamy ID obrotów ani DBC. Bierne CAN nie gwarantuje dostępności RPM w OBD przez gateway. OBD Mode01 PID0C daje RPM=(256 A+B)/4, PID05 coolant=A−40, PID10 MAF=(256 A+B)/100, PID2C commanded EGR=A×100/255 i PID2D EGR error=(A−128)×100/128, <strong>jeśli obsługiwane</strong>. PID2D nie jest surowym feedbackiem pozycji. Wsparcie sprawdź bitmapami00/20; brak obsługi nie oznacza0.</p>
+<p>W pakiecie odbiornik dekoduje odpowiedzi single-frame0x7E8–0x7EF, ale domyślnie nic nie wysyła. Obroty mogą pochodzić z równoległego skanera aktywnie odpytującego ECU. Profil aktywnego OBD: fizyczny przełącznik, potwierdzony adres ECU,1 żądanie outstanding, timeout200 ms,≤10żądań/s łącznie, RPM5 Hz + pozostałe1 Hz; ogranicz jeśli opóźnienia rosną. Brak automatycznego kasowania DTC i adaptacji ECU. Ta wersja firmware nie implementuje ogólnego UDS/ISO-TP ani TX OBD.</p>
+<h3>10. Schematy pomocnicze i dokładne połączenia nadzoru</h3>
+<p>SAFE_CLEAR_N = ESTOP_OK ∧ INTERLOCK ∧ HEART_OK ∧ CURRENT_OK ∧ VPROT_OK ∧ VMOTOR_OV_OK ∧ PGOOD5 ∧ PGOOD_3V3_IO ∧ PGOOD_ESP_3V3 ∧ SENSOR_FAULT_N ∧ ANALOG_WINDOW_OK. Wszystkie sygnały aktywne HIGH, 10kΩ pull-up przy wyjściach open-drain; wtyk pętli interlock ma pull-down. Kaskada 74HC08: połącz kolejne pary i AND wyników; nieużywane wejścia doGND. /PRE74HC74 do 3V3 przez 10k, D do 3V3, CLK z debounced ARM. Nieużywaną połówkę ustal /CLR=0,/PRE=1,D=0,CLK=0.</p>
+<p>OknoVPROT: IN+ comparatorLOW = VPROT/6, IN−=1,5 V; comparatorHIGH IN+=2,833 V, IN−=VPROT/6. Wyjścia wspólne VPROT_OK. VMOTOR_OV: IN+=2,833 V, IN−=VMOTOR/6; wyjście VMOTOR_OV_OK. LOW5 V: IN+=0,4×5V_A, IN−=1,9 V; HIGH5 V: IN+=2,1 V, IN−=0,4×5V_A. Wyjścia LOW5 V/HIGH5 V wspólne ANALOG_WINDOW_OK. OV3V3: IN+=2,5 V, IN−=3V3_IO×25/36. Dla ESP_3V3 górny próg jest wymaganiem odbioru regulatora płytki; nie ma drugiego niezależnego komparatora OV w bazowej BOM. To ograniczenie bezpieczeństwa pojedynczej awarii regulatora, nie deklaracja SIL/ASIL.</p>
+<p>Przekaźniki pomiarowe: KML1 kanały1/2, KML2 kanały3/4, KML3 kanał5 (drugi styk NC); identycznie KMT. Styki NC niepodłączone. COM połączone parami banków przy odpowiednich wejściach ADC, NO idą do rezystorów danego odczepu. KML cewki dostają zezwolenie A1 ∧ NOT(TEST_KEY), KMT: A2 ∧ TEST_KEY ∧ INTERLOCK. Rezystory górne każdego źródła istnieją fizycznie przed przekaźnikami. Jednoczesny zwarciowy błąd styków nie łączy niskoimpedancyjnie wyjść ECU z mostkiem.</p>
+<p>SENSOR_ENABLE i cewka KSENSOR mają dodatkowy sprzętowy AND z TEST_KEY ∧ INTERLOCK ∧ ESTOP_OK. Po FAULT firmware je wyłącza; włożenie LOGGER i STOP odcinają również bez udziału I²C. KPOL0: NC1=5V_SENSOR, NC2=AGND_SENSOR; KPOL1: NO1=AGND_SENSOR, NO2=5V_SENSOR; COM1=pin5, COM2=pin6. KSENSOR odcina oba przewody przed KPOL.</p>
+<p>To schemat logiczny połączeń, nie elektryczny netlist EDA do automatycznego ERC. <code>connections.csv</code> jest listą montażową sygnałów i nie zawiera numerów nóżek wszystkich wariantów obudów. Nóżki układów dobieraj z datasheet zamówionego wariantu, nie z nazw podobnych elementów.</p></section><section id="procedury"><h2>Procedury pomiarowe i interpretacja</h2>
+<p>Samochód użytkownika: <strong>Kia Sportage 1.7 CRDi, 2013</strong>, EGR 28410-2A850. Silnik tej konfiguracji jest zwykle oznaczany D4FD; w profilu pozostaje <code>engine_code: unverified</code>, dopóki oznaczenie/VIN go nie potwierdzi. Rok i pojemność nie rozstrzygają wersji ECU ani identyfikatorów CAN.</p>
+<h3>IDENTIFY — rozpoznawanie pinów 5/6</h3>
+<ul>
+<li>Zawór połączony z ECU poprzez adapter LOGGER. Mostek i zasilanie czujnika TEST sprzętowo zablokowane; bank pomiarowy LOGGER aktywny.</li>
+<li>Włącz zapłon zgodnie z normalną procedurą samochodu. Nie uruchamiaj TEST ani nie zasilaj pinów z urządzenia.</li>
+<li>Obserwuj pin4/5/6 względem B− przez minimum 2 s. Dla kandydata GND wymagaj −0,2…+0,3 V, drugiego pinu względem niego4,5…5,5 V. Feedback względem GND musi zawierać się w0,2…4,8 V. Pojedynczy skok albo zanik resetuje okno2 s.</li>
+<li>Oceń oba warianty: dokładnie jeden ma spełniać kryteria. Jeśli żaden lub oba: UNKNOWN, niczego nie próbuj odwracać. Brak5 V przy zapłonie, przesunięta masa albo uszkodzony feedback mogą uniemożliwić rozpoznanie.</li>
+<li>Zapisz wynik wraz z nazwą zaworu/adaptera, numerem sesji, wartościami min/max, datą, CRC i skalowaniem ADC. Potwierdź raz multimetrem rzeczywisty pin 5 V. To potwierdzenie toru pomiarowego, nie zgadywanie polaryzacji.</li>
+<li>Odłącz zapłon, wypnij LOGGER, dopiero potem podłącz zawór do TEST. K_SENSOR OFF → ustaw K_POL →100 ms → SENSOR_ENABLE →K_SENSOR ON →200 ms →weryfikacja 5 V/feedback. Nie przełączaj K_POL pod napięciem.</li>
+</ul>
+<p>Rozpoznawanie nie rozpoznaje typu czujnika i nie ustala krańców mechanicznych. Profil starego zaworu nie przechodzi automatycznie na drugi egzemplarz. Jeśli nie możesz uruchomić ECU, do odblokowania potrzebujesz zweryfikowanego pinoutu serwisowego albo pomiaru na sprawnym zestawie. Pomiar rezystancji trzech pinów nie dowodzi, że czujnik jest zwykłym potencjometrem.</p>
+<h3>Wspólne limity TEST</h3>
+<p>Wartości początkowe do kontrolowanego uruchomienia:12,0 V, zasilacz0,5 A, duty≤10%, impulsy≤50 ms, przerwa≥1 s. Brak ruchu przy tym limicie <strong>nie oznacza usterki</strong>. Potem zwiększ limit do 1 A/20% i dopiero na podstawie prądu sprawnego ruchu przygotuj profil roboczy. Firmware przykładowe ma maks. duty35%, soft current1,5 A oraz hard trip4 A — wymagają dopasowania; nie są danymi OEM.</p>
+<p>Przerwanie: STOP, odłączenie pętli interlock, nieaktualny ADC, utrata sprzętowego ARM, zanik5 V, feedback poza kalibracją, soft overcurrent, temperatura ponad limit profilu, timeout ruchu, brak zapisu. Powrót wyłącznie do FAULT/DISARMED; brak automatycznego wznowienia ruchu.</p>
+<p>Pozycja do analizy czujnika: <code>r=(V4−Vgnd)/(V5V−Vgnd)</code>. Po LEARN: <code>p=(r−r_closed)/(r_open−r_closed)</code> — również gdy znak mianownika jest ujemny. Zachowaj surowe napięcia; normalizacja może ukryć spadki wspólnego zasilania. W raportach nie obcinaj p do0…100%, bo wyjście poza zakres jest diagnostyczne.</p>
+<h3>LEARN</h3>
+<p>Cel: profil kierunku i bezpiecznego zakresu, nie adaptacja ECU. Tester nie zapisuje nic do sterownika samochodu.</p>
+<p>Najpierw zapisz pozycję przy silniku bez prądu i obejrzyj mechaniczne położenie zaworu. Oznacz je <code>rest</code>, nie automatycznie <code>closed</code>. W trybie krótkiego MANUAL wykonaj impulsy w kierunku+ i−; przerwij przy wzroście prądu bez ruchu. Porównaj znak Δr i ruch mechanizmu. Kierunek otwierania potwierdź wzrokowo/dokumentacją, nie samą polaryzacją feedbacku.</p>
+<p>Zbieraj co najmniej3 przejścia przy ograniczonym duty, utrzymuj małą energię. Nie „dobijaj” do krańca przez zadany długi czas. Plateau feedbacku wraz ze wzrostem prądu oznacza kandydat krańca <strong>albo zacięcie</strong>; bez potwierdzenia mechanicznego nie zatwierdzaj jako100%. Zapisz r_closed, r_open, znak kierunku, prąd zerowy, temperaturę, czas przejścia i wariancję. Wymagaj |r_open−r_closed|&gt;0,2, monotoniczności i powtarzalności zakresu≤2%FS. Ogranicz testy automatyczne do 10…90% ustalonego zakresu; nie do twardych ograniczników.</p>
+<p>W firmware komenda <code>learn &lt;r_closed&gt; &lt;r_open&gt; &lt;opening_sign&gt;</code> zapisuje <strong>zweryfikowane pomiarowo punkty</strong> z tego procesu. Celowo nie ma algorytmu szukającego ograniczników przez przeciążanie nieznanego zaworu. NVS aktualizuj tylko przy zatrzymanej akwizycji i rozbrojonym napędzie.</p>
+<h3>MANUAL</h3>
+<p>Jeden rozkaz = jeden ograniczony czasowo impuls. <code>manual &lt;signed_duty&gt; &lt;ms&gt;</code>; znak odnosi się do napięcia pin1−pin3. Limit dla pierwszych prób50ms; zatwierdzony profil może zezwolić do250ms. Nie dopuszczaj bezterminowego „OPEN” wysłanego przez terminal. Po zakończeniu zeroPWM, ARM=0, pauza; do kolejnego impulsu konieczne świeże zezwolenie użytkownika. Trzymanie przycisku UI wymaga odnawiania żądania co≤50ms i limitu całego ruchu.</p>
+<p>Loguj napięcie uzwojenia, prąd, r, temperatury, command duty i czas. MANUAL służy też do sprawdzenia znaku prądu i kalibracji, zanim jakikolwiek regulator zamknie pętlę.</p>
+<h3>SWEEP</h3>
+<p>Po LEARN wykonaj przejazd po punktach10,20,…90,80,…10%. W każdym punkcie maks.2 s na dojście i300 ms obserwacji. P regulator początkowoKp=0,8 duty/jednostkę pozycji, deadband1%, duty ograniczone profilem; całkowanie wyłączone, żeby nie kumulować wymuszenia na zacięciu. Jeśli potrzebne, dostrój na sprawnym ruchu. Sukces punktu: błąd&lt;2% przez 100 ms. Przekroczenie czasu = przerwanie, nie przeskoczenie trudnego punktu.</p>
+<p>Wynik: czasy10–90 i90–10%, overshoot, RMS prądu, błąd ustalony, różnica pozycji dla tego samego kierunku dojścia. Do oceny histerezy porównuj punkty przy podobnej temperaturze i napięciu. SWEEP nie zmienia ustawień ECU.</p>
+<h3>FRICTION</h3>
+<p>To wskaźnik oporów ruchu, nie bezpośredni pomiar siły tarcia. W pozycji20/50/80% zacznij od zeroPWM, zwiększ duty o1 punkt procentowy co 50 ms do limitu profilu. Zapisz prąd i duty w chwili pierwszej zmiany pozycji o≥1% przez≥20 ms. Natychmiast przerwij rampę po wykryciu ruchu. Powtórz w obu kierunkach3×, z powrotem do punktu startowego przy regulacji i przerwą1 s.</p>
+<p>Prąd rozruchu obejmuje sprężynę, przekładnię, moment silnika i tarcie; bez Kt/przełożenia nie raportuj N ani Nm. Zablokowany czujnik może wyglądać jak brak ruchu, dlatego kryterium awarii jest wspólne: prąd + Δpozycja + niezależna obserwacja. Firmware bazowe wykonuje rampę dla aktualnej pozycji; do20/50/80% dojedź funkcją <code>goto</code> i zrób3 powtórzenia. To jawne kroki procedury.</p>
+<h3>CYCLE</h3>
+<p>10–90–10% z przerwą500 ms na każdym końcu; początkowo20 cykli, potem najwyżej200 po obejrzeniu logu. Limit ruchu2 s, przerwa termiczna kiedyTC1 rośnie ponad profil. Co10 cykli porównaj czasy, prąd średni/RMS i zakres feedbacku z pierwszymi3cyklami. Licznik nie zalicza cyklu, który osiągnął tylko timeout. Brak automatycznego powrotu po błędzie.</p>
+<h3>THERMAL</h3>
+<p>Na zdemontowanym zaworze ogrzewaj wyłącznie kontrolowanym źródłem z własnym termostatem. EGRLab <strong>nie steruje grzałką</strong>. Etapy startowe temperatury korpusu napędu:20/40/60°C;80°C dopiero po potwierdzeniu dopuszczalnej temperatury konkretnego zespołu. To nie są limity pracy w silniku. TC1 na napędzie, TC2 na kołnierzu; odczekaj aż |dT1/dt|&lt;0,5°C/min przez 2 min, następnie SWEEP i3rampy FRICTION w obu kierunkach, opcjonalnie20 cykli.</p>
+<p>Powtórz w czasie chłodzenia; minimum 3serie. Zachowuj tę samą orientację zaworu, napięcie i ustawienia. Zapisz też20 s nieruchomego feedbacku bez silnika na każdym plateau: pomaga oddzielić dryft/glitch czujnika od mechaniki. Test stanowiskowy może nie odtworzyć temperatury wnętrza, ciśnienia spalin, drgań i osadów w aucie.</p>
+<p>W firmware <code>thermal</code> uruchamia SWEEP z obowiązkową poprawnąTC1 i limitem temperatury profilu. Stabilizację plateau i ogrzewanie wykonuje operator. Nie zakładamy, że temperatura obudowy jest temperaturą uzwojenia.</p>
+<h3>LOGGER i próba 1500–1700 rpm</h3>
+<p>Przed włączeniem do auta zrób porównanie: fabryczna wiązka → adapter z bypass shunta → adapter ze shuntem. Nie może pojawić się nowy DTC ani zmiana zachowania. Zmierz dodatkowy spadek napięcia, a nie tylko rezystancję multimetrem na zimno. Po próbie bypass usuń; w metadanych zapisz jego rzeczywisty stan (bypass oznacza nieważny pomiar prądu LOGGER).</p>
+<p>Rejestruj rozgrzewanie i20–30 min pracy z buforem co najmniej10 s przed znacznikiem. Na początek MARK ręczny, później triggery: feedback poza zakresem, referencja poza4,5–5,5 V, masa &gt;0,3 V, skok r&gt;5% w1 ms, rosnący prąd przy braku ruchu. Progi oznaczają podejrzenie, nie kodP0404; warunek prąd/brak ruchu potrzebuje znajomości rozkazu ECU, nie samych obrotów.</p>
+<p>Zrób osobne serie: zimny / rozgrzany / po postoju na gorąco, przy porównywalnym biegu i obciążeniu. Rejestruj pasmo1300–2000rpm z wolnym przejściem przez 1500–1700; nie tylko stałe obroty. Na drodze obsługą zajmuje się pasażer, przewody umocowane z dala od pedałów i elementów ruchomych. Celem jest rejestracja normalnie występującego objawu, bez wymuszania niebezpiecznej sytuacji.</p>
+<p>Synchronizuj: ręczny MARK oraz timestamp CAN; przy zewnętrznym skanerze wykonaj wspólny rozpoznawalny znacznik, np. krótki stabilny punkt obrotów na postoju. Odnotuj opóźnienie PID: odpowiedź OBD nie ma dokładności timestampu ADC. Jeśli pasywne CAN nie zawiera obrotów, wynik <code>RPM=null</code>; użyj legalnego profilu odczytu skanera, a nie odgadniętegoID.</p>
+<p>Nie kasuj DTC przed zapisaniem freeze-frame, statusu pending/confirmed i warunków wystąpienia. Nie ma uniwersalnego związku „błąd pozycji&gt;x przez yms = OEM P0404”; wartości kalibracyjne ECU zależą od wersji.</p>
+<h3>Macierz rozstrzygania przyczyny</h3>
+<table>
+<tr><th>Obserwacja</th><th>Hipoteza</th><th>Co ją rozdziela</th></tr>
+<tr><td>V5 V stabilne, ground stabilne, feedback ma nagłe przerwy</td><td>czujnik albo przewód feedback</td><td>porównanie napięcia na obu końcach wiązki, test nieruchomy i termiczny</td></tr>
+<tr><td>V5 V i feedback spadają razem</td><td>zasilanie 5 V, wspólna wiązka, zwarcie odbiornika</td><td>ratiometryczny r i pomiar referencji przy ECU</td></tr>
+<tr><td>rośnie sensor ground względemB−</td><td>powrót sensora/złącze</td><td>pomiar spadku wzdłuż przewodu bez zwierania dochassis</td></tr>
+<tr><td>napięcie uzwojenia obecne, prąd rośnie, brak Δr</td><td>zacięcie/napęd lub kłamliwy feedback</td><td>wzrokowy ruch na stole, prąd, termika i porównanie sprawnego egzemplarza</td></tr>
+<tr><td>napięcie uzwojenia obecne, prąd zanika</td><td>przerwa uzwojenia/szczotki/złącze</td><td>badanie rezystancji w stanie ciepłym przy całkowitym odłączeniu</td></tr>
+<tr><td>brak napięcia uzwojenia</td><td>brak rozkazu albo ograniczenie/ochrona ECU</td><td>parametr zadany i pozostałe warunki; samo0 V nie dowodzi uszkodzeniaECU</td></tr>
+<tr><td>pozycja poprawna, szarpanie trwa</td><td>przyczyna poza elektrycznym EGR lub niewłaściwy przepływ</td><td>MAF/MAP/boost/railpressure/DPF i układ napędowy, dane skanera</td></tr>
+</table>
+<p>Najbardziej wartościowe porównanie termiczne: dla tych samych punktów pozycji i napięcia wykres <code>I_breakaway(T)</code>, <code>t_10_90(T)</code>, <code>r_rest(T)</code>, liczba glitchy/min oraz zaników5V. Porównaj kierunki osobno. Silnik nagrzewa się również od samego testu — temperatura jest zmienną mierzoną, nie tylko nastawą grzałki.</p></section><section id="uruchomienie"><h2>Plan składania i odbioru</h2>
+<p>Samochód: Kia Sportage 1.7 CRDi, 2013 r., EGR28410-2A850. Posiadana płytka Waveshare N32R16-M jest odpowiednia; nie trzeba kupować innego MCU.</p>
+<p>Każdy etap kończy się zapisanym wynikiem. Poniższe kryteria są planem pomiarów, nie deklaracją wykonanych prób.</p>
+<table>
+<tr><th>Etap</th><th>Zmontuj i sprawdź</th><th>Warunek przejścia</th></tr>
+<tr><td>0</td><td>Oznaczenie modułu, rewizja Waveshare, numeracja adaptera EGR</td><td>Moduł N32R16 V; ciągłość przewodów; wykluczone odbicie lustrzane wtyczki</td></tr>
+<tr><td>1</td><td>Sam ESP z USB, konsola, PSRAM</td><td>Boot bez błędów, rozpoznane16 MiB PSRAM; MCU_ARM=0</td></tr>
+<tr><td>2</td><td>Ochrona wejścia i przetwornice, bez MCU i mostka</td><td>5 V i3,3 V w tolerancji; OVP odłącza przy 17,5–18,5 V; brak przegrzewania</td></tr>
+<tr><td>3</td><td>Odwrotna polaryzacja, zapady napięcia, powrót zasilania</td><td>Brak uszkodzenia; po powrocie latch pozostaje rozbrojony</td></tr>
+<tr><td>4</td><td>Safety ze sztucznymi wejściami</td><td>STOP, OC obu znaków, UV/OV, przerwanie pętli, zanik heartbeat wyłączają PERMIT</td></tr>
+<tr><td>5</td><td>ADC i przekaźniki pomiarowe, znane napięcia</td><td>Kolejność8 kanałów, znaki, kalibracja; błąd sensora≤10 mV po kalibracji</td></tr>
+<tr><td>6</td><td>INA i boczniki, obciążenie rezystancyjne</td><td>Pomiar prądu obu znaków; offset; dynamiczne wyłączenie OC</td></tr>
+<tr><td>7</td><td>SD, CAN stanowiskowy, dwie termopary</td><td>30 min bez utraty danych; detekcja odpięcia SD/TC; CAN LISTEN nie nadaje ACK</td></tr>
+<tr><td>8</td><td>VNH z rezystorem12Ω/25 W, potem małym silnikiem</td><td>Poprawny znakU/I; bezpieczny STOP; brak przepięć szyny ponad projekt</td></tr>
+<tr><td>9</td><td>Symulator czujnika5 V, feedback i PWM</td><td>Rozpoznaje obie polaryzacje; odrzuca niestabilne dane; zwarcie odczepu ograniczone</td></tr>
+<tr><td>10</td><td>LOGGER w samochodzie, najpierw bypass shunta</td><td>Brak nowych DTC; pin 5/6 potwierdzony; brak zasilania TEST na portach LOGGER</td></tr>
+<tr><td>11</td><td>EGR standalone</td><td>Czujnik z limitem20mA, motor0,5 A, impulsy50 ms; ruch i kierunek sprawdzone</td></tr>
+<tr><td>12</td><td>LEARN, SWEEP, FRICTION, CYCLE, THERMAL</td><td>Powtarzalny zakres bez dociskania do ograniczników; ustalone limity robocze</td></tr>
+<tr><td>13</td><td>LOGGER podczas objawu i korelacja RPM</td><td>Kompletne okno przed i po zdarzeniu; zapis freeze-frame i warunków próby</td></tr>
+</table>
+<h3>Odbiór niezależności zabezpieczeń</h3>
+<ul>
+<li>Odłącz MCU, wymuś PWM=HIGH: bez fizycznego ARM napęd pozostaje wyłączony.</li>
+<li>Zatrzymaj task bezpieczeństwa przy aktywnym PWM: monostable wyłącza zezwolenie w50–150 ms. OC nadal działa niezależnie i znacznie szybciej.</li>
+<li>Wstrzyknij do I_FILT napięcie poniżej LOW i powyżej HIGH. Zmierz PWM_OUT oraz ENA/ENB. Cel od utrzymanego przekroczenia do wyłączenia bramki: &lt;20 µs. Sprawdź oba znaki i kilka temperatur.</li>
+<li>Włóż wtyk LOGGER podczas TEST na sztucznym obciążeniu: PERMIT znika, żadne wyjście ECU nie otrzymuje napięcia mostka.</li>
+<li>Odłącz BUSY, zatrzymaj I²C, wyjmij SD: ruch ustaje; fabryczny tor LOGGER pozostaje połączony.</li>
+<li>Przytrzymaj ARM przed włączeniem zasilania: po ustąpieniu resetu nie może pojawić się nowe zbocze uzbrajające. Sprawdź układ debounce.</li>
+<li>Sprawdź ciągłość TEST–LOGGER we wszystkich pozycjach przekaźników. Wspólnej masy nie nazywaj izolacją galwaniczną.</li>
+<li>Przerwij każdą linię nadzoru i zasilanie każdego bloku safety oddzielnie; udokumentuj zachowanie. Projekt nie deklaruje odporności na dowolną pojedynczą awarię ani SIL/ASIL.</li>
+</ul>
+<h3>Kalibracja</h3>
+<p>Źródło i miernik referencyjny: sensory0/0,5/2,5/5 V; motor/VBAT0/5/12/16 V oraz−5 V, jeśli źródło pozwala. Prąd0,±0,5,±1,±2 A. Zapisuj wskazania miernika, nie tylko nastawy zasilacza. Dopasuj gain i offset całego toru, osobno dla banków. Firmware A ma jedną tablicę gain/offset: przed zmianą banku musi być wykazana zgodność obu torów w kryterium błędu; w przeciwnym wypadku potrzebne osobne profile kompilacji/sesje. Nie stosuj jednego dopasowania do dwóch różnych, niesprawdzonych banków.</p>
+<p>Nominalny LSB: ADC305,18µV; sensor311µV; motor1,239 mV; prąd1,221mA. Rozdzielczość nie oznacza dokładności. Uwzględnij R_IN ADC, rezystory, offset, błąd wzmocnienia, shunt i TCR, masę i temperaturę. Docelowe kryteria: sensor≤10 mV, motor≤1%, prąd≤2% pełnego używanego zakresu po kalibracji. Jeśli ich nie osiągasz, zapisz rzeczywisty błąd i nie wyciągaj wniosków o mniejszych zmianach.</p>
+<h3>Przepustowość</h3>
+<p>Startuj od 2 kS/s i sprawdź osiem różnych napięć na kanałach. To wykryje błędne powtarzanie kanałów przy nieprawidłowej ramce SPI. Następnie podnieś częstotliwość i zmierz CONVST/BUSY/CS na analizatorze, równocześnie zapisując SD, CAN i TC przez minimum 30 min. Kryterium: zeroGAP/CRC/drop, zmierzony jitter i raport max_dt.</p>
+<p>Wersja A używa ośmiu16-bitowych transakcji SPI w hardware mode. Narzut ESP-IDF może uniemożliwić20 kS/s. Nie obiecujemy tej częstotliwości bez odbioru. Przy2 kS/s i PWM1 kHz rejestrujesz trendy, a nie wierny kształt impulsów. Przed użyciem do oceny PWM wybierz dostateczne, pomiarowo potwierdzone próbkowanie lub równoległy oscyloskop.</p>
+<p>Przewidziane rozszerzenie: AD7606B software mode, jedna128-bitowa transakcja, SDI naGPIO2; kierunek INA przeniesiony do ekspandera i zmieniany przy wyłączonym PWM. To wymaga osobnej rewizji połączeń i sterownika. Alternatywnie mały kontroler akwizycji/CPLD. Zmiana samego ESP32 nie naprawi nieoptymalnego ramkowania.</p>
+<h3>Co wymaga rzeczywistego sprzętu</h3>
+<ul>
+<li>Identyfikacja obudów konektorów OEM i rewizji Waveshare.</li>
+<li>Ustawienie i pomiar OVP na zakupionym EVM oraz tolerancji komparatorów.</li>
+<li>Layout PCB, temperatury, przepięcia regeneracyjne, testy EMC/automotive.</li>
+<li>Kompilacja ESP-IDF, próby integracyjne, pomiar jittera i latency SD.</li>
+<li>Profil konkretnego zaworu: polaryzacja, punkty pozycji, prądy, czasy i temperatury.</li>
+</ul>
+<p>W pakiecie są schematy blokowe/połączeń oraz BOM, ale nie routowana PCB ani Gerbery. Źródła firmware mają <code>EGR_HARDWARE_ACCEPTED=0</code> w <code>commissioning.h</code> i wyłączone <code>CONFIG_EGR_ACTIVE_TEST</code>. Zmień obie blokady dopiero po odbiorze oraz wpisaniu zmierzonych współczynników do profilu. To nie zastępuje fizycznego ARM.</p></section><section id="firmware"><h2>Firmware i format logów</h2>
+<p>Projekt źródłowy jest przeznaczony dla ESP-IDF5.4.x i ESP32-S3. Nie został skompilowany ani uruchomiony na urządzeniu w tej sesji: w środowisku brak odpowiedniego toolchainu i sprzętu. Testy plików logów wykonano; testy C i pomiary czasu wykonania pozostają do uruchomienia.</p>
+<h3>Moduły</h3>
+<table>
+<tr><th>Moduł</th><th>Odpowiedzialność</th></tr>
+<tr><td><code>board.c</code></td><td>GPIO, ekspander, ADC, SD, MAX31856, pasywny TWAI, PWM i odcięcie ARM</td></tr>
+<tr><td><code>control.c</code></td><td>czysta logika stanów, polaryzacja, regulator, procedury i limity</td></tr>
+<tr><td><code>storage.c</code></td><td>ring PSRAM, zapis blokowy z CRC, pretrigger i zdarzenia NDJSON</td></tr>
+<tr><td><code>app_main.c</code></td><td>zadania FreeRTOS, konsola, profil NVS i orkiestracja</td></tr>
+<tr><td><code>commissioning.h</code></td><td>jawna blokada przed odbiorem hardware</td></tr>
+</table>
+<p><code>board_kill()</code> natychmiast zeruje MCU_ARM oraz PWM. Wyłączenie obu EN i przekaźnika mocy realizuje hardware. Żadna operacja I²C ani SD nie jest potrzebna do wyłączenia MCU_ARM. Zanik programu wykrywa zewnętrzny monostable, a przeciążenie niezależny komparator.</p>
+<h3>Stany</h3>
+<pre>BOOT → SAFE → LOGGER → IDENTIFY → LOGGER
+          └→ SENSOR_CHECK → READY → MANUAL / GOTO / SWEEP / FRICTION / CYCLE / THERMAL
+                                ↑                       │ sukces
+                                └───────────────────────┘
+FAULT ← błąd podczas przygotowania lub ruchu
+FAULT → SAFE po świadomym STOP; brak automatycznego wznowienia</pre>
+<p>LOGGER nigdy nie włącza własnego napędu. TEST wymaga zapisanego pin 5 V, zatwierdzonego hardware, fizycznego interlock, poprawnych napięć, świeżego ADC oraz sprawnego zapisu. Ruch dodatkowo wymaga fizycznego ARM i poprawnej TC1. Zanik dowolnego warunku przerywa próbę. Po FAULT zasilanie sensora zostaje odłączone; mechaniczny STOP i włożenie LOGGER blokują je również sprzętowo.</p>
+<p>Zadania: acquisition na rdzeniu1, priorytet23; safety na rdzeniu0, priorytet20 co 1 ms; writer priorytet8; CAN/TC priorytet5; console priorytet3. Timer powiadamia task akwizycji, który inicjuje konwersję i odczytuje SPI. Timestamp oznacza rzeczywisty start konwersji, a nie idealną pozycję na siatce czasu. Nie jest to sprzętowo deterministyczny CONVST. Nadmiar powiadomień oznacza utracone terminy i blokuje TEST. Brak Wi-Fi/BLE podczas rejestracji.</p>
+<p>Zmiana kierunku ma5 ms przerwy przy wyłączonym ARM. Regulator pozycji jest początkowo proporcjonalny, bez integratora. Wartości duty, prądu, temperatury i czasu są limitami rozruchowymi; nie pochodzą ze specyfikacji zaworu.</p>
+<h3>Budowanie i odblokowanie</h3>
+<p>W terminalu ESP-IDF:</p>
+<pre>cd firmware
+idf.py set-target esp32s3
+idf.py menuconfig
+idf.py build
+idf.py flash monitor</pre>
+<p>Sprawdź: Flash32 MB Octal/OPI, PSRAM16 MB Octal, taktowanie pamięci80 MHz na początek. Nie zmieniaj eFuse napięcia VDD_SPI; moduł N32R16 V jest fabrycznie wariantem1,8 V. Numer portu COM wybierz dla swojej płytki. UART0 pozostaje dla pokładowego CH343.</p>
+<p>Domyślnie <code>CONFIG_EGR_ACTIVE_TEST=n</code> i <code>EGR_HARDWARE_ACCEPTED=0</code>. Po pełnym odbiorze z rozdziału03 wpisz zmierzone współczynniki kalibracji, zatwierdź plik profilu i dopiero wtedy zmień oba ustawienia. Wartości domyślne gain/offset są nominalne, nie wynikiem kalibracji. Kod weryfikuje dane sensora również po odblokowaniu. Fizyczny ARM pozostaje konieczny.</p>
+<h3>Konsola</h3>
+<table>
+<tr><th>Komenda</th><th>Funkcja</th></tr>
+<tr><td><code>status</code></td><td>stan, pin 5V, napięcia, prąd, ratio, pozycja, TC1 i utracone terminy</td></tr>
+<tr><td><code>bind valve_id adapter_id</code></td><td>w SAFE identyfikuje fizyczny zawór i adapter; zmiana unieważnia stary pinout/LEARN</td></tr>
+<tr><td><code>logger</code></td><td>bank pomiarowy LOGGER, własny napęd i sensor OFF</td></tr>
+<tr><td><code>identify</code></td><td>stabilny pomiar5/6 przez2s, zapis wyniku do RAM</td></tr>
+<tr><td><code>stop</code></td><td>natychmiast ARM=0, sensor OFF, SAFE</td></tr>
+<tr><td><code>save</code></td><td>w SAFE zapis profilu do NVS; akwizy­cja wstrzymana na czas operacji Flash</td></tr>
+<tr><td><code>test</code></td><td>przełączenie K_POL bez napięcia i sprawdzenie własnego zasilania sensora</td></tr>
+<tr><td><code>learn rc ro sign</code></td><td>zatwierdzone pomiarowo punkty pozycji; np. wartości z trzech kontrolowanych przejść</td></tr>
+<tr><td><code>manual duty ms</code></td><td>pojedynczy impuls, np.<code>manual 0.05 50</code>; maksymalnie250ms w zatwierdzonym profilu</td></tr>
+<tr><td><code>goto p</code></td><td>dojście do pozycji0,1…0,9</td></tr>
+<tr><td><code>sweep</code></td><td>punkty10…90…10%, timeout każdego ruchu</td></tr>
+<tr><td><code>friction +1</code> / <code>friction -1</code></td><td>jedna rampa od aktualnej pozycji; kierunek otwarcia/zamknięcia z profilu</td></tr>
+<tr><td><code>cycle n</code></td><td>n pełnych cykli10–90–10%, maksimum200</td></tr>
+<tr><td><code>thermal</code></td><td>SWEEP przy nadzorowanej TC1; ogrzewanie i plateau wykonuje operator</td></tr>
+<tr><td><code>mark</code></td><td>zdarzenie ze wskazaniem miejsca w ring buffer</td></tr>
+</table>
+<p>Kolejność pierwszego profilu: <code>bind</code> → <code>logger</code> → <code>identify</code> → <code>status</code> → <code>stop</code> → <code>save</code>. Przy kolejnej sesji wczytany jest ten sam profil, ale dopasowanie do fizycznego zaworu pozostaje odpowiedzialnością operatora. Nie ma elektronicznego numeru seryjnego zaworu.</p>
+<p>LEARN nie jest automatycznym szukaniem twardych ograniczników. Procedura mechanicznej weryfikacji znajduje się w rozdziale02. Polecenie zapisuje jej wynik. THERMAL nie steruje grzałką. FRICTION dla20/50/80% wykonuj jako <code>goto</code> i osobne rampy. Ograniczenie do takich jawnych czynności chroni nieznany napęd przed automatycznym przeciążaniem.</p>
+<h3>PSRAM i pretrigger</h3>
+<p>Rekord ma32 bajty, a nie16: timestamp8 + sequence4 + osiem kodów16bit16 + flags2 + reserved2. Przy20 kS/s to640000B/s i2,304GB/h; przy 2kS/s64000B/s. Dane CAN i temperatur dochodzą osobno.</p>
+<p>Implementacja alokuje ring8 MiB (262144 rekordy). To13,1072 s przy 20k lub131,072 s przy 2k. MARK zapamiętuje indeks ring buffer. Writer otwiera drugi plik i czyta wcześniejsze dane z tego samego bufora, następnie dopisuje10 s po znaczniku. Okno przed znacznikiem wynosi min(10 s, połowa ring buffer): <strong>10 s przy 2 kS/s, 6,5536 s przy 20 kS/s</strong>. Rzeczywistą liczbę rekordów zapisuje zdarzenie MARK.</p>
+<p>Nie ma kopiowania kilku MB w ISR ani deklarowanej gwarancji zachowania pretrigger przy dowolnym zatrzymaniu SD. Jeśli writer nie zdąży przed nadpisaniem, rejestruje GAP i stan błędu. Do gwarantowanego10 s przy 20k potrzebne przeprojektowanie podziału pamięci, np. ring4 MiB + osobny snapshot6,4 MB. Ciągły plik SD zachowuje wcześniejszy zapis, jeśli nie wystąpił błąd.</p>
+<p>Writer kopiuje najwyżej64 rekordy pod krótkim spinlockiem do bufora wewnętrznego, zwalnia lock i dopiero zapisuje SD. Nie wykonuje dostępu do pliku w sekcji krytycznej. Przepełnienie kolejki zdarzeń również jest błędem — CAN nie może ginąć niezauważenie.</p>
+<h3>Format EGRLOG1</h3>
+<p>Little-endian. Nagłówek32 bajty:</p>
+<table>
+<tr><th>Offset</th><th>Typ</th><th>Znaczenie</th></tr>
+<tr><td>0</td><td>char[8]</td><td>EGRLOG1 + bajt0</td></tr>
+<tr><td>8</td><td>u16</td><td>wersja1</td></tr>
+<tr><td>10</td><td>u16</td><td>długość nagłówka32</td></tr>
+<tr><td>12</td><td>u32</td><td>nominalna częstotliwość próbkowania</td></tr>
+<tr><td>16</td><td>u32</td><td>długość rekordu32</td></tr>
+<tr><td>20</td><td>u32</td><td>flags; bit0 = dane syntetyczne</td></tr>
+<tr><td>24</td><td>u64</td><td>identyfikator sesji</td></tr>
+</table>
+<p>Blok: magic4=<code>BLK1</code>, count:u32, payload_bytes:u32, crc32:u32, następnie count rekordów. Count1…256, firmware używa maks.64. CRC32 IEEE/zlib obejmuje cały payload. Urwany ostatni blok można odrzucić w trybie recovery; nie dopisujemy zer i nie przechodzimy bez ostrzeżenia przez błędne CRC.</p>
+<p>Rekord: t_us:u64, sequence:u32, raw[8]:i16, flags:u16, reserved:u16. Flagi zarezerwowane: bit0GAP, bit1TESTbank, bit2sensorvalid, bit3motorpermit, bit4MARK, bit5fault. Firmware A ustawia bity0/1/3; stan sensora, FAULT i MARK są autorytatywnie zapisane w NDJSON. Nie interpretuj nieustawionych bitów2/4/5 jako braku zdarzenia.</p>
+<p>Sequence liczy dostarczone próbki. Utracone wyzwolenia timera nie dostają fikcyjnych próbek; licznik lost_ticks i GAP je ujawniają. Rzeczywiste odstępy wyznaczaj z t_us. Timestamp CAN jest czasem odbioru w tasku, nie sprzętowym znacznikiem początku ramki. Temperatury mają czas odczytu, fault i wartość/null; nie udają wspólnego próbkowania z ADC.</p>
+<p>Sesja: <code>session_&lt;counter&gt;/samples.egr</code>, <code>events.ndjson</code>, <code>meta.json</code>, <code>mark_&lt;time&gt;.egr</code>. Istniejący katalog nigdy nie jest nadpisywany. NVS ma własny mechanizm integralności ESP-IDF; kod dodatkowo sprawdza rozmiar i magic profilu. Nie implementuje osobnego podpisu kryptograficznego ani CRC struktury profilu.</p>
+<p><code>meta.json</code> przechowuje konfigurację startową. Zmiany pin 5V i punktów LEARN pojawiają się jako zdarzenia <code>profile</code> z timestampem. Eksporter stosuje je w odpowiednim momencie; nie przelicza całej sesji ostatnim profilem. Zmiany kalibracji gain/offset wymagają nowej sesji. Nazwy fizycznego zaworu i adaptera przechowywane są w NVS; wpisz je również do dziennika odbioru.</p>
+<p>FAT32: prototyp nie implementuje rotacji pliku. Przy20 kS/s limit4GiB jest osiągany po około 1h52 min; zatrzymaj i uruchom nową sesję wcześniej (zalecenie≤1h przy 20k). Przy2k limit wynosi około 18h38 min. Błąd zapisu przerywa TEST. Nie jest to bezobsługowy rejestrator wielodniowy ani gwarantowany zapis odporny na dowolny zanik zasilania.</p>
+<h3>Odczyt na komputerze</h3>
+<pre>python tools/egrlog.py inspect examples/synthetic.egr
+python tools/egrlog.py export examples/synthetic.egr --meta examples/synthetic.json --csv output.csv
+python -m unittest discover -s tests -p &quot;test_*.py&quot; -v</pre>
+<p>Python korzysta wyłącznie z biblioteki standardowej. Dane przykładowe mają oznaczenie synthetic; nie pochodzą z auta. CSV zachowuje kody surowe, napięcia, prąd, różnicę napięć uzwojenia, ratio i pozycję. Nieprawidłowa polaryzacja lub referencja daje pustą wartość, a nie fałszywe0%.</p>
+<h3>Zakres i ograniczenia</h3>
+<p>Kod obejmuje konsolę, akwizycję, ring/pretrigger, SD, CRC, stany i procedury ruchu po kalibracji, pasywne CAN, odczyt standardowych odpowiedzi RPM, dwie termopary i NVS. Nie obejmuje graficznego GUI, RTC, OTA, aktywnego OBD/UDS, automatycznej regulacji grzałki ani produkcyjnego mechanizmu odzyskiwania FAT. OLED i RTC są opcjami hardware, nie gotowymi funkcjami oprogramowania. Nominalne20 kS/s wymaga osobnego odbioru czasu wykonania lub szybszego sterownika opisanym sposobem.</p></section><section id="zrodla"><h2>Źródła techniczne — sprawdzone 2026-09-21</h2>
+<p>Wartości proponowanych rezystorów, podział funkcji i procedury są projektem własnym; nie są zaleceniem producenta samochodu. Podzespoły i zakresy potwierdzano w poniższych źródłach pierwotnych. Dokumenty producenta mają pierwszeństwo przed opisem sprzedawcy przy doborze wariantu.</p>
+<ul>
+<li><a href="https://www.waveshare.com/wiki/ESP32-S3-DEV-KIT-N8R8">Waveshare — porównanie wersji N8R8/N16R8/N32R16V</a> — moduł WROOM-2, OPI32MB, PSRAM16MB, NC35–37.</li>
+<li><a href="https://files.waveshare.com/wiki/ESP32-S3-DEV-KIT-N8R8/ESP32-S3-DEV-KIT-N8R8-schematic.pdf">Waveshare — schemat rodziny</a> — UART,USB,zasilanie iRGBGPIO38; niepodmienia fizycznejidentyfikacji rewizjiN32R16.</li>
+<li><a href="https://documentation.espressif.com/esp32-s3-wroom-2_datasheet_en.html">Espressif WROOM-2 datasheet</a> — GPIO47/48 na1,8V i wyprowadzenia modułu.</li>
+<li><a href="https://documentation.espressif.com/esp-idf/en/v5.4.3/esp32s3/index.html">ESP-IDF5.4.3</a> — odniesienieAPI; wersjętoolchainuprzypiąćprzykompilacji.</li>
+<li><a href="https://www.analog.com/media/en/technical-documentation/data-sheets/ad7606b.pdf">AD7606B datasheet</a> — równoczesnepróbkowanie,hardware mode,5MΩ,±10V i8ramek16bitdlaDOUTA.</li>
+<li><a href="https://www.analog.com/en/resources/app-notes/an-2011.html">ADI AN-2011</a> — różnicehardware/software mode.</li>
+<li><a href="https://www.ti.com/product/INA240-Q1/part-details/INA240A2EDRQ1">INA240A2-Q1</a> — wzmocnienie50, wspólny zakres−4…80V.</li>
+<li><a href="https://www.ti.com/product/TLV1702-Q1">TLV1702-Q1</a> — oknoprądu,wyjścia open-collector.</li>
+<li><a href="https://www.st.com/resource/en/datasheet/vnh5019a-e.pdf">VNH5019 datasheet</a> — prawdasterowaniaEN/PWM i41V absolutnego maksimum.</li>
+<li><a href="https://www.pololu.com/product/1451">Pololu1451</a> — gotowymodułVNH5019 iobwódVDD/EN.</li>
+<li><a href="https://www.ti.com/tool/LM74800EVM-CD">LM74800EVM-CD</a> i <a href="https://www.ti.com/lit/ds/symlink/lm7480-q1.pdf">LM7480-Q1 datasheet</a> — dwaMOSFET-y,reversepolarity,OVP.</li>
+<li><a href="https://www.tracopower.com/products/tsr2.pdf">TracoTSR2</a> — zasilaczemodułowe2A,zakreswejść.</li>
+<li><a href="https://www.ti.com/product/TPS2553">TPS2553</a> — ogranicznikprąduzasilaniaczujnika.</li>
+<li><a href="https://www.analog.com/media/en/technical-documentation/data-sheets/MAX31856.pdf">MAX31856</a> — typK,50Hz,rejestryifault.</li>
+<li><a href="https://www.ti.com/product/TCAN1051-Q1">TCAN1051-Q1</a> — wariantVIO,i silent mode.</li>
+</ul>
+<p>Nie znaleziono w publicznych źródłach OEM potwierdzonego numerowania wtyczki ani charakterystyki prądowo-termicznej 28410-2A850 dla VIN użytkownika. Pin1/3/4 przyjęto z instrukcji użytkownika;5/6 mierzone. Ogólny opis silnika nie jest źródłem limitów zaworu.</p></section><section id="weryfikacja"><h2>Stan weryfikacji pakietu</h2>
+<p>Data: 2026-09-21. Rewizja A.</p>
+<p><strong>Wykonano na komputerze:</strong> dziewięć testów narzędzia do logów. Sprawdzają zgodność rozmiarów ABI, zapis/odczyt, CRC, wykrycie urwanego bloku, odrzucenie nieprawidłowej długości, obie polaryzacje sensora, stan UNKNOWN, eksport CSV i monotoniczność czasu. Wszystkie przeszły.</p>
+<p>Przykład <code>examples/synthetic.egr</code> zawiera4000syntetycznych próbek, osiem kanałów,2kS/s i celowo zasymulowany krótki spadek feedbacku. Nie jest dowodem występowania takiego uszkodzenia w samochodzie. Czytnik potwierdza stały krok500µs oraz brak błędów CRC.</p>
+<p><strong>Przygotowano, lecz nie uruchomiono:</strong> testy logiki stanów w <code>tests/test_control.c</code>; projekt ESP-IDF. Brak lokalnego kompilatora C/ESP-IDF. Nie deklarujemy poprawnej kompilacji, działania peryferiów ani konkretnej przepustowości na ESP32 na podstawie testów Pythona.</p>
+<p><strong>Nie wykonano:</strong> ERC/DRC w EDA, routingu PCB, testów napięć, prądów, latencji, błędów sprzętowych, temperatury, EMC i impulsów automotive. Pliki CSV są listą montażową, a nie netlistą KiCad. Źródła dokumentacji producentów sprawdzono; nie zastępuje to odbioru zmontowanego urządzenia.</p>
+<h3>Otwarte ryzyka techniczne</h3>
+<table>
+<tr><th>Element</th><th>Co trzeba rozstrzygnąć</th></tr>
+<tr><td>ADC20 kS/s</td><td>Osiem transakcji w hardware mode może przekroczyć50 µs; kwalifikacja lub szybszy wariant sterownika</td></tr>
+<tr><td>Złącza OEM</td><td>Fizyczny numer obudowy, klucze i orientacja pinów przed zakupem</td></tr>
+<tr><td>Limity zaworu</td><td>Brak potwierdzonych OEM prądów i temperatur; profil z ostrożnego LEARN i pomiarów</td></tr>
+<tr><td>Automotive</td><td>Energia load dump, ujemne impulsy, masa, EMC i termika muszą być zbadane dla instalacji</td></tr>
+<tr><td>CAN/RPM</td><td>Rok auta nie określa ID broadcast; bazowo brak TX, możliwy odczyt odpowiedzi zewnętrznego skanera</td></tr>
+<tr><td>Pretrigger</td><td>10 s przy 2k;6,55 s przy 20k w tej implementacji; SD stall może nadpisać historię</td></tr>
+<tr><td>SD</td><td>Brak automatycznej rotacji plików i gwarancji odzyskania FAT po zaniku zasilania</td></tr>
+<tr><td>Safety</td><td>Projekt warsztatowy, bez deklaracji SIL/ASIL lub odporności na każdą pojedynczą awarię</td></tr>
+</table>
+<p>Wybór MCU: posiadany ESP32-S3 N32R16 V wystarcza do tej architektury. Zmiana MCU nie usuwa potrzeby prawidłowego front-endu, kwalifikacji SPI/SD i niezależnych zabezpieczeń.</p></section></main></html>

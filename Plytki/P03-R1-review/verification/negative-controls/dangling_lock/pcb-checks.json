@@ -1,0 +1,512 @@
+{
+  "board": "P03.kicad_pcb",
+  "board_sha256": "529ebabc4d7e75c05ba1954f02950670915398b9edb3e32a1a304a43e51659b0",
+  "checks": [
+    {
+      "check": "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "pass": false
+    },
+    {
+      "check": "54 parts + 5 mounting holes, nothing else",
+      "pass": true
+    },
+    {
+      "check": "Every value, footprint ID and pad net equals the exported schematic netlist",
+      "pass": true
+    },
+    {
+      "check": "2 copper layers, 1.6 mm board",
+      "pass": true
+    },
+    {
+      "check": "Both copper layers explicitly 35 um",
+      "pass": true
+    },
+    {
+      "check": "Closed rectangular outline 160 x 120 mm (P01/P02 format)",
+      "pass": true
+    },
+    {
+      "check": "Five NPTH 3.2 mm holes: the four P01/P02 corners + H5 (155, 38) next to the DAQ socket; copper keepouts on both layers",
+      "pass": true
+    },
+    {
+      "check": "No courtyard within 4.5 mm of a mounting-hole centre (screw head + washer)",
+      "pass": true
+    },
+    {
+      "check": "Explicit DRC rules and net classes active (Default 0.30/0.25, Power 0.60/0.30 for 5V_SYS, 3V3_CORE, 3V3_IO); no DRC exclusions",
+      "pass": true
+    },
+    {
+      "check": "Every pre-routed (locked) segment and via retained with its width and layer (5V_SYS feed 1.0 mm, decoupling stubs and capacitor GND vias)",
+      "pass": false
+    },
+    {
+      "check": "Supply nets: narrowest track 5V_SYS >= 1.0 mm, 3V3_CORE and 3V3_IO >= 0.6 mm",
+      "pass": true
+    },
+    {
+      "check": "M1 Waveshare: two 1x22 rows 22.86 mm apart (J1 row towards the board, J3 row at the left), USB-C end at the top edge (<= 0.5 mm)",
+      "pass": true
+    },
+    {
+      "check": "ANTENNA keepout: M1 antenna end + 3 mm sides + 8 mm beyond, both layers, no track / via / pour; no other part inside",
+      "pass": true
+    },
+    {
+      "check": "J1 DAQ (right-angle 2x8 socket to P05): mating face 0-0.5 mm inside the right edge; H2 and H5 on both sides within 25 mm; key position 2 NC",
+      "pass": true
+    },
+    {
+      "check": "IDC box headers J2..J8: at an edge (courtyard <= 0.5 mm), long axis along it, odd (signal) row inside, key pin NC (v6.1 keys)",
+      "pass": true
+    },
+    {
+      "check": "J9 PANELCORE (Mini-Fit Jr 8p) at an edge (<= 0.5 mm), position 6 NC",
+      "pass": true
+    },
+    {
+      "check": "SD1 Adafruit 4682: card end at a board edge (card tip <= 0.6 mm inside), M2.5 stand-off keepouts r 3 mm around both holes, both layers",
+      "pass": true
+    },
+    {
+      "check": "J10 LV03 pigtail: 1=5V_SYS 2=GND 3=3V3_IO 4=GND; anchors 12.5 mm from the solder row towards the edge; no copper under the tie band; the test pad under each LV03 pad has its net",
+      "pass": true
+    },
+    {
+      "check": "100 nF at every IC: <= 8 mm straight and <= 20 mm routed to the VCC pin (74LVC125 pin 14, MCP23017 pin 9, 74HC139 pin 16, TPS3808 VDD)",
+      "pass": true
+    },
+    {
+      "check": "Supply domains (v6.1): every 74LVC125 VCC on 3V3_CORE; 3V3_IO only at J10.3, TP3 and the unused OE# of U14; 3V3_CORE never joins 3V3_IO",
+      "pass": true
+    },
+    {
+      "check": "GND pours on both layers, island removal on; largest island >= 75 % of each pour; layers stitched by >= 40 GND vias (10 mm grid)",
+      "pass": true
+    },
+    {
+      "check": "Every visible reference outside other courtyards and nearest to its own part",
+      "pass": true
+    },
+    {
+      "check": "Every board legend outside all courtyards (visible after assembly); the M1 / SD1 module outlines excepted",
+      "pass": true
+    },
+    {
+      "check": "Connector names DAQ, ILOG, ITEST, SAFE, DIR, SFAULT, TEMP, CAN, PANELCORE, LV03 next to their own connector (<= 4 mm, nearest connector)",
+      "pass": true
+    },
+    {
+      "check": "KEY n beside every IDC header, in line with its key pin (<= 1.5 mm along the header), <= 3 mm outside the box, nearest to its own header",
+      "pass": true
+    },
+    {
+      "check": "Operating legends present (USB-C at the edge, antenna keepout, microSD card slot)",
+      "pass": true
+    }
+  ],
+  "details": {
+    "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)": {
+      "violations": 28,
+      "unconnected_items": 0,
+      "schematic_parity": 0
+    },
+    "Every value, footprint ID and pad net equals the exported schematic netlist": {
+      "errors": [],
+      "pads": 347
+    },
+    "Five NPTH 3.2 mm holes: the four P01/P02 corners + H5 (155, 38) next to the DAQ socket; copper keepouts on both layers": {
+      "holes_ok": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    "No courtyard within 4.5 mm of a mounting-hole centre (screw head + washer)": {},
+    "Explicit DRC rules and net classes active (Default 0.30/0.25, Power 0.60/0.30 for 5V_SYS, 3V3_CORE, 3V3_IO); no DRC exclusions": {
+      "classes": [
+        "Default",
+        "Power"
+      ],
+      "patterns": {
+        "/5V_SYS": "Power",
+        "3V3_CORE": "Power",
+        "3V3_IO": "Power"
+      }
+    },
+    "Every pre-routed (locked) segment and via retained with its width and layer (5V_SYS feed 1.0 mm, decoupling stubs and capacitor GND vias)": {
+      "missing": [
+        [
+          "track",
+          "/5V_SYS",
+          "((34.29, 5.95), (37.5, 5.95))",
+          "1.0",
+          "0"
+        ]
+      ],
+      "locked_items": 44
+    },
+    "Supply nets: narrowest track 5V_SYS >= 1.0 mm, 3V3_CORE and 3V3_IO >= 0.6 mm": {
+      "5V_SYS": 1.0,
+      "3V3_CORE": 0.6,
+      "3V3_IO": 0.6
+    },
+    "M1 Waveshare: two 1x22 rows 22.86 mm apart (J1 row towards the board, J3 row at the left), USB-C end at the top edge (<= 0.5 mm)": {
+      "row_distance_mm": 22.86,
+      "J1_column_x": 34.29,
+      "J3_column_x": 11.43,
+      "usb_end_y_mm": 0.25,
+      "pitch_ok": true
+    },
+    "ANTENNA keepout: M1 antenna end + 3 mm sides + 8 mm beyond, both layers, no track / via / pour; no other part inside": {
+      "rule_area": [
+        7.11,
+        58.25,
+        38.61,
+        72.75
+      ],
+      "expected": [
+        7.11,
+        58.25,
+        38.61,
+        72.75
+      ],
+      "parts_inside": [],
+      "copper_items_inside": 0,
+      "pour_inside": {
+        "F.Cu": 0,
+        "B.Cu": 0
+      }
+    },
+    "J1 DAQ (right-angle 2x8 socket to P05): mating face 0-0.5 mm inside the right edge; H2 and H5 on both sides within 25 mm; key position 2 NC": {
+      "orientation": 180.0,
+      "face_x_mm": 159.63,
+      "pin1": [
+        147.0,
+        31.0
+      ],
+      "pin15": [
+        147.0,
+        13.22
+      ],
+      "holes_to_centre_mm": {
+        "H2": 18.9,
+        "H5": 17.8
+      },
+      "pin2_net": "unconnected-(J1-Pin_2-Pad2)"
+    },
+    "IDC box headers J2..J8: at an edge (courtyard <= 0.5 mm), long axis along it, odd (signal) row inside, key pin NC (v6.1 keys)": {
+      "J2": {
+        "name": "ILOG",
+        "edge": "T",
+        "edge_gap_mm": 0.23,
+        "long_axis_along_edge": true,
+        "signal_row_inner": true,
+        "key_pin_nc": true
+      },
+      "J3": {
+        "name": "ITEST",
+        "edge": "T",
+        "edge_gap_mm": 0.23,
+        "long_axis_along_edge": true,
+        "signal_row_inner": true,
+        "key_pin_nc": true
+      },
+      "J4": {
+        "name": "SAFE",
+        "edge": "L",
+        "edge_gap_mm": 0.23,
+        "long_axis_along_edge": true,
+        "signal_row_inner": true,
+        "key_pin_nc": true
+      },
+      "J5": {
+        "name": "DIR",
+        "edge": "B",
+        "edge_gap_mm": 0.23,
+        "long_axis_along_edge": true,
+        "signal_row_inner": true,
+        "key_pin_nc": true
+      },
+      "J6": {
+        "name": "SFAULT",
+        "edge": "B",
+        "edge_gap_mm": 0.23,
+        "long_axis_along_edge": true,
+        "signal_row_inner": true,
+        "key_pin_nc": true
+      },
+      "J7": {
+        "name": "TEMP",
+        "edge": "B",
+        "edge_gap_mm": 0.23,
+        "long_axis_along_edge": true,
+        "signal_row_inner": true,
+        "key_pin_nc": true
+      },
+      "J8": {
+        "name": "CAN",
+        "edge": "T",
+        "edge_gap_mm": 0.23,
+        "long_axis_along_edge": true,
+        "signal_row_inner": true,
+        "key_pin_nc": true
+      }
+    },
+    "J9 PANELCORE (Mini-Fit Jr 8p) at an edge (<= 0.5 mm), position 6 NC": {
+      "edge": "B",
+      "edge_gap_mm": 0.25,
+      "pin6": "unconnected-(J9-Pin_6-Pad6)"
+    },
+    "SD1 Adafruit 4682: card end at a board edge (card tip <= 0.6 mm inside), M2.5 stand-off keepouts r 3 mm around both holes, both layers": {
+      "card_tip_to_edge_mm": 0.54,
+      "holes": [
+        [
+          58.5,
+          114.38
+        ],
+        [
+          38.18,
+          114.38
+        ]
+      ]
+    },
+    "J10 LV03 pigtail: 1=5V_SYS 2=GND 3=3V3_IO 4=GND; anchors 12.5 mm from the solder row towards the edge; no copper under the tie band; the test pad under each LV03 pad has its net": {
+      "pins": {
+        "1": "5V_SYS",
+        "2": "GND",
+        "3": "3V3_IO",
+        "4": "GND"
+      },
+      "anchor_to_row_mm": [
+        12.5,
+        12.5
+      ],
+      "anchors_on_edge_side": true,
+      "tie_rule_area": [
+        38.4,
+        0.9,
+        61.03,
+        6.1
+      ],
+      "test_pads": {
+        "1": {
+          "tp": "TP1",
+          "dx_mm": 0.0,
+          "same_net": true
+        },
+        "2": {
+          "tp": "TP4",
+          "dx_mm": 0.0,
+          "same_net": true
+        },
+        "3": {
+          "tp": "TP3",
+          "dx_mm": 0.0,
+          "same_net": true
+        },
+        "4": {
+          "tp": "TP6",
+          "dx_mm": 0.0,
+          "same_net": true
+        }
+      }
+    },
+    "100 nF at every IC: <= 8 mm straight and <= 20 mm routed to the VCC pin (74LVC125 pin 14, MCP23017 pin 9, 74HC139 pin 16, TPS3808 VDD)": {
+      "C5-U11.14": {
+        "straight_mm": 4.47,
+        "routed_mm": 4.8,
+        "gnd_pad_mm": 26.51
+      },
+      "C6-U12.14": {
+        "straight_mm": 4.47,
+        "routed_mm": 4.8,
+        "gnd_pad_mm": 26.51
+      },
+      "C7-U13.14": {
+        "straight_mm": 4.47,
+        "routed_mm": 4.8,
+        "gnd_pad_mm": 26.51
+      },
+      "C8-U14.14": {
+        "straight_mm": 4.47,
+        "routed_mm": 4.8,
+        "gnd_pad_mm": 26.51
+      },
+      "C9-U21.14": {
+        "straight_mm": 4.47,
+        "routed_mm": 4.8,
+        "gnd_pad_mm": 26.51
+      },
+      "C10-U22.14": {
+        "straight_mm": 4.47,
+        "routed_mm": 4.8,
+        "gnd_pad_mm": 26.51
+      },
+      "C11-U23.14": {
+        "straight_mm": 4.47,
+        "routed_mm": 4.8,
+        "gnd_pad_mm": 26.51
+      },
+      "C2-U1.9": {
+        "straight_mm": 4.85,
+        "routed_mm": 5.3,
+        "gnd_pad_mm": 4.55
+      },
+      "C1-U2.16": {
+        "straight_mm": 4.67,
+        "routed_mm": 4.8,
+        "gnd_pad_mm": 22.73
+      },
+      "C3-U3.3": {
+        "straight_mm": 4.5,
+        "routed_mm": 4.5,
+        "gnd_pad_mm": 5.13
+      }
+    },
+    "Supply domains (v6.1): every 74LVC125 VCC on 3V3_CORE; 3V3_IO only at J10.3, TP3 and the unused OE# of U14; 3V3_CORE never joins 3V3_IO": {
+      "vcc": {
+        "U11": "3V3_CORE",
+        "U12": "3V3_CORE",
+        "U13": "3V3_CORE",
+        "U14": "3V3_CORE",
+        "U21": "3V3_CORE",
+        "U22": "3V3_CORE",
+        "U23": "3V3_CORE"
+      },
+      "3V3_IO_pads": [
+        "J10.3",
+        "TP3.1",
+        "U14.10",
+        "U14.13",
+        "U14.4"
+      ]
+    },
+    "GND pours on both layers, island removal on; largest island >= 75 % of each pour; layers stitched by >= 40 GND vias (10 mm grid)": {
+      "islands": {
+        "F.Cu": 34,
+        "B.Cu": 29
+      },
+      "largest_island_percent": {
+        "F.Cu": 88.1,
+        "B.Cu": 81.2
+      },
+      "filled_percent": {
+        "F.Cu": 72.8,
+        "B.Cu": 69.6
+      },
+      "stitching_vias": 48
+    },
+    "Every visible reference outside other courtyards and nearest to its own part": {},
+    "Every board legend outside all courtyards (visible after assembly); the M1 / SD1 module outlines excepted": {},
+    "Connector names DAQ, ILOG, ITEST, SAFE, DIR, SFAULT, TEMP, CAN, PANELCORE, LV03 next to their own connector (<= 4 mm, nearest connector)": {
+      "DAQ": {
+        "to_own_mm": 1.3,
+        "nearest": "J1"
+      },
+      "ILOG": {
+        "to_own_mm": 1.45,
+        "nearest": "J2"
+      },
+      "ITEST": {
+        "to_own_mm": 2.95,
+        "nearest": "J3"
+      },
+      "SAFE": {
+        "to_own_mm": 1.3,
+        "nearest": "J4"
+      },
+      "DIR": {
+        "to_own_mm": 3.2,
+        "nearest": "J5"
+      },
+      "SFAULT": {
+        "to_own_mm": 3.2,
+        "nearest": "J6"
+      },
+      "TEMP": {
+        "to_own_mm": 3.2,
+        "nearest": "J7"
+      },
+      "CAN": {
+        "to_own_mm": 3.2,
+        "nearest": "J8"
+      },
+      "PANELCORE": {
+        "to_own_mm": 1.45,
+        "nearest": "J9"
+      },
+      "LV03": {
+        "to_own_mm": 1.2,
+        "nearest": "J10"
+      }
+    },
+    "KEY n beside every IDC header, in line with its key pin (<= 1.5 mm along the header), <= 3 mm outside the box, nearest to its own header": {
+      "J2": {
+        "key_pin": "2",
+        "text": {
+          "along_offset_mm": 0.0,
+          "gap_to_header_mm": 2.0,
+          "nearest_header": "J2"
+        }
+      },
+      "J3": {
+        "key_pin": "2",
+        "text": {
+          "along_offset_mm": 0.5,
+          "gap_to_header_mm": 2.0,
+          "nearest_header": "J3"
+        }
+      },
+      "J4": {
+        "key_pin": "4",
+        "text": {
+          "along_offset_mm": 0.3,
+          "gap_to_header_mm": 1.2,
+          "nearest_header": "J4"
+        }
+      },
+      "J5": {
+        "key_pin": "4",
+        "text": {
+          "along_offset_mm": 0.3,
+          "gap_to_header_mm": 0.9,
+          "nearest_header": "J5"
+        }
+      },
+      "J6": {
+        "key_pin": "3",
+        "text": {
+          "along_offset_mm": 0.3,
+          "gap_to_header_mm": 0.9,
+          "nearest_header": "J6"
+        }
+      },
+      "J7": {
+        "key_pin": "4",
+        "text": {
+          "along_offset_mm": 0.3,
+          "gap_to_header_mm": 0.9,
+          "nearest_header": "J7"
+        }
+      },
+      "J8": {
+        "key_pin": "4",
+        "text": {
+          "along_offset_mm": 0.3,
+          "gap_to_header_mm": 0.9,
+          "nearest_header": "J8"
+        }
+      }
+    },
+    "Operating legends present (USB-C at the edge, antenna keepout, microSD card slot)": {
+      "missing": []
+    }
+  },
+  "passed": 24,
+  "total": 26
+}

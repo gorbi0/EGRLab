@@ -1,0 +1,215 @@
+{
+  "status": "STATIC_CHECKS_PASS_HARDWARE_UNTESTED",
+  "checks": [
+    {
+      "check": "Every JSON terminal represented exactly once in CSV",
+      "pass": true
+    },
+    {
+      "check": "Main MOSFET orientation G,D,S",
+      "pass": true
+    },
+    {
+      "check": "Schottky common cathode; both anodes upstream",
+      "pass": true
+    },
+    {
+      "check": "Correct logic-level MOSFET, not an unqualified substitute",
+      "pass": true
+    },
+    {
+      "check": "OVP polarity physically connected",
+      "pass": true
+    },
+    {
+      "check": "UVLO polarity physically connected",
+      "pass": true
+    },
+    {
+      "check": "Both open collectors, supervisor and inhibit share OK",
+      "pass": true
+    },
+    {
+      "check": "Auxiliary regulator upstream of main MOSFET",
+      "pass": true
+    },
+    {
+      "check": "LM2936 TO92 OUT-GND-IN pinout",
+      "pass": true
+    },
+    {
+      "check": "TL431 cathode and REF tied, anode grounded",
+      "pass": true
+    },
+    {
+      "check": "TVS and VGS clamp orientations",
+      "pass": true
+    },
+    {
+      "check": "Sense path blocks reversed battery",
+      "pass": true
+    },
+    {
+      "check": "Trim wiper strapped to end",
+      "pass": true
+    },
+    {
+      "check": "Default OFF pullup has no dependency on AUX5",
+      "pass": true
+    },
+    {
+      "check": "Only Q3 provides intentional gate pull-down",
+      "pass": true
+    },
+    {
+      "check": "C9 regulator ESR is present",
+      "pass": true
+    },
+    {
+      "check": "No capacitor directly on TL431 cathode",
+      "pass": true
+    },
+    {
+      "check": "Fault signal is an open collector",
+      "pass": true
+    },
+    {
+      "check": "Fault pullup powered from receiving board, not AUX",
+      "pass": true
+    },
+    {
+      "check": "Loss of ENABLE releases fault transistor drive",
+      "pass": true
+    },
+    {
+      "check": "OVP calibratable with supplied trim",
+      "pass": true
+    },
+    {
+      "check": "Nominal hysteresis windows make physical sense",
+      "pass": true
+    },
+    {
+      "check": "Physical comparator network at 8 V, previous state False",
+      "pass": true
+    },
+    {
+      "check": "Physical comparator network at 8 V, previous state True",
+      "pass": true
+    },
+    {
+      "check": "Physical comparator network at 12 V, previous state False",
+      "pass": true
+    },
+    {
+      "check": "Physical comparator network at 12 V, previous state True",
+      "pass": true
+    },
+    {
+      "check": "Physical comparator network at 14.4 V, previous state False",
+      "pass": true
+    },
+    {
+      "check": "Physical comparator network at 14.4 V, previous state True",
+      "pass": true
+    },
+    {
+      "check": "Physical comparator network at 19 V, previous state False",
+      "pass": true
+    },
+    {
+      "check": "Physical comparator network at 19 V, previous state True",
+      "pass": true
+    },
+    {
+      "check": "Physical comparator network at 24 V, previous state False",
+      "pass": true
+    },
+    {
+      "check": "Physical comparator network at 24 V, previous state True",
+      "pass": true
+    },
+    {
+      "check": "Mutation control detects inverted OVP",
+      "pass": true
+    },
+    {
+      "check": "Sampled hysteresis never collapses",
+      "pass": true
+    },
+    {
+      "check": "Reference bias margin",
+      "pass": true
+    },
+    {
+      "check": "Supervisor and comparator sink budget",
+      "pass": true
+    },
+    {
+      "check": "MOSFET drive margin at conservative low input",
+      "pass": true
+    },
+    {
+      "check": "TVS residual voltage leaves MOSFET margin",
+      "pass": true
+    },
+    {
+      "check": "Secondary TVS clamp below regulator input rating at 25 C",
+      "pass": true
+    }
+  ],
+  "component_count": 72,
+  "terminal_count": 164,
+  "nominal_thresholds_V": {
+    "ov_off": 17.999999999989058,
+    "ov_return": 16.65852340242014,
+    "uv_start": 9.846857740963854,
+    "uv_off": 9.366584015024742
+  },
+  "trim_ohm": 2143.377081156359,
+  "sensitivity_envelope_5000_samples_V": {
+    "ov_off": [
+      17.519679368043104,
+      18.54289607939644
+    ],
+    "ov_return": [
+      16.223388382826016,
+      17.269663988643405
+    ],
+    "uv_start": [
+      9.439671865630674,
+      10.223760108164559
+    ],
+    "uv_off": [
+      9.008267396728794,
+      9.765681935378895
+    ]
+  },
+  "sensitivity_note": "Not guaranteed limits; assumes VF=0.4..0.85 V and buffer load 20..150 uA; calibrated trim held fixed; no transistor dynamic model.",
+  "loss_budget": [
+    {
+      "A": 1,
+      "diode_estimate_W": 0.5575,
+      "mosfet_hot_budget_W": 0.05,
+      "sum_W": 0.6075,
+      "drop_V": 0.6075
+    },
+    {
+      "A": 3.5,
+      "diode_estimate_W": 2.016875,
+      "mosfet_hot_budget_W": 0.6125,
+      "sum_W": 2.6293750000000005,
+      "drop_V": 0.7512500000000001
+    },
+    {
+      "A": 5,
+      "diode_estimate_W": 2.9375,
+      "mosfet_hot_budget_W": 1.25,
+      "sum_W": 4.1875,
+      "drop_V": 0.8375
+    }
+  ],
+  "hardware_measurements": null,
+  "spice_simulation": false,
+  "iso_qualification": false
+}

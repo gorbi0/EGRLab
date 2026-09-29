@@ -1,0 +1,77 @@
+Przeszedłem model połączeń skryptami, nie wzrokiem. Najpierw co wyszło czysto, żebyś wiedział, co jest pokryte:
+
+Kontrola	Wynik
+Zgodność sieci na obu końcach każdego kabla	211/211 bez rozjazdu
+Mapa GPIO firmware ↔ netlista (M1)	23/23 zgodne
+Kolizje kluczowania (rodzina + liczba pozycji + klucz)	brak; wszystkie IDC 4/6/8/10/16p mają różne klucze
+Sieci wiszące	tylko 4 wejścia termopar (zewnętrzne)
+Duplikaty definicji pinów	0
+Wyspy (elementy bez połączeń) na P01/P05/P07	brak
+SAFE_N — wyłącznie wyjścia otwarte	tak; U12.5 i U9.1 to wejścia
+Łańcuch MECH_OK	klucz → NC obu gniazd LOGGER → mostek adaptera T → pull-down; rozerwanie = 0
+Multiplekser CS prądowych	SN74HC139, enable = CURRENT_CS_N, A = MEAS_BANK → nigdy oba naraz; R_CS_IDLE trzyma wyłączone po resecie
+Progi OC po scaleniu rezystorów	OC_HIGH = 2,5×(1+10k/24,9k) = 3,504 V → +4,02 A; OC_LOW = 2,5×15/25 = 1,5 V → −4,00 A
+Zworka AUX	DPDT, biegun B odłącza RB4 w pozycji LO — poprawka F12 trzyma
+Diody gaszące cewek	D4/D5/D6, D8, D11+D12 obecne; COM TBD62083 = NC jest wtedy dopuszczalne
+Progi UVLO P01	8,74 V / 9,25 V na dzielniku + spadek D6 → ok. 9,3 / 9,8 V, zgodnie z deklaracją
+Testy pakietu	79/79, manifest SHA256 zgodny
+
+Teraz trzy rzeczy, które znalazłem.
+
+1. VPROT nie dochodzi do P05 — kanał VBAT jest fizycznie nieподłączony
+
+Na P05 jest dzielnik pomiaru napięcia instalacji: RV1 499k z sieci VPROT do ADC_CH7, dalej RB3 100k do masy i CF6 220 pF. Wszystko poprawne — poza tym, że sieć VPROT ma na P05 dokładnie jeden punkt: RV1.1. Żaden kabel jej tam nie przynosi.
+
+Do P05 wchodzą tylko cztery wiązki: DAQ (SPI), DAQOK, LV05 (5V_SYS / 3V3_IO / GND) i TAPS. Żadna nie niesie VPROT.
+
+Skutek w firmware: control_step wywala SUPPLY przy v[CH_VBAT] poza 9–16,5 V, a górna końcówka dzielnika wisi w powietrzu. Czyli albo TEST nie ruszy nigdy, albo — gorzej — wejście ustali się na wartości wyglądającej sensownie.
+
+Że to przeoczenie, a nie świadome usunięcie, potwierdza docs/03-uruchomienie.md:35, gdzie procedura odbioru każe podać „0/12/16 V na VPROT" przy kalibracji P05.
+
+Uwaga do poprawki, bo nie jest oczywista. LV05 to Mini-Fit Jr 4p i wszystkie cztery pozycje są zajęte. Nie da się dorzucić VPROT bez zmiany złącza. I nie wolno dołożyć go do grupy LV — osiem kabli LV03…LV10 jest zadeklarowanych jako wzajemnie wymienne (compatible_group = LV) i faktycznie mają identyczne sieci. Gdyby jeden z nich zaczął nieść 12 V, dałoby się go wpiąć w siedem gniazd spodziewających się 5 V i 3,3 V. Potrzebna jest osobna wiązka z własną grupą i własną blokadą — najprościej MSTB 5.08 2p, tak jak BAT.
+
+2. SENSOR_FAULT_N to jedyny sygnał fail-danger w całym schemacie
+
+Wszystkie gotowości są zrobione konsekwentnie: PSU_OK, DAQ_OK, DRIVE_OK, SENSOR_OK, CORE_LINK, PG_LINK są aktywne wysokim stanem i mają pull-down 10 k po stronie odbiornika (R_EXT_* na P04). Przerwany kabel = 0 = blokada. Wzorcowo.
+
+SENSOR_FAULT_N jest odwrotnie: aktywny niskim, z pull-upem 10 k po obu stronach (R_FAULT_PU na P08 i R_PU_SENSOR_FAULT_N na P03). Przerwanie wiązki SFAULT daje stan wysoki, czyli „brak awarii". A SFAULT to osobny kabel od wiązki SENSOR, więc jego przerwanie nie zabiera ani SENSOR_PERMIT, ani SENSOR_OK — zasilanie czujnika zostaje włączone, a informacja o przekroczeniu prądu z TPS2553 nie dociera do sterownika.
+
+Sprawdziłem, czy coś to kompensuje: SENSOR_OK na P08 powstaje jako P08_SUP3_N AND P08_SUP5_N — same lokalne szyny. Awaria ogranicznika prądu w nim nie uczestniczy, choć kontrakt interfejsów z MOD mówił o „braku lokalnej awarii wymagającej wyłączenia".
+
+Dwie drogi wyjścia: albo wpiąć SENSOR_FAULT_N (po inwersji) jako trzecie wejście bramki tworzącej SENSOR_OK na P08, albo przesyłać ten sygnał jako aktywny wysokim z pull-downem u odbiorcy. Pierwsza jest tańsza i nie zmienia wiązki.
+
+3. Dwie pozycje PANELSAFE do P04 prowadzą donikąd
+
+TEST_PRESENT i LOGGER_CLEAR przychodzą z panelu na P04 (J_PANELSAFEA.6 i .5) i na tej płytce nie mają żadnego odbiornika — jedyne ich konsumenty to MCP23017 na P03, który dostaje własne kopie wiązką PANELCORE. P11 rozprowadza je gwiazdą do obu płytek, więc kopia dla P04 jest zbędna.
+
+To nie jest błąd funkcjonalny, ale dla layoutu P04 oznacza dwie ścieżki-kikuty od złącza donikąd i dwie zajęte pozycje w 10-stykowym Mini-Ficie. Albo je wykorzystać, albo skrócić PANELSAFE do ośmiu pozycji.
+
+Drobiazgi
+
+SUPPLY (P01→P02) i VMOTOR (P02→P07) to oba MSTB 5.08 3p bez klucza, w tej samej grupie VPROT, o identycznych sieciach. Zamiana wtyków nie jest groźna (VPROT to jeden węzeł, P02 go tylko przepuszcza), ale zostawia P02 bez zasilania przy pozornie poprawnym połączeniu. Różna liczba pozycji albo kolor korpusu to zamyka.
+
+Próg OVP 18,00 V jest deklarowany dokładniej, niż wynika z układu: dzielnik pomiarowy jest zasilany przez D6 1N4148, którego spadek dryfuje −2 mV/°C. Przy 40 K zmiany temperatury to ok. 80 mV na progu, czyli 0,4%. Procedura każe zmierzyć rzeczywisty próg, więc to tylko kwestia brzmienia opisu.
+
+Czego brakuje w Waszych testach
+
+tests/test_v6.py ma szesnaście testów i wszystkie celują w rzeczy poprawione w tej rewizji. Nie ma wśród nich kontroli pokrycia sieci międzypłytkowych przez wiring.csv — i dlatego VPROT przeszedł. Ten test to kilkanaście linii:
+
+def test_every_cross_board_net_has_a_cable(self):
+    boards = collections.defaultdict(set)
+    for c in self.components.values():
+        for net in c['pins'].values():
+            if net != 'NC':
+                boards[net].add(c['board'])
+    wired = collections.defaultdict(set)
+    for w in self.wiring:
+        wired[w['net']] |= {w['from_board'], w['to_board']}
+    for net, brds in boards.items():
+        if len(brds) > 1 and net not in ('GND', 'AGND', 'PGND'):
+            self.assertFalse(brds - wired[net],
+                             f'{net}: brak wiązki do {sorted(brds - wired[net])}')
+
+Przy VPROT wywala się na {'P05'}. Warto dorzucić do tego drugi test: każda sieć, która na danej płytce ma wyłącznie pin złącza i żadnego odbiornika lokalnego — to wyłapie przypadek trzeci.
+
+Gdzie to stawia płytki
+
+P01 i P07 wychodzą z moich kontroli czyste — jeśli chcesz zacząć layout od jednej PCB, to są kandydaci. P05 ma blokadę: bez rozstrzygnięcia, którędy VPROT tam trafia, zaprojektujesz płytkę z martwym kanałem 7 i bez miejsca na dodatkowe złącze. Znalezienia 2 i 3 dotyczą P08/P03 i P04/P11, więc nie stoją na drodze P01 ani P07.

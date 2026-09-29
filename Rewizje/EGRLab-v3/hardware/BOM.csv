@@ -1,0 +1,71 @@
+ref;qty;part_or_requirement;package;function;stage;notes
+M1;1;Waveshare ESP32-S3-DEV-KIT-N32R16-M;modul posiadany;MCU;1;potwierdzic nadruk WROOM-2-N32R16V i rewizje plytki
+M2;1;Pololu 1451 / VNH5019;gotowy carrier;mostek H;8;"VDD pull-upow z MOTOR_PERMIT, nie na stale z 3V3"
+M3;1;TSR 2-2450;Traco Power;5V 2A;2;"wejscie 6.5-36V; nie gwarantuje cold crank"
+M4;1;TSR 2-2433;Traco Power;3.3V 2A;2;nie laczyc wyjscia z regulatorem plytki Waveshare
+M5;1;LM74800EVM-CD;TI evaluation module;ochrona wejscia 12V;2;"WROCILO w v3: odwrotna polaryzacja + OVP; ustawic i ZMIERZYC 17.5-18.5V"
+U1;1;AD7606BSTZ;LQFP-64 + adapter na DIP;ADC 8 kanalow;5;"wersja B wymagana do software mode; zwykly AD7606 tylko +-10V"
+U2 U3;2;INA240A2EDRQ1;SOIC-8;prad TEST i LOGGER;6;"gain 50; nie zamieniac na A1 bez zmiany skalowania"
+U4;1;TLV1702QDGKRQ1;VSSOP-8;okno pradu (oba znaki);4;wyjscia open collector wprost w wezel SAFE_N
+U5;1;TPS3808G33;SOT-23-6;supervisor 3V3_IO;4;wyjscie open drain do SAFE_N
+U6;1;TLV1702QDGKRQ1;VSSOP-8;okno napieciowe 5V_A;4;"WROCILO w v3: z 5V_A wyprowadzone sa progi OC i odniesienie INA"
+U13;1;ADR4525BRZ;SOIC-8;odniesienie 2.5V;4;"WROCILO w v3; osobne kondensatory wg datasheet"
+U7;1;SN74HC123;SOIC-16/DIP-16;watchdog heartbeat;4;"R220k/C1uF jako start; czas ZMIERZYC i dobrac 50-150 ms"
+U8;1;SN74HC14;SOIC-14/DIP-14;debounce ARM, inwersja watchdoga;4;nieuzywane wejscia ustalone
+U9;1;SN74HC74;SOIC-14/DIP-14;latch sprzetowego ARM;4;"reset asynchroniczny; brak auto-restartu"
+U10 U12;2;SN74HC08;SOIC-14/DIP-14;6 bramek AND;4;"PERMIT (2), PWM (1), zezwolenie czujnika (3); zadna nie wisi na SAFE_N"
+U11;1;TPS2553DBVR;SOT-23-6;limit zasilania czujnika;9;"RILIM 249k ~0.1A, nie 20mA"
+U14 U15;2;MAX31856MUD+;TSSOP-14 / modul 3V3;termopary K;7;modul nie moze wymuszac logiki 5V
+U16;1;TCAN1051VDRQ1;SOIC-8;CAN z VIO 3V3;7;"wariant V; S fizycznie high w LISTEN"
+Q2-Q6;5;2N7002;SOT-23;sterowanie cewkami sygnalowymi;5;po jednej galezi na cewke
+Q7;1;MOSFET N logic-level 60V;RDSon dla VGS 2.5/3.3V;cewka K_PWR;8;nie wybierac po samym VGS(th)
+Q8;1;2N7002;SOT-23;wyjscie otwarte watchdoga;4;"F01: push-pull 74HC nie moze wisiec na wezle wire-AND"
+KMEAS1 KMEAS2 KMEAS3;3;G6K-2F-Y DC5;DPDT 5V;bank odczepow (5 torow);5;jedna funkcja, jedna cewka MEAS_EN
+KCUR;1;G6K-2F-Y DC5;DPDT 5V;multiplekser pradu TEST/LOGGER;6;"F03: osobny przekaznik; w v2 dzielil cewke z bankiem"
+KSENSOR;1;G6K-2F-Y DC5;DPDT 5V;odlaczenie obu linii czujnika;9;"5V i AGND_SENSOR, przed zworka JP_SENSOR"
+KPWR;1;przekaznik samochodowy NO 12V >=20A;gniazdo z blokada;odciecie VMOTOR;8;czas opadania i cewka z datasheet konkretnego modelu
+RSH_T RSH_L;2;5 mOhm 2W 1% 4-terminal;Kelvin (np. WSK2512);boczniki;6;"TCR<=50ppm/K; zweryfikowac 4 styki w rzeczywistym SKU"
+D1;1;SM8S24CA;automotive TVS bidirectional;wejscie 12V;2;"clamp ok. 39V przy Ipp: NIE chroni sam TSR (max 36V) - stad modul OVP"
+D2;1;SMCJ18A;TVS unidirectional;VMOTOR;8;regeneracja przy zmianie kierunku, nie ciagly hamulec
+D3;1;PESD2CAN;SOT-23;ESD na CAN;7;krotki powrot do masy przy zlaczu
+D4-D10;7;1N4148/1N4007;diody cewek;przekazniki sygnalowe;5;katoda do +5V
+D11 D12;2;1N4007 + Zener 18V;obwod cewki K_PWR;szybkie opadanie;8;polaryzacja zgodna z kierunkiem energii cewki
+F1;1;bezpiecznik 10A + uchwyt;samochodowy;glowne wejscie;2;ten sam uchwyt dla zasilacza i dla klem
+F2 F3;2;bezpiecznik 1A + uchwyt;DC;galezie logiki;2;zapas na inrush zweryfikowac
+F4;1;bezpiecznik 5A + uchwyt;DC;TEST motor;8;zmiana dopiero po kwalifikacji pradu zaworu
+RM1-RM8;8;150 kOhm 0.1% >=200V;1206;odczepy pin1/pin3 obu adapterow;5;po 2 szeregowo; MONTOWAC PRZY ZLACZU EGR
+RS1-RS12;12;49.9 kOhm 0.1% >=100V;1206;odczepy pin4/5/6 obu adapterow;5;po 2 szeregowo; MONTOWAC PRZY ZLACZU EGR
+RA1 RA2;2;150 kOhm 0.1%;1206;kanal AUX galaz HI;5;dzielnik zamykany dopiero przez JP_AUX
+RA3 RA4;2;49.9 kOhm 0.1%;1206;kanal AUX galaz LO;5;LO daje +-2.5V i 76 uV/LSB
+RV1 RV2;2;249 kOhm 0.1%;1206;dzielnik VBAT;5;pojedynczy tor
+RB1-RB4;4;100 kOhm 0.1%;0805;dolne rezystory M_A/M_B/VBAT/AUX-HI;5;"RB4 ODLACZANY przez JP_AUX w pozycji LO"
+RC1-RC4;4;10 Ohm 0.1%;0805;Kelvin do INA;6;pary dobrane
+RO1 RO2;2;100 Ohm;0805;wyjscia INA do multipleksera;6;filtr 1nF
+R_OC;1;zestaw 3k/7k/1k/9k 0.1%;0805;progi +-4A oraz serwisowe +-8A;4;"po 2 kazdej wartosci; +-8A domyslnie NIEOBSADZONE"
+R_SUP;1;zestaw 15k/10k/6k/19k/4k/21k 0.1%;0805;progi okna 5V_A;4;0.4 x 5V_A kontra 1.9 i 2.1 V
+R_MISC;1;zestaw 100/330/1k/2.2k/4.7k/10k/47k/100k/220k/249k;0805/1206;pull-upy, filtry, watchdog, ILIM;4;"2.2k 0.5W na VMOTOR; po 10 szt."
+C_ADC;1;zestaw wg typowej aplikacji AD7606B;X7R;zasilanie i odniesienie ADC;5;"100nF przy kazdej nodze, 1uF REGCAP, 10uF reference"
+CF1-CF7;7;220 pF C0G;0805;filtry RC odczepow;5;M_A/M_B/p4/p5/p6/VBAT/AUX
+CI1-CI5;5;1 nF C0G;0805;filtry pradu i OC;6;rozniczkowe wejscia opcjonalnie DNP
+C_BULK;1;1000 uF 50V low ESR;radial;VMOTOR;8;prad tetnien i temperatura odpowiednie
+C_A;1;470 uF 10V low ESR + 1 Ohm 0.5W;radial/1206;filtr 5V_A;5;spadek szyny zmierzyc
+C_MISC;1;100nF x30, 1uF x8, 10uF x12, 100uF x2, 10nF x8;X7R / elektrolit;odsprzeganie;2;napiecia znamionowe stosowne do szyny
+SD1;1;microSD High Endurance 32GB + gniazdo SPI 3V3;FAT32;zapis;7;"test latency; bez translatorow rezystorowych do 5V"
+TC1 TC2;2;termopara K izolowana + przewod kompensacyjny;mocowanie mechaniczne;temperatury;7;"TC1 korpus napedu, TC2 kolnierz"
+J_BNC;1;gniazdo BNC + rezystor 330 Ohm;panel;SCOPE_TRIG do oscyloskopu;7;"DHO804 nie ma wejscia EXT - sygnal zajmuje kanal analogowy"
+R_LOAD;1;rezystor 12 Ohm 25W + radiator;TO-220/druciany;obciazenie zastepcze;8;"ok. 1.2 A i 17 W przy 14.4 V - radiator obowiazkowy"
+SW_STOP;1;grzybek zatrzaskowy NC;panel;E-STOP;4;"styk NC w JEDYNEJ galezi pull-upu SAFE_N; przerwany przewod = STOP"
+SW_ARM SW_MARK;2;przycisk chwilowy NO;panel;ARM / MARK;4;"ARM przez 74HC14 do CLK latcha; MARK na GPIO41"
+SW_MODE SW_CAN;2;przelacznik kluczykowy TEST / LISTEN;panel;tryby;4;CAN ACTIVE nieobslugiwany w firmware
+SW_LOG1 SW_LOG2;2;krancowka NC w gniezdzie LOGGER;mechaniczna;interlock + wykrycie adaptera;4;otwiera petle po wlozeniu wtyku
+JP_SENSOR;1;listwa 2x3 + 2 zworki;na adapterze TEST;polaryzacja czujnika;10;"ustawiane raz, bez napiecia; SENSOR_CHECK weryfikuje"
+JP_AUX;1;przelacznik DPDT albo listwa 2x3 + 2 zworki;panel;zakres AUX HI/LO;5;"F12: przelacza TAKZE dolny rezystor RB4"
+JP_OS;1;listwa 3x2 + 3 zworki;przy ADC;OS[2:0];5;"software mode wymaga 111; hardware mode wg datasheet"
+J_LOG J_TEST J_PWR;1;komplet zlaczy blokowanych niezamiennych;LOGGER 12p, TEST 8p, PWR 2p;wiazki;0;prad i temperatura wg przewodow
+J_EGR;1;komplet dopasowany do rzeczywistych zlaczy OEM;meski + zenski + TEST;adaptery L1/L2/T;0;KUPOWAC DOPIERO PO IDENTYFIKACJI OBUDOWY CUD87
+J_OBD;1;OBD-II meski z przewodem;16p;CAN;7;"obsadzone 6/14/4; pin 16 nie zasila niczego; pin 5 niepodlaczony"
+PROBE;1;komplet sond back-probe;adapter L2;rejestracja bez ruszania zlacza;10;ostre koncowki - twarde etui do bagazu kabinowego
+MECH;1;obudowa, przepusty, dystanse, radiator, przewody;kabina/stol;montaz;0;"wiazki odciazone; plytek nie zostawiac w komorze silnika"
+OPT1;1;P-MOS 60V + Zener 15V + 100k;DPAK;alternatywa dla M5;2;"tylko jesli rezygnujesz z OVP; DREN od akumulatora, ZRODLO od strony chronionej"
+OPT2;1;SSD1306 OLED 128x64 I2C;opcjonalne;UI lokalne;14;brak sterownika w firmware
+OPT3;1;DS3231 + CR2032 bez ladowarki;opcjonalne;UTC;14;brak sterownika w firmware

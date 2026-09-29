@@ -1,0 +1,132 @@
+[
+  {
+    "id": "F01",
+    "severity": "blocker",
+    "modules": "P02/P05",
+    "problem": "Brak fizycznego połączenia VPROT do P05",
+    "acceptance": "Pełna droga od źródła do dzielnika, bez zmiany LV; dedykowany niezamienny port.",
+    "status": "VERIFIED_OFFLINE",
+    "evidence": [
+      "evidence/electrical-pass.json",
+      "../verification/python-tests.txt"
+    ]
+  },
+  {
+    "id": "F02",
+    "severity": "blocker",
+    "modules": "P03/P08/firmware",
+    "problem": "SFAULT po przerwaniu wskazuje brak awarii",
+    "acceptance": "Utrata łącza lub zasilania daje HEALTHY=0; błąd zatrzymuje TEST i nie wznawia ruchu.",
+    "status": "VERIFIED_OFFLINE",
+    "evidence": [
+      "evidence/electrical-pass.json",
+      "../verification/python-tests.txt"
+    ]
+  },
+  {
+    "id": "F03",
+    "severity": "minor",
+    "modules": "P04/P11",
+    "problem": "PANELSAFE niesie dwie kopie sygnałów bez odbiornika",
+    "acceptance": "Piny 5/6 NC; korpus pozostaje 10p i odróżniony od PANELCORE.",
+    "status": "VERIFIED_OFFLINE",
+    "evidence": [
+      "evidence/electrical-pass.json",
+      "../verification/python-tests.txt"
+    ]
+  },
+  {
+    "id": "F04",
+    "severity": "minor",
+    "modules": "P01/P02/P07",
+    "problem": "SUPPLY i VMOTOR można pomylić",
+    "acceptance": "Jednoznaczna mechanika/klucz lub świadomie udokumentowana zgodność; opis koloru nie jest blokadą.",
+    "status": "VERIFIED_OFFLINE",
+    "evidence": [
+      "evidence/electrical-pass.json",
+      "../verification/python-tests.txt"
+    ]
+  },
+  {
+    "id": "F05",
+    "severity": "documentation",
+    "modules": "P01",
+    "problem": "Próg OVP opisany nadmiernie dokładnie",
+    "acceptance": "Próg nominalny około 18V; kalibracja pokojowa i próba temperaturowa.",
+    "status": "VERIFIED_OFFLINE",
+    "evidence": [
+      "STATUS.md"
+    ]
+  },
+  {
+    "id": "T01",
+    "severity": "blocker",
+    "modules": "tests",
+    "problem": "Kontrola zasilania pomijana w teście połączeń",
+    "acceptance": "Każda szyna i masa objęta grafem połączeń; test wykazuje F01 na oryginalnym V6.",
+    "status": "VERIFIED_OFFLINE",
+    "evidence": [
+      "evidence/electrical-pass.json",
+      "../verification/python-tests.txt"
+    ]
+  },
+  {
+    "id": "G01",
+    "severity": "gate",
+    "modules": "ALL",
+    "problem": "Dopuszczenie do layoutu i produkcji",
+    "acceptance": "Oddzielne statusy schematu, layoutu, produkcji i fizycznego odbioru; brak automatycznej zgody po samych testach.",
+    "status": "IMPLEMENTED_GATES_NOT_RELEASED",
+    "evidence": [
+      "STATUS.md"
+    ]
+  },
+  {
+    "id": "F06",
+    "severity": "blocker",
+    "modules": "firmware",
+    "problem": "Brak kontroli wieku zapamiętanych wejść MCP23017",
+    "acceptance": "Po 100ms bez odczytu aktywny TEST zatrzymany, INPUTS_STALE, brak automatycznego wznowienia",
+    "status": "VERIFIED_OFFLINE",
+    "evidence": [
+      "../verification/test_health-results.txt",
+      "../tests/test_v61.py"
+    ]
+  },
+  {
+    "id": "F07",
+    "severity": "minor",
+    "modules": "P03/P11",
+    "problem": "Nieużywana kopia STATUS_LED do panelu, dioda znajduje się na CORE",
+    "acceptance": "PANELCORE.6 NC po obu stronach, dioda CORE zachowana",
+    "status": "VERIFIED_OFFLINE",
+    "evidence": [
+      "evidence/F07-before-fix.json",
+      "patches/F07.diff",
+      "evidence/electrical-pass.json"
+    ]
+  },
+  {
+    "id": "T02",
+    "severity": "test",
+    "modules": "ALL",
+    "problem": "Brak kontroli portów bez lokalnego odbiornika",
+    "acceptance": "Tylko wyliczone wyjątki: dwie masy ekranu i dwie niewykorzystane pozycje standardowego LV",
+    "status": "VERIFIED_OFFLINE",
+    "evidence": [
+      "../tests/test_v61.py"
+    ]
+  },
+  {
+    "id": "G02",
+    "severity": "gate",
+    "modules": "ALL",
+    "problem": "Import EDA nie jest zatwierdzonym schematem wykonawczym",
+    "acceptance": "Kontrola symboli i footprintów, funkcjonalny układ arkuszy, przegląd niezależny; dopiero potem zamrożenie do layoutu",
+    "status": "OPEN",
+    "evidence": [
+      "../eda/README.md",
+      "bramki-modulow.csv"
+    ]
+  }
+]

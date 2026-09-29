@@ -1,0 +1,643 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-25T19:38:33",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P03.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole PTH 1 [3V3_IO] na TP3",
+                    "pos": {
+                        "x": 47.81,
+                        "y": 21.6
+                    },
+                    "uuid": "81e9593d-f103-48f5-8486-3a23dc23852c"
+                },
+                {
+                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 1,6017 mm",
+                    "pos": {
+                        "x": 51.62,
+                        "y": 21.6
+                    },
+                    "uuid": "0a69516a-c75c-41f3-89a9-d8e4821ec10a"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz 3V3_IO)",
+            "items": [
+                {
+                    "description": "Pole PTH 1 [GND] na TP4",
+                    "pos": {
+                        "x": 51.62,
+                        "y": 21.6
+                    },
+                    "uuid": "0da3673e-f43d-48b9-b192-067fdabed268"
+                },
+                {
+                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 5,6000 mm",
+                    "pos": {
+                        "x": 51.62,
+                        "y": 16.0
+                    },
+                    "uuid": "6009f449-a1d0-4094-9d26-8419038828d8"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci 3V3_IO oraz GND)",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 1,6017 mm",
+                    "pos": {
+                        "x": 51.62,
+                        "y": 21.6
+                    },
+                    "uuid": "0a69516a-c75c-41f3-89a9-d8e4821ec10a"
+                },
+                {
+                    "description": "Pole PTH 1 [GND] na TP4",
+                    "pos": {
+                        "x": 51.62,
+                        "y": 21.6
+                    },
+                    "uuid": "0da3673e-f43d-48b9-b192-067fdabed268"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 5,6000 mm",
+                    "pos": {
+                        "x": 51.62,
+                        "y": 16.0
+                    },
+                    "uuid": "6009f449-a1d0-4094-9d26-8419038828d8"
+                },
+                {
+                    "description": "Pole PTH 1 [GND] na TP4",
+                    "pos": {
+                        "x": 51.62,
+                        "y": 21.6
+                    },
+                    "uuid": "0da3673e-f43d-48b9-b192-067fdabed268"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 1,6017 mm",
+                    "pos": {
+                        "x": 51.62,
+                        "y": 21.6
+                    },
+                    "uuid": "0a69516a-c75c-41f3-89a9-d8e4821ec10a"
+                },
+                {
+                    "description": "Pole PTH 1 [GND] na TP4",
+                    "pos": {
+                        "x": 51.62,
+                        "y": 21.6
+                    },
+                    "uuid": "0da3673e-f43d-48b9-b192-067fdabed268"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu (klasa sieci 'Power' prześwit 0,3000 mm; obecnie 0,2726 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [/I2C_SDA] na B.Cu, długość 2,2530 mm",
+                    "pos": {
+                        "x": 47.8331,
+                        "y": 24.2207
+                    },
+                    "uuid": "25405754-33cd-43e7-b3de-b988aa6028a4"
+                },
+                {
+                    "description": "Pole PTH 1 [3V3_IO] na TP3",
+                    "pos": {
+                        "x": 47.81,
+                        "y": 21.6
+                    },
+                    "uuid": "81e9593d-f103-48f5-8486-3a23dc23852c"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 1,6017 mm",
+                    "pos": {
+                        "x": 51.62,
+                        "y": 21.6
+                    },
+                    "uuid": "0a69516a-c75c-41f3-89a9-d8e4821ec10a"
+                },
+                {
+                    "description": "Pole PTH 1 [GND] na TP4",
+                    "pos": {
+                        "x": 51.62,
+                        "y": 21.6
+                    },
+                    "uuid": "0da3673e-f43d-48b9-b192-067fdabed268"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 5,6000 mm",
+                    "pos": {
+                        "x": 51.62,
+                        "y": 16.0
+                    },
+                    "uuid": "6009f449-a1d0-4094-9d26-8419038828d8"
+                },
+                {
+                    "description": "Pole PTH 1 [GND] na TP4",
+                    "pos": {
+                        "x": 51.62,
+                        "y": 21.6
+                    },
+                    "uuid": "0da3673e-f43d-48b9-b192-067fdabed268"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P03'",
+            "items": [
+                {
+                    "description": "Footprint U22",
+                    "pos": {
+                        "x": 94.4,
+                        "y": 17.35
+                    },
+                    "uuid": "0a727af0-578b-43ce-aa08-2cc836270b21"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P03'",
+            "items": [
+                {
+                    "description": "Footprint TP2",
+                    "pos": {
+                        "x": 40.2,
+                        "y": 21.6
+                    },
+                    "uuid": "1be4fec0-b96a-47f4-b4fe-8157079e9c73"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P03'",
+            "items": [
+                {
+                    "description": "Footprint SD1",
+                    "pos": {
+                        "x": 58.5,
+                        "y": 96.6
+                    },
+                    "uuid": "1ce436ec-b262-4cdd-8687-01ab6be68f62"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P03'",
+            "items": [
+                {
+                    "description": "Footprint U14",
+                    "pos": {
+                        "x": 92.05,
+                        "y": 46.2
+                    },
+                    "uuid": "3d49628d-3a54-4dc3-bf60-847c6274ae9b"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P03'",
+            "items": [
+                {
+                    "description": "Footprint C10",
+                    "pos": {
+                        "x": 113.64,
+                        "y": 19.35
+                    },
+                    "uuid": "4374fba8-3576-4eac-ace8-896ce6237000"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P03'",
+            "items": [
+                {
+                    "description": "Footprint U23",
+                    "pos": {
+                        "x": 47.35,
+                        "y": 76.2
+                    },
+                    "uuid": "4c91fd05-5c2c-40e1-898f-8163a748ec19"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P03'",
+            "items": [
+                {
+                    "description": "Footprint U3",
+                    "pos": {
+                        "x": 122.1,
+                        "y": 61.8
+                    },
+                    "uuid": "4c95a0ae-b790-41af-a699-66e11a16912c"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P03'",
+            "items": [
+                {
+                    "description": "Footprint C7",
+                    "pos": {
+                        "x": 110.04,
+                        "y": 89.35
+                    },
+                    "uuid": "5089591e-3ce4-4ce1-824e-cc59b7b288b5"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P03'",
+            "items": [
+                {
+                    "description": "Footprint TP3",
+                    "pos": {
+                        "x": 47.81,
+                        "y": 21.6
+                    },
+                    "uuid": "512a0b3b-1bbf-4d2c-bf54-83518b4f09d8"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P03'",
+            "items": [
+                {
+                    "description": "Footprint TP1",
+                    "pos": {
+                        "x": 44.0,
+                        "y": 21.6
+                    },
+                    "uuid": "5294e917-6b94-44af-9017-b27be7cf7810"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P03'",
+            "items": [
+                {
+                    "description": "Footprint C4",
+                    "pos": {
+                        "x": 122.15,
+                        "y": 77.34
+                    },
+                    "uuid": "54be1556-20c3-45fd-b364-ddbb4ea8547c"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P03'",
+            "items": [
+                {
+                    "description": "Footprint TP4",
+                    "pos": {
+                        "x": 51.62,
+                        "y": 21.6
+                    },
+                    "uuid": "58b92591-7c9c-4eea-b751-2b7ec1f337ef"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P03'",
+            "items": [
+                {
+                    "description": "Footprint U11",
+                    "pos": {
+                        "x": 57.3,
+                        "y": 27.6
+                    },
+                    "uuid": "6c842a1b-7e51-41b8-a50e-00076368b167"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P03'",
+            "items": [
+                {
+                    "description": "Footprint C11",
+                    "pos": {
+                        "x": 49.35,
+                        "y": 56.96
+                    },
+                    "uuid": "71a89273-4430-4504-9e7c-780e33e4095b"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P03'",
+            "items": [
+                {
+                    "description": "Footprint C1",
+                    "pos": {
+                        "x": 76.75,
+                        "y": 32.9
+                    },
+                    "uuid": "730536d4-10e2-4cc9-887b-03b43a486da4"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P03'",
+            "items": [
+                {
+                    "description": "Footprint U13",
+                    "pos": {
+                        "x": 90.8,
+                        "y": 87.35
+                    },
+                    "uuid": "75653185-ba1f-4809-8ca7-672f8a60504d"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P03'",
+            "items": [
+                {
+                    "description": "Footprint C9",
+                    "pos": {
+                        "x": 139.79,
+                        "y": 17.2
+                    },
+                    "uuid": "7c969ded-07a4-4ecc-93eb-1545ffcaa700"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P03'",
+            "items": [
+                {
+                    "description": "Footprint U12",
+                    "pos": {
+                        "x": 15.2,
+                        "y": 77.4
+                    },
+                    "uuid": "87b2022d-a40c-49d3-b949-e149eac04ea6"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P03'",
+            "items": [
+                {
+                    "description": "Footprint C6",
+                    "pos": {
+                        "x": 34.44,
+                        "y": 79.4
+                    },
+                    "uuid": "95f90250-f86b-4db7-a186-35d756bd3f86"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P03'",
+            "items": [
+                {
+                    "description": "Footprint M1",
+                    "pos": {
+                        "x": 34.29,
+                        "y": 56.75
+                    },
+                    "uuid": "968c509b-bb76-45f1-9e3b-9468f5093e80"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P03'",
+            "items": [
+                {
+                    "description": "Footprint J10",
+                    "pos": {
+                        "x": 44.0,
+                        "y": 16.0
+                    },
+                    "uuid": "9d301dfe-8765-453d-91a2-5a7ecc6cf352"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P03'",
+            "items": [
+                {
+                    "description": "Footprint C2",
+                    "pos": {
+                        "x": 98.0,
+                        "y": 80.55
+                    },
+                    "uuid": "b0778624-eac9-443f-ad39-d78131c73da1"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P03'",
+            "items": [
+                {
+                    "description": "Footprint TP5",
+                    "pos": {
+                        "x": 117.6,
+                        "y": 48.8
+                    },
+                    "uuid": "b8cd264b-d791-4ee3-a3ef-bc4bec0c0c1c"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P03'",
+            "items": [
+                {
+                    "description": "Footprint C5",
+                    "pos": {
+                        "x": 55.3,
+                        "y": 46.84
+                    },
+                    "uuid": "b9d42235-0214-4039-8bb9-e665eb374606"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P03'",
+            "items": [
+                {
+                    "description": "Footprint U21",
+                    "pos": {
+                        "x": 120.55,
+                        "y": 15.2
+                    },
+                    "uuid": "d3434656-cbc8-491e-aaac-c6060c01ea6e"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P03'",
+            "items": [
+                {
+                    "description": "Footprint C8",
+                    "pos": {
+                        "x": 111.29,
+                        "y": 48.2
+                    },
+                    "uuid": "de0a5969-6f91-47a1-8a71-b44a8d5473c5"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P03'",
+            "items": [
+                {
+                    "description": "Footprint TP6",
+                    "pos": {
+                        "x": 55.43,
+                        "y": 21.6
+                    },
+                    "uuid": "fccb6725-7eae-4be1-940a-f0ca3a284270"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Obecna konfiguracja nie zawiera biblioteki footprintów 'P03'",
+            "items": [
+                {
+                    "description": "Footprint C3",
+                    "pos": {
+                        "x": 127.18,
+                        "y": 66.3
+                    },
+                    "uuid": "fdce56d1-13d9-4c9b-b635-168ae3f615f0"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        }
+    ]
+}

@@ -1,0 +1,174 @@
+{
+  "checks": [
+    {
+      "name": "Native DRC / unconnected / schematic parity",
+      "pass": true,
+      "detail": {
+        "violations": 0,
+        "unconnected_items": 0,
+        "schematic_parity": 0
+      }
+    },
+    {
+      "name": "Two layers and 1.6 mm FR4",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "160 x 120 mm outline",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Four M3 holes at 5 mm offsets",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Main carrier inventory; adapter capacitors excluded",
+      "pass": true,
+      "detail": {
+        "footprints": 92
+      }
+    },
+    {
+      "name": "Every numbered pad matches exported XML",
+      "pass": true,
+      "detail": {
+        "pads": 337,
+        "wrong": []
+      }
+    },
+    {
+      "name": "MCP100 D and 2N3904 physical pin assignment",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "IDC finished drill 1.2 mm, pad 1.9 mm",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Keys and SENSOR spare pads are NC",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Harness PTHs for AWG22 and AWG28",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Cable tie anchors 10-15 mm from solder rows",
+      "pass": true,
+      "detail": {
+        "J1": [
+          12.0
+        ],
+        "J2": [
+          12.0,
+          14.54
+        ]
+      }
+    },
+    {
+      "name": "Tie straps and M3 keep copper off both faces",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Carrier decouplers at most 8 mm from supply pin",
+      "pass": true,
+      "detail": {
+        "U1/C4": 7.135,
+        "U2/C5": 7.05,
+        "U3/C6": 6.173,
+        "U4/C7": 5.67,
+        "U5/C8": 5.67,
+        "U6/C9": 5.67,
+        "U7/C10": 5.67,
+        "U8/C11": 4.81,
+        "U9/C12": 4.81,
+        "U10/C13": 4.81,
+        "U11/C14": 6.515
+      }
+    },
+    {
+      "name": "Watchdog RC traces short, locked and without vias",
+      "pass": true,
+      "detail": {
+        "WD_RC": {
+          "length_mm": 11.334,
+          "vias": 0,
+          "all_front_locked": true
+        },
+        "WD_C": {
+          "length_mm": 6.399,
+          "vias": 0,
+          "all_front_locked": true
+        }
+      }
+    },
+    {
+      "name": "C1 lands on U1 timing nodes, not ground",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Tracks >=0.30 mm; vias 0.8/0.4 mm",
+      "pass": true,
+      "detail": {
+        "minimum_track_mm": 0.3,
+        "vias": 30
+      }
+    },
+    {
+      "name": "Ground pours on both sides, no isolated islands",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Harness and connector ground pads retain thermals",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "No DRC exclusions; minimum clearance 0.25 mm",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Every main part has visible reference",
+      "pass": true,
+      "detail": null
+    }
+  ],
+  "negative_controls": [
+    {
+      "mutation": "Swap local supervisor ground",
+      "target_check": "MCP100 D and 2N3904 physical pin assignment",
+      "detected": true
+    },
+    {
+      "mutation": "Wrong IDC hole",
+      "target_check": "IDC finished drill 1.2 mm, pad 1.9 mm",
+      "detected": true
+    },
+    {
+      "mutation": "Disabled tie keepout",
+      "target_check": "Tie straps and M3 keep copper off both faces",
+      "detected": true
+    },
+    {
+      "mutation": "Decoupler moved away",
+      "target_check": "Carrier decouplers at most 8 mm from supply pin",
+      "detected": true
+    },
+    {
+      "mutation": "Grounded timing capacitor",
+      "target_check": "C1 lands on U1 timing nodes, not ground",
+      "detected": true
+    }
+  ]
+}

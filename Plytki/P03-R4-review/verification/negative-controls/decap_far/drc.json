@@ -1,0 +1,758 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-27T17:33:42",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P03.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole PTH 1 [3V3_CORE] na C9",
+                    "pos": {
+                        "x": 139.79,
+                        "y": 29.2
+                    },
+                    "uuid": "d153f853-bc21-4659-8216-df4bb47f2c92"
+                },
+                {
+                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 2,8284 mm",
+                    "pos": {
+                        "x": 137.79,
+                        "y": 15.2
+                    },
+                    "uuid": "67996b60-a7cc-45d0-9e1c-33fefa62365b"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci ADC_BUSY oraz 3V3_CORE)",
+            "items": [
+                {
+                    "description": "Ścieżka [ADC_BUSY] na B.Cu, długość 6,3922 mm",
+                    "pos": {
+                        "x": 144.5639,
+                        "y": 24.65
+                    },
+                    "uuid": "badfd35c-907b-4895-8956-2fab24ebfb15"
+                },
+                {
+                    "description": "Pole PTH 1 [3V3_CORE] na C9",
+                    "pos": {
+                        "x": 139.79,
+                        "y": 29.2
+                    },
+                    "uuid": "d153f853-bc21-4659-8216-df4bb47f2c92"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci ADC_BUSY oraz 3V3_CORE)",
+            "items": [
+                {
+                    "description": "Ścieżka [ADC_BUSY] na B.Cu, długość 10,0341 mm",
+                    "pos": {
+                        "x": 140.0439,
+                        "y": 29.17
+                    },
+                    "uuid": "21dfcb95-475f-41b8-bf10-bd1021077848"
+                },
+                {
+                    "description": "Pole PTH 1 [3V3_CORE] na C9",
+                    "pos": {
+                        "x": 139.79,
+                        "y": 29.2
+                    },
+                    "uuid": "d153f853-bc21-4659-8216-df4bb47f2c92"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [ADC_BUSY] na B.Cu, długość 6,3922 mm",
+                    "pos": {
+                        "x": 144.5639,
+                        "y": 24.65
+                    },
+                    "uuid": "badfd35c-907b-4895-8956-2fab24ebfb15"
+                },
+                {
+                    "description": "Pole PTH 1 [3V3_CORE] na C9",
+                    "pos": {
+                        "x": 139.79,
+                        "y": 29.2
+                    },
+                    "uuid": "d153f853-bc21-4659-8216-df4bb47f2c92"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [ADC_BUSY] na B.Cu, długość 10,0341 mm",
+                    "pos": {
+                        "x": 140.0439,
+                        "y": 29.17
+                    },
+                    "uuid": "21dfcb95-475f-41b8-bf10-bd1021077848"
+                },
+                {
+                    "description": "Pole PTH 1 [3V3_CORE] na C9",
+                    "pos": {
+                        "x": 139.79,
+                        "y": 29.2
+                    },
+                    "uuid": "d153f853-bc21-4659-8216-df4bb47f2c92"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci ADC_CONVST oraz 3V3_CORE)",
+            "items": [
+                {
+                    "description": "Ścieżka [ADC_CONVST] na F.Cu, długość 5,6474 mm",
+                    "pos": {
+                        "x": 140.5,
+                        "y": 33.159999
+                    },
+                    "uuid": "935bc423-cef2-4d6a-bbb4-d8611030e814"
+                },
+                {
+                    "description": "Pole PTH 1 [3V3_CORE] na C9",
+                    "pos": {
+                        "x": 139.79,
+                        "y": 29.2
+                    },
+                    "uuid": "d153f853-bc21-4659-8216-df4bb47f2c92"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,1100 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [ADC_CONVST] na F.Cu, długość 5,6474 mm",
+                    "pos": {
+                        "x": 140.5,
+                        "y": 33.159999
+                    },
+                    "uuid": "935bc423-cef2-4d6a-bbb4-d8611030e814"
+                },
+                {
+                    "description": "Pole PTH 1 [3V3_CORE] na C9",
+                    "pos": {
+                        "x": 139.79,
+                        "y": 29.2
+                    },
+                    "uuid": "d153f853-bc21-4659-8216-df4bb47f2c92"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz MEAS_EN)",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [GND] na C9",
+                    "pos": {
+                        "x": 139.79,
+                        "y": 24.2
+                    },
+                    "uuid": "92e2987c-6e55-4e47-9c50-d55c1d1d4799"
+                },
+                {
+                    "description": "Ścieżka [MEAS_EN] na B.Cu, długość 0,8475 mm",
+                    "pos": {
+                        "x": 140.49,
+                        "y": 24.6894
+                    },
+                    "uuid": "fb3b80cd-a223-4b82-9b07-47ddaec0014a"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz MEAS_EN)",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [GND] na C9",
+                    "pos": {
+                        "x": 139.79,
+                        "y": 24.2
+                    },
+                    "uuid": "92e2987c-6e55-4e47-9c50-d55c1d1d4799"
+                },
+                {
+                    "description": "Ścieżka [MEAS_EN] na B.Cu, długość 1,6994 mm",
+                    "pos": {
+                        "x": 142.1894,
+                        "y": 24.6894
+                    },
+                    "uuid": "f6700d91-1774-4f70-b7ba-50a8d7b5fb7b"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [MEAS_EN] na B.Cu, długość 0,8475 mm",
+                    "pos": {
+                        "x": 140.49,
+                        "y": 24.6894
+                    },
+                    "uuid": "fb3b80cd-a223-4b82-9b07-47ddaec0014a"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na C9",
+                    "pos": {
+                        "x": 139.79,
+                        "y": 24.2
+                    },
+                    "uuid": "92e2987c-6e55-4e47-9c50-d55c1d1d4799"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci MEAS_EN oraz GND)",
+            "items": [
+                {
+                    "description": "Ścieżka [MEAS_EN] na B.Cu, długość 25,1510 mm",
+                    "pos": {
+                        "x": 139.8907,
+                        "y": 24.0901
+                    },
+                    "uuid": "73df4a2f-6896-4db3-8bea-e61dd9cb4fba"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na C9",
+                    "pos": {
+                        "x": 139.79,
+                        "y": 24.2
+                    },
+                    "uuid": "92e2987c-6e55-4e47-9c50-d55c1d1d4799"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [MEAS_EN] na B.Cu, długość 25,1510 mm",
+                    "pos": {
+                        "x": 139.8907,
+                        "y": 24.0901
+                    },
+                    "uuid": "73df4a2f-6896-4db3-8bea-e61dd9cb4fba"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na C9",
+                    "pos": {
+                        "x": 139.79,
+                        "y": 24.2
+                    },
+                    "uuid": "92e2987c-6e55-4e47-9c50-d55c1d1d4799"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz /OUT/ADC_CONVST_DRV)",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [GND] na C9",
+                    "pos": {
+                        "x": 139.79,
+                        "y": 24.2
+                    },
+                    "uuid": "92e2987c-6e55-4e47-9c50-d55c1d1d4799"
+                },
+                {
+                    "description": "Pole PTH 1 [/OUT/ADC_CONVST_DRV] na R37",
+                    "pos": {
+                        "x": 140.5,
+                        "y": 23.0
+                    },
+                    "uuid": "4d943d72-c1cc-44eb-bb46-49cdd4e4201a"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz /OUT/ADC_CONVST_DRV)",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [GND] na C9",
+                    "pos": {
+                        "x": 139.79,
+                        "y": 24.2
+                    },
+                    "uuid": "92e2987c-6e55-4e47-9c50-d55c1d1d4799"
+                },
+                {
+                    "description": "Pole PTH 1 [/OUT/ADC_CONVST_DRV] na R37",
+                    "pos": {
+                        "x": 140.5,
+                        "y": 23.0
+                    },
+                    "uuid": "4d943d72-c1cc-44eb-bb46-49cdd4e4201a"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint C9",
+                    "pos": {
+                        "x": 139.79,
+                        "y": 29.2
+                    },
+                    "uuid": "6bd5c8f2-77a1-41ae-acc9-f00194d4cd21"
+                },
+                {
+                    "description": "Footprint R37",
+                    "pos": {
+                        "x": 140.5,
+                        "y": 23.0
+                    },
+                    "uuid": "cd2bb430-3154-4c25-a287-6f7760c09cbb"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 1 [/OUT/ADC_CONVST_DRV] na R37",
+                    "pos": {
+                        "x": 140.5,
+                        "y": 23.0
+                    },
+                    "uuid": "4d943d72-c1cc-44eb-bb46-49cdd4e4201a"
+                },
+                {
+                    "description": "Footprint C9",
+                    "pos": {
+                        "x": 139.79,
+                        "y": 29.2
+                    },
+                    "uuid": "6bd5c8f2-77a1-41ae-acc9-f00194d4cd21"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 1 [3V3_CORE] na C9",
+                    "pos": {
+                        "x": 139.79,
+                        "y": 29.2
+                    },
+                    "uuid": "d153f853-bc21-4659-8216-df4bb47f2c92"
+                },
+                {
+                    "description": "Footprint R37",
+                    "pos": {
+                        "x": 140.5,
+                        "y": 23.0
+                    },
+                    "uuid": "cd2bb430-3154-4c25-a287-6f7760c09cbb"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [GND] na C9",
+                    "pos": {
+                        "x": 139.79,
+                        "y": 24.2
+                    },
+                    "uuid": "92e2987c-6e55-4e47-9c50-d55c1d1d4799"
+                },
+                {
+                    "description": "Footprint R37",
+                    "pos": {
+                        "x": 140.5,
+                        "y": 23.0
+                    },
+                    "uuid": "cd2bb430-3154-4c25-a287-6f7760c09cbb"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "Niekompletne łączenie termiczne ze strefą (warstwa B.Cu; 1 łącz połączonych z izolowanym polem)",
+            "items": [
+                {
+                    "description": "Strefa [GND] na B.Cu, priorytet 0",
+                    "pos": {
+                        "x": 1.0,
+                        "y": 1.0
+                    },
+                    "uuid": "d682823d-2d09-4f60-8d00-3d2d918bdc00"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na C9",
+                    "pos": {
+                        "x": 139.79,
+                        "y": 24.2
+                    },
+                    "uuid": "92e2987c-6e55-4e47-9c50-d55c1d1d4799"
+                }
+            ],
+            "severity": "error",
+            "type": "starved_thermal"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [MEAS_EN] na B.Cu, długość 25,1510 mm",
+                    "pos": {
+                        "x": 139.8907,
+                        "y": 24.0901
+                    },
+                    "uuid": "73df4a2f-6896-4db3-8bea-e61dd9cb4fba"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na C9",
+                    "pos": {
+                        "x": 139.79,
+                        "y": 24.2
+                    },
+                    "uuid": "92e2987c-6e55-4e47-9c50-d55c1d1d4799"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [MEAS_EN] na B.Cu, długość 1,6994 mm",
+                    "pos": {
+                        "x": 142.1894,
+                        "y": 24.6894
+                    },
+                    "uuid": "f6700d91-1774-4f70-b7ba-50a8d7b5fb7b"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na C9",
+                    "pos": {
+                        "x": 139.79,
+                        "y": 24.2
+                    },
+                    "uuid": "92e2987c-6e55-4e47-9c50-d55c1d1d4799"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [MEAS_EN] na B.Cu, długość 0,8475 mm",
+                    "pos": {
+                        "x": 140.49,
+                        "y": 24.6894
+                    },
+                    "uuid": "fb3b80cd-a223-4b82-9b07-47ddaec0014a"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na C9",
+                    "pos": {
+                        "x": 139.79,
+                        "y": 24.2
+                    },
+                    "uuid": "92e2987c-6e55-4e47-9c50-d55c1d1d4799"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [ADC_CONVST] na F.Cu, długość 5,6474 mm",
+                    "pos": {
+                        "x": 140.5,
+                        "y": 33.159999
+                    },
+                    "uuid": "935bc423-cef2-4d6a-bbb4-d8611030e814"
+                },
+                {
+                    "description": "Pole PTH 1 [3V3_CORE] na C9",
+                    "pos": {
+                        "x": 139.79,
+                        "y": 29.2
+                    },
+                    "uuid": "d153f853-bc21-4659-8216-df4bb47f2c92"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [ADC_BUSY] na B.Cu, długość 10,0341 mm",
+                    "pos": {
+                        "x": 140.0439,
+                        "y": 29.17
+                    },
+                    "uuid": "21dfcb95-475f-41b8-bf10-bd1021077848"
+                },
+                {
+                    "description": "Pole PTH 1 [3V3_CORE] na C9",
+                    "pos": {
+                        "x": 139.79,
+                        "y": 29.2
+                    },
+                    "uuid": "d153f853-bc21-4659-8216-df4bb47f2c92"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [ADC_BUSY] na B.Cu, długość 6,3922 mm",
+                    "pos": {
+                        "x": 144.5639,
+                        "y": 24.65
+                    },
+                    "uuid": "badfd35c-907b-4895-8956-2fab24ebfb15"
+                },
+                {
+                    "description": "Pole PTH 1 [3V3_CORE] na C9",
+                    "pos": {
+                        "x": 139.79,
+                        "y": 29.2
+                    },
+                    "uuid": "d153f853-bc21-4659-8216-df4bb47f2c92"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [GND] na C9",
+                    "pos": {
+                        "x": 139.79,
+                        "y": 24.2
+                    },
+                    "uuid": "92e2987c-6e55-4e47-9c50-d55c1d1d4799"
+                },
+                {
+                    "description": "Pole PTH 1 [/OUT/ADC_CONVST_DRV] na R37",
+                    "pos": {
+                        "x": 140.5,
+                        "y": 23.0
+                    },
+                    "uuid": "4d943d72-c1cc-44eb-bb46-49cdd4e4201a"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [GND] na C9",
+                    "pos": {
+                        "x": 139.79,
+                        "y": 24.2
+                    },
+                    "uuid": "92e2987c-6e55-4e47-9c50-d55c1d1d4799"
+                },
+                {
+                    "description": "Pole PTH 1 [/OUT/ADC_CONVST_DRV] na R37",
+                    "pos": {
+                        "x": 140.5,
+                        "y": 23.0
+                    },
+                    "uuid": "4d943d72-c1cc-44eb-bb46-49cdd4e4201a"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 2,8284 mm",
+                    "pos": {
+                        "x": 137.79,
+                        "y": 15.2
+                    },
+                    "uuid": "67996b60-a7cc-45d0-9e1c-33fefa62365b"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C9",
+                    "pos": {
+                        "x": 137.04,
+                        "y": 23.255
+                    },
+                    "uuid": "70486eb0-f862-4403-bf12-dee773e0d168"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Pole odnośnika do R37",
+                    "pos": {
+                        "x": 140.5,
+                        "y": 28.08
+                    },
+                    "uuid": "5db59f55-5a01-4f52-af6d-f2a0b38b25a9"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment z R37 na F.Silkscreen",
+                    "pos": {
+                        "x": 140.5,
+                        "y": 24.04
+                    },
+                    "uuid": "ae0d5478-c49e-438a-a052-7b20e4acbdb6"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Prostokąt z R37 na F.Silkscreen",
+                    "pos": {
+                        "x": 141.87,
+                        "y": 24.81
+                    },
+                    "uuid": "90c4a863-6048-4a19-a64a-a35c007ee10f"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,1255 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C9",
+                    "pos": {
+                        "x": 137.04,
+                        "y": 23.255
+                    },
+                    "uuid": "70486eb0-f862-4403-bf12-dee773e0d168"
+                },
+                {
+                    "description": "Prostokąt z U21 na F.Silkscreen",
+                    "pos": {
+                        "x": 118.87,
+                        "y": 13.52
+                    },
+                    "uuid": "a9bcb02e-c99c-4cba-bfa2-236e7bfcabee"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        }
+    ]
+}

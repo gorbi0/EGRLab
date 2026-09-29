@@ -1,0 +1,101 @@
+{
+  "checks": [
+    {
+      "check": "No components added or removed",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Only authorized BOM fields changed",
+      "pass": true,
+      "detail": {
+        "R41": {
+          "note": [
+            "Series resistor U6.4 -> J4.15, 2.8 mm from U6: harness short to GND <= 16 mA (3.465 V). Load = H_SAFE ribbon 150 mm (P04-R2.1) + P04 input, ~20 pF: tau ~4.4 ns, <= 5.5 ns/V over 0.8-2.0 V (P04 74LVC125A limit 10 ns/V, met up to ~36 pF).",
+            "Series resistor U6.4 -> J4.15, 2.8 mm from U6: harness short to GND <= 16 mA (3.465 V). Initial value; 150 mm H_SAFE to P04-R2.2 R17=10K. Verify <=10 ns/V at P04 U9.5 with actual load/probe; ideal RC is not a guaranteed capacitance limit."
+          ]
+        },
+        "U4": {
+          "note": [
+            "DBV SOT23-5, 0.95 mm pitch; direct hand soldering. Non-inverting OD; never substitute push-pull.",
+            "DBV SOT23-5, 0.95 mm pitch; direct hand soldering. R5: non-inverting Schmitt input, open-drain output; replaces LVC1G07 without changing pads. Never substitute push-pull or a non-Schmitt input."
+          ],
+          "mpn": [
+            "SN74LVC1G07DBVR",
+            "SN74LVC1G37DBVR"
+          ],
+          "url": [
+            "https://www.ti.com/lit/ds/symlink/sn74lvc1g07.pdf",
+            "https://www.ti.com/lit/gpn/SN74LVC1G37"
+          ],
+          "value": [
+            "SN74LVC1G07DBVR",
+            "SN74LVC1G37DBVR"
+          ],
+          "display": [
+            "SN74LVC1G07DBVR",
+            "SN74LVC1G37DBVR"
+          ]
+        }
+      }
+    },
+    {
+      "check": "Exact reviewed replacement MPN",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "All component pin maps identical",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Footprints, placements, references, pads and drills unchanged",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Only reviewed PCB value changed",
+      "pass": true,
+      "detail": {
+        "U4": [
+          "SN74LVC1G07DBVR",
+          "SN74LVC1G37DBVR"
+        ]
+      }
+    },
+    {
+      "check": "All tracks and vias including locks unchanged",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "All zone outlines, keepouts and thermal settings unchanged",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Only revision title changes in board drawings; outline unchanged",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "check": "Filled copper equivalent (XOR <=1e-6 mm2 AND residue thickness <=2 nm)",
+      "pass": true,
+      "detail": [
+        {
+          "layer": "F.Cu",
+          "xor_mm2": 2.77125e-08,
+          "max_residue_thickness_nm": 0.21347067880593043
+        },
+        {
+          "layer": "B.Cu",
+          "xor_mm2": 0.0,
+          "max_residue_thickness_nm": 0
+        }
+      ]
+    }
+  ],
+  "passed": true,
+  "base_pcb_sha256": "bbf06e6663018034969ad666d6be14d7f58909125f61fdecb10de2694bf8f7ac"
+}

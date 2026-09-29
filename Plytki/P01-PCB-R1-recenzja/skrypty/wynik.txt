@@ -1,0 +1,90 @@
+# Wyniki skryptów (KiCad 10.0.6, python z pcbnew) — plik: Plytki/P01-PCB-R1-review/eda/P01.kicad_pcb
+
+## radiatory_miedz.py
+HS1
+   BAT_FUSED      w=5.0 (15.0,31.5)->(44.0,31.5): krawędź profilu vs miedź = -1.50 mm (NAKŁADA SIĘ); krawędź przy (39.0,30.5)
+   BAT_FUSED      w=2.0 (44.0,31.5)->(49.0,28.0): krawędź profilu vs miedź = -1.00 mm (NAKŁADA SIĘ); krawędź przy (45.7,30.4)
+HS2
+   /P01_GATE      w=0.8 (99.0,30.0)->(98.0,34.0): krawędź profilu vs miedź = -0.38 mm (NAKŁADA SIĘ); krawędź przy (99.0,30.5)
+   /P01_GATE      w=0.8 (103.0,26.0)->(99.0,30.0): krawędź profilu vs miedź = -0.05 mm (NAKŁADA SIĘ); krawędź przy (99.5,30.0)
+   /P01_Q1_DRAIN  w=2.0 (115.0,30.0)->(118.0,34.0): krawędź profilu vs miedź = +0.10 mm (odstęp 0.10 mm); krawędź przy (116.7,30.4)
+   /P01_Q1_DRAIN  w=2.0 (108.0,30.0)->(115.0,30.0): krawędź profilu vs miedź = +0.50 mm (odstęp 0.50 mm); krawędź przy (116.5,30.0)
+   /P01_ON_COL    w=0.5 (130.1,42.7)->(130.1,18.7): krawędź profilu vs miedź = +0.82 mm (odstęp 0.82 mm); krawędź przy (129.0,25.1)
+
+## nadruk.py
+U1    silk shapes= 5 texts=[('U1', 1.0, 0.15)]
+J6    silk shapes=17 texts=[('J6', 1.0, 0.15)]
+Q8    silk shapes= 5 texts=[('Q8', 1.0, 0.15)]
+D3    silk shapes= 2 texts=[('D3', 1.0, 0.15)]
+U3    silk shapes= 5 texts=[('U3', 1.0, 0.15)]
+Q4    silk shapes= 5 texts=[('Q4', 1.0, 0.15)]
+U4    silk shapes= 5 texts=[('U4', 1.0, 0.15)]
+RV1   silk shapes= 4 texts=[('RV1', 1.0, 0.15)]
+Q2    silk shapes= 0 texts=[('Q2', 1.0, 0.15)]
+D6    silk shapes= 6 texts=[('K', 1.0, 0.15), ('D6', 1.0, 0.15)]
+C1    silk shapes=120 texts=[('C1', 1.0, 0.15)]
+D5    silk shapes= 6 texts=[('K', 1.0, 0.15), ('D5', 1.0, 0.15)]
+LK1   silk shapes= 0 texts=[('DRAIN | VPROT', 1.0, 0.15), ('LK1', 1.0, 0.15)]
+U2    silk shapes= 6 texts=[('U2', 1.0, 0.15)]
+J5    silk shapes= 0 texts=[('TIE', 1.0, 0.15), ('J5', 1.0, 0.15)]
+Q7    silk shapes= 5 texts=[('Q7', 1.0, 0.15)]
+D1    silk shapes= 1 texts=[('D1', 1.0, 0.15)]
+C9    silk shapes=137 texts=[('C9', 1.0, 0.15)]
+C3    silk shapes=158 texts=[('C3', 1.0, 0.15)]
+D2    silk shapes= 0 texts=[('D2', 1.0, 0.15)]
+C7    silk shapes=120 texts=[('C7', 1.0, 0.15)]
+Q5    silk shapes= 5 texts=[('Q5', 1.0, 0.15)]
+Q6    silk shapes= 5 texts=[('Q6', 1.0, 0.15)]
+D4    silk shapes= 6 texts=[('K', 1.0, 0.15), ('D4', 1.0, 0.15)]
+LED1  silk shapes= 6 texts=[('LED1', 1.0, 0.15)]
+D9    silk shapes= 6 texts=[('K', 1.0, 0.15), ('D9', 1.0, 0.15)]
+J7    silk shapes= 0 texts=[('TIE', 1.0, 0.15), ('J7', 1.0, 0.15)]
+Q3    silk shapes= 5 texts=[('Q3', 1.0, 0.15)]
+Q1    silk shapes= 0 texts=[('Q1', 1.0, 0.15)]
+board-level silk texts: 12 | texts < 1.0 mm: []
+
+## sieci_czule.py
+/AUX/P01_OV_REF      dł.  107.1 mm, zakres y  14.3.. 78.0 | blisko mocy: P01_VS (druga warstwa) min -0.24 mm, BAT_FUSED (ta sama warstwa) min 0.67 mm, P01_VS (ta sama warstwa) min 0.55 mm, BAT_FUSED (druga warstwa) min -0.83 mm
+P01_OK               dł.  210.4 mm, zakres y  20.2..115.2 | blisko mocy: P01_VS (ta sama warstwa) min 0.72 mm, P01_VS (druga warstwa) min 0.72 mm, BAT_FUSED (ta sama warstwa) min 1.82 mm, BAT_FUSED (druga warstwa) min 0.46 mm
+/AUX/P01_OV_SENSE    dł.   51.4 mm, zakres y  54.0.. 72.5 | blisko mocy: —
+/AUX/P01_UV_SENSE    dł.   78.7 mm, zakres y  77.6..102.0 | blisko mocy: —
+/AUX/P01_REF         dł.   97.4 mm, zakres y  44.8.. 94.0 | blisko mocy: —
+
+## tor_mocy.py (odcinki >= 1 mm)
+GND              B w=5.00 (  31.00, 19.00)->(  34.00,  9.50) len=  9.96
+GND              B w=5.00 ( 146.00,  9.50)->( 153.00, 16.50) len=  9.90
+GND              B w=4.00 (  28.00, 37.00)->(  22.62, 31.00) len=  8.06
+GND              B w=5.00 ( 153.00, 44.00)->( 150.32, 48.00) len=  4.81
+GND              B w=2.00 ( 153.00, 26.92)->( 148.00, 26.92) len=  5.00
+GND              B w=5.00 (  22.62, 19.00)->(  31.00, 19.00) len=  8.38
+GND              B w=4.00 (  32.32, 37.00)->(  28.00, 37.00) len=  4.32
+GND              B w=5.00 (  34.00,  9.50)->( 146.00,  9.50) len=112.00
+GND              B w=5.00 ( 153.00, 16.50)->( 153.00, 44.00) len= 27.50
+P01_VS           F w=5.00 (  55.00, 34.00)->(  94.00, 34.00) len= 39.00
+P01_VS           VIA  at (70.00,34.00) d=1.20 drill=0.60
+P01_VS           VIA  at (94.00,34.00) d=1.20 drill=0.60
+P01_VS           VIA  at (55.00,34.00) d=1.20 drill=0.60
+P01_VS           B w=2.00 ( 110.54, 34.00)->( 110.54, 27.00) len=  7.00
+P01_VS           B w=2.00 (  55.00, 22.30)->(  55.00, 28.00) len=  5.70
+P01_VS           B w=2.00 ( 110.54, 27.00)->( 110.54, 22.30) len=  4.70
+P01_VS           B w=5.00 (  55.00, 34.00)->( 110.54, 34.00) len= 55.54
+P01_VS           B w=2.00 (  55.00, 28.00)->(  55.00, 34.00) len=  6.00
+/VPROT           F w=3.00 ( 144.00, 36.00)->( 144.00, 44.00) len=  8.00
+/VPROT           F w=2.00 ( 144.00, 36.00)->( 148.00, 32.00) len=  5.66
+/VPROT           F w=3.00 ( 140.00, 48.00)->( 130.00, 48.00) len= 10.00
+/VPROT           F w=3.00 ( 144.00, 44.00)->( 140.00, 48.00) len=  5.66
+/VPROT           F w=1.50 ( 132.00, 54.00)->( 136.00, 58.00) len=  5.66
+/VPROT           F w=5.00 ( 136.00, 36.00)->( 144.00, 36.00) len=  8.00
+/VPROT           F w=1.50 ( 130.00, 48.00)->( 132.00, 54.00) len=  6.32
+BAT_FUSED        F w=2.00 (  49.00, 28.00)->(  52.46, 26.50) len=  3.77
+BAT_FUSED        F w=3.00 (  15.00, 31.50)->(  12.00, 37.00) len=  6.26
+BAT_FUSED        F w=2.00 (  52.46, 26.50)->(  52.46, 22.30) len=  4.20
+BAT_FUSED        F w=2.00 (  57.54, 26.50)->(  57.54, 22.30) len=  4.20
+BAT_FUSED        F w=2.00 (  44.00, 31.50)->(  49.00, 28.00) len=  6.10
+BAT_FUSED        F w=2.00 (  52.46, 26.50)->(  57.54, 26.50) len=  5.08
+BAT_FUSED        F w=5.00 (  15.00, 31.50)->(  44.00, 31.50) len= 29.00
+/P01_Q1_DRAIN    F w=2.00 ( 115.00, 30.00)->( 118.00, 34.00) len=  5.00
+/P01_Q1_DRAIN    F w=4.00 ( 122.00, 36.00)->( 126.00, 36.00) len=  4.00
+/P01_Q1_DRAIN    F w=2.00 ( 108.00, 22.30)->( 108.00, 30.00) len=  7.70
+/P01_Q1_DRAIN    F w=2.00 ( 108.00, 30.00)->( 115.00, 30.00) len=  7.00
+/P01_Q1_DRAIN    F w=4.00 ( 118.00, 34.00)->( 122.00, 36.00) len=  4.47

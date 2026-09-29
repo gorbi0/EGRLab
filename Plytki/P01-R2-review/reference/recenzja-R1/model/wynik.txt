@@ -1,0 +1,30 @@
+=== R1 obecny   C5=220n C6=47n  R21=4k7 R27=47   (VSG z samego dzielnika C5/C6 przy skoku 24 V: 19.56 V)
+  A) wpięcie zasilania, Q1 ma być OFF (Rs = 50 mOhm, C1 = 10 uF):
+     0->14 V, zbocze   1 us: Id szczyt   79.5 A, VSG max  7.04 V, VPROT max  2.37 V, energia w Q1   5.22 mJ
+     0->14 V, zbocze  10 us: Id szczyt   46.3 A, VSG max  5.85 V, VPROT max  1.84 V, energia w Q1   4.08 mJ
+     0->24 V, zbocze   1 us: Id szczyt  193.3 A, VSG max  9.86 V, VPROT max  6.73 V, energia w Q1  21.25 mJ
+     0->24 V, zbocze  10 us: Id szczyt  120.5 A, VSG max  8.21 V, VPROT max  5.80 V, energia w Q1  18.50 mJ
+     najgorszy Vt = 1,0 V, 0->24 V / 1 us: Id szczyt  209.7 A, VSG max  9.19 V
+  B) stan OVP-OFF: VS 18 V, VPROT 17 V, skok VS do 30 V (źródło idealne):
+     zbocze   1 us: Id szczyt  164.3 A, VPROT max 19.34 V
+     zbocze  10 us: Id szczyt   56.3 A, VPROT max 18.56 V
+  C) normalny start przy 14 V do 220 uF: prąd szczytowy 2.56 A, VPROT końcowe 14.00 V
+  D) wyłączenie OVP przy 18,5 V: |VGS| < 2 V po  26.8 us, < 0,5 V po  47.0 us, szczyt Q2 ~376 mA
+
+=== poprawka    C5=22n  C6=680n R21=47k R27=33   (VSG z samego dzielnika C5/C6 przy skoku 24 V: 0.75 V)
+  A) wpięcie zasilania, Q1 ma być OFF (Rs = 50 mOhm, C1 = 10 uF):
+     0->14 V, zbocze   1 us: Id szczyt    0.0 A, VSG max  0.42 V, VPROT max  0.00 V, energia w Q1   0.00 mJ
+     0->14 V, zbocze  10 us: Id szczyt    0.0 A, VSG max  0.39 V, VPROT max  0.00 V, energia w Q1   0.00 mJ
+     0->24 V, zbocze   1 us: Id szczyt    0.0 A, VSG max  0.71 V, VPROT max  0.00 V, energia w Q1   0.00 mJ
+     0->24 V, zbocze  10 us: Id szczyt    0.0 A, VSG max  0.64 V, VPROT max  0.00 V, energia w Q1   0.00 mJ
+     najgorszy Vt = 1,0 V, 0->24 V / 1 us: Id szczyt    0.0 A, VSG max  0.71 V
+  B) stan OVP-OFF: VS 18 V, VPROT 17 V, skok VS do 30 V (źródło idealne):
+     zbocze   1 us: Id szczyt    0.0 A, VPROT max 17.00 V
+     zbocze  10 us: Id szczyt    0.0 A, VPROT max 17.00 V
+  C) normalny start przy 14 V do 220 uF: prąd szczytowy 1.80 A, VPROT końcowe 13.99 V
+  D) wyłączenie OVP przy 18,5 V: |VGS| < 2 V po  43.8 us, < 0,5 V po  80.1 us, szczyt Q2 ~381 mA
+
+=== wariant ODRZUCONY: rezystor szeregowo z C5 (C5=220n, C6=47n, R21=4k7)
+  R szer. =  1000 Ohm: normalny start, prąd szczytowy  80.0 A (obecny projekt: patrz C)
+  R szer. =  2200 Ohm: normalny start, prąd szczytowy  68.7 A (obecny projekt: patrz C)
+  R szer. =  4700 Ohm: normalny start, prąd szczytowy  62.8 A (obecny projekt: patrz C)

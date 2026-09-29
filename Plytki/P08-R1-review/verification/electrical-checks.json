@@ -1,0 +1,626 @@
+{
+  "checks": [
+    {
+      "id": "IF-LV08",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "IF-SENSOR-M2.2",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "IF-SFAULT",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "IF-TSENSOR",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "MATE-P02-R3-review",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "MATE-P04-R2.1-review",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "MATE-P03-R2-review",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "TPS-DBV-PINS",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "CURRENT-LIMIT-RESISTOR",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "RELAY-CONTACTS",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "DRIVER",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "FLYBACK",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "SUP-U6",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "SUP-U7",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "SUP-U8",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "SUP-PULLUPS",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "FAULT-PULLUP-3V3",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "NO-FAULT-EN-FEEDBACK",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "GUARD-DIVIDER",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "GUARD-MARGINS",
+      "pass": true,
+      "note": "Calculated EN below1V: 0.614V; valid-state at 2.7V drive: 1.579V. Brownout waveform still requires bench test."
+    },
+    {
+      "id": "HC08-PINS",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "IOFF-TRANSLATION",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "DEFAULT-R5",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "DEFAULT-R6",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "DEFAULT-R7",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "DEFAULT-R8",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "DEFAULT-R9",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "DEFAULT-R10",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "DEFAULT-R12",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "DEFAULT-R14",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "OUTPUT-SERIES",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "DISCHARGE",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "NO-GROUND-BYPASS",
+      "pass": true,
+      "note": "No GND-referenced output capacitor, LED or bleed around return contact."
+    },
+    {
+      "id": "INPUT-OUTPUT-CAPS",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "ACTUAL-NETLIST-TRUTH",
+      "pass": true,
+      "note": "16 cases, propagated through actual HC08/LVC pins and series resistors. No formula-against-itself test."
+    }
+  ],
+  "negative_controls": [
+    {
+      "mutation": "NC-NO-swap",
+      "detected": true,
+      "by": [
+        "RELAY-CONTACTS"
+      ]
+    },
+    {
+      "mutation": "ground-bypass",
+      "detected": true,
+      "by": [
+        "DISCHARGE",
+        "NO-GROUND-BYPASS"
+      ]
+    },
+    {
+      "mutation": "reversed-flyback",
+      "detected": true,
+      "by": [
+        "FLYBACK"
+      ]
+    },
+    {
+      "mutation": "bad-TPS-pin",
+      "detected": true,
+      "by": [
+        "TPS-DBV-PINS"
+      ]
+    },
+    {
+      "mutation": "missing-guard",
+      "detected": true,
+      "by": [
+        "SUP-U8"
+      ]
+    },
+    {
+      "mutation": "wrong-guard-power",
+      "detected": true,
+      "by": [
+        "SUP-U8"
+      ]
+    },
+    {
+      "mutation": "5V-to-HC",
+      "detected": true,
+      "by": [
+        "HC08-PINS"
+      ]
+    },
+    {
+      "mutation": "ready-permit-loop",
+      "detected": true,
+      "by": [
+        "HC08-PINS",
+        "ACTUAL-NETLIST-TRUTH"
+      ]
+    },
+    {
+      "mutation": "fault-retry-loop",
+      "detected": true,
+      "by": [
+        "NO-FAULT-EN-FEEDBACK",
+        "HC08-PINS",
+        "ACTUAL-NETLIST-TRUTH"
+      ]
+    },
+    {
+      "mutation": "health-wrong-gate",
+      "detected": true,
+      "by": [
+        "HC08-PINS",
+        "ACTUAL-NETLIST-TRUTH"
+      ]
+    },
+    {
+      "mutation": "no-IOff",
+      "detected": true,
+      "by": [
+        "IOFF-TRANSLATION"
+      ]
+    },
+    {
+      "mutation": "bad-LV",
+      "detected": true,
+      "by": [
+        "IF-LV08",
+        "MATE-P02-R3-review"
+      ]
+    },
+    {
+      "mutation": "wrong-SENSOR-key",
+      "detected": true,
+      "by": [
+        "IF-SENSOR-M2.2",
+        "MATE-P04-R2.1-review"
+      ]
+    },
+    {
+      "mutation": "wrong-SFAULT",
+      "detected": true,
+      "by": [
+        "IF-SFAULT",
+        "MATE-P03-R2-review"
+      ]
+    },
+    {
+      "mutation": "no-pulldown",
+      "detected": true,
+      "by": [
+        "DEFAULT-R14"
+      ]
+    },
+    {
+      "mutation": "coil-common",
+      "detected": true,
+      "by": [
+        "DRIVER"
+      ]
+    },
+    {
+      "mutation": "wrong-limit",
+      "detected": true,
+      "by": [
+        "CURRENT-LIMIT-RESISTOR"
+      ]
+    },
+    {
+      "mutation": "bad-divider",
+      "detected": true,
+      "by": [
+        "GUARD-DIVIDER",
+        "GUARD-MARGINS"
+      ]
+    },
+    {
+      "mutation": "wrong-variant",
+      "detected": true,
+      "by": [
+        "TPS-DBV-PINS"
+      ]
+    },
+    {
+      "mutation": "wrong-supervisor",
+      "detected": true,
+      "by": [
+        "SUP-U8"
+      ]
+    }
+  ],
+  "truth_table": [
+    {
+      "inputs": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "actual": [
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "inputs": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "actual": [
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "inputs": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "actual": [
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "inputs": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "actual": [
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "inputs": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "actual": [
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "inputs": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "actual": [
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "inputs": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "actual": [
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "inputs": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "actual": [
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "inputs": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "actual": [
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "inputs": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "actual": [
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "inputs": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "actual": [
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "inputs": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "actual": [
+        0,
+        0,
+        0
+      ],
+      "expected": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "inputs": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "actual": [
+        1,
+        0,
+        0
+      ],
+      "expected": [
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "inputs": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "actual": [
+        1,
+        0,
+        1
+      ],
+      "expected": [
+        1,
+        0,
+        1
+      ]
+    },
+    {
+      "inputs": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "actual": [
+        1,
+        1,
+        0
+      ],
+      "expected": [
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "inputs": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "actual": [
+        1,
+        1,
+        1
+      ],
+      "expected": [
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "current_limit": {
+    "min_ma": 98.671320904747,
+    "typ_ma": 117.01020938843683,
+    "max_ma": 138.64181513270137
+  },
+  "hardware_tested": false
+}

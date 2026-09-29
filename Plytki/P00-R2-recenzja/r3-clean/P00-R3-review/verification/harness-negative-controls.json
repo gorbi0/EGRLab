@@ -1,0 +1,107 @@
+[
+  {
+    "case": "drive_to_motor_permit",
+    "expected_check": "Channels J1..J9",
+    "detected": true,
+    "failed_checks": [
+      "Channels J1..J9: P04 pin carries the named input, one connector, one pulldown, only IC inputs, H >= VIH + 0.2 V",
+      "Measure-only pins are driven by an IC output or open collector and are never used as a source target",
+      "Harness document tables match the checked map; no v6.1 designators (J13..J20)"
+    ]
+  },
+  {
+    "case": "hb_to_hw_armed",
+    "expected_check": "Channels J1..J9",
+    "detected": true,
+    "failed_checks": [
+      "Channels J1..J9: P04 pin carries the named input, one connector, one pulldown, only IC inputs, H >= VIH + 0.2 V",
+      "H_HB and P00 J9.1 drive the same P04 pin and are declared mutually exclusive",
+      "Measure-only pins are driven by an IC output or open collector and are never used as a source target",
+      "Harness document tables match the checked map; no v6.1 designators (J13..J20)"
+    ]
+  },
+  {
+    "case": "mech_double_pulldown_2k",
+    "expected_check": "Channels J1..J9",
+    "detected": true,
+    "failed_checks": [
+      "Channels J1..J9: P04 pin carries the named input, one connector, one pulldown, only IC inputs, H >= VIH + 0.2 V"
+    ]
+  },
+  {
+    "case": "extra_pulldown_on_psu_ok",
+    "expected_check": "Channels J1..J9",
+    "detected": true,
+    "failed_checks": [
+      "Channels J1..J9: P04 pin carries the named input, one connector, one pulldown, only IC inputs, H >= VIH + 0.2 V"
+    ]
+  },
+  {
+    "case": "h_sup_to_core_link_pin",
+    "expected_check": "Five 1 k branches",
+    "detected": true,
+    "failed_checks": [
+      "Five 1 k branches H_SUP/H_MCU/H_HB/H_PWM/H_SENSOR on P04 input nets with H >= VIH + 0.2 V",
+      "Harness document tables match the checked map; no v6.1 designators (J13..J20)"
+    ]
+  },
+  {
+    "case": "branches_from_panel_3v3",
+    "expected_check": "Branch source",
+    "detected": true,
+    "failed_checks": [
+      "Branch source is P04 J8 = PANEL_3V3 (not PANEL_3V3 behind R40)"
+    ]
+  },
+  {
+    "case": "stop_to_test_key",
+    "expected_check": "Contacts STOP",
+    "detected": true,
+    "failed_checks": [
+      "Contacts STOP / ARM / SAFE_N test on the named P04 nets",
+      "Harness document tables match the checked map; no v6.1 designators (J13..J20)"
+    ]
+  },
+  {
+    "case": "key_pin_as_gnd",
+    "expected_check": "Listed ground pins",
+    "detected": true,
+    "failed_checks": [
+      "Listed ground pins are GND; key positions are NC"
+    ]
+  },
+  {
+    "case": "source_on_sensor_permit",
+    "expected_check": "Measure-only pins",
+    "detected": true,
+    "failed_checks": [
+      "Five 1 k branches H_SUP/H_MCU/H_HB/H_PWM/H_SENSOR on P04 input nets with H >= VIH + 0.2 V",
+      "Measure-only pins are driven by an IC output or open collector and are never used as a source target",
+      "Harness document tables match the checked map; no v6.1 designators (J13..J20)"
+    ]
+  },
+  {
+    "case": "p00_heart_on_wrong_pin",
+    "expected_check": "P00 side",
+    "detected": true,
+    "failed_checks": [
+      "P00 side: every channel pin carries its 1 k output net and the next pin is GND"
+    ]
+  },
+  {
+    "case": "doc_row",
+    "expected_check": "Harness document tables",
+    "detected": true,
+    "failed_checks": [
+      "Harness document tables match the checked map; no v6.1 designators (J13..J20)"
+    ]
+  },
+  {
+    "case": "doc_v61",
+    "expected_check": "Harness document tables",
+    "detected": true,
+    "failed_checks": [
+      "Harness document tables match the checked map; no v6.1 designators (J13..J20)"
+    ]
+  }
+]

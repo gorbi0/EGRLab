@@ -1,0 +1,74 @@
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe src/set_rules.py
+Applied explicit 0.25 mm net clearance; no DRC exclusions.
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe src/make_shopping.py
+BOM and harness contracts written
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\kicad-cli.exe sch export netlist --format kicadxml -o verification/P09.xml eda/P09.kicad_sch
+12:08:36: Error: Can't create registry key 'HKCU\Software\kicad-cli' (error 5: Odmowa dost?pu.)
+12:08:36: Error: Can't open registry key 'HKCU\Software\kicad-cli' (error 2: Nie mo?na odnale?? okre?lonego pliku.)
+
+Fontconfig error: No writable cache directories
+	C:/WINDOWS/Cache/Fontcache
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\kicad-cli.exe sch erc --format json --severity-all -o verification/erc.json eda/P09.kicad_sch
+12:08:37: Error: Can't create registry key 'HKCU\Software\kicad-cli' (error 5: Odmowa dost?pu.)
+12:08:37: Error: Can't open registry key 'HKCU\Software\kicad-cli' (error 2: Nie mo?na odnale?? okre?lonego pliku.)
+
+Fontconfig error: No writable cache directories
+	C:/WINDOWS/Cache/Fontcache
+Found 0 violations
+Saved ERC Report to verification/erc.json
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe src/verify_schematic.py
+{"components": 48, "parts": 48, "pin_checks": 147, "extra": [], "erc_sheets": 4, "erc_violations": 0, "nets": 39} errors 0
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe src/verify_electrical.py
+Electrical 43 checks; 15 mutations
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe src/make_firmware_patch.py
+P09 temperature patch written; baseline untouched
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe src/test_temperature.py
+[
+  {
+    "case": "final",
+    "pass": true,
+    "expected": "PASS",
+    "output": "PASS 27 actual-function cases"
+  },
+  {
+    "case": "wrong-start-address",
+    "pass": true,
+    "expected": "detected regression",
+    "output": ""
+  },
+  {
+    "case": "wrong-fault-byte",
+    "pass": true,
+    "expected": "detected regression",
+    "output": ""
+  },
+  {
+    "case": "accept-floating-zero",
+    "pass": true,
+    "expected": "detected regression",
+    "output": ""
+  }
+]
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe src/verify_pcb.py
+PCB 20 checks; 10 mutations
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe src/tools/ground_islands.py
+CLUSTER 180
+[
+ [
+  "F.Cu:0",
+  {
+   "F.Cu": [
+    28.07,
+    66.009,
+    34.934,
+    73.841
+   ]
+  }
+ ]
+]
+clusters 1
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe src/package_manifest.py --paths-only
+Windows filename portability PASS
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe src/board_fingerprint.py
+Geometry fingerprint 593d72927b28587193fa770396fd280ec38877007edf89f8001830453d62b827
+PASS: native ERC/DRC, parity, electrical/PCB contracts and negative controls.

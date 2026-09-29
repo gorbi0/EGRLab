@@ -1,0 +1,61 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-27T09:02:43",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P00.kicad_pcb",
+    "unconnected_items": [],
+    "violations": [
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0272 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do R4",
+                    "pos": {
+                        "x": 89.8,
+                        "y": 16.8
+                    },
+                    "uuid": "b03ec84d-d132-4097-bc9b-5aadca02233d"
+                },
+                {
+                    "description": "Pole odnośnika do U1",
+                    "pos": {
+                        "x": 89.805,
+                        "y": 16.81
+                    },
+                    "uuid": "ceb92f95-580a-4846-be7e-fc691cdc7c7a"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        }
+    ]
+}

@@ -1,0 +1,46 @@
+{
+  "revision": "P00-R3",
+  "input_J10_min_V": 6.0,
+  "input_J10_max_V": 15.0,
+  "D1_design_drop_budget_V": 0.6,
+  "U2_min_VIN_V": 4.75,
+  "U2_min_IOUT_A": 0.005,
+  "V33_min_V": 3.14,
+  "V33_max_V": 3.46,
+  "ambient_min_C": 10.0,
+  "ambient_max_C": 40.0,
+  "resistor_tolerance": 0.01,
+  "resistor_TCR_per_C": 0.0001,
+  "R5_rating_W": 0.25,
+  "C6_cap_tolerance": 0.2,
+  "COUT_min_F": 1e-05,
+  "COUT_branch_ESR_min_ohm": 0.01,
+  "COUT_branch_ESR_max_ohm": 3.0,
+  "C6_Z_at_20C_100kHz_max_ohm": 0.34,
+  "thermal_design_IOUT_A": 0.065,
+  "thermal_assumed_IG_A": 0.02,
+  "theta_JA_reference_K_per_W": 77.9,
+  "LED_VF_min_V": 1.6,
+  "TLC555_IDD_max_A": 0.0005,
+  "TLC555_Ro_typ_ohm": [
+    200,
+    333
+  ],
+  "TLC555_Ro_min_VOH_ohm": [
+    900,
+    1667
+  ],
+  "P04_input_pulldown_ohm": 10000,
+  "P04_LVC_VIH_V": 2.0,
+  "HB_H_target_V": 2.4,
+  "hardware_verified": false,
+  "sources": {
+    "U2": "TI SNVS015F pp.4-5,11-12; https://www.mouser.com/datasheet/2/405/lm2937-3.3-484674.pdf",
+    "C6": "Panasonic EEUFR1H220; FR-A table 50V: 22uF, D5 L11 P2, Zmax 0.340 ohm at 100kHz/20C",
+    "R5_R6": "Yageo MFR April 3 2024 pp.2-3; 1ohm..4M7, 0.25W standard body 6.3x2.4mm, 100ppm/C",
+    "limitations": "The diode voltage budget is a design allowance. ESR computation applies at the cited frequency/temperature. The IG thermal allowance is not a guaranteed bound at every intermediate load. Verify voltage, stability and case temperature on the built fixture at 6V and 15V.",
+    "TLC555_R3": "TI SLFS043K (rev. January 2026) 5.5/5.6: VOH min 1.5 V typ 1.9 V at VDD 2 V, IOH -300 uA; VOH min 4.1 V typ 4.8 V at VDD 5 V, IOH -1 mA; IDD max 500 uA at 5 V (TLC555C). Ro = (VDD - VOH)/IOH: typ 200 / 333 ohm, at min VOH 900 / 1667 ohm. The 3.3 V value lies between; both ends are evaluated.",
+    "P04_R3": "P04-R2.1 (frozen in reference/P04-R2.1-parts.json): HEARTBEAT has R13 10 k to GND and a 74LVC125A input (VIH 2.0 V for VCC 2.7..3.6 V). ODBIOR target at J9 with 10 k: >= 2.4 V.",
+    "LED_R3": "LED VF at about 1 mA assumed >= 1.6 V (Kingbright sheets give VF at 20 mA); used only to bound the load from above."
+  }
+}

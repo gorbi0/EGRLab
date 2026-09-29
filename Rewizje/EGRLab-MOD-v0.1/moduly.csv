@@ -1,0 +1,12 @@
+﻿PCB;Funkcja i zawartość;Rezerwa miejsca;Samodzielny odbiór
+P01 PROTECT;Cały PWR-THT: TVS, Schottky, MOSFET, OVP/UVLO, własne zasilanie sterowania, wyjście błędu;"około 100 x 120 mm; radiatory poza obrysem, w razie potrzeby większa";"Zasilacz regulowany i obciążenie; progi, start, prąd wsteczny, temperatura"
+P02 PSU;TSR 5 V i 3,3 V, F2/F3, rozdział zasilania, punkt połączenia powrotów mocy;70 x 60 mm;"Obciążenia zamiast pozostałych płytek; regulacja, tętnienia, zanik szyn"
+P03 CORE;Posiadany Waveshare, MCP23017, microSD, UART, bufory interfejsów i nadzór lokalnego resetu;100 x 80 mm, po pomiarze Waveshare;PSRAM, zapis SD, GPIO, I2C i reset bez ADC oraz napędu
+P04 SAFE;Watchdog, STOP, ARM, zatrzask, interlock, bramki zezwolenia, wejścia gotowości modułów;80 x 70 mm;Generator impulsów i przełączniki P00, bez procesora i bez silnika
+P05 DAQ;AD7606B z kondensatorami, KMEAS1-3, KCUR, dolne dzielniki, filtry, AUX, pomiar VPROT, filtr 5V_A i jego nadzór;100 x 90 mm;Znane napięcia na 8 kanałach, identyfikacja, szum, zakresy, SPI
+P06 I-LOGGER;RSH_L, INA240, rezystory Kelvin, RO2, gniazdo mostka bocznika;50 x 45 mm;Prąd wzorcowy obu znaków i napięcie common-mode, bez ECU
+P07 DRIVE;VNH5019 na nośniku, F4, KPWR, C_BULK, TVS, RSH_T, INA240, lokalne okno OC i blokada napędu;100 x 90 mm plus radiator/nośnik;"Najpierw pomiar prądu i blokady; potem mostek z 12 Ω na radiatorze"
+P08 SENSOR;TPS2553, KSENSOR odcinający oba przewody, lokalny driver cewki i nadzór;50 x 45 mm;Rezystor zamiast sensora, limit prądu, rozłączenie plusa i powrotu
+P09 TEMP;Dwa moduły MAX31856 z wejściami termopar K, lokalne filtry i obsługa MISO;70 x 50 mm;Temperatura otoczenia, źródło porównawcze, przerwana termopara
+P10 CAN;TCAN1051V, ochrona przy złączu, fizyczne silent;50 x 40 mm;Magistrala laboratoryjna, odbiór bez nadawania i ACK
+P11 PANEL, opcjonalna;Pasywne rozprowadzenie przycisków, kontrolek i styków obecności adapterów;80 x 40 mm lub bez PCB;"Ciągłość przewodów, tabela interlocku; brak aktywnej elektroniki"

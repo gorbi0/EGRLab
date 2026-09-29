@@ -1,0 +1,399 @@
+{
+  "board": "P02.kicad_pcb",
+  "board_sha256": "973e9718783c14e3109de136d8e271a773e5872d40456108f893b2ba7db47ba4",
+  "checks": [
+    {
+      "check": "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)",
+      "pass": false
+    },
+    {
+      "check": "72 on-board parts + 4 mounting holes; R17 (R_CHARGE) stays off-board",
+      "pass": true
+    },
+    {
+      "check": "Every value, footprint ID and pad net equals the exported schematic netlist",
+      "pass": true
+    },
+    {
+      "check": "2 copper layers, 1.6 mm board",
+      "pass": true
+    },
+    {
+      "check": "Both copper layers explicitly 70 um",
+      "pass": true
+    },
+    {
+      "check": "Closed rectangular outline 160 x 120 mm (P01 format)",
+      "pass": true
+    },
+    {
+      "check": "Four NPTH 3.2 mm holes at the P01 positions with copper keepouts on both layers",
+      "pass": true
+    },
+    {
+      "check": "No courtyard within 4.5 mm of a mounting-hole centre (screw head + washer)",
+      "pass": true
+    },
+    {
+      "check": "Explicit DRC rules active (P01 set); no DRC exclusions",
+      "pass": true
+    },
+    {
+      "check": "Every pre-routed (locked) power segment retained with its width and layer",
+      "pass": true
+    },
+    {
+      "check": "VPROT input node: one F.Cu zone island joins J1.1 SUPPLY, J2.1 VMOTOR, TP1, R9.1; >= 4 mm copper along J1.1-J2.1 (5 A)",
+      "pass": true
+    },
+    {
+      "check": "5 A return J2.2 -> J1.2 in the B.Cu GND pour: corridor rule area on B.Cu, no track or via inside, both pads on the pour",
+      "pass": true
+    },
+    {
+      "check": "GND pours: B.Cu one continuous plane over >= 80 % of the board; F.Cu islands only where tied by GND pads (island removal: always)",
+      "pass": true
+    },
+    {
+      "check": "HOLD_STORE (unfused bank side) stays on the board: only C1..C3 +, F1.2, R1.1, R6.1, R20.1; all its copper locked",
+      "pass": true
+    },
+    {
+      "check": "Power nets: narrowest track VPROT >= 1.0, HOLD_FUSED >= 1.5, CHARGE_D/VIN >= 1.0, HOLD_STORE >= 0.6, VLOG_RES >= 0.8 mm (no thin unfused sense track)",
+      "pass": true
+    },
+    {
+      "check": "Unfused run F1.2 -> bank C1 + <= 30 mm (F1 at the bank)",
+      "pass": true
+    },
+    {
+      "check": "Divider tops at their sources: R6.1 on the bank rail (<= 25 mm to C2/C3 +), R9.1 in the VPROT node zone",
+      "pass": true
+    },
+    {
+      "check": "D_OR separate anodes (D1: A1=VPROT, K=VLOG_RES, A2=HOLD_FUSED); D_CHARGE anodes tied, K=HOLD_FUSED",
+      "pass": true
+    },
+    {
+      "check": "LV03..LV10 (J3..J10): 1=5V_SYS 2=GND 3=3V3_IO 4=GND",
+      "pass": true
+    },
+    {
+      "check": "100 nF at every IC: <= 8 mm straight and <= 20 mm routed to the supply pin",
+      "pass": true
+    },
+    {
+      "check": "Isolating resistors R18/R19 routed <=15mm to comparator; feedback after resistor",
+      "pass": true
+    },
+    {
+      "check": "TP3 only after R20; no raw HOLD_STORE test pad",
+      "pass": true
+    },
+    {
+      "check": "Converter input/output capacitors and C_BUS at their pins (<= 10 mm)",
+      "pass": true
+    },
+    {
+      "check": "Bank D35 cans: >= 3 mm apart; >= 10 mm from the TO-220 diodes and the converters",
+      "pass": true
+    },
+    {
+      "check": "J2 VMOTOR (GMSTBA 7.62) at the left edge, mating face within 1 mm of the board edge",
+      "pass": true
+    },
+    {
+      "check": "Harness anchors (J1 SUPPLY, J12 PSUOK, J13 R_CHARGE) 12.5 mm from the solder row, towards the nearest edge",
+      "pass": true
+    },
+    {
+      "check": "Every visible reference outside other courtyards and nearest to its own part",
+      "pass": true
+    },
+    {
+      "check": "Every board legend outside all courtyards (visible after assembly); harness pigtails J1/J12/J13 excepted",
+      "pass": true
+    },
+    {
+      "check": "Legends at their parts and nearer to them than to the neighbours: LV03..LV10, HOLD_STORE warning, J1/J2/J11/J12/J13 pins, test pads, fuse ratings, LED",
+      "pass": false
+    }
+  ],
+  "details": {
+    "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)": {
+      "violations": 24,
+      "unconnected_items": 0,
+      "schematic_parity": 0
+    },
+    "Every value, footprint ID and pad net equals the exported schematic netlist": {
+      "errors": [],
+      "pads": 204
+    },
+    "No courtyard within 4.5 mm of a mounting-hole centre (screw head + washer)": [],
+    "Every pre-routed (locked) power segment retained with its width and layer": {
+      "missing": [],
+      "locked_segments": 94
+    },
+    "VPROT input node: one F.Cu zone island joins J1.1 SUPPLY, J2.1 VMOTOR, TP1, R9.1; >= 4 mm copper along J1.1-J2.1 (5 A)": {
+      "outlines": 1,
+      "area_mm2": 189.1,
+      "connected_pads": [
+        "J1.1",
+        "J2.1",
+        "R9.1",
+        "TP1.1"
+      ],
+      "chords_4mm_filled": "11/11"
+    },
+    "5 A return J2.2 -> J1.2 in the B.Cu GND pour: corridor rule area on B.Cu, no track or via inside, both pads on the pour": {
+      "intruders": [],
+      "pour_pads": [
+        "J1.2",
+        "J2.2"
+      ]
+    },
+    "GND pours: B.Cu one continuous plane over >= 80 % of the board; F.Cu islands only where tied by GND pads (island removal: always)": {
+      "filled_percent": {
+        "F.Cu": 78.8,
+        "B.Cu": 86.4
+      },
+      "islands": {
+        "F.Cu": 1,
+        "B.Cu": 1
+      }
+    },
+    "HOLD_STORE (unfused bank side) stays on the board: only C1..C3 +, F1.2, R1.1, R6.1, R20.1; all its copper locked": {
+      "pads": [
+        "C1.1",
+        "C2.1",
+        "C3.1",
+        "F1.2",
+        "R1.1",
+        "R20.1",
+        "R6.1"
+      ],
+      "free_tracks": []
+    },
+    "Power nets: narrowest track VPROT >= 1.0, HOLD_FUSED >= 1.5, CHARGE_D/VIN >= 1.0, HOLD_STORE >= 0.6, VLOG_RES >= 0.8 mm (no thin unfused sense track)": {
+      "VPROT": 1.0,
+      "HOLD_STORE": 0.6,
+      "HOLD_FUSED": 1.5,
+      "CHARGE_D": 1.0,
+      "VLOG_RES": 0.8,
+      "P02_VIN_DC5": 1.0,
+      "P02_VIN_DC33": 1.0
+    },
+    "Unfused run F1.2 -> bank C1 + <= 30 mm (F1 at the bank)": {
+      "F1.2-C1.1_mm": 24.0
+    },
+    "Divider tops at their sources: R6.1 on the bank rail (<= 25 mm to C2/C3 +), R9.1 in the VPROT node zone": {
+      "R6.1-C2.1": 21.0,
+      "R6.1-C3.1": 21.0
+    },
+    "D_OR separate anodes (D1: A1=VPROT, K=VLOG_RES, A2=HOLD_FUSED); D_CHARGE anodes tied, K=HOLD_FUSED": {
+      "D1.1": "VPROT",
+      "D1.2": "VLOG_RES",
+      "D1.3": "HOLD_FUSED",
+      "D2.1": "CHARGE_D",
+      "D2.2": "HOLD_FUSED",
+      "D2.3": "CHARGE_D"
+    },
+    "100 nF at every IC: <= 8 mm straight and <= 20 mm routed to the supply pin": {
+      "C10-U4.2": {
+        "straight_mm": 7.6,
+        "routed_mm": 9.6
+      },
+      "C11-U5.14": {
+        "straight_mm": 4.38,
+        "routed_mm": 4.7
+      },
+      "C12-U6.14": {
+        "straight_mm": 4.01,
+        "routed_mm": 4.7
+      },
+      "C13-U7.8": {
+        "straight_mm": 4.01,
+        "routed_mm": 4.3
+      },
+      "C9-U3.2": {
+        "straight_mm": 6.04,
+        "routed_mm": 7.0
+      }
+    },
+    "Isolating resistors R18/R19 routed <=15mm to comparator; feedback after resistor": {
+      "R18.2-U7.3": 4.9,
+      "R19.2-U7.5": 9.7
+    },
+    "Converter input/output capacitors and C_BUS at their pins (<= 10 mm)": {
+      "C5.1-U1.1": 7.5,
+      "C6.1-U1.3": 7.56,
+      "C7.1-U2.1": 7.5,
+      "C8.1-U2.3": 7.56,
+      "C4.1-D1.2": 6.09
+    },
+    "Bank D35 cans: >= 3 mm apart; >= 10 mm from the TO-220 diodes and the converters": {
+      "gaps_mm": [
+        4.0,
+        4.0
+      ],
+      "can_edge_to_courtyard_mm": {
+        "D1": 18.3,
+        "D2": 12.2,
+        "U1": 12.9,
+        "U2": 28.8
+      }
+    },
+    "J2 VMOTOR (GMSTBA 7.62) at the left edge, mating face within 1 mm of the board edge": {
+      "front_x_mm": 0.6
+    },
+    "Harness anchors (J1 SUPPLY, J12 PSUOK, J13 R_CHARGE) 12.5 mm from the solder row, towards the nearest edge": {
+      "J1": {
+        "anchor_to_row_mm": [
+          12.5,
+          12.5
+        ],
+        "anchors_on_edge_side": true
+      },
+      "J12": {
+        "anchor_to_row_mm": [
+          12.5,
+          12.5
+        ],
+        "anchors_on_edge_side": true
+      },
+      "J13": {
+        "anchor_to_row_mm": [
+          12.5,
+          12.5
+        ],
+        "anchors_on_edge_side": true
+      }
+    },
+    "Every visible reference outside other courtyards and nearest to its own part": {},
+    "Every board legend outside all courtyards (visible after assembly); harness pigtails J1/J12/J13 excepted": {},
+    "Legends at their parts and nearer to them than to the neighbours: LV03..LV10, HOLD_STORE warning, J1/J2/J11/J12/J13 pins, test pads, fuse ratings, LED": {
+      "LV03": {
+        "mm": 14.84,
+        "nearest_rival_mm": 7.15
+      },
+      "LV04": {
+        "mm": 14.84,
+        "nearest_rival_mm": 7.15
+      },
+      "LV05": {
+        "mm": 7.15,
+        "nearest_rival_mm": 14.84
+      },
+      "LV06": {
+        "mm": 7.15,
+        "nearest_rival_mm": 14.84
+      },
+      "LV07": {
+        "mm": 7.15,
+        "nearest_rival_mm": 14.84
+      },
+      "LV08": {
+        "mm": 7.15,
+        "nearest_rival_mm": 14.84
+      },
+      "LV09": {
+        "mm": 7.15,
+        "nearest_rival_mm": 14.84
+      },
+      "LV10": {
+        "mm": 7.15,
+        "nearest_rival_mm": 14.84
+      },
+      "BANK/1k": {
+        "mm": 5.7,
+        "nearest_rival_mm": 25.74
+      },
+      "SUPPLY": {
+        "mm": 6.75,
+        "nearest_rival_mm": 22.42
+      },
+      "R_CHARGE 47R/25W": {
+        "mm": 5.5,
+        "nearest_rival_mm": 21.94
+      },
+      "1 PSU_OK": {
+        "mm": 5.0,
+        "nearest_rival_mm": 5.61
+      },
+      "2 GND": {
+        "mm": 4.2,
+        "nearest_rival_mm": 4.91
+      },
+      "3 HOLD_RDY": {
+        "mm": 5.6,
+        "nearest_rival_mm": 6.15
+      },
+      "VLOG": {
+        "mm": 2.64,
+        "nearest_rival_mm": 6.1
+      },
+      "5V": {
+        "mm": 2.4,
+        "nearest_rival_mm": 4.66
+      },
+      "3V3": {
+        "mm": 2.4,
+        "nearest_rival_mm": 4.66
+      },
+      "PSU_OK": {
+        "mm": 5.0,
+        "nearest_rival_mm": 6.4
+      },
+      "HOLD_RDY": {
+        "mm": 5.5,
+        "nearest_rival_mm": 6.8
+      },
+      "REF": {
+        "mm": 3.6,
+        "nearest_rival_mm": 5.38
+      },
+      "T2A": {
+        "mm": 6.84,
+        "nearest_rival_mm": 22.83
+      },
+      "F100mA": {
+        "mm": 6.4,
+        "nearest_rival_mm": 19.38
+      },
+      "VSENSE 1=VPROT_S 2=GND": {
+        "mm": 9.1,
+        "nearest_rival_mm": 25.76
+      },
+      "VMOTOR": {
+        "mm": 14.07,
+        "nearest_rival_mm": 35.61
+      },
+      "1=VPROT": {
+        "mm": 4.25,
+        "nearest_rival_mm": 8.73
+      },
+      "2=GND": {
+        "mm": 4.0,
+        "nearest_rival_mm": 8.61
+      },
+      "3=NC": {
+        "mm": 4.0,
+        "nearest_rival_mm": 8.61
+      },
+      "VPROT": {
+        "mm": 2.71,
+        "nearest_rival_mm": 11.44
+      },
+      "HOLD READY": {
+        "mm": 5.62,
+        "nearest_rival_mm": 99
+      },
+      "F1A at F2/F3": [
+        6.05,
+        6.05
+      ]
+    }
+  },
+  "passed": 27,
+  "total": 29
+}

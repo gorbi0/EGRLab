@@ -1,0 +1,44 @@
+FAIL Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)
+PASS 72 on-board parts + 4 mounting holes; R17 (R_CHARGE) stays off-board
+PASS Every value, footprint ID and pad net equals the exported schematic netlist
+PASS 2 copper layers, 1.6 mm board
+PASS Both copper layers explicitly 70 um
+PASS Closed rectangular outline 160 x 120 mm (P01 format)
+PASS Four NPTH 3.2 mm holes at the P01 positions with copper keepouts on both layers
+PASS No courtyard within 4.5 mm of a mounting-hole centre (screw head + washer)
+PASS Explicit DRC rules active (P01 set); no DRC exclusions
+PASS Every pre-routed (locked) power segment retained with its width and layer
+PASS VPROT input node: one F.Cu zone island joins J1.1 SUPPLY, J2.1 VMOTOR, TP1, R9.1; >= 4 mm copper along J1.1-J2.1 (5 A)
+PASS 5 A return J2.2 -> J1.2 in the B.Cu GND pour: corridor rule area on B.Cu, no track or via inside, both pads on the pour
+PASS GND pours: B.Cu one continuous plane over >= 80 % of the board; F.Cu islands only where tied by GND pads (island removal: always)
+PASS HOLD_STORE (unfused bank side) stays on the board: only C1..C3 +, F1.2, R1.1, R6.1, R20.1; all its copper locked
+PASS Power nets: narrowest track VPROT >= 1.0, HOLD_FUSED >= 1.5, CHARGE_D/VIN >= 1.0, HOLD_STORE >= 0.6, VLOG_RES >= 0.8 mm (no thin unfused sense track)
+PASS Unfused run F1.2 -> bank C1 + <= 30 mm (F1 at the bank)
+PASS Divider tops at their sources: R6.1 on the bank rail (<= 25 mm to C2/C3 +), R9.1 in the VPROT node zone
+PASS D_OR separate anodes (D1: A1=VPROT, K=VLOG_RES, A2=HOLD_FUSED); D_CHARGE anodes tied, K=HOLD_FUSED
+PASS LV03..LV10 (J3..J10): 1=5V_SYS 2=GND 3=3V3_IO 4=GND
+PASS 100 nF at every IC: <= 8 mm straight and <= 20 mm routed to the supply pin
+PASS Isolating resistors R18/R19 routed <=15mm to comparator; feedback after resistor
+PASS TP3 only after R20; no raw HOLD_STORE test pad
+PASS Converter input/output capacitors and C_BUS at their pins (<= 10 mm)
+PASS Bank D35 cans: >= 3 mm apart; >= 10 mm from the TO-220 diodes and the converters
+PASS J2 VMOTOR (GMSTBA 7.62) at the left edge, mating face within 1 mm of the board edge
+PASS Harness anchors (J1 SUPPLY, J12 PSUOK, J13 R_CHARGE) 12.5 mm from the solder row, towards the nearest edge
+PASS Every visible reference outside other courtyards and nearest to its own part
+PASS Every board legend outside all courtyards (visible after assembly); harness pigtails J1/J12/J13 excepted
+PASS Legends at their parts and nearer to them than to the neighbours: LV03..LV10, HOLD_STORE warning, J1/J2/J11/J12/J13 pins, test pads, fuse ratings, LED
+28/29 checks
+
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'

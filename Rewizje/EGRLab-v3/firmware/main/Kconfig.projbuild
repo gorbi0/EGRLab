@@ -1,0 +1,30 @@
+menu "EGRLab"
+config EGR_ACTIVE_TEST
+    bool "Wlacz TEST po odbiorze sprzetu i kalibracji"
+    default n
+config EGR_SAMPLE_HZ
+    int "Zadana czestotliwosc probkowania; kwalifikuj czasy na sprzecie"
+    range 100 20000
+    default 2000
+config EGR_ADC_SOFTWARE_MODE
+    bool "AD7606B w software mode (zworki OS[2:0] = 111, zakres per kanal)"
+    default y
+    help
+      Wymaga ukladu AD7606B i zworek OS[2:0] ustawionych na 111. Daje zakres
+      +-2,5 V na kanale masy czujnika i odczyt jedna ramka 128-bit.
+      Wylacz, jesli masz zwykly AD7606: wtedy wszystkie kanaly pracuja na
+      +-10 V, a odczyt idzie osmioma ramkami 16-bit. Tryb jest wybierany
+      swiadomie przy kompilacji, a nie zgadywany w czasie pracy.
+config EGR_WIFI_UI
+    bool "SoftAP z podgladem i przyciskami na telefonie"
+    default n
+    depends on EGR_ACTIVE_TEST
+config EGR_WIFI_SSID
+    string "SSID punktu dostepowego"
+    default "EGRLab"
+    depends on EGR_WIFI_UI
+config EGR_WIFI_PASSWORD
+    string "Haslo WPA2 (min. 8 znakow; puste = siec otwarta)"
+    default "zmien-to-haslo"
+    depends on EGR_WIFI_UI
+endmenu

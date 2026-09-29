@@ -1,0 +1,113 @@
+from;to;note
+J_PWR.BAT+;F1;bezpiecznik 10A blisko zrodla
+F1;Q1.source;P-MOS ochrona odwrotnej polaryzacji
+F1;D1.a;TVS SM8S24CA dwukierunkowy
+Q1.drain;VPROT;szyna po ochronie
+VPROT;F2;galaz 5V
+F2;M3.VIN;TSR 2-2450
+M3.VOUT;5V_SYS;
+5V_SYS;R_FILT 1R;do 5V_A
+R_FILT 1R;5V_A;470uF low ESR
+VPROT;F3;galaz 3V3
+F3;M4.VIN;TSR 2-2433
+M4.VOUT;3V3_IO;VDRIVE ADC, SD, MCP, CAN VIO
+VPROT;F4;galaz mocy TEST
+F4;KPWR.COM;przekaznik odciecia VMOTOR
+KPWR.NO;VMOTOR;1000uF + 1uF + 100nF + SMCJ18A + 2.2k rozladowczy
+VMOTOR;M2.VIN;Pololu 1451
+5V_SYS;U11.IN;TPS2553
+U11.OUT;KSENSOR.COM1;limit pradu czujnika
+KSENSOR.NO1;5V_SENSOR;do JP_SENSOR na adapterze TEST
+AGND;KSENSOR.COM2;drugi biegun odcinany
+KSENSOR.NO2;AGND_SENSOR;do JP_SENSOR na adapterze TEST
+M2.OUTA;RSH_T.p1;bocznik TEST
+RSH_T.p2;J_TEST.pin1;naped A
+M2.OUTB;J_TEST.pin3;naped B
+J_LOG_ECU.pin1;RSH_L.p1;bocznik LOGGER po stronie ECU
+RSH_L.p2;J_LOG_EGR.pin1;po stronie zaworu
+J_LOG_ECU.pin3;J_LOG_EGR.pin3;przewod wprost
+J_LOG_ECU.pin4;J_LOG_EGR.pin4;przewod wprost
+J_LOG_ECU.pin5;J_LOG_EGR.pin5;przewod wprost
+J_LOG_ECU.pin6;J_LOG_EGR.pin6;przewod wprost
+TAP_LOG_P1;RM1+RM2;2x150k przy zlaczu EGR
+TAP_TEST_P1;RM3+RM4;2x150k przy zlaczu EGR
+RM2;NODE_CH1;wezel wspolny obu adapterow
+RM4;NODE_CH1;wezel wspolny obu adapterow
+TAP_LOG_P3;RM5+RM6;2x150k
+TAP_TEST_P3;RM7+RM8;2x150k
+RM6;NODE_CH2;
+RM8;NODE_CH2;
+TAP_LOG_P4;RS1+RS2;2x49.9k
+TAP_TEST_P4;RS3+RS4;2x49.9k
+RS2;NODE_CH3;
+RS4;NODE_CH3;
+TAP_LOG_P5;RS5+RS6;2x49.9k
+TAP_TEST_P5;RS7+RS8;2x49.9k
+RS6;NODE_CH4;
+RS8;NODE_CH4;
+TAP_LOG_P6;RS9+RS10;2x49.9k
+TAP_TEST_P6;RS11+RS12;2x49.9k
+RS10;NODE_CH5;
+RS12;NODE_CH5;
+NODE_CH1;KMEAS1.NO_A;styk NO - odlaczone przy braku zasilania
+KMEAS1.COM_A;U1.V1;ADC kanal 1 + RB1 100k + CF1 220pF
+NODE_CH2;KMEAS1.NO_B;
+KMEAS1.COM_B;U1.V2;ADC kanal 2 + RB2 100k + CF2
+NODE_CH3;KMEAS2.NO_A;
+KMEAS2.COM_A;U1.V3;ADC kanal 3 + CF3
+NODE_CH4;KMEAS2.NO_B;
+KMEAS2.COM_B;U1.V4;ADC kanal 4 + CF4
+NODE_CH5;KMEAS3.NO_A;
+KMEAS3.COM_A;U1.V5;ADC kanal 5 + CF5
+U2.OUT;RO1;INA TEST przez 100R
+U3.OUT;RO2;INA LOGGER przez 100R
+RO1;KMEAS3.NO_B;multiplekser pradu - pozycja TEST
+RO2;KMEAS3.NC_B;multiplekser pradu - pozycja LOGGER
+KMEAS3.COM_B;U1.V6;ADC kanal 6
+VPROT;RV1+RV2;dzielnik VBAT 2x249k
+RV2;U1.V7;ADC kanal 7 + RB3 100k + CF6
+J_AUX.hot;JP_AUX;wybor HI/LO
+JP_AUX.HI;RA1+RA2;2x150k + RB4 100k
+JP_AUX.LO;RA3+RA4;2x49.9k
+RA2;U1.V8;ADC kanal 8 + CF7
+RA4;U1.V8;ten sam wezel, inna galaz
+J_AUX.gnd;AGND;masa krokodylka AUX
+RSH_T;U2.IN+/IN-;Kelvin przez RC1/RC2 10R
+RSH_L;U3.IN+/IN-;Kelvin przez RC3/RC4 10R
+U2.OUT;U4.IN+_low;kanal LOW komparatora przez 1k + 1nF
+U4.OUT_low;SAFE_N;open collector
+U4.OUT_high;SAFE_N;open collector
+U5.RESET_N;SAFE_N;supervisor 3V3_IO, open drain
+U7.Q;U9.A1;watchdog push-pull przez bramke AND
+U9.Y1;SAFE_N;jedyna bramka w torze SAFE_N
+SW_STOP.NC;R_PULLUP 10k;galaz pull-upu SAFE_N z 3V3
+R_PULLUP 10k;SAFE_N;SAFE_N ma 100k do GND
+SAFE_N;U6.CLR_N;74HC74 reset asynchroniczny
+SW_ARM;U8.A;74HC14 debounce 10k/100nF
+U8.Y;U6.CLK;zbocze uzbrajajace
+U6.Q;GPIO40;HW_ARMED
+U6.Q;U9.A2;wejscie MOTOR_PERMIT
+GPIO39;U9.B2;MCU_ARM
+GPIO42;U9.B3;INTERLOCK
+U9.Y2;MOTOR_PERMIT;
+MOTOR_PERMIT;M2.VDD;zasila pull-upy ENA/ENB
+MOTOR_PERMIT;Q7.gate_driver;cewka K_PWR
+GPIO1;U9.A4;PWM
+MOTOR_PERMIT;U9.B4;
+U9.Y4;M2.PWM;przez 330R, 47k do GND
+MCP.A5;M2.INA;przez 330R, 47k do GND
+MCP.A6;M2.INB;przez 330R, 47k do GND
+MCP.A0;U1.RESET;impuls >=10us przy starcie
+MCP.A1;KMEAS1-3.coils;MEAS_EN przez 2N7002
+MCP.A2;KMEAS3.coil_bank;MEAS_BANK przez 2N7002
+MCP.A3;KSENSOR.coil;SENSOR_ENABLE, dodatkowo AND z TEST_KEY i INTERLOCK
+MCP.B0;SW_MODE;TEST_KEY
+MCP.B1;U11.FAULT_N;SENSOR_FAULT_N
+MCP.B2;M2.ENA;diagnostyka mostka
+MCP.B3;M2.ENB;diagnostyka mostka
+MCP.B4;SW_LOG1+SW_LOG2;LOG_PRESENT_N, krancowki szeregowo
+MCP.B5;J_TEST.loop;TEST_PRESENT, petla zamykana adapterem
+GPIO38;R 330R;SCOPE_TRIG
+R 330R;J_BNC.center;do wejscia wyzwalania oscyloskopu
+J_BNC.shield;AGND;jedyne dodatkowe polaczenie galwaniczne - skop z power banku
+AGND;B-;jedyny punkt polaczenia mas, przy wejsciu zasilania

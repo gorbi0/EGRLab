@@ -1,0 +1,51 @@
+{
+  "netlist": "C:\\Users\\tgorbacz\\.codex\\.chatgpt-projects\\g-p-6a8827e57cc881919b26f761377a7bd3\\reviews\\P00-R1-recenzja-Codex\\evidence\\P00.xml",
+  "method": "Read native netlist; arithmetic with explicit assumptions. No hardware test.",
+  "topology_checks": 13,
+  "ldo_reference": "TI SNVS015F, pp. 4-5: VIN >= 4.75 V, output characteristics for IOUT >= 5 mA.",
+  "VIN_example": {
+    "at_J10_V": 5.0,
+    "assumed_D1_drop_V": 0.35,
+    "at_U2_V": 4.65,
+    "required_U2_min_V": 4.75,
+    "margin_V": -0.09999999999999964,
+    "note": "Illustrative plausible diode drop, not guaranteed VF of an assembled part."
+  },
+  "stop_all_low_no_external_load": {
+    "assumptions": "V33=3.3 V, LED10 VF=1.9 V, TLC555 Iq=0.2 mA, DISCH near 0 V. Typical estimate only.",
+    "load_components": {
+      "LED10_mA": 1.4,
+      "R1_to_DISCH_LOW_mA": 0.7021276595744681,
+      "R4_to_RESET_LOW_mA": 0.032999999999999995,
+      "TLC555_assumed_mA": 0.2
+    },
+    "estimated_total_mA": 2.3351276595744683,
+    "datasheet_min_mA": 5.0,
+    "note": "LM2937 ground/quiescent current does NOT count as its output load. Removing U1 for bring-up lowers load further."
+  },
+  "proposed_preload": {
+    "R_ohm": 560,
+    "tolerance": 0.01,
+    "minimum_mA_at_3V14_Rmax": 5.551626591230552,
+    "maximum_mW_at_3V46_Rmin": 21.593795093795094,
+    "temperature_drift_included": false
+  },
+  "heartbeat": {
+    "RA_ohm": 4700.0,
+    "RB_ohm": 68000.0,
+    "C_F": 1e-07,
+    "nominal_Hz": 102.3454157782516,
+    "H_duty": 0.5167022032693674,
+    "R_1pct_C_10pct_only_min_Hz": 92.12008620904733,
+    "R_1pct_C_10pct_only_max_Hz": 114.86578650757755,
+    "note": "Excludes timer thresholds, X7R temperature/bias effects and output-load waveform."
+  },
+  "channels_loaded": {
+    "nominal_H_with_10k_pulldown_V": 3.0,
+    "nominal_H_with_two_10k_pulldowns_V": 2.75,
+    "H_3V14_1pct_Rs_Rpd10k_V": 2.849312557286893,
+    "H_3V14_1pct_Rs_Rpd5k_V": 2.6078859060402686,
+    "note": "Resistive DC model, ignores contact resistance and input leakage; heartbeat additionally depends on TLC555 VOH."
+  },
+  "ground_short_current_mA_at_3V46_Rmin": 3.494949494949495
+}

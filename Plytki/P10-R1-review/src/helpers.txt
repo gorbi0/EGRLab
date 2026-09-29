@@ -1,0 +1,26 @@
+def custom(name,units):
+ # rows: (pin,name,electrical type) left/right. Explicit function symbols, not fake connectors.
+ s=f'(symbol "P10:{name}" (pin_names (offset 1.016)) (in_bom yes) (on_board yes)'
+ for u,(left,right) in enumerate(units,1):
+  h=max(len(left),len(right))+1;half=12.7
+  s+=f'(symbol "{name}_{u}_1" (rectangle (start {-half} {h*1.27}) (end {half} {-h*1.27}) (stroke (width .254) (type default)) (fill (type background))))'
+  s+=f'(symbol "{name}_{u}_0"'
+  for side,items in [(-1,left),(1,right)]:
+   for j,(n,label,typ) in enumerate(items):
+    s+=f'(pin {typ} line (at {side*(half+5.08)} {(h-2-j*2)*1.27} {0 if side==-1 else 180}) (length 5.08) (name {q(label)} (effects (font (size 1.0 1.0)))) (number "{n}" (effects (font (size 1 1)))))'
+  s+=')'
+ return parse(s+')')
+def copyfp(lib,name):
+ src=K/'footprints'/(lib+'.pretty')/(name+'.kicad_mod');assert src.exists(),src
+ dest=P/'eda/libraries'/(lib+'.pretty');dest.mkdir(parents=True,exist_ok=True);shutil.copy2(src,dest/src.name)
+ return lib+':'+name
+def write_tables():
+ clean={r:{k:v for k,v in p.items() if k!='symbol'} for r,p in PARTS.items()}
+ (P/'docs/parts.json').write_text(json.dumps(clean,indent=2,ensure_ascii=False),encoding='utf-8')
+ with (P/'docs/BOM.csv').open('w',newline='',encoding='utf-8-sig') as f:
+  w=csv.DictWriter(f,['ref','source_ref','display','mpn','qty','footprint','on_board','url','note'],delimiter=';',extrasaction='ignore');w.writeheader();w.writerows(PARTS.values())
+ libs={p['symbol'][1]:p['symbol'] for p in PARTS.values()};libs[PRJ+':PWR_FLAG']=symbol('power','PWR_FLAG')
+ (P/'eda/libraries/P10.kicad_sym').write_text('(kicad_symbol_lib (version 20231120) (generator "kicad_symbol_editor")'+''.join(dump([s[0],s[1].split(':')[1]]+s[2:]) for s in libs.values())+')',encoding='utf-8')
+ (P/'eda/sym-lib-table').write_text('(sym_lib_table (lib (name "P10") (type "KiCad") (uri "${KIPRJMOD}/libraries/P10.kicad_sym") (options "") (descr "P10 symbols")))')
+ flibs=sorted({p['footprint'].split(':')[0] for p in PARTS.values()})
+ (P/'eda/fp-lib-table').write_text('(fp_lib_table '+''.join(f'(lib (name {q(l)}) (type "KiCad") (uri "${{KIPRJMOD}}/libraries/{l}.pretty") (options "") (descr "P10 local library"))' for l in flibs)+')')

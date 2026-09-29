@@ -1,0 +1,108 @@
+{
+  "checks": [
+    {
+      "check": "U4 Schmitt input and open drain, exact pinout",
+      "pass": true,
+      "detail": {
+        "ref": "U4",
+        "source_ref": "ADDED_R2_RESET_BUFFER",
+        "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+        "display": "SN74LVC1G37DBVR",
+        "value": "SN74LVC1G37DBVR",
+        "mpn": "SN74LVC1G37DBVR",
+        "pins": {
+          "1": "NC",
+          "2": "SUP_RAW_N",
+          "3": "GND",
+          "4": "RESET_DRV_N",
+          "5": "3V3_CORE"
+        },
+        "url": "https://www.ti.com/lit/gpn/SN74LVC1G37",
+        "note": "DBV SOT23-5, 0.95 mm pitch; direct hand soldering. R5: non-inverting Schmitt input, open-drain output; replaces LVC1G07 without changing pads. Never substitute push-pull or a non-Schmitt input.",
+        "qty": 1,
+        "sheet": "POWER",
+        "on_board": true
+      }
+    },
+    {
+      "check": "TPS3808 pull-up nominal >=10k and connected correctly",
+      "pass": true,
+      "detail": 10000.0
+    },
+    {
+      "check": "R34 discharge peak <=16mA",
+      "pass": true,
+      "detail": 0.015909090909090907
+    },
+    {
+      "check": "SUP_N low at 3.0V below MCP VIL=0.6V",
+      "pass": true,
+      "detail": {
+        "worst_estimate_V": 0.5139456132267487,
+        "U4_VOL_V": 0.4,
+        "EN_pullup_assumption_ohm": [
+          9500,
+          10500
+        ]
+      }
+    },
+    {
+      "check": "P04 R17 default low from worst-case leakage below 0.8V",
+      "pass": true,
+      "detail": {
+        "voltage_V": 0.303,
+        "sum_uA": 30,
+        "direction": "conservative absolute sum, not measured current"
+      }
+    },
+    {
+      "check": "P04 active input high above 2.0V",
+      "pass": true,
+      "detail": {
+        "lower_bound_V": 2.342969354488155,
+        "U6_VOH_min_V": 2.4,
+        "U9_input_uA": 20
+      }
+    },
+    {
+      "check": "U6 output and P04 receiver retain reviewed topology",
+      "pass": true,
+      "detail": {
+        "P03_J4_15": "SUP_N_OUT",
+        "P04_J2_15": "SUP_N"
+      }
+    }
+  ],
+  "negative_controls": [
+    {
+      "mutation": "U4=SN74LVC1G07DBVR",
+      "detected": true,
+      "failures": [
+        "U4 Schmitt input and open drain, exact pinout"
+      ]
+    },
+    {
+      "mutation": "R13=1K / 1%",
+      "detected": true,
+      "failures": [
+        "TPS3808 pull-up nominal >=10k and connected correctly"
+      ]
+    },
+    {
+      "mutation": "R34=10R / 1%",
+      "detected": true,
+      "failures": [
+        "R34 discharge peak <=16mA"
+      ]
+    },
+    {
+      "mutation": "R17=100K / 1%",
+      "detected": true,
+      "failures": [
+        "P04 R17 default low from worst-case leakage below 0.8V"
+      ]
+    }
+  ],
+  "hardware_tested": false,
+  "scope": "DC limits, exact parts and pin maps; output slew, power ramps and B2B fit require bench/physical checks."
+}

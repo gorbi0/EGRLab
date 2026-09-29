@@ -1,0 +1,90 @@
+﻿ref;source_ref;display;mpn;qty;footprint;url;note
+J1;J1;TEST PADS;PCB pads (no purchased connector);1;P01:TestPads_2;;"V6: połączenie robocze przez BAT/SUPPLY/PG; pozostały dostęp pomiarowy. Nie dokupować gniazda."
+J2;J2;TEST PADS;PCB pads (no purchased connector);1;P01:TestPads_2;;"V6: połączenie robocze przez BAT/SUPPLY/PG; pozostały dostęp pomiarowy. Nie dokupować gniazda."
+J3;J3;INHIBIT / SHORT=OFF;M20-9990245;1;Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical;https://www.harwin.com/products/M20-9990245;"Normalnie bez zworki; tylko styk bezpotencjalowy."
+D1;D1;15KPA24CA;15KPA24CA-B;1;P01:TVS_P600_BIDIR_P20.32;https://www.littelfuse.com/assetdocs/tvs-diodes-15kpa-datasheet?assetguid=5152edba-6eab-4c4a-9bef-2c97b144328e;"Dwukierunkowy. Zastepuje zewnetrzny SM8S24CA w tym wariancie; nie sumowac ich mocy."
+D2;D2;STPS20100CT;STPS20100CT;1;P01:TO220_3_P2.54_Drill1.4;https://www.st.com/resource/en/datasheet/stps20100.pdf;1=A1, 2=K+tab, 3=A2. Polaczyc 1 i 3 symetrycznie. Osobny radiator <=5 K/W.
+Q1;Q1;SUP53P06-20-E3;SUP53P06-20-E3;1;P01:TO220_3_P2.54_Drill1.4;https://www.vishay.com/docs/68633/sup53p06-20.pdf;"R3: drain to removable LK1, then VPROT; tab=DRAIN."
+D3;D3;5KP18A;5KP18A-B;1;P01:TVS_P600_P20.32;https://www.littelfuse.com/assetdocs/tvs-diodes-5kp-datasheet?assetguid=b1ddd6a2-fccb-4327-bea1-7d77c0793479;Jednokierunkowy: pasek do VPROT. Nie jest stabilizatorem 18 V.
+D4;D4;BZX55C15;BZX55C15-TAP;1;Diode_THT:D_DO-35_SOD27_P10.16mm_Horizontal;https://www.vishay.com/docs/85604/bzx55.pdf;"Ograniczenie ujemnego VGS; pasek do SOURCE/VS. Krotkie wyprowadzenia."
+C1;C1;10u / 63V;UPW1J100MDD;1;Capacitor_THT:CP_Radial_D5.0mm_P2.00mm;https://www.nichicon.co.jp/products/pdfs/upw.pdf;"63 V; 105 C; 1=plus"
+C2;C2;100nF / 100V;B32529C1104J000;1;P01:C_TDK_B32529_L7.3_W2.5_P5;https://www.tdk-electronics.tdk.com/inf/20/20/db/fc_2009/B32520_529.pdf;"100 V; film lub X7R"
+C3;C3;100u / 50V;EEUFR1H101;1;Capacitor_THT:CP_Radial_D8.0mm_P3.50mm;https://industrial.panasonic.com/sa/products/pt/aluminum-cap-lead/models/EEUFR1H101;"50 V; 105 C; 1=plus"
+C4;C4;100nF / 100V;B32529C1104J000;1;P01:C_TDK_B32529_L7.3_W2.5_P5;https://www.tdk-electronics.tdk.com/inf/20/20/db/fc_2009/B32520_529.pdf;"100 V; film lub X7R"
+C5;C5;10nF / 100V;B32529C1103J000;1;P01:C_TDK_B32529_L7.3_W2.5_P5;https://www.tdk-electronics.tdk.com/inf/20/20/db/fc_2009/B32520_529.pdf;"100 V; film; Miller, ograniczenie szybkosci narastania"
+C6;C6;1000nF / 100V;MKS2D041001K00JO00;1;P01:C_WIMA_MKS2_1u100V_L7.2_W7.2_P5;https://www.tme.eu/Document/a1d7ff07b330f8f08de986bd168d8c92/WIMA_MKS_2.pdf;"100 V; film; odporność na zaklocenia bramki"
+R1;R1;150R / 2W;PR02000201500FR500;1;P01:R_PR02_P17.78;https://www.vishay.com/docs/28729/pr010203.pdf;"2 W; 1%; metal oxide; odporny impulsowo"
+D5;D5;1.5KE18A-E3/54;1.5KE18A-E3/54;1;Diode_THT:D_DO-201_P15.24mm_Horizontal;https://www.vishay.com/docs/88301/15ke.pdf;"UWAGA: VWM=15.3 V, VBR=17.1...18.9 V, VC=25.2 V; inna numeracja niz 5KP18A."
+C7;C7;22u / 50V;EEUFR1H220;1;Capacitor_THT:CP_Radial_D5.0mm_P2.00mm;https://industrial.panasonic.com/sa/products/pt/aluminum-cap-lead/models/EEUFR1H220;"50 V; 105 C; 1=plus"
+C8;C8;100nF / X7R;K104K15X7RF53H5;1;P01:C_Vishay_K15_H5_P5;https://www.vishay.com/docs/45171/kseries.pdf;"50 V; X7R"
+U1;U1;LM2936Z-5.0;LM2936Z-5.0/NOPB;1;Package_TO_SOT_THT:TO-92_Inline_Wide;https://www.ti.com/lit/ds/symlink/lm2936.pdf;UWAGA: 1=OUT, 2=GND, 3=IN. Nie pinout 78L05.
+R2;R2;1R / 0.5W;MFR-50FTE52-1R;1;P01:R_MFR50_H4_P15.24;https://www.yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf;"0.5 W; 1%; sztuczny ESR kondensatora C9"
+C9;C9;47u / 50V;EEUFR1H470;1;Capacitor_THT:CP_Radial_D6.3mm_P2.50mm;https://industrial.panasonic.com/sa/products/pt/aluminum-cap-lead/models/EEUFR1H470;"50 V; 105 C; low ESR; 1=plus. ESR C9+R2: 0.3...8 ohm w temperaturze pracy."
+C10;C10;100nF / X7R;K104K15X7RF53H5;1;P01:C_Vishay_K15_H5_P5;https://www.vishay.com/docs/45171/kseries.pdf;"50 V; przy U2"
+C11;C11;100nF / X7R;K104K15X7RF53H5;1;P01:C_Vishay_K15_H5_P5;https://www.vishay.com/docs/45171/kseries.pdf;"50 V; przy U4"
+R3;R3;820R / 0.5W;MFR-50FTE52-820R;1;P01:R_MFR50_H4_P15.24;https://www.yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf;"0.5 W; 1%"
+R4;R4;10K / 0.5W;MFR-50FTE52-10K;1;P01:R_MFR50_H4_P15.24;https://www.yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf;"0.5 W; 1%"
+U3;U3;TL431BILP;TL431BILP;1;Package_TO_SOT_THT:TO-92_Inline_Wide;https://www.ti.com/lit/ds/symlink/tl431.pdf;"TI LP: 1=CATHODE, 2=ANODE, 3=REF. Piny 1 i 3 zwarte; bez kondensatora na katodzie."
+U2;U2;LM2903P;LM2903P;1;Package_DIP:DIP-8_W7.62mm;https://www.ti.com/lit/ds/symlink/lm2903.pdf;Klasyczny LM2903P. Wyjscia OC 1 i 7 zwarte z RESET U4.
+U4;U4;MCP120-450DI/TO;MCP120-450DI/TO;1;Package_TO_SOT_THT:TO-92_Inline_Wide;https://ww1.microchip.com/downloads/en/devicedoc/11184d.pdf;Wariant D: 1=RESET, 2=VDD, 3=VSS. Open drain, bez wewnetrznego pull-up.
+D6;D6;1N4148;1N4148-TAP;1;Diode_THT:D_DO-35_SOD27_P10.16mm_Horizontal;https://www.vishay.com/docs/81857/1n4148.pdf;"Osobna dioda toru pomiarowego; blokuje ujemne VIN. Jej VF uwzglednia kalibracja OVP."
+R5;R5;54K9 / 0.1%;H454K9BYA;1;P01:R_MFR50_H4_P15.24;https://www.te.com/en/product-9-1879659-1.html;"0.5 W; 0.1%; <=25 ppm/K Selected HOLCO H4 0.5 W, 0.1%, 15 ppm/K; 10 x 3.7 mm."
+RV1;RV1;5K / 3296W;3296W-1-502LF;1;Potentiometer_THT:Potentiometer_Bourns_3296W_Vertical;https://www.bourns.com/docs/product-datasheets/3296.pdf;"Suwak 2 zwarty z 1. Start od 0 ohm miedzy (1+2) i 3. Nominalnie 2.14 kohm; kalibrowac pomiarem."
+R6;R6;10K / 0.1%;H410KBYA;1;P01:R_MFR50_H4_P15.24;https://www.te.com/en/product-9-1879659-1.html;"0.5 W; 0.1%; <=25 ppm/K Selected HOLCO H4 0.5 W, 0.1%, 15 ppm/K; 10 x 3.7 mm."
+R7;R7;10K / 0.1%;H410KBYA;1;P01:R_MFR50_H4_P15.24;https://www.te.com/en/product-9-1879659-1.html;"0.5 W; 0.1%; <=25 ppm/K Selected HOLCO H4 0.5 W, 0.1%, 15 ppm/K; 10 x 3.7 mm."
+R8;R8;220K / 0.1%;H4220KBYA;1;P01:R_MFR50_H4_P15.24;https://www.te.com/en/product-9-1879659-1.html;"0.5 W; 0.1%; <=25 ppm/K Selected HOLCO H4 0.5 W, 0.1%, 15 ppm/K; 10 x 3.7 mm."
+R9;R9;26K1 / 0.1%;H426K1BYA;1;P01:R_MFR50_H4_P15.24;https://www.te.com/en/product-9-1879659-1.html;"0.5 W; 0.1%; <=25 ppm/K Selected HOLCO H4 0.5 W, 0.1%, 15 ppm/K; 10 x 3.7 mm."
+R10;R10;10K / 0.1%;H410KBYA;1;P01:R_MFR50_H4_P15.24;https://www.te.com/en/product-9-1879659-1.html;"0.5 W; 0.1%; <=25 ppm/K Selected HOLCO H4 0.5 W, 0.1%, 15 ppm/K; 10 x 3.7 mm."
+R11;R11;249K / 0.1%;H4249KBYA;1;P01:R_MFR50_H4_P15.24;https://www.te.com/en/product-9-1879659-1.html;"0.5 W; 0.1%; <=25 ppm/K Selected HOLCO H4 0.5 W, 0.1%, 15 ppm/K; 10 x 3.7 mm."
+R12;R12;100K / 0.5W;MFR-50FTE52-100K;1;P01:R_MFR50_H4_P15.24;https://www.yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf;"0.5 W; 1%"
+C12;C12;100pF / C0G;K101J15C0GF53H5;1;P01:C_Vishay_K15_H5_P5;https://www.vishay.com/docs/45171/kseries.pdf;"50 V; C0G/NP0; nie zwiekszac bez badania czasu OVP"
+C13;C13;1nF / C0G;K102J15C0GF53H5;1;P01:C_Vishay_K15_H5_P5;https://www.vishay.com/docs/45171/kseries.pdf;"50 V; C0G/NP0"
+R13;R13;2K2 / 0.5W;MFR-50FTE52-2K2;1;P01:R_MFR50_H4_P15.24;https://www.yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf;"0.5 W; 1%"
+R14;R14;4K7 / 0.5W;MFR-50FTE52-4K7;1;P01:R_MFR50_H4_P15.24;https://www.yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf;"0.5 W; 1%"
+D7;D7;1N4148;1N4148-TAP;1;Diode_THT:D_DO-35_SOD27_P10.16mm_Horizontal;https://www.vishay.com/docs/81857/1n4148.pdf;D7+D8 zapobiegaja uruchomieniu drivera przy stanie LOW i nieustalonym AUX5 <1 V.
+D8;D8;1N4148;1N4148-TAP;1;Diode_THT:D_DO-35_SOD27_P10.16mm_Horizontal;https://www.vishay.com/docs/81857/1n4148.pdf;
+R15;R15;100K / 0.5W;MFR-50FTE52-100K;1;P01:R_MFR50_H4_P15.24;https://www.yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf;"0.5 W; 1%"
+Q6;Q6;2N5551G;2N5551G;1;Package_TO_SOT_THT:TO-92_Inline_Wide;https://www.onsemi.com/download/data-sheet/pdf/2n5550-d.pdf;onsemi: 1=E, 2=B, 3=C. Wtornik, odciaza wspolna linie OK.
+R16;R16;10K / 0.5W;MFR-50FTE52-10K;1;P01:R_MFR50_H4_P15.24;https://www.yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf;"0.5 W; 1%"
+R17;R17;4K7 / 0.5W;MFR-50FTE52-4K7;1;P01:R_MFR50_H4_P15.24;https://www.yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf;"0.5 W; 1%"
+R18;R18;47K / 0.5W;MFR-50FTE52-47K;1;P01:R_MFR50_H4_P15.24;https://www.yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf;"0.5 W; 1%"
+R19;R19;4K7 / 0.5W;MFR-50FTE52-4K7;1;P01:R_MFR50_H4_P15.24;https://www.yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf;"0.5 W; 1%"
+R20;R20;47K / 0.5W;MFR-50FTE52-47K;1;P01:R_MFR50_H4_P15.24;https://www.yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf;"0.5 W; 1%"
+Q3;Q3;2N5551G;2N5551G;1;Package_TO_SOT_THT:TO-92_Inline_Wide;https://www.onsemi.com/download/data-sheet/pdf/2n5550-d.pdf;Sciaga GATE przez R21 tylko przy ENABLE.
+Q5;Q5;2N5551G;2N5551G;1;Package_TO_SOT_THT:TO-92_Inline_Wide;https://www.onsemi.com/download/data-sheet/pdf/2n5550-d.pdf;Wlacza Q4, ktory wylacza szybki pull-up Q2.
+R21;R21;100K / 0.5W;MFR-50FTE52-100K;1;P01:R_MFR50_H4_P15.24;https://www.yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf;"0.5 W; 1%"
+R22;R22;470K / 0.5W;MFR-50FTE52-470K;1;P01:R_MFR50_H4_P15.24;https://www.yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf;"0.5 W; 1%"
+Q2;Q2;SUP53P06-20-E3;SUP53P06-20-E3;1;P01:TO220_3_P2.54_Drill1.4;https://www.vishay.com/docs/68633/sup53p06-20.pdf;"R2: P-MOS gate clamp, GDS. P01_OFF_BASE is a legacy net name; now Q2 gate."
+Q4;Q4;2N5401YBU;2N5401YBU;1;Package_TO_SOT_THT:TO-92_Inline_Wide;https://www.onsemi.com/download/data-sheet/pdf/2n5401-d.pdf;"Przy ENABLE: podciaga bramke Q2 do VS, blokujac Q2. R1 procurement selection: onsemi 2N5401YBU, E-B-C, replaces legacy 2N5401G; validate turn-off timing on bench. Never use -C bondout."
+R23;R23;2K2 / 2W;PR02000202201FR500;1;P01:R_PR02_P17.78;https://www.vishay.com/docs/28729/pr010203.pdf;"2 W; 1%; metal oxide"
+R24;R24;100K / 0.5W;MFR-50FTE52-100K;1;P01:R_MFR50_H4_P15.24;https://www.yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf;"0.5 W; 1%"
+R25;R25;47K / 0.5W;MFR-50FTE52-47K;1;P01:R_MFR50_H4_P15.24;https://www.yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf;"0.5 W; 1%"
+R26;R26;10K / 0.5W;MFR-50FTE52-10K;1;P01:R_MFR50_H4_P15.24;https://www.yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf;"0.5 W; 1%"
+R27;R27;10R / 2W;PR02000201009FR500;1;P01:R_PR02_P17.78;https://www.vishay.com/docs/28729/pr010203.pdf;"2 W; 1%; odporny impulsowo"
+R28;R28;4K7 / 0.5W;MFR-50FTE52-4K7;1;P01:R_MFR50_H4_P15.24;https://www.yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf;"0.5 W; 1%; rozladowanie wyjscia"
+LED1;LED1;GREEN 3mm;L-934GD;1;LED_THT:LED_D3.0mm;https://www.kingbrightusa.com/images/catalog/SPEC/L-934GD.pdf;Sygnalizuje VPROT, nie stan bezpieczenstwa ani zezwolenie na ruch.
+R29;R29;6K8 / 0.5W;MFR-50FTE52-6K8;1;P01:R_MFR50_H4_P15.24;https://www.yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf;"0.5 W; 1%"
+J4;J4;TEST PADS;PCB pads (no purchased connector);1;P01:TestPads_3;;"V6: połączenie robocze przez BAT/SUPPLY/PG; pozostały dostęp pomiarowy. Nie dokupować gniazda."
+Q7;Q7;2N5551G;2N5551G;1;Package_TO_SOT_THT:TO-92_Inline_Wide;https://www.onsemi.com/download/data-sheet/pdf/2n5550-d.pdf;"Otwarty kolektor sciaga SAFE_N przy braku ENABLE; uzbrojenie po bledzie wymaga ARM."
+Q8;Q8;2N5551G;2N5551G;1;Package_TO_SOT_THT:TO-92_Inline_Wide;https://www.onsemi.com/download/data-sheet/pdf/2n5550-d.pdf;Przy ENABLE blokuje Q7. Zasilanie polaryzacji Q7 z 3V3_IO odbiornika.
+R30;R30;10K / 0.5W;MFR-50FTE52-10K;1;P01:R_MFR50_H4_P15.24;https://www.yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf;"0.5 W; 1%"
+R31;R31;100K / 0.5W;MFR-50FTE52-100K;1;P01:R_MFR50_H4_P15.24;https://www.yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf;"0.5 W; 1%"
+R32;R32;10K / 0.5W;MFR-50FTE52-10K;1;P01:R_MFR50_H4_P15.24;https://www.yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf;"0.5 W; 1%"
+R33;R33;47K / 0.5W;MFR-50FTE52-47K;1;P01:R_MFR50_H4_P15.24;https://www.yageogroup.com/content/Resource%20Library/Datasheet/YAGEO-MFR_DATASHEET.pdf;"0.5 W; 1%"
+J8;J_PRES;TEST PADS;PCB pads (no purchased connector);1;P01:TestPads_2;;"V6: połączenie robocze przez BAT/SUPPLY/PG; pozostały dostęp pomiarowy. Nie dokupować gniazda."
+R34;W_PRES;0R / link;Tinned copper wire 0.6 mm;1;P01:R_MFR50_H4_P15.24;;Presence link. No resistor tolerance.
+J5;J_PGB;PG / soldered harness;"PCB termination; H_PG";1;P01:Pigtail_PG_6xAWG22;;PG
+J6;J_SUPPLYA;SUPPLY / MSTBA 3p;1757255;1;Connector_Phoenix_MSTB:PhoenixContact_MSTBA_2,5_3-G-5,08_1x03_P5.08mm_Horizontal;https://www.phoenixcontact.com/en-us/products/pcb-header-mstba-25-3-g-508-1757255;SUPPLY
+J7;J_BATB;BAT / soldered wires;"PCB termination; H_BAT";1;P01:Pigtail_PWR_2x2.5mm2;;BAT
+D9;ADDED_R2;BZX55C15-TAP;BZX55C15-TAP;1;Diode_THT:D_DO-35_SOD27_P10.16mm_Horizontal;https://www.vishay.com/docs/85604/bzx55.pdf;R2: limits gate-source voltage of Q2.
+LK1;ADDED_R3;LINK / Cu 2.5mm2;Copper wire 2.5mm2 removable link;1;P01:Link_Kelvin_P10;;"R3: removable copper link; two power PTH plus two Kelvin PTH. Never connect sense pads as power terminals."
+TP1;ADDED_TESTPAD;VS;PCB test pad;1;P01:TestPad_1;;"Additional probe access; no new circuit function."
+TP2;ADDED_TESTPAD;GATE;PCB test pad;1;P01:TestPad_1;;"Additional probe access; no new circuit function."
+TP3;ADDED_TESTPAD;AUX_IN;PCB test pad;1;P01:TestPad_1;;"Additional probe access; no new circuit function."
+TP4;ADDED_TESTPAD;AUX5;PCB test pad;1;P01:TestPad_1;;"Additional probe access; no new circuit function."
+TP5;ADDED_TESTPAD;REF;PCB test pad;1;P01:TestPad_1;;"Additional probe access; no new circuit function."
+TP6;ADDED_TESTPAD;OK;PCB test pad;1;P01:TestPad_1;;"Additional probe access; no new circuit function."
+TP7;ADDED_TESTPAD;ENABLE;PCB test pad;1;P01:TestPad_1;;"Additional probe access; no new circuit function."
+TP8;ADDED_TESTPAD;OV_SENSE;PCB test pad;1;P01:TestPad_1;;"Additional probe access; no new circuit function."
+TP9;ADDED_TESTPAD;UV_SENSE;PCB test pad;1;P01:TestPad_1;;"Additional probe access; no new circuit function."
+TP10;ADDED_TESTPAD;GND;PCB test pad;1;P01:TestPad_1;;"Additional probe access; no new circuit function."

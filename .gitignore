@@ -1,0 +1,17 @@
+# EGRLab — wykluczenia repozytorium (29.09.2026)
+
+# Archiwa pakietów recenzyjnych i rewizji dublują katalogi obok nich.
+# Zostają tylko paczki do zamówienia PCB (są w manifestach SHA-256 i idą do producenta).
+*.zip
+!Plytki/Zamowienie-Satland/DO-ZAMOWIENIA_*.zip
+!Plytki/*-zamowienie/DO-ZAMOWIENIA_*.zip
+
+# Pliki podręczne i blokady (żaden manifest pakietu ich nie obejmuje)
+__pycache__/
+*.pyc
+*.lck
+fp-info-cache
+*-backups/
+
+# UWAGA: katalogów negative-controls/ i plików *.kicad_prl NIE wykluczać —
+# są wpisane w manifesty SHA-256 kilku pakietów (P00/P02 zamówieniowe, P01 R1/R2/R3.1).

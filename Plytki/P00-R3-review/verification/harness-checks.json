@@ -1,0 +1,304 @@
+{
+  "p04_revision": "P04-R2.1",
+  "checks": [
+    {
+      "check": "P00 side: every channel pin carries its 1 k output net and the next pin is GND",
+      "pass": true
+    },
+    {
+      "check": "Channels J1..J9: P04 pin carries the named input, one connector, one pulldown, only IC inputs, H >= VIH + 0.2 V",
+      "pass": true,
+      "detail": {
+        "PSU": {
+          "p04": "J6.1",
+          "net": "PSU_OK",
+          "connectors": [
+            "J6.1"
+          ],
+          "gate_net": "PSU_OK",
+          "gates": [
+            "U9.9"
+          ],
+          "pulldown": [
+            "R18.1"
+          ],
+          "H_min_V": 2.849,
+          "threshold_V": 2.0
+        },
+        "DAQ": {
+          "p04": "J5.1",
+          "net": "DAQ_OK",
+          "connectors": [
+            "J5.1"
+          ],
+          "gate_net": "DAQ_OK",
+          "gates": [
+            "U9.12"
+          ],
+          "pulldown": [
+            "R19.1"
+          ],
+          "H_min_V": 2.849,
+          "threshold_V": 2.0
+        },
+        "DRIVE": {
+          "p04": "J3.7",
+          "net": "DRIVE_OK",
+          "connectors": [
+            "J3.7"
+          ],
+          "gate_net": "DRIVE_OK",
+          "gates": [
+            "U10.2"
+          ],
+          "pulldown": [
+            "R20.1"
+          ],
+          "H_min_V": 2.849,
+          "threshold_V": 2.0
+        },
+        "SENSOR": {
+          "p04": "J4.3",
+          "net": "SENSOR_OK",
+          "connectors": [
+            "J4.3"
+          ],
+          "gate_net": "SENSOR_OK",
+          "gates": [
+            "U10.5"
+          ],
+          "pulldown": [
+            "R21.1"
+          ],
+          "H_min_V": 2.849,
+          "threshold_V": 2.0
+        },
+        "CORE": {
+          "p04": "J2.13",
+          "net": "CORE_LINK",
+          "connectors": [
+            "J2.13"
+          ],
+          "gate_net": "CORE_LINK",
+          "gates": [
+            "U9.2"
+          ],
+          "pulldown": [
+            "R16.1"
+          ],
+          "H_min_V": 2.849,
+          "threshold_V": 2.0
+        },
+        "PG": {
+          "p04": "J7.5",
+          "net": "PG_LINK",
+          "connectors": [
+            "J7.5"
+          ],
+          "gate_net": "PG_LINK",
+          "gates": [
+            "U10.9"
+          ],
+          "pulldown": [
+            "R22.1"
+          ],
+          "H_min_V": 2.849,
+          "threshold_V": 2.0
+        },
+        "KEY": {
+          "p04": "J8.3",
+          "net": "TEST_KEY",
+          "connectors": [
+            "J8.3"
+          ],
+          "gate_net": "TEST_KEY_P04",
+          "gates": [
+            "U4.13",
+            "U7.10"
+          ],
+          "pulldown": [
+            "R23.1"
+          ],
+          "H_min_V": 2.608,
+          "threshold_V": 2.36
+        },
+        "MECH": {
+          "p04": "J8.4",
+          "net": "MECH_OK",
+          "connectors": [
+            "J8.4"
+          ],
+          "gate_net": "MECH_OK_P04",
+          "gates": [
+            "U7.9"
+          ],
+          "pulldown": [
+            "R24.1"
+          ],
+          "H_min_V": 2.608,
+          "threshold_V": 2.36
+        },
+        "HB": {
+          "p04": "J2.3",
+          "net": "HEARTBEAT",
+          "connectors": [
+            "J2.3"
+          ],
+          "gate_net": "HEARTBEAT",
+          "gates": [
+            "U8.5"
+          ],
+          "pulldown": [
+            "R13.1"
+          ],
+          "H_min_V": 2.849,
+          "threshold_V": 2.0
+        }
+      }
+    },
+    {
+      "check": "Branch source is P04 TP1 = 3V3_IO (not PANEL_3V3 behind R40)",
+      "pass": true
+    },
+    {
+      "check": "Five 1 k branches H_SUP/H_MCU/H_HB/H_PWM/H_SENSOR on P04 input nets with H >= VIH + 0.2 V",
+      "pass": true,
+      "detail": {
+        "H_SUP": {
+          "p04": "J2.15",
+          "net": "SUP_N",
+          "gate_net": "SUP_N",
+          "gates": [
+            "U9.5"
+          ],
+          "pulldown": [
+            "R17.1"
+          ],
+          "H_min_V": 3.103,
+          "threshold_V": 2.0
+        },
+        "H_MCU": {
+          "p04": "J2.5",
+          "net": "MCU_ARM",
+          "gate_net": "MCU_ARM",
+          "gates": [
+            "U8.9"
+          ],
+          "pulldown": [
+            "R14.1"
+          ],
+          "H_min_V": 2.845,
+          "threshold_V": 2.0
+        },
+        "H_HB": {
+          "p04": "J2.3",
+          "net": "HEARTBEAT",
+          "gate_net": "HEARTBEAT",
+          "gates": [
+            "U8.5"
+          ],
+          "pulldown": [
+            "R13.1"
+          ],
+          "H_min_V": 2.845,
+          "threshold_V": 2.0
+        },
+        "H_PWM": {
+          "p04": "J2.1",
+          "net": "PWM",
+          "gate_net": "PWM",
+          "gates": [
+            "U8.2"
+          ],
+          "pulldown": [
+            "R12.1"
+          ],
+          "H_min_V": 2.845,
+          "threshold_V": 2.0
+        },
+        "H_SENSOR": {
+          "p04": "J2.11",
+          "net": "SENSOR_ENABLE",
+          "gate_net": "SENSOR_ENABLE",
+          "gates": [
+            "U8.12"
+          ],
+          "pulldown": [
+            "R15.1"
+          ],
+          "H_min_V": 2.845,
+          "threshold_V": 2.0
+        }
+      }
+    },
+    {
+      "check": "H_HB and P00 J9.1 drive the same P04 pin and are declared mutually exclusive",
+      "pass": true
+    },
+    {
+      "check": "Contacts STOP / ARM / SAFE_N test on the named P04 nets",
+      "pass": true,
+      "detail": {
+        "STOP": [
+          "PANEL_3V3",
+          "STOP_NC_OUT"
+        ],
+        "ARM": [
+          "ARM_CONTACT",
+          "GND"
+        ],
+        "SAFE_N_TEST": [
+          "SAFE_N",
+          "GND"
+        ]
+      }
+    },
+    {
+      "check": "P04 supply pins: 3V3_IO on J1.3, GND on J1.2/J1.4, J1.1 left open",
+      "pass": true
+    },
+    {
+      "check": "Measure-only pins are driven by an IC output or open collector and are never used as a source target",
+      "pass": true,
+      "detail": {
+        "J3.1": [
+          "U5.11"
+        ],
+        "J3.3": [
+          "U4.8"
+        ],
+        "J3.5": [
+          "U2.4"
+        ],
+        "J4.1": [
+          "U5.6"
+        ],
+        "J2.7": [
+          "U3.5"
+        ],
+        "J2.9": [
+          "U7.6"
+        ],
+        "J3.9": [
+          "Q1.3",
+          "Q2.3",
+          "Q3.3"
+        ]
+      }
+    },
+    {
+      "check": "Listed ground pins are GND; key positions are NC",
+      "pass": true
+    },
+    {
+      "check": "Harness document tables match the checked map; no v6.1 designators (J13..J20)",
+      "pass": true,
+      "detail": {
+        "mismatch": [],
+        "v6.1_refs": []
+      }
+    }
+  ],
+  "passed": 10,
+  "total": 10
+}
