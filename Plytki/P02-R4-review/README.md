@@ -42,3 +42,7 @@ W chmurze: `scripts/egrlab-docker python3 src/run_schematic.py` (ok. 20 s). Loka
 | `src/` | Generatory (`cadlib.py`, `verify_schematic.py` z P02 R3), `parts.py`, `build_schematic.py`, `check_electrical.py`, `run_schematic.py` |
 
 Footprinty TO-220, MFR-50, PR02, B32529, MKS2, P600 i wiązki PG pochodzą z bibliotek P01 R3 / P02 R3 (bez zmian), pozostałe z KiCad 10.0.6 albo z generatora w `parts.py`. W etapie 2 (PCB) trzeba potwierdzić: obrys C12 (16 × 25 mm, P7,5), oprawki MINI Keystone 3568, Mini-Fit 2p.
+
+## Stan etapu 2 (29.09.2026) — trasowanie niedokończone
+
+`eda/P02.kicad_pcb`: rozmieszczenie S1 klasa 2/3, wylewki mocy, wynik Freeroutingu + zszycie GND, **bez dokańczania** (29 niepołączonych pozycji wg `routing/precompletion-drc.json`). Stan sprzed trasowania: `routing/prerouted.kicad_pcb`. Nie ma świeżych wyników `verify_pcb.py`, prób ujemnych PCB ani wydania (`run_release.py`) — do uruchomienia po dokończeniu trasowania lokalnie (`src/run_layout.py`, potem `src/verify_pcb.py`).

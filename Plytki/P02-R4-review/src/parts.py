@@ -28,18 +28,19 @@ def localfp(name):
     return 'P02:' + name
 
 
-def simplepads(name, count, pitch, drill, pad, anchor=False, label=''):
-    """Soldered-wire termination (same generator as P02 R3): pads in a row, optional strain-relief holes 12.5 mm behind."""
+def simplepads(name, count, pitch, drill, pad, anchor=False, label='', back=12.5):
+    """Soldered-wire termination (same generator as P02 R3): pads in a row, optional strain-relief holes `back` mm behind
+    (R3: 12.5 mm; R4 in S1: 7.0 mm for the thin AWG22 wires J14/J15, to fit the 2/3 board)."""
     s = f'(footprint {q(name)} (version 20240108) (generator "pcbnew") (layer "F.Cu") (attr through_hole)'
     for i in range(count):
         s += f'(pad "{i + 1}" thru_hole {"rect" if i == 0 else "circle"} (at {i * pitch} 0) (size {pad} {pad}) (drill {drill}) (layers "*.Cu" "*.Mask"))'
     if anchor:
         hole = 3.2
         for px in [-3, (count - 1) * pitch + 3]:
-            s += f'(pad "" np_thru_hole circle (at {px} -12.5) (size {hole} {hole}) (drill {hole}) (layers "*.Cu" "*.Mask"))'
-        s += f'(fp_text user "TIE / 12.5 mm" (at {(count - 1) * pitch / 2} -16) (layer "F.SilkS") (effects (font (size 1 1) (thickness .15))))'
+            s += f'(pad "" np_thru_hole circle (at {px} {-back}) (size {hole} {hole}) (drill {hole}) (layers "*.Cu" "*.Mask"))'
+        s += f'(fp_text user "TIE / {back} mm" (at {(count - 1) * pitch / 2} {-back - 3.5}) (layer "F.SilkS") (effects (font (size 1 1) (thickness .15))))'
     x0 = -6 if anchor else -pad / 2 - 0.5; x1 = (count - 1) * pitch - x0
-    y0 = -15.5 if anchor else -pad / 2 - 0.5; y1 = pad / 2 + 0.5
+    y0 = -back - 3.0 if anchor else -pad / 2 - 0.5; y1 = pad / 2 + 0.5
     s += f'(fp_rect (start {x0} {y0}) (end {x1} {y1}) (stroke (width 0.05) (type default)) (fill none) (layer "F.CrtYd"))'
     if label:
         s += f'(fp_text user {q(label)} (at {(count - 1) * pitch / 2} 3.2) (layer "F.Fab") (effects (font (size 1 1) (thickness .15))))'
@@ -72,8 +73,8 @@ def cap_lying():
 TO220 = localfp('TO220_3_P2.54_Drill1.4'); RPR02 = localfp('R_PR02_P17.78')
 CK15 = localfp('C_Vishay_K15_H5_P5'); CB32 = localfp('C_TDK_B32529_L7.3_W2.5_P5'); CMKS = localfp('C_WIMA_MKS2_1u100V_L7.2_W7.2_P5')
 TVS600 = localfp('TVS_P600_P20.32'); BATFP = localfp('Pigtail_PWR_2x2.5mm2')
-PWRFP = simplepads('Pigtail_PWR_SW_2xAWG22', 2, 3.81, 1.1, 2.0, True, 'PWR 1..2')
-VBATFP = simplepads('Pigtail_VBAT_1xAWG22', 1, 2.54, 1.1, 2.0, True, 'VBAT')
+PWRFP = simplepads('Pigtail_PWR_SW_2xAWG22_T7', 2, 3.81, 1.1, 2.0, True, 'PWR 1..2', 7.0)
+VBATFP = simplepads('Pigtail_VBAT_1xAWG22', 1, 2.54, 1.1, 2.0, False, 'VBAT')   # no anchor: the wire is tied to the J1 anchor (2/3 board)
 CH16 = cap_lying()
 TO92 = copyfp('Package_TO_SOT_THT', 'TO-92_Inline_Wide')
 D35 = copyfp('Diode_THT', 'D_DO-35_SOD27_P5.08mm_Vertical_CathodeUp'); D15 = copyfp('Diode_THT', 'D_DO-15_P5.08mm_Vertical_CathodeUp')
@@ -334,19 +335,21 @@ mon('C29', 'P02R3:C12', S_C, CK15, '100nF / X7R', 'K104K15X7RF5TH5', {1: '3V3_IO
 res('R44', 'P02R3:R4', '10K', 'PSU_OK', 'GND', 'MON', 'PSU_OK low while U10 is unpowered.', 'yr1b')
 mon('J15', 'R4:NEW', conn(1), VBATFP, 'VBAT_IN / soldered wire', 'PCB termination; 1 x AWG22', {1: 'VBAT_CAR'},
     note='D-01/Z-12: one wire from the car battery + terminal in the engine bay, 1 A in-line fuse <= 10 cm from the terminal (R4E1-06); NO ground wire. '
-         'S1: at the input wall x = 106.5.', h='WIRE')
+         'S1: top corner at the input wall; no own anchor, tie the wire to the J1 anchor next to it.', h='WIRE')
 res('R38', 'R4:NEW', '10K', 'VBAT_CAR', 'VBAT_SENSE', 'MON', 'Limits TVS current; CH7 multiplier 6.0898 -> 6.1918 (+1.67 %, recalibrate).', 'smd')
 mon('D13', 'R4:NEW', S_TVS, D15, 'P6KE24CA / VBAT', 'P6KE24CA', {1: 'VBAT_SENSE', 2: 'GND'}, URL['p6ke'], 'Bidirectional, VWM 20.5 V, VC 33.2 V.', vr=20.5, h='D15')
 
 # ============ sheet SERW: service headers on edge B (S1 section 6) ============
 # pin -> (node net, series resistor, class); pin 1 and 13 are GND. Classes (S1 section 6): 1K logic / rails <= 5 V,
 # 4K7 pack rails (<= 16.8 V: 3.6 mA, 60 mW into a short), 10K high-impedance nodes (dividers, gates, references).
-SV = {'J_SV1': {2: ('P02_AUX5', 'R50', '1K'), 3: ('P02_REF', 'R51', '10K'), 4: ('P02_UV_DIV', 'R52', '10K'), 5: ('P02_UV_CMP', 'R53', '10K'),
-                6: ('P02_OK', 'R54', '1K'), 7: ('P02_ENABLE', 'R55', '1K'), 8: ('PFAIL_N', 'R56', '1K'), 9: ('SAFE_N', 'R57', '1K'),
-                10: ('P04_3V3', 'R58', '1K'), 11: ('VBAT_SENSE', 'R59', '10K'), 12: ('P02_SUP5_N', 'R60', '1K')},
-      'J_SV2': {2: ('P02_BAT_IN', 'R61', '4K7'), 3: ('P02_SW_COM', 'R62', '4K7'), 4: ('P02_GATE', 'R63', '10K'), 5: ('P02_OFF_G', 'R64', '10K'),
-                6: ('P02_VSW', 'R65', '4K7'), 7: ('VMOTOR', 'R66', '4K7'), 8: ('P02_HOLD_C', 'R67', '4K7'), 9: ('P02_VLOG', 'R68', '4K7'),
-                10: ('5V_SYS', 'R69', '1K'), 11: ('3V3_IO', 'R70', '1K'), 12: ('PSU_OK', 'R71', '1K')}}
+SV = {'J_SV1': {2: ('P02_ENABLE', 'R55', '1K'), 3: ('P02_SUP5_N', 'R60', '1K'), 4: ('PSU_OK', 'R71', '1K'), 5: ('SAFE_N', 'R57', '1K'),
+                6: ('P04_3V3', 'R58', '1K'), 7: ('P02_UV_CMP', 'R53', '10K'), 8: ('P02_OK', 'R54', '1K'), 9: ('P02_AUX5', 'R50', '1K'),
+                10: ('PFAIL_N', 'R56', '1K'), 11: ('P02_REF', 'R51', '10K'), 12: ('P02_UV_DIV', 'R52', '10K')},
+      'J_SV2': {2: ('P02_GATE', 'R63', '10K'), 3: ('VBAT_SENSE', 'R59', '10K'), 4: ('VMOTOR', 'R66', '4K7'), 5: ('P02_BAT_IN', 'R61', '4K7'),
+                6: ('3V3_IO', 'R70', '1K'), 7: ('P02_OFF_G', 'R64', '10K'), 8: ('P02_SW_COM', 'R62', '4K7'), 9: ('P02_VSW', 'R65', '4K7'),
+                10: ('P02_VLOG', 'R68', '4K7'), 11: ('5V_SYS', 'R69', '1K'), 12: ('P02_HOLD_C', 'R67', '4K7')}}
+# Pin order follows the x position of the nodes on the board (pin 1 of the angled header is at the larger x), so the
+# service lines do not cross; left-half nodes go to J_SV1 (slot S2), right-half nodes to J_SV2 (slot S3).
 
 
 def svnet(node):

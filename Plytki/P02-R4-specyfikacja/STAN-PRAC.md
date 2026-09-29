@@ -103,3 +103,9 @@ Recenzja: `Plytki/P02-R4-recenzja/RECENZJA-P02-R4-ETAP1.md`. PR #2 scalony (4ac3
 - **Panel (P11):** włącznik PWR ze złoconymi stykami (obwód „suchy”, ok. 0,3 mA).
 
 Następny krok: etap 2 (PCB) — `ZADANIE-P02-R4-ETAP2.md`, polecenie w `docs/CHMURA.md`.
+
+## Etap 2 — stan przerwany (29.09.2026, sesja w chmurze)
+
+Gałąź `p02-r4-pcb`. Trasowanie przerwane na polecenie użytkownika; do dokończenia lokalnie.
+
+Zrobione: schemat w formacie S1 (5 arkuszy z SERW; D3 5KP24A, J_BP IDC 2 × 10 na krawędzi A, listwy serwisowe J_SV1/J_SV2 1 × 13 z rezystorami R50–R71 na krawędzi B, U9/C27/C28 SMD od spodu wg S1-2), rozmieszczenie w klasie 2/3 (106,5 × 100 mm, 0 nakładań obrysów), wylewki toru 5 A, pasy i korytarz powrotu GND, skrypty układu i kontroli (`src/`). Plik `eda/P02.kicad_pcb` to wynik Freeroutingu po zszyciu GND, przed dokańczaniem: 29 niepołączonych pozycji, 2 naruszenia prześwitu przy D10.1, 1 ścieżka w strefie zakazanej (OFF_D przy 87,5/50,4), 1 nakładanie R33/R57 (po imporcie). Stan przed trasowaniem: `routing/prerouted.kicad_pcb`. Lista niepołączonych sieci i pytania: opis PR.
