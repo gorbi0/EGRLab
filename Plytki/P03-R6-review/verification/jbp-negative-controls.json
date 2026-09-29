@@ -1,0 +1,201 @@
+[
+  {
+    "control": "null control (no defect)",
+    "expected": "all pass",
+    "detected": true,
+    "failed": []
+  },
+  {
+    "control": "J_BP3 pin 7 unconnected",
+    "expected": "C0",
+    "detected": true,
+    "failed": [
+      "C1 every R5 connector signal (J1..J10) and PFAIL_N exactly once on J_BP1..3, no other signals",
+      "C0 three 2x10 edge-A connectors, 20 connected pins each",
+      "C3 odd pins are GND except the justified exceptions (static signals or supplies only)",
+      "C5 every edge signal has a GND ribbon neighbour; every J_BP net classified"
+    ]
+  },
+  {
+    "control": "CAN_RX lost from J_BP1.8",
+    "expected": "C1",
+    "detected": true,
+    "failed": [
+      "C1 every R5 connector signal (J1..J10) and PFAIL_N exactly once on J_BP1..3, no other signals",
+      "C0 three 2x10 edge-A connectors, 20 connected pins each",
+      "C5 every edge signal has a GND ribbon neighbour; every J_BP net classified"
+    ]
+  },
+  {
+    "control": "CAN_TX duplicated on J_BP1.9",
+    "expected": "C1",
+    "detected": true,
+    "failed": [
+      "C1 every R5 connector signal (J1..J10) and PFAIL_N exactly once on J_BP1..3, no other signals",
+      "C3 odd pins are GND except the justified exceptions (static signals or supplies only)",
+      "C5 every edge signal has a GND ribbon neighbour; every J_BP net classified"
+    ]
+  },
+  {
+    "control": "foreign net I2C_SDA on J_BP1.20",
+    "expected": "C1",
+    "detected": true,
+    "failed": [
+      "C1 every R5 connector signal (J1..J10) and PFAIL_N exactly once on J_BP1..3, no other signals",
+      "C5 every edge signal has a GND ribbon neighbour; every J_BP net classified"
+    ]
+  },
+  {
+    "control": "only one 5V_SYS pin",
+    "expected": "C2",
+    "detected": true,
+    "failed": [
+      "C2 5V_SYS twice on J_BP2, 3V3_IO once on J_BP3"
+    ]
+  },
+  {
+    "control": "CAN_TX on odd pin (swap 6/7)",
+    "expected": "C3",
+    "detected": true,
+    "failed": [
+      "C3 odd pins are GND except the justified exceptions (static signals or supplies only)"
+    ]
+  },
+  {
+    "control": "edge TC2_CS on exception pin (swap 9/10)",
+    "expected": "C3",
+    "detected": true,
+    "failed": [
+      "C3 odd pins are GND except the justified exceptions (static signals or supplies only)",
+      "C5 every edge signal has a GND ribbon neighbour; every J_BP net classified"
+    ]
+  },
+  {
+    "control": "ADC_SCLK loses GND neighbour (swap 3/4)",
+    "expected": "C4",
+    "detected": true,
+    "failed": [
+      "C3 odd pins are GND except the justified exceptions (static signals or supplies only)",
+      "C4 ADC_SCLK, SPI3_SCLK and MEAS_EN have GND on both ribbon sides"
+    ]
+  },
+  {
+    "control": "MEAS_EN loses GND neighbour (swap 15/16)",
+    "expected": "C4",
+    "detected": true,
+    "failed": [
+      "C3 odd pins are GND except the justified exceptions (static signals or supplies only)",
+      "C4 ADC_SCLK, SPI3_SCLK and MEAS_EN have GND on both ribbon sides"
+    ]
+  },
+  {
+    "control": "SPI3_SCLK at ribbon end (swap 2/1 -> pin 1)",
+    "expected": "C4",
+    "detected": true,
+    "failed": [
+      "C3 odd pins are GND except the justified exceptions (static signals or supplies only)",
+      "C4 ADC_SCLK, SPI3_SCLK and MEAS_EN have GND on both ribbon sides"
+    ]
+  },
+  {
+    "control": "HEARTBEAT without GND neighbour (swap 13/15)",
+    "expected": "C5",
+    "detected": true,
+    "failed": [
+      "C3 odd pins are GND except the justified exceptions (static signals or supplies only)",
+      "C5 every edge signal has a GND ribbon neighbour; every J_BP net classified"
+    ]
+  },
+  {
+    "control": "pull-up on GPIO side",
+    "expected": "C6",
+    "detected": true,
+    "failed": [
+      "C6 PFAIL_N: J_BP -> 1K series -> module GPIO; 10K pull-up to 3V3_CORE on the connector side (HIGH with J_BP2 open)"
+    ]
+  },
+  {
+    "control": "series resistor 0R",
+    "expected": "C6",
+    "detected": true,
+    "failed": [
+      "C6 PFAIL_N: J_BP -> 1K series -> module GPIO; 10K pull-up to 3V3_CORE on the connector side (HIGH with J_BP2 open)"
+    ]
+  },
+  {
+    "control": "PFAIL_N wired straight to the GPIO",
+    "expected": "C6",
+    "detected": true,
+    "failed": [
+      "C6 PFAIL_N: J_BP -> 1K series -> module GPIO; 10K pull-up to 3V3_CORE on the connector side (HIGH with J_BP2 open)",
+      "C7 PFAIL_N GPIO is GPIO3 (J1-13), not PSRAM, 1.8 V, boot strap, UART0 or USB"
+    ]
+  },
+  {
+    "control": "PFAIL_N on GPIO37 PSRAM",
+    "expected": "C7",
+    "detected": true,
+    "failed": [
+      "C7 PFAIL_N GPIO is GPIO3 (J1-13), not PSRAM, 1.8 V, boot strap, UART0 or USB"
+    ]
+  },
+  {
+    "control": "PFAIL_N on GPIO46 strap",
+    "expected": "C7",
+    "detected": true,
+    "failed": [
+      "C7 PFAIL_N GPIO is GPIO3 (J1-13), not PSRAM, 1.8 V, boot strap, UART0 or USB"
+    ]
+  },
+  {
+    "control": "service header without GND at the end",
+    "expected": "C8",
+    "detected": true,
+    "failed": [
+      "C8 at most 3 service headers, <= 13 pins, GND on first and last pin",
+      "C9 every service pin except GND reaches its node through one series resistor >= 1K"
+    ]
+  },
+  {
+    "control": "service pin straight on 3V3_CORE",
+    "expected": "C9",
+    "detected": true,
+    "failed": [
+      "C9 every service pin except GND reaches its node through one series resistor >= 1K",
+      "C10 service headers cover the ODBIOR minimum (rails, reset, EN = SUP_N, PFAIL_N, start states), no node twice"
+    ]
+  },
+  {
+    "control": "service resistor 100R",
+    "expected": "C9",
+    "detected": true,
+    "failed": [
+      "C9 every service pin except GND reaches its node through one series resistor >= 1K",
+      "C10 service headers cover the ODBIOR minimum (rails, reset, EN = SUP_N, PFAIL_N, start states), no node twice"
+    ]
+  },
+  {
+    "control": "SUP_N (EN) not on a service header",
+    "expected": "C10",
+    "detected": true,
+    "failed": [
+      "C10 service headers cover the ODBIOR minimum (rails, reset, EN = SUP_N, PFAIL_N, start states), no node twice"
+    ]
+  },
+  {
+    "control": "5V_SYS service resistor 10K",
+    "expected": "C11",
+    "detected": true,
+    "failed": [
+      "C11 series value class (S1 §6): rails 1K, high-impedance nodes 10K"
+    ]
+  },
+  {
+    "control": "SUP_RAW_N service resistor 1K",
+    "expected": "C11",
+    "detected": true,
+    "failed": [
+      "C11 series value class (S1 §6): rails 1K, high-impedance nodes 10K"
+    ]
+  }
+]
