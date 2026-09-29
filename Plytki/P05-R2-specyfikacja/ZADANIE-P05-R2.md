@@ -1,5 +1,7 @@
 # P05 R2 — zadanie dla sesji w chmurze (29.09.2026)
 
+> **29.09.2026 — format S1:** layout P05 R2 (punkt 3 zakresu) jest wstrzymany, bo płytki przechodzą na stos S1 (`Plytki/Format-S1/SPECYFIKACJA-FORMATU-S1.md`). Z tego zadania obowiązują zmiany schematu i dokumentów (punkty 1, 2, 4, 5 i 6). Layout wykona nowe zadanie P05 w formacie S1.
+
 Źródła: recenzja `Plytki/P05-R1-recenzja/RECENZJA-P05-R1.md` (uwagi P5-01…P5-09, „Kolejność dla R2”), zamknięty pakiet `Plytki/P05-R1-review` (nie zmieniać), decyzje z 29.09 w `EGRLab-AKTYWNE.md`. Pamięć: `docs/pamiec-claude/p05-r1-review.md` i `kicad-pipeline-quirks.md` (zwłaszcza lokalna zmiana przez zasianie SES, jak w P03 R4).
 
 Ustawienia sesji: Opus 5.5, wysiłek high. Gałąź `p05-r2`.

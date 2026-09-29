@@ -15,7 +15,7 @@ Katalog jest repozytorium git: **github.com/gorbi0/EGRLab** (prywatne), gałąź
 
 ## FORMAT S1 — STUDIUM (29.09.2026, DO DECYZJI)
 
-Studium formatu S1 (`Plytki/Format-S1/STUDIUM-FORMATU-S1.md`, do decyzji użytkownika): stos poziomych płytek w formacie ok. 160 × 100 mm z tercjami (L, 2/3, 1/3), płytka połączeń zamiast wiązek na jednej długiej krawędzi, listwy serwisowe z kołkami do odbioru na drugiej (wymaganie użytkownika), panel na krótkiej. Szacunek: LOGGER ok. 231 × 133 × 95 mm (2,9 l zamiast 11,4 l), pełny ok. 231 × 133 × 120 mm (3,7 l zamiast 14,5 l). Części zajmują dziś 21–53 % powierzchni płytek. P02 R4 w obecnej technice potrzebuje ok. 155 cm² wobec celu 98 cm², więc etap 2 (PCB) wstrzymany do decyzji o formacie; do wstrzymania także layout P05 R2 i zamówienie PCB P04.
+Studium formatu S1 (`Plytki/Format-S1/STUDIUM-FORMATU-S1.md`, do decyzji użytkownika): stos poziomych płytek w formacie ok. 160 × 100 mm z tercjami (L, 2/3, 1/3), płytka połączeń zamiast wiązek na jednej długiej krawędzi, listwy serwisowe z kołkami do odbioru na drugiej (wymaganie użytkownika), panel na krótkiej. Szacunek: LOGGER ok. 231 × 133 × 105 mm (3,2 l zamiast 11,4 l), pełny ok. 231 × 133 × 127 mm (3,9 l zamiast 14,5 l). Części zajmują dziś 21–53 % powierzchni płytek. P02 R4 w obecnej technice potrzebuje ok. 155 cm² wobec celu 98 cm², więc etap 2 (PCB) wstrzymany do decyzji o formacie; do wstrzymania także layout P05 R2 i zamówienie PCB P04.
 
 ## P02 R4 — RECENZJA ETAPU 1 I DECYZJE (29.09.2026)
 

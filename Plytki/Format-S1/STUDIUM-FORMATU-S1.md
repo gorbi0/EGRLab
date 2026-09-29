@@ -11,12 +11,12 @@ Rysunek porównawczy: `porownanie-S1-kaseta.svg`.
 
 ## Wniosek
 
-Przyrząd da się zmniejszyć mniej więcej czterokrotnie:
+Przyrząd da się zmniejszyć mniej więcej 3,5 raza:
 
 | Wariant | Teraz (kaseta R1) | Po zmianie (stos S1) |
 |---|---|---|
-| LOGGER | 11,4 l (361 × 209 × 151 mm) | ok. 2,9 l (231 × 133 × 95 mm) |
-| Pełny | 14,5 l | ok. 3,7 l (231 × 133 × 120 mm) |
+| LOGGER | 11,4 l (361 × 209 × 151 mm) | ok. 3,2 l (231 × 133 × 105 mm) |
+| Pełny | 14,5 l | ok. 3,9 l (231 × 133 × 127 mm) |
 
 Warunek: nowy layout wszystkich płytek w jednym formacie. Schematy zostają.
 
@@ -85,14 +85,14 @@ Wariant pełny ma 5 poziomów, jeśli P06 zmieści się w 1/3; inaczej 6.
 **Wnętrze:**
 - długość: 50 mm panelu + 160 mm stosu + 15 mm wejść;
 - szerokość: 18 mm płytki połączeń + 100 mm stosu + 9 mm strony serwisowej;
-- wysokość: suma wysokości poziomów + 10 mm.
+- wysokość: 8 mm od dna, płytki po 1,6 mm, dystanse 25 mm (pod P02 R4) i po 20 mm, elementy górnej płytki ≤ 16,5 mm i 3 mm zapasu. Wartości dystansów podaje `SPECYFIKACJA-FORMATU-S1.md`; pierwsze wydanie tego studium liczyło z niższych poziomów i podawało 95 mm i 2,9 l dla wariantu LOGGER.
 
 Ścianki mają 3 mm.
 
 | Wariant | Kaseta R1 | Stos S1, płytka połączeń | Stos S1, wiązki |
 |---|---|---|---|
-| LOGGER | 361 × 209 × 151 mm, 11,4 l | 231 × 133 × 95 mm, ok. 2,9 l | 231 × 145 × 95 mm, ok. 3,2 l |
-| Pełny | 361 × 265 × 151 mm, 14,5 l | 231 × 133 × 120 mm, ok. 3,7 l | 231 × 145 × 137 mm, ok. 4,6 l |
+| LOGGER | 361 × 209 × 151 mm, 11,4 l | 231 × 133 × 105 mm, ok. 3,2 l | 231 × 145 × 105 mm, ok. 3,5 l |
+| Pełny | 361 × 265 × 151 mm, 14,5 l | 231 × 133 × 127 mm, ok. 3,9 l | 231 × 145 × 148 mm, ok. 5,0 l |
 
 ## Połączenia między płytkami: płytka połączeń czy wiązki
 

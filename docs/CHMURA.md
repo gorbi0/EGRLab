@@ -144,17 +144,24 @@ Manifesty SHA-256 obu pakietów w repozytorium sprawdzone po pracy: 234/234 i 22
 
 Wykonane: krok 0 i P02 R4 etap 1 (PR #2, scalone 29.09.2026; recenzja `Plytki/P02-R4-recenzja/RECENZJA-P02-R4-ETAP1.md`).
 
-1. **P02 R4, etap 2 — PCB** (Opus 5.5, high): `Plytki/P02-R4-specyfikacja/ZADANIE-P02-R4-ETAP2.md`, polecenie niżej.
-2. **P05 R2** — w toku (gałąź `p05-r2`): `Plytki/P05-R2-specyfikacja/ZADANIE-P05-R2.md`.
-3. P03: wejście PFAIL_N, sprawy B2B. P06 (bocznik 2512). P11 R2: przyciski, złącza panelu, włącznik PWR ze złoconymi stykami (obwód „suchy”, ok. 0,3 mA).
-4. Tabela wiązek pod kasetę (`Plytki/Kaseta-R1`).
+**Od 29.09.2026 każda nowa płytka powstaje w formacie S1:** `Plytki/Format-S1/SPECYFIKACJA-FORMATU-S1.md` i `format-s1.json`. Format S1 to:
+- stos płytek L, 2/3 i 1/3 na 160 × 100 mm;
+- złącze płytki połączeń P12 na krawędzi A;
+- listwa serwisowa z kołkami na krawędzi B;
+- posiadane rezystory THT na stojąco, nowe części SMD 1206;
+- produkcja w JLCPCB.
+
+1. **P02 R4, etap 2 — PCB w S1 (pilot)** (Opus 5.5, high): `Plytki/P02-R4-specyfikacja/ZADANIE-P02-R4-ETAP2.md` (wersja 2), polecenie niżej.
+2. **P05 R2** (gałąź `p05-r2`): z zadania obowiązują zmiany schematu i dokumentów; layout wykona nowe zadanie P05 w S1.
+3. **LOGGER w S1:** P03, P05, P06, P09, P10, każda z pinoutem J_BP i listwą serwisową. Następnie P12 (płytka połączeń), P11 pod nowy panel i obudowa.
+4. **Wariant pełny w S1:** P04, P08, P07.
 
 ### Praca równoległa
 
-Kilka sesji naraz jest dozwolonych. Każda pracuje tylko we własnym pakiecie i nie zmienia plików wspólnych (`EGRLab-AKTYWNE.md`, `docs/01-overview.md`, `docs/CHMURA.md`, `docs/pamiec-claude/`, `scripts/`, `.gitignore`); uzupełnia je sesja lokalna po scaleniu. Rozsądny limit to dwie sesje, bo każdy PR przechodzi lokalną recenzję.
+Kilka sesji może działać naraz. Każda pracuje tylko we własnym pakiecie. Żadna nie zmienia plików wspólnych: `EGRLab-AKTYWNE.md`, `docs/01-overview.md`, `docs/CHMURA.md`, `docs/pamiec-claude/`, `scripts/`, `Plytki/Format-S1/`, `.gitignore`. Uzupełnia je sesja lokalna po scaleniu. Rozsądny limit to dwie sesje, bo każdy PR przechodzi lokalną recenzję.
 
-### Gotowe polecenie — P02 R4, etap 2
+### Gotowe polecenie — P02 R4, etap 2 (S1)
 
 Ustawienia sesji: Opus 5.5, wysiłek high.
 
-> Przeczytaj CLAUDE.md, docs/CHMURA.md (zwłaszcza „Koszty”), docs/pamiec-claude/MEMORY.md, a z pamięci tylko kicad-pipeline-quirks.md, p02-r1-state.md, p01-pcb-r1-review.md i pcb-fab-satland.md. Wykonaj zadanie z Plytki/P02-R4-specyfikacja/ZADANIE-P02-R4-ETAP2.md na gałęzi p02-r4-pcb. Równolegle pracuje sesja P05 R2 — nie zmieniaj plików wspólnych wymienionych w zadaniu. Zakończ PR-em po polsku; pytania wpisz do opisu PR i nie włączaj śledzenia PR.
+> Przeczytaj CLAUDE.md, docs/CHMURA.md (zwłaszcza „Koszty”), docs/pamiec-claude/MEMORY.md, a z pamięci tylko kicad-pipeline-quirks.md, p02-r1-state.md, p01-pcb-r1-review.md i format-s1.md. Wykonaj zadanie z Plytki/P02-R4-specyfikacja/ZADANIE-P02-R4-ETAP2.md (wersja 2, format S1) na gałęzi p02-r4-pcb. Obowiązuje Plytki/Format-S1/SPECYFIKACJA-FORMATU-S1.md. Nie zmieniaj plików wspólnych wymienionych w zadaniu. Zakończ PR-em po polsku; pytania wpisz do opisu PR i nie włączaj śledzenia PR.

@@ -1,0 +1,62 @@
+{
+  "wersja": "S1-1 (29.09.2026)",
+  "opis": "Dane liczbowe formatu S1 dla generatorów płytek. Tekst i uzasadnienia: SPECYFIKACJA-FORMATU-S1.md.",
+  "uklad_wspolrzednych": "x wzdłuż 160 mm (0 = strona panelu), y w poprzek (0 = krawędź A, płytka połączeń; 100 = krawędź B, strona serwisowa), z w górę; wymiary w mm",
+  "sloty": [
+    {"id": "S1", "x0": 0.0, "x1": 53.0},
+    {"id": "S2", "x0": 53.5, "x1": 106.5},
+    {"id": "S3", "x0": 107.0, "x1": 160.0}
+  ],
+  "rozstaw_slotow": 53.5,
+  "klasy": {
+    "L": {"sloty": [["S1", "S2", "S3"]], "W": 160.0, "H": 100.0},
+    "2/3": {"sloty": [["S1", "S2"], ["S2", "S3"]], "W": 106.5, "H": 100.0},
+    "1/3": {"sloty": [["S1"], ["S2"], ["S3"]], "W": 53.0, "H": 100.0}
+  },
+  "obrys": {"promien_naroza": 1.0, "grubosc_pcb": 1.6, "warstwy": 2, "miedz_um": 35, "odstep_miedzi_od_krawedzi": 0.5},
+  "otwory_M3": {
+    "srednica": 3.2,
+    "strefa_dystansu_srednica": 7.0,
+    "x_w_slocie": [4.0, 49.0],
+    "y": [14.0, 86.0],
+    "zasada": "płytka ma otwory wszystkich slotów, które zajmuje (1/3: 4, 2/3: 8, L: 12); współrzędne x w układzie płytki = x_w_slocie + 53,5 × (numer slotu na płytce − 1)"
+  },
+  "krawedz_A": {
+    "strefa_y": [0.0, 10.0],
+    "zlacze": "IDC 2,54 mm, obudowane, kątowe; 2x5, 2x8 albo 2x10; strona wtyku równo z krawędzią",
+    "srodek_x_w_slocie": 26.5,
+    "max_zlacz_na_slot": 1,
+    "pin1": "od strony mniejszego x",
+    "polaczenie": "krótka taśma IDC do płytki połączeń P12 (pionowej, równoległej do krawędzi A, ok. 18 mm od niej)"
+  },
+  "krawedz_B": {
+    "strefa_y": [90.0, 100.0],
+    "listwa": "goldpin 1xN 2,54 mm kątowy, kołki wystają ok. 6 mm za krawędź",
+    "zakres_x_w_slocie": [10.0, 43.0],
+    "max_pinow_na_slot": 13,
+    "GND": "pierwszy i ostatni pin każdej listwy",
+    "wezly_wysokoimpedancyjne": "przez rezystor szeregowy 1–10 kΩ przy węźle"
+  },
+  "poziomy": {
+    "dystans_standard": 20.0,
+    "dystans_wysoki": 25.0,
+    "wys_max_gora_standard": 16.5,
+    "wys_max_gora_wysoki": 21.5,
+    "wyprowadzenia_THT_od_spodu_max": 1.5,
+    "elementy_od_spodu": "brak",
+    "dystans_od_dna_obudowy": 8.0
+  },
+  "przydzial": {
+    "LOGGER": [
+      {"poziom": 1, "dystans": 25.0, "plytki": [{"P10": ["S1"]}, {"P02R4": ["S2", "S3"]}]},
+      {"poziom": 2, "dystans": 20.0, "plytki": [{"P03": ["S1", "S2", "S3"]}]},
+      {"poziom": 3, "dystans": 20.0, "plytki": [{"P05": ["S1", "S2"]}, {"P09": ["S3"]}]},
+      {"poziom": 4, "dystans": 20.0, "plytki": [{"P06": ["S1"]}]}
+    ],
+    "PELNY_dodatkowo": [
+      {"poziom": 4, "plytki": [{"P04": ["S2", "S3"]}]},
+      {"poziom": 5, "dystans": 20.0, "plytki": [{"P08": ["S1"]}, {"P07": ["S2", "S3"]}]}
+    ],
+    "uwagi": "P02R4 i P06: jeśli layout nie zmieści się w klasie, P02R4 → L (P10 na poziom 4), P06 → 2/3 (pełny: 6 poziomów)"
+  }
+}
