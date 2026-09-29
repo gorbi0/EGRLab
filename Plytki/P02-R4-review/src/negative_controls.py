@@ -27,7 +27,7 @@ def move(b, r, dx, dy):
 
 
 def mount_shift(b): move(b, 'H1', .5, 0)                                  # hole 0.5 mm off the S1 grid
-def jbp_shift(b): move(b, 'J_BP', 1.0, 0)                                 # edge-A connector off x = 80.0
+def jbp_shift(b): move(b, 'J_BP', 1.0, 0)                                 # edge-A connector off x = 133.5
 def sv_no_gnd_end(b): pad(b, 'J_SV1', '13').SetNet(pad(b, 'J_SV1', '12').GetNet())   # last pin not GND
 def sv_pin_without_resistor(b): pad(b, 'J_SV2', '2').SetNet(b.FindNet('P02_GATE'))   # GATE straight to the pin
 def neck_5a(b):                                                           # BAT_IN pour squeezed to a 2.4 mm strip

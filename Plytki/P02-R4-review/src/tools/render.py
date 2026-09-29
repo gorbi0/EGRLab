@@ -4,7 +4,7 @@ import pcbnew as p, sys, json
 from PIL import Image, ImageDraw
 P = Path(__file__).resolve().parents[2]
 b = p.LoadBoard(str(P / 'eda/P02.kicad_pcb')); S = 12
-img = Image.new('RGB', (int(106.5 * S) + 1, int(100 * S) + 1), 'white'); d = ImageDraw.Draw(img, 'RGBA')
+img = Image.new('RGB', (int(160 * S) + 1, int(100 * S) + 1), 'white'); d = ImageDraw.Draw(img, 'RGBA')
 def poly(ps, fill):
     for k in range(ps.OutlineCount()):
         o = ps.Outline(k); d.polygon([(p.ToMM(o.CPoint(i).x) * S, p.ToMM(o.CPoint(i).y) * S) for i in range(o.PointCount())], fill=fill)

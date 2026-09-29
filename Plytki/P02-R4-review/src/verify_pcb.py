@@ -15,7 +15,7 @@ b = p.LoadBoard(str(path)); b.BuildConnectivity()
 S1 = json.loads((P.parents[0] / 'Format-S1/format-s1.json').read_text(encoding='utf-8'))
 root = ET.parse(P / 'verification/P02.xml').getroot(); parts = json.loads(Path(os.environ.get('P02_PARTS_JSON', P / 'docs/parts.json')).read_text(encoding='utf-8'))
 checks = []; details = {}
-KLASA, SLOTY = '2/3', ['S2', 'S3']                       # ZADANIE etap 2, section 2: class 2/3, slots S2-S3 of level 1
+KLASA, SLOTY = 'L', ['S1', 'S2', 'S3']                       # ZADANIE etap 2, section 2: class 2/3, slots S2-S3 of level 1
 W, H = S1['klasy'][KLASA]['W'], S1['klasy'][KLASA]['H']; STEP = S1['rozstaw_slotow']
 HMAX = S1['poziomy']['wys_max_gora_wysoki']               # level 1 is the high level (25 mm standoffs)
 # S1 section 8, table 'Pinout P02 R4 J_BP' (typed from the specification, independent of parts.py)
@@ -84,8 +84,16 @@ def fills(netname, layers=(p.F_Cu, p.B_Cu)):
 
 # ---------------- 1. native DRC, fresh, bound to the inputs ----------------
 drc, receipt = run_fresh_drc(path, out / 'drc.json')
-check('Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)',
-      not drc['violations'] and not drc['unconnected_items'] and not drc['schematic_parity'], receipt['counts'])
+# Klasa L (29.09): silkscreen.py drops footprint silk at file level (off the board, over other pads or over other silk) and lists
+# every drop per part; KiCad then reports lib_footprint_mismatch for exactly those parts. Only these are accepted, by UUID.
+trimmed = set(json.loads((P / 'routing/silkscreen.json').read_text(encoding='utf-8')).get('dropped_by_part', {}))
+fp_uuid = {f.m_Uuid.AsString(): f.GetReference() for f in b.GetFootprints()}
+lib_ok = [v for v in drc['violations'] if v['type'] == 'lib_footprint_mismatch' and all(fp_uuid.get(i['uuid']) in trimmed for i in v['items'])]
+rest = [v for v in drc['violations'] if v not in lib_ok]
+check('Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts '
+      'whose silk silkscreen.py trimmed)',
+      not rest and not drc['unconnected_items'] and not drc['schematic_parity'],
+      dict(receipt['counts'], other_violations=len(rest), accepted_lib_mismatch=sorted(fp_uuid.get(i['uuid']) for v in lib_ok for i in v['items'])))
 # ---------------- 2. netlist, parts, board ----------------
 comps = {c.get('ref'): c for c in root.findall('./components/comp')}
 onboard = {r for r, q in parts.items() if q.get('on_board', True)}
@@ -125,11 +133,13 @@ check('Both copper layers 35 um (S1)', cu == {'F.Cu': S1['obrys']['miedz_um'] / 
 edge = [g for g in b.GetDrawings() if g.GetLayer() == p.Edge_Cuts]
 arcs = [g for g in edge if g.GetShape() == p.SHAPE_T_ARC]; segs = [g for g in edge if g.GetShape() == p.SHAPE_T_SEGMENT]
 bb = b.GetBoardEdgesBoundingBox(); R = S1['obrys']['promien_naroza']
-ol = b.GetBoardPolygonOutlines() if hasattr(b, 'GetBoardPolygonOutlines') else None
+hw = max(p.ToMM(g.GetWidth()) for g in edge) / 2   # klasa L (29.09): the bounding box includes half the Edge.Cuts line width
 check(f'Outline class {KLASA}: {W} x {H} mm, 4 corner arcs R {R} mm (format-s1.json)',
       len(segs) == 4 and len(arcs) == 4 and all(abs(p.ToMM(a.GetRadius()) - R) < 1e-4 for a in arcs)
-      and abs(p.ToMM(bb.GetLeft())) < 1e-3 and abs(p.ToMM(bb.GetTop())) < 1e-3 and abs(p.ToMM(bb.GetRight()) - W) < 1e-3 and abs(p.ToMM(bb.GetBottom()) - H) < 1e-3,
-      {'bbox': [p.ToMM(bb.GetLeft()), p.ToMM(bb.GetTop()), p.ToMM(bb.GetRight()), p.ToMM(bb.GetBottom())], 'arcs': len(arcs), 'segments': len(segs)})
+      and abs(p.ToMM(bb.GetLeft()) + hw) < 1e-3 and abs(p.ToMM(bb.GetTop()) + hw) < 1e-3 and abs(p.ToMM(bb.GetRight()) - hw - W) < 1e-3
+      and abs(p.ToMM(bb.GetBottom()) - hw - H) < 1e-3,
+      {'bbox_line_centres': [p.ToMM(bb.GetLeft()) + hw, p.ToMM(bb.GetTop()) + hw, p.ToMM(bb.GetRight()) - hw, p.ToMM(bb.GetBottom()) - hw],
+       'arcs': len(arcs), 'segments': len(segs)})
 want_h = sorted((x + STEP * k, y) for k in range(len(SLOTY)) for x in S1['otwory_M3']['x_w_slocie'] for y in S1['otwory_M3']['y'])
 got_h = sorted(pos(fmap[r].GetPosition()) for r in holes_ref)
 hole_ok = all(list(fmap[r].Pads())[0].GetAttribute() == p.PAD_ATTRIB_NPTH and pos(list(fmap[r].Pads())[0].GetDrillSize()) == (S1['otwory_M3']['srednica'],) * 2 for r in holes_ref)
@@ -186,18 +196,18 @@ jb = fmap.get('J_BP'); jd = {}
 if jb:
     pads1 = {a.GetNumber(): pos(a.GetPosition()) for a in jb.Pads()}; fab = layer_bbox(jb, p.F_Fab); cy = layer_bbox(jb, p.F_CrtYd)
     xs = [v[0] for v in pads1.values()]; cx = (min(xs) + max(xs)) / 2
-    s3 = S1['sloty'][1]; slot_x0 = STEP * 1                     # second slot of the board (level slot S3)
+    s3 = S1['sloty'][2]; slot_x0 = STEP * 2                     # second slot of the board (level slot S3)
     nets_ok = {int(k): net(pad('J_BP', k)) for k in pads1} == JBP
     jd = {'centre_x': round(cx, 3), 'pin1': pads1['1'], 'pin20': pads1['20'], 'fab_front_y': fab[1] if fab else None, 'fab_x': fab and (fab[0], fab[2])}
     ok = (abs(cx - (slot_x0 + S1['krawedz_A']['srodek_x_w_slocie'])) < .05 and pads1['1'][0] == min(xs) and nets_ok and fab and abs(fab[1]) < .3
           and slot_x0 + 10 - 1.5 <= fab[0] and fab[2] <= slot_x0 + 43 + 1.5 and len(pads1) == 20)
 else:
     ok = False
-check('J_BP (edge A): IDC 2x10 angled, body front at y = 0, centre x = 80.0 (slot S3 of the board), pin 1 at smaller x, pinout = S1 section 8', ok, jd)
+check('J_BP (edge A): IDC 2x10 angled, body front at y = 0, centre x = 133.5 (slot S3), pin 1 at smaller x, pinout = S1 section 8', ok, jd)
 # ---------------- 4. edge B: service headers ----------------
 svd = {}; sv_ok = True
 texts = [(t.GetText(), t) for t in b.GetDrawings() if isinstance(t, p.PCB_TEXT) and t.GetLayer() == p.F_SilkS]
-for k, hdr in enumerate(['J_SV1', 'J_SV2']):
+for k, hdr in [(0, 'J_SV1'), (2, 'J_SV2')]:   # klasa L: J_SV1 w S1, J_SV2 w S3
     f = fmap.get(hdr); x0 = STEP * k; problems = []
     if not f:
         sv_ok = False; svd[hdr] = 'missing'; continue
@@ -241,6 +251,8 @@ PATHS = {  # net, waypoints (mm); sampled every 0.5 mm, chord +/-2 mm perpendicu
     'VMOTOR F1.2-J2.1': ('VMOTOR', [(86.8, 62.7), (91.8, 66.5), (91.8, 74.0), (94.4, 76.0)]),
     'GND return J1.2-J2.2 (B.Cu)': ('GND', [(93.2, 31.62), (97.3, 31.8), (97.3, 39.5), (103.8, 42.5), (103.8, 63.0), (98.5, 68.38)]),
 }
+DX = 53.5   # klasa L (29.09): the power block moved with placement.py / route_critical.py; waypoints above are the 2/3 pilot ones
+PATHS = {k: (n, [(x + DX, y) for x, y in wp]) for k, (n, wp) in PATHS.items()}
 pw = {}
 for name, (n, wp) in PATHS.items():
     fl = fills(n, (p.B_Cu,) if n == 'GND' else (p.F_Cu, p.B_Cu)); bad_pts = []; count = 0
@@ -306,7 +318,7 @@ hold = {'C12.1-D2.2': round(math.dist(pxy('C12', '1'), pxy('D2', '2')), 1), 'C12
 check('C_H, D2 and D1 close together: HOLD_C pads within 20 mm of each other', all(v <= 20 for v in hold.values()), hold)
 wall = {r: round(W - max(p.ToMM(a.GetPosition().x) for a in fmap[r].Pads()), 1) for r in ('J1', 'J2', 'J15')}
 fab2 = layer_bbox(fmap['J2'], p.F_Fab)
-check('J1 BAT, J2 VMOTOR, J15 VBAT_IN at the input wall x = 106.5 (pads/anchors <= 17 mm from it); J2 mating face at the edge',
+check('J1 BAT, J2 VMOTOR, J15 VBAT_IN at the input wall x = 160 (pads/anchors <= 17 mm from it); J2 mating face at the edge',
       all(v <= 17 for v in wall.values()) and fab2 and abs(fab2[2] - W) < 1.0, {'pad_to_wall_mm': wall, 'J2_fab_right': fab2 and fab2[2]})
 
 # ---------------- 9. silkscreen ----------------
@@ -333,9 +345,9 @@ for f in b.GetFootprints():
     if o:
         amb[r] = o
 check('Every visible reference outside the courtyards of other parts', not amb, amb)
-title = [s for s, t in texts if s.startswith('P02 R4 S1-2/3')]
+title = [s for s, t in texts if s.startswith('P02 R4 S1-L')]
 marks = [s for s, t in texts if s.strip() in ('A', 'B') or s.startswith('KRAWEDZ A') or s.startswith('KRAWEDZ B')]
-check('Silkscreen: board name "P02 R4 S1-2/3 S2-S3", edge markers A and B', bool(title) and any('A' in m for m in marks) and any('B' in m for m in marks), {'title': title, 'marks': marks})
+check('Silkscreen: board name "P02 R4 S1-L S1-S3", edge markers A and B', bool(title) and any('A' in m for m in marks) and any('B' in m for m in marks), {'title': title, 'marks': marks})
 
 res = {'board': str(path), 'board_sha256': hashlib.sha256(path.read_bytes()).hexdigest(), 'checks': checks, 'details': details,
        'passed': sum(c['pass'] for c in checks), 'total': len(checks)}

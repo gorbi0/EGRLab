@@ -6,6 +6,10 @@
 3. Router dead ends (P03 R1: MOTOR_INA ran 5 mm out and back on both layers; P04 R2 trials: F.Cu and B.Cu stubs meeting where no via was emitted): drop duplicate
    free segments, then free segments with an end that touches no pad, via or other segment of the net, and free vias
    left with fewer than two connections; repeated until nothing changes.
+3a. P02 R4 (29.09, klasa L): vias whose centre lies on a THT pad of the same net (DRC hole_to_hole), free or locked:
+   the completion planner may change layers on its own THT pad and emit a via there. The pad already joins both
+   layers and the track ends stay on its copper. Free vias of nets without a pour that touch copper on one layer only
+   (DRC via_dangling) go as dead ends.
 4. Pads given on the command line (e.g. U9.13) get a solid zone connection: pads whose thermal relief is starved
    by neighbouring tracks (DRC starved_thermal). Never used for soldered wires.
 pcbnew's Remove() leaves the SWIG wrappers of the whole process unusable (GetTracks / LoadBoard return SwigPyObject),
@@ -95,7 +99,19 @@ for t in sorted(tracks, key=lambda t: (t.GetNetname(), t.GetLayer(), sorted([key
         dead.add(uid(t)); dup += 1
     else:
         seen[k] = t
+# 3a. vias on THT pads of the same net
+n_via_pad = 0
+for t in tracks:
+    if not isinstance(t, p.PCB_VIA) or uid(t) in dead:
+        continue
+    for a in pads_by_net[t.GetNetCode()]:
+        if a.GetAttribute() != p.PAD_ATTRIB_PTH or not a.HitTest(t.GetPosition()):
+            continue
+        gap = math.hypot(p.ToMM(t.GetPosition().x - a.GetPosition().x), p.ToMM(t.GetPosition().y - a.GetPosition().y))
+        if gap < p.ToMM(max(a.GetDrillSize().x, a.GetDrillSize().y)) / 2 + p.ToMM(t.GetDrillValue()) / 2 + .3:   # min hole-to-hole 0.3 mm
+            dead.add(uid(t)); n_via_pad += 1; break
 n_dead_end = 0
+pour_nets = {z.GetNetCode() for z in b.Zones() if not z.GetIsRuleArea()}
 while True:
     live = [t for t in tracks if uid(t) not in dead]; gone = []
     for t in live:
@@ -107,6 +123,10 @@ while True:
             links = [u for u in same if not isinstance(u, p.PCB_VIA) and u.HitTest(t.GetPosition())]
             if len(links) + sum(a.HitTest(t.GetPosition()) for a in pads) < 2:
                 gone.append(uid(t))
+            elif t.GetNetCode() not in pour_nets:   # P02 R4: copper on one layer only (DRC via_dangling)
+                lay = {u.GetLayer() for u in links} | {L for a in pads if a.HitTest(t.GetPosition()) for L in (p.F_Cu, p.B_Cu) if a.IsOnLayer(L)}
+                if len(lay) < 2:
+                    gone.append(uid(t))
             continue
         for e in (t.GetStart(), t.GetEnd()):
             on = any(a.IsOnLayer(t.GetLayer()) and a.HitTest(e) for a in pads) or any(
@@ -137,4 +157,4 @@ if left:  # e.g. a GND pad enclosed by routed tracks on both layers: the pours c
     fn.write_bytes(BACKUP); print(f'aborted: {left} unconnected after clean-up (solid pads and refill included); input board restored'); sys.exit(3)
 p.SaveBoard(str(fn), b, True)
 print('removed', n_redundant, 'redundant free items', sorted(redundant_nets), '; dropped', len(tiny), 'tiny; joined', joined, 'near-miss ends;',
-      dup, 'duplicate and', n_dead_end, 'dead-end items; unconnected 0; solid zone connection:', ['.'.join(x) for x in SOLID_PADS] or 'none')
+      dup, 'duplicate,', n_via_pad, 'via-on-THT-pad and', n_dead_end, 'dead-end items; unconnected 0; solid zone connection:', ['.'.join(x) for x in SOLID_PADS] or 'none')

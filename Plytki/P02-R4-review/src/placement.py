@@ -1,4 +1,4 @@
-"""P02 R4 placement (format S1, class 2/3). Writes src/placement.json: ref -> [x, y, rotation]; origin = footprint origin
+"""P02 R4 placement (format S1, class L: the 2/3 pilot layout with the power block moved 53.5 mm towards the input wall). Writes src/placement.json: ref -> [x, y, rotation]; origin = footprint origin
 (pad 1 for THT library parts, centre for SMD). Board: x 0..106.5 (106.5 = input wall), y 0..100 (0 = edge A, 100 = edge B).
 Fixed by S1: J_BP (edge A, centre x = 80.0), J_SV1/J_SV2 (edge B, x 10..43 in each slot), J1/J2/J15 at the input wall.
 Power chain J1 -> Q9 -> SW_COM -> Q1 -> VSW -> F1 -> J2 runs down the right third; control on the left.
@@ -32,7 +32,7 @@ put('R61', 81.5, 17.5, 90)                  # service BAT_IN, inside the BAT_IN 
 put('R35', 71.08, 16.3, 180)             # REV_G (71.08,16.3) - GND (66,16.3)
 put('C1', 65.5, 21.3, 0)                 # SW_COM reservoir
 put('D10', 66, 26.5, 0)                  # SW_COM (66,26.5) - REV_G (71.08,26.5)
-put('R5', 63.2, 30.2, 180)                   # SW_COM (67.46,30) - PWR_A (64.54,30); R_T1 at SW_COM
+R5_XY = (12.0, 77.5, 90)                   # klasa L: przy D11 (SW_COM), zob. koniec pliku
 put('R62', 62.4, 25.5, 180)                # service SW_COM
 put('C2', 77.3, 31.2, 0)                 # 100 nF B32529 at the sources
 # gate of Q1 (right of Q1, under J1)
@@ -136,7 +136,7 @@ put('R31', 24.5, 14.5, 0)
 put('Q8', 13.05, 39.5, 0)
 put('R32', 20.72, 39.5, 0)
 put('R33', 28.43, 39.5, 0)
-put('R57', 33, 43.1, 270)                    # service SAFE_N
+put('R57', 38.4, 44.5, 270)   # 29.09: przeniesiony obok R7 (nakładanie z R33 w pilocie)                    # service SAFE_N
 put('R58', 33, 14.5, 0)                    # service P04_3V3
 put('Q3', 96.5, 47.5, 90)
 put('R17', 100.2, 50.5, 90)
@@ -149,5 +149,46 @@ put('R26', 72, 83, 0)
 put('Q5', 81, 83, 0)
 put('R19', 72, 87.2, 0)
 put('R20', 81, 87.2, 0)
+# ---- klasa L (decyzja użytkownika 29.09, opcja 1): w klasie 2/3 trasowanie się nie domykało. Blok mocy, złącza ściany
+# wejść, J_BP i J_SV2 przesunięte o jeden slot (53,5 mm) do x = 160; blok sterowania i J_SV1 (slot S1) bez zmian.
+# Odległości wewnątrz bloków zostają, między blokami otwiera się pas ok. 30 mm na ścieżki. route_critical.py przesuwa
+# wylewki, pasy, korytarz i ścieżki tym samym DX.
+DX = 53.5
+RIGID = ['J_BP', 'J_SV2', 'J1', 'J2', 'J15', 'R38', 'D13', 'R59', 'R34', 'Q9', 'Q1', 'R61', 'R35', 'C1', 'D10', 'R62', 'C2', 'C6', 'R22', 'C5', 'R21', 'D4', 'R63', 'R27', 'Q2', 'R64', 'R23', 'C3', 'C4', 'R65', 'F1', 'D3', 'R66', 'R29', 'LED1', 'R40', 'D1', 'D2', 'C12', 'R41', 'R67', 'C20', 'R68', 'Q3', 'R17', 'R18', 'Q4', 'R24', 'D9', 'R25', 'R26', 'Q5', 'R19', 'R20']
+assert set(RIGID) <= set(L), sorted(set(RIGID) - set(L))
+for ref in RIGID:
+    L[ref][0] = round(L[ref][0] + DX, 3)
+# ---- klasa L, rozsunięcie bloku sterowania (29.09, lokalnie) ----
+# Po przesunięciu bloku mocy blok sterowania został gęsty jak w pilocie 2/3 (x 0..61), a pas x ≈ 61..86 pusty. Router
+# i planer dokańczania zostawiały 2-5 połączeń; PWR_A nie miała drogi do J14 (pierścień ścieżek na obu warstwach).
+# Współrzędne x części sterowania mnożone przez KX od lewej krawędzi (strona panelu): układ i sąsiedztwa zostają, odstępy
+# rosną o 35 %. Bez zmian: blok mocy (RIGID), złącza S1 (J_SV1; J_BP i J_SV2 są w RIGID), R70 (położony już w pasie).
+KX = 1.35
+KEEP = set(RIGID) | {'J_SV1', 'R70'}
+for ref in L:
+    if ref not in KEEP:
+        L[ref][0] = round(L[ref][0] * KX, 3)
+# R5 (1 kΩ, początek dzielnika UVLO) z bloku mocy obok D11, do którego i tak dochodzi miedź SW_COM (zasilanie V_CTRL).
+# PWR_A (R5.2 → J14.1 → włącznik na panelu) skraca się ze 100 mm przez całą płytkę do odcinka w bloku sterowania,
+# a rezystor nadal stoi przy źródle SW_COM, więc zwarcie w przewodach panelu ogranicza do ok. 17 mA.
+# Po rozsunięciu cztery części wpadły w strefy dystansów M3 (D7), a siedem kondensatorów odsprzęgających odjechało od
+# pinów dalej niż 8 mm (verify_pcb.py §8). Położenia poniżej znalazł skrypt: wolne miejsce (obrysy, strefy M3, na spodzie
+# >= 1 mm od pól THT) najbliżej pinu zasilania układu.
+put('R58', 43.05, 14.5, 0)
+put('D12', 52.65, 81.0, 0)
+put('C29', 47.25, 22.5, 270)                # C29.1 - U10.14: 3,4 mm
+put('C21', 53.08, 5.0, 180)                 # C21.1 - U5.1: 7,0 mm
+put('C22', 64.66, 11.5, 270)                # C22.1 - U5.3: 6,5 mm
+put('C23', 31.55, 28.5, 270)                # C23.1 - U6.1: 6,5 mm
+put('C24', 37.13, 28.5, 270)                # C24.1 - U6.3: 6,6 mm
+put('C25', 9.99, 20.5, 0)                   # C25.1 - U7.2: 4,8 mm
+put('C26', 9.99, 27.0, 0)                   # C26.1 - U8.2: 4,8 mm
+put('C27', 49.54, 66.72, 270, 'B')          # C27.1 - U9.14: 2,0 mm (obrót przed odbiciem na spód; po odbiciu 90)
+# Rezystory listwy serwisowej przy węźle (verify_pcb.py: <= 10 mm od pola sieci węzła): najmniejsze przesunięcie
+# do odległości <= 8 mm.
+put('R69', 74.11, 7.65, 0)                  # 5V_SYS: 7,9 mm od U5 (było 11,4 mm)
+put('R70', 59.70, 19.45, 0)                 # 3V3_IO: 8,0 mm od U10 (było 25,7 mm; położony w pasie przy pierwszym przebiegu klasy L)
+put('R71', 38.35, 35.5, 0)                  # PSU_OK: 7,9 mm od R44 (było 11,4 mm)
+put('R5', *R5_XY)
 (P / 'src/placement.json').write_text(json.dumps(L, indent=1) + '\n')
 print(len(L), 'placed')

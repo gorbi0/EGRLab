@@ -1,6 +1,6 @@
-"""P02 R4 PCB (format S1, class 2/3, slots S2-S3 of level 1) from the exported netlist (verification/P02.xml) and src/placement.json.
+"""P02 R4 PCB (format S1, class L, slots S1-S3 of level 1) from the exported netlist (verification/P02.xml) and src/placement.json.
 Adapted from the P02 R3 builder. Outline, M3 holes and standoff zones come from Plytki/Format-S1/format-s1.json (S1-1);
-board coordinates: x along the long side (0 = panel side of the board, 106.5 = input wall), y across (0 = edge A, 100 = edge B).
+board coordinates: x along the long side (0 = panel side of the board, 160 = input wall), y across (0 = edge A, 100 = edge B).
 Rules as P02 R3 (clearance 0.25, track 0.3, 1.6 mm), copper 35 um, annular ring >= 0.25 mm for PTH and vias (S1 section 3).
 Parts on the bottom (S1-2): only SMD marked 'B' in placement.json (U9 SOIC and its capacitors).
 """
@@ -9,7 +9,7 @@ import pcbnew as p, json, re, math, xml.etree.ElementTree as ET
 P = Path(__file__).resolve().parents[1]; E = P / 'eda'
 S1 = json.loads((P.parents[0] / 'Format-S1/format-s1.json').read_text(encoding='utf-8'))
 mm = p.FromMM
-CLASS, SLOTS = '2/3', ['S2', 'S3']
+CLASS, SLOTS = 'L', ['S1', 'S2', 'S3']
 W, Hh = S1['klasy'][CLASS]['W'], S1['klasy'][CLASS]['H']; R = S1['obrys']['promien_naroza']
 
 
@@ -95,7 +95,7 @@ if __name__ == '__main__':
         g = p.PCB_SHAPE(); g.SetShape(p.SHAPE_T_ARC); g.SetCenter(xy(cx, cy))
         g.SetStart(xy(cx + R * math.cos(math.radians(a0)), cy + R * math.sin(math.radians(a0))))
         g.SetArcAngleAndEnd(p.EDA_ANGLE(90, p.DEGREES_T), True); g.SetWidth(mm(.05)); g.SetLayer(p.Edge_Cuts); b.Add(g)
-    tb = p.TITLE_BLOCK(); tb.SetTitle('EGRLab P02 R4 / format S1, klasa 2/3 (S2-S3)'); tb.SetRevision('P02-R4 etap 2'); tb.SetDate('2026-09-29')
+    tb = p.TITLE_BLOCK(); tb.SetTitle('EGRLab P02 R4 / format S1, klasa L (S1-S3)'); tb.SetRevision('P02-R4 etap 2'); tb.SetDate('2026-09-29')
     tb.SetComment(0, 'Pilot formatu S1; recenzja lokalna i przymiarka 1:1 przed zamowieniem'); b.SetTitleBlock(tb)
     b.BuildConnectivity(); p.SaveBoard(str(E / 'P02.kicad_pcb'), b)
     print('Created P02 R4 board:', len(fmap), 'footprints +', len(holes()), 'M3 holes; outline', W, 'x', Hh)

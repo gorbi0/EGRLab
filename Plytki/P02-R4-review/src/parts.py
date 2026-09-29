@@ -136,6 +136,7 @@ PARTS = {}
 # heights above the board, mm (S1 level 1: <= 21.5). 'karta' = data sheet outline, 'szac.' = estimate to confirm at the 1:1 fit.
 H = {'TO220': (20.5, 'karta TO-220: korpus z blaszka <= 16,5 + nozki skrocone do 4,0'), 'TO92': (8.5, 'karta TO-92 5,2 + nozki ok. 3'),
      'DIP': (8.5, 'podstawka 4,2 + DIP ok. 4,3'), 'SOIC': (1.75, 'karta SOIC-14'), 'R1206': (0.7, 'karta RC1206'), 'C1206': (1.8, 'karta X7R 1206 (max)'),
+     'C1206_104': (0.88, 'karta KEMET C1206C104K5RACTU: grubosc 0,78 +/- 0,10 mm (DigiKey 411248: max 0,88); 29.09, C27/C28 od spodu (S1-2: <= 1,5)'),
      'RV07': (10.0, 'szac.: DIN0207 6,3 pionowo + petla nozki'), 'RV04': (7.0, 'szac.: DIN0204 3,6 pionowo + petla nozki'),
      'D35': (7.0, 'szac.: DO-35 4,0 pionowo + petla nozki'), 'D15': (10.5, 'szac.: DO-15 7,6 pionowo + petla nozki'),
      'PR02': (5.0, 'karta PR02 D 3,9 lezacy + 1 mm od plytki'), 'P600': (9.1, 'karta P600 D 9,1 max, lezacy'),
@@ -172,7 +173,7 @@ def res(ref, src, val, a, b, sheet, note='', kind='smd'):
 
 # ============ sheet WEJ: pack input, Q9 (Q_REV), Q1 (Q_SW), Q2 (Q_OFF), VSW, VMOTOR, hold-up C_H ============
 add('J1', 'R4:NEW', conn(2), BATFP, 'BAT / soldered wires', 'PCB termination; 2 x 1.5 mm2 to XT60 (wall)', {1: 'P02_BAT_IN', 2: 'GND'},
-    note='Pack 4S: XT60 male in the enclosure wall -> 2 x 1.5 mm2 -> J1 with strain-relief anchor 12.5 mm (footprint of P02 R3 J1). S1: at the input wall x = 106.5.', h='WIRE')
+    note='Pack 4S: XT60 male in the enclosure wall -> 2 x 1.5 mm2 -> J1 with strain-relief anchor 12.5 mm (footprint of P02 R3 J1). S1: at the input wall x = 160.', h='WIRE')
 add('Q9', 'R4:NEW', S_PMOS, TO220, 'SUP53P06-20 / Q_REV', 'SUP53P06-20-E3', {1: 'P02_REV_G', 2: 'P02_BAT_IN', 3: 'P02_SW_COM'}, URL['sup53'],
     'Reverse-polarity switch, back-to-back with Q1 (sources at SW_COM). Drain at the pack: correct polarity -> body diode conducts, '
     'gate pulled to GND -> on; reversed pack -> VGS = 0, body diode blocks. No heatsink: 0.37 W at 3.5 A. Standing, leads cut to 4 mm.', vr=60, h='TO220')
@@ -308,7 +309,7 @@ lv('C24', 'P02R3:C8', S_CP, CP5, '22u / 16V', 'EEUFR1C220', {1: '3V3_IO', 2: 'GN
 JBP = {1: 'GND', 2: '5V_SYS', 3: 'GND', 4: '5V_SYS', 5: 'GND', 6: '5V_SYS', 7: 'GND', 8: '3V3_IO', 9: 'GND', 10: '3V3_IO',
        11: 'GND', 12: 'PSU_OK', 13: 'GND', 14: 'PFAIL_N', 15: 'P04_3V3', 16: 'SAFE_N', 17: 'PG_SEND', 18: 'PG_LINK', 19: 'GND', 20: 'VBAT_SENSE'}
 lv('J_BP', 'R4:NEW', symbol('Connector_Generic', 'Conn_02x10_Odd_Even'), IDC, 'J_BP / IDC 2x10 angled', 'Wurth 61202021621 (shrouded IDC 2x10, right angle, Au) or equivalent',
-   JBP, URL['idc'], 'Edge A, slot S3 of the board (x = 80.0 mm), taped to P12 (S1 section 5). Pinout S1 section 8; replaces LV03..LV10, J11, J12, J13 and J16 of etap 1. '
+   JBP, URL['idc'], 'Edge A, slot S3 (x = 133.5 mm), taped to P12 (S1 section 5). Pinout S1 section 8; replaces LV03..LV10, J11, J12, J13 and J16 of etap 1. '
    '5V_SYS on 3 pins (IDC ~1 A per contact).', vr=250, h='IDC')
 
 # ============ sheet MON: PSU_OK (P02 R3), VBAT of the car (J15) ============
@@ -325,9 +326,9 @@ mon('C26', 'P02R3:C10', S_C, CK15, '100nF / X7R', 'K104K15X7RF5TH5', {1: '5V_SYS
 mon('U9', 'P02R3:U5', S_BUF, SOIC14, '74LVC125A / SO14', '74LVC125AD,118 (Nexperia)',
     {1: 'GND', 2: 'P02_SUP5_RAW', 3: 'P02_SUP5_N', 4: '3V3_IO', 5: 'GND', 6: 'NC', 7: 'GND', 8: 'NC', 9: 'GND', 10: '3V3_IO', 11: 'NC', 12: 'GND', 13: '3V3_IO', 14: '3V3_IO'},
     URL['lvc125'], 'As R3 U5: 5 V RST to 3.3 V logic. Unused OE#=3V3_IO, inputs=GND. S1: SOIC-14 soldered directly (no adapter; S1 section 9). Owned.', h='SOIC')
-mon('C27', 'P02R3:C11', S_C, C1206, '100nF / X7R', 'C1206C104K5RACTU', {1: '3V3_IO', 2: 'GND'}, URL['x7r1206'], 'At U9 pin 14. New SMD 1206.', vr=50, h='C1206')
+mon('C27', 'P02R3:C11', S_C, C1206, '100nF / X7R', 'C1206C104K5RACTU', {1: '3V3_IO', 2: 'GND'}, URL['x7r1206'], 'At U9 pin 14. New SMD 1206.', vr=50, h='C1206_104')
 mon('C28', 'P02R3:C16', S_C, C1206, '100nF / X7R', 'C1206C104K5RACTU', {1: '3V3_IO', 2: 'GND'}, URL['x7r1206'],
-    'Second 100 nF at U9 (was on the SO14 adapter in R3); now on the board next to pin 14. New SMD 1206.', vr=50, h='C1206')
+    'Second 100 nF at U9 (was on the SO14 adapter in R3); now on the board next to pin 14. New SMD 1206.', vr=50, h='C1206_104')
 mon('U10', 'P02R3:U6', S_AND, DIP14, 'SN74HC08N', 'SN74HC08N',
     {1: 'P02_SUP3_N', 2: 'P02_SUP5_N', 3: 'PSU_OK', 4: 'GND', 5: 'GND', 6: 'NC', 7: 'GND', 8: 'NC', 9: 'GND', 10: 'GND', 11: 'NC', 12: 'GND', 13: 'GND', 14: '3V3_IO'},
     URL['hc08'], 'Gate A = PSU_OK (as R3). HOLD_READY gates of R3 removed: gates B-D inputs to GND, outputs open. Owned, in an owned DIP-14 socket.', h='DIP')

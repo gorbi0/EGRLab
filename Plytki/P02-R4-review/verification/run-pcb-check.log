@@ -1,0 +1,24 @@
+FAIL Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities)
+PASS 127 on-board parts + 12 mounting holes, nothing else
+PASS Every value, footprint ID and pad net equals the exported schematic netlist
+FAIL S1-2 section 4: parts on the bottom only SMD <= 1.5 mm (SOIC allowed on level 1), >= 1 mm from THT pads (standoff zones: check below)
+PASS 2 copper layers, 1.6 mm board (S1: FR4 1.6 mm)
+PASS Both copper layers 35 um (S1)
+FAIL Outline class L: 160.0 x 100.0 mm, 4 corner arcs R 1.0 mm (format-s1.json)
+PASS M3 holes: 8 NPTH 3.2 mm exactly at the S1 positions (x_w_slocie + 53.5 k, y 14 / 86)
+PASS Standoff zones D7: no courtyard and no copper (pads, tracks, vias, pours) within 3.5 mm of a hole centre; rule areas on both layers
+PASS Rules as P02 R3 (clearance >= 0.25, track >= 0.30, edge 0.5) and annular ring >= 0.25 mm (S1); no DRC exclusions
+PASS Every PTH pad and via has an annular ring >= 0.25 mm (measured on the copper)
+PASS J_BP (edge A): IDC 2x10 angled, body front at y = 0, centre x = 133.5 (slot S3), pin 1 at smaller x, pinout = S1 section 8
+FAIL Service headers (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pins out ~6 mm, GND on both ends, one series resistor of its class at the node (<= 10 mm or in its pour), one silk label per pin
+PASS Every part <= 21.5 mm above the board (level 1, S1 section 4; heights in parts.py)
+FAIL 5 A path J1 -> Q9 -> SW_COM -> Q1 -> VSW -> F1 -> J2 and the GND return: >= 4.0 mm of net copper across the path everywhere between the pads (IPC-2152, 35 um, 5 A, <= 20 K)
+PASS GND return corridor on B.Cu: rule area contains J1.2 and J2.2, no track or via inside
+PASS GND pours: B.Cu >= 50 % of the board; island removal always (every island tied)
+FAIL TO-220 (Q9, Q1, Q2, D1, D2): under each tab only copper of the tab net (pin 2) on F.Cu
+PASS Decoupling at the pins (task section 2): capacitor pad <= 8 mm from its pin
+PASS C_H, D2 and D1 close together: HOLD_C pads within 20 mm of each other
+PASS J1 BAT, J2 VMOTOR, J15 VBAT_IN at the input wall x = 160 (pads/anchors <= 17 mm from it); J2 mating face at the edge
+PASS Every visible reference outside the courtyards of other parts
+PASS Silkscreen: board name "P02 R4 S1-L S1-S3", edge markers A and B
+17/23 PCB checks passed

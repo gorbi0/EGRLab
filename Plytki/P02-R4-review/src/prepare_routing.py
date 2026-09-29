@@ -11,7 +11,9 @@ import re, shutil, subprocess, sys, json
 import pcbnew as p
 P = Path(__file__).resolve().parents[1]; f = P / 'routing/P02.dsn'; d = f.read_text()
 assert 'EDGE_STRIP' not in d, 'DSN already prepared; re-run route_critical.py first'
-LOCKED_ONLY = {'GND', '/P02_REV_G', '/P02_OFF_D', 'P02_HOLD_C', 'P02_BAT_IN', 'P02_VSW', 'VMOTOR'}
+# Lokalnie 29.09 (Claude): GND wraca do listy sieci routera. Gdy łączyły ją tylko wylewki, po trasowaniu zostawało
+# 7 wysp GND, których planer dokańczania nie domykał (przebieg w chmurze i pierwsza próba lokalna).
+LOCKED_ONLY = {'/P02_REV_G', '/P02_OFF_D', 'P02_HOLD_C', 'P02_BAT_IN', 'P02_VSW', 'VMOTOR'}
 b = p.LoadBoard(str(P / 'eda/P02.kicad_pcb'))
 pours = [z for z in b.Zones() if not z.GetIsRuleArea() and z.GetNetname() != 'GND']
 inside = set()
@@ -32,7 +34,7 @@ def fix(m):
 
 d = re.sub(r'(\(net ("[^"]+"|\S+)\s*\n\s*)\(pins ([^)]*)\)', fix, d)
 d, k = re.subn(r'\(plane ', '(keepout ', d); assert k >= 7, k
-S1 = json.loads((P.parents[0] / 'Format-S1/format-s1.json').read_text(encoding='utf-8')); W, H = S1['klasy']['2/3']['W'], S1['klasy']['2/3']['H']
+S1 = json.loads((P.parents[0] / 'Format-S1/format-s1.json').read_text(encoding='utf-8')); W, H = S1['klasy']['L']['W'], S1['klasy']['L']['H']
 e = .4; strips = [(0, 0, W, e), (0, H - e, W, H), (0, 0, e, H), (W - e, 0, W, H)]
 add = ''.join(f'    (keepout "EDGE_STRIP" (polygon {L} 0  {x0 * 1000:.0f} {-y0 * 1000:.0f}  {x1 * 1000:.0f} {-y0 * 1000:.0f}  {x1 * 1000:.0f} {-y1 * 1000:.0f}  {x0 * 1000:.0f} {-y1 * 1000:.0f}))\n'
               for L in ('F.Cu', 'B.Cu') for x0, y0, x1, y1 in strips)

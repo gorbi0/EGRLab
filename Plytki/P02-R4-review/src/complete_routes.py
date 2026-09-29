@@ -4,13 +4,16 @@ Default replays reviewed completion-routes.json. --plan regenerates the candidat
 R2: --plan takes the pairs from a fresh native DRC (unconnected items, matched by UUID) instead of a
 hard-coded list, because every new router run leaves different gaps; starved thermals are handled by
 run_layout.py (cleanup.py with the pads named by DRC), not here.
+P02 R4 (29.09, klasa L): the path starts and ends only on the copper layers of its end items (an SMD pad exists on one
+layer); before, a B.Cu path could end in the centre of an F.Cu SMD pad without a via (three such stubs in the first run).
+The records are written also when items stay unconnected (exit 3), so a partial completion can be replayed.
 """
 from pathlib import Path
 import pcbnew as p,json,math,heapq,sys,os,subprocess
 from PIL import Image,ImageDraw,ImageFilter
 import numpy as np
 P=Path(__file__).resolve().parents[1];fn=P/'eda/P02.kicad_pcb';b=p.LoadBoard(str(fn));mm=p.FromMM
-R=10;W=int(106.5*R)+1;H=100*R+1
+R=10;W=int(160*R)+1;H=100*R+1
 f={q.GetReference():q for q in b.GetFootprints()}
 def pad(ref,n):return next(q for q in f[ref].Pads() if q.GetNumber()==str(n))
 def xy(v):return [p.ToMM(v.x),p.ToMM(v.y)]
@@ -35,9 +38,10 @@ def fillmask(net):
     o=best.Hole(0,h);d.polygon([(p.ToMM(o.CPoint(i).x)*R,p.ToMM(o.CPoint(i).y)*R) for i in range(o.PointCount())],fill=0)
   masks.append(np.array(im.filter(ImageFilter.MinFilter(13)))!=0)
  return masks
-def plan(net,sxy,gxy,goalmask=None):
+def plan(net,sxy,gxy,goalmask=None,slay=(0,1),glay=(0,1)):
  """gxy None: the goal is the net's main pour (a pad cut off from the fill, reported by DRC against the zone).
- goalmask (P02 R4): per-layer boolean masks of the copper the path may end on."""
+ goalmask (P02 R4): per-layer boolean masks of the copper the path may end on.
+ slay / glay (P02 R4): copper layers (0 F.Cu, 1 B.Cu) of the start and end items; the path starts and ends only there."""
  goal=goalmask if goalmask is not None else (fillmask(net) if gxy is None else None)
  if goalmask is not None:gxy=None
  images=[]
@@ -65,12 +69,12 @@ def plan(net,sxy,gxy,goalmask=None):
   if g is None:return 0
   dx=abs(x-g[0]);dy=abs(y-g[1]);return max(dx,dy)+.41421356*min(dx,dy)
  def key(x,y,l):return (l*H+y)*W+x
- starts={key(*s,0),key(*s,1)};todo=[(h(*s),0,q) for q in starts];heapq.heapify(todo);cost={q:0 for q in starts};prev={};end=None
+ starts={key(*s,l) for l in slay};todo=[(h(*s),0,q) for q in starts];heapq.heapify(todo);cost={q:0 for q in starts};prev={};end=None
  while todo:
   _,dist,q=heapq.heappop(todo)
   if dist!=cost.get(q):continue
   x=q%W;y=(q//W)%H;l=q//(W*H)
-  if (x,y)==g if goal is None else goal[l][y,x]:end=q;break
+  if ((x,y)==g and l in glay) if goal is None else goal[l][y,x]:end=q;break
   nxt=[]
   for dx,dy in [(1,0),(-1,0),(0,1),(0,-1),(1,1),(1,-1),(-1,1),(-1,-1)]:
    nx,ny=x+dx,y+dy
@@ -148,19 +152,22 @@ def orphan_pads(code):
   for q in fp.Pads():
    if q.GetNetCode()!=code:continue
    on=[L for L in big if big[L] is not None and q.IsOnLayer(L) and big[L].Contains(q.GetPosition())]
-   if not on:out.append((q,(f'{fp.GetReference()}.{q.GetNumber()}',xy(q.GetPosition()))))
+   if not on:out.append((q,(f'{fp.GetReference()}.{q.GetNumber()}',xy(q.GetPosition()),pad_layers(q))))
  return out
+def pad_layers(q):
+ return tuple(i for i,L in enumerate([p.F_Cu,p.B_Cu]) if q.IsOnLayer(L))
 def endpoint(uuid,pos):
- """Pad centre for a pad, the DRC marker position for a track/via end; (item label, xy, net code)."""
+ """Pad centre for a pad, the DRC marker position for a track/via end; (item label, xy, net code, copper layers)."""
  for fp in b.GetFootprints():
   for q in fp.Pads():
-   if q.m_Uuid.AsString()==uuid:return f'{fp.GetReference()}.{q.GetNumber()}',xy(q.GetPosition()),q.GetNetCode()
+   if q.m_Uuid.AsString()==uuid:return f'{fp.GetReference()}.{q.GetNumber()}',xy(q.GetPosition()),q.GetNetCode(),pad_layers(q)
  for t in b.GetTracks():
   if t.m_Uuid.AsString()==uuid:
    ends=[xy(t.GetPosition())] if isinstance(t,p.PCB_VIA) else [xy(t.GetStart()),xy(t.GetEnd())]
-   return ('via' if isinstance(t,p.PCB_VIA) else 'track')+'@'+t.GetNetname(),min(ends,key=lambda e:math.dist(e,pos)),t.GetNetCode()
+   lay=(0,1) if isinstance(t,p.PCB_VIA) else ((0,) if t.GetLayer()==p.F_Cu else (1,))
+   return ('via' if isinstance(t,p.PCB_VIA) else 'track')+'@'+t.GetNetname(),min(ends,key=lambda e:math.dist(e,pos)),t.GetNetCode(),lay
  for z in b.Zones():
-  if z.m_Uuid.AsString()==uuid:return 'pour@'+z.GetNetname(),None,z.GetNetCode()
+  if z.m_Uuid.AsString()==uuid:return 'pour@'+z.GetNetname(),None,z.GetNetCode(),(0,1)
  sys.exit(f'unconnected item {uuid} is neither a pad, a track nor a zone: plan by hand')
 if '--plan' in sys.argv:
  # Rounds: a pad cluster joined to the pour can reveal the next cluster (DRC reports one edge per cluster), so
@@ -175,34 +182,34 @@ if '--plan' in sys.argv:
   ok_n=0;fail=[]
   for u in todo:
    ends=sorted([endpoint(i['uuid'],(i['pos']['x'],i['pos']['y']))+(i['uuid'],) for i in u['items']],key=lambda e:e[1] is None)
-   (la,sa,na,ua),(lz,sz,nz,uz)=ends;assert na==nz,(la,lz);net=b.GetNetsByNetcode()[na]
+   (la,sa,na,ya,ua),(lz,sz,nz,yz,uz)=ends;assert na==nz,(la,lz);net=b.GetNetsByNetcode()[na]
    if sa is None and net.GetNetname()=='GND':
     gnd_islands.append(rnd);continue   # P02 R4: GND pour islands are tied by stitch.py (run_layout.py re-checks with DRC)
    if sa is None:
     # P02 R4: pour <-> pour: every pad of the net that no largest island (F.Cu or B.Cu) reaches is joined to it
-    for q,(lab,pxy) in orphan_pads(na):
+    for q,(lab,pxy,play) in orphan_pads(na):
      if lab in done:continue
-     done.add(lab);points=plan(na,pxy,None)
+     done.add(lab);points=plan(na,pxy,None,slay=play)
      if points is None:fail.append(lab);continue
      records.append({'round':rnd,'net':net.GetNetname(),'from':lab,'to':'largest pour island','points_mm_layer':points});add(net,points);ok_n+=1
      print('Completion round',rnd,lab,'-> largest island',len(points),'vertices',flush=True)
     continue
    if sz is None and la in done:continue
-   done.add(la);points=plan(na,sa,sz);to=lz
+   done.add(la);points=plan(na,sa,sz,slay=ya,glay=yz);to=lz
    if points is None:  # P02 R4: any copper of the other part of the net (KiCad connectivity), from either end
-    for lab,pxy,uid_ in [(la,sa,ua)]+([(lz,sz,uz)] if sz is not None else []):
+    for lab,pxy,uid_,lay_ in [(la,sa,ua,ya)]+([(lz,sz,uz,yz)] if sz is not None else []):
      m=cluster_mask(na,uid_)
      if m is not None:
-      points=plan(na,pxy,None,m)
+      points=plan(na,pxy,None,m,slay=lay_)
       if points is not None:to='other part of '+net.GetNetname();la=lab;break
    if points is None and has_pour(na):
-    points=plan(na,sa,None);to='largest pour island'
+    points=plan(na,sa,None,slay=ya);to='largest pour island'
    if points is None:fail.append(la);print('skipped (no path this round):',net.GetNetname(),la,flush=True);continue
    records.append({'round':rnd,'net':net.GetNetname(),'from':la,'to':to,'points_mm_layer':points});add(net,points);ok_n+=1
    print('Completion round',rnd,la,to,len(points),'vertices',flush=True)
-  if fail and not ok_n:print('no completion path for',fail);sys.exit(3)
+  if fail and not ok_n:print('no completion path for',fail);target.write_text(json.dumps(records,indent=2));sys.exit(3)
   b.BuildConnectivity();p.ZONE_FILLER(b).Fill(b.Zones());p.SaveBoard(str(fn),b)
- else:print('unconnected items remain after 10 completion rounds');sys.exit(3)
+ else:print('unconnected items remain after 10 completion rounds');target.write_text(json.dumps(records,indent=2));sys.exit(3)
  target.write_text(json.dumps(records,indent=2))
 else:
  for rec in json.loads(target.read_text()):add(b.FindNet(rec['net']),rec['points_mm_layer'])

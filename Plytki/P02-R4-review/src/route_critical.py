@@ -1,4 +1,4 @@
-"""P02 R4: explicit power copper before signal autorouting (all locked; S1 board, class 2/3).
+"""P02 R4: explicit power copper before signal autorouting (all locked; S1 board, class L; geometry of the 2/3 pilot moved by DX = 53.5).
 5 A path as F.Cu zones with full pad connection: J1.1 -> BAT_IN pour -> Q9 (D) ... Q9 (S) -> SW_COM pour (+ B.Cu copy under the
 sources) -> Q1 (S) ... Q1 (D) -> VSW pour -> F1 -> VMOTOR pour -> J2.1. The return J2.2 -> J1.2 runs in the B.Cu GND pour inside a
 corridor where no track or via may go (rule area).
@@ -15,9 +15,12 @@ mm = p.FromMM; F, B = p.F_Cu, p.B_Cu
 
 # ---- geometry (board mm); names are checked by verify_pcb.py ----
 POURS = {  # net -> [(layer, x0, y0, x1, y1), ...]
-    'P02_BAT_IN': [(F, 75.4, 17.4, 93.6, 28.4)],
-    'P02_SW_COM': [(F, 62.4, 19.4, 72.3, 31.8), (F, 62.4, 27.9, 75.5, 31.8), (F, 75.2, 29.3, 86.2, 36.2), (B, 70.0, 25.0, 78.0, 36.2)],
-    'P02_VSW': [(F, 58.5, 33.2, 73.0, 42.2), (F, 44.0, 33.2, 58.5, 37.9), (F, 53.9, 37.9, 56.5, 42.3), (F, 58.5, 42.2, 76.5, 46.3),
+    # 29.09 (klasa L, verify_pcb §7): the Q9 tab strip reaches y = 29.0 and the Q1 strip starts at y = 32.04, beyond the BAT_IN / VSW
+    # rectangles; a GND sliver filled the gap under both tab ends. Own-net rectangles now cover the strip ends, and the SW_COM
+    # rectangles next to them keep 0.30-0.35 mm (PWR clearance), too little for any GND fill.
+    'P02_BAT_IN': [(F, 75.4, 17.4, 93.6, 28.4), (F, 75.8, 28.0, 77.6, 29.15)],
+    'P02_SW_COM': [(F, 62.4, 19.4, 72.3, 31.55), (F, 62.4, 27.9, 75.5, 31.55), (F, 75.2, 29.45, 86.2, 36.2), (B, 70.0, 25.0, 78.0, 36.2)],
+    'P02_VSW': [(F, 70.4, 31.9, 72.3, 33.3), (F, 58.5, 33.2, 73.0, 42.2), (F, 44.0, 33.2, 58.5, 37.9), (F, 53.9, 37.9, 56.5, 42.3), (F, 58.5, 42.2, 76.5, 46.3),
                 (F, 61.0, 46.3, 68.0, 58.0), (F, 61.0, 56.5, 76.8, 66.0), (F, 68.0, 66.0, 73.5, 71.0), (B, 61.0, 46.3, 68.0, 66.0)],
     'VMOTOR': [(F, 83.2, 59.0, 95.3, 72.0), (F, 89.0, 70.0, 98.4, 79.5)],
     '/P02_OFF_D': [(F, 80.54, 53.85, 90.54, 55.3), (F, 84.8, 53.85, 86.3, 56.2), (F, 86.8, 53.3, 88.2, 53.9)],  # Q2 tab + necks to pin 2 and the R27 track
@@ -36,7 +39,7 @@ BANDS = {  # 5 A bands kept free of foreign tracks/vias (rule areas); the width 
 CORRIDOR = [(86, 28), (106, 28), (106, 72), (94.5, 72), (94.5, 64), (101.5, 64), (101.5, 44), (97.5, 44), (97.5, 37.5), (86, 37.5)]
 TRACKS = [  # net, points, width
     ('/P02_REV_G', [(71.08, 16.3), (71.08, 26.5)], .5), ('/P02_REV_G', [(71.08, 21.46), (74.0, 21.46)], .5),
-    ('/P02_OFF_D', [(87.5, 50.4), (87.5, 53.6)], .8),
+    ('/P02_OFF_D', [(87.5, 50.4), (87.5, 53.3)], .8),
     ('P02_VLOG', [(57.5, 52.0), (59.8, 51.96)], .8), ('P02_VLOG', [(57.5, 52.0), (57.5, 53.2), (56.4, 54.3), (56.0, 54.3)], .8),
     ('P02_HOLD_C', [(51.85, 49.3), (40.7, 49.3), (40.7, 49.5), (38.5, 51.7), (37.0, 53.2), (37.0, 55.3)], .8),   # D2 tab -> R67, R41 -> C_H (+)
     ('P02_SW_COM', [(86.0, 35.8), (89.5, 39.3), (91.78, 39.3)], .8),
@@ -44,6 +47,15 @@ TRACKS = [  # net, points, width
     ('GND', [(91.43, 13.32), (93.4, 13.32)], .5),              # J_BP pin 19 to its own via
 ]
 VIAS = [('GND', (66.3, 13.32)), ('GND', (93.4, 13.32))]
+
+
+# klasa L (29.09): cała geometria bloku mocy przesunięta razem z placement.py (DX = 53,5 mm)
+DX = 53.5
+POURS = {n: [(Ly, x0 + DX, y0, x1 + DX, y1) for Ly, x0, y0, x1, y1 in r] for n, r in POURS.items()}
+BANDS = {k: (ls, [(x + DX, y) for x, y in pts]) for k, (ls, pts) in BANDS.items()}
+CORRIDOR = [(x + DX, y) for x, y in CORRIDOR]
+TRACKS = [(n, [(x + DX, y) for x, y in pts], w) for n, pts, w in TRACKS]
+VIAS = [(n, (x + DX, y)) for n, (x, y) in VIAS]
 
 
 def xy(x, y):
