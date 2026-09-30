@@ -1,0 +1,145 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-30T22:02:34",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P09.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [/SPI/CLK_BUF] z R14 na F.Cu",
+                    "pos": {
+                        "x": -3.225,
+                        "y": 24.73
+                    },
+                    "uuid": "269de229-426d-4ef9-a398-b535e0d8c29e"
+                },
+                {
+                    "description": "Ścieżka [/SPI/CLK_BUF] na B.Cu, długość 6,5424 mm",
+                    "pos": {
+                        "x": 6.9012,
+                        "y": 26.3875
+                    },
+                    "uuid": "f089e01c-5533-4a05-9484-a487b951d958"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole lutownicze 2 [CLK_MODULE] z R14 na F.Cu",
+                    "pos": {
+                        "x": -6.325,
+                        "y": 24.73
+                    },
+                    "uuid": "088c2251-d4f5-43cc-b50e-1b2b96eeb7f5"
+                },
+                {
+                    "description": "Ścieżka [CLK_MODULE] na F.Cu, długość 4,3100 mm",
+                    "pos": {
+                        "x": 3.675,
+                        "y": 20.42
+                    },
+                    "uuid": "f801225d-eb97-48f2-9d1d-91909db3c793"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [/SPI/CLK_BUF] na F.Cu, długość 0,1262 mm",
+                    "pos": {
+                        "x": 6.775,
+                        "y": 24.73
+                    },
+                    "uuid": "2e2d4070-2039-499d-a329-55f60bcb7b7e"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [CLK_MODULE] na F.Cu, długość 4,3100 mm",
+                    "pos": {
+                        "x": 3.675,
+                        "y": 20.42
+                    },
+                    "uuid": "f801225d-eb97-48f2-9d1d-91909db3c793"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J2",
+                    "pos": {
+                        "x": 41.74,
+                        "y": 95.96
+                    },
+                    "uuid": "7888a6c1-6234-438e-93ca-f202adc8c378"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x08_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J1",
+                    "pos": {
+                        "x": 17.61,
+                        "y": 13.33
+                    },
+                    "uuid": "f2e7e5ca-5518-47ea-962b-da9fb31eae2e"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        }
+    ]
+}

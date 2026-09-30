@@ -27,7 +27,7 @@ Pakiet `Plytki/P03-R6-review/` (sesja w chmurze, bez PCB): obwód P03-R5 w klasi
 
 ## P09 R2 / P10 R2 — SCHEMATY W FORMACIE S1 (PR #5, scalony 29.09.2026)
 
-Pakiety `Plytki/P09-R2-review/` i `Plytki/P10-R2-review/` (sesja w chmurze, bez PCB). P09 R2: J_BP IDC 2×8, listwa serwisowa 1×13, posiadane rezystory THT na stojąco; kontrole 52/52, próby ujemne 35/35. P10 R2: J_BP IDC 2×5, listwa serwisowa 1×9; kontrole 32/32, próby ujemne 36/36. P10 przechodzi w S1-3 na poziom 4, slot S3 (wyżej): przed layoutem układy SOIC na górę, J3 przy ścianie wejść.
+Pakiety `Plytki/P09-R2-review/` i `Plytki/P10-R2-review/` (sesja w chmurze, bez PCB). P09 R2: J_BP IDC 2×8, listwa serwisowa 1×13, posiadane rezystory THT na stojąco; kontrole 52/52, próby ujemne 35/35. P10 R2: J_BP IDC 2×5, listwa serwisowa 1×9; kontrole 32/32, próby ujemne 36/36. P10 przechodzi w S1-3 na poziom 4, slot S3 (wyżej): przed layoutem układy SOIC na górę, J3 przy ścianie wejść. **P09 R2 — PCB (30.09 wieczorem, komputer 24/7, gałąź `p09-r2-pcb`):** DRC 0 niepołączonych / 0 niezgodności / 0 innych naruszeń (2 przyjęte `lib_footprint_mismatch` J1/J2), kontrole PCB 22/22, próby ujemne 16/16; moduły terminalami do ściany wejść. Sporne: wysokość gniazda z modułem (szacunek = limit 16,5 mm), pin 1 listwy J2 od większego x (dokumenty poprawione), 4 pola z pełnym połączeniem z wylewką; szczegóły w README pakietu, sekcja „PCB”.
 
 ## REPOZYTORIUM GIT I SESJE W CHMURZE (29.09.2026)
 

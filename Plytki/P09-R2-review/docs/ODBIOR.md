@@ -2,7 +2,7 @@
 
 Egzemplarz / data / wykonujący: __________. Rewizja / SHA256 pakietu: __________.
 
-Punkty pomiarowe są na **listwie serwisowej J2** (krawędź B, dostępna po skręceniu stosu; kołki przez 1 kΩ). Numeracja kołków od strony mniejszego x: 1 GND, 2 3V3_IO, 3 5V_SYS, 4 TC1_VIN, 5 TC2_VIN, 6 TC1_3VO, 7 TC2_3VO, 8 CS1_BUF, 9 CS2_BUF, 10 OE1_N, 11 OE2_N, 12 SPI3_MISO, 13 GND. Wejściowych SCLK/MOSI/CS z J_BP na listwie nie ma (mierzyć na listwie P03).
+Punkty pomiarowe są na **listwie serwisowej J2** (krawędź B, dostępna po skręceniu stosu; kołki przez 1 kΩ). Numeracja kołków od strony większego x (patrząc od krawędzi B: od prawej; nazwa sygnału przy każdym kołku): 1 GND, 2 3V3_IO, 3 5V_SYS, 4 TC1_VIN, 5 TC2_VIN, 6 TC1_3VO, 7 TC2_3VO, 8 CS1_BUF, 9 CS2_BUF, 10 OE1_N, 11 OE2_N, 12 SPI3_MISO, 13 GND. Wejściowych SCLK/MOSI/CS z J_BP na listwie nie ma (mierzyć na listwie P03).
 
 | Sprawdzenie | Kołek J2 / kryterium | Wynik |
 |---|---|---|

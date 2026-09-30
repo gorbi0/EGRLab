@@ -71,5 +71,5 @@ srv_pins={1:G,13:G};srv_r={}
 for k,(net,_) in enumerate(SRV,2):
  r='R'+str(19+k-1);srv_r[net]=r;srv_pins[k]='SRV_'+net
  res(r,'1K',1000,net,'SRV_'+net,'CONNECT','Serwis: kołek przez 1k przy węźle, zsunięta sonda nic nie uszkodzi')
-add('J2','J_SRV',symbol('Connector_Generic','Conn_01x13'),HDR13,'SERWIS / goldpin 1x13','Goldpin 1x13 2.54mm angled (buy angled strip, owned 1x40 is straight)',srv_pins,'CONNECT',note='Edge B, x=10..43 mm of the slot; pin 1 towards smaller x; pins stick ~6 mm beyond the edge. GND at both ends.')
+add('J2','J_SRV',symbol('Connector_Generic','Conn_01x13'),HDR13,'SERWIS / goldpin 1x13','Goldpin 1x13 2.54mm angled (buy angled strip, owned 1x40 is straight)',srv_pins,'CONNECT',note='Edge B, x=10..43 mm of the slot; pin 1 towards larger x (angled strip on the top side, pins out of edge B: the footprint fixes the order); pins stick ~6 mm beyond the edge. GND at both ends.')
 if __name__=='__main__':write_tables();print(len(PARTS),'parts')

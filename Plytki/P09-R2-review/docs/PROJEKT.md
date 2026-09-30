@@ -33,7 +33,7 @@ Dla 50 Hz pierwsza konwersja może trwać do 185 ms, kolejne do 110 ms według d
 
 ## Montaż
 
-PCB 53 × 100 mm (klasa 1/3), FR4 1,6 mm, Cu 35 µm, dwie warstwy, JLCPCB; layout robi sesja lokalna. Dystanse M3 20 mm na czterech otworach slotu. U1/U2 SO14 i rezystory/kondensatory SMD 1206 lutować najpierw (rezystory serwisowe i kondensatory odsprzęgające mogą leżeć od spodu, o ile SMD ≤ 1,5 mm), później posiadane rezystory MF0207 i kondensatory 100 n na stojąco, U3 DIP16, selektory, gniazda i listwy; moduły dopiero po sprawdzeniu nośnika.
+PCB 53 × 100 mm (klasa 1/3), FR4 1,6 mm, Cu 35 µm, dwie warstwy, JLCPCB; layout: 30.09.2026, komputer 24/7 (README, sekcja „PCB”). Dystanse M3 20 mm na czterech otworach slotu. U1/U2 SO14 i rezystory/kondensatory SMD 1206 lutować najpierw (rezystory serwisowe i kondensatory odsprzęgające mogą leżeć od spodu, o ile SMD ≤ 1,5 mm), później posiadane rezystory MF0207 i kondensatory 100 n na stojąco, U3 DIP16, selektory, gniazda i listwy; moduły dopiero po sprawdzeniu nośnika.
 
 Gniazda J3/J4 1×9 / 2,54 mm, pin 1 VIN ma pad kwadratowy, pin 2 = 3Vo, pin 3 = GND. Otwory podparcia Ø6 mm zostają regulowanymi otworami pod nylonowe słupki M2.5 z podkładkami OD 8 mm; rozstaw 20,32 × 16 mm jest założeniem do przymiarki, nie wymiarem producenta. Wymiary obrysu obu gniazd z modułami (ok. 29 × 24 mm każde) mieszczą się w slocie 53 mm; zajęcie miejsca sprawdza layout.
 
