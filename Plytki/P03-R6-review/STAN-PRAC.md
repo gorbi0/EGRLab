@@ -2,6 +2,15 @@
 
 Gałąź `p03-r6-pcb`. Etap: **poprawki schematu zrobione i sprawdzone, layout w toku (trasowanie się nie domyka)**. Dalsza praca na komputerze 24/7 (Ubuntu, sesja Claude Code „frigate-claude”); środowisko: `docs/UBUNTU-24-7.md`.
 
+## 30.09 wieczorem — Ubuntu 24/7 (sesja „frigate-claude”)
+
+- Środowisko: obraz `egrlab-kicad:10.0.6` zbudowany (komputer ma Ubuntu 22.04: `setup-chmura.sh` bierze teraz przypięte paczki czcionek noble z sumami SHA-256), `src/run_schematic.py` w kontenerze = wyniki z repo (różnice tylko CRLF/LF, daty, ścieżka).
+- **Komputer jest rejestratorem monitoringu (Frigate) i ten ma pierwszeństwo:** `scripts/egrlab-docker` daje kontenerom najniższą wagę CPU i limit 2 rdzeni, najwyżej 2 ciężkie zadania naraz (`docs/UBUNTU-24-7.md`).
+- Masa: `src/fanout_gnd.py` po `route_critical.py` — belka GND po F.Cu pod każdym SOIC-14 (pod korpusem router i tak nie wchodzi) z dwiema przelotkami, odcinki z przelotkami przy SOT-23, grzebień GND pod korpusem każdego J_BP (piny nieparzystego rzędu przez szczeliny parzystego do szyny y = 8, przelotki na końcach). W 6 przebiegach z grzebieniem żaden pin GND złącza nie został odcięty (bez niego w E2: 13). Pola GND elementów 1206 zostają wylewkom (fanout każdego pola kosztował routera 22–30 zamiast 6–13 otwartych połączeń).
+- `cleanup.py --tidy` zaraz po imporcie SES: Freerouting zostawia kawałki niedokończonych połączeń (81–112 elementów na przebieg), które blokowały planer dokańczania.
+- Wynik 7 wariantów (rozmieszczenie, kręgosłup 5 V na F.Cu, grzebień, rozsunięcie S1, zamiana bramek, 4 wątki routera): po routerze i sprzątaniu zostaje **16–29 otwartych połączeń sygnałowych** (liczone DRC; licznik Freeroutingu zaniża), planer domyka kilka. Rozrzut między przebiegami ±5–8, więc pojedyncze porównania wariantów nie są rozstrzygające. Wąskie gardła: pas między J_BP2 a strefą anteny (pod nim nie ma miedzi), góra S1 (J_BP1, rząd SOIC, U1 jako ściana), przejście z rzędu J1 modułu do S3 (SPI3/TC, SUP_N).
+- **Decyzje użytkownika (30.09):** ścieżki sygnałowe 0,2 mm przy odstępie 0,25 mm (zasilanie bez zmian: 5 V 1,5/0,6 mm, 3V3_CORE 0,3 mm; odstępstwo od S1 §3 tylko dla P03 R6); zamiana bramek LOGGER_CURRENT_OK i SENSOR_HEALTHY z U12 (kanały 3/4) na wolne kanały U14 (oba końce w S1), z tym kołek serwisowy LOGGER_CURRENT_OK na J_SV1.10, SUP_N na J_SV3.12; commity i push etapami na tę gałąź.
+
 ## Zrobione (sprawdzone)
 
 Poprawki z recenzji PR #6, przed layoutem — `src/run_schematic.py` przechodzi w całości (ERC 0, 511/511 pinów, funkcje 53/53 i mutacje 44/44, reset 8/8 + 4/4, J_BP/PFAIL/listwy 12/12 i próby 25/25 z zerową, tabele PASS):

@@ -14,6 +14,9 @@
    (DRC via_dangling) go as dead ends.
 4. Pads given on the command line (e.g. U9.13) get a solid zone connection: pads whose thermal relief is starved
    by neighbouring tracks (DRC starved_thermal). Never used for soldered wires.
+--tidy (P03 R6, 30.09): the same steps right after the SES import, saved even with gaps left. Freerouting 2.1 leaves pieces of
+connections it did not finish (PFAIL_N in three pieces, a floating middle one); the completion planner took them as
+items to join and they blocked its paths. The final clean-up (no --tidy) still requires complete connectivity.
 pcbnew's Remove() leaves the SWIG wrappers of the whole process unusable (GetTracks / LoadBoard return SwigPyObject),
 so victims are chosen by UUID on the loaded board and deleted at file level; the board is then reloaded, the solid pads
 set and the pours refilled; it is saved only if connectivity is complete (otherwise the input file is restored, exit 1).
@@ -22,7 +25,8 @@ from pathlib import Path
 import pcbnew as p, sys, collections, math
 from sexpr import parse, dump
 P = Path(__file__).resolve().parents[1]; fn = P / 'eda/P03.kicad_pcb'; BACKUP = fn.read_bytes(); b = p.LoadBoard(str(fn))
-SOLID_PADS = [a.split('.') for a in sys.argv[1:]]
+TIDY = '--tidy' in sys.argv   # P03 R6 (30.09, Ubuntu): right after the SES import, before the completion planner (see below)
+SOLID_PADS = [a.split('.') for a in sys.argv[1:] if a != '--tidy']
 
 
 def key(v):
@@ -181,8 +185,8 @@ for ref, num in SOLID_PADS:
     pad.SetLocalZoneConnection(p.ZONE_CONNECTION_FULL)
 p.ZONE_FILLER(b).Fill(b.Zones()); b.BuildConnectivity()
 left = b.GetConnectivity().GetUnconnectedCount(True)
-if left:  # e.g. a GND pad enclosed by routed tracks on both layers: the pours cannot reach it
+if left and not TIDY:  # e.g. a GND pad enclosed by routed tracks on both layers: the pours cannot reach it
     fn.write_bytes(BACKUP); print(f'aborted: {left} unconnected after clean-up (solid pads and refill included); input board restored'); sys.exit(3)
 p.SaveBoard(str(fn), b, True)
-print('removed', n_redundant, 'redundant free items', sorted(redundant_nets), '; dropped', len(tiny), 'tiny; joined', joined, 'near-miss ends;',
-      dup, 'duplicate,', n_via_pad, 'via-on-THT-pad and', n_dead_end, 'dead-end items; unconnected 0; solid zone connection:', ['.'.join(x) for x in SOLID_PADS] or 'none')
+print(('tidy (unconnected %d left for the planner): ' % left) if TIDY else '', 'removed', n_redundant, 'redundant free items', sorted(redundant_nets), '; dropped', len(tiny), 'tiny; joined', joined, 'near-miss ends;',
+      dup, 'duplicate,', n_via_pad, 'via-on-THT-pad and', n_dead_end, 'dead-end items; solid zone connection:', ['.'.join(x) for x in SOLID_PADS] or 'none')

@@ -52,10 +52,19 @@ PY=$(command -v python3)
   $WHEELS
 ls "$C"/wheels/reportlab-5* >/dev/null 2>&1 && rm -f "$C"/wheels/reportlab-5* || true
 
-step "Czcionki Liberation (metrycznie zgodne z Arial i Arial Narrow) z archive.ubuntu.com"
+step "Czcionki Liberation (metrycznie zgodne z Arial i Arial Narrow): paczki Ubuntu 24.04 z archive.ubuntu.com"
+# 30.09.2026: przypięte paczki noble zamiast `apt-get download`, które zależało od wydania hosta — na Ubuntu 22.04
+# (komputer 24/7, docs/UBUNTU-24-7.md) nie ma fonts-liberation-sans-narrow i skrypt kończył się tu kodem 100 bez komunikatu.
+# To te same wersje, które pobierała chmura na 24.04 (noble-updates i noble-security ich nie zmieniają); sumy z indeksu noble.
+FONT_DEBS="fonts-liberation/fonts-liberation_2.1.5-3_all.deb 065c2ab1abc9108b17d401016dc594b79750904390f095845c93bb06e1153acc
+fonts-liberation-sans-narrow/fonts-liberation-sans-narrow_1.07.6-4_all.deb 9c64f03daaa4b0eee8b36ba53e4ce8ac22ec12437951c699197344989c7dc2dc"
 if [ ! -f "$C/fonts/LiberationSansNarrow-Regular.ttf" ]; then
-  tmp=$(mktemp -d); ( cd "$tmp" && apt-get download fonts-liberation fonts-liberation-sans-narrow >/dev/null 2>&1 )
-  for d in "$tmp"/*.deb; do dpkg -x "$d" "$tmp/x"; done
+  tmp=$(mktemp -d)
+  while read -r deb sha; do
+    curl -fsSL -o "$tmp/${deb##*/}" "http://archive.ubuntu.com/ubuntu/pool/main/f/$deb"
+    echo "$sha  $tmp/${deb##*/}" | sha256sum -c --quiet -
+    dpkg -x "$tmp/${deb##*/}" "$tmp/x"
+  done <<< "$FONT_DEBS"
   find "$tmp/x" -name '*.ttf' -exec cp {} "$C/fonts/" \;
   rm -rf "$tmp"
 fi

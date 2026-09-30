@@ -372,13 +372,16 @@ def centre(r):
     x0, y0, x1, y1 = cbox(r); return ((x0 + x1) / 2, (y0 + y1) / 2)
 
 
-jc = {r: ((pxy(r, '1')[0] + pxy(r, '20')[0]) / 2, pxy(r, '1')[1]) for r in ('J_BP2', 'J_BP3')}
-req = {'U21-J_BP2': round(math.dist(centre('U21'), jc['J_BP2']), 1), 'U22-J_BP2': round(math.dist(centre('U22'), jc['J_BP2']), 1),
+# U22 (30.09, disputed, README "Decyzje sporne" 2): in S1 by J_BP1 (CS_ILOG_N / CS_ITEST_N to J_BP1.2/4, inputs from U1/U2),
+# not by J_BP2 as the README requirement said; MEAS_EN and ADC_RESET (static) take the longer way to J_BP2.
+jc = {r: ((pxy(r, '1')[0] + pxy(r, '20')[0]) / 2, pxy(r, '1')[1]) for r in ('J_BP1', 'J_BP2', 'J_BP3')}
+req = {'U21-J_BP2': round(math.dist(centre('U21'), jc['J_BP2']), 1), 'U22-J_BP1': round(math.dist(centre('U22'), jc['J_BP1']), 1),
        'U23-J_BP3': round(math.dist(centre('U23'), jc['J_BP3']), 1), 'U6.4-J_BP3.12': round(math.dist(pxy('U6', '4'), pxy('J_BP3', '12')), 1),
        'R41.2-J_BP3.12': round(math.dist(pxy('R41', '2'), pxy('J_BP3', '12')), 1), 'C15.1-U6.5': round(math.dist(pxy('C15', '1'), pxy('U6', '5')), 1),
        'R42.2-M1.J1-13': round(math.dist(pxy('R42', '2'), pxy('M1', 'J1-13')), 1), 'R43.1-J_BP2.16': round(math.dist(pxy('R43', '1'), pxy('J_BP2', '16')), 1)}
-lim = {'U21-J_BP2': 30, 'U22-J_BP2': 30, 'U23-J_BP3': 25, 'U6.4-J_BP3.12': 12, 'R41.2-J_BP3.12': 12, 'C15.1-U6.5': 6, 'R42.2-M1.J1-13': 8, 'R43.1-J_BP2.16': 8}
-check('README layout requirements: U21 and U22 by J_BP2 (<= 30 mm), U23 by J_BP3 (<= 25 mm), U6 / R41 / C15 at J_BP3.12, R42 at M1 J1-13, R43 at J_BP2.16',
+lim = {'U21-J_BP2': 30, 'U22-J_BP1': 30, 'U23-J_BP3': 25, 'U6.4-J_BP3.12': 12, 'R41.2-J_BP3.12': 12, 'C15.1-U6.5': 6, 'R42.2-M1.J1-13': 8, 'R43.1-J_BP2.16': 8}
+check('README layout requirements: U21 by J_BP2 (<= 30 mm), U22 by J_BP1 (<= 30 mm; decision 30.09, disputed: README asked J_BP2), '
+      'U23 by J_BP3 (<= 25 mm), U6 / R41 / C15 at J_BP3.12, R42 at M1 J1-13, R43 at J_BP2.16',
       all(req[k] <= lim[k] for k in req), {'distance_mm': req, 'limit_mm': lim})
 supo = round(sum(p.ToMM(t.GetLength()) for t in b.GetTracks() if not isinstance(t, p.PCB_VIA) and net(t) == 'SUP_N_OUT'), 1)
 check('SUP_N_OUT copper on P03 <= 30 mm (reset edge budget: local 3 pF of the 30 pF, README "Reset do P04")', supo <= 30, {'track_mm': supo})

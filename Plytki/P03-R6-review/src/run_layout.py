@@ -4,6 +4,12 @@ usage: python src/run_layout.py [--reuse-ses] [--replan]
 --reuse-ses keeps routing/P03.ses and replays routing/completion-routes.json (--replan: plans them again from DRC).
 Without it Freerouting runs again (up to 6 times) while no completion path is found or the clean-up would leave a gap.
 Freerouting 2.1.0 stops after 30 passes (--router.stop_pass_no; the unrouted count stops falling after ~6 passes here).
+30.09 (Ubuntu): fanout_gnd.py after route_critical.py (locked GND bars under the SOICs, SOT-23 stubs, J_BP GND combs), and
+cleanup.py --tidy right after the SES import: Freerouting 2.1 leaves pieces of unfinished connections that blocked the
+completion planner (P03 R6: 81-112 dead-end items per run).
+EGRLAB_ROUTER_THREADS sets --router.max_threads (Freerouting default 1): with N threads each pass routes N boards and keeps
+the best (BatchAutorouter.autoroute_pass_multi_thread -> BoardHistory.restoreBestBoard). One trial each on P03 R6 (30.09):
+passes 16-30 averaged 13.0 open with 4 threads and 12.7 with 1, so no gain shown; the default stays 1.
 """
 from pathlib import Path
 import subprocess, sys, os, json, collections, shutil
@@ -33,7 +39,7 @@ def starved(d):
     return {f'{f.GetReference()}.{a.GetNumber()}' for f in b.GetFootprints() for a in f.Pads() if a.m_Uuid.AsString() in ids}
 
 
-for s in ['build_board.py', 'set_stackup.py', 'set_rules.py', 'route_critical.py', 'prepare_routing.py']:
+for s in ['build_board.py', 'set_stackup.py', 'set_rules.py', 'route_critical.py', 'fanout_gnd.py', 'prepare_routing.py']:
     run(PY, s)
 ses = P / 'routing/P03.ses'; reuse = '--reuse-ses' in sys.argv; attempts = []
 if not reuse:
@@ -45,7 +51,8 @@ for attempt in range(1, 2 if reuse else NATT + 1):
         try:   # P03 R6 (30.09): a stuck Freerouting run (no SES after the time limit) counts as a failed attempt, not a crash
             with open(P / 'routing/freerouting-stdout.log', 'w') as log:
                 run(FR / 'jdk-21.0.12.1+1-jre/bin/java.exe', '-Xmx4g', '-jar', FR / 'freerouting-2.1.0.jar', '-de', 'P03.dsn', '-do', 'P03.ses', '-mp', os.environ.get('EGRLAB_ROUTER_PASSES', '30'),
-                    '--router.stop_pass_no=' + os.environ.get('EGRLAB_ROUTER_PASSES', '30'), '-da', '--gui.enabled=false', cwd=P / 'routing', stdout=log, stderr=subprocess.STDOUT,
+                    '--router.stop_pass_no=' + os.environ.get('EGRLAB_ROUTER_PASSES', '30'), '-da', '--gui.enabled=false',
+                    '--router.max_threads=' + os.environ.get('EGRLAB_ROUTER_THREADS', '1'), cwd=P / 'routing', stdout=log, stderr=subprocess.STDOUT,
                     timeout=int(os.environ.get('EGRLAB_ROUTER_TIMEOUT', '1500')))
         except subprocess.TimeoutExpired:
             attempts.append({'attempt': attempt, 'completion_and_cleanup_ok': False, 'router_timeout': True})
@@ -53,7 +60,8 @@ for attempt in range(1, 2 if reuse else NATT + 1):
     assert ses.exists()
     if not reuse:  # every router result is kept for replay/debugging (routing/attempt-N.ses, not packaged)
         shutil.copy2(ses, P / f'routing/attempt-{attempt}.ses')
-    run(PY, 'import_routing.py'); run(PY, 'set_rules.py'); run(PY, 'stitch.py'); run(PY, 'set_rules.py')   # P02 R4: stitch first, fewer GND islands
+    run(PY, 'import_routing.py'); run(PY, 'set_rules.py'); run(PY, 'cleanup.py', '--tidy'); run(PY, 'set_rules.py')   # 30.09: debris out first
+    run(PY, 'stitch.py'); run(PY, 'set_rules.py')   # P02 R4: stitch first, fewer GND islands
     rc = run(PY, 'complete_routes.py', *([] if reuse and '--replan' not in sys.argv else ['--plan']), check=reuse).returncode
     assert rc in (0, 3), 'complete_routes.py failed (script error, not a routing gap)'
     solid = set()
