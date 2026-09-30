@@ -55,7 +55,7 @@ Przypisanie części do rejestru wynika z dosłownego dopasowania wartości i ty
 4. D1 (PESD2CAN) 3,2 mm od pól J3 (przy wejściu kabla), za nim U1 (CANH/CANL naprzeciw D1 i J3) i bufor U2; R1 przy wyjściu U2, CAN_RX biegnie do J1.8.
 5. **Sporne (dokumentacja):** pin 1 listwy J2 od większego x (x = 36,66 mm) — jak w P09 R2 i P03 R6; kolejność sygnałów od pinu 1 bez zmian; poprawione: nota BOM J2 i `docs/ODBIOR.md`.
 6. Rezystory serwisowe przy węzłach: R3 przy C1 (5V_SYS), R4 przy C2 (3V3_IO), R5 przy U1.4 (RX_RAW), R6 przy R1 (CAN_RX), R7 przy J1.6 (CAN_TX), R8/R9 (10 kΩ) przy J3; ścieżki od rezystorów do J2 są długie, ale idą za rezystorem (S1 §6).
-7. Dwa oznaczenia ukryte z braku miejsca (R3, D1); na rysunku montażowym F.Fab są wszystkie. Wysokość przewodu W3 z opaską ok. 6 mm to szacunek.
+7. Jedno oznaczenie ukryte z braku miejsca (R3); na rysunku montażowym F.Fab są wszystkie. Wysokość przewodu W3 z opaską ok. 6 mm to szacunek.
 
 **Otwarte:** przymiarka wydruku 1:1 (strona 5 PDF; kotwa J3 i przebieg przewodu do ściany wejść), recenzja; paczka produkcyjna dopiero po „scal”.
 

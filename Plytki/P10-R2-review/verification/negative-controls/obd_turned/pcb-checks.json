@@ -1,6 +1,6 @@
 {
   "board": "/home/tgorbacz/AI/Claude/EGRLab/.worktrees/p10-r2-pcb/Plytki/P10-R2-review/verification/negative-controls/obd_turned/P10.kicad_pcb",
-  "board_sha256": "fe50adaccd00e76215654553236b5d0d8129b9d96127b47004beb7984e84572b",
+  "board_sha256": "7c688a5dbd653a42577ba7c665a480f0be3edeb2879f5d99e0efe4e235dd6f6d",
   "checks": [
     {
       "check": "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
@@ -89,10 +89,10 @@
   ],
   "details": {
     "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)": {
-      "violations": 29,
+      "violations": 30,
       "unconnected_items": 2,
       "schematic_parity": 0,
-      "other_violations": 27,
+      "other_violations": 28,
       "other_types": [
         "clearance",
         "courtyards_overlap",
@@ -101,6 +101,7 @@
         "pth_inside_courtyard",
         "shorting_items",
         "silk_over_copper",
+        "silk_overlap",
         "solder_mask_bridge",
         "track_dangling"
       ],
@@ -316,10 +317,13 @@
       }
     },
     "Every visible reference outside the courtyards of other parts": {
+      "R4": [
+        "J3"
+      ],
       "U1": [
         "J3"
       ],
-      "R4": [
+      "D1": [
         "J3"
       ],
       "R8": [

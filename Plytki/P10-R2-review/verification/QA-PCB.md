@@ -50,6 +50,6 @@ Kontrole PCB: 21/21. Próby ujemne: 18/18 (w tym próba zerowa).
 | gnd_pour_removed | GND pours | tak | 2 |
 | ref_on_part | Every visible reference | tak | 2 |
 
-Nadruk: ukryte oznaczenia (brak miejsca): R3, D1; nieumieszczone napisy: brak.
+Nadruk: ukryte oznaczenia (brak miejsca): R3; nieumieszczone napisy: brak.
 
 Oględziny PDF: strony 1–5 obejrzane przy tworzeniu pakietu (render w output/previews/pcb-*.png).

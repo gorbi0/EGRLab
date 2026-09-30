@@ -1,7 +1,7 @@
 {
     "$schema": "https://schemas.kicad.org/drc.v1.json",
     "coordinate_units": "mm",
-    "date": "2026-09-30T22:15:12",
+    "date": "2026-09-30T22:32:47",
     "ignored_checks": [
         {
             "description": "Footprint has no courtyard defined",
@@ -42,7 +42,7 @@
                         "x": 19.8673,
                         "y": 56.3427
                     },
-                    "uuid": "c845bcd9-4279-42ef-8142-34c34f8102a0"
+                    "uuid": "1434f7d8-d980-48c6-9a0d-70d0455b3dc6"
                 },
                 {
                     "description": "Pole PTH 1 [5V_SYS] na C1",
@@ -50,7 +50,7 @@
                         "x": 8.825,
                         "y": 57.385
                     },
-                    "uuid": "61621c4b-4dad-4701-a86a-c037ac924b9c"
+                    "uuid": "ac28c8dc-6259-4ed2-8870-2e60016ba7cb"
                 }
             ],
             "severity": "error",
@@ -58,6 +58,98 @@
         }
     ],
     "violations": [
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci 3V3_IO oraz 5V_SYS)",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 1,1673 mm",
+                    "pos": {
+                        "x": 9.1469,
+                        "y": 57.7146
+                    },
+                    "uuid": "4548c186-7453-4115-be06-22b59ee2404a"
+                },
+                {
+                    "description": "Pole PTH 1 [5V_SYS] na C1",
+                    "pos": {
+                        "x": 8.825,
+                        "y": 57.385
+                    },
+                    "uuid": "ac28c8dc-6259-4ed2-8870-2e60016ba7cb"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 1,1673 mm",
+                    "pos": {
+                        "x": 9.1469,
+                        "y": 57.7146
+                    },
+                    "uuid": "4548c186-7453-4115-be06-22b59ee2404a"
+                },
+                {
+                    "description": "Pole PTH 1 [5V_SYS] na C1",
+                    "pos": {
+                        "x": 8.825,
+                        "y": 57.385
+                    },
+                    "uuid": "ac28c8dc-6259-4ed2-8870-2e60016ba7cb"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci 3V3_IO oraz 5V_SYS)",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 2,1176 mm",
+                    "pos": {
+                        "x": 9.1469,
+                        "y": 55.597
+                    },
+                    "uuid": "a9d78762-245a-48b2-8c16-6542e4276608"
+                },
+                {
+                    "description": "Pole PTH 1 [5V_SYS] na C1",
+                    "pos": {
+                        "x": 8.825,
+                        "y": 57.385
+                    },
+                    "uuid": "ac28c8dc-6259-4ed2-8870-2e60016ba7cb"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 2,1176 mm",
+                    "pos": {
+                        "x": 9.1469,
+                        "y": 55.597
+                    },
+                    "uuid": "a9d78762-245a-48b2-8c16-6542e4276608"
+                },
+                {
+                    "description": "Pole PTH 1 [5V_SYS] na C1",
+                    "pos": {
+                        "x": 8.825,
+                        "y": 57.385
+                    },
+                    "uuid": "ac28c8dc-6259-4ed2-8870-2e60016ba7cb"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
         {
             "description": "Elementy łączą dwie różne sieci (sieci 3V3_IO oraz GND)",
             "items": [
@@ -67,7 +159,7 @@
                         "x": 9.6271,
                         "y": 51.3296
                     },
-                    "uuid": "28140d02-17f7-45c7-af7f-3c292f232787"
+                    "uuid": "57dcd2b5-c022-4ee3-a4d5-0752f52dc672"
                 },
                 {
                     "description": "Pole PTH 2 [GND] na C1",
@@ -75,7 +167,7 @@
                         "x": 8.825,
                         "y": 52.385
                     },
-                    "uuid": "cdbc3378-9ec3-4e1f-b765-7c45c7caf778"
+                    "uuid": "7829453c-3686-4590-b505-b1fa5cbc8530"
                 }
             ],
             "severity": "error",
@@ -90,7 +182,7 @@
                         "x": 9.0811,
                         "y": 51.8756
                     },
-                    "uuid": "4b60c787-a5eb-4b77-b91b-7574fb399ec3"
+                    "uuid": "2a84601f-0cab-4aff-b5f2-af6df4894b9c"
                 },
                 {
                     "description": "Pole PTH 2 [GND] na C1",
@@ -98,11 +190,34 @@
                         "x": 8.825,
                         "y": 52.385
                     },
-                    "uuid": "cdbc3378-9ec3-4e1f-b765-7c45c7caf778"
+                    "uuid": "7829453c-3686-4590-b505-b1fa5cbc8530"
                 }
             ],
             "severity": "error",
             "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 1,9216 mm",
+                    "pos": {
+                        "x": 9.0811,
+                        "y": 51.8756
+                    },
+                    "uuid": "2a84601f-0cab-4aff-b5f2-af6df4894b9c"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na C1",
+                    "pos": {
+                        "x": 8.825,
+                        "y": 52.385
+                    },
+                    "uuid": "7829453c-3686-4590-b505-b1fa5cbc8530"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
         },
         {
             "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0202 mm)",
@@ -113,7 +228,7 @@
                         "x": 9.6271,
                         "y": 51.3296
                     },
-                    "uuid": "28140d02-17f7-45c7-af7f-3c292f232787"
+                    "uuid": "57dcd2b5-c022-4ee3-a4d5-0752f52dc672"
                 },
                 {
                     "description": "Pole PTH 2 [GND] na C1",
@@ -121,37 +236,14 @@
                         "x": 8.825,
                         "y": 52.385
                     },
-                    "uuid": "cdbc3378-9ec3-4e1f-b765-7c45c7caf778"
+                    "uuid": "7829453c-3686-4590-b505-b1fa5cbc8530"
                 }
             ],
             "severity": "error",
             "type": "hole_clearance"
         },
         {
-            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
-            "items": [
-                {
-                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 1,9216 mm",
-                    "pos": {
-                        "x": 9.0811,
-                        "y": 51.8756
-                    },
-                    "uuid": "4b60c787-a5eb-4b77-b91b-7574fb399ec3"
-                },
-                {
-                    "description": "Pole PTH 2 [GND] na C1",
-                    "pos": {
-                        "x": 8.825,
-                        "y": 52.385
-                    },
-                    "uuid": "cdbc3378-9ec3-4e1f-b765-7c45c7caf778"
-                }
-            ],
-            "severity": "error",
-            "type": "hole_clearance"
-        },
-        {
-            "description": "Elementy łączą dwie różne sieci (sieci 5V_SYS oraz 3V3_IO)",
+            "description": "Elementy łączą dwie różne sieci (sieci 5V_SYS oraz GND)",
             "items": [
                 {
                     "description": "Pole PTH 1 [5V_SYS] na C1",
@@ -159,130 +251,38 @@
                         "x": 8.825,
                         "y": 57.385
                     },
-                    "uuid": "61621c4b-4dad-4701-a86a-c037ac924b9c"
+                    "uuid": "ac28c8dc-6259-4ed2-8870-2e60016ba7cb"
                 },
-                {
-                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 2,1176 mm",
-                    "pos": {
-                        "x": 9.1469,
-                        "y": 55.597
-                    },
-                    "uuid": "f7b31527-a809-47c2-b72e-b1f44f89edf2"
-                }
-            ],
-            "severity": "error",
-            "type": "shorting_items"
-        },
-        {
-            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
-            "items": [
-                {
-                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 2,1176 mm",
-                    "pos": {
-                        "x": 9.1469,
-                        "y": 55.597
-                    },
-                    "uuid": "f7b31527-a809-47c2-b72e-b1f44f89edf2"
-                },
-                {
-                    "description": "Pole PTH 1 [5V_SYS] na C1",
-                    "pos": {
-                        "x": 8.825,
-                        "y": 57.385
-                    },
-                    "uuid": "61621c4b-4dad-4701-a86a-c037ac924b9c"
-                }
-            ],
-            "severity": "error",
-            "type": "hole_clearance"
-        },
-        {
-            "description": "Elementy łączą dwie różne sieci (sieci 5V_SYS oraz 3V3_IO)",
-            "items": [
-                {
-                    "description": "Pole PTH 1 [5V_SYS] na C1",
-                    "pos": {
-                        "x": 8.825,
-                        "y": 57.385
-                    },
-                    "uuid": "61621c4b-4dad-4701-a86a-c037ac924b9c"
-                },
-                {
-                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 1,1673 mm",
-                    "pos": {
-                        "x": 9.1469,
-                        "y": 57.7146
-                    },
-                    "uuid": "8b03a12e-6061-46f4-99e2-b71cc6a8f35d"
-                }
-            ],
-            "severity": "error",
-            "type": "shorting_items"
-        },
-        {
-            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
-            "items": [
-                {
-                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 1,1673 mm",
-                    "pos": {
-                        "x": 9.1469,
-                        "y": 57.7146
-                    },
-                    "uuid": "8b03a12e-6061-46f4-99e2-b71cc6a8f35d"
-                },
-                {
-                    "description": "Pole PTH 1 [5V_SYS] na C1",
-                    "pos": {
-                        "x": 8.825,
-                        "y": 57.385
-                    },
-                    "uuid": "61621c4b-4dad-4701-a86a-c037ac924b9c"
-                }
-            ],
-            "severity": "error",
-            "type": "hole_clearance"
-        },
-        {
-            "description": "Elementy łączą dwie różne sieci (sieci unconnected-(U2-Pad8) oraz GND)",
-            "items": [
-                {
-                    "description": "Pole lutownicze 8 [unconnected-(U2-Pad8)] z U2 na F.Cu",
-                    "pos": {
-                        "x": 10.525,
-                        "y": 52.19
-                    },
-                    "uuid": "867c0487-29d8-40fb-9809-83f58715dc35"
-                },
-                {
-                    "description": "Pole PTH 2 [GND] na C1",
-                    "pos": {
-                        "x": 8.825,
-                        "y": 52.385
-                    },
-                    "uuid": "cdbc3378-9ec3-4e1f-b765-7c45c7caf778"
-                }
-            ],
-            "severity": "error",
-            "type": "shorting_items"
-        },
-        {
-            "description": "Elementy łączą dwie różne sieci (sieci GND oraz 5V_SYS)",
-            "items": [
                 {
                     "description": "Pole lutownicze 12 [GND] z U2 na F.Cu",
                     "pos": {
                         "x": 10.525,
                         "y": 57.27
                     },
-                    "uuid": "cbbf6e3f-86fd-47ef-bb7f-a0b8c6cdaf84"
-                },
+                    "uuid": "9e20f0bf-c388-454a-8352-9ecdd98c3d7f"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz unconnected-(U2-Pad8))",
+            "items": [
                 {
-                    "description": "Pole PTH 1 [5V_SYS] na C1",
+                    "description": "Pole PTH 2 [GND] na C1",
                     "pos": {
                         "x": 8.825,
-                        "y": 57.385
+                        "y": 52.385
                     },
-                    "uuid": "61621c4b-4dad-4701-a86a-c037ac924b9c"
+                    "uuid": "7829453c-3686-4590-b505-b1fa5cbc8530"
+                },
+                {
+                    "description": "Pole lutownicze 8 [unconnected-(U2-Pad8)] z U2 na F.Cu",
+                    "pos": {
+                        "x": 10.525,
+                        "y": 52.19
+                    },
+                    "uuid": "74a34be7-1bc5-4b12-a8e5-3a982fb612a4"
                 }
             ],
             "severity": "error",
@@ -292,24 +292,116 @@
             "description": "Courtyards overlap",
             "items": [
                 {
-                    "description": "Footprint U2",
-                    "pos": {
-                        "x": 13.0,
-                        "y": 56.0
-                    },
-                    "uuid": "3c338cd9-0a0d-4864-9628-0e20642edfb3"
-                },
-                {
                     "description": "Footprint C1",
                     "pos": {
                         "x": 8.825,
                         "y": 57.385
                     },
-                    "uuid": "89099ccb-8fba-4d74-ae77-e7c57cec85ad"
+                    "uuid": "036b0699-459a-4d77-af49-44b510122138"
+                },
+                {
+                    "description": "Footprint U2",
+                    "pos": {
+                        "x": 13.0,
+                        "y": 56.0
+                    },
+                    "uuid": "b4df3fc4-52d4-4e40-b249-39295d5d0e03"
                 }
             ],
             "severity": "error",
             "type": "courtyards_overlap"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 1,9216 mm",
+                    "pos": {
+                        "x": 9.0811,
+                        "y": 51.8756
+                    },
+                    "uuid": "2a84601f-0cab-4aff-b5f2-af6df4894b9c"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na C1",
+                    "pos": {
+                        "x": 8.825,
+                        "y": 52.385
+                    },
+                    "uuid": "7829453c-3686-4590-b505-b1fa5cbc8530"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole PTH 1 [5V_SYS] na C1",
+                    "pos": {
+                        "x": 8.825,
+                        "y": 57.385
+                    },
+                    "uuid": "ac28c8dc-6259-4ed2-8870-2e60016ba7cb"
+                },
+                {
+                    "description": "Pole lutownicze 12 [GND] z U2 na F.Cu",
+                    "pos": {
+                        "x": 10.525,
+                        "y": 57.27
+                    },
+                    "uuid": "9e20f0bf-c388-454a-8352-9ecdd98c3d7f"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 1,1673 mm",
+                    "pos": {
+                        "x": 9.1469,
+                        "y": 57.7146
+                    },
+                    "uuid": "4548c186-7453-4115-be06-22b59ee2404a"
+                },
+                {
+                    "description": "Pole PTH 1 [5V_SYS] na C1",
+                    "pos": {
+                        "x": 8.825,
+                        "y": 57.385
+                    },
+                    "uuid": "ac28c8dc-6259-4ed2-8870-2e60016ba7cb"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [GND] na C1",
+                    "pos": {
+                        "x": 8.825,
+                        "y": 52.385
+                    },
+                    "uuid": "7829453c-3686-4590-b505-b1fa5cbc8530"
+                },
+                {
+                    "description": "Pole lutownicze 8 [unconnected-(U2-Pad8)] z U2 na F.Cu",
+                    "pos": {
+                        "x": 10.525,
+                        "y": 52.19
+                    },
+                    "uuid": "74a34be7-1bc5-4b12-a8e5-3a982fb612a4"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
         },
         {
             "description": "Przednia soldermaska łączy elementy o różnych sieciach",
@@ -320,7 +412,7 @@
                         "x": 9.6271,
                         "y": 51.3296
                     },
-                    "uuid": "28140d02-17f7-45c7-af7f-3c292f232787"
+                    "uuid": "57dcd2b5-c022-4ee3-a4d5-0752f52dc672"
                 },
                 {
                     "description": "Pole PTH 2 [GND] na C1",
@@ -328,53 +420,7 @@
                         "x": 8.825,
                         "y": 52.385
                     },
-                    "uuid": "cdbc3378-9ec3-4e1f-b765-7c45c7caf778"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
-            "items": [
-                {
-                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 1,1673 mm",
-                    "pos": {
-                        "x": 9.1469,
-                        "y": 57.7146
-                    },
-                    "uuid": "8b03a12e-6061-46f4-99e2-b71cc6a8f35d"
-                },
-                {
-                    "description": "Pole PTH 1 [5V_SYS] na C1",
-                    "pos": {
-                        "x": 8.825,
-                        "y": 57.385
-                    },
-                    "uuid": "61621c4b-4dad-4701-a86a-c037ac924b9c"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
-            "items": [
-                {
-                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 1,9216 mm",
-                    "pos": {
-                        "x": 9.0811,
-                        "y": 51.8756
-                    },
-                    "uuid": "4b60c787-a5eb-4b77-b91b-7574fb399ec3"
-                },
-                {
-                    "description": "Pole PTH 2 [GND] na C1",
-                    "pos": {
-                        "x": 8.825,
-                        "y": 52.385
-                    },
-                    "uuid": "cdbc3378-9ec3-4e1f-b765-7c45c7caf778"
+                    "uuid": "7829453c-3686-4590-b505-b1fa5cbc8530"
                 }
             ],
             "severity": "error",
@@ -389,7 +435,7 @@
                         "x": 9.1469,
                         "y": 55.597
                     },
-                    "uuid": "f7b31527-a809-47c2-b72e-b1f44f89edf2"
+                    "uuid": "a9d78762-245a-48b2-8c16-6542e4276608"
                 },
                 {
                     "description": "Pole PTH 1 [5V_SYS] na C1",
@@ -397,53 +443,7 @@
                         "x": 8.825,
                         "y": 57.385
                     },
-                    "uuid": "61621c4b-4dad-4701-a86a-c037ac924b9c"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
-            "items": [
-                {
-                    "description": "Pole PTH 1 [5V_SYS] na C1",
-                    "pos": {
-                        "x": 8.825,
-                        "y": 57.385
-                    },
-                    "uuid": "61621c4b-4dad-4701-a86a-c037ac924b9c"
-                },
-                {
-                    "description": "Pole lutownicze 12 [GND] z U2 na F.Cu",
-                    "pos": {
-                        "x": 10.525,
-                        "y": 57.27
-                    },
-                    "uuid": "cbbf6e3f-86fd-47ef-bb7f-a0b8c6cdaf84"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
-            "items": [
-                {
-                    "description": "Pole lutownicze 8 [unconnected-(U2-Pad8)] z U2 na F.Cu",
-                    "pos": {
-                        "x": 10.525,
-                        "y": 52.19
-                    },
-                    "uuid": "867c0487-29d8-40fb-9809-83f58715dc35"
-                },
-                {
-                    "description": "Pole PTH 2 [GND] na C1",
-                    "pos": {
-                        "x": 8.825,
-                        "y": 52.385
-                    },
-                    "uuid": "cdbc3378-9ec3-4e1f-b765-7c45c7caf778"
+                    "uuid": "ac28c8dc-6259-4ed2-8870-2e60016ba7cb"
                 }
             ],
             "severity": "error",
@@ -458,7 +458,7 @@
                         "x": 19.8673,
                         "y": 56.3427
                     },
-                    "uuid": "c845bcd9-4279-42ef-8142-34c34f8102a0"
+                    "uuid": "1434f7d8-d980-48c6-9a0d-70d0455b3dc6"
                 }
             ],
             "severity": "warning",
@@ -473,7 +473,7 @@
                         "x": 36.66,
                         "y": 95.96
                     },
-                    "uuid": "4e1c17ed-7309-4250-8876-9a8b39c9b6cd"
+                    "uuid": "6ec979b0-913b-4403-a2dc-4997f2f1a56c"
                 }
             ],
             "severity": "warning",
@@ -488,7 +488,7 @@
                         "x": 21.42,
                         "y": 13.33
                     },
-                    "uuid": "97bb55db-69eb-426a-a2ec-49d95017ec62"
+                    "uuid": "da229b12-d469-4d44-93ea-b1f14fdaae26"
                 }
             ],
             "severity": "warning",
@@ -503,7 +503,7 @@
                         "x": 9.858,
                         "y": 52.265
                     },
-                    "uuid": "9a4b0379-f8e0-4fb3-a302-639bf62162d7"
+                    "uuid": "ad212fe0-ab0e-44c2-9200-0ec39bc1e3ee"
                 }
             ],
             "severity": "warning",
@@ -518,7 +518,7 @@
                         "x": 10.195,
                         "y": 52.265
                     },
-                    "uuid": "faa15542-6329-41ee-b58c-dc1dd091fa34"
+                    "uuid": "89311263-828c-406f-aad7-abb303283ba7"
                 }
             ],
             "severity": "warning",
@@ -533,7 +533,7 @@
                         "x": 10.195,
                         "y": 57.505
                     },
-                    "uuid": "14548c09-525c-407f-9187-5ad4e56c61ce"
+                    "uuid": "51cbb62a-bd80-4633-b81e-52560c0a7d13"
                 }
             ],
             "severity": "warning",

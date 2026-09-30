@@ -26,6 +26,7 @@ bottom = sorted((r for r, v in json.loads((P / 'src/placement.json').read_text(e
                 key=lambda r: (r[0], int(r[1:])))
 nlib = sum(1 for v in drc['violations'] if v['type'] == 'lib_footprint_mismatch')
 pdfmetrics.registerFont(TTFont('Arial', 'C:/Windows/Fonts/arial.ttf')); pdfmetrics.registerFont(TTFont('Bold', 'C:/Windows/Fonts/arialbd.ttf'))
+pdfmetrics.registerFontFamily('Arial', normal='Arial', bold='Bold', italic='Arial', boldItalic='Bold')   # 30.09: <b> in the notes printed as regular without it
 (O / 'pdf').mkdir(parents=True, exist_ok=True)
 PDF = O / f"pdf/{REV.replace(' ', '-')}-PCB.pdf"
 c = Canvas(str(PDF), pagesize=(297 * mm, 210 * mm)); c.setTitle(f'EGRLab {REV}: PCB CAN w formacie S1')
