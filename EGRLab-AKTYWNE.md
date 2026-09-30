@@ -2,12 +2,16 @@
 
 
 
-Aktualizacja: 28.09.2026. P03-R5 i P04-R2.2: korekta wspólnego resetu, CAD/PDF/BOM sprawdzone; fizyczne próby otwarte. P00, P01, P02 i P04 mają pakiety do zamówienia PCB (`Plytki/Zamowienie-Satland/`). P05 nadal wymaga poprawek z recenzji, P07 HOLD. Baza odniesienia: `Rewizje/EGRLab-v6.1-rc1`.
+Aktualizacja: 30.09.2026. P02 R4 etap 2: PCB w klasie L do recenzji (PR #4; DRC bez niepołączeń, PCB 23/23, próby ujemne 12/12). Format S1-3 (P10 na poziomie 4). Schematy S1: P03 R6, P05 R2, P09 R2, P10 R2 scalone, layouty lokalnie. P00 i P04 mają pakiety do zamówienia PCB (`Plytki/Zamowienie-Satland/`), P01 i stare P02 wstrzymane (zasilanie z pakietu 4S). Baza odniesienia: `Rewizje/EGRLab-v6.1-rc1`.
 
 Pakiety płytek i ich recenzje znajdują się w `Plytki/`.
 
 
 
+
+## P02 R4 — ETAP 2: PCB W KLASIE L (30.09.2026, lokalnie, PR #4)
+
+Pakiet `Plytki/P02-R4-review/` (gałąź `p02-r4-pcb`, PR #4): płytka 160 × 100 mm (klasa L, cały poziom 1), dwie warstwy 35 µm. Rozmieszczenie: blok mocy z pilota przesunięty o 53,5 mm do ściany wejść; blok sterowania rozsunięty ×1,35 (w pilocie ściśnięty, router zostawiał 2–5 połączeń); R5 obok D11, bo PWR_A z bloku mocy nie miała drogi do J14; odsprzęganie ≤ 7,1 mm od pinów, rezystory serwisowe ≤ 8 mm od węzłów. Trasowanie: Freerouting 2.1.0 (wynik 4. próby) i planer dokańczania, 37 przelotek zszywających GND. W skryptach pilota poprawione: planer (warstwa pola SMD), zszywanie GND (siatka kończyła się na 2/3 płytki, klastry bez połączenia), porządki (przelotki na polach THT, łańcuchy między osobnymi kawałkami zablokowanej miedzi), wylewki pod końcami blaszek Q9/Q1 (wchodził tam GND), nadruk, kontrole, próby ujemne i PDF liczone dla klasy 2/3. Wynik: DRC 0 niepołączonych / 0 niezgodności ze schematem, jedyne zgłoszenia to 13 × niezgodność footprintu z biblioteką u części z przyciętym nadrukiem (przyjęte jawnie w `verify_pcb.py`); kontrole PCB 23/23; próby ujemne 12/12; tor 5 A ≥ 4,1 mm miedzi (najmniej przy R18.2 w korytarzu powrotu GND). C27/C28 od spodu mają 0,88 mm wg karty (wpis 1,8 mm był maksimum rodziny X7R). Otwarte: przymiarka 1:1, 12 oznaczeń ukrytych w bloku mocy, jeden nieodtworzony przypadek zniknięcia stref GND w przebiegu wydania (teraz twarda kontrola w `stitch.py`). Czeka na recenzję i „scal”.
 
 ## FORMAT S1-3 — P02 R4 W KLASIE L, P10 NA POZIOMIE 4 (29.09.2026)
 

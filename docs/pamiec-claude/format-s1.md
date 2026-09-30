@@ -1,6 +1,6 @@
 ---
 name: format-s1
-description: "Studium formatu S1 (29.09): stos płytek 160×100 z tercjami zamiast kasety R1, płytka połączeń zamiast wiązek, listwy serwisowe z kołkami na jednej krawędzi (wymaganie użytkownika); LOGGER ok. 3,2 l zamiast 11,4 l; PRZYJĘTY 29.09, specyfikacja S1-1"
+description: "Format S1 (29.09): stos płytek 160×100 z tercjami, płytka połączeń P12, listwy serwisowe na krawędzi B (wymaganie użytkownika); LOGGER ok. 3,2 l; specyfikacja S1-3 (P02 R4 w klasie L, P10 na poziomie 4 S3)"
 metadata:
   node_type: memory
   type: project
@@ -33,6 +33,9 @@ metadata:
 - pinout J_BP płytki P02 R4 jest ustalony.
 
 Wstrzymane: stary etap 2 P02 R4, layout P05 R2, zamówienie PCB P04. Następny krok: pilot P02 R4 w S1 w chmurze.
+
+**S1-2 (29.09):** SMD od spodu dozwolone (SOIC tylko na poziomie 1).
+**S1-3 (29.09 wieczorem, commit 1c94235 na main):** P02 R4 w klasie L (cały poziom 1; w 2/3 trasowanie się nie domykało), P10 na poziom 4, slot S3 (J3 OBD przy ścianie wejść; od spodu bez SOIC, góra ≤ 16,5 mm; P10 R2 zakładał S1 poziomu 1). Wariant pełny: na poziomie 4 zostaje tylko S2, więc P04 potrzebuje 6. poziomu (albo P10) — do decyzji przy wariancie pełnym.
 
 **Why:** w kasecie R1 z płytkami 160 × 120 urządzenie było za duże (obawa użytkownika z 29.09).
 **How to apply:** projektując każdą płytkę, trzymać format S1 i listwę serwisową na krawędzi B. Zob. [[kaseta-r1]], [[p02-r4-state]], [[egrlab-review-rules]].
