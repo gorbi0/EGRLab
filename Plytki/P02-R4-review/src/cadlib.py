@@ -119,7 +119,7 @@ class Sheet:
     rad=math.radians(a);end=(round(x-5.08*math.cos(rad),5),round(y+5.08*math.sin(rad),5));self.wire((x,y),end);self.label(net,end,'right' if a==0 else 'left',net in CROSS)
   for p in self.junctions:self.items.append(f'(junction (at {p[0]} {p[1]}) (diameter 0) (color 0 0 0 0) (uuid {uid(self.name+"j"+str(p))}))')
  def save(self):
-  text=f'(kicad_sch (version 20250114) (generator "eeschema") (uuid {uid(self.name)}) (paper "A3") (title_block (title {q("P02-R4 / "+self.name)}) (date "2026-09-29") (rev "P02-R4") (company "EGRLab / schematic review (etap 1, bez PCB)") (comment 1 "Zasilanie z pakietu Li-ion 4S (12,0-16,8 V); UVLO 13,53 / 12,51 V; C_H 2200 uF") (comment 2 "Tor bramki Q1/Q2 i sterowanie z P01 R3 (R23 = 22k / 0,5W)"))'
+  text=f'(kicad_sch (version 20250114) (generator "eeschema") (uuid {uid(self.name)}) (paper "A3") (title_block (title {q("P02-R4 / "+self.name)}) (date "2026-09-29") (rev "P02-R4") (company "EGRLab / etap 2: format S1 (plytka 2/3, sloty S2-S3)") (comment 1 "Pakiet Li-ion 4S; UVLO 13,50 / 12,55 V nom.; C_H 2200 uF; D3 5KP24A") (comment 2 "Tor bramki Q1/Q2 i sterowanie z P01 R3 (R23 = 22k / 0,5W)"))'
   text+='(lib_symbols '+''.join(dump(v) for v in self.libs.values())+')'+''.join(self.items)
   if not self.root or self.root==uid(self.name):text+=f'(sheet_instances (path "/" (page "1")))'
   (P/'eda'/(FILES.get(self.name,self.name)+'.kicad_sch')).write_text(text+')',encoding='utf-8')

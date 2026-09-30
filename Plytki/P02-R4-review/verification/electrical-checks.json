@@ -11,9 +11,9 @@
       "info": ""
     },
     {
-      "check": "T02 BAT_IN reaches only J1.1, Q9 drain and TP1",
+      "check": "T02 BAT_IN reaches only J1.1, Q9 drain and the service resistor R61",
       "pass": true,
-      "info": "J1.1, Q9.2, TP1.1"
+      "info": "J1.1, Q9.2, R61.1"
     },
     {
       "check": "T03 Zener clamps D10/D4/D9: cathode SW_COM, anode on the gate of Q9/Q1/Q2",
@@ -36,12 +36,12 @@
       "info": ""
     },
     {
-      "check": "T07 PFAIL_N buffers OK: U2A + = OK x R7/(R6+R7), - = REF; pull-up to 3V3_IO; R37 to PFAIL_N at J16.1 and J12.3",
+      "check": "T07 PFAIL_N buffers OK: U2A + = OK x R7/(R6+R7), - = REF; pull-up to 3V3_IO; R37 to PFAIL_N at J_BP.14",
       "pass": true,
       "info": ""
     },
     {
-      "check": "T08 SAFE_N as P01: Q7 base fed only from J13.1 (P04 3V3, separate from local 3V3_IO); Q8 released by ENABLE",
+      "check": "T08 SAFE_N as P01: Q7 base fed only from J_BP.15 (P04 3V3, separate from local 3V3_IO; R58 = service pin); Q8 released by ENABLE",
       "pass": true,
       "info": ""
     },
@@ -51,7 +51,7 @@
       "info": ""
     },
     {
-      "check": "T10 VMOTOR only from VSW through F1; nothing else on VMOTOR",
+      "check": "T10 VMOTOR only from VSW through F1; nothing else on VMOTOR but J2.1 and the service resistor R66",
       "pass": true,
       "info": ""
     },
@@ -66,12 +66,27 @@
       "info": ""
     },
     {
-      "check": "T13 VBAT: J15 - R38 - VBAT_SENSE (D13 bidirectional TVS to GND) - J11.1; no GND wire from the car",
+      "check": "T13 VBAT: J15 - R38 - VBAT_SENSE (D13 bidirectional TVS to GND) - J_BP.20; no GND wire from the car",
       "pass": true,
       "info": ""
     },
     {
-      "check": "T14 TVS on VSW with VWM >= 16.8 V (5KP18A: 18 V)",
+      "check": "T14 TVS on VSW with VWM >= 16.8 V",
+      "pass": true,
+      "info": "5KP24A: VWM 24.0 V"
+    },
+    {
+      "check": "T15 Z-01: no damage at a steady 25 V (5S by mistake): VBR min of the VSW transil >= 25 V (R4E1-01)",
+      "pass": true,
+      "info": "5KP24A: VBR min 26.7 V"
+    },
+    {
+      "check": "T16 J_BP pinout = S1 section 8 (GND 1,3,5,7,9,11,13,19; 5V_SYS 2,4,6; 3V3_IO 8,10; 12 PSU_OK, 14 PFAIL_N, 15 P04_3V3, 16 SAFE_N, 17 PG_SEND, 18 PG_LINK, 20 VBAT_SENSE)",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "check": "T17 Service headers (S1 section 6): <= 13 pins, GND on both ends, every other pin only through one series resistor of its class (4K7 pack rails, 10K high-impedance, 1K logic/<= 5 V); all O-01..O-09 points present",
       "pass": true,
       "info": ""
     },
@@ -156,9 +171,14 @@
       "info": "0.37 W at 3.5 A, 0.75 W at 5 A"
     },
     {
-      "check": "L02 PWR wire shorted to GND: R5 <= 60 % of 0.5 W",
+      "check": "L02 PWR wire shorted to GND: R5 <= 60 % of its rating (anti-surge 1206, 0.66 W)",
       "pass": true,
-      "info": "286 mW"
+      "info": "286 mW of 660 mW"
+    },
+    {
+      "check": "L05 Service resistor with its pin shorted to GND: <= 50 % of its rating (node at its maximum voltage)",
+      "pass": true,
+      "info": "max 112 mW (R59)"
     },
     {
       "check": "L03 R23 static loss (Q4 on, OFF_G at SW_COM) <= 10 % of 0.5 W",
@@ -312,29 +332,29 @@
   "spec_conformance": [
     {
       "id": "Z-02",
-      "text": "UVLO 13.53 / 12.51 V, spread +/-0.34 V",
-      "result": "on 12.90..14.08 V, off 11.98..13.11 V",
-      "met": false
+      "text": "UVLO envelope (after etap 1): on 12.90..14.08 V, off 11.98..13.11 V, hysteresis >= 0.84 V",
+      "result": "on 12.90..14.08 V, off 11.98..13.11 V, hysteresis >= 0.84 V",
+      "met": true
     },
     {
       "id": "Z-08",
-      "text": "after PFAIL_N >= 14 ms at 6 W and >= 28 ms at 3 W (C_H -20 %)",
+      "text": "after PFAIL_N >= 10 ms at 6 W in the worst corner (after etap 1); nominal 16.8 / 33.5 ms at 6 / 3 W",
       "result": "worst 11.1 / 22.3 ms; nominal 16.8 / 33.5 ms",
-      "met": false
+      "met": true
     },
     {
       "id": "Z-01",
       "text": "no damage at 0..25 V",
-      "result": "5KP18A on VSW: VBR min 20 V; a steady 25 V source drives the TVS into breakdown",
-      "met": false
+      "result": "5KP24A on VSW: VBR min 26.7 V",
+      "met": true
     }
   ],
   "pin_mismatches": [],
   "limits": "0..50 C; analytic models; LM2903/TL431/LM2936 data-sheet limits; SUP53P06 gate model of P01 R3; NOT_TESTED hardware",
   "inputs_sha256": {
-    "verification/P02.xml": "615410edf0d9f09bb20aceacb5dc1442b4f61064c4c854a9b7907d7a3525849c",
-    "docs/parts.json": "443e14fdbc5ea4acc2dcd317cb5331147e5f64e162a3b33d382ba583483ac058",
-    "src/check_electrical.py": "5390b44eed92977abe9410c96ee635ba81d317c8a0fdff21f8557ff42567b3f6"
+    "verification/P02.xml": "e8041860e06e1eb9f7aed501f592e0d3d6874b0957ba8ed4c1733d166b13f201",
+    "docs/parts.json": "230b1d42ead13cad83d0cc035c55e7f01c65f53fc283783ed7e42665c0bb24d6",
+    "src/check_electrical.py": "e887b89fde4b94a97f77b3e6cbfb0ce006de18d24a2ec977cbc68a408423bc51"
   },
   "passed": true
 }

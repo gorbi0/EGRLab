@@ -103,3 +103,17 @@ Recenzja: `Plytki/P02-R4-recenzja/RECENZJA-P02-R4-ETAP1.md`. PR #2 scalony (4ac3
 - **Panel (P11):** włącznik PWR ze złoconymi stykami (obwód „suchy”, ok. 0,3 mA).
 
 Następny krok: etap 2 (PCB) — `ZADANIE-P02-R4-ETAP2.md`, polecenie w `docs/CHMURA.md`.
+
+## Etap 2 — stan przerwany (29.09.2026, sesja w chmurze)
+
+Gałąź `p02-r4-pcb`. Trasowanie przerwane na polecenie użytkownika; do dokończenia lokalnie.
+
+Zrobione: schemat w formacie S1 (5 arkuszy z SERW; D3 5KP24A, J_BP IDC 2 × 10 na krawędzi A, listwy serwisowe J_SV1/J_SV2 1 × 13 z rezystorami R50–R71 na krawędzi B, U9/C27/C28 SMD od spodu wg S1-2), rozmieszczenie w klasie 2/3 (106,5 × 100 mm, 0 nakładań obrysów), wylewki toru 5 A, pasy i korytarz powrotu GND, skrypty układu i kontroli (`src/`). Plik `eda/P02.kicad_pcb` to wynik Freeroutingu po zszyciu GND, przed dokańczaniem: 29 niepołączonych pozycji, 2 naruszenia prześwitu przy D10.1, 1 ścieżka w strefie zakazanej (OFF_D przy 87,5/50,4), 1 nakładanie R33/R57 (po imporcie). Stan przed trasowaniem: `routing/prerouted.kicad_pcb`. Lista niepołączonych sieci i pytania: opis PR.
+
+## Etap 2 — PCB w klasie L gotowa do recenzji (30.09.2026, lokalnie)
+
+Decyzja użytkownika „opcja 1”: klasa L (160 × 100 mm, cały poziom 1; format S1-3, P10 na poziom 4). Rozmieszczenie: blok mocy przesunięty o 53,5 mm do ściany wejść; blok sterowania rozsunięty ×1,35, a potem — na wskazanie użytkownika z wydruku 1:1 — jeszcze raz w stronę wolnego pola (górna połowa ×1,25, dolna ×1,12; układy sztywno z odsprzęganiem i rezystorami serwisowymi); grupa podtrzymania 8 mm w lewo razem z wylewkami VLOG/HOLD_C; R5 obok D11 (PWR_A nie miała drogi do J14 przy R5 w bloku mocy). Rdzeń mocy bez zmian (decyzja użytkownika). Trasowanie: Freerouting 2.1.0 domknął się w 1. próbie, planer dokańczania dołożył 7 tras; skrypty pilota poprawione (planer, zszywanie GND, porządki, wylewki pod blaszkami Q9/Q1, nadruk, kontrole, próby ujemne i PDF dla klasy L).
+
+Wynik (`Plytki/P02-R4-review/README.md`, `verification/QA-PCB.md`): DRC 0 niepołączonych / 0 niezgodności ze schematem / 0 innych naruszeń, jedyne zgłoszenia to niezgodności footprintów z biblioteką u części z przyciętym nadrukiem (przyjęte jawnie); kontrole PCB 23/23; próby ujemne 12/12; tor 5 A ≥ 4,1 mm miedzi.
+
+Następny krok: recenzja PCB (PR #4), przymiarka 1:1, dopiero potem paczka produkcyjna.
