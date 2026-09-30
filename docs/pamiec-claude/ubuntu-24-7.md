@@ -1,19 +1,20 @@
 ---
 name: ubuntu-24-7
-description: "Od 30.09.2026 długie zadania EGRLab idą na komputerze użytkownika z Ubuntu (24/7); projekty w /home/tgorbacz/AI/Claude/<projekt>, EGRLab tam; sesja na projekt z Remote Control; Docker z scripts/setup-chmura.sh; layout/trasowanie dozwolone"
+description: Komputer 24/7 z Ubuntu 22.04 (od 30.09) = rejestrator monitoringu Frigate, który ma pierwszeństwo; projekty w /home/tgorbacz/AI/Claude/<projekt>; Docker egrlab-kicad z limitem CPU; push wymaga logowania użytkownika
 metadata:
   node_type: memory
-  type: reference
-  originSessionId: 1bdb3685-394a-4886-bbc7-14b9957d5ea4
-  modified: 2026-09-30T15:22:15.069Z
+  type: project
+  originSessionId: cb9bcc34-135b-58ad-be17-9604396c28c1
+  modified: 2026-09-30T20:00:00.000Z
 ---
 
-Komputer 24/7 z Ubuntu. Projekty Claude w `/home/tgorbacz/AI/Claude/<projekt>` (decyzja użytkownika 30.09), EGRLab w `/home/tgorbacz/AI/Claude/EGRLab`, pamięć w `~/.claude/projects/-home-tgorbacz-AI-Claude-EGRLab/memory/`. Jedna sesja na projekt, uruchomiona w jego katalogu z Remote Control; „frigate-claude” (Remote Control, widoczna w ListAgents z laptopa) zrobiła przygotowanie. Opis środowiska i zasad: `docs/UBUNTU-24-7.md`.
+Komputer 24/7 (Ubuntu **22.04**, 12 wątków, 31 GB). Projekty Claude w `/home/tgorbacz/AI/Claude/<projekt>`, EGRLab w `/home/tgorbacz/AI/Claude/EGRLab`, pamięć w `~/.claude/projects/-home-tgorbacz-AI-Claude-EGRLab/memory/`. Opis: `docs/UBUNTU-24-7.md`.
 
-- Narzędzia: obraz Docker `egrlab-kicad:10.0.6` z `scripts/setup-chmura.sh`, polecenia przez `scripts/egrlab-docker` (KiCad 10.0.6, Freerouting 2.1.0 w `/opt/egrlab/freerouting`, reportlab, poppler, Node/sharp, czcionki Liberation).
-- To komputer i plan użytkownika, nie płatna chmura: layout i trasowanie wolno tu robić (zasady kosztowe z CHMURA.md nie obowiązują, [[chmura-limity]] dotyczy chmury).
-- Hasła i tokeny (sudo, `gh auth login`) wpisuje użytkownik.
-- Wiadomości z laptopa do tej sesji tylko po „wyślij” użytkownika; scalanie po „scal”.
+- **Rejestrator monitoringu (Frigate) ma pierwszeństwo** (użytkownik 30.09): `scripts/egrlab-docker` daje kontenerom `--cpu-shares 2` i `--cpus 2`; najwyżej 2 ciężkie zadania naraz; limitu nie podnosić bez zgody. Kontrola: `docker exec frigate curl -s http://127.0.0.1:5000/api/stats` (`skipped_fps` = 0). Kamera cam5_tyl_2 nie działa (przegryziony kabel, naprawi użytkownik) — nie diagnozować.
+- Obraz `egrlab-kicad:10.0.6` z `scripts/setup-chmura.sh` (czcionki z przypiętych paczek noble, bo 22.04 nie ma `fonts-liberation-sans-narrow`).
+- Git: tożsamość lokalnie w repo (Tomasz Gorbaczuk <gorbi@adres.pl>); `gh` nie ma, odczyt repo działa, **push wymaga logowania użytkownika** (30.09 niezrobione — commity czekają lokalnie).
+- Kolejne płytki równolegle w worktree `.worktrees/<gałąź>` (wykluczone w `.git/info/exclude`), żeby nie przełączać gałęzi w trakcie przebiegów.
+- Wiadomości do innych sesji tylko po „wyślij”; scalanie po „scal”.
 
-**Why:** użytkownik chce, żeby zadania nie zależały od laptopa (30.09.2026).
-**How to apply:** nowe zadania prowadzić tam; pamięć przywracać z `docs/pamiec-claude/` do `~/.claude/projects/<ścieżka repo z „-”>/memory/`. Zob. [[repo-chmura]], [[p03-r6-state]].
+**Why:** użytkownik chce, żeby zadania nie zależały od laptopa; maszyna nagrywa monitoring.
+**How to apply:** ciężkie przebiegi zawsze przez `egrlab-docker`, kontrolować Frigate. Zob. [[repo-chmura]], [[p03-r6-state]].

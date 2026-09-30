@@ -78,7 +78,7 @@ put('SD1', 148.5, 70.9, 180)    # header y 70.9 (pin 1 3V at x 148.5); card towa
 put('U22', 11.0, 28.0, 90); put('U14', 22.0, 28.0, 90); put('U13', 33.5, 28.0, 90)
 put('U1', 42.0, 45.0, 270)      # MCP23017: inputs 1-7 face the buffers, 15-28 face down; courtyard x 7.42..43.55
 put('U2', 27.0, 66.0, 270)      # HC139 decoder
-put('U21', 51.0, 24.0, 90)      # DAQ outputs next to J_BP2 (README), left of the lane along the M1 J1 row
+put('U21', 54.0, 24.0, 90)      # DAQ outputs next to J_BP2 (README, verify <= 30 mm; x 51 gave 30.9), left of the lane along the M1 J1 row
 put('U11', 51.0, 62.0, 0)       # inputs to the M1 J1 row (DOUTA, BUSY, MISO, CAN_RX)
 put('U12', 104.5, 50.0, 0)      # HW_ARMED / INTERLOCK to M1 J3-8 / J3-6
 put('U23', 122.0, 27.0, 90)     # SPI3 to J_BP3.2-10 and SD1
@@ -168,6 +168,8 @@ NODE = {'MOTOR_INB': ('U1', 27), 'MOTOR_INA': ('U1', 26), '3V3_CORE': ('C1', 1),
         'SENSOR_ENABLE': ('J_BP3', 9), 'TC2_CS': ('U23', 11), 'TC1_CS': ('U23', 8), 'INTERLOCK': ('R26', 1), 'HW_ARMED': ('R3', 1),
         'LOGGER_CURRENT_OK': ('R2', 1)}
 SERV = {r: NODE[parts[r]['pins']['1']] for r in parts if parts[r]['source_ref'] == 'ADDED_R6_SERVICE_SERIES'}
+FIRST = ['R71']   # 30.09: SENSOR_ENABLE has one node pad (J_BP3.9) in the crowded J_BP3 cluster; placed last it ended 11.5 mm away
+SERV = {r: SERV[r] for r in FIRST + [r for r in SERV if r not in FIRST]}
 assert len(SERV) == 33, len(SERV)
 for r, (u, n) in SERV.items():
     place_near(r, (u, str(n)), own='1', lane_ok=u in ('M1', 'R42'), radius=25)

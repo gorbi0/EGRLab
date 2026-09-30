@@ -86,23 +86,33 @@ def rect_hits_copper(rc):
     shape = p.SHAPE_POLY_SET(); shape.NewOutline()
     for x, y in [(rc[0], rc[1]), (rc[2], rc[1]), (rc[2], rc[3]), (rc[0], rc[3])]:
         shape.Append(p.FromMM(x), p.FromMM(y))
+    return shape_hits_copper(shape)
+
+
+MIN_HIT = 1e-3   # mm2
+
+
+def shape_hits_copper(shape):
+    """As rect_hits_copper for any outline (30.09: the SD1 keepouts are circles; their bounding squares caught the pour
+    and two tracks in the corners, outside the rule area). A hit needs more than MIN_HIT mm2 of common area: a pour filled up to
+    a circular rule area shares only polygonisation slivers with it (1e-7 mm2 measured on SD1)."""
     hits = []
     for L in (p.F_Cu, p.B_Cu):
         for t in b.GetTracks():
             if isinstance(t, p.PCB_VIA) or t.GetLayer() == L:
                 ps = p.SHAPE_POLY_SET(); t.TransformShapeToPolygon(ps, L, 0, p.FromMM(.005), p.ERROR_INSIDE); ps.BooleanIntersection(shape)
-                if ps.OutlineCount():
+                if ps.OutlineCount() and ps.Area() / 1e12 > MIN_HIT:
                     hits.append(('via ' if isinstance(t, p.PCB_VIA) else 'track ') + net(t))
         for z in b.Zones():
             if not z.GetIsRuleArea() and z.IsOnLayer(L):
                 ps = p.SHAPE_POLY_SET(z.GetFilledPolysList(L)); ps.BooleanIntersection(shape)
-                if ps.OutlineCount():
+                if ps.OutlineCount() and ps.Area() / 1e12 > MIN_HIT:
                     hits.append(f'pour {net(z)} {b.GetLayerName(L)}')
         for f in b.GetFootprints():
             for a in f.Pads():
                 if a.IsOnLayer(L) and a.GetAttribute() != p.PAD_ATTRIB_NPTH:
                     ps = p.SHAPE_POLY_SET(); a.TransformShapeToPolygon(ps, L, 0, p.FromMM(.005), p.ERROR_INSIDE); ps.BooleanIntersection(shape)
-                    if ps.OutlineCount():
+                    if ps.OutlineCount() and ps.Area() / 1e12 > MIN_HIT:
                         hits.append(f'pad {f.GetReference()}.{a.GetNumber()}')
     return sorted(set(hits))
 
@@ -305,7 +315,7 @@ sd = fmap['SD1']; card = [fp2board(sd, x, -22.86) for x in (0, 20.32)]
 tip = min(H - q[1] for q in card); sdz = [z for z in keep if z.GetZoneName().startswith('SD1 M2.5')]
 sdh = sorted(pos(a.GetPosition()) for a in sd.Pads() if a.GetAttribute() == p.PAD_ATTRIB_NPTH)
 sdc = sorted(tuple(round(p.ToMM(v), 2) for v in (z.Outline().BBox().GetCenter().x, z.Outline().BBox().GetCenter().y)) for z in sdz)
-sd_cu = [h for z in sdz for h in rect_hits_copper(zone_rect(z)) if not h.startswith('pad SD1.')]
+sd_cu = [h for z in sdz for h in shape_hits_copper(z.Outline()) if not h.startswith('pad SD1.')]
 check(f'SD1 Adafruit 4682: card towards edge B (tip <= {CARD_MAX} mm inside it), M2.5 keepouts r 3 mm around both holes, both layers, no copper',
       all(abs(q[1] - card[0][1]) < 1e-6 for q in card) and 0 <= tip <= CARD_MAX and len(sdz) == 2 and all(full_keepout(z) for z in sdz)
       and sdc == sorted(tuple(round(v, 2) for v in h) for h in sdh) and not sd_cu,
@@ -325,12 +335,16 @@ def path_res(netname, a_ref, a_pad, z_ref, z_pad, wmin=1.2):
 
     def link(u, v, r):
         adj.setdefault(u, []).append((v, r)); adj.setdefault(v, []).append((u, r))
+    vias = [t for t in items if isinstance(t, p.PCB_VIA)]
     for t in items:
         if isinstance(t, p.PCB_VIA):
             link(('F',) + key(t.GetPosition()), ('B',) + key(t.GetPosition()), .001 / 2)   # ~1 mOhm per via, two in parallel on the spine
-        else:
-            L = 'F' if t.GetLayer() == p.F_Cu else 'B'
-            link((L,) + key(t.GetStart()), (L,) + key(t.GetEnd()), RHO * p.ToMM(t.GetLength()) * 1e-3 / (p.ToMM(t.GetWidth()) * 1e-3 * T))
+        else:   # 30.09: split the segment at every via lying on it (route_critical.py puts v1 inside the F.Cu stub, v2 on the B.Cu spine)
+            L = 'F' if t.GetLayer() == p.F_Cu else 'B'; a0, a1 = key(t.GetStart()), key(t.GetEnd()); ln = math.dist(a0, a1)
+            cuts = sorted({a0, a1} | {key(v.GetPosition()) for v in vias if ln and abs(math.dist(a0, key(v.GetPosition())) + math.dist(key(v.GetPosition()), a1) - ln) < 1e-3},
+                          key=lambda q: math.dist(a0, q))
+            for u, v in zip(cuts, cuts[1:]):
+                link((L,) + u, (L,) + v, RHO * math.dist(u, v) * 1e-3 / (p.ToMM(t.GetWidth()) * 1e-3 * T))
     for nd in list(adj):   # a node inside a THT pad or on a via joins both layers
         for q in (fmap[a_ref], fmap[z_ref]):
             pass

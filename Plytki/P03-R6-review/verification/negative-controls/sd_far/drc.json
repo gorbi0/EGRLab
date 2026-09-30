@@ -1,0 +1,855 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-30T21:26:40",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P03.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole PTH 1 [3V3_CORE] na SD1",
+                    "pos": {
+                        "x": 148.5,
+                        "y": 68.9
+                    },
+                    "uuid": "f160f675-3685-49b7-9319-9b08f7482ea9"
+                },
+                {
+                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 9,6200 mm",
+                    "pos": {
+                        "x": 147.2483,
+                        "y": 70.3524
+                    },
+                    "uuid": "3ee25358-19f7-4c6f-9e10-7fe717cb4bb3"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Ścieżka [SD_CS] na F.Cu, długość 4,2500 mm",
+                    "pos": {
+                        "x": 135.8,
+                        "y": 70.9
+                    },
+                    "uuid": "cae41938-174b-4a5d-b103-5ea2182bfde4"
+                },
+                {
+                    "description": "Ścieżka [SD_CS] na B.Cu, długość 4,9159 mm",
+                    "pos": {
+                        "x": 135.8,
+                        "y": 70.9
+                    },
+                    "uuid": "a59b7a58-5d9c-4ca0-a0d1-195744b93af8"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Ścieżka [SPI3_MOSI] na B.Cu, długość 17,2377 mm",
+                    "pos": {
+                        "x": 126.1511,
+                        "y": 58.7111
+                    },
+                    "uuid": "56e34076-97ed-4ef3-a2a5-d14ca78028a5"
+                },
+                {
+                    "description": "Pole PTH 5 [SPI3_MOSI] na SD1",
+                    "pos": {
+                        "x": 138.34,
+                        "y": 68.9
+                    },
+                    "uuid": "45172604-1eef-405e-9632-b1c20235c700"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Ścieżka [SPI3_MISO] na B.Cu, długość 7,4086 mm",
+                    "pos": {
+                        "x": 135.6413,
+                        "y": 76.1387
+                    },
+                    "uuid": "c0978426-2c1e-4f6c-9b8d-480c08d08d00"
+                },
+                {
+                    "description": "Pole PTH 4 [SPI3_MISO] na SD1",
+                    "pos": {
+                        "x": 140.88,
+                        "y": 68.9
+                    },
+                    "uuid": "80ad479b-fe06-475c-985a-1054fecb3f53"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole PTH 3 [SPI3_SCLK] na SD1",
+                    "pos": {
+                        "x": 143.42,
+                        "y": 68.9
+                    },
+                    "uuid": "1f5b7bff-aaf9-435f-acb4-6574ca885f00"
+                },
+                {
+                    "description": "Ścieżka [SPI3_SCLK] na B.Cu, długość 28,2756 mm",
+                    "pos": {
+                        "x": 143.42,
+                        "y": 70.9
+                    },
+                    "uuid": "2255bc45-195f-4063-8d30-ed12f03ee7ec"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci unconnected-(SD1-D1-Pad7) oraz /SERWIS/SV_SUP_N_OUT)",
+            "items": [
+                {
+                    "description": "Pole PTH 7 [unconnected-(SD1-D1-Pad7)] na SD1",
+                    "pos": {
+                        "x": 133.26,
+                        "y": 68.9
+                    },
+                    "uuid": "b293088c-88ba-4648-9c04-0e95d980fa3e"
+                },
+                {
+                    "description": "Ścieżka [/SERWIS/SV_SUP_N_OUT] na F.Cu, długość 2,0065 mm",
+                    "pos": {
+                        "x": 133.155,
+                        "y": 68.7838
+                    },
+                    "uuid": "b79a2315-a80f-454a-8f59-5bdd57f77552"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SV_SUP_N_OUT] na F.Cu, długość 2,0065 mm",
+                    "pos": {
+                        "x": 133.155,
+                        "y": 68.7838
+                    },
+                    "uuid": "b79a2315-a80f-454a-8f59-5bdd57f77552"
+                },
+                {
+                    "description": "Pole PTH 7 [unconnected-(SD1-D1-Pad7)] na SD1",
+                    "pos": {
+                        "x": 133.26,
+                        "y": 68.9
+                    },
+                    "uuid": "b293088c-88ba-4648-9c04-0e95d980fa3e"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci /SERWIS/SV_SUP_N_OUT oraz unconnected-(SD1-D1-Pad7))",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SV_SUP_N_OUT] na F.Cu, długość 46,8576 mm",
+                    "pos": {
+                        "x": 133.155,
+                        "y": 21.9262
+                    },
+                    "uuid": "a3542d33-78de-4434-bdf7-0727ef9f0bfd"
+                },
+                {
+                    "description": "Pole PTH 7 [unconnected-(SD1-D1-Pad7)] na SD1",
+                    "pos": {
+                        "x": 133.26,
+                        "y": 68.9
+                    },
+                    "uuid": "b293088c-88ba-4648-9c04-0e95d980fa3e"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SV_SUP_N_OUT] na F.Cu, długość 46,8576 mm",
+                    "pos": {
+                        "x": 133.155,
+                        "y": 21.9262
+                    },
+                    "uuid": "a3542d33-78de-4434-bdf7-0727ef9f0bfd"
+                },
+                {
+                    "description": "Pole PTH 7 [unconnected-(SD1-D1-Pad7)] na SD1",
+                    "pos": {
+                        "x": 133.26,
+                        "y": 68.9
+                    },
+                    "uuid": "b293088c-88ba-4648-9c04-0e95d980fa3e"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci SPI3_SCLK oraz SPI3_MISO)",
+            "items": [
+                {
+                    "description": "Ścieżka [SPI3_SCLK] na B.Cu, długość 28,2756 mm",
+                    "pos": {
+                        "x": 143.42,
+                        "y": 70.9
+                    },
+                    "uuid": "2255bc45-195f-4063-8d30-ed12f03ee7ec"
+                },
+                {
+                    "description": "Pole PTH 4 [SPI3_MISO] na SD1",
+                    "pos": {
+                        "x": 140.88,
+                        "y": 68.9
+                    },
+                    "uuid": "80ad479b-fe06-475c-985a-1054fecb3f53"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [SPI3_SCLK] na B.Cu, długość 28,2756 mm",
+                    "pos": {
+                        "x": 143.42,
+                        "y": 70.9
+                    },
+                    "uuid": "2255bc45-195f-4063-8d30-ed12f03ee7ec"
+                },
+                {
+                    "description": "Pole PTH 4 [SPI3_MISO] na SD1",
+                    "pos": {
+                        "x": 140.88,
+                        "y": 68.9
+                    },
+                    "uuid": "80ad479b-fe06-475c-985a-1054fecb3f53"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci SD_CS oraz SPI3_MOSI)",
+            "items": [
+                {
+                    "description": "Pole PTH 6 [SD_CS] na SD1",
+                    "pos": {
+                        "x": 135.8,
+                        "y": 68.9
+                    },
+                    "uuid": "36e9bf6f-1864-415d-a18b-ba91e3e45f69"
+                },
+                {
+                    "description": "Ścieżka [SPI3_MOSI] na B.Cu, długość 17,2377 mm",
+                    "pos": {
+                        "x": 126.1511,
+                        "y": 58.7111
+                    },
+                    "uuid": "56e34076-97ed-4ef3-a2a5-d14ca78028a5"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [SPI3_MOSI] na B.Cu, długość 17,2377 mm",
+                    "pos": {
+                        "x": 126.1511,
+                        "y": 58.7111
+                    },
+                    "uuid": "56e34076-97ed-4ef3-a2a5-d14ca78028a5"
+                },
+                {
+                    "description": "Pole PTH 6 [SD_CS] na SD1",
+                    "pos": {
+                        "x": 135.8,
+                        "y": 68.9
+                    },
+                    "uuid": "36e9bf6f-1864-415d-a18b-ba91e3e45f69"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci SD_CS oraz unconnected-(SD1-D1-Pad7))",
+            "items": [
+                {
+                    "description": "Ścieżka [SD_CS] na B.Cu, długość 4,9159 mm",
+                    "pos": {
+                        "x": 135.8,
+                        "y": 70.9
+                    },
+                    "uuid": "a59b7a58-5d9c-4ca0-a0d1-195744b93af8"
+                },
+                {
+                    "description": "Pole PTH 7 [unconnected-(SD1-D1-Pad7)] na SD1",
+                    "pos": {
+                        "x": 133.26,
+                        "y": 68.9
+                    },
+                    "uuid": "b293088c-88ba-4648-9c04-0e95d980fa3e"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [SD_CS] na B.Cu, długość 4,9159 mm",
+                    "pos": {
+                        "x": 135.8,
+                        "y": 70.9
+                    },
+                    "uuid": "a59b7a58-5d9c-4ca0-a0d1-195744b93af8"
+                },
+                {
+                    "description": "Pole PTH 7 [unconnected-(SD1-D1-Pad7)] na SD1",
+                    "pos": {
+                        "x": 133.26,
+                        "y": 68.9
+                    },
+                    "uuid": "b293088c-88ba-4648-9c04-0e95d980fa3e"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci /SERWIS/SV_SUP_N oraz 3V3_CORE)",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SV_SUP_N] na F.Cu, długość 5,7370 mm",
+                    "pos": {
+                        "x": 145.645,
+                        "y": 64.6931
+                    },
+                    "uuid": "54d723fe-f229-4a8f-ab81-f805d970f778"
+                },
+                {
+                    "description": "Pole PTH 1 [3V3_CORE] na SD1",
+                    "pos": {
+                        "x": 148.5,
+                        "y": 68.9
+                    },
+                    "uuid": "f160f675-3685-49b7-9319-9b08f7482ea9"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci 3V3_CORE oraz GND)",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 9,6200 mm",
+                    "pos": {
+                        "x": 147.2483,
+                        "y": 70.3524
+                    },
+                    "uuid": "3ee25358-19f7-4c6f-9e10-7fe717cb4bb3"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na SD1",
+                    "pos": {
+                        "x": 145.96,
+                        "y": 68.9
+                    },
+                    "uuid": "97f43f72-1aa9-41fc-9699-ed75346fd596"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 9,6200 mm",
+                    "pos": {
+                        "x": 147.2483,
+                        "y": 70.3524
+                    },
+                    "uuid": "3ee25358-19f7-4c6f-9e10-7fe717cb4bb3"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na SD1",
+                    "pos": {
+                        "x": 145.96,
+                        "y": 68.9
+                    },
+                    "uuid": "97f43f72-1aa9-41fc-9699-ed75346fd596"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint R11",
+                    "pos": {
+                        "x": 135.8,
+                        "y": 65.099999
+                    },
+                    "uuid": "2cf533c3-65b5-4491-83fb-b9c03025465e"
+                },
+                {
+                    "description": "Footprint SD1",
+                    "pos": {
+                        "x": 148.5,
+                        "y": 68.9
+                    },
+                    "uuid": "8a96c20a-4da8-4b27-8500-a5e9ab8208d4"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "Niekompletne łączenie termiczne ze strefą (warstwa F.Cu; 1 łącz połączonych z izolowanym polem)",
+            "items": [
+                {
+                    "description": "Strefa [GND] na F.Cu, priorytet 0",
+                    "pos": {
+                        "x": 0.3,
+                        "y": 0.3
+                    },
+                    "uuid": "febd4956-7d4e-4db9-8730-70314f1ba697"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na SD1",
+                    "pos": {
+                        "x": 145.96,
+                        "y": 68.9
+                    },
+                    "uuid": "97f43f72-1aa9-41fc-9699-ed75346fd596"
+                }
+            ],
+            "severity": "error",
+            "type": "starved_thermal"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [SPI3_MOSI] na B.Cu, długość 17,2377 mm",
+                    "pos": {
+                        "x": 126.1511,
+                        "y": 58.7111
+                    },
+                    "uuid": "56e34076-97ed-4ef3-a2a5-d14ca78028a5"
+                },
+                {
+                    "description": "Pole PTH 6 [SD_CS] na SD1",
+                    "pos": {
+                        "x": 135.8,
+                        "y": 68.9
+                    },
+                    "uuid": "36e9bf6f-1864-415d-a18b-ba91e3e45f69"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SV_SUP_N] na F.Cu, długość 5,7370 mm",
+                    "pos": {
+                        "x": 145.645,
+                        "y": 64.6931
+                    },
+                    "uuid": "54d723fe-f229-4a8f-ab81-f805d970f778"
+                },
+                {
+                    "description": "Pole PTH 1 [3V3_CORE] na SD1",
+                    "pos": {
+                        "x": 148.5,
+                        "y": 68.9
+                    },
+                    "uuid": "f160f675-3685-49b7-9319-9b08f7482ea9"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SV_SUP_N_OUT] na F.Cu, długość 46,8576 mm",
+                    "pos": {
+                        "x": 133.155,
+                        "y": 21.9262
+                    },
+                    "uuid": "a3542d33-78de-4434-bdf7-0727ef9f0bfd"
+                },
+                {
+                    "description": "Pole PTH 7 [unconnected-(SD1-D1-Pad7)] na SD1",
+                    "pos": {
+                        "x": 133.26,
+                        "y": 68.9
+                    },
+                    "uuid": "b293088c-88ba-4648-9c04-0e95d980fa3e"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SV_SUP_N_OUT] na F.Cu, długość 2,0065 mm",
+                    "pos": {
+                        "x": 133.155,
+                        "y": 68.7838
+                    },
+                    "uuid": "b79a2315-a80f-454a-8f59-5bdd57f77552"
+                },
+                {
+                    "description": "Pole PTH 7 [unconnected-(SD1-D1-Pad7)] na SD1",
+                    "pos": {
+                        "x": 133.26,
+                        "y": 68.9
+                    },
+                    "uuid": "b293088c-88ba-4648-9c04-0e95d980fa3e"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 9,6200 mm",
+                    "pos": {
+                        "x": 147.2483,
+                        "y": 70.3524
+                    },
+                    "uuid": "3ee25358-19f7-4c6f-9e10-7fe717cb4bb3"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na SD1",
+                    "pos": {
+                        "x": 145.96,
+                        "y": 68.9
+                    },
+                    "uuid": "97f43f72-1aa9-41fc-9699-ed75346fd596"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [SD_CS] na B.Cu, długość 4,9159 mm",
+                    "pos": {
+                        "x": 135.8,
+                        "y": 70.9
+                    },
+                    "uuid": "a59b7a58-5d9c-4ca0-a0d1-195744b93af8"
+                },
+                {
+                    "description": "Pole PTH 7 [unconnected-(SD1-D1-Pad7)] na SD1",
+                    "pos": {
+                        "x": 133.26,
+                        "y": 68.9
+                    },
+                    "uuid": "b293088c-88ba-4648-9c04-0e95d980fa3e"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [SPI3_SCLK] na B.Cu, długość 28,2756 mm",
+                    "pos": {
+                        "x": 143.42,
+                        "y": 70.9
+                    },
+                    "uuid": "2255bc45-195f-4063-8d30-ed12f03ee7ec"
+                },
+                {
+                    "description": "Pole PTH 4 [SPI3_MISO] na SD1",
+                    "pos": {
+                        "x": 140.88,
+                        "y": 68.9
+                    },
+                    "uuid": "80ad479b-fe06-475c-985a-1054fecb3f53"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 1,2517 mm",
+                    "pos": {
+                        "x": 148.5,
+                        "y": 70.9
+                    },
+                    "uuid": "fe3b38f1-1ae7-4332-9d58-7dcf392c2385"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [SD_CS] na F.Cu, długość 4,2500 mm",
+                    "pos": {
+                        "x": 135.8,
+                        "y": 70.9
+                    },
+                    "uuid": "cae41938-174b-4a5d-b103-5ea2182bfde4"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [SD_CS] na B.Cu, długość 4,9159 mm",
+                    "pos": {
+                        "x": 135.8,
+                        "y": 70.9
+                    },
+                    "uuid": "a59b7a58-5d9c-4ca0-a0d1-195744b93af8"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [SPI3_MOSI] na B.Cu, długość 17,2377 mm",
+                    "pos": {
+                        "x": 126.1511,
+                        "y": 58.7111
+                    },
+                    "uuid": "56e34076-97ed-4ef3-a2a5-d14ca78028a5"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [SPI3_MISO] na B.Cu, długość 7,4086 mm",
+                    "pos": {
+                        "x": 135.6413,
+                        "y": 76.1387
+                    },
+                    "uuid": "c0978426-2c1e-4f6c-9b8d-480c08d08d00"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [SPI3_SCLK] na B.Cu, długość 28,2756 mm",
+                    "pos": {
+                        "x": 143.42,
+                        "y": 70.9
+                    },
+                    "uuid": "2255bc45-195f-4063-8d30-ed12f03ee7ec"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV2",
+                    "pos": {
+                        "x": 95.24,
+                        "y": 95.96
+                    },
+                    "uuid": "6b9a8a30-c890-4ea7-a9ee-8c0d9f53ea2f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP2",
+                    "pos": {
+                        "x": 68.57,
+                        "y": 13.33
+                    },
+                    "uuid": "7892d6fb-b885-42fa-a41a-5f4f83b0f596"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV3",
+                    "pos": {
+                        "x": 148.74,
+                        "y": 95.96
+                    },
+                    "uuid": "9148d16d-c1f4-41b9-a2e6-cba9c508ec9c"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV1",
+                    "pos": {
+                        "x": 41.74,
+                        "y": 95.96
+                    },
+                    "uuid": "a232fec8-1d65-43bf-b6e7-82a68dad630e"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP3",
+                    "pos": {
+                        "x": 122.07,
+                        "y": 13.33
+                    },
+                    "uuid": "c0af10c0-28db-4643-96a2-0a7ed217b8ba"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP1",
+                    "pos": {
+                        "x": 15.07,
+                        "y": 13.33
+                    },
+                    "uuid": "ccf59d13-8e68-48b4-b2b2-2658d83ae54c"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Prostokąt z SD1 na F.Silkscreen",
+                    "pos": {
+                        "x": 151.16,
+                        "y": 89.34
+                    },
+                    "uuid": "b8dbccf9-dcda-40c3-abb3-001932ec56e2"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        }
+    ]
+}

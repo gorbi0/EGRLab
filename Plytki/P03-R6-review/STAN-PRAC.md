@@ -1,6 +1,6 @@
 # P03 R6 — stan pracy (przekazanie na komputer 24/7 z Ubuntu, 30.09.2026)
 
-Gałąź `p03-r6-pcb`. Etap: **poprawki schematu zrobione i sprawdzone, layout w toku (trasowanie się nie domyka)**. Dalsza praca na komputerze 24/7 (Ubuntu, sesja Claude Code „frigate-claude”); środowisko: `docs/UBUNTU-24-7.md`.
+Gałąź `p03-r6-pcb`. Etap: **PCB gotowa do recenzji (30.09 wieczorem)** — DRC 0/0/0 (6 przyjętych `lib_footprint_mismatch`), kontrole PCB 25/25, próby ujemne 16/16, PDF `output/pdf/P03-R6-PCB.pdf`; opis, wyniki i decyzje sporne w README (sekcja „PCB”). Praca na komputerze 24/7 (Ubuntu, sesja Claude Code „frigate-claude”); środowisko: `docs/UBUNTU-24-7.md`.
 
 ## 30.09 wieczorem — Ubuntu 24/7 (sesja „frigate-claude”)
 
@@ -58,7 +58,7 @@ Inne otwarte:
 
 ## Następne kroki
 
-1. Środowisko na Ubuntu (`docs/UBUNTU-24-7.md`), odtworzenie `src/run_schematic.py` w kontenerze (wyniki jak w repozytorium, różnice tylko CRLF/LF i daty).
-2. Domknięcie trasowania (wyżej), potem `silkscreen.py`, `verify_pcb.py` (wszystko PASS), `negative_controls.py`, PDF — poprawić skrypty tam, gdzie wyjdą błędy (pisane bez uruchomienia).
-3. README: sekcja layoutu (wyniki, decyzje sporne), `EGRLab-AKTYWNE.md`, `docs/01-overview.md`, pamięć.
-4. Commit/push na `p03-r6-pcb`, PR; scalanie dopiero po „scal” użytkownika. Potem przymiarka 1:1 i paczka produkcyjna (skrypty z `Plytki/P02-PCB-R4-zamowienie/src/`).
+1. Recenzja PCB (README, sekcja „PCB”: 9 decyzji, w tym sporne) i przymiarka wydruku 1:1 (`output/pdf/P03-R6-PCB.pdf`, strona 5); wysokość M1 na listwach.
+2. Push gałęzi `p03-r6-pcb` i PR — commity są lokalnie na komputerze 24/7; push czeka na logowanie użytkownika do GitHuba na tym komputerze (`gh auth login` albo poświadczenie git). Scalanie dopiero po „scal”.
+3. Po akceptacji: paczka produkcyjna (skrypty z `Plytki/P02-PCB-R4-zamowienie/src/`).
+4. Odtworzenie: `scripts/egrlab-docker python3 src/run_release.py` (odtwarza `routing/P03.ses` + `completion-routes.json`, ok. 35 min przy 2 rdzeniach); nowe trasowanie: `--new-route` (wynik za każdym razem inny, pętla do 6 prób).

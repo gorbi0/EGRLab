@@ -144,6 +144,14 @@ for t in tracks:
             dead.add(uid(t)); n_via_pad += 1; break
 n_dead_end = 0
 pour_nets = {z.GetNetCode() for z in b.Zones() if not z.GetIsRuleArea()}
+# 30.09 (GND plane mode): a via of a pour net inside that net's fill is joined on that layer; the router's GND fan-out vias
+# (pad -> stub -> via into the B.Cu plane) have one track link only and were removed as dead ends
+pour_fill = collections.defaultdict(list)
+for z in b.Zones():
+    if not z.GetIsRuleArea():
+        for L in (p.F_Cu, p.B_Cu):
+            if z.IsOnLayer(L):
+                pour_fill[z.GetNetCode()].append(z.GetFilledPolysList(L))
 while True:
     live = [t for t in tracks if uid(t) not in dead]; gone = []
     for t in live:
@@ -153,7 +161,8 @@ while True:
         pads = pads_by_net[t.GetNetCode()]
         if isinstance(t, p.PCB_VIA):
             links = [u for u in same if not isinstance(u, p.PCB_VIA) and u.HitTest(t.GetPosition())]
-            if len(links) + sum(a.HitTest(t.GetPosition()) for a in pads) < 2:
+            in_pour = sum(ps.Contains(t.GetPosition()) for ps in pour_fill.get(t.GetNetCode(), []))
+            if len(links) + sum(a.HitTest(t.GetPosition()) for a in pads) + in_pour < 2:
                 gone.append(uid(t))
             elif t.GetNetCode() not in pour_nets:   # P02 R4: copper on one layer only (DRC via_dangling)
                 lay = {u.GetLayer() for u in links} | {L for a in pads if a.HitTest(t.GetPosition()) for L in (p.F_Cu, p.B_Cu) if a.IsOnLayer(L)}

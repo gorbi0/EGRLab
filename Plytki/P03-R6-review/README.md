@@ -1,8 +1,8 @@
-# EGRLab P03-R6 — CORE w formacie S1 (schemat)
+# EGRLab P03-R6 — CORE w formacie S1 (schemat i PCB)
 
 29.09.2026, sesja w chmurze, zadanie `Plytki/Format-S1/zadania/ZADANIE-P03-S1.md`. **Tylko schemat i kontrole, bez PCB.** Layout i trasowanie robi sesja lokalna (`docs/CHMURA.md`, zasada 6). Sprzęt NIE ZBADANO.
 
-**30.09.2026: layout w toku** na gałęzi `p03-r6-pcb` — stan, wyniki przebiegów routera i decyzje sporne w `STAN-PRAC.md`; dalsza praca na komputerze 24/7 z Ubuntu (`docs/UBUNTU-24-7.md`).
+**30.09.2026 wieczorem: PCB gotowa do recenzji** (gałąź `p03-r6-pcb`, komputer 24/7 z Ubuntu, `docs/UBUNTU-24-7.md`): DRC 0 niepołączonych / 0 niezgodności ze schematem / 0 innych naruszeń (6 przyjętych `lib_footprint_mismatch` złączy z przyciętym nadrukiem), kontrole PCB 25/25, próby ujemne 16/16 z zerową, PDF `output/pdf/P03-R6-PCB.pdf`. Szczegóły w sekcji „PCB” niżej; przymiarka 1:1 i sprzęt: NIE ZBADANO.
 
 P03-R6 to obwód P03-R5 przeniesiony do formatu S1 (`Plytki/Format-S1/SPECYFIKACJA-FORMATU-S1.md`, S1-2): klasa **L** (160 × 100 mm), **poziom 2**, sloty S1–S3. Funkcje i sieci R5 zostają bez zmian, zmieniają się złącza. Dochodzi wejście PFAIL_N z P02 R4 i trzy listwy serwisowe. Zamknięty pakiet `Plytki/P03-R5-review` nie był zmieniany.
 
@@ -92,6 +92,31 @@ Nowe kontrole z zadania: każda sieć dawnego złącza dokładnie raz na J_BP (C
 
 Nie przeniesiono kontroli R3 „złącza równe zamrożonym mapom sąsiadów” (P02-R3 J3, P04-R2.1 J2, P05-R1 J1): te mapy przestały obowiązywać, a nowe powstaną w rewizjach S1 sąsiadów i w P12. Do tego czasu jedynym kontraktem jest `docs/J_BP.csv`.
 
+## PCB (30.09.2026 wieczorem, `src/run_release.py`, KiCad 10.0.6 w Dockerze)
+
+| Kontrola | Wynik | Raport |
+|---|---|---|
+| DRC świeży, wszystkie poziomy | 0 niepołączonych, 0 niezgodności ze schematem, 0 innych naruszeń; 6 × `lib_footprint_mismatch` (J_BP1–3, J_SV1–3: nadruk przycięty przez `silkscreen.py`, przyjęte jawnie) | `verification/drc.json` |
+| Kontrole PCB (`verify_pcb.py`) | 25/25 | `verification/pcb-checks.json`, `QA-PCB.md` |
+| Próby ujemne PCB | 16/16 z zerową | `verification/negative-controls.json` |
+| Tor 5 V (J_BP2 → Q1 → M1 J1-21, 1,5 mm) | 37,7 mΩ miedzi przy 20 °C (budżet 50 mΩ) | `pcb-checks.json` |
+| Trasowanie | Freerouting 2.1.0 (30 przebiegów, 4 wątki, GND jako płaszczyzna B.Cu), druga próba; planer dokańczania: 5 połączeń sygnałowych i 4 GND; 263 przelotki | `routing/attempts.json`, `completion-routes.json` |
+
+**Jak powstało trasowanie** (skrypty w `src/`, opis w nagłówkach): `fanout_gnd.py` przed routerem kładzie zablokowane belki GND pod każdym SOIC-14 (F.Cu pod korpusem, dwie przelotki) i grzebienie GND pod korpusami J_BP (piny nieparzystego rzędu przez szczeliny parzystego do szyny y = 8 mm); `prepare_routing.py` przekazuje GND routerowi jako płaszczyznę B.Cu, więc router sam dokłada przelotki GND przy polach SMD; po imporcie `cleanup.py --tidy` usuwa porzucone kawałki tras; `stitch.py` i planer `complete_routes.py` (raster 0,05 mm, przeszkody poszerzane geometrycznie, łączenie wysp GND z głównym klastrem) domykają resztę. Bez tych kroków router zostawiał 16–29 połączeń sygnałowych i kilkadziesiąt odciętych pól GND (7 wariantów, `STAN-PRAC.md`).
+
+**Decyzje (sporne oznaczone):**
+1. **Sporne:** USB-C M1 i karta SD1 ok. 6,2 mm przed krawędzią B — moduły (26 mm) są szersze niż przerwy między listwami serwisowymi (19,4 mm); dostęp przy zdjętej ściance B.
+2. **Sporne:** U22 w S1 przy J_BP1 (README wymagało J_BP2) — jego wejścia idą z U1/U2, dwa wyjścia do J_BP1; `verify_pcb.py` sprawdza ≤ 30 mm od J_BP1.
+3. **Sporne:** przydział kołków listew według położenia węzłów (zmiana względem schematu z PR #6), z zamianą J_SV1.10 ↔ J_SV3.12 (niżej).
+4. **Sporne:** przy J_SV2 i J_SV3 skróty trzyliterowe (0,8 mm) i legenda na płytce zamiast pełnych nazw (nad listwami stoją moduły, zostaje 1,5 mm); GND tych listew tylko w legendzie.
+5. 3V3_CORE 0,3 mm (0,5 mm nie mieści się między pinami w rastrze 2,54; spadek ok. 25 mV przy 100 mA).
+6. **Decyzja użytkownika 30.09:** ścieżki sygnałowe 0,2 mm przy odstępie 0,25 mm, tylko na P03 R6 (odstępstwo od S1 §3: reguły jak P02-R3); zasilanie bez zmian.
+7. **Decyzja użytkownika 30.09:** zamiana bramek LOGGER_CURRENT_OK / SENSOR_HEALTHY z U12 na wolne kanały U14 (opis w „Listwy serwisowe”).
+8. Rozmieszczenie: S1 rozsunięte w dół (rząd SOIC y 28, U1 y 45, U2 y 66), U21 x = 54 (≤ 30 mm od J_BP2), C13 obrócony o 180° (pole 5V_SYS na górze, jak zakładał komentarz; wcześniej pole GND było zamknięte między J_BP2 a torem 5 V), węzły serwisowe bliżej listew (5V_SYS przy U5.1, ADC_BUSY przy U11.5, HEARTBEAT przy M1 J3-18, SUP_N przy U6.2).
+9. **Sporne (lutowanie):** trzy pola GND z pełnym połączeniem z wylewką zamiast termicznego (J_BP1.7, J_BP2.3, M1.J3-1 — szprychy odcięte przez ścieżki); reguła P02 „pola złączy zostają z termikami” dotyczyła lutowanych przewodów, których na P03 nie ma. Przy lutowaniu tych pinów potrzeba więcej ciepła.
+
+**Otwarte:** przymiarka wydruku 1:1 (strona 5 PDF), wysokość M1 na listwach (szacunek 13,8 mm), 15 oznaczeń ukrytych z braku miejsca (lista w `verification/QA-PCB.md`; na rysunku montażowym F.Fab są wszystkie), recenzja; paczka produkcyjna dopiero po „scal”.
+
 ## Otwarte punkty
 
 1. Akceptacja przesunięć grup (TEMP, PFAIL_N, P07) i wyjątków od reguły „nieparzyste = GND”.
@@ -105,8 +130,9 @@ Nie przeniesiono kontroli R3 „złącza równe zamrożonym mapom sąsiadów” 
 
 ## Pliki
 
-- `eda/P03.kicad_sch` (+ 5 arkuszy podrzędnych), `eda/libraries/`, `eda/P03.kicad_pro` (reguły z R5, bez PCB).
-- `output/pdf/P03-R6-schemat.pdf` (6 stron), podglądy `output/previews/sch-*.png`.
+- `eda/P03.kicad_sch` (+ 5 arkuszy podrzędnych), `eda/libraries/`, `eda/P03.kicad_pro` (reguły z `set_rules.py`), **`eda/P03.kicad_pcb`** (płytka z `run_release.py`).
+- `output/pdf/P03-R6-schemat.pdf` (6 stron), podglądy `output/previews/sch-*.png`; **`output/pdf/P03-R6-PCB.pdf`** (5 stron: opis, montaż 1:1, F.Cu, B.Cu, przymiarka), `output/svg/`, `output/previews/pcb-*.png`, `top.png`, `isometric.png`.
 - `docs/J_BP.csv` i `docs/SERWIS.csv` (dla P12), `docs/BOM.csv`, `docs/zakupy.csv`, `docs/netlist-pinowa.csv`, `docs/parts.json`, `docs/ODBIOR.md`, `docs/MECHANIKA.md`, `docs/ODTWARZANIE.md`; z R5 bez zmian treści: `STANY-DOMYSLNE.csv`, `ZRODLA.md`, `KONTRAKT-RESET.md` i `ZASILANIE-RESET.md` (z notą R6 na górze).
-- `src/`: generator (`parts.py`, `jbp_pinout.py`, `serwis_pinout.py`, `build_schematic.py`, `write_tables.py`), kontrole (`verify_*.py`, `compare_v61.py`), `run_release.py`.
+- `src/`: generator (`parts.py`, `jbp_pinout.py`, `serwis_pinout.py`, `build_schematic.py`, `write_tables.py`), kontrole (`verify_*.py`, `compare_v61.py`), layout (`placement.py`, `build_board.py`, `route_critical.py`, `fanout_gnd.py`, `prepare_routing.py`, `run_layout.py`, `import_routing.py`, `cleanup.py`, `stitch.py`, `complete_routes.py`, `silkscreen.py`, `negative_controls.py`, `export_views.py`, `make_pdf.py`), `run_release.py`.
+- `routing/`: wynik routera `P03.ses` i trasy dokańczające `completion-routes.json` (odtwarzanie: `run_release.py` bez `--new-route`), raporty kroków; `verification/`: DRC, kontrole PCB, próby ujemne, `QA-PCB.md`, manifest SHA-256.
 - `reference/`: netlisty R1 i R5, import v6.1, mapa części P04 do budżetu resetu, footprinty z P02.

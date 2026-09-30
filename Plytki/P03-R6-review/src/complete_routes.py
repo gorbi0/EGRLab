@@ -13,13 +13,23 @@ import pcbnew as p,json,math,heapq,sys,os,subprocess
 from PIL import Image,ImageDraw,ImageFilter
 import numpy as np
 P=Path(__file__).resolve().parents[1];fn=P/'eda/P03.kicad_pcb';b=p.LoadBoard(str(fn));mm=p.FromMM
-R=10;W=int(160*R)+1;H=100*R+1
+# 30.09 evening: 0.05 mm raster (was 0.1) and exact obstacle growth. The old 0.5 mm dilation of every obstacle kept a 0.2 mm
+# track 0.4 mm from other copper (0.25 needed) and hid the last paths in the dense areas once signals went to 0.2 mm.
+R=int(os.environ.get('EGRLAB_PLAN_RES','20'));W=int(160*R)+1;H=100*R+1
+MARGIN=.05;VIA_R=.45;PWRN=('5V_SYS','5V_M1')
+def clr(name):return .30 if name in PWRN else .25
+def width_of(name):return .3 if name in ('3V3_CORE',)+PWRN else .2
+def grown(ps,d):
+ q=p.SHAPE_POLY_SET(ps);q.Inflate(mm(d),p.CORNER_STRATEGY_ROUND_ALL_CORNERS,mm(.005));return q
 f={q.GetReference():q for q in b.GetFootprints()}
 def pad(ref,n):return next(q for q in f[ref].Pads() if q.GetNumber()==str(n))
 def xy(v):return [p.ToMM(v.x),p.ToMM(v.y)]
-def drawpoly(d,ps):
+def drawpoly(d,ps,holes=False):
  for k in range(ps.OutlineCount()):
   o=ps.Outline(k);d.polygon([(p.ToMM(o.CPoint(i).x)*R,p.ToMM(o.CPoint(i).y)*R) for i in range(o.PointCount())],fill=255)
+  if holes:
+   for h in range(ps.HoleCount(k)):
+    o=ps.Hole(k,h);d.polygon([(p.ToMM(o.CPoint(i).x)*R,p.ToMM(o.CPoint(i).y)*R) for i in range(o.PointCount())],fill=0)
 def fillmask(net):
  """Largest filled polygon of the net on each layer, 0.6 mm inside its edge: where a completion track may end."""
  masks=[]
@@ -32,11 +42,8 @@ def fillmask(net):
     one=p.SHAPE_POLY_SET();one.AddOutline(ps.Outline(i))
     for h in range(ps.HoleCount(i)):one.AddHole(ps.Hole(i,h))
     if best is None or one.Area()>best.Area():best=one
-  if best is not None:
-   o=best.Outline(0);d.polygon([(p.ToMM(o.CPoint(i).x)*R,p.ToMM(o.CPoint(i).y)*R) for i in range(o.PointCount())],fill=255)
-   for h in range(best.HoleCount(0)):
-    o=best.Hole(0,h);d.polygon([(p.ToMM(o.CPoint(i).x)*R,p.ToMM(o.CPoint(i).y)*R) for i in range(o.PointCount())],fill=0)
-  masks.append(np.array(im.filter(ImageFilter.MinFilter(13)))!=0)
+  if best is not None:drawpoly(d,grown(best,-.6),holes=True)   # 0.6 mm inside the fill edge
+  masks.append(np.array(im)!=0)
  return masks
 def plan(net,sxy,gxy,goalmask=None,slay=(0,1),glay=(0,1)):
  """gxy None: the goal is the net's main pour (a pad cut off from the fill, reported by DRC against the zone).
@@ -44,26 +51,32 @@ def plan(net,sxy,gxy,goalmask=None,slay=(0,1),glay=(0,1)):
  slay / glay (P02 R4): copper layers (0 F.Cu, 1 B.Cu) of the start and end items; the path starts and ends only there."""
  goal=goalmask if goalmask is not None else (fillmask(net) if gxy is None else None)
  if goalmask is not None:gxy=None
- images=[]
+ name=b.GetNetsByNetcode()[net].GetNetname();w=width_of(name);cn=clr(name);obs=[];vmask=[]
  for layer in [p.F_Cu,p.B_Cu]:
-  im=Image.new('L',(W,H));d=ImageDraw.Draw(im)
+  it=Image.new('L',(W,H));dt=ImageDraw.Draw(it);iv=Image.new('L',(W,H));dv=ImageDraw.Draw(iv)  # forbidden for a track centre / a via centre
+  def block(o):
+   c=max(cn,clr(o.GetNetname()))
+   ps=p.SHAPE_POLY_SET();o.TransformShapeToPolygon(ps,layer,mm(c+w/2+MARGIN),mm(.005),p.ERROR_OUTSIDE);drawpoly(dt,ps)
+   ps=p.SHAPE_POLY_SET();o.TransformShapeToPolygon(ps,layer,mm(c+VIA_R+MARGIN),mm(.005),p.ERROR_OUTSIDE);drawpoly(dv,ps)
+  def hole(q,r):   # a new via keeps 0.3 mm hole to hole also from the holes of its own net (30.09: one landed 0.25 mm from a fan-out via)
+   x,y=xy(q.GetPosition());rr=r/2+.2+.3+MARGIN;dv.ellipse([(x-rr)*R,(y-rr)*R,(x+rr)*R,(y+rr)*R],fill=255)
   for fp in b.GetFootprints():
    for q in fp.Pads():
-    if q.GetNetCode()==net:continue
-    if q.IsOnLayer(layer):
-     ps=p.SHAPE_POLY_SET();q.TransformShapeToPolygon(ps,layer,0,mm(.005),p.ERROR_OUTSIDE);drawpoly(d,ps)
+    if q.GetNetCode()!=net and q.IsOnLayer(layer):block(q)
+    elif q.GetNetCode()==net:
+     if q.GetDrillSize().x>0:hole(q,p.ToMM(q.GetDrillSize().x))
+     elif q.IsOnLayer(layer):ps=p.SHAPE_POLY_SET();q.TransformShapeToPolygon(ps,layer,mm(VIA_R+.1),mm(.005),p.ERROR_OUTSIDE);drawpoly(dv,ps)   # no via in its own SMD pad
   for t in b.GetTracks():
-   if t.GetNetCode()==net:continue
-   if isinstance(t,p.PCB_VIA) or t.GetLayer()==layer:
-    ps=p.SHAPE_POLY_SET();t.TransformShapeToPolygon(ps,layer,0,mm(.005),p.ERROR_OUTSIDE);drawpoly(d,ps)
+   if t.GetNetCode()!=net and (isinstance(t,p.PCB_VIA) or t.GetLayer()==layer):block(t)
+   elif t.GetNetCode()==net and isinstance(t,p.PCB_VIA):hole(t,p.ToMM(t.GetDrillValue()))
   for zone in b.Zones():
-   if zone.GetIsRuleArea() and zone.IsOnLayer(layer):drawpoly(d,zone.Outline())  # P02 R4: only on the layers of the rule area
-   elif not zone.GetIsRuleArea() and zone.GetNetCode()!=net and zone.GetNetname()!='GND' and zone.IsOnLayer(layer):drawpoly(d,zone.GetFilledPolysList(layer))  # P02 R4: never cut a power pour
-  # 0.5mm conservative added radius = 0.25 clearance + 0.15 track + raster margin.
-  d.rectangle([0,0,W-1,H-1],outline=255,width=10)
-  images.append(im)
- obs=[np.array(im.filter(ImageFilter.MaxFilter(11)))!=0 for im in images]
- via=np.array(images[0].filter(ImageFilter.MaxFilter(17)))|np.array(images[1].filter(ImageFilter.MaxFilter(17)))
+   if zone.GetIsRuleArea() and zone.IsOnLayer(layer):drawpoly(dt,grown(zone.Outline(),w/2+MARGIN));drawpoly(dv,grown(zone.Outline(),VIA_R+MARGIN))  # P02 R4: only on the layers of the rule area
+   elif not zone.GetIsRuleArea() and zone.GetNetCode()!=net and zone.GetNetname()!='GND' and zone.IsOnLayer(layer):  # P02 R4: never cut a power pour
+    c=max(cn,clr(zone.GetNetname()));fl=zone.GetFilledPolysList(layer);drawpoly(dt,grown(fl,c+w/2+MARGIN));drawpoly(dv,grown(fl,c+VIA_R+MARGIN))
+  dt.rectangle([0,0,W-1,H-1],outline=255,width=int(math.ceil((.5+w/2+MARGIN)*R)))   # copper 0.5 mm from the board edge
+  dv.rectangle([0,0,W-1,H-1],outline=255,width=int(math.ceil((.5+VIA_R+MARGIN)*R)))
+  obs.append(np.array(it)!=0);vmask.append(np.array(iv)!=0)
+ via=vmask[0]|vmask[1]
  s=tuple(round(v*R) for v in sxy);g=tuple(round(v*R) for v in gxy) if goal is None else None
  def h(x,y):
   if g is None:return 0
@@ -79,7 +92,7 @@ def plan(net,sxy,gxy,goalmask=None,slay=(0,1),glay=(0,1)):
   for dx,dy in [(1,0),(-1,0),(0,1),(0,-1),(1,1),(1,-1),(-1,1),(-1,-1)]:
    nx,ny=x+dx,y+dy
    if 0<=nx<W and 0<=ny<H and not obs[l][ny,nx] and not obs[l][y,nx] and not obs[l][ny,x]:nxt.append((nx,ny,l,1.41421356237 if dx and dy else 1))
-  if not via[y,x]:nxt.append((x,y,1-l,80))
+  if not via[y,x]:nxt.append((x,y,1-l,8*R))   # a via costs 8 mm of track
   for nx,ny,nl,dc in nxt:
    nk=key(nx,ny,nl);nd=dist+dc
    if nd<cost.get(nk,1e99):cost[nk]=nd;prev[nk]=q;heapq.heappush(todo,(nd+h(nx,ny),nd,nk))
@@ -126,12 +139,51 @@ def cluster_mask(code,uuid):
    if it.GetNetCode()!=code or it.m_Uuid.AsString() in con:continue
    if isinstance(it,p.PAD) and not it.IsOnLayer(layer):continue
    if isinstance(it,p.PCB_TRACK) and not isinstance(it,p.PCB_VIA) and it.GetLayer()!=layer:continue
-   ps=p.SHAPE_POLY_SET();it.TransformShapeToPolygon(ps,layer,0,mm(.005),p.ERROR_INSIDE);drawpoly(d,ps);anything=True
+   ps=p.SHAPE_POLY_SET();it.TransformShapeToPolygon(ps,layer,0,mm(.005),p.ERROR_INSIDE);drawpoly(d,grown(ps,-.3));anything=True
   for z in b.Zones():  # P02 R4: pour islands of the net that are not connected to the start count as goal too
    if z.GetIsRuleArea() or z.GetNetCode()!=code or not z.IsOnLayer(layer) or z.m_Uuid.AsString() in con:continue
-   drawpoly(d,z.GetFilledPolysList(layer));anything=True
-  masks.append(np.array(im.filter(ImageFilter.MinFilter(7)))!=0)
+   drawpoly(d,grown(z.GetFilledPolysList(layer),-.3));anything=True
+  masks.append(np.array(im)!=0)   # 0.3 mm inside the copper edge
  return masks if anything else None
+def main_mask(code):
+ """Copper of the largest cluster of net `code` (pads, tracks, vias, pour pieces), per layer, 0.3 mm inside its edge: an orphan
+ island must reach this, not another island (30.09: U4.3 was joined to a second island and came back next round)."""
+ b.BuildConnectivity();con=b.GetConnectivity();pads=[q for fp in b.GetFootprints() for q in fp.Pads() if q.GetNetCode()==code];best=None
+ for q in pads:
+  ids={x.m_Uuid.AsString() for x in con.GetConnectedItems(q)}|{q.m_Uuid.AsString()}
+  n=sum(1 for x in pads if x.m_Uuid.AsString() in ids)
+  if best is None or n>best[0]:best=(n,ids)
+ if best is None:return None
+ ids=best[1];masks=[]
+ for layer in [p.F_Cu,p.B_Cu]:
+  im=Image.new('L',(W,H));d=ImageDraw.Draw(im)
+  for it in pads+[t for t in b.GetTracks() if t.GetNetCode()==code]:
+   if it.m_Uuid.AsString() not in ids:continue
+   if isinstance(it,p.PAD) and not it.IsOnLayer(layer):continue
+   if isinstance(it,p.PCB_TRACK) and not isinstance(it,p.PCB_VIA) and it.GetLayer()!=layer:continue
+   ps=p.SHAPE_POLY_SET();it.TransformShapeToPolygon(ps,layer,0,mm(.005),p.ERROR_INSIDE);drawpoly(d,grown(ps,-.3))
+  for z in b.Zones():   # pour pieces that touch the main cluster
+   if z.GetIsRuleArea() or z.GetNetCode()!=code or not z.IsOnLayer(layer):continue
+   fl=z.GetFilledPolysList(layer)
+   for k in range(fl.OutlineCount()):
+    one=p.SHAPE_POLY_SET();one.AddOutline(fl.Outline(k))
+    for h in range(fl.HoleCount(k)):one.AddHole(fl.Hole(k,h))
+    if any(it.m_Uuid.AsString() in ids and (isinstance(it,p.PCB_VIA) or (isinstance(it,p.PAD) and it.IsOnLayer(layer))) and one.Contains(it.GetPosition()) for it in pads+list(b.GetTracks())):
+     drawpoly(d,grown(one,-.3),holes=True)
+  masks.append(np.array(im)!=0)
+ return masks
+def gnd_orphans():
+ """GND pads that KiCad connectivity does not join to the largest GND pad cluster (geometric order)."""
+ b.BuildConnectivity();con=b.GetConnectivity();pads=[q for fp in b.GetFootprints() for q in fp.Pads() if q.GetNetname()=='GND'];seen={};cls=[]
+ for q in sorted(pads,key=lambda q:xy(q.GetPosition())):
+  u=q.m_Uuid.AsString()
+  if u in seen:continue
+  ids={x.m_Uuid.AsString() for x in con.GetConnectedItems(q)}|{u};grp=[x for x in pads if x.m_Uuid.AsString() in ids]
+  for x in grp:seen[x.m_Uuid.AsString()]=len(cls)
+  cls.append(grp)
+ if len(cls)<2:return []
+ big=max(range(len(cls)),key=lambda k:len(cls[k]))
+ return [cl[0] for k,cl in enumerate(cls) if k!=big]   # one pad per orphan cluster
 def has_pour(code):
  return any(not z.GetIsRuleArea() and z.GetNetCode()==code for z in b.Zones())
 def orphan_pads(code):
@@ -177,9 +229,19 @@ if '--plan' in sys.argv:
   subprocess.run([CLI,'pcb','drc','--format','json','--severity-all','--refill-zones','-o',str(rep),str(fn)],check=True,stdout=subprocess.DEVNULL)
   todo=json.loads(rep.read_text())['unconnected_items']
   todo=[u for u in todo if not all('[GND]' in i['description'] and ('Strefa' in i['description'] or 'Zone' in i['description']) for i in u['items'])]
-  if not todo:break
+  orphans=gnd_orphans()   # 30.09: GND pads outside the main GND cluster (a pour island DRC reports only as zone <-> zone)
+  if not todo and not orphans:break
   done=set()  # DRC can list one pad against the pour of each layer: one completion per pad and round is enough
   ok_n=0;fail=[]
+  for q in orphans:
+   lab=f'{q.GetParentFootprint().GetReference()}.{q.GetNumber()}';m=main_mask(q.GetNetCode());done.add(lab);points=None
+   b.BuildConnectivity();own=[x for x in b.GetConnectivity().GetConnectedItems(q) if isinstance(x,p.PCB_VIA)]
+   for sxy,sl in [(xy(q.GetPosition()),pad_layers(q))]+sorted((xy(v.GetPosition()),(0,1)) for v in own):   # the pad first, then the vias of its cluster
+    points=plan(q.GetNetCode(),sxy,None,m,slay=sl) if m is not None else None
+    if points is not None:break
+   if points is None:fail.append(lab);print('skipped (no path this round): GND island',lab,flush=True);continue
+   records.append({'round':rnd,'net':'GND','from':lab,'to':'main GND cluster','points_mm_layer':points});add(q.GetNet(),points);ok_n+=1
+   print('Completion round',rnd,lab,'-> main GND cluster',len(points),'vertices',flush=True);break   # one per round: the next DRC sees the joined island
   for u in todo:
    ends=sorted([endpoint(i['uuid'],(i['pos']['x'],i['pos']['y']))+(i['uuid'],) for i in u['items']],key=lambda e:e[1] is None)
    (la,sa,na,ya,ua),(lz,sz,nz,yz,uz)=ends;assert na==nz,(la,lz);net=b.GetNetsByNetcode()[na]

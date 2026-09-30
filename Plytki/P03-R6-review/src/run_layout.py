@@ -8,8 +8,8 @@ Freerouting 2.1.0 stops after 30 passes (--router.stop_pass_no; the unrouted cou
 cleanup.py --tidy right after the SES import: Freerouting 2.1 leaves pieces of unfinished connections that blocked the
 completion planner (P03 R6: 81-112 dead-end items per run).
 EGRLAB_ROUTER_THREADS sets --router.max_threads (Freerouting default 1): with N threads each pass routes N boards and keeps
-the best (BatchAutorouter.autoroute_pass_multi_thread -> BoardHistory.restoreBestBoard). One trial each on P03 R6 (30.09):
-passes 16-30 averaged 13.0 open with 4 threads and 12.7 with 1, so no gain shown; the default stays 1.
+the best (BatchAutorouter.autoroute_pass_multi_thread -> BoardHistory.restoreBestBoard). Default 4 = the setting of the runs
+that converged (30.09, with the GND plane); its own effect was not isolated (one earlier pair: 13.0 vs 12.7 open, no gain shown).
 """
 from pathlib import Path
 import subprocess, sys, os, json, collections, shutil
@@ -52,7 +52,7 @@ for attempt in range(1, 2 if reuse else NATT + 1):
             with open(P / 'routing/freerouting-stdout.log', 'w') as log:
                 run(FR / 'jdk-21.0.12.1+1-jre/bin/java.exe', '-Xmx4g', '-jar', FR / 'freerouting-2.1.0.jar', '-de', 'P03.dsn', '-do', 'P03.ses', '-mp', os.environ.get('EGRLAB_ROUTER_PASSES', '30'),
                     '--router.stop_pass_no=' + os.environ.get('EGRLAB_ROUTER_PASSES', '30'), '-da', '--gui.enabled=false',
-                    '--router.max_threads=' + os.environ.get('EGRLAB_ROUTER_THREADS', '1'), cwd=P / 'routing', stdout=log, stderr=subprocess.STDOUT,
+                    '--router.max_threads=' + os.environ.get('EGRLAB_ROUTER_THREADS', '4'), cwd=P / 'routing', stdout=log, stderr=subprocess.STDOUT,
                     timeout=int(os.environ.get('EGRLAB_ROUTER_TIMEOUT', '1500')))
         except subprocess.TimeoutExpired:
             attempts.append({'attempt': attempt, 'completion_and_cleanup_ok': False, 'router_timeout': True})
@@ -67,11 +67,10 @@ for attempt in range(1, 2 if reuse else NATT + 1):
     solid = set()
     if rc == 0:  # P02 R4: GND stitching before the clean-up, so GND pour islands left by the router are tied first
         run(PY, 'set_rules.py'); run(PY, 'stitch.py'); run(PY, 'set_rules.py'); d = drc('routing/postroute-drc.json'); solid = starved(d)
-        if any(x.startswith('J') for x in solid):  # harness / connector GND pads keep thermals (soldered wires): route again
-            print('starved connector pad(s):', sorted(x for x in solid if x.startswith('J')), flush=True); rc = 1
-        else:
-            rc = run(PY, 'cleanup.py', *sorted(solid), check=reuse).returncode
-            assert rc in (0, 3), 'cleanup.py failed (script error, not a routing gap)'
+        # P03 R6 (30.09): no harness wires on this board (the P02 rule 'connector GND pads keep thermals, soldered wires' does not
+        # apply); J_BP / J_SV / M1 GND pins starved by the even-row signals get a solid pour connection like any other pad
+        rc = run(PY, 'cleanup.py', *sorted(solid), check=reuse).returncode
+        assert rc in (0, 3), 'cleanup.py failed (script error, not a routing gap)'
     attempts.append({'attempt': attempt, 'completion_and_cleanup_ok': rc == 0})
     assert rc == 0 or not reuse, 'bundled SES no longer gives a complete board'
     if rc == 0:
@@ -86,7 +85,6 @@ for k in range(4):  # a pad can become starved only after the clean-up or the st
     d = drc('routing/postclean-drc.json'); more = starved(d) - solid
     if not more:
         break
-    assert not any(x.startswith('J') for x in more), ('connector GND pad starved after stitching', sorted(more))
     solid |= more; run(PY, 'cleanup.py', *sorted(solid)); run(PY, 'set_rules.py')
 else:
     sys.exit('starved thermals remain after 4 rounds')

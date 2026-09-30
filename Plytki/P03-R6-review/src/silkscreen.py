@@ -20,15 +20,17 @@ from build_board import W, Hh as H
 EDGE = .3   # silk-to-edge clearance used by DRC (board setting min_silk... edge 0.3 is KiCad default for silk_edge_clearance)
 LABEL = {  # J_SV1: full names, vertical
     'GND': 'GND', '5V_SYS': '5V_SYS', '5V_M1': '5V_M1', '3V3_CORE': '3V3', '3V3_IO': '3V3_IO', 'SUP_RAW_N': 'SUPRAW', 'SUP_N': 'SUP_N',
-    'SUP_N_OUT': 'SUPOUT', 'PFAIL_N': 'PFAIL', 'I2C_SCL': 'SCL', 'I2C_SDA': 'SDA', 'SCOPE_TRIG': 'SCOPE'}
+    'SUP_N_OUT': 'SUPOUT', 'PFAIL_N': 'PFAIL', 'I2C_SCL': 'SCL', 'I2C_SDA': 'SDA', 'SCOPE_TRIG': 'SCOPE',
+    # 30.09 evening: J_SV1 holds the S1 nodes since the regrouping by node position (and LOGGER_CURRENT_OK since the gate swap)
+    'MOTOR_INB': 'MOT_INB', 'MOTOR_INA': 'MOT_INA', 'MEAS_BANK': 'MBANK', 'CS_ITEST_N': 'ITEST_N', 'CS_ILOG_N': 'ILOG_N',
+    'LOGGER_CURRENT_OK': 'LCUR_OK'}
 ABBR = {  # J_SV2 / J_SV3: three letters, horizontal, with a legend
     'MEAS_EN': 'MEN', 'ADC_RESET': 'RST', 'ADC_CONVST': 'CNV', 'ADC_CS': 'ACS', 'ADC_BUSY': 'BSY', 'CS_ILOG_N': 'ILG', 'CS_ITEST_N': 'ITS',
     'CURRENT_CS_N': 'CCS', 'MEAS_BANK': 'MBK', 'SD_CS': 'SDC', 'TC1_CS': 'TC1', 'TC2_CS': 'TC2', 'PWM': 'PWM', 'HEARTBEAT': 'HBT',
     'MCU_ARM': 'ARM', 'HW_ARMED': 'HWA', 'INTERLOCK': 'ILK', 'SENSOR_ENABLE': 'SEN', 'CORE_LINK': 'LNK', 'MOTOR_INA': 'INA',
-    'MOTOR_INB': 'INB', 'LOGGER_CURRENT_OK': 'LCO', 'GND': 'GND'}
-LEGEND = ['J_SV2/J_SV3 (skroty):', 'MEN MEAS_EN  RST ADC_RESET', 'CNV ADC_CONVST  ACS ADC_CS', 'BSY ADC_BUSY  ILG CS_ILOG_N',
-          'ITS CS_ITEST_N  CCS CURRENT_CS_N', 'MBK MEAS_BANK  SDC SD_CS', 'TC1/TC2 TC1_CS/TC2_CS  PWM', 'HBT HEARTBEAT  ARM MCU_ARM',
-          'HWA HW_ARMED  ILK INTERLOCK', 'SEN SENSOR_ENABLE  LNK CORE_LINK', 'INA/INB MOTOR_INA/B', 'LCO LOGGER_CURRENT_OK']
+    'MOTOR_INB': 'INB', 'LOGGER_CURRENT_OK': 'LCO', 'GND': 'GND',
+    '5V_SYS': '5VS', '5V_M1': '5VM', 'PFAIL_N': 'PFL', 'SUP_RAW_N': 'SRW', 'SUP_N_OUT': 'SPO', 'SUP_N': 'SUP'}   # 30.09: J_SV2/J_SV3 content
+LEGEND = []   # built from the abbreviations actually used on J_SV2 / J_SV3 (after the service labels, below)
 
 
 def bbox_of(item):
@@ -134,7 +136,7 @@ def text_box(t):
 
 
 # service labels, read from edge B: J_SV1 vertical full names (as P02 R4), J_SV2 / J_SV3 horizontal abbreviations under the modules
-labels = {}
+labels = {}; used = {}
 for hdr in ('J_SV1', 'J_SV2', 'J_SV3'):
     for a in fps[hdr].Pads():
         n = a.GetNetname().split('/')[-1]; x = p.ToMM(a.GetPosition().x); node = n
@@ -146,8 +148,14 @@ for hdr in ('J_SV1', 'J_SV2', 'J_SV3'):
             t = LABEL[node]; tx.SetText(t); tx.SetTextSize(p.VECTOR2I(mm(.7), mm(.8)))
             tx.SetTextAngle(p.EDA_ANGLE(90, p.DEGREES_T)); tx.SetHorizJustify(p.GR_TEXT_H_ALIGN_LEFT); tx.SetPosition(p.VECTOR2I(mm(x), mm(93.9)))
         else:
-            t = ABBR[node]; tx.SetText(t); tx.SetTextSize(p.VECTOR2I(mm(.6), mm(.7))); tx.SetPosition(p.VECTOR2I(mm(x), mm(94.25)))
+            if node == 'GND':   # 30.09: GND on pins 1 and 13 is in the legend; the pin-1 label overlapped the header's pin-1 mark
+                continue
+            t = ABBR[node]; tx.SetText(t); tx.SetTextSize(p.VECTOR2I(mm(.7), mm(.8))); tx.SetPosition(p.VECTOR2I(mm(x), mm(94.25)))   # 0.8 mm: DRC text height
         b.Add(tx); placed.append(text_box(tx)); labels[f'{hdr}.{a.GetNumber()}'] = t
+        if hdr != 'J_SV1' and node != 'GND':
+            used[t] = node
+pairs = [f'{k} {used[k]}' for k in sorted(used)]
+LEGEND = ['J_SV2/J_SV3 (skroty; GND: kolki 1 i 13):'] + ['  '.join(pairs[i:i + 2]) for i in range(0, len(pairs), 2)]
 missing = []
 for r in sorted(fps, key=lambda r: yards[r].BBox().GetArea()):
     f = fps[r]; ref = f.Reference(); f.Value().SetVisible(False)
@@ -186,13 +194,13 @@ def txt(t, x, y, size=1.0, angle=0, thick=.15, just=None):
 
 
 extra = []
-def place_text(t, spots, size=1.0, angle=0, just=None):
+def place_text(t, spots, size=1.0, angle=0, just=None, own=None):
     for x, y in spots:
         a = p.PCB_TEXT(b); a.SetText(t); a.SetPosition(p.VECTOR2I(mm(x), mm(y))); a.SetTextSize(p.VECTOR2I(mm(size * .9), mm(size)))
         a.SetTextThickness(mm(.15 if size >= 1 else .12)); a.SetLayer(p.F_SilkS); a.SetTextAngle(p.EDA_ANGLE(angle, p.DEGREES_T))
         if just == 'left': a.SetHorizJustify(p.GR_TEXT_H_ALIGN_LEFT)
         if just == 'right': a.SetHorizJustify(p.GR_TEXT_H_ALIGN_RIGHT)
-        if free(text_box(a), None):
+        if free(text_box(a), own):   # own: the connector of a pin-1 mark (30.09: its own courtyard covers pin 1, so no mark was placed)
             b.Add(a); placed.append(text_box(a)); return (x, y)
     extra.append(t); return None
 
@@ -206,7 +214,7 @@ res['edge_B'] = place_text('KRAWEDZ B (SERWIS)', [(x, y) for y in (98.4, 97.8, 9
 yy = None
 for y0 in (64, 60, 56, 68, 44, 40, 36):          # legend of the abbreviations: one block, first free place
     for x0 in (118, 122, 9, 12, 100):
-        spots = [(x0, y0 + 1.25 * i) for i in range(len(LEGEND))]
+        spots = [(x0, y0 + 1.5 * i) for i in range(len(LEGEND))]   # 30.09: 1.25 mm let the 0.8 mm lines overlap (text box ~1.7 x size)
         trial = []
         for (x, y), t in zip(spots, LEGEND):
             a_ = p.PCB_TEXT(b); a_.SetText(t); a_.SetPosition(p.VECTOR2I(mm(x), mm(y))); a_.SetTextSize(p.VECTOR2I(mm(.7), mm(.8)))
@@ -223,7 +231,7 @@ if not yy:
 # pin 1 of every connector
 for r in ('J_BP1', 'J_BP2', 'J_BP3', 'J_SV1', 'J_SV2', 'J_SV3'):
     a = next(q for q in fps[r].Pads() if q.GetNumber() == '1'); ax, ay = p.ToMM(a.GetPosition().x), p.ToMM(a.GetPosition().y); s_ = max(p.ToMM(a.GetSize().x), p.ToMM(a.GetSize().y)) / 2 + .9
-    res['pin1_' + r] = place_text('1', [(ax + dx, ay + dy) for dx, dy in [(-s_, 0), (s_, 0), (0, -s_), (0, s_), (-s_, -s_), (s_, -s_), (-s_, s_), (s_, s_)]], .9)
+    res['pin1_' + r] = place_text('1', [(ax + dx * k, ay + dy * k) for k in (1, 1.5) for dx, dy in [(-s_, 0), (s_, 0), (0, -s_), (0, s_), (-s_, -s_), (s_, -s_), (-s_, s_), (s_, s_)]], .9, own=r)
 p.SaveBoard(str(fn), b)
 rep = {'dropped_footprint_silk': n_drop, 'dropped_by_part': dict(sorted(drop_by.items())), 'moved_texts_by_part': dict(sorted(moved_by.items())),
        'hidden_references': missing, 'board_texts': res, 'unplaced_texts': extra, 'service_labels': labels}

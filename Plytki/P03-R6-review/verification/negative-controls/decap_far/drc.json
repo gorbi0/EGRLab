@@ -1,0 +1,442 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-30T21:27:15",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P03.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [3V3_CORE] z C9 na F.Cu",
+                    "pos": {
+                        "x": 37.9395,
+                        "y": 21.525
+                    },
+                    "uuid": "0b88fc27-aa1b-4a9f-8e21-f6b236e3db9f"
+                },
+                {
+                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 2,7505 mm",
+                    "pos": {
+                        "x": 29.69,
+                        "y": 25.525
+                    },
+                    "uuid": "12098527-4cdd-444f-b660-5da213cfb8b1"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci 3V3_CORE oraz ENB_DIAG)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [3V3_CORE] z C9 na F.Cu",
+                    "pos": {
+                        "x": 37.9395,
+                        "y": 21.525
+                    },
+                    "uuid": "0b88fc27-aa1b-4a9f-8e21-f6b236e3db9f"
+                },
+                {
+                    "description": "Ścieżka [ENB_DIAG] na F.Cu, długość 18,6361 mm",
+                    "pos": {
+                        "x": 38.6229,
+                        "y": 37.1023
+                    },
+                    "uuid": "dd52d394-0172-4895-93d5-5176f084289f"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci LOGGER_CLEAR oraz GND)",
+            "items": [
+                {
+                    "description": "Ścieżka [LOGGER_CLEAR] na F.Cu, długość 2,7084 mm",
+                    "pos": {
+                        "x": 34.1249,
+                        "y": 20.8599
+                    },
+                    "uuid": "1941b74a-2a43-46df-b2f8-1f07c56a930c"
+                },
+                {
+                    "description": "Pole lutownicze 2 [GND] z C9 na F.Cu",
+                    "pos": {
+                        "x": 34.8145,
+                        "y": 21.525
+                    },
+                    "uuid": "87e5fd55-2aae-4463-bfe2-d23f3f577d5c"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci LOGGER_CLEAR oraz GND)",
+            "items": [
+                {
+                    "description": "Ścieżka [LOGGER_CLEAR] na F.Cu, długość 6,2529 mm",
+                    "pos": {
+                        "x": 34.1249,
+                        "y": 14.607
+                    },
+                    "uuid": "694d998d-b64a-447b-b26e-ed712c25b649"
+                },
+                {
+                    "description": "Pole lutownicze 2 [GND] z C9 na F.Cu",
+                    "pos": {
+                        "x": 34.8145,
+                        "y": 21.525
+                    },
+                    "uuid": "87e5fd55-2aae-4463-bfe2-d23f3f577d5c"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz LOGGER_CLEAR)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 2 [GND] z C9 na F.Cu",
+                    "pos": {
+                        "x": 34.8145,
+                        "y": 21.525
+                    },
+                    "uuid": "87e5fd55-2aae-4463-bfe2-d23f3f577d5c"
+                },
+                {
+                    "description": "Pole lutownicze 1 [LOGGER_CLEAR] z R6 na F.Cu",
+                    "pos": {
+                        "x": 36.04,
+                        "y": 22.775
+                    },
+                    "uuid": "6470abd9-37f1-4c61-ac4a-52ca399aa43d"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint C9",
+                    "pos": {
+                        "x": 36.377,
+                        "y": 21.525
+                    },
+                    "uuid": "3b51ee4b-3d2d-44cf-ab1c-d14e22475125"
+                },
+                {
+                    "description": "Footprint R6",
+                    "pos": {
+                        "x": 36.04,
+                        "y": 21.225
+                    },
+                    "uuid": "b65b75f1-c01f-4514-8dcf-09b2a62d226d"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole lutownicze 2 [GND] z C9 na F.Cu",
+                    "pos": {
+                        "x": 34.8145,
+                        "y": 21.525
+                    },
+                    "uuid": "87e5fd55-2aae-4463-bfe2-d23f3f577d5c"
+                },
+                {
+                    "description": "Pole lutownicze 1 [LOGGER_CLEAR] z R6 na F.Cu",
+                    "pos": {
+                        "x": 36.04,
+                        "y": 22.775
+                    },
+                    "uuid": "6470abd9-37f1-4c61-ac4a-52ca399aa43d"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [ENB_DIAG] na F.Cu, długość 18,6361 mm",
+                    "pos": {
+                        "x": 38.6229,
+                        "y": 37.1023
+                    },
+                    "uuid": "dd52d394-0172-4895-93d5-5176f084289f"
+                },
+                {
+                    "description": "Pole lutownicze 1 [3V3_CORE] z C9 na F.Cu",
+                    "pos": {
+                        "x": 37.9395,
+                        "y": 21.525
+                    },
+                    "uuid": "0b88fc27-aa1b-4a9f-8e21-f6b236e3db9f"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [LOGGER_CLEAR] na F.Cu, długość 2,7084 mm",
+                    "pos": {
+                        "x": 34.1249,
+                        "y": 20.8599
+                    },
+                    "uuid": "1941b74a-2a43-46df-b2f8-1f07c56a930c"
+                },
+                {
+                    "description": "Pole lutownicze 2 [GND] z C9 na F.Cu",
+                    "pos": {
+                        "x": 34.8145,
+                        "y": 21.525
+                    },
+                    "uuid": "87e5fd55-2aae-4463-bfe2-d23f3f577d5c"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [LOGGER_CLEAR] na F.Cu, długość 6,2529 mm",
+                    "pos": {
+                        "x": 34.1249,
+                        "y": 14.607
+                    },
+                    "uuid": "694d998d-b64a-447b-b26e-ed712c25b649"
+                },
+                {
+                    "description": "Pole lutownicze 2 [GND] z C9 na F.Cu",
+                    "pos": {
+                        "x": 34.8145,
+                        "y": 21.525
+                    },
+                    "uuid": "87e5fd55-2aae-4463-bfe2-d23f3f577d5c"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 1,0923 mm",
+                    "pos": {
+                        "x": 49.0318,
+                        "y": 21.525
+                    },
+                    "uuid": "1c540b6f-afcb-4a10-b101-0e604b58cd46"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV2",
+                    "pos": {
+                        "x": 95.24,
+                        "y": 95.96
+                    },
+                    "uuid": "6b9a8a30-c890-4ea7-a9ee-8c0d9f53ea2f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP2",
+                    "pos": {
+                        "x": 68.57,
+                        "y": 13.33
+                    },
+                    "uuid": "7892d6fb-b885-42fa-a41a-5f4f83b0f596"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV3",
+                    "pos": {
+                        "x": 148.74,
+                        "y": 95.96
+                    },
+                    "uuid": "9148d16d-c1f4-41b9-a2e6-cba9c508ec9c"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV1",
+                    "pos": {
+                        "x": 41.74,
+                        "y": 95.96
+                    },
+                    "uuid": "a232fec8-1d65-43bf-b6e7-82a68dad630e"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP3",
+                    "pos": {
+                        "x": 122.07,
+                        "y": 13.33
+                    },
+                    "uuid": "c0af10c0-28db-4643-96a2-0a7ed217b8ba"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP1",
+                    "pos": {
+                        "x": 15.07,
+                        "y": 13.33
+                    },
+                    "uuid": "ccf59d13-8e68-48b4-b2b2-2658d83ae54c"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C9",
+                    "pos": {
+                        "x": 30.376999,
+                        "y": 19.689999
+                    },
+                    "uuid": "b510f0fb-3144-49be-920d-5a8f94080b1d"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment z C9 na F.Silkscreen",
+                    "pos": {
+                        "x": 37.088252,
+                        "y": 22.435
+                    },
+                    "uuid": "88e6f786-3f39-442e-b507-f7c498dbacea"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment z R6 na F.Silkscreen",
+                    "pos": {
+                        "x": 35.13,
+                        "y": 21.952064
+                    },
+                    "uuid": "510ec50d-54c6-498a-9666-0da8109ead01"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Segment z C9 na F.Silkscreen",
+                    "pos": {
+                        "x": 37.088252,
+                        "y": 20.615
+                    },
+                    "uuid": "836d9acc-3aef-4358-8900-f620877ee364"
+                },
+                {
+                    "description": "Segment z R6 na F.Silkscreen",
+                    "pos": {
+                        "x": 36.95,
+                        "y": 21.952064
+                    },
+                    "uuid": "cf7b059c-7e90-4fec-9301-253fff14ad4e"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        }
+    ]
+}

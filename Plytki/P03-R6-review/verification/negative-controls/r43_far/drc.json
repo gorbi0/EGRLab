@@ -1,0 +1,274 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-30T21:27:37",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P03.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_CORE] na B.Cu, długość 21,0748 mm",
+                    "pos": {
+                        "x": 64.2925,
+                        "y": 20.6449
+                    },
+                    "uuid": "71a6b8ac-2ecf-4d52-86db-ec5bfa1990c9"
+                },
+                {
+                    "description": "Pole lutownicze 2 [3V3_CORE] z R43 na F.Cu",
+                    "pos": {
+                        "x": 86.35,
+                        "y": 31.39
+                    },
+                    "uuid": "6c3b6aed-fe7b-440d-880d-2db61be20d96"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [PFAIL_N] z R43 na F.Cu",
+                    "pos": {
+                        "x": 86.35,
+                        "y": 28.29
+                    },
+                    "uuid": "f5a3824e-e220-4f34-9770-547787bfdb3a"
+                },
+                {
+                    "description": "Ścieżka [PFAIL_N] na F.Cu, długość 1,7070 mm",
+                    "pos": {
+                        "x": 86.35,
+                        "y": 16.29
+                    },
+                    "uuid": "32782448-ae28-4c5a-bb9e-03fd925cc6b2"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint R43",
+                    "pos": {
+                        "x": 86.35,
+                        "y": 29.84
+                    },
+                    "uuid": "a5678c42-4398-4ca7-a6a0-2c3ceb0fa57b"
+                },
+                {
+                    "description": "Footprint M1",
+                    "pos": {
+                        "x": 68.57,
+                        "y": 37.3
+                    },
+                    "uuid": "c6c9dfde-c19b-476f-a1f6-1bc301f4f368"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 0,2746 mm",
+                    "pos": {
+                        "x": 86.35,
+                        "y": 19.39
+                    },
+                    "uuid": "2775c25e-3529-4249-9ca4-2501c1b8610f"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [PFAIL_N] na F.Cu, długość 1,7070 mm",
+                    "pos": {
+                        "x": 86.35,
+                        "y": 16.29
+                    },
+                    "uuid": "32782448-ae28-4c5a-bb9e-03fd925cc6b2"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV2",
+                    "pos": {
+                        "x": 95.24,
+                        "y": 95.96
+                    },
+                    "uuid": "6b9a8a30-c890-4ea7-a9ee-8c0d9f53ea2f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP2",
+                    "pos": {
+                        "x": 68.57,
+                        "y": 13.33
+                    },
+                    "uuid": "7892d6fb-b885-42fa-a41a-5f4f83b0f596"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV3",
+                    "pos": {
+                        "x": 148.74,
+                        "y": 95.96
+                    },
+                    "uuid": "9148d16d-c1f4-41b9-a2e6-cba9c508ec9c"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV1",
+                    "pos": {
+                        "x": 41.74,
+                        "y": 95.96
+                    },
+                    "uuid": "a232fec8-1d65-43bf-b6e7-82a68dad630e"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP3",
+                    "pos": {
+                        "x": 122.07,
+                        "y": 13.33
+                    },
+                    "uuid": "c0af10c0-28db-4643-96a2-0a7ed217b8ba"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP1",
+                    "pos": {
+                        "x": 15.07,
+                        "y": 13.33
+                    },
+                    "uuid": "ccf59d13-8e68-48b4-b2b2-2658d83ae54c"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Segment z R43 na F.Silkscreen",
+                    "pos": {
+                        "x": 85.44,
+                        "y": 29.112936
+                    },
+                    "uuid": "935adf1c-6f66-490e-841b-24f6c21ecb6f"
+                },
+                {
+                    "description": "Prostokąt z M1 na F.Silkscreen",
+                    "pos": {
+                        "x": 67.13,
+                        "y": 29.18
+                    },
+                    "uuid": "fc43d465-8e04-498a-8983-b4e7a0d2331a"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Segment z R43 na F.Silkscreen",
+                    "pos": {
+                        "x": 87.26,
+                        "y": 29.112936
+                    },
+                    "uuid": "6a352820-d4dc-42bf-bf3d-e47156b29649"
+                },
+                {
+                    "description": "Prostokąt z M1 na F.Silkscreen",
+                    "pos": {
+                        "x": 67.13,
+                        "y": 29.18
+                    },
+                    "uuid": "fc43d465-8e04-498a-8983-b4e7a0d2331a"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        }
+    ]
+}

@@ -25,6 +25,7 @@ VIA_D, VIA_DRILL, TW, CLR, PWR_CLR, EXTRA, OWN_GAP, VIA_GAP, EDGE = .9, .4, .3, 
 PWR = {'5V_SYS', '5V_M1'}
 import os
 MODE = os.environ.get('EGRLAB_FANOUT', 'ic')    # 'ic' (default): SOIC bars + SOT-23 stubs; 'all': also every 1206 GND pad
+PLANE = os.environ.get('EGRLAB_GND_MODE', 'plane') == 'plane'   # prepare_routing.py default: SOT-23 stubs only when GND is out of the router
 MODULES = {'M1', 'SD1'}
 
 
@@ -130,6 +131,8 @@ if __name__ == '__main__':
         assert all(a.IsOnLayer(F) for a in pads), (ref, 'SMD GND pad on the bottom: fan-out not written for it')
         if MODE == 'ic' and not (name.startswith('SOIC') or name.startswith('SOT')):
             continue   # passives: their GND pads sit at the outer end of the part, the pours reach them
+        if PLANE and name.startswith('SOT'):
+            continue   # 30.09: with the GND plane the router joins these pins; a pre-placed via ended in a cut-off pour piece in 4 of 6 failed runs
         if name.startswith('SOIC-14'):
             loc = sorted(((p.ToMM(a.GetFPRelativePosition().x), p.ToMM(a.GetFPRelativePosition().y), a) for a in pads), key=lambda t: t[1])
             y0, y1 = loc[0][1], loc[-1][1]
