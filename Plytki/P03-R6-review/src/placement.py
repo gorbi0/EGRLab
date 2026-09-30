@@ -73,9 +73,11 @@ put('SD1', 148.5, 70.9, 180)    # header y 70.9 (pin 1 3V at x 148.5); card towa
 # S1 row under J_BP1 (fan-out band y 14.7..21.3): U22 (CS_ILOG/ITEST to J_BP1.2/4; inputs from U1/U2), U14 (TEST_KEY), U13 (J_BP1.15-18).
 # U22 moved from the S1/S2 column to S1 (30.09, second router run): its inputs come from U1/U2 and two of its outputs go to J_BP1;
 # MEAS_EN and ADC_RESET (static, J_BP2.14/18) take the longer way. README asked for U22 near J_BP2 (disputed, noted there).
-put('U22', 11.0, 25.0, 90); put('U14', 22.0, 25.0, 90); put('U13', 33.5, 25.0, 90)
-put('U1', 42.0, 37.0, 270)      # MCP23017: inputs 1-7 face the buffers, 15-28 face down; courtyard x 7.42..43.55
-put('U2', 27.0, 55.0, 270)      # HC139 decoder
+# 30.09 evening (Ubuntu): S1 spread downwards into its free lower half (the P02 R4 lesson): SOIC row y 25 -> 28, U1 37 -> 45, U2 55 -> 66;
+# the J_BP1 fan-out band and the space between the SOIC row and U1 were the densest part of the board in every router run.
+put('U22', 11.0, 28.0, 90); put('U14', 22.0, 28.0, 90); put('U13', 33.5, 28.0, 90)
+put('U1', 42.0, 45.0, 270)      # MCP23017: inputs 1-7 face the buffers, 15-28 face down; courtyard x 7.42..43.55
+put('U2', 27.0, 66.0, 270)      # HC139 decoder
 put('U21', 51.0, 24.0, 90)      # DAQ outputs next to J_BP2 (README), left of the lane along the M1 J1 row
 put('U11', 51.0, 62.0, 0)       # inputs to the M1 J1 row (DOUTA, BUSY, MISO, CAN_RX)
 put('U12', 104.5, 50.0, 0)      # HW_ARMED / INTERLOCK to M1 J3-8 / J3-6
@@ -85,7 +87,7 @@ put('LED1', 50.5, 95.5, 0)      # status LED at edge B between J_SV1 and J_SV2 (
 # down the right side of M1 -> y = 93 under the USB end of M1 -> J1-21 (5V of the module) -> C14. The spine channel is kept free of parts.
 SPINE_X = 97.4
 put('Q1', SPINE_X - .95, 19.3, 90)   # rot 90: D (96.45, 18.36) towards J_BP2, G (95.5, 20.24), S (97.4, 20.24) on the spine line
-put('C13', 93.4, 17.3, 90)           # pad 1 (5V_SYS) at (93.4, 15.74) under the J_BP2.19 -> Q1 D diagonal
+put('C13', 93.4, 17.3, 270)          # pad 1 (5V_SYS) at (93.4, 15.81) under the J_BP2.19 -> Q1 D diagonal (rot 90 put it at the bottom)
 put('U5', 101.0, 21.2, 180)          # LTC4412: SENSE (6) at (99.86, 22.15) next to the spine; VIN, GATE by the router
 put('C14', 64.45, 88.1, 180)         # pad 1 (5V_M1) at (66.01, 88.1), 2.56 mm from M1 J1-21
 
@@ -148,7 +150,7 @@ for r, (u, n) in {'R36': ('U21', 6), 'R37': ('U21', 11), 'R39': ('U21', 8), 'R38
     place_near(r, (u, str(n)))
 place_near('R42', ('M1', 'J1-13'), lane_ok=True)    # README: R42 at M1 J1-13 (GPIO3)
 # ---- pull-ups / pull-downs at the receiver or source ----
-PULL = {'R1': ('U2', 1), 'R2': ('U12', 9), 'R3': ('U12', 2), 'R5': ('U1', 7), 'C4': ('U1', 7), 'R6': ('U13', 9), 'R7': ('U12', 12),
+PULL = {'R1': ('U2', 1), 'R2': ('U14', 5), 'R3': ('U12', 2), 'R5': ('U1', 7), 'C4': ('U1', 7), 'R6': ('U13', 9), 'R7': ('U14', 9),
         'R8': ('U13', 12), 'R9': ('U1', 12), 'R10': ('U1', 13), 'R11': ('SD1', 6), 'R13': ('U3', 1), 'R15': ('U21', 2), 'R16': ('U21', 5),
         'R17': ('U21', 9), 'R18': ('U21', 12), 'R19': ('U22', 2), 'R20': ('U22', 5), 'R21': ('U23', 2), 'R22': ('U23', 5), 'R23': ('U23', 9),
         'R24': ('U23', 12), 'R25': ('U2', 2), 'R26': ('U12', 5), 'R27': ('U14', 2), 'R28': ('U13', 2), 'R29': ('U13', 5), 'R30': ('U11', 12),
@@ -156,11 +158,13 @@ PULL = {'R1': ('U2', 1), 'R2': ('U12', 9), 'R3': ('U12', 2), 'R5': ('U1', 7), 'C
 for r, (u, n) in PULL.items():
     place_near(r, (u, str(n)))
 # ---- service resistors: node side (pin 1) next to a pad of the node; the node pad is chosen in the slot of the header ----
+# 30.09 evening: taps closer to the header / out of the J_BP2 band: 5V_SYS at U5.1 (was C13.1), ADC_BUSY at U11.5 (was J_BP2.12),
+# HEARTBEAT at M1 J3-18 (was J_BP3.16); SUP_N at U6.2 (was U1.18) since its pin moved to J_SV3.12 with the gate swap U12 -> U14.
 NODE = {'MOTOR_INB': ('U1', 27), 'MOTOR_INA': ('U1', 26), '3V3_CORE': ('C1', 1), 'MEAS_BANK': ('R25', 1), 'SCOPE_TRIG': ('R12', 1),
-        'CS_ITEST_N': ('U22', 11), 'CS_ILOG_N': ('U22', 8), '3V3_IO': ('U14', 4), 'SUP_N': ('U1', 18), 'I2C_SDA': ('R10', 2), 'I2C_SCL': ('R9', 2),
-        '5V_SYS': ('C13', 1), 'CURRENT_CS_N': ('M1', 'J3-10'), 'ADC_RESET': ('J_BP2', 18), 'MEAS_EN': ('J_BP2', 14), 'ADC_BUSY': ('J_BP2', 12),
+        'CS_ITEST_N': ('U22', 11), 'CS_ILOG_N': ('U22', 8), '3V3_IO': ('U14', 13), 'SUP_N': ('U6', 2), 'I2C_SDA': ('R10', 2), 'I2C_SCL': ('R9', 2),
+        '5V_SYS': ('U5', 1), 'CURRENT_CS_N': ('M1', 'J3-10'), 'ADC_RESET': ('J_BP2', 18), 'MEAS_EN': ('J_BP2', 14), 'ADC_BUSY': ('U11', 5),
         'ADC_CONVST': ('R37', 2), 'ADC_CS': ('U21', 3), 'PFAIL_N': ('R42', 1), 'SD_CS': ('M1', 'J1-7'), 'SUP_RAW_N': ('R13', 1), '5V_M1': ('C14', 1),
-        'MCU_ARM': ('J_BP3', 18), 'HEARTBEAT': ('J_BP3', 16), 'PWM': ('J_BP3', 14), 'CORE_LINK': ('R14', 2), 'SUP_N_OUT': ('R41', 2),
+        'MCU_ARM': ('J_BP3', 18), 'HEARTBEAT': ('M1', 'J3-18'), 'PWM': ('J_BP3', 14), 'CORE_LINK': ('R14', 2), 'SUP_N_OUT': ('R41', 2),
         'SENSOR_ENABLE': ('J_BP3', 9), 'TC2_CS': ('U23', 11), 'TC1_CS': ('U23', 8), 'INTERLOCK': ('R26', 1), 'HW_ARMED': ('R3', 1),
         'LOGGER_CURRENT_OK': ('R2', 1)}
 SERV = {r: NODE[parts[r]['pins']['1']] for r in parts if parts[r]['source_ref'] == 'ADDED_R6_SERVICE_SERIES'}

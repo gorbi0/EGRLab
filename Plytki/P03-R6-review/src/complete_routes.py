@@ -105,7 +105,7 @@ def add(net,points):
   if a[2]!=c[2]:
    assert a[:2]==c[:2];t=p.PCB_VIA(b);t.SetPosition(p.VECTOR2I(mm(a[0]),mm(a[1])));t.SetWidth(mm(.9));t.SetDrill(mm(.4));t.SetViaType(p.VIATYPE_THROUGH);t.SetLayerPair(p.F_Cu,p.B_Cu)
   else:
-   t=p.PCB_TRACK(b);t.SetStart(p.VECTOR2I(mm(a[0]),mm(a[1])));t.SetEnd(p.VECTOR2I(mm(c[0]),mm(c[1])));t.SetWidth(mm(.3));t.SetLayer(p.F_Cu if a[2]==0 else p.B_Cu)
+   t=p.PCB_TRACK(b);t.SetStart(p.VECTOR2I(mm(a[0]),mm(a[1])));t.SetEnd(p.VECTOR2I(mm(c[0]),mm(c[1])));t.SetWidth(mm(.3 if net.GetNetname() in ('3V3_CORE','5V_SYS','5V_M1') else .2));t.SetLayer(p.F_Cu if a[2]==0 else p.B_Cu)  # 30.09: signals 0.2 mm (obstacles still kept for 0.3)
   t.SetNet(net);t.SetLocked(True);b.Add(t)
 target=P/'routing/completion-routes.json';records=[];gnd_islands=[]
 def cluster_mask(code,uuid):

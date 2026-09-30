@@ -37,7 +37,7 @@ S['POWER'].text('SUP_N = M1 EN + U1 RESET; do P04 przez U6 (Schmitt) i R41 jako 
 S['POWER'].text('R34=220R ogranicza rozladowanie fabrycznego C_EN=1uF. Zachowac kondensator i pull-up 10K na Waveshare.',8,100,1.3)
 S['POWER'].text('U4 LVC1G37: Schmitt + OPEN DRAIN. U6 LVC1G17: Schmitt + push-pull. P04 U9.5: wymagane zbocze <=10 ns/V, do pomiaru.',8,104,1.3)
 
-pulls={'U11':{1:'R32',2:'R31',3:'R33',4:'R30'},'U12':{1:'R3',2:'R26',3:'R2',4:'R7'},'U13':{1:'R28',2:'R29',3:'R6',4:'R8'},'U14':{1:'R27'}}
+pulls={'U11':{1:'R32',2:'R31',3:'R33',4:'R30'},'U12':{1:'R3',2:'R26'},'U13':{1:'R28',2:'R29',3:'R6',4:'R8'},'U14':{1:'R27',2:'R2',3:'R7'}}
 for u,x,c in [('U11',24,'C5'),('U12',62,'C6'),('U13',100,'C7'),('U14',138,'C8')]:
     for i in range(1,5):
         y=23+(i-1)*17;put(u,x,y,u=i,txt=(-2,-4))

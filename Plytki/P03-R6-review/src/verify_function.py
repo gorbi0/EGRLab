@@ -19,7 +19,7 @@ RECEIVER={
  'INTERLOCK':('U12','5','GND'), 'TEST_KEY':('U14','2','GND'), 'ENA_DIAG':('U13','2','GND'),
  'ENB_DIAG':('U13','5','GND'), 'CAN_RX':('U11','12','3V3_CORE'), 'ADC_BUSY':('U11','5','GND'),
  'ADC_DOUTA':('U11','2','GND'), 'SPI3_MISO':('U11','9','GND'), 'HW_ARMED':('U12','2','GND'),
- 'LOGGER_CURRENT_OK':('U12','9','GND'), 'SENSOR_HEALTHY':('U12','12','GND'),
+ 'LOGGER_CURRENT_OK':('U14','5','GND'), 'SENSOR_HEALTHY':('U14','9','GND'),
  'LOGGER_CLEAR':('U13','9','GND'), 'TEST_PRESENT':('U13','12','GND')}
 
 def extract(root):
@@ -64,7 +64,10 @@ def checks(root):
  old,_=extract(ET.parse(P/'reference/P03-R1.xml').getroot())
  allowed={('M1','J1-3'):'SUP_N',('M1','J1-21'):'5V_M1',('U3','1'):'SUP_RAW_N',('R13','1'):'SUP_RAW_N',
           ('U21','6'):'ADC_SCLK_DRV',('U21','8'):'ADC_SDI_DRV',('U21','11'):'ADC_CONVST_DRV',
-          ('U23','3'):'SPI3_SCLK_DRV',('U23','6'):'SPI3_MOSI_DRV',('M1','J1-13'):'PFAIL_N_CORE'}
+          ('U23','3'):'SPI3_SCLK_DRV',('U23','6'):'SPI3_MOSI_DRV',('M1','J1-13'):'PFAIL_N_CORE',
+          # R6 layout (30.09, user decision): gate swap U12 ch3/ch4 -> U14 ch2/ch3; U12 ch3/ch4 spare (A, OE = GND, Y open)
+          ('U12','8'):'NC',('U12','9'):'GND',('U12','11'):'NC',('U12','12'):'GND',
+          ('U14','4'):'GND',('U14','5'):'LOGGER_CURRENT_OK',('U14','6'):'LOGGER_CURRENT_OK_CORE',('U14','8'):'SENSOR_HEALTHY_CORE',('U14','9'):'SENSOR_HEALTHY',('U14','10'):'GND'}
  # R6: the R1 harness connectors J1..J10 are gone (their nets are checked on J_BP1..3 in verify_jbp.py).
  differences=[(r,p,n,pins.get((r,p))) for (r,p),n in old.items() if not re.fullmatch(r'J\d+',r) and pins.get((r,p))!=allowed.get((r,p),n)]
  check('R1 pin contract plus exact R2/R4/R6 delta',not differences,differences)

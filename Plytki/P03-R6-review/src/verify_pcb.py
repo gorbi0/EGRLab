@@ -207,8 +207,10 @@ check('Standoff zones D7: no courtyard and no copper (pads, tracks, vias, pours)
       not near and not cop and rules_ok == len(want_h), {'courtyards': sorted(map(str, near)), 'copper': sorted(map(str, cop)), 'rule_areas': rules_ok})
 pro = json.loads((P / 'eda/P03.kicad_pro').read_text()); ds = pro['board']['design_settings']; rules = ds['rules']
 cls = {c['name']: c for c in pro['net_settings']['classes']}
-check('Rules as P02 R3 / R4 (clearance >= 0.25, track >= 0.30, edge 0.5) and annular ring >= 0.25 mm (S1); no DRC exclusions',
-      rules['min_clearance'] >= .25 and rules['min_track_width'] >= .3 and rules['min_copper_edge_clearance'] >= .5 and rules['min_via_annular_width'] >= .25
+check('Rules as P02 R3 / R4 (clearance >= 0.25, edge 0.5), annular ring >= 0.25 mm (S1); tracks >= 0.20 mm, 3V3_CORE class 0.30, PWR 0.60 '
+      '(user decision 30.09: signals 0.2 mm on P03 R6 only); no DRC exclusions',
+      rules['min_clearance'] >= .25 and rules['min_track_width'] >= .2 and rules['min_copper_edge_clearance'] >= .5 and rules['min_via_annular_width'] >= .25
+      and cls.get('CORE3V3', {}).get('track_width') == .3 and cls.get('PWR', {}).get('track_width') == .6
       and not ds['drc_exclusions'] and all(c['clearance'] >= .25 for c in cls.values()))
 ring = [f'{f.GetReference()}.{a.GetNumber()}' for f in b.GetFootprints() for a in f.Pads() if a.GetAttribute() == p.PAD_ATTRIB_PTH
         and (min(p.ToMM(a.GetSize().x), p.ToMM(a.GetSize().y)) - p.ToMM(a.GetDrillSize().x)) / 2 < .25 - 1e-6]

@@ -1,7 +1,8 @@
 """P03 R6 PCB (format S1, class L, slots S1-S3 of level 2) from the exported netlist (verification/P03.xml) and src/placement.json.
 Builder taken over from P02 R4 (outline, M3 holes and standoff zones from Plytki/Format-S1/format-s1.json) and P03 R5 (rule areas
 of the modules). Board coordinates: x along the long side (0 = panel side, 160 = input wall), y across (0 = edge A, 100 = edge B).
-Rules as P02 R3 / R4 (clearance 0.25, track 0.3), 2 x 35 um copper, annular ring >= 0.25 mm (S1 section 3).
+Rules as P02 R3 / R4 (clearance 0.25), 2 x 35 um copper, annular ring >= 0.25 mm (S1 section 3); minimum track 0.2 mm instead of 0.3
+(user decision 30.09 evening, P03 R6 only: signals 0.2 mm, 3V3_CORE 0.3 mm, 5 V unchanged; set_rules.py).
 Rule areas on both copper layers (no tracks, vias or pours):
 - M3 H1..H12: standoff zones D7 (S1 section 4), also no footprints;
 - ANTENNA M1: the Waveshare antenna end (footprint F.Fab rectangle x -1.32..24.18, y -8.0..-1.5) plus 3 mm at the sides and
@@ -63,7 +64,7 @@ if __name__ == '__main__':
     parts = json.loads((P / 'docs/parts.json').read_text(encoding='utf-8'))
     root = ET.parse(P / 'verification/P03.xml').getroot()
     b = p.BOARD(); b.SetFileName(str(E / 'P03.kicad_pcb')); b.SetCopperLayerCount(2)
-    s = b.GetDesignSettings(); s.SetBoardThickness(mm(S1['obrys']['grubosc_pcb'])); s.m_MinClearance = mm(.25); s.m_TrackMinWidth = mm(.3)
+    s = b.GetDesignSettings(); s.SetBoardThickness(mm(S1['obrys']['grubosc_pcb'])); s.m_MinClearance = mm(.25); s.m_TrackMinWidth = mm(.2)
     s.m_CopperEdgeClearance = mm(S1['obrys']['odstep_miedzi_od_krawedzi']); s.m_HoleToHoleMin = mm(.3); s.m_HoleClearance = mm(.25)
     s.m_ViasMinSize = mm(.9); s.m_MinThroughDrill = mm(.4); s.m_ViasMinAnnularWidth = mm(.25)
     s.m_SilkClearance = mm(.15); s.m_MinSilkTextHeight = mm(.8); s.m_MinSilkTextThickness = mm(.12)

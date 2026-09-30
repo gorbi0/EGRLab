@@ -220,10 +220,13 @@ res('R4', 'R_LED', '1K / 1%', 'MF0207FTE-1K', {1: 'STATUS_LED', 2: 'LED_A'})
 add('LED1', 'LED1', S_LED, LED, 'GREEN 3mm / STATUS', 'L-934GD', {1: 'GND', 2: 'LED_A'}, URL['l934'], 'MCP23017 GPA7.')
 res('R14', 'W_LINK', '1K / 1%', 'MF0207FTE-1K', {1: '3V3_CORE', 2: 'CORE_LINK'}, 'CORE_LINK = presence of 3V3_CORE through 1 k (R3, review P3-02): a harness short to GND draws 3.3 mA; P04 R16 10 k sees >= 2.85 V (74LVC125A VIH 2.0 V). v6.1 had a wire link.')
 # ---- sheet IO: buffers and harness connectors --------------------------------------------------------------
+# R6 layout (30.09, user decision): LOGGER_CURRENT_OK and SENSOR_HEALTHY moved from U12 ch3/ch4 to the spare U14 ch2/ch3 (gate swap):
+# both ends are in S1 (J_BP1.11/12 -> buffer -> U1), U12 stands by M1 J3 in S2. U12 ch3/ch4 are spares now (A, OE = GND, Y open);
+# U14 ch4 stays a v6.1 spare (OE = 3V3_IO). Documented deltas in compare_v61.py and verify_function.py.
 BUF = {'U11': ('U_IN1', {1: 'GND', 2: 'ADC_DOUTA', 3: 'ADC_DOUTA_CORE', 4: 'GND', 5: 'ADC_BUSY', 6: 'ADC_BUSY_CORE', 7: 'GND', 8: 'SPI3_MISO_CORE', 9: 'SPI3_MISO', 10: 'GND', 11: 'CAN_RX_CORE', 12: 'CAN_RX', 13: 'GND', 14: '3V3_CORE'}),
-       'U12': ('U_IN2', {1: 'GND', 2: 'HW_ARMED', 3: 'HW_ARMED_CORE', 4: 'GND', 5: 'INTERLOCK', 6: 'INTERLOCK_CORE', 7: 'GND', 8: 'LOGGER_CURRENT_OK_CORE', 9: 'LOGGER_CURRENT_OK', 10: 'GND', 11: 'SENSOR_HEALTHY_CORE', 12: 'SENSOR_HEALTHY', 13: 'GND', 14: '3V3_CORE'}),
+       'U12': ('U_IN2', {1: 'GND', 2: 'HW_ARMED', 3: 'HW_ARMED_CORE', 4: 'GND', 5: 'INTERLOCK', 6: 'INTERLOCK_CORE', 7: 'GND', 8: 'NC', 9: 'GND', 10: 'GND', 11: 'NC', 12: 'GND', 13: 'GND', 14: '3V3_CORE'}),
        'U13': ('U_IN3', {1: 'GND', 2: 'ENA_DIAG', 3: 'ENA_DIAG_CORE', 4: 'GND', 5: 'ENB_DIAG', 6: 'ENB_DIAG_CORE', 7: 'GND', 8: 'LOGGER_CLEAR_CORE', 9: 'LOGGER_CLEAR', 10: 'GND', 11: 'TEST_PRESENT_CORE', 12: 'TEST_PRESENT', 13: 'GND', 14: '3V3_CORE'}),
-       'U14': ('U_IN4', {1: 'GND', 2: 'TEST_KEY', 3: 'TEST_KEY_CORE', 4: '3V3_IO', 5: 'GND', 6: 'NC', 7: 'GND', 8: 'NC', 9: 'GND', 10: '3V3_IO', 11: 'NC', 12: 'GND', 13: '3V3_IO', 14: '3V3_CORE'}),
+       'U14': ('U_IN4', {1: 'GND', 2: 'TEST_KEY', 3: 'TEST_KEY_CORE', 4: 'GND', 5: 'LOGGER_CURRENT_OK', 6: 'LOGGER_CURRENT_OK_CORE', 7: 'GND', 8: 'SENSOR_HEALTHY_CORE', 9: 'SENSOR_HEALTHY', 10: 'GND', 11: 'NC', 12: 'GND', 13: '3V3_IO', 14: '3V3_CORE'}),
        'U21': ('U_OUT1', {1: 'GND', 2: 'ADC_CS_SRC', 3: 'ADC_CS', 4: 'GND', 5: 'ADC_SCLK_SRC', 6: 'ADC_SCLK', 7: 'GND', 8: 'ADC_SDI', 9: 'ADC_SDI_SRC', 10: 'GND', 11: 'ADC_CONVST', 12: 'ADC_CONVST_SRC', 13: 'GND', 14: '3V3_CORE'}),
        'U22': ('U_OUT2', {1: 'GND', 2: 'ADC_RESET_SRC', 3: 'ADC_RESET', 4: 'GND', 5: 'MEAS_EN_SRC', 6: 'MEAS_EN', 7: 'GND', 8: 'CS_ILOG_N', 9: 'CS_ILOG_N_SRC', 10: 'GND', 11: 'CS_ITEST_N', 12: 'CS_ITEST_N_SRC', 13: 'GND', 14: '3V3_CORE'}),
        'U23': ('U_OUT3', {1: 'GND', 2: 'SPI3_SCLK_SRC', 3: 'SPI3_SCLK', 4: 'GND', 5: 'SPI3_MOSI_SRC', 6: 'SPI3_MOSI', 7: 'GND', 8: 'TC1_CS', 9: 'TC1_CS_SRC', 10: 'GND', 11: 'TC2_CS', 12: 'TC2_CS_SRC', 13: 'GND', 14: '3V3_CORE'})}

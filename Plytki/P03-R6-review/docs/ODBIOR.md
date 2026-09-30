@@ -15,7 +15,7 @@ Wyniki sprzętowe: **NIE ZBADANO**. Wypełnić datę, rewizje modułów, przyrz�
 | Prąd wsteczny USB→SYS | Przy 5V_SYS = 0 i aktywnym USB cel < 50 µA ustalonego prądu; impulsy zanotować osobno | NIE ZBADANO |
 | SD + Wi-Fi, 30 min | 5V_M1 (J_SV2.12) ≥ 4,60 V, 3V3_CORE (J_SV1.4) stabilne; bez resetów; temperatury LDO/Q1 | NIE ZBADANO |
 | Start bez firmware / bootloader / RESET przytrzymany | J_SV2: MEAS_EN (.5) = 0, ADC_RESET (.4) = 0, ADC_CONVST (.7) = 0, ADC_CS (.8) = 1, SD_CS (.10) = 1, CURRENT_CS_N (.3) = 1; J_SV1: CS_ITEST_N (.7) = 1, CS_ILOG_N (.8) = 1, MEAS_BANK (.5) = 0, MOTOR_INA/INB (.3/.2) = 0; J_SV3: TC1_CS (.9) = 1, TC2_CS (.8) = 1, MCU_ARM (.2) = 0 (30.09: grupy wg `docs/SERWIS.csv` po przydziale kołków według węzłów) | NIE ZBADANO |
-| Zapad 3V3_CORE przez 3,07 V | SUP_RAW_N (J_SV2.11) i SUP_N (J_SV1.10) LOW; reset ESP i MCP; P04 rozbrojone | NIE ZBADANO |
+| Zapad 3V3_CORE przez 3,07 V | SUP_RAW_N (J_SV2.11) i SUP_N (J_SV3.12, od 30.09) LOW; reset ESP i MCP; P04 rozbrojone | NIE ZBADANO |
 | Wymuszenie SUP_N do GND | ESP i MCP restartują; IODIR/OLAT odtworzone, nowa sesja, wymagane ARM | NIE ZBADANO |
 | Programowanie USB (R6: gniazdo od krawędzi B) | Przy złożonym stosie kabel USB wchodzi bez rozbierania; bootloader i flash działają, reset obejmuje MCP | NIE ZBADANO |
 | Zbocze SUP_N_OUT na P04 | Jak w R5, na nowej drodze taśma 30 mm + P12 + taśma 30 mm: na P04 U9.5 jedno monotoniczne zbocze na przejście, ≤ 10 ns/V w całym obszarze 0,8–2,0 V, oba kierunki; szacunek R6 8,3 ns/V przy 30 pF (nie kryterium). Podać sondę i jej pojemność. SUP_N_P04 i SUP_OK bez serii impulsów; HW_ARMED i MOTOR_PERMIT stale L | NIE ZBADANO |
