@@ -1,6 +1,6 @@
 ---
 name: p02-r4-state
-description: "P02 R4 (zasilanie z pakietu 4S): etap 1 schemat (PR #2) → decyzje (D3 5KP24A, C_H 2200, UVLO obwiednia) → etap 2 PCB lokalnie w klasie L: DRC czysty, PCB 23/23, próby 12/12, PR #4 czeka na recenzję"
+description: "P02 R4 (zasilanie z pakietu 4S): etap 1 schemat (PR #2) → decyzje (D3 5KP24A, C_H 2200, UVLO obwiednia) → etap 2 PCB lokalnie w klasie L, blok sterowania rozsunięty w wolne pole: DRC czysty, PCB 23/23, próby 12/12, PR #4 czeka na recenzję"
 metadata:
   node_type: memory
   type: project
@@ -67,6 +67,14 @@ Paczka produkcyjna dopiero po mojej recenzji PCB.
 - Jeden przebieg wydania zgubił strefy GND po imporcie SES (204 niepołączenia, nie odtworzone); `stitch.py` ma assert.
 - Opis PR #4 nadal z pilota (gh zablokowany przez tryb uprawnień) — stan w README pakietu i STAN-PRAC.
 - Otwarte: przymiarka 1:1, 12 ukrytych oznaczeń w bloku mocy, paczka produkcyjna po recenzji.
+- **30.09 — rozsunięcie na wskazanie użytkownika (wydruk 1:1, wolne pole między blokami), commit c91a1c9 na `p02-r4-pcb`:**
+  blok sterowania górna połowa ×1,25 / dolna ×1,12 (CLUSTERS: układy z odsprzęganiem i rezystorami serwisowymi sztywno),
+  grupa podtrzymania DH = −8 mm (route_critical: VLOG/HOLD_C pours + tracks + przedłużenia VSW), ENABLE −4 mm, U9/C27/C28
+  na miejscu; R30/R31/R58/D12 poza strefą H3. Zajętość pasów 20 mm: 42/43/41/40/41/23/76/68 %. Rdzeń mocy zostaje
+  (użytkownik: „może tak zostać”). Router domknął się w 1. próbie (planer: 7 tras). Wynik: DRC 0/0/0 innych, 14 × lib
+  mismatch przyjęte; PCB 23/23; próby 12/12; tor 5 A ≥ 4,1 mm; 9 ukrytych oznaczeń; pełne połączenie GND: C8.2, D3.2 (P600!),
+  LED1.1, U10.4, U2.4. README sekcja etapu 2 generowana skryptem z danych wydania (manifest przeliczony tak samo).
+- Czeka na recenzję i „scal” PR #4; potem przymiarka 1:1 i paczka produkcyjna.
 - Uruchamianie: `EGRLAB_FREEROUTING=C:/Users/tgorbacz/.codex/.chatgpt-projects/g-p-6a8827e57cc881919b26f761377a7bd3/.egrlab-toolchains/freerouting`, Python KiCada `C:/Program Files/KiCad/10.0/bin/python.exe src/run_layout.py`.
 - **Nie przełączać gałęzi w trakcie przebiegu.** Commity na `main` robić plumbingiem (tymczasowy indeks, `read-tree`/`update-index` z `core.protectNTFS=false`, `commit-tree`, `update-ref`).
 
