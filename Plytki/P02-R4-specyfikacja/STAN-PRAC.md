@@ -112,8 +112,8 @@ Zrobione: schemat w formacie S1 (5 arkuszy z SERW; D3 5KP24A, J_BP IDC 2 × 10 n
 
 ## Etap 2 — PCB w klasie L gotowa do recenzji (30.09.2026, lokalnie)
 
-Decyzja użytkownika „opcja 1”: klasa L (160 × 100 mm, cały poziom 1; format S1-3, P10 na poziom 4). Rozmieszczenie: blok mocy przesunięty o 53,5 mm do ściany wejść, blok sterowania rozsunięty ×1,35, R5 obok D11 (PWR_A nie miała drogi do J14 przy R5 w bloku mocy), odsprzęganie ≤ 7,1 mm, rezystory serwisowe ≤ 8 mm od węzłów. Trasowanie: Freerouting 2.1.0, wynik 4. próby + planer dokańczania; po drodze poprawione skrypty pilota (planer, zszywanie GND, porządki, wylewki pod blaszkami Q9/Q1, nadruk, kontrole i próby ujemne dla klasy L).
+Decyzja użytkownika „opcja 1”: klasa L (160 × 100 mm, cały poziom 1; format S1-3, P10 na poziom 4). Rozmieszczenie: blok mocy przesunięty o 53,5 mm do ściany wejść; blok sterowania rozsunięty ×1,35, a potem — na wskazanie użytkownika z wydruku 1:1 — jeszcze raz w stronę wolnego pola (górna połowa ×1,25, dolna ×1,12; układy sztywno z odsprzęganiem i rezystorami serwisowymi); grupa podtrzymania 8 mm w lewo razem z wylewkami VLOG/HOLD_C; R5 obok D11 (PWR_A nie miała drogi do J14 przy R5 w bloku mocy). Rdzeń mocy bez zmian (decyzja użytkownika). Trasowanie: Freerouting 2.1.0 domknął się w 1. próbie, planer dokańczania dołożył 7 tras; skrypty pilota poprawione (planer, zszywanie GND, porządki, wylewki pod blaszkami Q9/Q1, nadruk, kontrole, próby ujemne i PDF dla klasy L).
 
-Wynik (`Plytki/P02-R4-review/README.md`, `verification/QA-PCB.md`): DRC 0 niepołączonych / 0 niezgodności ze schematem, jedyne zgłoszenia to 13 × niezgodność footprintu z biblioteką u części z przyciętym nadrukiem (przyjęte jawnie); kontrole PCB 23/23; próby ujemne 12/12; tor 5 A ≥ 4,1 mm miedzi.
+Wynik (`Plytki/P02-R4-review/README.md`, `verification/QA-PCB.md`): DRC 0 niepołączonych / 0 niezgodności ze schematem / 0 innych naruszeń, jedyne zgłoszenia to niezgodności footprintów z biblioteką u części z przyciętym nadrukiem (przyjęte jawnie); kontrole PCB 23/23; próby ujemne 12/12; tor 5 A ≥ 4,1 mm miedzi.
 
 Następny krok: recenzja PCB (PR #4), przymiarka 1:1, dopiero potem paczka produkcyjna.

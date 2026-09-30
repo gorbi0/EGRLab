@@ -1,6 +1,6 @@
 {
   "board": "C:\\Users\\tgorbacz\\Documents\\GORBI\\Priv\\Kia\\Sportage\\EGRLab\\Plytki\\P02-R4-review\\verification\\negative-controls\\sv_no_gnd_end\\P02.kicad_pcb",
-  "board_sha256": "a2f1dfb454b59f83f8641ad90783b6552a5afa26da44155463c74432009adf5d",
+  "board_sha256": "1293689986733e5cb68da24566b751fee3421943fab2108c4e085d31141f1cf3",
   "checks": [
     {
       "check": "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
@@ -97,10 +97,10 @@
   ],
   "details": {
     "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)": {
-      "violations": 13,
+      "violations": 20,
       "unconnected_items": 1,
       "schematic_parity": 1,
-      "other_violations": 0,
+      "other_violations": 6,
       "accepted_lib_mismatch": [
         "C21",
         "C22",
@@ -109,6 +109,7 @@
         "C9",
         "D1",
         "D10",
+        "D12",
         "D13",
         "D2",
         "J2",
@@ -129,19 +130,19 @@
           "smd": true,
           "height_mm": 0.88,
           "soic": false,
-          "min_gap_to_THT_mm": 9.88
+          "min_gap_to_THT_mm": 5.63
         },
         "U9": {
           "smd": true,
           "height_mm": 1.75,
           "soic": true,
-          "min_gap_to_THT_mm": 9.24
+          "min_gap_to_THT_mm": 3.83
         },
         "C28": {
           "smd": true,
           "height_mm": 0.88,
           "soic": false,
-          "min_gap_to_THT_mm": 6.69
+          "min_gap_to_THT_mm": 4.08
         }
       }
     },
@@ -330,7 +331,7 @@
             "node": "P04_3V3",
             "resistor": "R58",
             "value": "1K",
-            "node_dist_mm": 9.6,
+            "node_dist_mm": 3.7,
             "in_pour": false,
             "label": "P04_3V"
           },
@@ -537,33 +538,33 @@
     "GND return corridor on B.Cu: rule area contains J1.2 and J2.2, no track or via inside": [],
     "GND pours: B.Cu >= 50 % of the board; island removal always (every island tied)": {
       "cover_percent": {
-        "F.Cu": 66.7,
-        "B.Cu": 72.2
+        "F.Cu": 65.5,
+        "B.Cu": 74.2
       },
       "islands": {
-        "F.Cu": 18,
-        "B.Cu": 14
+        "F.Cu": 28,
+        "B.Cu": 9
       }
     },
     "TO-220 (Q9, Q1, Q2, D1, D2): under each tab only copper of the tab net (pin 2) on F.Cu": {
-      "D2": {
-        "tab_net": "P02_HOLD_C",
+      "Q1": {
+        "tab_net": "P02_VSW",
         "foreign": []
       },
       "D1": {
         "tab_net": "P02_VLOG",
         "foreign": []
       },
-      "Q1": {
-        "tab_net": "P02_VSW",
+      "Q2": {
+        "tab_net": "P02_OFF_D",
+        "foreign": []
+      },
+      "D2": {
+        "tab_net": "P02_HOLD_C",
         "foreign": []
       },
       "Q9": {
         "tab_net": "P02_BAT_IN",
-        "foreign": []
-      },
-      "Q2": {
-        "tab_net": "P02_OFF_D",
         "foreign": []
       }
     },
@@ -579,7 +580,7 @@
       "C27.1-U9.14": 2.02,
       "C28.1-U9.14": 6.19,
       "C29.1-U10.14": 3.43,
-      "C21.1-U5.1": 7.0,
+      "C21.1-U5.1": 6.99,
       "C22.1-U5.3": 6.52,
       "C23.1-U6.1": 6.52,
       "C24.1-U6.3": 6.58
@@ -603,8 +604,8 @@
         "P02 R4 S1-L S1–S3"
       ],
       "marks": [
-        "KRAWEDZ A (P12)",
-        "KRAWEDZ B (SERWIS)"
+        "KRAWEDZ B (SERWIS)",
+        "KRAWEDZ A (P12)"
       ]
     }
   },

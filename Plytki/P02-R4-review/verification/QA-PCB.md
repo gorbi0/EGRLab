@@ -1,6 +1,6 @@
 # P02-R4 — QA PCB (etap 2, format S1; plik generowany przez src/run_release.py)
 
-DRC (świeży, wszystkie poziomy): 13 naruszeń / 0 niepołączonych / 0 niezgodności ze schematem.
+DRC (świeży, wszystkie poziomy): 14 naruszeń / 0 niepołączonych / 0 niezgodności ze schematem.
 Kontrole PCB: 23/23. Próby ujemne: 12/12 (w tym próba zerowa).
 
 | Kontrola | Wynik |
@@ -46,6 +46,6 @@ Kontrole PCB: 23/23. Próby ujemne: 12/12 (w tym próba zerowa).
 | hold_far | C_H, D2 and D1 | tak | 3 |
 | label_missing | Service headers | tak | 1 |
 
-Nadruk: ukryte oznaczenia (brak miejsca): R23, R22, C21, C20, D2, Q9, Q2, F2, F1, F3, U6, U5; nieumieszczone napisy: 1, 1, 1, 1, 1, 1.
+Nadruk: ukryte oznaczenia (brak miejsca): R23, R22, Q2, Q9, F3, F1, F2, U6, U5; nieumieszczone napisy: 1, 1, 1, 1, 1, 1.
 
 Oględziny PDF: strony 1–5 obejrzane przy tworzeniu pakietu (render w output/previews/pcb-*.png).

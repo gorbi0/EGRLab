@@ -190,5 +190,39 @@ put('R69', 74.11, 7.65, 0)                  # 5V_SYS: 7,9 mm od U5 (było 11,4 m
 put('R70', 59.70, 19.45, 0)                 # 3V3_IO: 8,0 mm od U10 (było 25,7 mm; położony w pasie przy pierwszym przebiegu klasy L)
 put('R71', 38.35, 35.5, 0)                  # PSU_OK: 7,9 mm od R44 (było 11,4 mm)
 put('R5', *R5_XY)
+# ---- 30.09 (użytkownik, wydruk 1:1): rozsunięcie obu bloków w stronę wolnego pola ----
+# Po równym ×1,35 zostało puste pole między blokami (ok. 15 cm²: x 70–95 / y 5–25 i x 45–65 / y 55–75), a oba brzegi były
+# ciasne (zajętość obrysami w pasach 20 mm: 49 / 60 / 36 / 24 / 29 / 34 / 76 / 68 %). Blok sterowania rozsuwa się jeszcze raz
+# w osi x od strony panelu: górna połowa (y ≤ Y_SPLIT) ×SX_TOP, dolna ×SX_BOT. Układy jadą sztywno ze swoimi kondensatorami
+# odsprzęgającymi i rezystorami serwisowymi (CLUSTERS), więc odległości z verify_pcb.py §4 i §8 się nie zmieniają.
+# Grupa podtrzymania (HOLD) przesuwa się o DH w lewo; route_critical.py przesuwa o DH jej wylewki VLOG i HOLD_C, ścieżki
+# kotwic i przedłużenia VSW do R40/D1. Grupa ENABLE ustępuje miejsca C12. U9, C27, C28 (od spodu) zostają: nad nimi nie może
+# stanąć pin THT.
+SX_TOP, SX_BOT, Y_SPLIT = 1.25, 1.12, 58.0
+DH, HOLD = -8.0, ['C12', 'D1', 'D2', 'R40', 'R41', 'R67', 'C20', 'R68']
+DEN, ENABLE = -4.0, ['Q6', 'D7', 'D8', 'R14', 'R15', 'R16', 'R55']
+BOTTOM = {'U9', 'C27', 'C28'}
+CLUSTERS = {'U5': ['C21', 'C22', 'R69'], 'U6': ['C23', 'C24'], 'U7': ['C25'], 'U8': ['C26'], 'U10': ['C29', 'R70', 'R60'],
+            'U2': ['C11', 'R54'], 'U1': ['C8', 'C10', 'R50'], 'R12': ['C13', 'R52'], 'R44': ['R71'], 'R11': ['R53'],
+            'R3': ['R51'], 'R37': ['R56'], 'Q7': ['R57'], 'R30': ['R58']}
+member = {m: a for a, ms in CLUSTERS.items() for m in ms}
+for ref in HOLD:
+    L[ref][0] = round(L[ref][0] + DH, 3)
+for ref in ENABLE:
+    L[ref][0] = round(L[ref][0] + DEN, 3)
+shift = {}
+for ref, v in L.items():
+    if ref in RIGID or ref in HOLD or ref in ENABLE or ref in BOTTOM or ref in member or ref == 'J_SV1':
+        continue
+    shift[ref] = v[0] * ((SX_TOP if v[1] <= Y_SPLIT else SX_BOT) - 1)
+for m, a in member.items():
+    shift[m] = shift[a]
+for ref, d in shift.items():
+    L[ref][0] = round(L[ref][0] + d, 3)
+# po rozsunięciu: R30, R31, R58 w strefie dystansu otworu H3, D12 na R55 - najbliższe wolne położenia (skrypt)
+put('R30', 40.844, 9.5, 0)
+put('R31', 39.094, 14.5, 0)
+put('R58', 38.094, 10.5, 90)                # P04_3V3: 3,7 mm od R30.1 (poza strefą H3)
+put('D12', 58.718, 81.0, 0)
 (P / 'src/placement.json').write_text(json.dumps(L, indent=1) + '\n')
 print(len(L), 'placed')

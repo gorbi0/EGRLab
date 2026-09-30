@@ -56,6 +56,21 @@ BANDS = {k: (ls, [(x + DX, y) for x, y in pts]) for k, (ls, pts) in BANDS.items(
 CORRIDOR = [(x + DX, y) for x, y in CORRIDOR]
 TRACKS = [(n, [(x + DX, y) for x, y in pts], w) for n, pts, w in TRACKS]
 VIAS = [(n, (x + DX, y)) for n, (x, y) in VIAS]
+# 30.09: grupa podtrzymania przesunięta w placement.py o DH w lewo: jej wylewki VLOG i HOLD_C oraz ścieżki kotwic jadą z nią;
+# przedłużenie VSW do R40 wydłuża się w lewo o |DH|, przedłużenie do pinu VSW D1 przesuwa się razem z D1.
+DH = -8.0
+POURS['P02_VLOG'] = [(Ly, x0 + DH, y0, x1 + DH, y1) for Ly, x0, y0, x1, y1 in POURS['P02_VLOG']]
+POURS['P02_HOLD_C'] = [(Ly, x0 + DH, y0, x1 + DH, y1) for Ly, x0, y0, x1, y1 in POURS['P02_HOLD_C']]
+TRACKS = [(n, [(x + DH, y) for x, y in pts], w) if n in ('P02_VLOG', 'P02_HOLD_C') else (n, pts, w) for n, pts, w in TRACKS]
+_vsw = []
+for Ly, x0, y0, x1, y1 in POURS['P02_VSW']:
+    if (round(x0 - DX, 2), round(x1 - DX, 2)) == (44.0, 58.5):      # pod R40 do głównej wylewki VSW
+        x0 += DH
+    elif (round(x0 - DX, 2), round(x1 - DX, 2)) == (53.9, 56.5):    # do pinu VSW D1
+        x0 += DH; x1 += DH
+    _vsw.append((Ly, x0, y0, x1, y1))
+assert sum(1 for a, c in zip(POURS['P02_VSW'], _vsw) if a != c) == 2
+POURS['P02_VSW'] = _vsw
 
 
 def xy(x, y):
