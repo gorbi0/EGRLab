@@ -14,7 +14,7 @@ Stan 30.09.2026 wieczorem (szczegóły: README pakietu, sekcja „PCB”, i `Ply
 - Decyzje użytkownika 30.09: ścieżki sygnałowe 0,2 mm przy odstępie 0,25 (tylko P03 R6; S1 §3 dalej „jak P02-R3”), 3V3_CORE 0,3 mm (klasa CORE3V3); zamiana bramek LOGGER_CURRENT_OK / SENSOR_HEALTHY z U12 ch3/ch4 na U14 ch2/ch3 (10 opisanych różnic w `compare_v61.py` i `verify_function.py`), kołki J_SV1.10 ↔ J_SV3.12; commity i push etapami.
 - Rozmieszczenie: S1 rozsunięte (SOIC y 28, U1 y 45, U2 y 66), U21 x 54, C13 obrót 270, węzły serwisowe bliżej listew, R71 stawiany pierwszy.
 - Sporne do recenzji: 9 punktów w README (m.in. moduły 6,2 mm przed krawędzią B, U22 przy J_BP1, skróty przy J_SV2/3, 3 pola GND z pełnym połączeniem: J_BP1.7, J_BP2.3, M1.J3-1).
-- Otwarte: przymiarka 1:1, wysokość M1, 15 ukrytych oznaczeń, push/PR, paczka produkcyjna po „scal”.
+- Otwarte: przymiarka 1:1, wysokość M1, 7 ukrytych oznaczeń (było 15), push/PR, paczka produkcyjna po „scal”.
 
 **Why:** pierwsza płytka zrobiona w całości na komputerze 24/7; łańcuch jest wzorem dla P09/P10 R2 ([[kicad-pipeline-quirks]]).
 **How to apply:** recenzję zaczynać od README „PCB”; nie trasować od nowa bez potrzeby (wynik routera jest losowy — odtwarzać SES). Zob. [[ubuntu-24-7]], [[format-s1]].

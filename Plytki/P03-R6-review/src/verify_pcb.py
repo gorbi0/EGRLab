@@ -433,7 +433,7 @@ for f in b.GetFootprints():
 check('Every visible reference outside the courtyards of other parts', not amb, amb)
 title = [s for s, t in texts if s.startswith('P03 R6 S1-L')]
 marks = [s for s, t in texts if s.startswith('KRAWEDZ A') or s.startswith('KRAWEDZ B')]
-check('Silkscreen: board name "P03 R6 S1-L", edge markers A and B', bool(title) and any('A' in m for m in marks) and any('B' in m for m in marks), {'title': title, 'marks': marks})
+check('Silkscreen: board name "P03 R6 S1-L", edge markers A and B', bool(title) and any(m.startswith('KRAWEDZ A') for m in marks) and any(m.startswith('KRAWEDZ B') for m in marks), {'title': title, 'marks': marks})
 
 res = {'board': str(path), 'board_sha256': hashlib.sha256(path.read_bytes()).hexdigest(), 'checks': checks, 'details': details,
        'passed': sum(c['pass'] for c in checks), 'total': len(checks)}

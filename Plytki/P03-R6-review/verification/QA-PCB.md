@@ -52,6 +52,6 @@ Kontrole PCB: 25/25. Próby ujemne: 16/16 (w tym próba zerowa).
 | label_missing | Service headers | tak | 1 |
 | ref_on_part | Every visible reference | tak | 2 |
 
-Nadruk: ukryte oznaczenia (brak miejsca): R51, R66, R48, R71, R27, R65, R20, R70, R2, R12, C2, C13, U6, SD1, M1; nieumieszczone napisy: brak.
+Nadruk: ukryte oznaczenia (brak miejsca): R27, R41, R51, R53, R9, C2, U6; nieumieszczone napisy: brak.
 
 Oględziny PDF: strony 1–5 obejrzane przy tworzeniu pakietu (render w output/previews/pcb-*.png).

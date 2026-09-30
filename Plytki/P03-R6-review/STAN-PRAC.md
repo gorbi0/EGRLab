@@ -2,6 +2,13 @@
 
 Gałąź `p03-r6-pcb`. Etap: **PCB gotowa do recenzji (30.09 wieczorem)** — DRC 0/0/0 (6 przyjętych `lib_footprint_mismatch`), kontrole PCB 25/25, próby ujemne 16/16, PDF `output/pdf/P03-R6-PCB.pdf`; opis, wyniki i decyzje sporne w README (sekcja „PCB”). Praca na komputerze 24/7 (Ubuntu, sesja Claude Code „frigate-claude”); środowisko: `docs/UBUNTU-24-7.md`.
 
+## 30.09 późnym wieczorem — poprawki wydania (po P09/P10)
+
+- Wydruk przymiarki (strona 5 PDF) obiecywał kółka Ø7 wokół otworów M3, a pokazywał tylko otwory: `build_board.py` rysuje kółka stref (M3 Ø7, SD1 Ø6) na F.Fab.
+- `verify_pcb.py`: kontrola znaczników krawędzi szukała litery A w tekście („KRAWEDZ B” też ją ma) — teraz `startswith`; znaczniki były na płytce, wynik bez zmian.
+- Nadruk: stała kolejność oznaczeń przy remisie powierzchni (kolejność footprintów szła za losowymi UUID) i drugi pierścień pozycji — ukrytych oznaczeń 7 zamiast 15.
+- PDF: pogrubienia (`registerFontFamily`), przecinki dziesiętne; tytuł schematu „schemat i PCB do recenzji”. DRC 0/0/0, kontrole 25/25, próby 16/16 bez zmian.
+
 ## 30.09 wieczorem — Ubuntu 24/7 (sesja „frigate-claude”)
 
 - Środowisko: obraz `egrlab-kicad:10.0.6` zbudowany (komputer ma Ubuntu 22.04: `setup-chmura.sh` bierze teraz przypięte paczki czcionek noble z sumami SHA-256), `src/run_schematic.py` w kontenerze = wyniki z repo (różnice tylko CRLF/LF, daty, ścieżka).

@@ -25,10 +25,15 @@ m1 = next(v for k, v in det.items() if k.startswith('M1 Waveshare')); sd = next(
 bottom = sorted(r for r, v in json.loads((P / 'src/placement.json').read_text(encoding='utf-8')).items() if len(v) > 3 and v[3] == 'B')
 nlib = sum(1 for v in drc['violations'] if v['type'] == 'lib_footprint_mismatch')
 pdfmetrics.registerFont(TTFont('Arial', 'C:/Windows/Fonts/arial.ttf')); pdfmetrics.registerFont(TTFont('Bold', 'C:/Windows/Fonts/arialbd.ttf'))
+pdfmetrics.registerFontFamily('Arial', normal='Arial', bold='Bold', italic='Arial', boldItalic='Bold')   # 30.09: <b> in the notes printed as regular without it
 (O / 'pdf').mkdir(parents=True, exist_ok=True)
 c = Canvas(str(O / 'pdf/P03-R6-PCB.pdf'), pagesize=(297 * mm, 210 * mm)); c.setTitle('EGRLab P03 R6: PCB CORE w formacie S1')
 style = ParagraphStyle('body', fontName='Arial', fontSize=9.5, leading=13, textColor=HexColor('#172833'))
 NPAGES = 5
+
+
+def pl(v):
+    return str(v).replace('.', ',')   # Polish decimal comma (30.09: numbers printed as 6.15 mm)
 
 
 def para(t, x, y, w):
@@ -59,12 +64,12 @@ hmax = max((HEIGHTS.get(r, HEIGHTS.get(parts[r]['footprint']))[0], r) for r in p
 start(1, 'P03 R6 — CORE (ESP32-S3), PCB w formacie S1', 'Klasa L (160 × 100 mm), sloty S1–S3 poziomu 2 (dystanse 20 mm). Schemat: osobny PDF (6 arkuszy A3).')
 y = 172
 for t in [f'<b>Płytka:</b> 160 × 100 mm (klasa L), narożniki R1, FR4 1,6 mm, 2 × 35 µm; 12 otworów M3 (NPTH 3,2) według format-s1.json, strefy dystansów Ø7 bez miedzi i części. '
-          f'{sum(1 for q in parts.values() if q["on_board"])} części, od spodu {", ".join(bottom) or "żadnych"}; najwyższa część {hmax[1]} {hmax[0]} mm (limit 16,5).',
+          f'{sum(1 for q in parts.values() if q["on_board"])} części, od spodu {", ".join(bottom) or "żadnych"}; najwyższa część {hmax[1]} {pl(hmax[0])} mm (limit 16,5).',
           '<b>Krawędź A:</b> J_BP1 / J_BP2 / J_BP3 (IDC 2×10 kątowe, pinout docs/J_BP.csv) ze środkami w x = 26,5 / 80 / 133,5. <b>Krawędź B:</b> J_SV1–J_SV3 '
           '(goldpin kątowy 1×13, GND na końcach, każdy kołek przez rezystor 1k / 10k przy węźle; przydział według położenia węzłów, docs/SERWIS.csv).',
-          f'<b>Moduły:</b> M1 (Waveshare ESP32-S3) w S2, USB-C w stronę krawędzi B, {m1["usb_to_edge_B_mm"]} mm od niej; antena w stronę krawędzi A, pod nią obszar bez miedzi. '
-          f'SD1 (Adafruit 4682) w S3, karta w stronę krawędzi B, {sd["card_tip_to_edge_B_mm"]} mm od niej. Oba moduły kończą się przed obrysem listew serwisowych (sporne, README).',
-          f'<b>5 V:</b> J_BP2.17/19/20 → Q1 (blokada USB) → ścieżka 1,5 mm po B.Cu wzdłuż prawego boku M1 → M1 J1-21; miedź toru {p5["total_mOhm"]} mΩ (budżet 50 mΩ).',
+          f'<b>Moduły:</b> M1 (Waveshare ESP32-S3) w S2, USB-C w stronę krawędzi B, {pl(m1["usb_to_edge_B_mm"])} mm od niej; antena w stronę krawędzi A, pod nią obszar bez miedzi. '
+          f'SD1 (Adafruit 4682) w S3, karta w stronę krawędzi B, {pl(sd["card_tip_to_edge_B_mm"])} mm od niej. Oba moduły kończą się przed obrysem listew serwisowych (sporne, README).',
+          f'<b>5 V:</b> J_BP2.17/19/20 → Q1 (blokada USB) → ścieżka 1,5 mm po B.Cu wzdłuż prawego boku M1 → M1 J1-21; miedź toru {pl(p5["total_mOhm"])} mΩ (budżet 50 mΩ).',
           f'<b>Kontrole:</b> DRC: {len(drc["unconnected_items"])} niepołączonych, {len(drc["schematic_parity"])} niezgodności ze schematem, '
           f'{len(drc["violations"]) - nlib} innych naruszeń; {nlib} zgłoszeń lib_footprint_mismatch u części z przyciętym nadrukiem (przyjęte przez verify_pcb.py); '
           f'PCB {checks["passed"]}/{checks["total"]}; próby ujemne PCB {npass}/{len(neg)} (z próbą zerową).',
@@ -85,8 +90,9 @@ pages = [(2, 'Montaż od góry — 1:1', 'assembly', [
     (4, 'Miedź B.Cu — 1:1, widok od spodu', 'copper-back', [
     'Widok od spodu (lustrzany względem strony 3).', '<b>Tor 5V_M1:</b> ścieżka 1,5 mm wzdłuż prawego boku M1 i pod końcem USB do J1-21.']),
     (5, 'Przymiarka 1:1 — obrys, obrysy części, otwory', 'fit', [
-    'Wydrukować w skali 100 % i położyć na części / w obudowie. Kółka Ø7 wokół otworów M3 to strefy dystansów.',
-    f'<b>Wysokości (limit 16,5 mm, poziom 2):</b> M1 na listwach ok. {HEIGHTS["M1"][0]} mm (szacunek), SD1 ok. {HEIGHTS["SD1"][0]} mm, IDC ok. 9,2 mm, DIP w podstawkach ok. 8 mm.',
+    'Wydrukować w skali 100 % i położyć na części / w obudowie. Kółka Ø7 wokół otworów M3 to strefy dystansów, kółka Ø6 przy SD1 — '
+    'pola dystansów M2,5 modułu karty.',
+    f'<b>Wysokości (limit 16,5 mm, poziom 2):</b> M1 na listwach ok. {pl(HEIGHTS["M1"][0])} mm (szacunek), SD1 ok. {pl(HEIGHTS["SD1"][0])} mm, IDC ok. 9,2 mm, DIP w podstawkach ok. 8 mm.',
     'Kołki listew J_SV wystają ok. 6 mm za krawędź B; J_BP wtyk równo z krawędzią A.'])]
 for n, title, name, notes in pages:
     start(n, title, 'Geometria z natywnego pliku PCB; sprawdź belkę 100 mm przed przymiarką.'); board(name)

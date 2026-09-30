@@ -115,7 +115,7 @@ Nie przeniesiono kontroli R3 „złącza równe zamrożonym mapom sąsiadów” 
 8. Rozmieszczenie: S1 rozsunięte w dół (rząd SOIC y 28, U1 y 45, U2 y 66), U21 x = 54 (≤ 30 mm od J_BP2), C13 obrócony o 180° (pole 5V_SYS na górze, jak zakładał komentarz; wcześniej pole GND było zamknięte między J_BP2 a torem 5 V), węzły serwisowe bliżej listew (5V_SYS przy U5.1, ADC_BUSY przy U11.5, HEARTBEAT przy M1 J3-18, SUP_N przy U6.2).
 9. **Sporne (lutowanie):** trzy pola GND z pełnym połączeniem z wylewką zamiast termicznego (J_BP1.7, J_BP2.3, M1.J3-1 — szprychy odcięte przez ścieżki); reguła P02 „pola złączy zostają z termikami” dotyczyła lutowanych przewodów, których na P03 nie ma. Przy lutowaniu tych pinów potrzeba więcej ciepła.
 
-**Otwarte:** przymiarka wydruku 1:1 (strona 5 PDF), wysokość M1 na listwach (szacunek 13,8 mm), 15 oznaczeń ukrytych z braku miejsca (lista w `verification/QA-PCB.md`; na rysunku montażowym F.Fab są wszystkie), recenzja; paczka produkcyjna dopiero po „scal”.
+**Otwarte:** przymiarka wydruku 1:1 (strona 5 PDF), wysokość M1 na listwach (szacunek 13,8 mm), 7 oznaczeń ukrytych z braku miejsca (R9, R27, R41, R51, R53, C2, U6; lista w `verification/QA-PCB.md`, na rysunku montażowym F.Fab są wszystkie; do 30.09 wieczorem 15 — nadruk dostał drugi pierścień pozycji i stałą kolejność), recenzja; paczka produkcyjna dopiero po „scal”.
 
 ## Otwarte punkty
 

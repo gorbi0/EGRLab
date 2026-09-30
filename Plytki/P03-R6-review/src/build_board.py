@@ -46,6 +46,11 @@ def antenna_rect(f):
     return (min(a for a, _ in q), min(b for _, b in q), max(a for a, _ in q), max(b for _, b in q))
 
 
+def fab_circle(b, x, y, r):
+    """Board-level F.Fab circle of a keepout (30.09: the fit print said "circles D7 around the M3 holes" but showed only the holes)."""
+    g = p.PCB_SHAPE(b); g.SetShape(p.SHAPE_T_CIRCLE); g.SetCenter(xy(x, y)); g.SetEnd(xy(x + r, y)); g.SetLayer(p.F_Fab); g.SetWidth(mm(.1)); b.Add(g)
+
+
 def rule_area(b, name, pts, footprints=False):
     z = p.ZONE(b); z.SetIsRuleArea(True); z.SetLayerSet(layers(p.F_Cu, p.B_Cu)); z.SetDoNotAllowTracks(True)
     z.SetDoNotAllowVias(True); z.SetDoNotAllowZoneFills(True); z.SetDoNotAllowPads(False); z.SetDoNotAllowFootprints(footprints)
@@ -112,11 +117,12 @@ if __name__ == '__main__':
         pad = p.PAD(f); pad.SetAttribute(p.PAD_ATTRIB_NPTH); pad.SetShape(p.PAD_SHAPE_CIRCLE); pad.SetSize(xy(dh, dh))
         pad.SetDrillSize(xy(dh, dh)); pad.SetLayerSet(p.LSET.AllCuMask()); f.Add(pad)
         f.SetPosition(xy(x, y)); f.Reference().SetVisible(False); f.Value().SetVisible(False); f.SetAllowMissingCourtyard(True); b.Add(f)
-        rule_area(b, f'M3 H{i} standoff D7', circle(x, y, rz), footprints=True)
+        rule_area(b, f'M3 H{i} standoff D7', circle(x, y, rz), footprints=True); fab_circle(b, x, y, rz)
     x0, y0, x1, y1 = antenna_rect(fmap['M1'])
     rule_area(b, 'ANTENNA M1', [(x0, y0), (x1, y0), (x1, y1), (x0, y1)])
     for k, a in enumerate(sorted((a for a in fmap['SD1'].Pads() if a.GetAttribute() == p.PAD_ATTRIB_NPTH), key=lambda a: a.GetPosition().x), 1):
         rule_area(b, f'SD1 M2.5 {k}', circle(p.ToMM(a.GetPosition().x), p.ToMM(a.GetPosition().y), 3))
+        fab_circle(b, p.ToMM(a.GetPosition().x), p.ToMM(a.GetPosition().y), 3)
     # outline with R1 corners
     segs = [((R, 0), (W - R, 0)), ((W, R), (W, Hh - R)), ((W - R, Hh), (R, Hh)), ((0, Hh - R), (0, R))]
     for a, c in segs:
