@@ -1,0 +1,367 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-30T22:15:06",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P10.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [CAN_L] z D1 na F.Cu",
+                    "pos": {
+                        "x": 31.9375,
+                        "y": 47.7
+                    },
+                    "uuid": "dddff96a-5e4c-4bc9-9bd2-fe676ad12346"
+                },
+                {
+                    "description": "Ścieżka [CAN_L] na F.Cu, długość 2,2625 mm",
+                    "pos": {
+                        "x": 31.9375,
+                        "y": 57.7
+                    },
+                    "uuid": "0a1eab6f-0dbb-41ca-972b-de5c18057100"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole lutownicze 2 [CAN_H] z D1 na F.Cu",
+                    "pos": {
+                        "x": 31.9375,
+                        "y": 45.8
+                    },
+                    "uuid": "1b822625-5483-4a95-adbb-0e944a3aafc2"
+                },
+                {
+                    "description": "Ścieżka [CAN_H] na B.Cu, długość 2,8284 mm",
+                    "pos": {
+                        "x": 33.25,
+                        "y": 55.0
+                    },
+                    "uuid": "30edb647-76ab-4923-b470-83cf23886c07"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci /CORE/SRV_CAN_H oraz CAN_L)",
+            "items": [
+                {
+                    "description": "Ścieżka [/CORE/SRV_CAN_H] na F.Cu, długość 0,1616 mm",
+                    "pos": {
+                        "x": 31.4116,
+                        "y": 47.92
+                    },
+                    "uuid": "b65f4c8c-31d4-4f23-bedd-af29e230cfff"
+                },
+                {
+                    "description": "Pole lutownicze 1 [CAN_L] z D1 na F.Cu",
+                    "pos": {
+                        "x": 31.9375,
+                        "y": 47.7
+                    },
+                    "uuid": "dddff96a-5e4c-4bc9-9bd2-fe676ad12346"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci /CORE/SRV_CAN_H oraz CAN_L)",
+            "items": [
+                {
+                    "description": "Ścieżka [/CORE/SRV_CAN_H] na F.Cu, długość 7,8490 mm",
+                    "pos": {
+                        "x": 36.9617,
+                        "y": 53.4701
+                    },
+                    "uuid": "26ce1bb1-a68b-42b8-bca9-2eeebe728f7a"
+                },
+                {
+                    "description": "Pole lutownicze 1 [CAN_L] z D1 na F.Cu",
+                    "pos": {
+                        "x": 31.9375,
+                        "y": 47.7
+                    },
+                    "uuid": "dddff96a-5e4c-4bc9-9bd2-fe676ad12346"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci /CORE/SRV_CAN_H oraz CAN_L)",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [/CORE/SRV_CAN_H] na R8",
+                    "pos": {
+                        "x": 31.25,
+                        "y": 47.92
+                    },
+                    "uuid": "d734de4f-3d6e-49a5-a360-f68c3db473aa"
+                },
+                {
+                    "description": "Pole lutownicze 1 [CAN_L] z D1 na F.Cu",
+                    "pos": {
+                        "x": 31.9375,
+                        "y": 47.7
+                    },
+                    "uuid": "dddff96a-5e4c-4bc9-9bd2-fe676ad12346"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu ( prześwit 0,2500 mm; obecnie 0,2334 mm)",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [/CORE/SRV_CAN_H] na R8",
+                    "pos": {
+                        "x": 31.25,
+                        "y": 47.92
+                    },
+                    "uuid": "d734de4f-3d6e-49a5-a360-f68c3db473aa"
+                },
+                {
+                    "description": "Pole lutownicze 3 [GND] z D1 na F.Cu",
+                    "pos": {
+                        "x": 30.0625,
+                        "y": 46.75
+                    },
+                    "uuid": "81d60c85-f2b0-47ac-83ba-44d4f759ef92"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint R8",
+                    "pos": {
+                        "x": 31.25,
+                        "y": 53.0
+                    },
+                    "uuid": "cea0f6ac-8896-4ee6-a455-c12cf6f9bc3e"
+                },
+                {
+                    "description": "Footprint D1",
+                    "pos": {
+                        "x": 31.0,
+                        "y": 46.75
+                    },
+                    "uuid": "eababfe1-760d-46ba-b707-446e20b65dba"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [/CORE/SRV_CAN_H] na R8",
+                    "pos": {
+                        "x": 31.25,
+                        "y": 47.92
+                    },
+                    "uuid": "d734de4f-3d6e-49a5-a360-f68c3db473aa"
+                },
+                {
+                    "description": "Footprint D1",
+                    "pos": {
+                        "x": 31.0,
+                        "y": 46.75
+                    },
+                    "uuid": "eababfe1-760d-46ba-b707-446e20b65dba"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/CORE/SRV_CAN_H] na F.Cu, długość 7,8490 mm",
+                    "pos": {
+                        "x": 36.9617,
+                        "y": 53.4701
+                    },
+                    "uuid": "26ce1bb1-a68b-42b8-bca9-2eeebe728f7a"
+                },
+                {
+                    "description": "Pole lutownicze 1 [CAN_L] z D1 na F.Cu",
+                    "pos": {
+                        "x": 31.9375,
+                        "y": 47.7
+                    },
+                    "uuid": "dddff96a-5e4c-4bc9-9bd2-fe676ad12346"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/CORE/SRV_CAN_H] na F.Cu, długość 0,1616 mm",
+                    "pos": {
+                        "x": 31.4116,
+                        "y": 47.92
+                    },
+                    "uuid": "b65f4c8c-31d4-4f23-bedd-af29e230cfff"
+                },
+                {
+                    "description": "Pole lutownicze 1 [CAN_L] z D1 na F.Cu",
+                    "pos": {
+                        "x": 31.9375,
+                        "y": 47.7
+                    },
+                    "uuid": "dddff96a-5e4c-4bc9-9bd2-fe676ad12346"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [/CORE/SRV_CAN_H] na R8",
+                    "pos": {
+                        "x": 31.25,
+                        "y": 47.92
+                    },
+                    "uuid": "d734de4f-3d6e-49a5-a360-f68c3db473aa"
+                },
+                {
+                    "description": "Pole lutownicze 1 [CAN_L] z D1 na F.Cu",
+                    "pos": {
+                        "x": 31.9375,
+                        "y": 47.7
+                    },
+                    "uuid": "dddff96a-5e4c-4bc9-9bd2-fe676ad12346"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [CAN_H] na F.Cu, długość 0,9723 mm",
+                    "pos": {
+                        "x": 31.25,
+                        "y": 55.1125
+                    },
+                    "uuid": "a36f69fa-47cd-466d-9869-0f6b96551448"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x09_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J2",
+                    "pos": {
+                        "x": 36.66,
+                        "y": 95.96
+                    },
+                    "uuid": "4e1c17ed-7309-4250-8876-9a8b39c9b6cd"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x05_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J1",
+                    "pos": {
+                        "x": 21.42,
+                        "y": 13.33
+                    },
+                    "uuid": "97bb55db-69eb-426a-a2ec-49d95017ec62"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment z D1 na F.Silkscreen",
+                    "pos": {
+                        "x": 31.76,
+                        "y": 48.26
+                    },
+                    "uuid": "d8f8e4e6-9e6c-418c-9ece-6cff8f3105f9"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment z D1 na F.Silkscreen",
+                    "pos": {
+                        "x": 31.76,
+                        "y": 48.31
+                    },
+                    "uuid": "9313d8e6-f34e-441f-9545-a1d75cc84ebb"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        }
+    ]
+}

@@ -5,7 +5,7 @@ Przyrządy i wzorcowy interfejs CAN: ____ kabel W3 / rzeczywista długość: ___
 
 Wszystkie statusy poniżej **NIE ZBADANO**. PASS wpisuje wykonawca po pomiarze.
 
-Punkty pomiarowe są na **listwie serwisowej J2** (krawędź B, dostępna po skręceniu stosu; kołki przez rezystory 1 kΩ, a CAN_H/CAN_L przez 10 kΩ). Numeracja od strony mniejszego x: 1 GND, 2 5V_SYS, 3 3V3_IO, 4 RX_RAW, 5 CAN_RX, 6 CAN_TX, 7 CAN_H, 8 CAN_L, 9 GND. Przebiegi CAN o pełnej wierności mierzyć na J3 (kabel W3), nie na kołkach 7/8 (10 kΩ i pojemność sondy dają ok. 150 ns).
+Punkty pomiarowe są na **listwie serwisowej J2** (krawędź B, dostępna po skręceniu stosu; kołki przez rezystory 1 kΩ, a CAN_H/CAN_L przez 10 kΩ). Numeracja od strony większego x (patrząc od krawędzi B: od prawej; nazwa sygnału przy każdym kołku): 1 GND, 2 5V_SYS, 3 3V3_IO, 4 RX_RAW, 5 CAN_RX, 6 CAN_TX, 7 CAN_H, 8 CAN_L, 9 GND. Przebiegi CAN o pełnej wierności mierzyć na J3 (kabel W3), nie na kołkach 7/8 (10 kΩ i pojemność sondy dają ok. 150 ns).
 
 | Próba | Kołek J2 / kryterium / pomiar do zapisania | Wynik / załącznik |
 |---|---|---|

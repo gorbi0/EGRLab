@@ -1,4 +1,4 @@
-"""P10 passive CAN receiver, R2, format S1 (class 1/3, slot S1, level 1). Fixed silent and recessive TXD, protected RX to CORE.
+"""P10 passive CAN receiver, R2, format S1 (class 1/3, slot S3, level 4; S1-3). Fixed silent and recessive TXD, protected RX to CORE.
 R1 -> R2: J1 LV10 and J2 CAN_CORE (soldered harnesses) -> J_BP (angled shrouded IDC 2x5, odd pins GND); TP1..TP6 -> service strip J2 (1x9, GND at both ends,
 series resistors R3..R9 at the nodes); J3 OBD tail stays; owned THT parts (Zamowione/zamowione.csv: MF0207 10k, K104K15X7RF5TH5 100n) stand upright, everything else new is SMD 1206."""
 from cadlib import *
@@ -37,7 +37,7 @@ JBP=[(2,'5V_SYS','zasilanie do P10','P02 R4 (przez P12)','5V_SYS: VCC transceive
      (8,'CAN_RX','wyjście','P03','GPIO18 CORE; RXD transceivera przez bufor U2 (Ioff) i R1 100 Ω'),
      (10,'5V_SYS','zasilanie do P10','P02 R4 (przez P12)','drugi pin 5V_SYS (S1 §5)')]
 jbp_pins={i:G for i in range(1,11,2)};jbp_pins.update({p:n for p,n,*_ in JBP})
-add('J1','J_BP',symbol('Connector_Generic','Conn_02x05_Odd_Even'),IDC10,'J_BP / IDC 2x5','IDC header 2x5 2.54mm angled shrouded, Au (type to be chosen in the purchase list)',jbp_pins,'CORE',note='Edge A, centre x=26.5 mm of the slot (S1). Odd pins GND, even pins signals/supplies. Pin 1 towards smaller x. Replaces LV10 (P02-R3/J10) and CORE CAN (P03-R2/J8).')
+add('J1','J_BP',symbol('Connector_Generic','Conn_02x05_Odd_Even'),IDC10,'J_BP / IDC 2x5','IDC header 2x5 2.54mm angled shrouded, Au (type to be chosen in the purchase list)',jbp_pins,'CORE',note='Edge A, centre x=26.5 mm of the slot (S3). Odd pins GND, even pins signals/supplies. Pin 1 towards smaller x. Replaces LV10 (P02-R3/J10) and CORE CAN (P03-R2/J8).')
 add('J3','J_OBD_TAIL',symbol('Connector_Generic','Conn_01x02'),'P10:PTH_OBD','OBD / PTH','Soldered 120ohm twisted pair',{1:'CAN_H',2:'CAN_L'},'P10',note='300mm cable to OBD male typeA pins6/14. All other OBD pins NC, including4/5/16. Device GND from its power input only.')
 # Service strip (edge B). 1k for rails and logic; 10k for the two CAN bus nodes (external vehicle network: a slipped probe must not load or stress the bus).
 SRV=[('5V_SYS',1000,'VCC transceivera: obecność 5 V, pobór, spadek'),
@@ -51,5 +51,5 @@ srv_pins={1:G,len(SRV)+2:G};srv_r={}
 for k,(net,ohm,_) in enumerate(SRV,2):
  r='R'+str(k+1);srv_r[net]=r;srv_pins[k]='SRV_'+net
  res(r,'1K' if ohm==1000 else '10K',net,'SRV_'+net,'CORE','P10_R2','Serwis: kołek przez rezystor przy węźle, zsunięta sonda nic nie uszkodzi')
-add('J2','J_SRV',symbol('Connector_Generic','Conn_01x09'),HDR9,'SERWIS / goldpin 1x9','Goldpin 1x9 2.54mm angled (buy angled strip, owned 1x40 is straight)',srv_pins,'CORE',note='Edge B, x=10..43 mm of the slot; pin 1 towards smaller x; pins stick ~6 mm beyond the edge. GND at both ends.')
+add('J2','J_SRV',symbol('Connector_Generic','Conn_01x09'),HDR9,'SERWIS / goldpin 1x9','Goldpin 1x9 2.54mm angled (buy angled strip, owned 1x40 is straight)',srv_pins,'CORE',note='Edge B, x=10..43 mm of the slot; pin 1 towards larger x (angled strip on the top side, pins out of edge B: the footprint fixes the order); pins stick ~6 mm beyond the edge. GND at both ends.')
 if __name__=='__main__':write_tables();print(len(PARTS),'parts')
