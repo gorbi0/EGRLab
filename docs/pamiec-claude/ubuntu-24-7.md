@@ -1,6 +1,6 @@
 ---
 name: ubuntu-24-7
-description: "Od 30.09.2026 długie zadania EGRLab idą na komputerze użytkownika z Ubuntu (24/7, sesja Claude Code „frigate-claude” z Remote Control); środowisko Docker z scripts/setup-chmura.sh; layout/trasowanie dozwolone"
+description: "Od 30.09.2026 długie zadania EGRLab idą na komputerze użytkownika z Ubuntu (24/7); projekty w /home/tgorbacz/AI/Claude/<projekt>, EGRLab tam; sesja na projekt z Remote Control; Docker z scripts/setup-chmura.sh; layout/trasowanie dozwolone"
 metadata:
   node_type: memory
   type: reference
@@ -8,7 +8,7 @@ metadata:
   modified: 2026-09-30T15:22:15.069Z
 ---
 
-Komputer 24/7 z Ubuntu, sesja Claude Code „frigate-claude” (Remote Control; widoczna w ListAgents z laptopa). Opis środowiska i zasad: `docs/UBUNTU-24-7.md`.
+Komputer 24/7 z Ubuntu. Projekty Claude w `/home/tgorbacz/AI/Claude/<projekt>` (decyzja użytkownika 30.09), EGRLab w `/home/tgorbacz/AI/Claude/EGRLab`, pamięć w `~/.claude/projects/-home-tgorbacz-AI-Claude-EGRLab/memory/`. Jedna sesja na projekt, uruchomiona w jego katalogu z Remote Control; „frigate-claude” (Remote Control, widoczna w ListAgents z laptopa) zrobiła przygotowanie. Opis środowiska i zasad: `docs/UBUNTU-24-7.md`.
 
 - Narzędzia: obraz Docker `egrlab-kicad:10.0.6` z `scripts/setup-chmura.sh`, polecenia przez `scripts/egrlab-docker` (KiCad 10.0.6, Freerouting 2.1.0 w `/opt/egrlab/freerouting`, reportlab, poppler, Node/sharp, czcionki Liberation).
 - To komputer i plan użytkownika, nie płatna chmura: layout i trasowanie wolno tu robić (zasady kosztowe z CHMURA.md nie obowiązują, [[chmura-limity]] dotyczy chmury).
