@@ -17,6 +17,8 @@ assert checks['board_sha256'] == hashlib.sha256((P / 'eda/P02.kicad_pcb').read_b
 neg = json.loads((P / 'verification/negative-controls.json').read_text(encoding='utf-8'))
 el = json.loads((P / 'verification/electrical-checks.json').read_text(encoding='utf-8'))
 parts = json.loads((P / 'docs/parts.json').read_text(encoding='utf-8'))
+drc = json.loads((P / 'verification/drc.json').read_text(encoding='utf-8')); silk = json.loads((P / 'routing/silkscreen.json').read_text(encoding='utf-8'))
+bottom = sorted(r for r, v in json.loads((P / 'src/placement.json').read_text(encoding='utf-8')).items() if len(v) > 3 and v[3] == 'B')   # klasa L (30.09)
 pdfmetrics.registerFont(TTFont('Arial', 'C:/Windows/Fonts/arial.ttf')); pdfmetrics.registerFont(TTFont('Bold', 'C:/Windows/Fonts/arialbd.ttf'))
 (O / 'pdf').mkdir(parents=True, exist_ok=True)
 c = Canvas(str(O / 'pdf/P02-R4-PCB.pdf'), pagesize=(297 * mm, 210 * mm)); c.setTitle('EGRLab P02 R4: PCB w formacie S1 (etap 2)')
@@ -33,7 +35,7 @@ def start(n, title, subtitle):
     c.setFillColor(HexColor('#172833')); c.setFont('Bold', 18); c.drawString(12 * mm, 190 * mm, title)
     c.setFont('Arial', 9); c.drawString(12 * mm, 182 * mm, subtitle)
     c.setStrokeColor(HexColor('#cdd7dc')); c.line(12 * mm, 14 * mm, 285 * mm, 14 * mm)
-    c.setFont('Arial', 8); c.drawString(12 * mm, 9 * mm, 'P02 R4 S1-L S1–S3 | 29.09.2026 | etap 2 do recenzji lokalnej | przymiarka 1:1 i odbiór sprzętu: NIE ZBADANO')
+    c.setFont('Arial', 8); c.drawString(12 * mm, 9 * mm, 'P02 R4 S1-L S1–S3 | 29–30.09.2026 | etap 2 do recenzji lokalnej | przymiarka 1:1 i odbiór sprzętu: NIE ZBADANO')
     c.drawRightString(285 * mm, 9 * mm, f'{n} / {NPAGES}')
 
 
@@ -50,13 +52,15 @@ def board(name, x=12, y=40):
 npass = sum(x['detected'] for x in neg); nel = sum(k['pass'] for k in el['checks'])
 start(1, 'P02 R4 — zasilanie z pakietu 4S, PCB w formacie S1', 'Pilot formatu S1: klasa L (160 × 100 mm), sloty S1–S3 poziomu 1 (dystanse 25 mm). Schemat: osobny PDF (5 arkuszy A3).')
 y = 172
-for t in [f'<b>Płytka:</b> 106,5 × 100,0 mm, narożniki R1, FR4 1,6 mm, 2 × 35 µm; 8 otworów M3 (NPTH 3,2) według format-s1.json, strefy dystansów Ø7 bez miedzi i części. '
-          f'{sum(1 for p in parts.values() if p["on_board"])} części, wszystkie od góry; najwyższa część {max(p["height_mm"] for p in parts.values() if p["on_board"])} mm (limit 21,5).',
+for t in [f'<b>Płytka:</b> 160 × 100 mm (klasa L), narożniki R1, FR4 1,6 mm, 2 × 35 µm; 12 otworów M3 (NPTH 3,2) według format-s1.json, strefy dystansów Ø7 bez miedzi i części. '
+          f'{sum(1 for p in parts.values() if p["on_board"])} części, od spodu {", ".join(bottom)}; najwyższa część {max(p["height_mm"] for p in parts.values() if p["on_board"])} mm (limit 21,5).',
           '<b>Krawędź A:</b> J_BP (IDC 2×10 kątowe, pinout S1 §8) ze środkiem w x = 133,5. <b>Krawędź B:</b> J_SV1 i J_SV2 (goldpin kątowy 1×13, GND na końcach, każdy kołek przez rezystor 1k / 4,7k / 10k przy węźle).',
-          '<b>Ściana wejść (x = 106,5):</b> J1 BAT (kotwa przewodów), J2 VMOTOR (GMSTBA), J15 VBAT_IN. J14 PWR przy lewej krawędzi (przewód do panelu).',
+          '<b>Ściana wejść (x = 160):</b> J1 BAT (kotwa przewodów), J2 VMOTOR (GMSTBA), J15 VBAT_IN. J14 PWR przy lewej krawędzi (przewód do panelu).',
           '<b>Tor 5 A:</b> strefy miedzi J1 → Q9 → SW_COM → Q1 → VSW → F1 → J2 oraz powrót GND po B.Cu w korytarzu bez ścieżek; ≥ 4 mm miedzi wzdłuż całego toru (IPC-2152, 35 µm, ≤ 20 K). Blaszki TO-220 stoją nad miedzią własnej sieci.',
-          f'<b>Kontrole:</b> DRC 0/0/0; PCB {checks["passed"]}/{checks["total"]}; próby ujemne PCB {npass}/{len(neg)} (z próbą zerową); ERC 0; kontrole elektryczne {nel}/{len(el["checks"])}.',
-          '<b>Otwarte:</b> przymiarka 1:1 (strona 5), wysokości szacunkowe (bezpieczniki MINI, GMSTBA z wtykiem, MKS2), recenzja lokalna; paczka produkcyjna poza zakresem.']:
+          f'<b>Kontrole:</b> DRC: {len(drc["unconnected_items"])} niepołączonych, {len(drc["schematic_parity"])} niezgodności ze schematem, '
+          f'{len(drc["violations"]) - sum(1 for v in drc['violations'] if v['type'] == 'lib_footprint_mismatch')} innych naruszeń; {sum(1 for v in drc['violations'] if v['type'] == 'lib_footprint_mismatch')} zgłoszeń lib_footprint_mismatch u części z przyciętym nadrukiem (przyjęte przez verify_pcb.py); PCB {checks["passed"]}/{checks["total"]}; próby ujemne PCB {npass}/{len(neg)} (z próbą zerową); ERC 0; kontrole elektryczne {nel}/{len(el["checks"])}.',
+          f'<b>Otwarte:</b> przymiarka 1:1 (strona 5), wysokości szacunkowe (bezpieczniki MINI, GMSTBA z wtykiem, MKS2), recenzja lokalna; '
+          f'{len(silk["hidden_references"])} oznaczeń ukrytych z braku miejsca ({", ".join(silk["hidden_references"])}); paczka produkcyjna poza zakresem.']:
     y = para(t, 12, y, 120)
 c.drawImage(str(O / 'previews/isometric.png'), 138 * mm, 30 * mm, 150 * mm, 125 * mm, preserveAspectRatio=True, anchor='c', mask='auto')
 para('Render KiCad z modelami bibliotecznymi (C_H leżący i pigtaile bez modeli 3D).', 142, 30, 140)
@@ -65,7 +69,7 @@ pages = [(2, 'Montaż od góry — 1:1', 'assembly', [
     '<b>C12 (C_H 2200 µF)</b> leży: plus przy D2/D1, puszka przyklejona lub przywiązana do płytki.',
     '<b>TO-220 (Q9, Q1, Q2, D1, D2)</b> stoją; nóżki skrócone do 4 mm, blaszka nad miedzią własnej sieci. Bez radiatorów.',
     '<b>R27, R40</b> (PR02) leżą 1 mm nad płytką. Rezystory THT z zakupów P01 stoją; nowe rezystory i ceramika SMD 1206.',
-    '<b>U9</b> 74LVC125A lutowany wprost (SOIC-14), bez adaptera; C27 i C28 przy pinie 14.',
+    '<b>Od spodu (S1-2):</b> U9 74LVC125A (SOIC-14, bez adaptera) oraz C27 i C28 (1206) przy jego pinie 14 — lutować przed częściami THT.',
     '<b>R34</b> to zwora z drutu 0,6 mm (PG_SEND–PG_LINK).', 'Wyprowadzenia THT od spodu przyciąć do ≤ 1,5 mm (S1 §4).']),
     (3, 'Miedź F.Cu — 1:1', 'copper-front', [
     'Natywny eksport KiCad po wypełnieniu stref. Szare pola to miedź.',
@@ -81,7 +85,7 @@ pages = [(2, 'Montaż od góry — 1:1', 'assembly', [
 for n, title, name, notes in pages:
     start(n, title, 'Geometria z natywnego pliku PCB; sprawdź belkę 100 mm przed przymiarką.'); board(name)
     yy = 172
-    for t in notes:
-        yy = para(t, 128, yy, 157)
+    for t in notes:   # klasa L (30.09): the 160 mm board ends at x = 172; notes to the right of it
+        yy = para(t, 178, yy, 107)
     c.showPage()
 c.save(); print(O / 'pdf/P02-R4-PCB.pdf')

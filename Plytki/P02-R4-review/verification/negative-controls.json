@@ -1,0 +1,111 @@
+[
+  {
+    "control": "null_control",
+    "expected_failing_check": "none (all PASS)",
+    "detected": true,
+    "failed_checks": []
+  },
+  {
+    "control": "mount_shift",
+    "expected_failing_check": "M3 holes",
+    "detected": true,
+    "failed_checks": [
+      "M3 holes: 12 NPTH 3.2 mm exactly at the S1 positions (x_w_slocie + 53.5 k, y 14 / 86)"
+    ]
+  },
+  {
+    "control": "jbp_shift",
+    "expected_failing_check": "J_BP (edge A)",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "J_BP (edge A): IDC 2x10 angled, body front at y = 0, centre x = 133.5 (slot S3), pin 1 at smaller x, pinout = S1 section 8",
+      "Every visible reference outside the courtyards of other parts"
+    ]
+  },
+  {
+    "control": "sv_no_gnd_end",
+    "expected_failing_check": "Service headers",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Every value, footprint ID and pad net equals the exported schematic netlist",
+      "Service headers (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pins out ~6 mm, GND on both ends, one series resistor of its class at the node (<= 10 mm or in its pour), one silk label per pin"
+    ]
+  },
+  {
+    "control": "sv_pin_without_resistor",
+    "expected_failing_check": "Service headers",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Every value, footprint ID and pad net equals the exported schematic netlist",
+      "Service headers (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pins out ~6 mm, GND on both ends, one series resistor of its class at the node (<= 10 mm or in its pour), one silk label per pin"
+    ]
+  },
+  {
+    "control": "too_tall",
+    "expected_failing_check": "Every part <=",
+    "detected": true,
+    "failed_checks": [
+      "Every part <= 21.5 mm above the board (level 1, S1 section 4; heights in parts.py)"
+    ]
+  },
+  {
+    "control": "neck_5a",
+    "expected_failing_check": "5 A path",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "5 A path J1 -> Q9 -> SW_COM -> Q1 -> VSW -> F1 -> J2 and the GND return: >= 4.0 mm of net copper on every cross-section (+/-3 mm) between the pads (IPC-2152, 35 um, 5 A, <= 20 K)",
+      "TO-220 (Q9, Q1, Q2, D1, D2): under each tab only copper of the tab net (pin 2) on F.Cu"
+    ]
+  },
+  {
+    "control": "decap_far",
+    "expected_failing_check": "Decoupling",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "S1-2 section 4: parts on the bottom only SMD <= 1.5 mm (SOIC allowed on level 1), >= 1 mm from THT pads (standoff zones: check below)",
+      "Decoupling at the pins (task section 2): capacitor pad <= 8 mm from its pin"
+    ]
+  },
+  {
+    "control": "tab_foreign",
+    "expected_failing_check": "TO-220",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "TO-220 (Q9, Q1, Q2, D1, D2): under each tab only copper of the tab net (pin 2) on F.Cu"
+    ]
+  },
+  {
+    "control": "corridor_track",
+    "expected_failing_check": "GND return corridor",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "5 A path J1 -> Q9 -> SW_COM -> Q1 -> VSW -> F1 -> J2 and the GND return: >= 4.0 mm of net copper on every cross-section (+/-3 mm) between the pads (IPC-2152, 35 um, 5 A, <= 20 K)",
+      "GND return corridor on B.Cu: rule area contains J1.2 and J2.2, no track or via inside"
+    ]
+  },
+  {
+    "control": "hold_far",
+    "expected_failing_check": "C_H, D2 and D1",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "C_H, D2 and D1 close together: HOLD_C pads within 20 mm of each other",
+      "Every visible reference outside the courtyards of other parts"
+    ]
+  },
+  {
+    "control": "label_missing",
+    "expected_failing_check": "Service headers",
+    "detected": true,
+    "failed_checks": [
+      "Service headers (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pins out ~6 mm, GND on both ends, one series resistor of its class at the node (<= 10 mm or in its pour), one silk label per pin"
+    ]
+  }
+]

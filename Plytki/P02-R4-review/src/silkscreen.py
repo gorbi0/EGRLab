@@ -87,6 +87,26 @@ for f in b.GetFootprints():
         if g.GetLayer() == p.F_SilkS:
             silk.append((f.GetReference(), bbox_of(g)))
 placed = []; placed_b = []
+# 30.09: a footprint text (the cathode 'K' of the DO-35 / DO-15 vertical diodes) that touches silk of its own or another part
+# moves to the nearest free spot (0.2 mm grid, up to 3 mm); DRC reports these as silk_overlap inside one footprint. Listed per part.
+moved_by = {}
+ftexts = [(f.GetReference(), g) for f in b.GetFootprints() for g in f.GraphicalItems() if g.GetLayer() == p.F_SilkS and isinstance(g, p.PCB_TEXT)]
+for r0, g in ftexts:
+    ob = bbox_of(g); others = [sb for r, sb in silk if sb != ob]
+    if not any(hit(ob, sb, .2) for sb in others):
+        continue
+    x0, y0 = p.ToMM(g.GetPosition().x), p.ToMM(g.GetPosition().y); done = False
+    offs = sorted(((i * .2, j * .2) for i in range(-15, 16) for j in range(-15, 16) if (i, j) != (0, 0)), key=lambda q: (math.hypot(*q), q))
+    for ddx, ddy in offs:
+        g.SetPosition(p.VECTOR2I(mm(x0 + ddx), mm(y0 + ddy))); bx = bbox_of(g)
+        if not any(hit(bx, sb, .2) for sb in others) and not any(hit(bx, pb, .25) for r, pb in padboxes) \
+                and EDGE + .2 < bx[0] and bx[2] < W - EDGE - .2 and EDGE + .2 < bx[1] and bx[3] < H - EDGE - .2 \
+                and not any(r != r0 and not fps[r].IsFlipped() and cy.Contains(p.VECTOR2I(mm((bx[0] + bx[2]) / 2), mm((bx[1] + bx[3]) / 2))) for r, cy in yards.items()):
+            done = True; break
+    if not done:
+        g.SetPosition(p.VECTOR2I(mm(x0), mm(y0))); continue
+    silk = [(r, sb) for r, sb in silk if not (r == r0 and sb == ob)] + [(r0, bbox_of(g))]
+    moved_by[r0] = moved_by.get(r0, 0) + 1
 
 
 def free(box, own, bottom=False):
@@ -181,6 +201,7 @@ for r in ('J_BP', 'J_SV1', 'J_SV2', 'J1', 'J2', 'J14'):
     a = next(q for q in fps[r].Pads() if q.GetNumber() == '1'); ax, ay = p.ToMM(a.GetPosition().x), p.ToMM(a.GetPosition().y); s = max(p.ToMM(a.GetSize().x), p.ToMM(a.GetSize().y)) / 2 + .9
     res['pin1_' + r] = place_text('1', [(ax + dx, ay + dy) for dx, dy in [(-s, 0), (s, 0), (0, -s), (0, s), (-s, -s), (s, -s), (-s, s), (s, s)]], .9)
 p.SaveBoard(str(fn), b)
-rep = {'dropped_footprint_silk': n_drop, 'dropped_by_part': dict(sorted(drop_by.items())), 'hidden_references': missing, 'board_texts': res, 'unplaced_texts': extra, 'service_labels': labels}
+rep = {'dropped_footprint_silk': n_drop, 'dropped_by_part': dict(sorted(drop_by.items())), 'moved_texts_by_part': dict(sorted(moved_by.items())),
+       'hidden_references': missing, 'board_texts': res, 'unplaced_texts': extra, 'service_labels': labels}
 (P / 'routing/silkscreen.json').write_text(json.dumps(rep, indent=1, ensure_ascii=False) + '\n', encoding='utf-8')
 print('silk: dropped', n_drop, 'footprint graphics; hidden references', missing, '; unplaced texts', extra)

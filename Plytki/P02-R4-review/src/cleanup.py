@@ -1,7 +1,9 @@
 """P02 R4 post-routing clean-up (copied from P04 R2, file name changed). Taken over from P03 R1 (Claude); replaces the R1 script, which deleted through pcbnew
 (see the SWIG note below) and had no dead-end removal. Run after import_routing.py, set_rules.py and complete_routes.py.
 1. Remove autorouted chains that start and end on locked copper of the same net and touch no pad or free via on
-   the way: they only duplicate locked copper.
+   the way: they only duplicate locked copper. P02 R4 (30.09): both ends must lie on the same connected group of locked
+   copper (locked tracks and vias joined end to end or through a pad of the net); the completion planner leaves separate
+   locked pieces, and a chain between two of them is the only link (P02_OK after the tab-pour change).
 2. SES rounding: drop free segments shorter than 5 um; join free track ends that miss each other by < 5 um.
 3. Router dead ends (P03 R1: MOTOR_INA ran 5 mm out and back on both layers; P04 R2 trials: F.Cu and B.Cu stubs meeting where no via was emitted): drop duplicate
    free segments, then free segments with an end that touches no pad, via or other segment of the net, and free vias
@@ -48,8 +50,30 @@ for code, items in by_net.items():
     free = [t for t in items if not t.IsLocked() and not isinstance(t, p.PCB_VIA)]
     free_vias = [t for t in items if not t.IsLocked() and isinstance(t, p.PCB_VIA)]
 
+    # connected groups of locked copper: tracks/vias joined end to end, or through a pad of the net
+    grp = {uid(t): uid(t) for t in locked}
+
+    def root(u):
+        while grp[u] != u:
+            grp[u] = grp[grp[u]]; u = grp[u]
+        return u
+
+    def ends(t):
+        return [t.GetPosition()] if isinstance(t, p.PCB_VIA) else [t.GetStart(), t.GetEnd()]
+
+    for t in locked:
+        for u in locked:
+            if u is t or root(uid(u)) == root(uid(t)):
+                continue
+            if any((isinstance(u, p.PCB_VIA) or isinstance(t, p.PCB_VIA) or u.GetLayer() == t.GetLayer()) and u.HitTest(e) for e in ends(t)):
+                grp[root(uid(u))] = root(uid(t))
+    for a in pads_by_net[code]:
+        on = [t for t in locked if any(a.HitTest(e) and (isinstance(t, p.PCB_VIA) or a.IsOnLayer(t.GetLayer())) for e in ends(t))]
+        for t in on[1:]:
+            grp[root(uid(t))] = root(uid(on[0]))
+
     def anchored(pt, layer):
-        return any((isinstance(t, p.PCB_VIA) or t.GetLayer() == layer) and t.HitTest(pt) for t in locked)
+        return {root(uid(t)) for t in locked if (isinstance(t, p.PCB_VIA) or t.GetLayer() == layer) and t.HitTest(pt)}
 
     def blocked(pt, layer):
         return any(a.IsOnLayer(layer) and a.HitTest(pt) for a in pads_by_net[code]) or any(v.HitTest(pt) for v in free_vias)
@@ -60,15 +84,19 @@ for code, items in by_net.items():
             adj[(t.GetLayer(), key(e))].append(t)
     for t in free:
         for start in (t.GetStart(), t.GetEnd()):
-            if not anchored(start, t.GetLayer()) or blocked(start, t.GetLayer()):
+            g0 = anchored(start, t.GetLayer())
+            if not g0 or blocked(start, t.GetLayer()):
                 continue
             chain, cur, pt = [t], t, (t.GetEnd() if start == t.GetStart() else t.GetStart())
             while True:
                 node = (cur.GetLayer(), key(pt))
                 if blocked(pt, cur.GetLayer()):
                     break
-                if anchored(pt, cur.GetLayer()):
-                    dead.update(uid(x) for x in chain); redundant_nets.add(t.GetNetname()); break
+                g1 = anchored(pt, cur.GetLayer())
+                if g1:
+                    if g0 & g1:   # same locked group at both ends: the chain duplicates it
+                        dead.update(uid(x) for x in chain); redundant_nets.add(t.GetNetname())
+                    break
                 nxt = [x for x in adj[node] if x is not cur]
                 if len(nxt) != 1 or len(chain) > 50:
                     break

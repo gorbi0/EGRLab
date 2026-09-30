@@ -86,7 +86,8 @@ def fills(netname, layers=(p.F_Cu, p.B_Cu)):
 drc, receipt = run_fresh_drc(path, out / 'drc.json')
 # Klasa L (29.09): silkscreen.py drops footprint silk at file level (off the board, over other pads or over other silk) and lists
 # every drop per part; KiCad then reports lib_footprint_mismatch for exactly those parts. Only these are accepted, by UUID.
-trimmed = set(json.loads((P / 'routing/silkscreen.json').read_text(encoding='utf-8')).get('dropped_by_part', {}))
+_silk = json.loads((P / 'routing/silkscreen.json').read_text(encoding='utf-8'))
+trimmed = set(_silk.get('dropped_by_part', {})) | set(_silk.get('moved_texts_by_part', {}))
 fp_uuid = {f.m_Uuid.AsString(): f.GetReference() for f in b.GetFootprints()}
 lib_ok = [v for v in drc['violations'] if v['type'] == 'lib_footprint_mismatch' and all(fp_uuid.get(i['uuid']) in trimmed for i in v['items'])]
 rest = [v for v in drc['violations'] if v not in lib_ok]
@@ -143,7 +144,7 @@ check(f'Outline class {KLASA}: {W} x {H} mm, 4 corner arcs R {R} mm (format-s1.j
 want_h = sorted((x + STEP * k, y) for k in range(len(SLOTY)) for x in S1['otwory_M3']['x_w_slocie'] for y in S1['otwory_M3']['y'])
 got_h = sorted(pos(fmap[r].GetPosition()) for r in holes_ref)
 hole_ok = all(list(fmap[r].Pads())[0].GetAttribute() == p.PAD_ATTRIB_NPTH and pos(list(fmap[r].Pads())[0].GetDrillSize()) == (S1['otwory_M3']['srednica'],) * 2 for r in holes_ref)
-check('M3 holes: 8 NPTH 3.2 mm exactly at the S1 positions (x_w_slocie + 53.5 k, y 14 / 86)',
+check(f'M3 holes: {4 * len(SLOTY)} NPTH 3.2 mm exactly at the S1 positions (x_w_slocie + 53.5 k, y 14 / 86)',
       hole_ok and len(got_h) == len(want_h) and all(math.dist(a, c) < .005 for a, c in zip(got_h, want_h)), {'want': want_h, 'got': got_h})
 RZ = S1['otwory_M3']['strefa_dystansu_srednica'] / 2
 near = set(); cop = []
@@ -244,28 +245,33 @@ hh = {r: parts[r]['height_mm'] for r in onboard}
 check(f'Every part <= {HMAX} mm above the board (level 1, S1 section 4; heights in parts.py)', all(v is not None and v <= HMAX for v in hh.values()),
       {'max': max(hh.items(), key=lambda q: q[1] or 99), 'over': {r: v for r, v in hh.items() if v is None or v > HMAX}})
 # ---------------- 6. 5 A path (IPC-2152, 35 um, <= 20 K: >= 4.0 mm) ----------------
-PATHS = {  # net, waypoints (mm); sampled every 0.5 mm, chord +/-2 mm perpendicular must be copper of the net on F.Cu or B.Cu
+PATHS = {  # net, waypoints (mm); sampled every 0.5 mm; on the perpendicular within +/-3 mm >= 4.0 mm must be copper of the net (F.Cu or B.Cu)
     'BAT_IN J1.1-Q9.D': ('P02_BAT_IN', [(87.0, 24.0), (77.6, 24.0)]),
     'SW_COM Q9.S-Q1.S': ('P02_SW_COM', [(74.0, 27.9), (74.0, 33.1)]),
-    'VSW Q1.D-F1.1': ('P02_VSW', [(71.5, 38.0), (69.8, 40.0), (69.8, 44.0), (65.3, 48.5), (65.3, 56.5), (69.5, 60.8), (73.4, 60.8)]),
+    # 30.09: VSW along the middle of the L-shaped pour; the pilot line started at the Q1 pin row (chord into the gate pad
+    # clearance) and cut the inner corner diagonally (chord outside the pour)
+    'VSW Q1.D-F1.1': ('P02_VSW', [(69.8, 38.0), (69.8, 44.0), (65.3, 44.0), (65.3, 56.5), (69.5, 60.8), (73.4, 60.8)]),
     'VMOTOR F1.2-J2.1': ('VMOTOR', [(86.8, 62.7), (91.8, 66.5), (91.8, 74.0), (94.4, 76.0)]),
     'GND return J1.2-J2.2 (B.Cu)': ('GND', [(93.2, 31.62), (97.3, 31.8), (97.3, 39.5), (103.8, 42.5), (103.8, 63.0), (98.5, 68.38)]),
 }
 DX = 53.5   # klasa L (29.09): the power block moved with placement.py / route_critical.py; waypoints above are the 2/3 pilot ones
 PATHS = {k: (n, [(x + DX, y) for x, y in wp]) for k, (n, wp) in PATHS.items()}
+# 30.09 (klasa L): the measure is the copper of the net on the cross-section, not one unbroken 4 mm chord. The current splits
+# around pads of its own net (R18.2 GND with its thermal ring stands in the B.Cu return corridor: 2.0 + 1.6 + 2.9 mm), which
+# the unbroken chord counted as a neck. Copper = pours + pads + tracks of the net (fills()); thermal gaps do not count.
 pw = {}
 for name, (n, wp) in PATHS.items():
-    fl = fills(n, (p.B_Cu,) if n == 'GND' else (p.F_Cu, p.B_Cu)); bad_pts = []; count = 0
+    fl = fills(n, (p.B_Cu,) if n == 'GND' else (p.F_Cu, p.B_Cu)); bad_pts = []; count = 0; wmin = 99.0
     for (x1, y1), (x2, y2) in zip(wp, wp[1:]):
         L = math.dist((x1, y1), (x2, y2)); ux, uy = (x2 - x1) / L, (y2 - y1) / L
         for k in range(int(L / .5) + 1):
             mx, my = x1 + ux * .5 * k, y1 + uy * .5 * k; count += 1
-            for o in [i * .25 - 2 for i in range(17)]:
-                q = xy(mx - uy * o, my + ux * o)
-                if not any(ps.Contains(q) for ps in fl.values()):
-                    bad_pts.append((round(mx, 2), round(my, 2), o)); break
-    pw[name] = {'samples': count, 'narrow': bad_pts[:10], 'narrow_count': len(bad_pts)}
-check('5 A path J1 -> Q9 -> SW_COM -> Q1 -> VSW -> F1 -> J2 and the GND return: >= 4.0 mm of net copper across the path everywhere between the pads '
+            cu_pts = sum(1 for i in range(61) if any(ps.Contains(xy(mx - uy * (i * .1 - 3), my + ux * (i * .1 - 3))) for ps in fl.values()))
+            width = round(cu_pts * .1, 1); wmin = min(wmin, width)
+            if width < 4.0:
+                bad_pts.append((round(mx, 2), round(my, 2), width))
+    pw[name] = {'samples': count, 'min_copper_mm': wmin, 'narrow': bad_pts[:10], 'narrow_count': len(bad_pts)}
+check('5 A path J1 -> Q9 -> SW_COM -> Q1 -> VSW -> F1 -> J2 and the GND return: >= 4.0 mm of net copper on every cross-section (+/-3 mm) between the pads '
       '(IPC-2152, 35 um, 5 A, <= 20 K)', all(v['narrow_count'] == 0 for v in pw.values()), pw)
 corr = [z for z in b.Zones() if z.GetIsRuleArea() and z.GetZoneName().startswith('B.Cu GND return')]; intr = []
 if len(corr) == 1:

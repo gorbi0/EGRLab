@@ -109,3 +109,11 @@ Następny krok: etap 2 (PCB) — `ZADANIE-P02-R4-ETAP2.md`, polecenie w `docs/CH
 Gałąź `p02-r4-pcb`. Trasowanie przerwane na polecenie użytkownika; do dokończenia lokalnie.
 
 Zrobione: schemat w formacie S1 (5 arkuszy z SERW; D3 5KP24A, J_BP IDC 2 × 10 na krawędzi A, listwy serwisowe J_SV1/J_SV2 1 × 13 z rezystorami R50–R71 na krawędzi B, U9/C27/C28 SMD od spodu wg S1-2), rozmieszczenie w klasie 2/3 (106,5 × 100 mm, 0 nakładań obrysów), wylewki toru 5 A, pasy i korytarz powrotu GND, skrypty układu i kontroli (`src/`). Plik `eda/P02.kicad_pcb` to wynik Freeroutingu po zszyciu GND, przed dokańczaniem: 29 niepołączonych pozycji, 2 naruszenia prześwitu przy D10.1, 1 ścieżka w strefie zakazanej (OFF_D przy 87,5/50,4), 1 nakładanie R33/R57 (po imporcie). Stan przed trasowaniem: `routing/prerouted.kicad_pcb`. Lista niepołączonych sieci i pytania: opis PR.
+
+## Etap 2 — PCB w klasie L gotowa do recenzji (30.09.2026, lokalnie)
+
+Decyzja użytkownika „opcja 1”: klasa L (160 × 100 mm, cały poziom 1; format S1-3, P10 na poziom 4). Rozmieszczenie: blok mocy przesunięty o 53,5 mm do ściany wejść, blok sterowania rozsunięty ×1,35, R5 obok D11 (PWR_A nie miała drogi do J14 przy R5 w bloku mocy), odsprzęganie ≤ 7,1 mm, rezystory serwisowe ≤ 8 mm od węzłów. Trasowanie: Freerouting 2.1.0, wynik 4. próby + planer dokańczania; po drodze poprawione skrypty pilota (planer, zszywanie GND, porządki, wylewki pod blaszkami Q9/Q1, nadruk, kontrole i próby ujemne dla klasy L).
+
+Wynik (`Plytki/P02-R4-review/README.md`, `verification/QA-PCB.md`): DRC 0 niepołączonych / 0 niezgodności ze schematem, jedyne zgłoszenia to 13 × niezgodność footprintu z biblioteką u części z przyciętym nadrukiem (przyjęte jawnie); kontrole PCB 23/23; próby ujemne 12/12; tor 5 A ≥ 4,1 mm miedzi.
+
+Następny krok: recenzja PCB (PR #4), przymiarka 1:1, dopiero potem paczka produkcyjna.

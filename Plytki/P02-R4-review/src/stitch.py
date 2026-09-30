@@ -32,6 +32,8 @@ def islands():
             for L in (p.F_Cu, p.B_Cu)}
 
 
+# 30.09: one release run found no GND pours here (204 unconnected, cause not reproduced); stop loudly instead of stitching nothing
+assert sum(1 for z in b.Zones() if not z.GetIsRuleArea() and z.GetNetname() == 'GND') == 2, 'GND pours missing (import_routing.py makes them)'
 gnd = b.FindNet('GND'); p.ZONE_FILLER(b).Fill(b.Zones()); before = islands()
 fills = {L: [z.GetFilledPolysList(L) for z in b.Zones() if not z.GetIsRuleArea() and z.GetNetname() == 'GND' and z.IsOnLayer(L)] for L in (p.F_Cu, p.B_Cu)}
 rules = [z for z in b.Zones() if z.GetIsRuleArea()]

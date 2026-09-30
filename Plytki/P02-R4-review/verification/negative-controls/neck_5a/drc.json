@@ -1,0 +1,280 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-30T07:24:50",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P02.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [P02_BAT_IN] z R61 na F.Cu",
+                    "pos": {
+                        "x": 135.0,
+                        "y": 18.9625
+                    },
+                    "uuid": "7429c03e-7cf9-4aae-b018-27af30b9cb7a"
+                },
+                {
+                    "description": "Strefa 'PWR P02_BAT_IN F.Cu' [P02_BAT_IN] na F.Cu, priorytet 10",
+                    "pos": {
+                        "x": 128.9,
+                        "y": 22.8
+                    },
+                    "uuid": "483ab1f1-1295-4a1f-bbb0-c6c3aaecfa78"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Niekompletne łączenie termiczne ze strefą (warstwa F.Cu; 1 łącz połączonych z izolowanym polem)",
+            "items": [
+                {
+                    "description": "Strefa 'PWR P02_BAT_IN F.Cu' [P02_BAT_IN] na F.Cu, priorytet 10",
+                    "pos": {
+                        "x": 128.9,
+                        "y": 22.8
+                    },
+                    "uuid": "483ab1f1-1295-4a1f-bbb0-c6c3aaecfa78"
+                },
+                {
+                    "description": "Pole PTH 1 [P02_BAT_IN] na J1",
+                    "pos": {
+                        "x": 143.5,
+                        "y": 24.0
+                    },
+                    "uuid": "4c592167-af47-44e9-8564-165b38e4b44f"
+                }
+            ],
+            "severity": "error",
+            "type": "starved_thermal"
+        },
+        {
+            "description": "Footprint 'D_DO-35_SOD27_P5.08mm_Vertical_CathodeUp' nie odpowiada jego kopii w bibliotece 'Diode_THT'",
+            "items": [
+                {
+                    "description": "Footprint D10",
+                    "pos": {
+                        "x": 119.5,
+                        "y": 26.5
+                    },
+                    "uuid": "1138d1d1-5c9b-41ee-b5de-da932cd814c9"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PhoenixContact_GMSTBA_2,5_3-G-7,62_1x03_P7.62mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_Phoenix_GMSTB'",
+            "items": [
+                {
+                    "description": "Footprint J2",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 76.0
+                    },
+                    "uuid": "311eb294-b4ae-462c-b19e-89d3f165e948"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'TO220_3_P2.54_Drill1.4' nie odpowiada jego kopii w bibliotece 'P02'",
+            "items": [
+                {
+                    "description": "Footprint D2",
+                    "pos": {
+                        "x": 103.5,
+                        "y": 41.0
+                    },
+                    "uuid": "3412a550-dfab-4149-b3f2-7ab48a6e088a"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'TO220_3_P2.54_Drill1.4' nie odpowiada jego kopii w bibliotece 'P02'",
+            "items": [
+                {
+                    "description": "Footprint D1",
+                    "pos": {
+                        "x": 108.5,
+                        "y": 43.0
+                    },
+                    "uuid": "4fe01e4d-39bc-434d-831e-c492d89b5006"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'D_DO-15_P5.08mm_Vertical_CathodeUp' nie odpowiada jego kopii w bibliotece 'Diode_THT'",
+            "items": [
+                {
+                    "description": "Footprint D13",
+                    "pos": {
+                        "x": 157.8,
+                        "y": 8.6
+                    },
+                    "uuid": "7aa43069-db28-434f-b75b-c22d60d76ca9"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV2",
+                    "pos": {
+                        "x": 148.74,
+                        "y": 95.96
+                    },
+                    "uuid": "840f4faf-487b-4ab2-881e-91d62b854b28"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV1",
+                    "pos": {
+                        "x": 41.74,
+                        "y": 95.96
+                    },
+                    "uuid": "8c41c035-cbbf-4268-a754-d5d77179c814"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'CP_Radial_D5.0mm_P2.00mm' nie odpowiada jego kopii w bibliotece 'Capacitor_THT'",
+            "items": [
+                {
+                    "description": "Footprint C21",
+                    "pos": {
+                        "x": 53.08,
+                        "y": 5.0
+                    },
+                    "uuid": "91e7875f-100e-48d5-8c9e-19f85e8156f5"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'CP_Radial_D5.0mm_P2.00mm' nie odpowiada jego kopii w bibliotece 'Capacitor_THT'",
+            "items": [
+                {
+                    "description": "Footprint C24",
+                    "pos": {
+                        "x": 37.13,
+                        "y": 28.5
+                    },
+                    "uuid": "be8ddaee-8020-4c5e-97f7-1b670160d7d4"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'CP_Radial_D5.0mm_P2.00mm' nie odpowiada jego kopii w bibliotece 'Capacitor_THT'",
+            "items": [
+                {
+                    "description": "Footprint C22",
+                    "pos": {
+                        "x": 64.66,
+                        "y": 11.5
+                    },
+                    "uuid": "c83aa5a4-8784-4fd0-a0bf-aada28f14753"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'CP_Radial_D6.3mm_P2.50mm' nie odpowiada jego kopii w bibliotece 'Capacitor_THT'",
+            "items": [
+                {
+                    "description": "Footprint C9",
+                    "pos": {
+                        "x": 10.125,
+                        "y": 72.0
+                    },
+                    "uuid": "d601ecf8-0782-4f86-b62d-03fb1a8a6759"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP",
+                    "pos": {
+                        "x": 122.07,
+                        "y": 13.32
+                    },
+                    "uuid": "d9ad8585-338c-4390-956d-a234c91474a7"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'CP_Radial_D5.0mm_P2.00mm' nie odpowiada jego kopii w bibliotece 'Capacitor_THT'",
+            "items": [
+                {
+                    "description": "Footprint C23",
+                    "pos": {
+                        "x": 31.55,
+                        "y": 28.5
+                    },
+                    "uuid": "fe7022bb-a9d9-49cd-96fb-a300cd2836e1"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        }
+    ]
+}

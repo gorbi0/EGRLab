@@ -4,7 +4,7 @@ eda/P02.kicad_pcb is never modified; copies and their reports stay in verificati
 Each copy gets the project, the schematic sheets and absolute library tables, so DRC and parity run as on the release board.
 """
 from pathlib import Path
-import pcbnew as p, json, subprocess, sys, shutil, os
+import pcbnew as p, json, subprocess, sys, shutil, os, math
 from sexpr import parse, dump, sub
 P = Path(__file__).resolve().parents[1]; src = P / 'eda/P02.kicad_pcb'; root = P / 'verification/negative-controls'
 mm = p.FromMM
@@ -30,15 +30,22 @@ def mount_shift(b): move(b, 'H1', .5, 0)                                  # hole
 def jbp_shift(b): move(b, 'J_BP', 1.0, 0)                                 # edge-A connector off x = 133.5
 def sv_no_gnd_end(b): pad(b, 'J_SV1', '13').SetNet(pad(b, 'J_SV1', '12').GetNet())   # last pin not GND
 def sv_pin_without_resistor(b): pad(b, 'J_SV2', '2').SetNet(b.FindNet('P02_GATE'))   # GATE straight to the pin
+DX = 53.5   # klasa L (30.09): coordinates below are the 2/3 pilot ones, moved with the power block
+
+
 def neck_5a(b):                                                           # BAT_IN pour squeezed to a 2.4 mm strip
     z = next(z for z in b.Zones() if z.GetZoneName().startswith('PWR P02_BAT_IN')); o = z.Outline(); o.RemoveAllContours(); o.NewOutline()
     for x, y in [(75.4, 22.8), (93.6, 22.8), (93.6, 25.2), (75.4, 25.2)]:
-        o.Append(mm(x), mm(y))
-def decap_far(b): move(b, 'C28', 10, 5)                                   # 100 nF 10 mm away from U9
+        o.Append(mm(x + DX), mm(y))
+def decap_far(b):                                                         # 100 nF moved 10 mm further from U9.14
+    # 30.09: along the line U9.14 -> C28.1; the pilot's fixed (+10, +5) brought C28 closer to U9 in the class-L placement
+    u, c = pad(b, 'U9', '14').GetPosition(), pad(b, 'C28', '1').GetPosition()
+    dx, dy = p.ToMM(c.x - u.x), p.ToMM(c.y - u.y); d = math.hypot(dx, dy)
+    move(b, 'C28', 10 * dx / d, 10 * dy / d)
 def tab_foreign(b):                                                       # GND track under the tab of Q1
-    t = p.PCB_TRACK(b); t.SetLayer(p.F_Cu); t.SetWidth(mm(.3)); t.SetStart(xy(71.5, 33.5)); t.SetEnd(xy(71.5, 41.0)); t.SetNet(b.FindNet('GND')); b.Add(t)
+    t = p.PCB_TRACK(b); t.SetLayer(p.F_Cu); t.SetWidth(mm(.3)); t.SetStart(xy(71.5 + DX, 33.5)); t.SetEnd(xy(71.5 + DX, 41.0)); t.SetNet(b.FindNet('GND')); b.Add(t)
 def corridor_track(b):                                                    # signal track in the B.Cu GND return corridor
-    t = p.PCB_TRACK(b); t.SetLayer(p.B_Cu); t.SetWidth(mm(.3)); t.SetStart(xy(104, 45)); t.SetEnd(xy(104, 55)); t.SetNet(b.FindNet('PSU_OK')); b.Add(t)
+    t = p.PCB_TRACK(b); t.SetLayer(p.B_Cu); t.SetWidth(mm(.3)); t.SetStart(xy(104 + DX, 45)); t.SetEnd(xy(104 + DX, 55)); t.SetNet(b.FindNet('PSU_OK')); b.Add(t)
 def hold_far(b): move(b, 'C12', -25, 0)                                   # C_H 25 mm away from D1/D2
 def null_control(b): pass
 
