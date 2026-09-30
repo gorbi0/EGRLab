@@ -15,9 +15,9 @@ EDGE = {'ADC_DOUTA', 'ADC_SDI', 'ADC_CS', 'ADC_CONVST', 'ADC_BUSY', 'SPI3_MOSI',
         'CAN_TX', 'CAN_RX', 'N_J_SCOPE_HOT', 'PWM', 'HEARTBEAT', 'SUP_N_OUT', 'PFAIL_N'}
 STATIC = {'ADC_RESET', 'LOGGER_CURRENT_OK', 'SENSOR_HEALTHY', 'MARK', 'TEST_KEY', 'LOGGER_CLEAR', 'TEST_PRESENT', 'MCU_ARM', 'HW_ARMED',
           'INTERLOCK', 'SENSOR_ENABLE', 'CORE_LINK', 'MOTOR_INA', 'MOTOR_INB', 'ENA_DIAG', 'ENB_DIAG'}
-SUPPLY = {'5V_SYS': ('J_BP2', 2), '3V3_IO': ('J_BP3', 1)}  # net: (connector, exact pin count)
+SUPPLY = {'5V_SYS': ('J_BP2', 3), '3V3_IO': ('J_BP3', 1)}  # net: (connector, exact pin count)
 # Odd pins allowed to carry a non-GND net (reasons: src/jbp_pinout.py EXCEPTIONS, README). Anything else odd must be GND.
-EXC = {('J_BP1', 11), ('J_BP1', 13), ('J_BP1', 15), ('J_BP1', 17), ('J_BP1', 19), ('J_BP2', 19), ('J_BP3', 5), ('J_BP3', 9), ('J_BP3', 13), ('J_BP3', 17)}
+EXC = {('J_BP1', 11), ('J_BP1', 13), ('J_BP1', 15), ('J_BP1', 17), ('J_BP1', 19), ('J_BP2', 17), ('J_BP2', 19), ('J_BP3', 5), ('J_BP3', 9), ('J_BP3', 13), ('J_BP3', 17)}
 OLD_CONNECTORS = [f'J{i}' for i in range(1, 11)]  # R5: J1 DAQ B2B, J2..J8 IDC, J9 PANELCORE, J10 LV03
 # Waveshare N32R16V header pins not usable for PFAIL_N (reference/DevKitC-1-headers.md, Waveshare schematic, ESP32-S3 datasheet):
 FORBIDDEN = {'J3-11': 'GPIO37 octal PSRAM', 'J3-12': 'GPIO36 octal PSRAM', 'J3-13': 'GPIO35 octal PSRAM', 'J3-16': 'GPIO48 1.8 V domain',
@@ -81,9 +81,9 @@ def checks(root):
     pu = [r for r, p in pf if r.startswith('R') and {pins.get((r, '1')), pins.get((r, '2'))} == {'PFAIL_N', '3V3_CORE'}]
     gpio = [k for k in pfc if k[0] == 'M1']
     ok_series = len(ser) == 1 and vals[ser[0]].startswith('1K') and set(pfc) == {(ser[0], p) for r, p in pfc if r == ser[0]} | set(gpio) and len(pfc) == 2
-    ok_pull = len(pu) == 1 and vals[pu[0]].startswith('10K') and not any(r.startswith('R') and '3V3_CORE' in (pins.get((r, '1')), pins.get((r, '2'))) for r, _ in pfc)
-    check('C6 PFAIL_N: J_BP -> 1K series -> module GPIO; 10K pull-up to 3V3_CORE on the connector side (HIGH with J_BP2 open)',
-          ok_series and ok_pull and ('J_BP2', '18') in pf, {'series': ser, 'pullup': pu, 'PFAIL_N': pf, 'PFAIL_N_CORE': pfc})
+    ok_pull = len(pu) == 1 and vals[pu[0]].startswith('100K') and not any(r.startswith('R') and '3V3_CORE' in (pins.get((r, '1')), pins.get((r, '2'))) for r, _ in pfc)
+    check('C6 PFAIL_N: J_BP2.16 -> 1K series -> module GPIO; 100K pull-up to 3V3_CORE on the connector side (HIGH with J_BP2 open; 30.09: 10K gave 0.95 V > VIL at LM2903 VOL 0.7 V)',
+          ok_series and ok_pull and ('J_BP2', '16') in pf, {'series': ser, 'pullup': pu, 'PFAIL_N': pf, 'PFAIL_N_CORE': pfc})
     check('C7 PFAIL_N GPIO is GPIO3 (J1-13), not PSRAM, 1.8 V, boot strap, UART0 or USB', [k[1] for k in gpio] == [PFAIL_GPIO[1]] and not any(k[1] in FORBIDDEN for k in gpio),
           {'gpio': gpio, 'forbidden': FORBIDDEN})
     # C8..C11 service headers
@@ -151,6 +151,8 @@ def run():
          ('MEAS_EN loses GND neighbour (swap 15/16)', 'C4', lambda m: swap(m, 'J_BP2', 15, 16)),
          ('SPI3_SCLK at ribbon end (swap 2/1 -> pin 1)', 'C4', lambda m: swap(m, 'J_BP3', 1, 2)),
          ('HEARTBEAT without GND neighbour (swap 13/15)', 'C5', lambda m: swap(m, 'J_BP3', 13, 15)),
+         ('PFAIL_N between the 5V_SYS pins (swap 16/18)', 'C5', lambda m: swap(m, 'J_BP2', 16, 18)),
+         ('PFAIL_N pull-up back to 10K (29.09)', 'C6', lambda m: value(m, ref_of(m, 'PFAIL_N', '3V3_CORE'), '10K / 1% 1206')),
          ('pull-up on GPIO side', 'C6', lambda m: move(m, ref_of(m, 'PFAIL_N', '3V3_CORE'), 1, 'PFAIL_N_CORE')),
          ('series resistor 0R', 'C6', lambda m: value(m, ref_of(m, 'PFAIL_N', 'PFAIL_N_CORE'), '0R / 1% 1206')),
          ('PFAIL_N wired straight to the GPIO', 'C6', lambda m: move(m, 'M1', 'J1-13', 'PFAIL_N')),

@@ -2,12 +2,16 @@
 
 
 
-Aktualizacja: 30.09.2026. P02 R4: PCB w klasie L scalona (PR #4) i paczka produkcyjna gotowa (`Plytki/P02-PCB-R4-zamowienie`, ZIP aa7b526b…, pod JLCPCB; nie zamówiona). Format S1-3 (P10 na poziomie 4). Schematy S1: P03 R6, P05 R2, P09 R2, P10 R2 scalone, layouty lokalnie. P00 i P04 mają pakiety do zamówienia PCB (`Plytki/Zamowienie-Satland/`), P01 i stare P02 wstrzymane (zasilanie z pakietu 4S). Baza odniesienia: `Rewizje/EGRLab-v6.1-rc1`.
+Aktualizacja: 30.09.2026. P03 R6: layout w toku na gałęzi `p03-r6-pcb`, praca przeniesiona na komputer 24/7 z Ubuntu (`docs/UBUNTU-24-7.md`). P02 R4: PCB w klasie L scalona (PR #4) i paczka produkcyjna gotowa (`Plytki/P02-PCB-R4-zamowienie`, ZIP aa7b526b…, pod JLCPCB; nie zamówiona). Format S1-3 (P10 na poziomie 4). Schematy S1: P03 R6, P05 R2, P09 R2, P10 R2 scalone, layouty lokalnie. P00 i P04 mają pakiety do zamówienia PCB (`Plytki/Zamowienie-Satland/`), P01 i stare P02 wstrzymane (zasilanie z pakietu 4S). Baza odniesienia: `Rewizje/EGRLab-v6.1-rc1`.
 
 Pakiety płytek i ich recenzje znajdują się w `Plytki/`.
 
 
 
+
+## P03 R6 — LAYOUT W TOKU, PRZENIESIENIE NA UBUNTU 24/7 (30.09.2026)
+
+Gałąź `p03-r6-pcb`, stan w `Plytki/P03-R6-review/STAN-PRAC.md`. Poprawki schematu po recenzji PR #6 zrobione i sprawdzone (`src/run_schematic.py`: ERC 0, 511/511, funkcje 53/53, mutacje 44/44, J_BP 12/12 + próby 25/25): R43 100 kΩ, trzecia żyła 5V_SYS na J_BP2.17 (PFAIL_N → 16, ADC_RESET → 18), wszystkie R i C w SMD 1206, kołki listew serwisowych według położenia węzłów. Layout: rozmieszczenie (M1 w S2 z USB-C 6,2 mm przed krawędzią B, SD1 w S3, U22 w S1), zablokowany tor 5 V 1,5 mm po B.Cu, skrypty kontroli i PDF napisane (jeszcze nieuruchomione). Trasowanie się nie domyka: po zmianie 3V3_CORE na 0,3 mm router zostawia ok. 13 połączeń, a bez GND w routerze ok. 60 pól masy nie łączy się z wylewkami — następny krok: GND z powrotem do routera albo przelotki GND przy pinach. Dalsza praca na komputerze 24/7 z Ubuntu (`docs/UBUNTU-24-7.md`, sesja „frigate-claude”).
 
 ## P02 R4 — PACZKA PRODUKCYJNA (30.09.2026)
 

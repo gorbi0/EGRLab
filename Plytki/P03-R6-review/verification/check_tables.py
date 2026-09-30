@@ -33,11 +33,13 @@ parts=json.loads((P/'docs/parts.json').read_text(encoding='utf-8'))
 assert len(tables['BOM.csv'])==len(parts)==len(vals)
 for r in tables['BOM.csv']:
     assert r['mpn']==parts[r['ref']]['mpn'] and r['footprint']==parts[r['ref']]['footprint'],r
-# R6 mounting rule (task §4): owned values THT (resistors vertical), other passives SMD 1206
+# R6 mounting rule (task §4; 30.09: owned MF0207/K15 stock is used up by P09 R2 and P10 R2, so every P03 resistor and
+# capacitor is a purchase and new purchases are SMD 1206; one 100 nF code on the whole board)
 for ref,p in parts.items():
-    if re.fullmatch(r'R\d+',ref):
-        v=p['value'].split('/')[0].strip()
-        assert ('Vertical' in p['footprint'])==(v in ('10K','4K7')) and ('1206' in p['footprint'])==(v not in ('10K','4K7')),(ref,v,p['footprint'])
+    if re.fullmatch(r'[RC]\d+',ref):
+        assert '1206' in p['footprint'] and 'Vertical' not in p['footprint'] and 'K15' not in p['footprint'],(ref,p['footprint'])
+    if re.fullmatch(r'C\d+',ref) and p['value'].startswith('100n'):
+        assert p['mpn']=='GRM31CR71H104KA01L',(ref,p['mpn'])
 purchase_refs=[]
 for r in tables['zakupy.csv']:
     refs=[x.strip() for x in r['oznaczenia'].split(',')]

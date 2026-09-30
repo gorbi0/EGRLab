@@ -85,7 +85,8 @@
     "detected": true,
     "failed": [
       "C3 odd pins are GND except the justified exceptions (static signals or supplies only)",
-      "C4 ADC_SCLK, SPI3_SCLK and MEAS_EN have GND on both ribbon sides"
+      "C4 ADC_SCLK, SPI3_SCLK and MEAS_EN have GND on both ribbon sides",
+      "C6 PFAIL_N: J_BP2.16 -> 1K series -> module GPIO; 100K pull-up to 3V3_CORE on the connector side (HIGH with J_BP2 open; 30.09: 10K gave 0.95 V > VIL at LM2903 VOL 0.7 V)"
     ]
   },
   {
@@ -107,11 +108,28 @@
     ]
   },
   {
+    "control": "PFAIL_N between the 5V_SYS pins (swap 16/18)",
+    "expected": "C5",
+    "detected": true,
+    "failed": [
+      "C5 every edge signal has a GND ribbon neighbour; every J_BP net classified",
+      "C6 PFAIL_N: J_BP2.16 -> 1K series -> module GPIO; 100K pull-up to 3V3_CORE on the connector side (HIGH with J_BP2 open; 30.09: 10K gave 0.95 V > VIL at LM2903 VOL 0.7 V)"
+    ]
+  },
+  {
+    "control": "PFAIL_N pull-up back to 10K (29.09)",
+    "expected": "C6",
+    "detected": true,
+    "failed": [
+      "C6 PFAIL_N: J_BP2.16 -> 1K series -> module GPIO; 100K pull-up to 3V3_CORE on the connector side (HIGH with J_BP2 open; 30.09: 10K gave 0.95 V > VIL at LM2903 VOL 0.7 V)"
+    ]
+  },
+  {
     "control": "pull-up on GPIO side",
     "expected": "C6",
     "detected": true,
     "failed": [
-      "C6 PFAIL_N: J_BP -> 1K series -> module GPIO; 10K pull-up to 3V3_CORE on the connector side (HIGH with J_BP2 open)"
+      "C6 PFAIL_N: J_BP2.16 -> 1K series -> module GPIO; 100K pull-up to 3V3_CORE on the connector side (HIGH with J_BP2 open; 30.09: 10K gave 0.95 V > VIL at LM2903 VOL 0.7 V)"
     ]
   },
   {
@@ -119,7 +137,7 @@
     "expected": "C6",
     "detected": true,
     "failed": [
-      "C6 PFAIL_N: J_BP -> 1K series -> module GPIO; 10K pull-up to 3V3_CORE on the connector side (HIGH with J_BP2 open)"
+      "C6 PFAIL_N: J_BP2.16 -> 1K series -> module GPIO; 100K pull-up to 3V3_CORE on the connector side (HIGH with J_BP2 open; 30.09: 10K gave 0.95 V > VIL at LM2903 VOL 0.7 V)"
     ]
   },
   {
@@ -127,7 +145,7 @@
     "expected": "C6",
     "detected": true,
     "failed": [
-      "C6 PFAIL_N: J_BP -> 1K series -> module GPIO; 10K pull-up to 3V3_CORE on the connector side (HIGH with J_BP2 open)",
+      "C6 PFAIL_N: J_BP2.16 -> 1K series -> module GPIO; 100K pull-up to 3V3_CORE on the connector side (HIGH with J_BP2 open; 30.09: 10K gave 0.95 V > VIL at LM2903 VOL 0.7 V)",
       "C7 PFAIL_N GPIO is GPIO3 (J1-13), not PSRAM, 1.8 V, boot strap, UART0 or USB"
     ]
   },

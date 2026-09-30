@@ -22,7 +22,8 @@ Wiodący kierunek: wiązka / masa / złącze, a nie sam zawór.
 - `EGRLab-AKTYWNE.md` — bieżący etap przyrządu EGRLab: płytki P00–P11, decyzje, stany pakietów, zakupy.
 - `docs/pamiec-claude/MEMORY.md` — kopia pamięci Claude z komputera użytkownika (29.09.2026): stany płytek, decyzje, pułapki narzędzi. W sesji w chmurze przeczytaj na starcie.
 - `docs/CHMURA.md` — praca w sesji w chmurze: podział zadań chmura/lokalnie, narzędzia Linux, ścieżki Windows do sparametryzowania, zadanie pierwszej sesji.
-- `Plytki/P02-R4-specyfikacja/STAN-PRAC.md` — bieżąca praca: P02 R4 (zasilanie z pakietu 4S), stan przed schematem.
+- `docs/UBUNTU-24-7.md` — komputer 24/7 z Ubuntu (od 30.09.2026): tam idą długie zadania (layout, trasowanie, generatory); środowisko Docker, przywracanie pamięci, zasady.
+- `Plytki/P03-R6-review/STAN-PRAC.md` — bieżąca praca: P03 R6 (CORE w formacie S1), layout w toku, gałąź `p03-r6-pcb`.
 
 ## Jak ze mną pracować
 

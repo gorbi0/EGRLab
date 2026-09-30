@@ -13,6 +13,7 @@
     "pass": true,
     "detail": {
       "5V_SYS": [
+        "J_BP2.17",
         "J_BP2.19",
         "J_BP2.20"
       ],
@@ -59,6 +60,11 @@
           "J_BP1",
           19,
           "MOTOR_INA"
+        ],
+        [
+          "J_BP2",
+          17,
+          "5V_SYS"
         ],
         [
           "J_BP2",
@@ -128,7 +134,7 @@
     }
   },
   {
-    "check": "C6 PFAIL_N: J_BP -> 1K series -> module GPIO; 10K pull-up to 3V3_CORE on the connector side (HIGH with J_BP2 open)",
+    "check": "C6 PFAIL_N: J_BP2.16 -> 1K series -> module GPIO; 100K pull-up to 3V3_CORE on the connector side (HIGH with J_BP2 open; 30.09: 10K gave 0.95 V > VIL at LM2903 VOL 0.7 V)",
     "pass": true,
     "detail": {
       "series": [
@@ -140,7 +146,7 @@
       "PFAIL_N": [
         [
           "J_BP2",
-          "18"
+          "16"
         ],
         [
           "R42",
@@ -151,7 +157,7 @@
           "1"
         ],
         [
-          "R51",
+          "R62",
           "1"
         ]
       ],

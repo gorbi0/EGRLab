@@ -2,9 +2,10 @@
 R6 changes against R5 (circuit functions unchanged; see docs/ZMIANY-R6.md):
 - J1 (DAQ B2B), J2..J8 (IDC), J9 (PANELCORE Mini-Fit) and J10 (LV03 pigtail) -> three right-angle IDC 2x10 box headers
   J_BP1..J_BP3 on edge A, one per slot; pinout in src/jbp_pinout.py; 5V_SYS and 3V3_IO now arrive from P02 R4 through P12;
-- new input PFAIL_N (P02 R4, D-02): J_BP2.18 -> R42 1K -> GPIO3 (J1-13), R43 10K to 3V3_CORE on the connector side;
+- new input PFAIL_N (P02 R4, D-02): J_BP2.16 -> R42 1K -> GPIO3 (J1-13), R43 100K to 3V3_CORE on the connector side (30.09: was 10K);
 - three 1x13 right-angle service headers J_SV1..J_SV3 on edge B, every non-GND pin through a series resistor at the node;
-- passives: values owned in Zamowione/zamowione.csv (10K, 4K7 MF0207; 100 nF K15) stay THT, resistors vertical; the rest SMD 1206;
+- passives: all SMD 1206 (30.09: the owned MF0207 10K/4K7 and K15 stock is used up by P09 R2 and P10 R2, so P03 buys everything;
+  user rule: owned THT stays THT, new purchases SMD); every 100 nF uses the C12/C15 code GRM31CR71H104KA01L;
 - 74LVC125A soldered as SOIC-14 and TPS3808 as SOT-23-6 directly (fab board; Kamami/PA0085 adapters not needed).
 R5 history: U4 LVC1G37 replaces LVC1G07 (R5); Schmitt buffer U6 SN74LVC1G17, R41 220R and C15 on the reset line to P04 (R4).
 source_ref maps each part to the v6.1 P03 BOM or marks it as added. Pin nets follow the v6.1 import
@@ -111,8 +112,12 @@ SO14 = copyfp('Package_SO', 'SOIC-14_3.9x8.7mm_P1.27mm'); SOT236 = copyfp('Packa
 IDC20 = copyfp('Connector_IDC', 'IDC-Header_2x10_P2.54mm_Horizontal')
 SV13 = copyfp('Connector_PinHeader_2.54mm', 'PinHeader_1x13_P2.54mm_Horizontal')
 # S1 §9 / task §4: resistor values owned in Zamowione/zamowione.csv (MF0207, TME 24.09) stay THT, mounted vertically.
-OWNED_R = {'10K': 'MF0207FTE-10K', '4K7': 'MF0207FTE-4K7'}
-SMD_R = {'1K': 'RC1206FR-071KL', '330R': 'RC1206FR-07330RL', '220R': 'RC1206FR-07220RL', '33R': 'RC1206FR-0733RL'}
+# 30.09 (review PR #6): the owned MF0207 10K/4K7 and K15 are used up by P09 R2 and P10 R2, so every P03 resistor and 100 nF is a
+# purchase -> SMD 1206 (user rule: owned THT stays, new parts SMD).
+OWNED_R = {}
+SMD_R = {'1K': 'RC1206FR-071KL', '330R': 'RC1206FR-07330RL', '220R': 'RC1206FR-07220RL', '33R': 'RC1206FR-0733RL',
+         '10K': 'RC1206FR-0710KL', '4K7': 'RC1206FR-074K7L', '100K': 'RC1206FR-07100KL'}
+CSMD = copyfp('Capacitor_SMD', 'C_1206_3216Metric_Pad1.33x1.80mm_HandSolder')
 
 
 def custom_symbol(name, left, right, half_w, pitch=2.54):
@@ -177,7 +182,7 @@ def res(ref, src, value, mpn, pins, note='', sheet='P03'):
 
 
 def cap(ref, src, pins, note='', sheet='P03'):
-    add(ref, src, S_C, C100N, '100nF / X7R', 'K104K15X7RF5TH5', pins, URL['k15'], note, sheet)  # R6: owned code (Zamowione/zamowione.csv), same part as F53H5
+    add(ref, src, S_C, CSMD, '100nF / 50V X7R', 'GRM31CR71H104KA01L', pins, '', note, sheet)  # 30.09: purchase -> SMD 1206, same code as C12/C15 (K15 stock used by P09/P10)
 
 
 # ---- sheet P03 (CORE): MCU board, SD, expander, decoder, supervisor, local pull-ups -------------------------
@@ -315,7 +320,8 @@ for idx,n in [(7,'5V_M1'),(8,'SUP_RAW_N')]:
 # connector side: LOW at the GPIO = VOL + (3V3_CORE - VOL) * 1K / 11K (0.68 V at VOL 0.4 V, 3.465 V) < VIL 0.825 V;
 # on the GPIO side the same 10K would give 0.91 V (fails). J_BP2 open (no P02/P12): 10K pulls HIGH = supply OK.
 res('R42', 'ADDED_R6_PFAIL_SERIES', '1K / 1%', '', {1: 'PFAIL_N', 2: 'PFAIL_N_CORE'}, 'PFAIL_N series resistor at M1 GPIO3 (J1-13): limits clamp current when P02 is live and CORE is not.')
-res('R43', 'ADDED_R6_PFAIL_PULLUP', '10K / 1%', '', {1: 'PFAIL_N', 2: '3V3_CORE'}, 'PFAIL_N default HIGH (supply OK) with J_BP2 open; connector side of R42.')
+res('R43', 'ADDED_R6_PFAIL_PULLUP', '100K / 1%', '', {1: 'PFAIL_N', 2: '3V3_CORE'}, 'PFAIL_N default HIGH (supply OK) with J_BP2 open; connector side of R42. '
+    '30.09: 100K (was 10K): with LM2903 VOL 0.7 V over temperature the GPIO low level is 0.73 V < VIL 0.825 V (10K gave 0.95 V).')
 
 # ---- R6: service headers on edge B (format S1 §6) -----------------------------------------------------------
 from serwis_pinout import SERWIS
