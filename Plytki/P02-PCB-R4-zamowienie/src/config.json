@@ -1,0 +1,31 @@
+{
+  "name": "P02",
+  "source": "P02-R4-review",
+  "revision": "R4",
+  "release_date": "30.09.2026",
+  "board_mm": [
+    160,
+    100
+  ],
+  "corner_radius_mm": 1.0,
+  "thickness_mm": 1.6,
+  "copper_um": 35,
+  "layers": [
+    "F.Cu",
+    "B.Cu",
+    "F.Mask",
+    "B.Mask",
+    "F.SilkS",
+    "B.SilkS",
+    "Edge.Cuts"
+  ],
+  "silk": "obie strony (od spodu oznaczenia U9, C27, C28)",
+  "pdf": "P02-R4-PCB.pdf",
+  "odbior": null,
+  "fab": "JLCPCB",
+  "lib_mismatch_accept": "routing/silkscreen.json",
+  "extra": {
+    "intro": "Format S1, klasa L (cały poziom 1 stosu). Płytka zaakceptowana przez użytkownika 30.09.2026 po recenzji PR #4.",
+    "assembly": "Montaż: najpierw od spodu U9 (SOIC-14) oraz C27 i C28 (1206), potem części THT od góry; wyprowadzenia THT od spodu przyciąć do ≤ 1,5 mm (S1 §4). Pola z pełnym połączeniem ze strefą GND (lista w `projekt/routing/solid-pads.json`, m.in. D3.2 — wyprowadzenie transila P600) lutować mocniejszą lutownicą. Opis montażu i wysokości: `projekt/output/pdf/P02-R4-PCB.pdf`."
+  }
+}

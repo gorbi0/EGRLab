@@ -1,6 +1,6 @@
 ---
 name: p02-r4-state
-description: "P02 R4 (zasilanie z pakietu 4S): etap 1 schemat (PR #2) → decyzje (D3 5KP24A, C_H 2200, UVLO obwiednia) → etap 2 PCB lokalnie w klasie L, blok sterowania rozsunięty w wolne pole: DRC czysty, PCB 23/23, próby 12/12, PR #4 czeka na recenzję"
+description: "P02 R4 (zasilanie z pakietu 4S): etap 1 schemat (PR #2) → decyzje (D3 5KP24A, C_H 2200, UVLO obwiednia) → etap 2 PCB lokalnie w klasie L, blok sterowania rozsunięty w wolne pole: DRC czysty, PCB 23/23, próby 12/12, PR #4 scalony, paczka produkcyjna ZIP aa7b526b (JLCPCB, nie zamówiona)"
 metadata:
   node_type: memory
   type: project
@@ -74,7 +74,10 @@ Paczka produkcyjna dopiero po mojej recenzji PCB.
   (użytkownik: „może tak zostać”). Router domknął się w 1. próbie (planer: 7 tras). Wynik: DRC 0/0/0 innych, 14 × lib
   mismatch przyjęte; PCB 23/23; próby 12/12; tor 5 A ≥ 4,1 mm; 9 ukrytych oznaczeń; pełne połączenie GND: C8.2, D3.2 (P600!),
   LED1.1, U10.4, U2.4. README sekcja etapu 2 generowana skryptem z danych wydania (manifest przeliczony tak samo).
-- Czeka na recenzję i „scal” PR #4; potem przymiarka 1:1 i paczka produkcyjna.
+- **30.09: płytka OK (użytkownik), PR #4 scalony (merge 26caff4, plumbing).** Paczka produkcyjna `Plytki/P02-PCB-R4-zamowienie/`:
+  ZIP aa7b526b… (7 Gerber X2 z B.SilkS + 2 Excellon), pod JLCPCB; DRC 0/0/0 z 14 przyjętymi lib mismatch (export_production.py
+  z regułą z silkscreen.json), CAM 20/20 (nowa kontrola obrysu z łukami R — corner_radius_mm w config.json), próby 8/8 + zerowa,
+  97 przelotek zakrytych. Projekt w paczce bez verification/negative-controls. Nie zamówiona; przymiarka 1:1 — NIE ZBADANO.
 - Uruchamianie: `EGRLAB_FREEROUTING=C:/Users/tgorbacz/.codex/.chatgpt-projects/g-p-6a8827e57cc881919b26f761377a7bd3/.egrlab-toolchains/freerouting`, Python KiCada `C:/Program Files/KiCad/10.0/bin/python.exe src/run_layout.py`.
 - **Nie przełączać gałęzi w trakcie przebiegu.** Commity na `main` robić plumbingiem (tymczasowy indeks, `read-tree`/`update-index` z `core.protectNTFS=false`, `commit-tree`, `update-ref`).
 

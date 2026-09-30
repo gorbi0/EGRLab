@@ -3,6 +3,8 @@
 *28.09.2026. Pliki są zweryfikowane; przymiarka części i próby sprzętu — NIE ZBADANO.*
 
 > **29.09.2026: P01 i P02 WSTRZYMANE** — decyzja o zasilaniu przyrządu z ogniw 18650 (P01 i HOLD w P02 zostaną zastąpione nową płytką zasilania). Zamawiać tylko **P00 i P04**. Tabele i mail niżej obejmują jeszcze cztery płytki.
+>
+> **30.09.2026: nowa płytka zasilania P02 R4** (format S1, klasa L 160 × 100 mm) — paczka `../P02-PCB-R4-zamowienie/` (`DO-ZAMOWIENIA_P02-PCB-R4.zip`, SHA-256 aa7b526b…), przygotowana pod JLCPCB (laminat 1,6 mm; w Satlandzie 1,5 mm też pasuje). Zastępuje P01-R3.1 i P02-R3 z tego folderu — tych dwóch ZIP-ów nie zamawiać.
 
 **Producent:** Satland Prototype sp. z o.o., Gdańsk, ul. Zeusa 61. E-mail biuro@prototypy.com, tel. +48 58 554-07-64 (pn–pt 7:00–15:00). [Kalkulator](https://www.prototypy.com/sites_pcbplugins/pcborder/58).
 

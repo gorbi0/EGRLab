@@ -20,5 +20,10 @@ Stan 28.09: `Plytki/Zamowienie-Satland/` — ZIP-y P00-R3 (d45254c5…), P01-R3.
 
 29.09: **P01 i P02 wstrzymane** (zasilanie z ogniw 18650 — [[zasilanie-ogniwa-18650]]); do zamówienia tylko P00 i P04.
 
+30.09: **P02 R4 (format S1) — paczka `Plytki/P02-PCB-R4-zamowienie/`** (ZIP aa7b526b…), skrypty z paczki P04 dostosowane do S1:
+obrys z narożnikami R (config `corner_radius_mm`), akceptacja lib_footprint_mismatch tylko dla części z przyciętym nadrukiem
+(`lib_mismatch_accept`), teksty z `release_date` i `fab` (JLCPCB: 1,6 mm). W folderze Satland dopisana uwaga: P01-R3.1 i
+P02-R3 nie zamawiać. Kolejne płytki S1 pakować kopią z `P02-PCB-R4-zamowienie/src/`.
+
 **Why:** termin 23.10.2026 (wylot do Alicante); koszt 70 µm.
 **How to apply:** kolejne płytki (P03, P05…) pakować tymi samymi skryptami (config.json: name, source, revision, board_mm, copper_um, layers, pdf, odbior); sprawdzać pusty dolny opis; laminat 1,5 mm w Satlandzie. Zob. [[egrlab-purchasing-state]], [[p00-r1-state]], [[p02-r1-state]], [[kicad-pipeline-quirks]].
