@@ -154,7 +154,7 @@ for hdr in JSV:
 pairs = [f'{k} {used[k]}' for k in sorted(used)]
 LEGEND = ['J_SV2/J_SV3 (skroty; GND: kolki 1 i 13):'] + ['  '.join(pairs[i:i + 2]) for i in range(0, len(pairs), 2)]
 missing = []
-for r in sorted(fps, key=lambda r: yards[r].BBox().GetArea()):
+for r in sorted(fps, key=lambda r: (yards[r].BBox().GetArea(), r)):   # 30.09: ties by reference (board order follows random UUIDs)
     f = fps[r]; ref = f.Reference(); f.Value().SetVisible(False)
     if r.startswith('H'):
         ref.SetVisible(False); continue
@@ -167,6 +167,15 @@ for r in sorted(fps, key=lambda r: yards[r].BBox().GetArea()):
             cands += [(cx + dx, y0 - size * .8, 0), (cx + dx, y1 + size * .8, 0)]
         for dy in (-3, 3):
             cands += [(x0 - size * .8, cy_ + dy, 90), (x1 + size * .8, cy_ + dy, 90)]
+        # 30.09 second ring (tried only after the first): half steps, one and two text heights further out, text beside the part
+        d = size * .8; half = len(ref.GetText()) * size * .45 + .3
+        for dx in (-1.5, 1.5, -4.5, 4.5):
+            cands += [(cx + dx, y0 - d, 0), (cx + dx, y1 + d, 0)]
+        for dy in (-1.5, 1.5, -4.5, 4.5, -6, 6):
+            cands += [(x0 - d, cy_ + dy, 90), (x1 + d, cy_ + dy, 90)]
+        for k in (2, 3):
+            cands += [(cx, y0 - k * d, 0), (cx, y1 + k * d, 0), (x0 - k * d, cy_, 90), (x1 + k * d, cy_, 90)]
+        cands += [(x0 - half, cy_, 0), (x1 + half, cy_, 0), (cx, y0 - half, 90), (cx, y1 + half, 90)]
         for x, y, a in cands:
             ref.SetTextSize(p.VECTOR2I(mm(size), mm(size))); ref.SetTextThickness(mm(.15 if size == 1.0 else .12))
             ref.SetTextAngle(p.EDA_ANGLE(a, p.DEGREES_T)); ref.SetPosition(p.VECTOR2I(mm(x), mm(y)))

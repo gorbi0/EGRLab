@@ -49,6 +49,6 @@ Kontrole PCB: 22/22. Próby ujemne: 16/16 (w tym próba zerowa).
 | gnd_pour_removed | GND pours | tak | 2 |
 | ref_on_part | Every visible reference | tak | 2 |
 
-Nadruk: ukryte oznaczenia (brak miejsca): R11, R12, R16, C7, R1, R3; nieumieszczone napisy: brak.
+Nadruk: ukryte oznaczenia (brak miejsca): R16, C7, R1, R19, R7, R8; nieumieszczone napisy: brak.
 
 Oględziny PDF: strony 1–5 obejrzane przy tworzeniu pakietu (render w output/previews/pcb-*.png).

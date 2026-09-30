@@ -1,6 +1,6 @@
 {
   "board": "/home/tgorbacz/AI/Claude/EGRLab/.worktrees/p09-r2-pcb/Plytki/P09-R2-review/verification/negative-controls/support_track/P09.kicad_pcb",
-  "board_sha256": "59398c440fea487c62c1d1993cc8741ce3664a8d34bee6bca4969217ea0362ba",
+  "board_sha256": "cb9f5c717b8628aebb95410684b2b2513ced9b71a7e1f360e5250179b022b684",
   "checks": [
     {
       "check": "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
@@ -111,6 +111,18 @@
     },
     "S1-2 section 4: parts on the bottom only SMD <= 1.5 mm, no SOIC (level 3), >= 1 mm from THT pads": {
       "bottom_parts": {
+        "R22": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.12
+        },
+        "R25": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.12
+        },
         "R27": {
           "smd": true,
           "height_mm": 0.7,
@@ -123,11 +135,17 @@
           "soic": false,
           "min_gap_to_THT_mm": 2.45
         },
-        "R22": {
+        "R24": {
           "smd": true,
           "height_mm": 0.7,
           "soic": false,
-          "min_gap_to_THT_mm": 1.12
+          "min_gap_to_THT_mm": 1.17
+        },
+        "R29": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 3.4
         },
         "R23": {
           "smd": true,
@@ -141,35 +159,17 @@
           "soic": false,
           "min_gap_to_THT_mm": 2.03
         },
-        "R26": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 1.95
-        },
         "R28": {
           "smd": true,
           "height_mm": 0.7,
           "soic": false,
           "min_gap_to_THT_mm": 2.64
         },
-        "R29": {
+        "R26": {
           "smd": true,
           "height_mm": 0.7,
           "soic": false,
-          "min_gap_to_THT_mm": 3.4
-        },
-        "R24": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 1.17
-        },
-        "R25": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 1.12
+          "min_gap_to_THT_mm": 1.95
         },
         "R30": {
           "smd": true,
@@ -353,7 +353,7 @@
     },
     "Every part <= 16.5 mm above the board (level 3, S1 section 4; src/heights.py; the module socket is an estimate at the limit)": {
       "max": [
-        "J4",
+        "J3",
         16.5
       ],
       "over": {}

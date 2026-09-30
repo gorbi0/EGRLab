@@ -57,7 +57,7 @@ Przypisanie części do rejestru wynika z dosłownego dopasowania wartości i ty
 6. Rezystory serwisowe R20–R30 od spodu (SMD 1206, 0,7 mm; S1-2), przy węzłach, ≥ 1,1 mm od pól THT.
 7. C6/C7 (1 µF przy VIN modułów) są 6,0 i 5,3 mm od pinu VIN. Moduł wystaje 4,5 mm za pin 1 (obrys), miejsce po lewej zajmuje selektor JP1/JP2, więc 1206 mieści się dopiero między J1 a J3 (najbliżej ok. 5,75 mm). Kontrola ma dla nich próg 6,5 mm; odsprzęganie układów C1–C3 ma próg 6 mm (jest 2,5–3,25 mm).
 8. **Sporne (lutowanie):** cztery pola z pełnym połączeniem z wylewką zamiast termicznego (J1.1, J1.3, J4.3, R10.2 — szprychy odcięte przez ścieżki). Przy lutowaniu tych pinów potrzeba więcej ciepła.
-9. Sześć oznaczeń ukrytych z braku miejsca (R1, R3, R11, R12, R16, C7); na rysunku montażowym F.Fab są wszystkie.
+9. Sześć oznaczeń ukrytych z braku miejsca (R1, R7, R8, R16, R19, C7); na rysunku montażowym F.Fab są wszystkie.
 10. Informacyjnie: tabela budżetu złączy S1 §8 („pierwsze przybliżenie”) podaje dla P09 IDC 2×5; pakiet R2 ma 2×8 (poza pięcioma sygnałami SPI/CS niesie 5V_SYS ×2 i 3V3_IO) — do uwzględnienia przy P12.
 
 **Otwarte:** przymiarka wydruku 1:1 z modułami (strona 5 PDF), wysokość gniazda z modułem (szacunek = limit), recenzja; paczka produkcyjna dopiero po „scal”.
