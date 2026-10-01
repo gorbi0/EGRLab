@@ -1,7 +1,7 @@
 {
     "$schema": "https://schemas.kicad.org/drc.v1.json",
     "coordinate_units": "mm",
-    "date": "2026-09-30T22:29:10",
+    "date": "2026-10-01T09:40:13",
     "ignored_checks": [
         {
             "description": "Footprint has no courtyard defined",
@@ -37,20 +37,20 @@
             "description": "Missing connection between items",
             "items": [
                 {
-                    "description": "Ścieżka [TC1_3VO] na B.Cu, długość 1,0983 mm",
-                    "pos": {
-                        "x": 32.4017,
-                        "y": 25.54
-                    },
-                    "uuid": "29d52853-6fe3-462b-be74-3511a3c3eb56"
-                },
-                {
                     "description": "Pole lutownicze 1 [TC1_3VO] z R24 na B.Cu",
                     "pos": {
-                        "x": 45.336727,
-                        "y": 27.512787
+                        "x": 15.5,
+                        "y": 25.04
                     },
-                    "uuid": "efc8b114-f538-4602-86c0-54961ae0596f"
+                    "uuid": "27fd3cfc-17f2-4804-900f-28120e22c308"
+                },
+                {
+                    "description": "Ścieżka [TC1_3VO] na B.Cu, długość 3,0000 mm",
+                    "pos": {
+                        "x": 30.5,
+                        "y": 25.04
+                    },
+                    "uuid": "6d4a0ef1-12c6-4798-8126-ef8e42ab125f"
                 }
             ],
             "severity": "error",
@@ -60,20 +60,20 @@
             "description": "Missing connection between items",
             "items": [
                 {
-                    "description": "Pole lutownicze 2 [/CONNECT/SRV_TC1_3VO] z R24 na B.Cu",
+                    "description": "Ścieżka [/CONNECT/SRV_TC1_3VO] na B.Cu, długość 0,0599 mm",
                     "pos": {
-                        "x": 48.436727,
-                        "y": 27.512787
+                        "x": 24.4,
+                        "y": 25.04
                     },
-                    "uuid": "e6989e9f-8264-4d15-8c8f-23ed191e5ccc"
+                    "uuid": "642c17c2-a5d1-4ce4-9c6c-3ac39854bf6b"
                 },
                 {
-                    "description": "Ścieżka [/CONNECT/SRV_TC1_3VO] na B.Cu, długość 4,0520 mm",
+                    "description": "Pole lutownicze 2 [/CONNECT/SRV_TC1_3VO] z R24 na B.Cu",
                     "pos": {
-                        "x": 33.7348,
-                        "y": 28.4052
+                        "x": 12.4,
+                        "y": 25.04
                     },
-                    "uuid": "19076fd7-b1a0-45d6-99ab-0b01c5722433"
+                    "uuid": "69397e46-99fb-4118-b42e-3ded12ca16d8"
                 }
             ],
             "severity": "error",
@@ -82,15 +82,268 @@
     ],
     "violations": [
         {
+            "description": "Elementy łączą dwie różne sieci (sieci /CONNECT/SRV_CS2_BUF oraz /CONNECT/SRV_TC1_3VO)",
+            "items": [
+                {
+                    "description": "Ścieżka [/CONNECT/SRV_CS2_BUF] na B.Cu, długość 3,6603 mm",
+                    "pos": {
+                        "x": 11.375,
+                        "y": 26.0
+                    },
+                    "uuid": "4ea7418c-74f0-4c85-bb9b-16aed9349cfc"
+                },
+                {
+                    "description": "Pole lutownicze 2 [/CONNECT/SRV_TC1_3VO] z R24 na B.Cu",
+                    "pos": {
+                        "x": 12.4,
+                        "y": 25.04
+                    },
+                    "uuid": "69397e46-99fb-4118-b42e-3ded12ca16d8"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci TC1_3VO oraz CS2_BUF)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [TC1_3VO] z R24 na B.Cu",
+                    "pos": {
+                        "x": 15.5,
+                        "y": 25.04
+                    },
+                    "uuid": "27fd3cfc-17f2-4804-900f-28120e22c308"
+                },
+                {
+                    "description": "Ścieżka [CS2_BUF] na B.Cu, długość 2,2717 mm",
+                    "pos": {
+                        "x": 16.081299,
+                        "y": 24.3937
+                    },
+                    "uuid": "f937f6bb-2da9-4ad7-9f76-85390f6fc73e"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci TC1_3VO oraz CS2_BUF)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [TC1_3VO] z R24 na B.Cu",
+                    "pos": {
+                        "x": 15.5,
+                        "y": 25.04
+                    },
+                    "uuid": "27fd3cfc-17f2-4804-900f-28120e22c308"
+                },
+                {
+                    "description": "Ścieżka [CS2_BUF] na B.Cu, długość 4,2666 mm",
+                    "pos": {
+                        "x": 20.3479,
+                        "y": 24.3937
+                    },
+                    "uuid": "436376d6-36c4-4a42-8d8d-9b7c9392125f"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci CS2_BUF oraz TC1_3VO)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [CS2_BUF] z R27 na B.Cu",
+                    "pos": {
+                        "x": 14.475,
+                        "y": 26.0
+                    },
+                    "uuid": "bdb4d2ea-d9c1-4067-957b-4949e7cecc28"
+                },
+                {
+                    "description": "Pole lutownicze 1 [TC1_3VO] z R24 na B.Cu",
+                    "pos": {
+                        "x": 15.5,
+                        "y": 25.04
+                    },
+                    "uuid": "27fd3cfc-17f2-4804-900f-28120e22c308"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci /CONNECT/SRV_CS2_BUF oraz /CONNECT/SRV_TC1_3VO)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 2 [/CONNECT/SRV_CS2_BUF] z R27 na B.Cu",
+                    "pos": {
+                        "x": 11.375,
+                        "y": 26.0
+                    },
+                    "uuid": "f13e08b2-517d-4e64-8a9c-eef5b5bec5db"
+                },
+                {
+                    "description": "Pole lutownicze 2 [/CONNECT/SRV_TC1_3VO] z R24 na B.Cu",
+                    "pos": {
+                        "x": 12.4,
+                        "y": 25.04
+                    },
+                    "uuid": "69397e46-99fb-4118-b42e-3ded12ca16d8"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint R27",
+                    "pos": {
+                        "x": 12.925,
+                        "y": 26.0
+                    },
+                    "uuid": "19cc49d9-98fd-407a-86ae-b8f62ed63036"
+                },
+                {
+                    "description": "Footprint R24",
+                    "pos": {
+                        "x": 13.95,
+                        "y": 25.04
+                    },
+                    "uuid": "8be3a07c-f567-4952-920b-25aceaf5abb0"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [CS2_BUF] na B.Cu, długość 4,2666 mm",
+                    "pos": {
+                        "x": 20.3479,
+                        "y": 24.3937
+                    },
+                    "uuid": "436376d6-36c4-4a42-8d8d-9b7c9392125f"
+                },
+                {
+                    "description": "Pole lutownicze 1 [TC1_3VO] z R24 na B.Cu",
+                    "pos": {
+                        "x": 15.5,
+                        "y": 25.04
+                    },
+                    "uuid": "27fd3cfc-17f2-4804-900f-28120e22c308"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/CONNECT/SRV_CS2_BUF] na B.Cu, długość 3,6603 mm",
+                    "pos": {
+                        "x": 11.375,
+                        "y": 26.0
+                    },
+                    "uuid": "4ea7418c-74f0-4c85-bb9b-16aed9349cfc"
+                },
+                {
+                    "description": "Pole lutownicze 2 [/CONNECT/SRV_TC1_3VO] z R24 na B.Cu",
+                    "pos": {
+                        "x": 12.4,
+                        "y": 25.04
+                    },
+                    "uuid": "69397e46-99fb-4118-b42e-3ded12ca16d8"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [CS2_BUF] z R27 na B.Cu",
+                    "pos": {
+                        "x": 14.475,
+                        "y": 26.0
+                    },
+                    "uuid": "bdb4d2ea-d9c1-4067-957b-4949e7cecc28"
+                },
+                {
+                    "description": "Pole lutownicze 1 [TC1_3VO] z R24 na B.Cu",
+                    "pos": {
+                        "x": 15.5,
+                        "y": 25.04
+                    },
+                    "uuid": "27fd3cfc-17f2-4804-900f-28120e22c308"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole lutownicze 2 [/CONNECT/SRV_CS2_BUF] z R27 na B.Cu",
+                    "pos": {
+                        "x": 11.375,
+                        "y": 26.0
+                    },
+                    "uuid": "f13e08b2-517d-4e64-8a9c-eef5b5bec5db"
+                },
+                {
+                    "description": "Pole lutownicze 2 [/CONNECT/SRV_TC1_3VO] z R24 na B.Cu",
+                    "pos": {
+                        "x": 12.4,
+                        "y": 25.04
+                    },
+                    "uuid": "69397e46-99fb-4118-b42e-3ded12ca16d8"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [CS2_BUF] na B.Cu, długość 2,2717 mm",
+                    "pos": {
+                        "x": 16.081299,
+                        "y": 24.3937
+                    },
+                    "uuid": "f937f6bb-2da9-4ad7-9f76-85390f6fc73e"
+                },
+                {
+                    "description": "Pole lutownicze 1 [TC1_3VO] z R24 na B.Cu",
+                    "pos": {
+                        "x": 15.5,
+                        "y": 25.04
+                    },
+                    "uuid": "27fd3cfc-17f2-4804-900f-28120e22c308"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
             "description": "Track has unconnected end",
             "items": [
                 {
-                    "description": "Ścieżka [TC1_3VO] na B.Cu, długość 1,0983 mm",
+                    "description": "Ścieżka [TC1_3VO] na B.Cu, długość 3,0000 mm",
                     "pos": {
-                        "x": 32.4017,
-                        "y": 25.54
+                        "x": 30.5,
+                        "y": 25.04
                     },
-                    "uuid": "29d52853-6fe3-462b-be74-3511a3c3eb56"
+                    "uuid": "6d4a0ef1-12c6-4798-8126-ef8e42ab125f"
                 }
             ],
             "severity": "warning",
@@ -100,12 +353,12 @@
             "description": "Track has unconnected end",
             "items": [
                 {
-                    "description": "Ścieżka [/CONNECT/SRV_TC1_3VO] na B.Cu, długość 4,0520 mm",
+                    "description": "Ścieżka [/CONNECT/SRV_TC1_3VO] na B.Cu, długość 0,0599 mm",
                     "pos": {
-                        "x": 33.7348,
-                        "y": 28.4052
+                        "x": 24.4,
+                        "y": 25.04
                     },
-                    "uuid": "19076fd7-b1a0-45d6-99ab-0b01c5722433"
+                    "uuid": "642c17c2-a5d1-4ce4-9c6c-3ac39854bf6b"
                 }
             ],
             "severity": "warning",
@@ -120,7 +373,7 @@
                         "x": 17.61,
                         "y": 13.33
                     },
-                    "uuid": "30a232f6-9290-4087-8239-adfa5c8493d4"
+                    "uuid": "e0fd208e-a2a9-4a8d-a99f-22f74952bdd0"
                 }
             ],
             "severity": "warning",
@@ -135,11 +388,102 @@
                         "x": 41.74,
                         "y": 95.96
                     },
-                    "uuid": "600e3836-3a71-4667-b95b-d99c186fb7b8"
+                    "uuid": "fef8b5a6-dcf7-4d40-b62e-c03bc25f7682"
                 }
             ],
             "severity": "warning",
             "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Pole odnośnika do R27",
+                    "pos": {
+                        "x": 12.925,
+                        "y": 24.025
+                    },
+                    "uuid": "8af193bb-2329-441e-a9b7-b471cb84a34f"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment z R27 na B.Silkscreen",
+                    "pos": {
+                        "x": 13.652064,
+                        "y": 25.09
+                    },
+                    "uuid": "80b5404c-89dd-430e-a5c6-b06653794aab"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment z R24 na B.Silkscreen",
+                    "pos": {
+                        "x": 14.677064,
+                        "y": 25.95
+                    },
+                    "uuid": "c8d94bf3-cf47-480a-9463-71f1fea5493d"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do R27",
+                    "pos": {
+                        "x": 12.925,
+                        "y": 24.025
+                    },
+                    "uuid": "8af193bb-2329-441e-a9b7-b471cb84a34f"
+                },
+                {
+                    "description": "Segment z R24 na B.Silkscreen",
+                    "pos": {
+                        "x": 14.677064,
+                        "y": 24.13
+                    },
+                    "uuid": "bb7c5cd3-914d-431e-b1bb-69838d44a7ab"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do R27",
+                    "pos": {
+                        "x": 12.925,
+                        "y": 24.025
+                    },
+                    "uuid": "8af193bb-2329-441e-a9b7-b471cb84a34f"
+                },
+                {
+                    "description": "Pole odnośnika do R24",
+                    "pos": {
+                        "x": 13.95,
+                        "y": 23.064999
+                    },
+                    "uuid": "effdad19-85b6-45c7-9ae1-d66d335f86c1"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
         }
     ]
 }

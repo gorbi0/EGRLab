@@ -13,4 +13,5 @@ GND_REF = ('J1', '1')        # reference pad of the main GND cluster (stitch.py)
 PWR = []                     # nets of class PWR (0.6 mm, clearance 0.3)
 CORE = []                    # nets of class CORE3V3 (0.3 mm)
 SIGNAL_W = .3                # Default track: S1 section 3 (rules as P02-R3); the 0.2 mm of P03 R6 was a P03-only user decision
-SUPPORT_KEEPOUT = {'J3': 4.0, 'J4': 4.0}   # NPTH support holes of the module sockets: nylon M2.5 + 8 mm washer -> no copper within 4 mm
+SUPPORT_KEEPOUT = {}         # 1.10 (decyzja użytkownika): moduły J3 / J4 lutowane wprost, bez gniazd i bez otworów podparcia
+PIN_MARKS = {'J3': {'1': '1'}, 'J4': {'1': '1'}}   # S1 §9 (pin 1 każdego złącza): VIN modułów; przykryte przez moduł po montażu

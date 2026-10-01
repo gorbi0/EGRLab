@@ -1,5 +1,5 @@
 """Independent checks of the finished P09 R2 PCB in format S1 (fresh native DRC + S1 and P09-specific rules); structure and the
-generic checks of P03 R6 verify_pcb.py (30.09.2026), board values from board.py.
+generic checks of P03 R6 verify_pcb.py (30.09.2026), board values from board.py; generic part shared with P10 R2 (review fixes 1.10).
 usage: KiCad Python verify_pcb.py [alternative_board] [report_dir]
 The alternative board is used by negative_controls.py (copies with one deliberate defect each).
 Sources of the expected values: Plytki/Format-S1/format-s1.json and SPECYFIKACJA-FORMATU-S1.md (S1-3), the P12 contract docs/J_BP.csv,
@@ -11,13 +11,15 @@ from sexpr import parse, one, sub
 from provenance import run_fresh_drc
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from heights import height
-from board import NAME, REV, CLASS, SLOTS, SIGNAL_W, SUPPORT_KEEPOUT
+from board import NAME, REV, CLASS, SLOTS, SIGNAL_W, SUPPORT_KEEPOUT, JBP as JBP_ZL, JSV as JSV_ZL, PIN_MARKS
+import ast as _ast
+TYTUL = f"{REV} S1-{CLASS} {SLOTS[0] if len(SLOTS) == 1 else SLOTS[0] + '-' + SLOTS[-1]}"   # S1 §9 (jak P02 R4)
 P = Path(__file__).resolve().parents[1]
 path = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else P / f'eda/{NAME}.kicad_pcb'
 out = Path(sys.argv[2]).resolve() if len(sys.argv) > 2 else P / 'verification'
 b = p.LoadBoard(str(path)); b.BuildConnectivity()
 S1 = json.loads((P.parents[0] / 'Format-S1/format-s1.json').read_text(encoding='utf-8'))
-root = ET.parse(P / f'verification/{NAME}.xml').getroot(); parts = json.loads(Path(os.environ.get('P09_PARTS_JSON', P / 'docs/parts.json')).read_text(encoding='utf-8'))
+root = ET.parse(P / f'verification/{NAME}.xml').getroot(); parts = json.loads(Path(os.environ.get('EGRLAB_PARTS_JSON', P / 'docs/parts.json')).read_text(encoding='utf-8'))
 checks = []; details = {}
 KLASA, SLOTY = CLASS, SLOTS
 W, H = S1['klasy'][KLASA]['W'], S1['klasy'][KLASA]['H']; STEP = S1['rozstaw_slotow']
@@ -93,7 +95,7 @@ MIN_HIT = 1e-3   # mm2
 
 
 def shape_hits_copper(shape):
-    """As rect_hits_copper for any outline (30.09: the SD1 keepouts are circles; their bounding squares caught the pour
+    """As rect_hits_copper for any outline (P03 R6 30.09: the SD1 keepouts are circles; their bounding squares caught the pour
     and two tracks in the corners, outside the rule area). A hit needs more than MIN_HIT mm2 of common area: a pour filled up to
     a circular rule area shares only polygonisation slivers with it (1e-7 mm2 measured on SD1)."""
     hits = []
@@ -238,7 +240,8 @@ jd = {'centre_x': round(cx, 3), 'pin1': pads1['1'], 'fab_front_y': fab and round
 check('J1 = J_BP (edge A): IDC 2x8 angled, body front at y = 0, pin centre x = 26.5, pin 1 at the smaller x, pinout = docs/J_BP.csv (P12 contract)', ok, jd)
 # ---------------- 4. edge B: service header J2 (contract docs/SERWIS.csv) ----------------
 texts = [(t.GetText(), t) for t in b.GetDrawings() if isinstance(t, p.PCB_TEXT) and t.GetLayer() == p.F_SilkS]
-labels = json.loads((P / 'routing/silkscreen.json').read_text(encoding='utf-8')).get('service_labels', {})
+LABEL = next(_ast.literal_eval(n.value) for n in _ast.parse((P / 'src/silkscreen.py').read_text(encoding='utf-8')).body
+             if isinstance(n, _ast.Assign) and any(getattr(t, 'id', '') == 'LABEL' for t in n.targets))   # 1.10 (recenzja): wzorzec niezależny od wyniku
 f = fmap['J2']; problems = []; rows = []
 pd = sorted(((int(a.GetNumber()), a) for a in f.Pads()), key=lambda q: q[0]); fab = layer_bbox(f, p.F_Fab)
 xs = [p.ToMM(a.GetPosition().x) for _, a in pd]; lo, hi = S1['krawedz_B']['zakres_x_w_slocie']
@@ -246,6 +249,9 @@ if len(pd) > S1['krawedz_B']['max_pinow_na_slot']: problems.append('too many pin
 if min(xs) - .85 < lo - 1e-6 or max(xs) + .85 > hi + 1e-6: problems.append(f'pins outside x {lo}..{hi}')
 if not fab or fab[3] - H < 5.0: problems.append(f'pins not ~6 mm beyond edge B (fab {fab})')
 if net(pd[0][1]) != 'GND' or net(pd[-1][1]) != 'GND': problems.append('GND not on both ends')
+for n, a in (pd[0], pd[-1]):
+    if len([t for s_, t in texts if s_ == LABEL['GND'] and abs(p.ToMM(t.GetPosition().x) - p.ToMM(a.GetPosition().x)) < 1.3 and 80 < p.ToMM(t.GetPosition().y) < H]) != 1:
+        problems.append(f'pin {n}: no single GND label')
 for n, a in pd[1:-1]:
     want_net, want_res = SERW[n]
     members = [(ff.GetReference(), q) for ff in b.GetFootprints() for q in ff.Pads() if q.GetNetname() == a.GetNetname() and ff.GetReference() != 'J2']
@@ -256,50 +262,53 @@ for n, a in pd[1:-1]:
     others = [x for ff in b.GetFootprints() for x in ff.Pads() if x.GetNetname() == other.GetNetname() and ff.GetReference() != r]
     dist = min((math.dist(pos(other.GetPosition()), pos(x.GetPosition())) for x in others), default=99)
     if node != want_net or want_res.split()[0] != r: problems.append(f'pin {n}: {r} on {node}, SERWIS.csv {want_net} {want_res}')
-    if val != '1K': problems.append(f'pin {n}: {r} {val}, README: every service pin through 1 kOhm')
+    want_val = {'1 kΩ': '1K', '10 kΩ': '10K', '4,7 kΩ': '4K7'}[' '.join(want_res.split()[1:3])]
+    if val != want_val: problems.append(f'pin {n}: {r} {val}, SERWIS.csv {want_val} (S1 section 6: 1K logic / rails, README)')
     if dist > 10: problems.append(f'pin {n}: {r} not at its node ({dist:.1f} mm)')
-    lab = labels.get(f'J2.{n}')
+    lab = LABEL.get(node)
     tx = [t for s, t in texts if lab and s == lab and abs(p.ToMM(t.GetPosition().x) - p.ToMM(a.GetPosition().x)) < 1.3 and 80 < p.ToMM(t.GetPosition().y) < H]
     if len(tx) != 1: problems.append(f'pin {n}: {len(tx)} silk labels')
     rows.append({'pin': n, 'node': node, 'resistor': r, 'value': val, 'node_dist_mm': round(dist, 1), 'label': lab, 'side': 'B' if fmap[r].IsFlipped() else 'F'})
-check('Service header J2 (edge B, S1 section 6): <= 13 pins in x 10..43, pins out ~6 mm, GND on both ends, one 1 kOhm series resistor per pin '
-      'as docs/SERWIS.csv, <= 10 mm from its node, one silk label per pin', not problems, {'problems': problems, 'pins': rows})
+check('Service header J2 (edge B, S1 section 6): <= 13 pins in x 10..43, pins out ~6 mm, GND on both ends, one series resistor per pin '
+      'of the value in docs/SERWIS.csv, <= 10 mm from its node, one silk label per pin with the name of its node (LABEL in silkscreen.py), GND at the ends', not problems, {'problems': problems, 'pins': rows})
+# ---------------- 4b. reserved strips at the edges (S1 §5 / §6) ----------------
+pasy = {}
+for zl, kraw in [(z, 'A') for z in JBP_ZL] + [(z, 'B') for z in JSV_ZL]:
+    xs_ = [p.ToMM(a.GetPosition().x) for a in fmap[zl].Pads() if a.GetNumber()]; x0 = STEP * int(((min(xs_) + max(xs_)) / 2) // STEP)
+    y0, y1 = (S1['krawedz_A']['strefa_y'] if kraw == 'A' else S1['krawedz_B']['strefa_y']); lo_, hi_ = (10.0, 43.0) if kraw == 'A' else S1['krawedz_B']['zakres_x_w_slocie']
+    pas = (x0 + lo_, y0, x0 + hi_, y1)
+    pasy[f'{zl} ({kraw})'] = {'pas': pas, 'czesci': sorted(r for r in fmap if r not in holes_ref and r != zl
+                                                        and cbox(r)[0] < pas[2] and pas[0] < cbox(r)[2] and cbox(r)[1] < pas[3] and pas[1] < cbox(r)[3])}
+check('Reserved strip of edge A (S1 §5: y 0-10, x 10-43 of each J_BP slot): no other part on either side; '
+      'the edge-B zone of the service headers is reported only (S1 §6 gives the header position, not a reserved strip)',
+      not any(v['czesci'] for k, v in pasy.items() if k.endswith('(A)')), pasy)
 # ---------------- 5. heights ----------------
 hh = {r: height(r, parts) for r in onboard}
-check(f'Every part <= {HMAX} mm above the board (level 3, S1 section 4; src/heights.py; the module socket is an estimate at the limit)', all(v <= HMAX for v in hh.values()),
+check(f'Every part <= {HMAX} mm above the board (level 3, S1 section 4; src/heights.py; the module height is an upper estimate)', all(v <= HMAX for v in hh.values()),
       {'max': max(hh.items(), key=lambda q: q[1]), 'over': {r: v for r, v in hh.items() if v > HMAX}})
-# ---------------- 6. modules J3 / J4 (MAX31856 XU on 1x9 sockets; outline provisional, README) ----------------
+# ---------------- 6. modules J3 / J4 (MAX31856 XU soldered directly by their 1x9 header, user decision 1.10; outline provisional, README) ----------------
 md = {}; mok = True
 for r in ('J3', 'J4'):
-    f = fmap[r]; pins = [pxy(r, str(k)) for k in range(1, 10)]; npth = sorted(pos(a.GetPosition()) for a in f.Pads() if a.GetAttribute() == p.PAD_ATTRIB_NPTH)
+    f = fmap[r]; pins = [pxy(r, str(k)) for k in range(1, 10)]; npth = [a for a in f.Pads() if a.GetAttribute() == p.PAD_ATTRIB_NPTH]
     term = fp2board(f, -10.16, 19.0)    # far edge of the module outline (F.Fab; thermocouple terminal side) in board mm
     fab = layer_bbox(f, p.F_Fab)
-    rz = [z for z in b.Zones() if z.GetIsRuleArea() and z.GetZoneName().startswith(f'{r} support')]
-    cu = [h for z in rz for h in shape_hits_copper(z.Outline())]
-    good = (len(npth) == 2 and len(rz) == 2 and all(z.GetDoNotAllowTracks() and z.GetDoNotAllowVias() and z.GetDoNotAllowZoneFills()
-                                                   and {p.F_Cu, p.B_Cu} <= set(z.GetLayerSet().Seq()) for z in rz)
-            and all(abs(p.ToMM(z.Outline().BBox().GetWidth()) / 2 - SUPPORT_KEEPOUT[r]) < .05 for z in rz) and not cu
-            and term[0] > max(q[0] for q in pins) and pins[0][1] < pins[-1][1] and fab and 0 <= fab[0] and fab[2] <= W and 0 <= fab[1] and fab[3] <= H)
-    md[r] = {'pin1': pins[0], 'pin9': pins[-1], 'support_holes': npth, 'terminal_edge': [round(v, 2) for v in term],
-             'terminal_edge_to_input_wall_mm': round(W - term[0], 2), 'module_fab_bbox': fab and [round(v, 2) for v in fab],
-             'keepouts': len(rz), 'copper_in_keepouts': cu, 'ok': good}
+    good = (not npth and term[0] > max(q[0] for q in pins) and pins[0][1] < pins[-1][1]
+            and fab and 0 <= fab[0] and fab[2] <= W and 0 <= fab[1] and fab[3] <= H)
+    md[r] = {'pin1': pins[0], 'pin9': pins[-1], 'npth_holes': len(npth), 'terminal_edge': [round(v, 2) for v in term],
+             'terminal_edge_to_input_wall_mm': round(W - term[0], 2), 'module_fab_bbox': fab and [round(v, 2) for v in fab], 'ok': good}
     mok &= good
-check(f'J3 / J4 MAX31856 sockets (MODUL-KWALIFIKACJA.md): module outline on the board, thermocouple terminal towards the input wall (x = {W}, S1 sections 2 and 7), '
-      f'pin 1 / VIN at the smaller y; 6 mm support holes with {SUPPORT_KEEPOUT["J3"]} mm keepouts (washers OD 8 mm) on both layers, no copper in them', mok, md)
+check(f'J3 / J4 MAX31856 XU modules soldered directly (MODUL-KWALIFIKACJA.md; no socket, no support holes, decision 1.10): module outline '
+      f'on the board, thermocouple terminal towards the input wall (x = {W}, S1 sections 2 and 7), pin 1 / VIN at the smaller y', mok, md)
 # ---------------- 7. placement requirements (decoupling, drivers) ----------------
 DEC = {'C1': ('U1', '14'), 'C2': ('U2', '14'), 'C3': ('U3', '16')}
 dd = {}
 for c, (u, n) in DEC.items():
     q = next(a for a in fmap[c].Pads() if a.GetNetname() == pad(u, n).GetNetname()); dd[f'{c}-{u}.{n}'] = round(math.dist(pos(q.GetPosition()), pxy(u, n)), 2)
 check('Decoupling at the IC pins: 100 nF pad <= 6 mm from its supply pin (C1 U1.14, C2 U2.14, C3 U3.16; limit as P03 R6)', all(v <= 6 for v in dd.values()), dd)
-# C6 / C7 (1 uF) sit on the module VIN next to the socket. The module overhangs pin 1 (courtyard 4.5 mm beyond it), JP1 / JP2 (the VIN
-# selector) take the spot left of pin 1, and between J1 and J3 a 1206 fits only lying along x (measured 30.09: 3.2 mm gap), with its
-# pad at best 5.75 mm from the pin: the limit here is 6.5 mm, not the 6 mm of the IC decoupling.
-vd = {}
+vd = {}   # C6 / C7 (1 uF) on the module VIN; since 1.10 JP1 stands below J3.1 like JP2, so the IC limit holds (R2 to 30.09: 6.5 mm)
 for c, j in {'C6': 'J3', 'C7': 'J4'}.items():
     q = next(a for a in fmap[c].Pads() if a.GetNetname() == pad(j, '1').GetNetname()); vd[f'{c}-{j}.1'] = round(math.dist(pos(q.GetPosition()), pxy(j, '1')), 2)
-check('Module supply capacitors: C6 / C7 pad <= 6.5 mm from the VIN pin of J3 / J4 (the module outline overhangs pin 1; see the comment)',
-      all(v <= 6.5 for v in vd.values()), vd)
+check('Module supply capacitors: C6 / C7 pad <= 6 mm from the VIN pin of J3 / J4 (as the IC decoupling; review 1.10)', all(v <= 6 for v in vd.values()), vd)
 DRV = {'R14': ('U1', '3'), 'R15': ('U1', '6'), 'R16': ('U1', '8'), 'R17': ('U1', '11'), 'R11': ('U2', '3'), 'R12': ('U2', '6')}
 dv = {}
 for r, (u, n) in DRV.items():
@@ -335,9 +344,26 @@ for f in b.GetFootprints():
     if o:
         amb[r] = o
 check('Every visible reference outside the courtyards of other parts', not amb, amb)
-title = [s for s, t in texts if s.startswith(REV + ' S1-1/3')]
+blisko = {}
+for f in b.GetFootprints():
+    r = f.GetReference(); t = f.Reference()
+    if r in holes_ref or not t.IsVisible() or r not in cour:
+        continue
+    c_ = t.GetBoundingBox().GetCenter(); dist_ = lambda poly: 0.0 if poly.Contains(c_) else math.sqrt(poly.SquaredDistance(c_)) / 1e6
+    mine = dist_(cour[r]); inne = sorted((dist_(cy), o) for o, cy in cour.items() if o != r and side[o] == side[r])
+    if inne and inne[0][0] <= mine:
+        blisko[r] = {'own_mm': round(mine, 2), 'nearest_other': inne[0][1], 'other_mm': round(inne[0][0], 2)}
+check('Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)', not blisko, blisko)
+znaki = {}
+for r_, zn in PIN_MARKS.items():
+    for num, t_ in zn.items():
+        q = pad(r_, num); qx, qy = pxy(r_, num)
+        znaki[f'{r_}.{num} {t_}'] = [s_ for s_, t in texts if s_ == t_ and math.dist((p.ToMM(t.GetPosition().x), p.ToMM(t.GetPosition().y)), (qx, qy)) <= 3.0]
+check('Pin 1 / polarity marks of module and wire connectors on the silkscreen, <= 3 mm from their pads (S1 §9; review 1.10)',
+      all(len(v) == 1 for v in znaki.values()), znaki)
+title = [s for s, t in texts if s == TYTUL]
 marks = [s for s, t in texts if s.startswith('KRAWEDZ A') or s.startswith('KRAWEDZ B')]
-check(f'Silkscreen: board name "{REV} S1-1/3", edge markers A and B', bool(title) and any(m.startswith('KRAWEDZ A') for m in marks) and any(m.startswith('KRAWEDZ B') for m in marks), {'title': title, 'marks': marks})
+check(f'Silkscreen: board name "{TYTUL}", edge markers A and B', bool(title) and any(m.startswith('KRAWEDZ A') for m in marks) and any(m.startswith('KRAWEDZ B') for m in marks), {'title': title, 'marks': marks})
 
 res = {'board': str(path), 'board_sha256': hashlib.sha256(path.read_bytes()).hexdigest(), 'checks': checks, 'details': details,
        'passed': sum(c['pass'] for c in checks), 'total': len(checks)}

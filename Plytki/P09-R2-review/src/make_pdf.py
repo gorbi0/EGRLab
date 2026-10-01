@@ -14,7 +14,8 @@ import json, hashlib, sys, xml.etree.ElementTree as ET
 P = Path(__file__).resolve().parents[1]; O = P / 'output'
 sys.path.insert(0, str(P / 'src'))
 from heights import HEIGHTS
-from board import NAME, REV
+from board import NAME, REV, CLASS, SLOTS
+TYTUL = f"{REV} S1-{CLASS} {SLOTS[0] if len(SLOTS) == 1 else SLOTS[0] + '-' + SLOTS[-1]}"
 checks = json.loads((P / 'verification/pcb-checks.json').read_text(encoding='utf-8')); assert checks['passed'] == checks['total']
 assert checks['board_sha256'] == hashlib.sha256((P / f'eda/{NAME}.kicad_pcb').read_bytes()).hexdigest()
 neg = json.loads((P / 'verification/negative-controls.json').read_text(encoding='utf-8'))
@@ -43,7 +44,7 @@ def start(n, title, subtitle):
     c.setFillColor(HexColor('#172833')); c.setFont('Bold', 18); c.drawString(12 * mm, 190 * mm, title)
     c.setFont('Arial', 9); c.drawString(12 * mm, 182 * mm, subtitle)
     c.setStrokeColor(HexColor('#cdd7dc')); c.line(12 * mm, 14 * mm, 285 * mm, 14 * mm)
-    c.setFont('Arial', 8); c.drawString(12 * mm, 9 * mm, f'{REV} S1-1/3 | 30.09.2026 | PCB do recenzji lokalnej | przymiarka 1:1 i odbiór sprzętu: NIE ZBADANO')
+    c.setFont('Arial', 8); c.drawString(12 * mm, 9 * mm, f'{TYTUL} | 01.10.2026 | PCB do recenzji lokalnej | przymiarka 1:1 i odbiór sprzętu: NIE ZBADANO')
     c.drawRightString(285 * mm, 9 * mm, f'{n} / {NPAGES}')
 
 
@@ -55,6 +56,10 @@ def board(name, x=20, y=42):
     for xx in (x, x + 100):
         c.line(xx * mm, (y - 13) * mm, xx * mm, (y - 7) * mm)
     c.setFont('Arial', 8.5); c.drawString(x * mm, (y - 17) * mm, 'Belka 100 mm. Drukować 100 %, bez dopasowania do strony; zmierzyć belkę przed przymiarką.')
+
+
+def liczba(n, f1, f2, f5):   # 1 zgłoszenie, 2 zgłoszenia, 5 zgłoszeń
+    return f'{n} ' + (f1 if n == 1 else f2 if 2 <= n % 10 <= 4 and not 12 <= n % 100 <= 14 else f5)
 
 
 def h_of(r):
@@ -71,41 +76,41 @@ start(1, f'{REV} — TEMP (2 × MAX31856), PCB w formacie S1',
 y = 172
 for t in [f'<b>Płytka:</b> 53 × 100 mm (klasa 1/3), narożniki R1, FR4 1,6 mm, 2 × 35 µm; 4 otwory M3 (NPTH 3,2) według format-s1.json, strefy dystansów Ø7 '
           f'bez miedzi i części. {len(onboard)} części, od spodu {bottom[0]}–{bottom[-1]} (rezystory serwisowe 1206); najwyższe: {", ".join(tall)} '
-          f'{str(hmax).replace(".", ",")} mm — szacunek gniazda z modułem, równo z limitem 16,5 mm (potwierdzić przy przymiarce).',
+          f'{str(hmax).replace(".", ",")} mm — moduł z terminalem, szacunek górny (potwierdzić przy przymiarce; limit 16,5 mm).',
           '<b>Krawędź A:</b> J1 = J_BP (IDC 2×8 kątowe, pinout docs/J_BP.csv), środek x = 26,5 mm, pin 1 od mniejszego x. <b>Krawędź B:</b> J2 goldpin '
           'kątowy 1×13 (GND na kołkach 1 i 13, kołki 2–12 przez 1 kΩ przy węzłach, docs/SERWIS.csv); pin 1 od większego x — kątowa listwa od góry '
           'z kołkami za krawędzią B nie pozwala inaczej (README).',
-          f'<b>Moduły:</b> J3 (TC1) i J4 (TC2) — gniazda 1×9 pod moduły MAX31856 XU, ustawione tak, że terminal termopary jest w stronę ściany wejść '
-          f'(x = 53 mm; krawędź obrysu modułu {str(t3).replace(".", ",")} mm od krawędzi płytki), pin 1 = VIN u góry rzędu. Otwory podparcia Ø6 z polem Ø8 '
-          'bez miedzi na obu warstwach (podkładki słupków M2,5).',
+          f'<b>Moduły:</b> J3 (TC1) i J4 (TC2) — moduły MAX31856 XU lutowane wprost fabryczną listwą 1×9 (bez gniazd i podpórek; decyzja 1.10), '
+          f'terminal termopary w stronę ściany wejść (x = 53 mm; krawędź obrysu modułu {str(t3).replace(".", ",")} mm od krawędzi płytki), '
+          'pin 1 = VIN u góry rzędu (nadruk „1”).',
           f'<b>Kontrole:</b> DRC: {len(drc["unconnected_items"])} niepołączonych, {len(drc["schematic_parity"])} niezgodności ze schematem, '
           f'{len(drc["violations"]) - nlib} innych naruszeń'
-          + (f'; {nlib} zgłoszeń lib_footprint_mismatch u części z przyciętym nadrukiem (przyjęte przez verify_pcb.py)' if nlib else '')
+          + (f'; {liczba(nlib, "zgłoszenie", "zgłoszenia", "zgłoszeń")} lib_footprint_mismatch u części z przyciętym nadrukiem (przyjęte przez verify_pcb.py)' if nlib else '')
           + f'; PCB {checks["passed"]}/{checks["total"]}; próby ujemne PCB {npass}/{len(neg)} (z próbą zerową).',
-          '<b>Otwarte:</b> przymiarka 1:1 z modułami (strona 5; MODUL-KWALIFIKACJA krok 1), wysokość gniazda z modułem, recenzja lokalna; '
-          f'{len(hidden)} oznaczeń ukrytych z braku miejsca{(" (" + ", ".join(hidden) + ")") if hidden else ""}; paczka produkcyjna poza zakresem.']:
+          '<b>Otwarte:</b> przymiarka 1:1 z modułami (strona 5; MODUL-KWALIFIKACJA krok 1), wysokość modułu z terminalem, recenzja lokalna; '
+          f'{liczba(len(hidden), "oznaczenie ukryte", "oznaczenia ukryte", "oznaczeń ukrytych")} z braku miejsca{(" (" + ", ".join(hidden) + "; na rysunku montażowym z warstwy F.Fab)") if hidden else ""}; paczka produkcyjna poza zakresem.']:
     y = para(t, 12, y, 150)
 c.drawImage(str(O / 'previews/isometric.png'), 168 * mm, 30 * mm, 120 * mm, 140 * mm, preserveAspectRatio=True, anchor='c', mask='auto')
-para('Render KiCad z modelami bibliotecznymi (gniazda modułów bez modeli 3D).', 170, 30, 115)
+para('Render KiCad bez modeli 3D części (obraz Dockera nie ma biblioteki modeli KiCad).', 170, 30, 115)
 c.showPage()
 pages = [(2, 'Montaż od góry — 1:1', 'assembly', [
-    '<b>J3 / J4:</b> gniazda żeńskie 1×9 pod moduły MAX31856 XU; listwa modułu po lewej, terminal termopary w prawo (ściana wejść), VIN = pin 1 '
-    'u góry rzędu (kwadratowe pole). Moduły wkładać dopiero po sprawdzeniu nośnika (PROJEKT, MODUL-KWALIFIKACJA).',
+    '<b>J3 / J4:</b> moduły MAX31856 XU lutowane wprost fabryczną listwą 1×9 (plastik listwy między modułem a płytką); listwa modułu po lewej, '
+    'terminal termopary w prawo (ściana wejść), VIN = pin 1 u góry rzędu (kwadratowe pole, nadruk „1”). Lutować dopiero po kwalifikacji modułu '
+    'i sprawdzeniu nośnika bez modułów (MODUL-KWALIFIKACJA, ODBIOR); wyprowadzenia listwy od spodu przyciąć do ≤ 1,5 mm.',
     '<b>U1 / U2</b> SOIC-14 lutowane wprost, <b>U3</b> DIP16 wprost (bez podstawki). Rezystory MF0207 i kondensatory 100 n na stojąco; pozostałe R/C SMD 1206.',
     f'<b>Od spodu:</b> {bottom[0]}–{bottom[-1]} (rezystory 1 kΩ listwy serwisowej, SMD ≤ 1,5 mm). Wyprowadzenia THT od spodu przyciąć do ≤ 1,5 mm (S1 §4).',
     '<b>JP1 / JP2:</b> wybór VIN modułu (1–2 = 3,3 V, 2–3 = 5 V); początkowo bez zwór, nigdy dwie zwory na jednym selektorze.']),
     (3, 'Miedź F.Cu — 1:1', 'copper-front', [
     'Natywny eksport KiCad po wypełnieniu stref. Szare pola to miedź (GND).',
-    '<b>Obszary bez miedzi</b> wokół otworów M3 (Ø7) i otworów podparcia modułów (Ø8, na obu warstwach).', 'Wydruk kontrolny, nie plik produkcyjny.']),
+    '<b>Obszary bez miedzi</b> wokół otworów M3 (Ø7, na obu warstwach).', 'Wydruk kontrolny, nie plik produkcyjny.']),
     (4, 'Miedź B.Cu — 1:1, widok od spodu', 'copper-back', [
     'Widok od spodu (lustrzany względem strony 3). B.Cu to głównie masa GND; od spodu leżą też pola rezystorów serwisowych R20–R30.']),
     (5, 'Przymiarka 1:1 — obrys, obrysy części, otwory', 'fit', [
-    'Wydrukować w skali 100 % i położyć na części / w obudowie. Kółka Ø7 wokół otworów M3 to strefy dystansów, kółka Ø8 wokół otworów '
-    'podparcia modułów (Ø6) to podkładki słupków M2,5.',
-    f'<b>Wysokości (limit 16,5 mm, poziom 3):</b> gniazdo z modułem i terminalem ok. {str(HEIGHTS["P09:MAX31856_XU_socket"][0]).replace(".", ",")} mm '
-    '(szacunek, równo z limitem), IDC ok. 9,2 mm, rezystory na stojąco i JP ze zworą ok. 9 mm.',
-    '<b>Moduły:</b> rozstaw otworów podparcia 20,32 × 16 mm to założenie do przymiarki (PROJEKT); przyłożyć oba moduły do wydruku przed zamówieniem.',
-    'Kołki listwy J2 wystają ok. 6 mm za krawędź B; J1 wtyk równo z krawędzią A.'])]
+    'Wydrukować w skali 100 % i położyć na części / w obudowie. Kółka Ø7 wokół otworów M3 to strefy dystansów.',
+    f'<b>Wysokości (limit 16,5 mm, poziom 3):</b> moduł z terminalem do {str(HEIGHTS["P09:MAX31856_XU"][0]).replace(".", ",")} mm '
+    '(szacunek górny: plastik listwy 2,5 + płytka modułu do 1,6 + terminal do 10), IDC ok. 9,2 mm, rezystory na stojąco i JP ze zworą ok. 9 mm.',
+    '<b>Moduły:</b> przyłożyć oba moduły do wydruku przed zamówieniem: raster listwy, obrys i terminal (MODUL-KWALIFIKACJA krok 1).',
+    'Kołki listwy J2 wystają ok. 6 mm za krawędź B (rysunek obejmuje tylko płytkę 53 × 100 mm); J1 wtyk równo z krawędzią A.'])]
 for n, title, name, notes in pages:
     start(n, title, 'Geometria z natywnego pliku PCB; sprawdź belkę 100 mm przed przymiarką.'); board(name)
     yy = 172

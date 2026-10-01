@@ -1,5 +1,6 @@
 """P09 R2 PCB (format S1, class 1/3, slot S3 of level 3) from the exported netlist and src/placement.json. Builder taken over from
-P03 R6 (30.09.2026; outline, M3 holes and standoff zones from Plytki/Format-S1/format-s1.json), board values from board.py.
+P03 R6 (30.09.2026; outline, M3 holes and standoff zones from Plytki/Format-S1/format-s1.json), board values from board.py; shared with
+P10 R2 (its PAD_KEEPOUT ring and SUPPORT_KEEPOUT anchor; P09 has neither since the modules are soldered directly, 1.10).
 Rules as P02 R3 / R4 (clearance 0.25, track 0.3), 2 x 35 um copper, annular ring >= 0.25 mm (S1 section 3).
 Rule areas on both copper layers: M3 H1..H4 standoff zones D7 (S1 section 4), also no footprints.
 """
@@ -10,6 +11,8 @@ P = Path(__file__).resolve().parents[1]; E = P / 'eda'
 S1 = json.loads((P.parents[0] / 'Format-S1/format-s1.json').read_text(encoding='utf-8'))
 mm = p.FromMM
 from board import NAME, TITLE, CLASS, SLOTS, SUPPORT_KEEPOUT
+import board as _board
+PAD_KEEPOUT = getattr(_board, 'PAD_KEEPOUT', {})
 W, Hh = S1['klasy'][CLASS]['W'], S1['klasy'][CLASS]['H']; R = S1['obrys']['promien_naroza']
 
 
@@ -46,8 +49,8 @@ def fab_circle(b, x, y, r):
     g = p.PCB_SHAPE(b); g.SetShape(p.SHAPE_T_CIRCLE); g.SetCenter(xy(x, y)); g.SetEnd(xy(x + r, y)); g.SetLayer(p.F_Fab); g.SetWidth(mm(.1)); b.Add(g)
 
 
-def rule_area(b, name, pts, footprints=False):
-    z = p.ZONE(b); z.SetIsRuleArea(True); z.SetLayerSet(layers(p.F_Cu, p.B_Cu)); z.SetDoNotAllowTracks(True)
+def rule_area(b, name, pts, footprints=False, warstwy=(p.F_Cu, p.B_Cu)):
+    z = p.ZONE(b); z.SetIsRuleArea(True); z.SetLayerSet(layers(*warstwy)); z.SetDoNotAllowTracks(True)
     z.SetDoNotAllowVias(True); z.SetDoNotAllowZoneFills(True); z.SetDoNotAllowPads(False); z.SetDoNotAllowFootprints(footprints)
     z.SetZoneName(name)
     o = z.Outline(); o.NewOutline()
@@ -118,10 +121,25 @@ if __name__ == '__main__':
         rule_area(b, 'ANTENNA M1', [(x0, y0), (x1, y0), (x1, y1), (x0, y1)])
     for k, a in enumerate(sorted((a for a in (fmap['SD1'].Pads() if 'SD1' in fmap else []) if a.GetAttribute() == p.PAD_ATTRIB_NPTH), key=lambda a: a.GetPosition().x), 1):
         rule_area(b, f'SD1 M2.5 {k}', circle(p.ToMM(a.GetPosition().x), p.ToMM(a.GetPosition().y), 3))
-    for ref, rk in SUPPORT_KEEPOUT.items():   # P09: support holes of the module sockets (washers), as P03 R6 SD1 M2.5
+    for ref, rk in SUPPORT_KEEPOUT.items():   # NPTH holes of board.SUPPORT_KEEPOUT parts (P10: J3 cable-tie anchor), as P03 R6 SD1 M2.5
         for k, a in enumerate(sorted((a for a in fmap[ref].Pads() if a.GetAttribute() == p.PAD_ATTRIB_NPTH), key=lambda a: a.GetPosition().y), 1):
             rule_area(b, f'{ref} support {k}', circle(p.ToMM(a.GetPosition().x), p.ToMM(a.GetPosition().y), rk))
             fab_circle(b, p.ToMM(a.GetPosition().x), p.ToMM(a.GetPosition().y), rk)
+    for ref, d in PAD_KEEPOUT.items():   # P10 (1.10): ring of width d around a vertical pair of soldered-wire pads, no copper of any
+        # net in it; only a channel of SIGNAL_W + 2 x 0.25 mm towards -x per pad, where the locked line of that pad leaves for D1
+        from board import SIGNAL_W
+        pp = sorted((a for a in fmap[ref].Pads() if a.GetNumber()), key=lambda a: a.GetPosition().y)
+        assert len(pp) == 2 and pp[0].GetPosition().x == pp[1].GetPosition().x, ref
+        x = p.ToMM(pp[0].GetPosition().x); h = max(p.ToMM(pp[0].GetSize().x), p.ToMM(pp[0].GetSize().y)) / 2
+        y1, y2 = p.ToMM(pp[0].GetPosition().y), p.ToMM(pp[1].GetPosition().y); cw = SIGNAL_W / 2 + .25
+        xl, xp, xr = x - h - d, x - h, x + h
+        obie = (p.F_Cu, p.B_Cu)   # kanały tylko na F.Cu (tam idą linie do D1); na B.Cu pełny pierścień (1.10: wylewka GND weszła w kanał od spodu)
+        prost = [((xl, y1 - h - d, xr + d, y1 - h), obie), ((xr, y1 - h, xr + d, y2 + h), obie), ((xl, y1 + h, xr, y2 - h), obie),
+                 ((xl, y2 + h, xr + d, y2 + h + d), obie), ((xl, y1 - h, xp, y1 - cw), (p.F_Cu,)), ((xl, y1 + cw, xp, y1 + h), (p.F_Cu,)),
+                 ((xl, y2 - h, xp, y2 - cw), (p.F_Cu,)), ((xl, y2 + cw, xp, y2 + h), (p.F_Cu,)), ((xl, y1 - h, xp, y1 + h), (p.B_Cu,)),
+                 ((xl, y2 - h, xp, y2 + h), (p.B_Cu,))]
+        for k, ((a0, b0, a1, b1), ww) in enumerate(prost, 1):
+            rule_area(b, f'{ref} pola {d} mm {k}', [(a0, b0), (a1, b0), (a1, b1), (a0, b1)], warstwy=ww)
     # outline with R1 corners
     segs = [((R, 0), (W - R, 0)), ((W, R), (W, Hh - R)), ((W - R, Hh), (R, Hh)), ((0, Hh - R), (0, R))]
     for a, c in segs:

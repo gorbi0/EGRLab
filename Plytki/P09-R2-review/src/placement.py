@@ -6,14 +6,15 @@ Machinery (geo, place_near) from P03 R6 placement.py (30.09.2026), with bottom-s
 Fixed by S1 (SPECYFIKACJA-FORMATU-S1.md sections 4-6) and the BOM notes:
 - J1 (J_BP, IDC 2x8 right angle): mating face at y = 0, pin centre x = 26.5, pin 1 at the smaller x;
 - J2 (service header 1x13 right angle): pins in x 11.26..41.74, ~6 mm beyond edge B. Pin 1 stands at the LARGER x: a right-angle
-  header on the top side with its pins towards edge B cannot have it the other way (as P03 R6 J_SV1..3); the BOM note of J2 says
-  "pin 1 towards smaller x" (README: pin order unchanged, only the side);
-- 4 M3 holes (x 4 / 49, y 14 / 86) with the D7 standoff zones.
-Modules J3 / J4 (MAX31856 XU on 1x9 sockets; outline provisional until the 1:1 fit, README): rotated 90 so the thermocouple terminal
-ends face the input wall; header column at x = MX. J3 below J1 and clear of the H2 zone, J4 above the H4 zone. Their 6 mm support
-holes (nylon M2.5 with 8 mm washers) get 4 mm keepouts here and rule areas in build_board.py.
+  header on the top side with its pins towards edge B cannot have it the other way (as P03 R6 J_SV1..3; the BOM note of J2 says so);
+- 4 M3 holes (x 4 / 49, y 14 / 86) with the D7 standoff zones;
+- the reserved strip of edge A (S1 section 5: y 0..10, x 10..43) holds J1 only, on both sides (review 1.10: C4 / R20 reached into it).
+Modules J3 / J4 (MAX31856 XU soldered directly by their 1x9 header, user decision 1.10; outline provisional until the 1:1 fit, README):
+rotated 90 so the thermocouple terminal ends face the input wall; header column at x = MX. J3 below J1 and clear of the H3 zone
+(49, 14), J4 above the H4 zone (49, 86).
 Logic in the left column: U1 (input buffers SCLK / MOSI / TC1_CS / TC2_CS) under J1 next to its signal pins, U2 (MISO buffers)
-next to the module headers between J3 and J4, U3 (HC139 selecting the MISO buffer) left of U2, JP1 / JP2 at the VIN pins of J3 / J4.
+next to the module headers between J3 and J4, U3 (HC139 selecting the MISO buffer) left of U2, JP1 / JP2 7.5 mm below the VIN pins
+of J3 / J4 (review 1.10: JP1 next to J3.1 pushed C6 beyond 6 mm from the pin).
 Passives: nearest free spot at the pin they belong to (decoupling: IC supply pin; pulls: the buffer pin; series: the driver pin).
 Service resistors R20-R30 on the bottom (README R2 plan; S1-2: SMD <= 1.5 mm, >= 1 mm from THT pads, outside the standoff zones).
 """
@@ -26,8 +27,7 @@ W, H = S1['klasy']['1/3']['W'], S1['klasy']['1/3']['H']
 HOLES = [(x, y) for x in S1['otwory_M3']['x_w_slocie'] for y in S1['otwory_M3']['y']]
 RZ = S1['otwory_M3']['strefa_dystansu_srednica'] / 2
 MX, J3Y, J4Y = 30.5, 22.5, 53.0          # module header column x; y of pin 1 (VIN) of J3 / J4
-SUPPORT = [(MX + 16, y + d) for y in (J3Y, J4Y) for d in (0, 20.32)]   # 6 mm support holes of the sockets (footprint (0,16), (-20.32,16))
-SUPPORT_R = 4.0                           # 8 mm nylon washer
+STRIP_A = (10.0, S1['krawedz_A']['strefa_y'][0], 43.0, S1['krawedz_A']['strefa_y'][1])   # S1 section 5, slot S3 = the whole board
 GEO = {}
 
 
@@ -79,7 +79,9 @@ def free(b, m=.5, own=None, side='F'):
             continue   # courtyards of the other side do not block; THT pads are checked below for the bottom
         if b[0] - m < o[2] and o[0] < b[2] + m and b[1] - m < o[3] and o[1] < b[3] + m:
             return False
-    for (hx, hy), rr in [(h, RZ) for h in HOLES] + [(h, SUPPORT_R) for h in SUPPORT]:
+    if b[0] < STRIP_A[2] and STRIP_A[0] < b[2] and b[1] < STRIP_A[3] and STRIP_A[1] < b[3]:
+        return False   # reserved strip of edge A (J1 is put() directly)
+    for (hx, hy), rr in [(h, RZ) for h in HOLES]:
         dx = max(b[0] - hx, 0, hx - b[2]); dy = max(b[1] - hy, 0, hy - b[3])
         if math.hypot(dx, dy) < rr + .1:
             return False
@@ -116,13 +118,13 @@ def place_near(ref, target, own=None, radius=16.0, rots=(0, 90, 180, 270), m=.5,
 put('J1', 26.5 - 3.5 * 2.54, 13.33, 90)      # pin 1 (x 17.61) at the smaller x; mating face at y = 0 (as P03 R6 J_BP)
 put('J2', 26.5 + 15.24, 95.96, 270)          # pin 1 at x 41.74 (larger x), pin 13 at 11.26; body front at y = 100
 # ---- modules: terminal ends towards the input wall (x = 53) ----
-put('J3', MX, J3Y, 90)                        # courtyard x 27.98..52.02, y 17.97..47.34 (H2 zone ends at y 17.5)
-put('J4', MX, J4Y, 90)                        # courtyard y 48.47..77.84 (H4 zone starts at y 82.5)
+put('J3', MX, J3Y, 90)                        # courtyard x 28.0..50.0, y 20.0..45.32 (H3 zone ends at y 17.5)
+put('J4', MX, J4Y, 90)                        # courtyard y 50.5..75.82 (H4 zone starts at y 82.5)
 # ---- logic ----
 put('U1', 12.0, 26.0, 0)                      # SOIC-14: inputs from J1.6/8/12/14, outputs down to R14-R17 and the modules
 put('U2', 21.5, 50.0, 0)                      # MISO buffers between the module headers (J3.5 at y 32.66, J4.5 at y 63.16)
 put('U3', 9.0, 62.0, 0)                       # HC139 below U2 (the lower third was empty): OE1_N / OE2_N up to U2.1 / U2.4; clear of the H3 zone
-put('JP1', 25.0, 21.5, 0)                     # VIN select of J3 (pin 2 = TC1_VIN next to J3.1)
+put('JP1', 25.0, 30.0, 0)                     # VIN select of J3, 7.5 mm below J3.1 like JP2 (the spot left of J3.1 is C6's)
 put('JP2', 25.0, 60.5, 0)                     # VIN select of J4
 for a, c in [(r, o) for r in list(BOX) for o in list(BOX) if r < o]:
     ba, bc = BOX[a], BOX[c]

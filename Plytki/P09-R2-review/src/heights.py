@@ -1,11 +1,11 @@
 """P09 R2: part heights above the board (mm) for the S1 level-3 limit (16.5 mm top, 1.5 mm bottom; SPECYFIKACJA-FORMATU-S1.md §4).
-Values with their source; 'szacunek' = estimate to confirm at the 1:1 fit (docs/MODUL-KWALIFIKACJA.md step 1 measures the socket
+Values with their source; 'szacunek' = estimate to confirm at the 1:1 fit (docs/MODUL-KWALIFIKACJA.md step 1 measures the module
 and terminal height). Used by verify_pcb.py and make_pdf.py. (Structure from P03 R6 heights.py.)
 """
 import os as _os
 HEIGHTS = {  # footprint id or reference -> (height mm, source)
-    'P09:MAX31856_XU_socket': (16.5, 'szacunek: gniazdo żeńskie 1x9 ok. 8,5 mm + płytka modułu ok. 1,0 mm (deklarowane 24x21x1 mm) + terminal '
-                               'termopary ok. 7 mm; równo z limitem poziomu 3 — potwierdzić pomiarem (MODUL-KWALIFIKACJA krok 1)'),
+    'P09:MAX31856_XU': (14.1, 'szacunek górny: moduł lutowany wprost (1.10) — plastik listwy modułu 2,5 mm + płytka modułu do 1,6 mm '
+                        '(deklarowane 24x21x1 mm) + terminal termopary do 10 mm (typowy KF301); potwierdzić pomiarem (MODUL-KWALIFIKACJA krok 1)'),
     'Package_DIP:DIP-16_W7.62mm': (5.1, 'karta SN74HC139N: max 5,08 mm; U3 lutowany wprost (BOM bez podstawki)'),
     'Connector_IDC:IDC-Header_2x08_P2.54mm_Horizontal': (9.2, 'typowe gniazdo IDC kątowe obudowane: 8,9-9,2 mm'),
     'Connector_PinHeader_2.54mm:PinHeader_1x13_P2.54mm_Horizontal': (2.6, 'listwa kątowa 2,54 mm: korpus 2,54 mm'),

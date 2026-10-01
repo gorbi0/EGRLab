@@ -1,0 +1,306 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-01T09:40:48",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P09.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Ścieżka [TC1_VIN] na F.Cu, długość 0,0369 mm",
+                    "pos": {
+                        "x": 26.5005,
+                        "y": 22.5
+                    },
+                    "uuid": "6ba66085-484d-4db9-ba24-daae9ab4aded"
+                },
+                {
+                    "description": "Pole lutownicze 1 [TC1_VIN] z C6 na F.Cu",
+                    "pos": {
+                        "x": 16.500499,
+                        "y": 22.5
+                    },
+                    "uuid": "379056f0-4668-4916-bcbe-29bf435e90e4"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci TC1_VIN oraz TC2_CS)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [TC1_VIN] z C6 na F.Cu",
+                    "pos": {
+                        "x": 16.500499,
+                        "y": 22.5
+                    },
+                    "uuid": "379056f0-4668-4916-bcbe-29bf435e90e4"
+                },
+                {
+                    "description": "Ścieżka [TC2_CS] na F.Cu, długość 5,0431 mm",
+                    "pos": {
+                        "x": 15.8881,
+                        "y": 23.8154
+                    },
+                    "uuid": "55a4d3ed-ccaa-4ce4-baef-6745bdb818b1"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci 3V3_IO oraz GND)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 14 [3V3_IO] z U1 na F.Cu",
+                    "pos": {
+                        "x": 14.475,
+                        "y": 22.19
+                    },
+                    "uuid": "92f9f9db-0864-46a1-ad78-dfd468ef5fc3"
+                },
+                {
+                    "description": "Pole lutownicze 2 [GND] z C6 na F.Cu",
+                    "pos": {
+                        "x": 13.375499,
+                        "y": 22.5
+                    },
+                    "uuid": "59ac7418-d1fb-48dd-b124-c6a3c1c7152c"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint U1",
+                    "pos": {
+                        "x": 12.0,
+                        "y": 26.0
+                    },
+                    "uuid": "6ef6de9e-0429-4688-ac4a-1a3ace296742"
+                },
+                {
+                    "description": "Footprint C6",
+                    "pos": {
+                        "x": 14.937999,
+                        "y": 22.5
+                    },
+                    "uuid": "c6d83d04-4b11-4566-af97-08d3deec6e5f"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole lutownicze 14 [3V3_IO] z U1 na F.Cu",
+                    "pos": {
+                        "x": 14.475,
+                        "y": 22.19
+                    },
+                    "uuid": "92f9f9db-0864-46a1-ad78-dfd468ef5fc3"
+                },
+                {
+                    "description": "Pole lutownicze 2 [GND] z C6 na F.Cu",
+                    "pos": {
+                        "x": 13.375499,
+                        "y": 22.5
+                    },
+                    "uuid": "59ac7418-d1fb-48dd-b124-c6a3c1c7152c"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [TC2_CS] na F.Cu, długość 5,0431 mm",
+                    "pos": {
+                        "x": 15.8881,
+                        "y": 23.8154
+                    },
+                    "uuid": "55a4d3ed-ccaa-4ce4-baef-6745bdb818b1"
+                },
+                {
+                    "description": "Pole lutownicze 1 [TC1_VIN] z C6 na F.Cu",
+                    "pos": {
+                        "x": 16.500499,
+                        "y": 22.5
+                    },
+                    "uuid": "379056f0-4668-4916-bcbe-29bf435e90e4"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x08_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J1",
+                    "pos": {
+                        "x": 17.61,
+                        "y": 13.33
+                    },
+                    "uuid": "e0fd208e-a2a9-4a8d-a99f-22f74952bdd0"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J2",
+                    "pos": {
+                        "x": 41.74,
+                        "y": 95.96
+                    },
+                    "uuid": "fef8b5a6-dcf7-4d40-b62e-c03bc25f7682"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment z U1 na F.Silkscreen",
+                    "pos": {
+                        "x": 9.94,
+                        "y": 21.565
+                    },
+                    "uuid": "93952d4f-7e60-4492-a95d-f321c1529bb3"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment z C6 na F.Silkscreen",
+                    "pos": {
+                        "x": 15.649251,
+                        "y": 23.41
+                    },
+                    "uuid": "8cdcdbfa-54bb-4a5e-9be8-64883febfc29"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,1095 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C6",
+                    "pos": {
+                        "x": 11.612999,
+                        "y": 22.5
+                    },
+                    "uuid": "36c23c58-4212-4861-9d4e-9a67035caa3b"
+                },
+                {
+                    "description": "Segment z U1 na F.Silkscreen",
+                    "pos": {
+                        "x": 9.94,
+                        "y": 21.565
+                    },
+                    "uuid": "93952d4f-7e60-4492-a95d-f321c1529bb3"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0486 mm)",
+            "items": [
+                {
+                    "description": "Segment z C6 na F.Silkscreen",
+                    "pos": {
+                        "x": 15.649251,
+                        "y": 21.59
+                    },
+                    "uuid": "3cee1f1c-86ba-45cc-a4f3-a8c0553a4812"
+                },
+                {
+                    "description": "Segment z U1 na F.Silkscreen",
+                    "pos": {
+                        "x": 9.94,
+                        "y": 21.565
+                    },
+                    "uuid": "93952d4f-7e60-4492-a95d-f321c1529bb3"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0467 mm)",
+            "items": [
+                {
+                    "description": "Segment z C6 na F.Silkscreen",
+                    "pos": {
+                        "x": 15.649251,
+                        "y": 21.59
+                    },
+                    "uuid": "3cee1f1c-86ba-45cc-a4f3-a8c0553a4812"
+                },
+                {
+                    "description": "Segment z U1 na F.Silkscreen",
+                    "pos": {
+                        "x": 14.06,
+                        "y": 21.565
+                    },
+                    "uuid": "914d0cf9-7326-42e5-bd15-fac8faa5eeb6"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        }
+    ]
+}

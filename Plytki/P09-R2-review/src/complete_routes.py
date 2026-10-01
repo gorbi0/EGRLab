@@ -19,7 +19,7 @@ fn=P/f'eda/{NAME}.kicad_pcb';b=p.LoadBoard(str(fn));mm=p.FromMM
 # 30.09 evening: 0.05 mm raster (was 0.1) and exact obstacle growth. The old 0.5 mm dilation of every obstacle kept a 0.2 mm
 # track 0.4 mm from other copper (0.25 needed) and hid the last paths in the dense areas once signals went to 0.2 mm.
 R=int(os.environ.get('EGRLAB_PLAN_RES','20'));W=int(BW*R)+1;H=int(BH*R)+1
-MARGIN=.05;VIA_R=.45;PWRN=tuple(BOARD_PWR)   # P09: widths and clearances from board.py (P03 R6 had them fixed)
+MARGIN=.05;VIA_R=.45;PWRN=tuple(BOARD_PWR)   # widths and clearances from board.py (P03 R6 had them fixed)
 def clr(name):return .30 if name in PWRN else .25
 def width_of(name):return .3 if name in tuple(CORE)+PWRN else SIGNAL_W
 def grown(ps,d):
@@ -121,7 +121,7 @@ def add(net,points):
   if a[2]!=c[2]:
    assert a[:2]==c[:2];t=p.PCB_VIA(b);t.SetPosition(p.VECTOR2I(mm(a[0]),mm(a[1])));t.SetWidth(mm(.9));t.SetDrill(mm(.4));t.SetViaType(p.VIATYPE_THROUGH);t.SetLayerPair(p.F_Cu,p.B_Cu)
   else:
-   t=p.PCB_TRACK(b);t.SetStart(p.VECTOR2I(mm(a[0]),mm(a[1])));t.SetEnd(p.VECTOR2I(mm(c[0]),mm(c[1])));t.SetWidth(mm(width_of(net.GetNetname())));t.SetLayer(p.F_Cu if a[2]==0 else p.B_Cu)  # 30.09: signals 0.2 mm (obstacles still kept for 0.3)
+   t=p.PCB_TRACK(b);t.SetStart(p.VECTOR2I(mm(a[0]),mm(a[1])));t.SetEnd(p.VECTOR2I(mm(c[0]),mm(c[1])));t.SetWidth(mm(width_of(net.GetNetname())));t.SetLayer(p.F_Cu if a[2]==0 else p.B_Cu)  # width from board.py (P03 R6 30.09: signals 0.2 mm, obstacles still kept for 0.3)
   t.SetNet(net);t.SetLocked(True);b.Add(t)
 target=P/'routing/completion-routes.json';records=[];gnd_islands=[]
 def cluster_mask(code,uuid):

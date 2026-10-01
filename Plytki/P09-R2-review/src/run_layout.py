@@ -1,7 +1,7 @@
-"""Rebuild the P03 R6 layout (format S1, class L, level 2) from the netlist: board, stackup, rules, locked power pours and anchors, Freerouting,
+"""Rebuild the layout of the board in board.py (P09 R2; chain written for P03 R6, format S1) from the netlist: board, stackup, rules, locked power pours and anchors, Freerouting,
 import, completion routes from DRC, clean-up, GND stitching, DRC. Chain and scripts from P04 R2 (complete_routes, cleanup, stitch).
 usage: python src/run_layout.py [--reuse-ses] [--replan]
---reuse-ses keeps routing/P03.ses and replays routing/completion-routes.json (--replan: plans them again from DRC).
+--reuse-ses keeps routing/<NAME>.ses and replays routing/completion-routes.json (--replan: plans them again from DRC).
 Without it Freerouting runs again (up to 6 times) while no completion path is found or the clean-up would leave a gap.
 Freerouting 2.1.0 stops after 30 passes (--router.stop_pass_no; the unrouted count stops falling after ~6 passes here).
 30.09 (Ubuntu): fanout_gnd.py after route_critical.py (locked GND bars under the SOICs, SOT-23 stubs, J_BP GND combs), and

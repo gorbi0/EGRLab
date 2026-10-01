@@ -1,16 +1,18 @@
-"""P09 R2 silkscreen (format S1, class 1/3; the P03 R6 script with board values from board.py). Run after run_layout.py; changes
+"""P09 R2 silkscreen (format S1, class 1/3; the P03 R6 script, shared with P10 R2; board values from board.py). Run after run_layout.py; changes
 only F.SilkS (and hides values), never copper. Steps as P03 R6: footprint silk that would break DRC dropped at file level,
-references placed at the first free candidate, board texts (name, edge markers, pin 1 of J1 / J2) and one full-name label per
-service pin of J2 (vertical, read from edge B). Every drop is listed in routing/silkscreen.json."""
+references placed at the first free candidate, board texts (name, edge markers, pin 1 of J1 / J2, PIN_MARKS) and one label per
+service pin of J2 (LABEL: the net name, shortened only where it does not fit; vertical, read from edge B). Every drop is listed in routing/silkscreen.json."""
 from pathlib import Path
 import pcbnew as p, json, math, sys
 from sexpr import parse, dump, sub, one
 P = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(P / 'src'))
-from board import NAME, REV, JBP, JSV
+from board import NAME, REV, JBP, JSV, CLASS, SLOTS, PIN_MARKS
+TYTUL = f"{REV} S1-{CLASS} {SLOTS[0] if len(SLOTS) == 1 else SLOTS[0] + '-' + SLOTS[-1]}"   # S1 §9: nazwa, rewizja, klasa i sloty (jak P02 R4)
 fn = P / f'eda/{NAME}.kicad_pcb'
-from build_board import W, Hh as H
-FULL = set(JSV)   # P09: one service header with room above it -> full names on every pin (P03: only J_SV1)
+from build_board import W, Hh as H, holes
+STREFY = [(hx, hy) for hx, hy in holes()]; RZ_M3 = 3.5   # 1.10 (recenzja P09): tekst w strefie Ø7 przykrywa dystans M3 z podkładką
+FULL = set(JSV)   # P09 / P10: one service header with room above it -> full names on every pin (P03: only J_SV1)
 EDGE = .3   # silk-to-edge clearance used by DRC (board setting min_silk... edge 0.3 is KiCad default for silk_edge_clearance)
 LABEL = {  # J_SV1: full names, vertical
     'GND': 'GND', '5V_SYS': '5V_SYS', '5V_M1': '5V_M1', '3V3_CORE': '3V3', '3V3_IO': '3V3_IO', 'SUP_RAW_N': 'SUPRAW', 'SUP_N': 'SUP_N',
@@ -19,8 +21,10 @@ LABEL = {  # J_SV1: full names, vertical
     'MOTOR_INB': 'MOT_INB', 'MOTOR_INA': 'MOT_INA', 'MEAS_BANK': 'MBANK', 'CS_ITEST_N': 'ITEST_N', 'CS_ILOG_N': 'ILOG_N',
     'LOGGER_CURRENT_OK': 'LCUR_OK',
     # P09 R2 J2 (docs/SERWIS.csv)
-    'TC1_VIN': 'TC1VIN', 'TC2_VIN': 'TC2VIN', 'TC1_3VO': 'TC1_3V', 'TC2_3VO': 'TC2_3V', 'CS1_BUF': 'CS1BUF', 'CS2_BUF': 'CS2BUF',
-    'OE1_N': 'OE1_N', 'OE2_N': 'OE2_N', 'SPI3_MISO': 'MISO'}
+    'TC1_VIN': 'TC1_VIN', 'TC2_VIN': 'TC2_VIN', 'TC1_3VO': 'TC1_3VO', 'TC2_3VO': 'TC2_3VO', 'CS1_BUF': 'CS1_BUF', 'CS2_BUF': 'CS2_BUF',
+    'OE1_N': 'OE1_N', 'OE2_N': 'OE2_N', 'SPI3_MISO': 'MISO',   # 1.10 (recenzja P09): pełne nazwy sieci; SPI3_MISO skrócone (jedyne MISO na P09)
+    # P10 R2 J2 (docs/SERWIS.csv)
+    'RX_RAW': 'RX_RAW', 'CAN_RX': 'CAN_RX', 'CAN_TX': 'CAN_TX', 'CAN_H': 'CAN_H', 'CAN_L': 'CAN_L'}
 ABBR = {  # J_SV2 / J_SV3: three letters, horizontal, with a legend
     'MEAS_EN': 'MEN', 'ADC_RESET': 'RST', 'ADC_CONVST': 'CNV', 'ADC_CS': 'ACS', 'ADC_BUSY': 'BSY', 'CS_ILOG_N': 'ILG', 'CS_ITEST_N': 'ITS',
     'CURRENT_CS_N': 'CCS', 'MEAS_BANK': 'MBK', 'SD_CS': 'SDC', 'TC1_CS': 'TC1', 'TC2_CS': 'TC2', 'PWM': 'PWM', 'HEARTBEAT': 'HBT',
@@ -116,6 +120,8 @@ for r0, g in ftexts:
 
 
 def free(box, own, bottom=False):
+    if any(math.hypot(max(box[0] - hx, 0, hx - box[2]), max(box[1] - hy, 0, hy - box[3])) < RZ_M3 for hx, hy in STREFY):
+        return False
     if box[0] < EDGE + .2 or box[1] < EDGE + .2 or box[2] > W - EDGE - .2 or box[3] > H - EDGE - .2:
         return False
     if any(hit(box, pb, .25) for r, pb in (botpads if bottom else padboxes)):
@@ -126,6 +132,14 @@ def free(box, own, bottom=False):
         return False
     corners = [(box[0] + (box[2] - box[0]) * i / 4, box[1] + (box[3] - box[1]) * j / 2) for i in range(5) for j in range(3)]
     return not any(r != own and fps[r].IsFlipped() == bottom and cy.Contains(p.VECTOR2I(mm(x), mm(y))) for r, cy in yards.items() for x, y in corners)
+
+
+def najblizej_wlasnej(box, own, bottom=False):
+    """1.10 (recenzja): oznaczenie musi być wyraźnie bliżej własnego obrysu niż każdego innego (było: R1 1 mm od R5, 4,9 mm od R1)."""
+    c = p.VECTOR2I(mm((box[0] + box[2]) / 2), mm((box[1] + box[3]) / 2))
+    d = lambda poly: 0.0 if poly.Contains(c) else math.sqrt(poly.SquaredDistance(c)) / 1e6
+    mine = d(yards[own])
+    return all(mine + .3 < d(cy) for r, cy in yards.items() if r != own and fps[r].IsFlipped() == bottom)
 
 
 def text_box(t):
@@ -180,7 +194,7 @@ for r in sorted(fps, key=lambda r: (yards[r].BBox().GetArea(), r)):   # 30.09: t
             ref.SetTextSize(p.VECTOR2I(mm(size), mm(size))); ref.SetTextThickness(mm(.15 if size == 1.0 else .12))
             ref.SetTextAngle(p.EDA_ANGLE(a, p.DEGREES_T)); ref.SetPosition(p.VECTOR2I(mm(x), mm(y)))
             bx = text_box(ref)
-            if free(bx, r, f.IsFlipped()):
+            if free(bx, r, f.IsFlipped()) and najblizej_wlasnej(bx, r, f.IsFlipped()):
                 (placed_b if f.IsFlipped() else placed).append(bx); ok = True; break
         if ok:
             break
@@ -213,14 +227,14 @@ def place_text(t, spots, size=1.0, angle=0, just=None, own=None):
 
 # ---- 3. board texts ----
 res = {}
-# P09 (53 mm wide): title in the free lower third, short edge markers in the corners next to J1 / J2
-res['title'] = place_text(REV + ' S1-1/3', [(x, y) for y in (80, 82, 78, 84, 76) for x in (26, 22, 30, 18, 34)], 1.2)
+# 1/3 board (53 mm wide): title in a free area (P10: the empty middle, then the lower third), short edge markers in the corners next to J1 / J2
+res['title'] = place_text(TYTUL, [(x, y) for y in (35, 80, 82, 78, 84, 76) for x in (26, 22, 30, 18, 34)], 1.2)
 res['edge_A'] = place_text('KRAWEDZ A (P12)', [(x, y) for y in (2.5, 4, 5.5, 7) for x in (8.0, 7.5, 45.0, 45.5)], .8)
 if res['edge_A'] is None:   # 30.09: on 53 mm the long marker does not fit beside J1 -> the short one in a corner
     extra.remove('KRAWEDZ A (P12)'); res['edge_A'] = place_text('KRAWEDZ A', [(x, y) for y in (2.5, 4, 5.5, 7) for x in (6.0, 5.5, 47.0, 47.5)], .8)
 res['edge_B'] = place_text('KRAWEDZ B', [(x, y) for y in (97.5, 98.2, 96.5, 95.5) for x in (5.0, 4.6, 48.0, 48.4)], .8)
 yy = None
-for y0 in ((64, 60, 56, 68, 44, 40, 36) if used else ()):   # legend of the abbreviations (none on P09): one block, first free place
+for y0 in ((64, 60, 56, 68, 44, 40, 36) if used else ()):   # legend of the abbreviations (none on P09 / P10): one block, first free place
     for x0 in (118, 122, 9, 12, 100):
         spots = [(x0, y0 + 1.5 * i) for i in range(len(LEGEND))]   # 30.09: 1.25 mm let the 0.8 mm lines overlap (text box ~1.7 x size)
         trial = []
@@ -240,6 +254,11 @@ if used and not yy:
 for r in JBP + JSV:
     a = next(q for q in fps[r].Pads() if q.GetNumber() == '1'); ax, ay = p.ToMM(a.GetPosition().x), p.ToMM(a.GetPosition().y); s_ = max(p.ToMM(a.GetSize().x), p.ToMM(a.GetSize().y)) / 2 + .9
     res['pin1_' + r] = place_text('1', [(ax + dx * k, ay + dy * k) for k in (1, 1.5) for dx, dy in [(-s_, 0), (s_, 0), (0, -s_), (0, s_), (-s_, -s_), (s_, -s_), (-s_, s_), (s_, s_)]], .9, own=r)
+for r, znaki in PIN_MARKS.items():   # 1.10 (recenzja): biegunowość / pin 1 złączy modułów i wiązek (S1 §9: pin 1 każdego złącza)
+    for num, t in znaki.items():
+        a = next(q for q in fps[r].Pads() if q.GetNumber() == num); ax, ay = p.ToMM(a.GetPosition().x), p.ToMM(a.GetPosition().y)
+        s_ = max(p.ToMM(a.GetSize().x), p.ToMM(a.GetSize().y)) / 2 + .9
+        res[f'znak_{r}.{num}'] = place_text(t, [(ax + dx * k, ay + dy * k) for k in (1, 1.5) for dx, dy in [(-s_, 0), (s_, 0), (0, -s_), (0, s_), (-s_, -s_), (s_, -s_), (-s_, s_), (s_, s_)]], .9, own=r)
 p.SaveBoard(str(fn), b)
 rep = {'dropped_footprint_silk': n_drop, 'dropped_by_part': dict(sorted(drop_by.items())), 'moved_texts_by_part': dict(sorted(moved_by.items())),
        'hidden_references': missing, 'board_texts': res, 'unplaced_texts': extra, 'service_labels': labels}

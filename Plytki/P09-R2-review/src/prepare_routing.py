@@ -10,7 +10,7 @@ of the pours reaching the pads after the routing. Trials: with GND out of the li
 GND pads cut off after every run; with the plane 1-2 open after 20 passes. The real B.Cu pour is cut by the B.Cu tracks,
 so stitch.py and the completion planner still tie the islands; cleanup.py keeps the fan-out vias that sit in the pour.
 Router-only keepouts 0.4 mm wide along the board edges (Freerouting does not know the copper-to-edge
-clearance, P03 R2 lesson). The rule areas (M3 zones, ANTENNA M1, SD1 M2.5) are exported by KiCad as keepouts.
+clearance, P03 R2 lesson). The rule areas (M3 zones and the board's own from build_board.py; P03 R6: ANTENNA M1, SD1 M2.5) are exported by KiCad as keepouts.
 """
 from pathlib import Path
 import shutil, subprocess, sys, json, re

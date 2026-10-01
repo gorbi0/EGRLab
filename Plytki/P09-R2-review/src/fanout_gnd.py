@@ -19,7 +19,7 @@ again (prepare_routing.py follows). Report: routing/fanout.json.
 from pathlib import Path
 import pcbnew as p, json, math
 P = Path(__file__).resolve().parents[1]
-from board import NAME, JBP, PWR as PWR_NETS   # P09 R2: board values (script taken from P03 R6)
+from board import NAME, JBP, PWR as PWR_NETS   # board values from board.py (script taken from P03 R6 via P09 R2)
 path = P / f'eda/{NAME}.kicad_pcb'
 from build_board import W, Hh as H
 mm = p.FromMM; F, B = p.F_Cu, p.B_Cu
@@ -28,7 +28,7 @@ PWR = set(PWR_NETS)
 import os
 MODE = os.environ.get('EGRLAB_FANOUT', 'ic')    # 'ic' (default): SOIC bars + SOT-23 stubs; 'all': also every 1206 GND pad
 PLANE = os.environ.get('EGRLAB_GND_MODE', 'plane') == 'plane'   # prepare_routing.py default: SOT-23 stubs only when GND is out of the router
-MODULES = {'M1', 'SD1'}
+MODULES = {'M1', 'SD1'}   # P03 R6 module references (ESP32 / microSD); none on P09 / P10
 
 
 def V(x, y):
