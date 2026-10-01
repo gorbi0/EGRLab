@@ -33,11 +33,11 @@ Zdarzenia i pola logu: `docs/04-firmware-logi.md`, sekcja „6.2-s1”.
 
 | Wariant | Obraz | SHA-256 |
 |---|---|---|
-| core | 363 808 B | `0c20bcb1d9b1a0a9…` |
-| minimal | 417 584 B | `9dd278cff0c8a13d…` |
-| logger | 424 960 B | `bd236e0ca161f740…` |
-| test | 418 240 B | `64dc7b62834af910…` |
-| wifi | 970 688 B | `3b1907f30dfbfca9…` |
+| core | 363 808 B | `f812bc603b1e7e52…` |
+| minimal | 417 584 B | `6ffa0f7316343b5d…` |
+| logger | 424 960 B | `75e2dc516d2f0f01…` |
+| test | 418 240 B | `d4ba47b6c3b86e5f…` |
+| wifi | 970 688 B | `0f9da61bbbade7bc…` |
 
 Pełne sumy i źródła: `verification/builds.json`; obrazy do wgrania: `firmware/prebuilt/<wariant>/` (`python -m esptool --chip esp32s3 -p PORT -b 460800 --before default_reset --after hard_reset write_flash "@flash_args"` z katalogu wariantu).
 

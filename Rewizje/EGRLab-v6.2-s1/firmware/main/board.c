@@ -120,7 +120,8 @@ void board_pfail_init(void) {
     gpio_config_t in = {.pin_bit_mask = 1ULL << PFAIL_N, .mode = GPIO_MODE_INPUT, .pull_up_en = GPIO_PULLUP_DISABLE,
                         .pull_down_en = GPIO_PULLDOWN_DISABLE, .intr_type = GPIO_INTR_NEGEDGE};
     ESP_ERROR_CHECK(gpio_config(&in));
-    esp_err_t e = gpio_install_isr_service(0);
+    /* Dyspozytor w IRAM: zbocze PFAIL_N obsluzone takze w czasie zapisu do flash (NVS), gdy cache jest wylaczony. */
+    esp_err_t e = gpio_install_isr_service(ESP_INTR_FLAG_IRAM);
     if (e != ESP_OK && e != ESP_ERR_INVALID_STATE) ESP_ERROR_CHECK(e);
     ESP_ERROR_CHECK(gpio_isr_handler_add(PFAIL_N, pfail_isr, NULL));
 }
