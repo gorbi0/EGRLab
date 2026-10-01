@@ -17,6 +17,7 @@ ZRODLA = [  # płytka, gałąź, plik, format
     ('P03 R6', 'origin/p03-r6-pcb', 'Plytki/P03-R6-review/docs/zakupy.csv', 'zakupy'),
     ('P09 R2', 'origin/p09-r2-pcb', 'Plytki/P09-R2-review/docs/BOM.csv', 'bom'),
     ('P10 R2', 'origin/p10-r2-pcb', 'Plytki/P10-R2-review/docs/BOM.csv', 'bom'),
+    ('P05 R3', 'origin/p05-s1', 'Plytki/P05-R3-review/docs/BOM.csv', 'bom'),   # 1.10: schemat z PR #7 (poprawki lokalne), bez PCB
 ]
 PLYTKI = [z[0] for z in ZRODLA]
 DO_WYBORU = {  # klucz -> co wybrać (S1: typ nieustalony w BOM)
@@ -25,6 +26,7 @@ DO_WYBORU = {  # klucz -> co wybrać (S1: typ nieustalony w BOM)
     'IDC 2X5 KĄTOWE': 'typ do wyboru: kątowe obudowane IDC 2×5, złocone',
     'GOLDPIN 1X13 KĄTOWY': 'typ do wyboru: kątowy goldpin 1×13 (posiadany 1×40 jest prosty); można ciąć z kątowego 1×40',
     'GOLDPIN 1X9 KĄTOWY': 'typ do wyboru: kątowy goldpin 1×9 (jak wyżej)',
+    '100DP1T1B4M6RE': 'SW1 P05: E-Switch 100 DPDT ON-ON, kątowy M6 (decyzja 1.10); kod tulei (B4 bez gwintu / B3 z gwintem + H) i dostępność do potwierdzenia (Mouser)',
 }
 
 
@@ -103,15 +105,15 @@ def wczytaj():
     return pozycje
 
 
-ALIAS = {'2N5551G': '2N5551TA'}   # ta sama część, inne opakowanie (BOM P02 R4 wobec rejestru)
+ALIAS = {'2N5551G': '2N5551TA',   # ta sama część, inne opakowanie (BOM P02 R4 wobec rejestru)
+         '1N4148': '1187768'}      # P05: Kamami 1187768 (1N4148 THT, 10 szt., przydział P05/P08; wiersz rejestru bez MPN)
 
 
 DODATKI = [  # części ukryte w opisach BOM (gniazda, dystanse, zworki) — jak w liście 2 (Zakupy-2/src/items2.py, tme.py)
     ('P03 R6', 'ZL262-40SG', 'gniazdo żeńskie 1×40 złocone, ciąć na 1×22 (M1 na dwóch rzędach)', 2, ['M1']),
     ('P03 R6', 'ZL262-9SG', 'gniazdo żeńskie 1×9 złocone', 1, ['SD1']),
     ('P03 R6', 'TFF-M2.5X12/DR182', 'dystans poliamidowy M2,5 12 mm', 2, ['SD1']),
-    ('P09 R2', 'ZL262-9SG', 'gniazdo żeńskie 1×9 złocone', 2, ['J3', 'J4']),
-    ('P09 R2', 'TFF-M2.5X12/DR182', 'dystans poliamidowy M2,5 12 mm (podparcie modułów, wysokość do przymiarki)', 4, ['J3', 'J4']),
+    # P09 R2: gniazda ZL262-9SG i dystanse M2,5 odpadły 1.10 (decyzja użytkownika: moduły MAX31856 lutowane wprost)
     ('P09 R2', 'JUMPER-KPL', 'zworka 2,54 (JP1/JP2; początkowo bez zwory)', 2, ['JP1', 'JP2']),
 ]
 UWAGI = {  # pozycje z rejestru albo posiadane, których BOM nie nazywa wprost
@@ -175,8 +177,8 @@ wiersze.sort(key=grupa)
 with open(P / 'zakupy-3-szkic.csv', 'w', encoding='utf-8', newline='') as fh:
     w = csv.DictWriter(fh, fieldnames=list(wiersze[0]), delimiter=';'); w.writeheader(); w.writerows(wiersze)
 koszt = sum(float(w['tme_28_09'].split(': ')[1].split(' zł')[0].replace(',', '.')) * w['razem'] for w in wiersze if w['tme_28_09'] and (w['wniosek'].startswith('kupić') or 'dokupić' in w['wniosek']))
-L = ['# Lista zakupowa 3 — SZKIC (płytki S1: P02 R4, P03 R6, P09 R2, P10 R2)', '',
-     '*1.10.2026, plik generowany przez `src/szkic.py`. Nie zamawiać: BOM-y P03/P09/P10 czekają na recenzję PR, P05/P06/P11 na rewizje S1, '
+L = [f"# Lista zakupowa 3 — SZKIC (płytki S1: {', '.join(PLYTKI)})", '',
+     '*1.10.2026, plik generowany przez `src/szkic.py`. Nie zamawiać: P09 R2, P10 R2 i P05 R3 scalone 1.10 (P05 bez PCB), P03 R6 po bieżącym trasowaniu, P06/P11 czekają na rewizje S1; '
      'ceny i stany TME są z listy 2 (28.09) i trzeba je sprawdzić w przeglądarce.*', '',
      f"Pozycji: {len(wiersze)}; do wyboru typu: {sum(1 for w in wiersze if w['klucz'] in DO_WYBORU)}; do kupienia: "
      f"{sum(1 for w in wiersze if w['wniosek'].startswith('kupić'))}; częściowo z rejestru: {sum(1 for w in wiersze if 'dokupić' in w['wniosek'])}; "
