@@ -140,7 +140,7 @@ Wysokość stosu:
 | P02 R4 | zasilanie wszystkich płytek, PSU_OK, PFAIL_N, P04_3V3, SAFE_N, PG_SEND, PG_LINK, VBAT_SENSE | 1 × 2×10 (pinout niżej) |
 | P03 | DAQ 8, ILOG 2, ITEST 1, SAFE 8, DIR 4, SFAULT 1, TEMP 5, CAN 2, PANELCORE 5, PFAIL_N — ok. 37 sygnałów + zasilanie i GND | 3 × 2×10 |
 | P04 | SAFE, DRIVE, SENSOR, DAQOK, PSUOK, PG, PANELSAFE | 2 × 2×10 |
-| P05 | DAQ 8, DAQOK, VBAT_SENSE + zasilanie i GND | 1 × 2×10 |
+| P05 | DAQ 8 (J_BP2, S2); DAQOK, VBAT_SENSE, 5V_SYS × 2 (J_BP1, S1) | 1 × 2×10 + 1 × 2×5 (decyzja użytkownika 1.10.2026: jedno 2×10 nie mieści 10 sygnałów i dwóch 5V_SYS na pinach parzystych) |
 | P06 | ILOG (ADC_SCLK, ADC_DOUTA, CS_ILOG_N, LOGGER_CURRENT_OK) | 1 × 2×5 |
 | P07 | ITEST, DIR, DRIVE | 1 × 2×10 |
 | P08 | SENSOR, SFAULT | 1 × 2×5 |

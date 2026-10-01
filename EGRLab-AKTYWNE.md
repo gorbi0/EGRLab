@@ -35,7 +35,7 @@ Katalog jest repozytorium git: **github.com/gorbi0/EGRLab** (prywatne), gałąź
 
 ## P05 R2 — SCHEMAT (PR #3, 29.09.2026)
 
-P05 R2, etap schematu (PR #3, scalony 29.09): R5 6,04 kΩ, R7 5,11 kΩ, R13 47 kΩ, CH7 = VBAT_SENSE, arkusze AUX_IN/ZLACZA, ODBIOR i INTEGRACJA według recenzji; ERC 0, 421/421, 23/23, 12/12. U2 w klasie wysokiej — decyzja użytkownika: REF5025ID (Mouser 595-REF5025ID, 35,82 zł; REF5025AIDR z listy 2 to klasa standardowa 0,1 % i daje dolny narożnik okna DAQ_OK 4,7477 V < 4,75 V — mój błąd na liście). Layout P05 w S1 osobnym zadaniem; wzór odsprzęgania U1 w `Plytki/P05-R2-review/wip-layout-obrys-R1/`. Lista zakupowa 2 poprawiona o REF5025ID i oznaczona „do przeliczenia” po decyzjach z 29.09.
+P05 R2, etap schematu (PR #3, scalony 29.09): R5 6,04 kΩ, R7 5,11 kΩ, R13 47 kΩ, CH7 = VBAT_SENSE, arkusze AUX_IN/ZLACZA, ODBIOR i INTEGRACJA według recenzji; ERC 0, 421/421, 23/23, 12/12. U2 w klasie wysokiej — decyzja użytkownika: REF5025ID (Mouser 595-REF5025ID, 35,82 zł; REF5025AIDR z listy 2 to klasa standardowa 0,1 % i daje dolny narożnik okna DAQ_OK 4,7477 V < 4,75 V — mój błąd na liście). Layout P05 w S1 osobnym zadaniem; wzór odsprzęgania U1 w `Plytki/P05-R2-review/wip-layout-obrys-R1/`. Lista zakupowa 2 poprawiona o REF5025ID i oznaczona „do przeliczenia” po decyzjach z 29.09. **1.10.2026:** decyzja użytkownika — dwa złącza J_BP (J_BP2 2×10 z magistralą DAQ w slocie S2, na tych samych pinach co P03 R6; J_BP1 2×5 z 5V_SYS ×2, DAQ_OK i VBAT_SENSE w slocie S1); schemat w S1 (R3) robi sesja w chmurze: `Plytki/Format-S1/zadania/ZADANIE-P05-S1.md`, gałąź `p05-s1`, polecenie w `docs/CHMURA.md`.
 
 ## FORMAT S1 — PRZYJĘTY (29.09.2026)
 
