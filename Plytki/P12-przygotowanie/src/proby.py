@@ -9,7 +9,15 @@ P = Path(__file__).resolve().parents[1]; BAZA = json.loads((P / 'zrodla.json').r
 
 
 def plan(cfg):
-    return next(p for p in cfg['plytki'] if p['plytka'] == 'P05 R3')['zrodlo']['piny']
+    """1.10: P05 czyta schemat z chmury (csv); wady wstrzykujemy do kopii jego pinoutu jako planu (ten sam pinout, sprawdzone)."""
+    z = next(p for p in cfg['plytki'] if p['plytka'] == 'P05 R3')['zrodlo']
+    if z['typ'] != 'plan':
+        z.update(typ='plan', piny=z.pop('plan_piny'), ref='origin/main', plik=z['plan_plik'])
+    return z['piny']
+
+
+def schemat_inny_niz_plan(cfg):        # plan z zadania mówi PFAIL_N na J_BP2.16 P05, schemat ma tam GND
+    next(p for p in cfg['plytki'] if p['plytka'] == 'P05 R3')['zrodlo']['plan_piny']['J_BP2']['16'][0] = 'PFAIL_N'
 
 
 def nazwa_sieci(cfg):                  # ADC_SCLK na P05 przemianowane: P03 kieruje ADC_SCLK do P05, który już ma pinout
@@ -39,7 +47,8 @@ def opis_w_specyfikacji(cfg, tmp):     # stary nagłówek S1 §8 (x = 80,0 mm dl
 
 
 PROBY = [(None, None), (nazwa_sieci, 'brak na P05'), (brak_nadajnika, 'brak nadajnika'), (dwa_nadajniki, 'więcej niż jeden nadajnik'),
-         (prad_ponad_styki, 'na 2 pinach'), (dziura_w_numeracji, 'dziury w numeracji'), (opis_w_specyfikacji, 'slot S3 ma środek')]
+         (prad_ponad_styki, 'na 2 pinach'), (dziura_w_numeracji, 'dziury w numeracji'), (opis_w_specyfikacji, 'slot S3 ma środek'),
+         (schemat_inny_niz_plan, 'plan z zadania PFAIL_N')]
 wyniki = []
 with tempfile.TemporaryDirectory() as t:
     tmp = Path(t)

@@ -11,7 +11,7 @@
 | `wyniki/KONTRAKTY.md` | Raport: błędy, źródła z wersjami, miejsca złączy dla P12, sieci, zasilanie |
 | `wyniki/zlacza-P12.csv` | Miejsca złączy: poziom, slot, x w układzie stosu, z spodu płytki, typ IDC |
 | `wyniki/kontrakty.json` | To samo dla programów (przyszły generator netlisty P12) |
-| `src/proby.py`, `wyniki/proby.json` | Próby ujemne skryptu: 6 wstrzykniętych wad i próba zerowa, każda porównana z przebiegiem bazowym |
+| `src/proby.py`, `wyniki/proby.json` | Próby ujemne skryptu: 7 wstrzykniętych wad i próba zerowa, każda porównana z przebiegiem bazowym |
 
 **Kontrole:**
 - **Złącza:** wielkość IDC (2×5, 2×8 albo 2×10, bez dziur w numeracji) i piny nieparzyste inne niż GND (wypisane z uwagami płytki). Do tego środek złącza zmierzony w raporcie PCB płytki wobec slotu (S1 §5).
@@ -24,7 +24,9 @@
 
 ## Wynik 1.10.2026
 
-**1 błąd (pojemność 5 V, niżej pkt 5), poza tym czysto.** 17 sieci jest kompletnych: P02 R4 ↔ P03 R6 ↔ P05 R3 (pinout z zadania) ↔ P09 R2 ↔ P10 R2. 29 sieci czeka na P04, P06, P07, P08 albo P11. Próby ujemne: 7/7 z zerową.
+**1 błąd (pojemność 5 V, niżej pkt 5), poza tym czysto.** 17 sieci jest kompletnych: P02 R4 ↔ P03 R6 ↔ P05 R3 ↔ P09 R2 ↔ P10 R2. 29 sieci czeka na P04, P06, P07, P08 albo P11. Próby ujemne: 8/8 z zerową.
+
+**1.10 (po PR #7):** P05 R3 czytany ze schematu z chmury (`origin/p05-s1`, `docs/J_BP.csv`), a tabele z zadania zostały w `zrodla.json` jako `plan_piny`: skrypt porównuje schemat z planem pin po pinie (zgodne; nowa próba ujemna `schemat_inny_niz_plan`).
 
 Ustalenia:
 1. **Specyfikacja S1 §8 miała zły nagłówek:** „Pinout P02 R4 J_BP (2×10, slot S3, środek x = 80,0 mm)”. Slot S3 ma środek 133,5 mm i tam stoi J_BP na płytce P02 R4 (raport PCB: 133,5 mm). Poprawione w tej gałęzi; P02 R4 bez zmian.
@@ -44,7 +46,7 @@ Ustalenia:
 ## Aktualizacja
 
 - **Po scaleniu gałęzi płytki:** w `zrodla.json` zmienić jej `ref` na `origin/main`.
-- **Po PR P05 z chmury:** źródło P05 zmienić z typu `plan` (kopia tabel z `ZADANIE-P05-S1.md`) na `csv`: `origin/p05-s1`, `Plytki/P05-R3-review/docs/J_BP.csv`. Skrypt sprawdzi wtedy schemat z planem.
+- **P05 (zrobione 1.10):** źródło `csv` z `origin/p05-s1`; po scaleniu PR #7 zmienić `ref` na `origin/main`.
 - **P06, P11, P04, P07, P08:** dopisać źródła, gdy powstaną pinouty.
 
 Uruchomienie (Python 3, bez dodatkowych pakietów; najpierw `git fetch origin`):

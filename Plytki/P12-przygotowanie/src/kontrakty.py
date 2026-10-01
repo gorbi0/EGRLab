@@ -113,6 +113,12 @@ def z_poziomu(poziom):
 plytki = CFG['plytki']; dane = {}; bledy = []; uwagi = []; zlacza = []
 for pl in plytki:
     piny = wczytaj(pl); pl['_piny'] = piny
+    plan = (pl.get('zrodlo') or {}).get('plan_piny')   # 1.10: schemat z chmury (csv) wobec tabel z zadania
+    if plan and piny:
+        jest = {(p['zlacze'], p['pin']): p['siec'] for p in piny}; chce = {(zl, int(n)): v[0] for zl, rows in plan.items() for n, v in rows.items()}
+        for k in sorted(set(jest) | set(chce)):
+            if jest.get(k) != chce.get(k):
+                bledy.append(f"{pl['plytka']} {k[0]}.{k[1]}: schemat {jest.get(k)}, plan z zadania {chce.get(k)}")
     if not piny:
         continue
     dane[baza(pl['plytka'])] = pl
