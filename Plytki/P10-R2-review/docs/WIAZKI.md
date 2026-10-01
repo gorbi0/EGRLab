@@ -4,6 +4,8 @@ W R2 zostaje jedna wiązka: **W3 OBD CAN** (J3). W1 LV10 i W2 CORE CAN z R1 zast
 
 Uwaga do layoutu: J3 nie leży na krawędzi A ani B, tylko na jednej z krótkich (przy ścianie wejść lub panelu), bo kabel do gniazda OBD wychodzi z obudowy inną drogą niż taśmy P12 i strona serwisowa. Layout R2 (30.09.2026): J3 przy ścianie wejść (x = 53 mm, slot S3 poziomu 4), kotwa w stronę ściany, pas pod przewodem bez części (README, sekcja „PCB”).
 
+Strony „po prawej / po lewej” w tabeli: patrząc od ściany wejść wzdłuż przewodu, w stronę lutów (na płytce R2: pole 1 przy mniejszym y, nadruk „H” / „L” przy polach).
+
 | W3: J3 P10 | Sygnał | OBD męski TypeA |
 |---:|---|---:|
 | 1, pole kwadratowe po prawej | CAN_H | 6 |

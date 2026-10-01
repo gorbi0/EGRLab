@@ -1,0 +1,107 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-01T09:16:46",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P10.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [5V_SYS] z C4 na F.Cu",
+                    "pos": {
+                        "x": 12.0,
+                        "y": 3.4375
+                    },
+                    "uuid": "43d70817-13df-40f4-a5dc-cbf0906db92e"
+                },
+                {
+                    "description": "Ścieżka [5V_SYS] na F.Cu, długość 1,8226 mm",
+                    "pos": {
+                        "x": 20.1312,
+                        "y": 12.0788
+                    },
+                    "uuid": "1e469e8a-36bb-45b0-9615-d8b42dbdd103"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Footprint 'PinHeader_1x09_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J2",
+                    "pos": {
+                        "x": 36.66,
+                        "y": 95.96
+                    },
+                    "uuid": "05ea916c-f845-4281-aacd-e1e23ddbb70f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x05_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J1",
+                    "pos": {
+                        "x": 21.42,
+                        "y": 13.33
+                    },
+                    "uuid": "e5b0f1f7-0a5f-43bd-846c-ff8c67803bb0"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Tekst PCB 'KRAWEDZ A (P12)' na F.Silkscreen",
+                    "pos": {
+                        "x": 8.0,
+                        "y": 2.5
+                    },
+                    "uuid": "8beecb2f-0cca-4d00-ba17-6ec2f5baedaa"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        }
+    ]
+}

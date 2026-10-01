@@ -10,6 +10,8 @@ P = Path(__file__).resolve().parents[1]; E = P / 'eda'
 S1 = json.loads((P.parents[0] / 'Format-S1/format-s1.json').read_text(encoding='utf-8'))
 mm = p.FromMM
 from board import NAME, TITLE, CLASS, SLOTS, SUPPORT_KEEPOUT
+import board as _board
+PAD_KEEPOUT = getattr(_board, 'PAD_KEEPOUT', {})
 W, Hh = S1['klasy'][CLASS]['W'], S1['klasy'][CLASS]['H']; R = S1['obrys']['promien_naroza']
 
 
@@ -46,8 +48,8 @@ def fab_circle(b, x, y, r):
     g = p.PCB_SHAPE(b); g.SetShape(p.SHAPE_T_CIRCLE); g.SetCenter(xy(x, y)); g.SetEnd(xy(x + r, y)); g.SetLayer(p.F_Fab); g.SetWidth(mm(.1)); b.Add(g)
 
 
-def rule_area(b, name, pts, footprints=False):
-    z = p.ZONE(b); z.SetIsRuleArea(True); z.SetLayerSet(layers(p.F_Cu, p.B_Cu)); z.SetDoNotAllowTracks(True)
+def rule_area(b, name, pts, footprints=False, warstwy=(p.F_Cu, p.B_Cu)):
+    z = p.ZONE(b); z.SetIsRuleArea(True); z.SetLayerSet(layers(*warstwy)); z.SetDoNotAllowTracks(True)
     z.SetDoNotAllowVias(True); z.SetDoNotAllowZoneFills(True); z.SetDoNotAllowPads(False); z.SetDoNotAllowFootprints(footprints)
     z.SetZoneName(name)
     o = z.Outline(); o.NewOutline()
@@ -122,6 +124,21 @@ if __name__ == '__main__':
         for k, a in enumerate(sorted((a for a in fmap[ref].Pads() if a.GetAttribute() == p.PAD_ATTRIB_NPTH), key=lambda a: a.GetPosition().y), 1):
             rule_area(b, f'{ref} support {k}', circle(p.ToMM(a.GetPosition().x), p.ToMM(a.GetPosition().y), rk))
             fab_circle(b, p.ToMM(a.GetPosition().x), p.ToMM(a.GetPosition().y), rk)
+    for ref, d in PAD_KEEPOUT.items():   # P10 (1.10): ring of width d around a vertical pair of soldered-wire pads, no copper of any
+        # net in it; only a channel of SIGNAL_W + 2 x 0.25 mm towards -x per pad, where the locked line of that pad leaves for D1
+        from board import SIGNAL_W
+        pp = sorted((a for a in fmap[ref].Pads() if a.GetNumber()), key=lambda a: a.GetPosition().y)
+        assert len(pp) == 2 and pp[0].GetPosition().x == pp[1].GetPosition().x, ref
+        x = p.ToMM(pp[0].GetPosition().x); h = max(p.ToMM(pp[0].GetSize().x), p.ToMM(pp[0].GetSize().y)) / 2
+        y1, y2 = p.ToMM(pp[0].GetPosition().y), p.ToMM(pp[1].GetPosition().y); cw = SIGNAL_W / 2 + .25
+        xl, xp, xr = x - h - d, x - h, x + h
+        obie = (p.F_Cu, p.B_Cu)   # kanały tylko na F.Cu (tam idą linie do D1); na B.Cu pełny pierścień (1.10: wylewka GND weszła w kanał od spodu)
+        prost = [((xl, y1 - h - d, xr + d, y1 - h), obie), ((xr, y1 - h, xr + d, y2 + h), obie), ((xl, y1 + h, xr, y2 - h), obie),
+                 ((xl, y2 + h, xr + d, y2 + h + d), obie), ((xl, y1 - h, xp, y1 - cw), (p.F_Cu,)), ((xl, y1 + cw, xp, y1 + h), (p.F_Cu,)),
+                 ((xl, y2 - h, xp, y2 - cw), (p.F_Cu,)), ((xl, y2 + cw, xp, y2 + h), (p.F_Cu,)), ((xl, y1 - h, xp, y1 + h), (p.B_Cu,)),
+                 ((xl, y2 - h, xp, y2 + h), (p.B_Cu,))]
+        for k, ((a0, b0, a1, b1), ww) in enumerate(prost, 1):
+            rule_area(b, f'{ref} pola {d} mm {k}', [(a0, b0), (a1, b0), (a1, b1), (a0, b1)], warstwy=ww)
     # outline with R1 corners
     segs = [((R, 0), (W - R, 0)), ((W, R), (W, Hh - R)), ((W - R, Hh), (R, Hh)), ((0, Hh - R), (0, R))]
     for a, c in segs:

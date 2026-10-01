@@ -17,7 +17,7 @@ g=collections.defaultdict(list)
 for r,p in PARTS.items():g[p['zrodlo'],p['mpn'],p['footprint'].split(':')[-1]].append(r)
 n10=sum(1 for p in PARTS.values() if p['value']=='10K' and p['zrodlo']=='rejestr');n100=sum(1 for p in PARTS.values() if p['value']=='100n')
 L=['# Zakupy P10-R2 — ilości na jedną płytkę (S1)','',
-'Źródło: **rejestr** = pozycja z `Zamowione/zamowione.csv` (posiadane; rezystory MF0207 i kondensatory radialne montowane na stojąco, 74LVC125AD z zamówienia P10); **nowe** = do kupienia (lista zakupowa 2 do przeliczenia po decyzjach S1). Płytka z JLCPCB (klasa 1/3, 53 × 100 mm); tu tylko schemat.','',
+'Źródło: **rejestr** = pozycja z `Zamowione/zamowione.csv` (posiadane; rezystory MF0207 i kondensatory radialne montowane na stojąco, 74LVC125AD z zamówienia P10); **nowe** = do kupienia (lista zakupowa 2 do przeliczenia po decyzjach S1). Płytka z JLCPCB (klasa 1/3, 53 × 100 mm, slot S3 poziomu 4); PCB w README, sekcja „PCB”.','',
 '| Źródło | Nazwa | Ilość | Referencje / obudowa |','|---|---|---:|---|']
 for (z,name,fp),refs in sorted(g.items()):L.append(f'| {z} | {name} | {len(refs)} | {", ".join(refs)} / {fp} |')
 L+=['','**Części z rejestru, o które konkuruje P09** (stan rejestru 24.09: MF0207 10 k — 7 szt., K104K15X7RF5TH5 100 n — 5 szt.):','',
@@ -30,7 +30,7 @@ f'| K104K15X7RF5TH5 100 n | {n100} | 3 | {n100+3} | 5 |','',
 '- J1 (J_BP): obudowane złącze kątowe IDC 2×5, raster 2,54 mm, styki Au; taśma IDC 2×5 do P12 (dwa gniazda zaciskowe).',
 '- J2 (SERWIS): goldpin **kątowy** 1×9 (posiadana listwa 1×40 z Kamami jest prosta).',
 '- Kondensatory SMD 1206 X7R 25 V ±10 %; C4/C5 po DC bias ≥ 2,2 µF.',
-'- Rezystory serwisowe 1 kΩ 1206 (R3–R7), od spodu płytki pod listwą (S1 §9); CAN_H/CAN_L przez 10 kΩ (R8, R9, MF0207 z rejestru).',
+'- Rezystory serwisowe 1 kΩ 1206 (R3–R7) od góry, przy swoich węzłach (S1 §6); CAN_H/CAN_L przez 10 kΩ (R8, R9, MF0207 z rejestru), przy J3.',
 '- W3 OBD CAN (jedyna wiązka, która została): 300 mm skrętka CAN 120 Ω (LAPP UNITRONIC BUS CAN z listy 2), wtyk OBD-II męski typ A 16p z obudową, obsadzone tylko 6/14; opaski nylonowe 2,5 mm na kotwę J3 — bez zmian względem R1 (`P10-R1-review/docs/WIAZKI.md`, W3).',
 '- W1 (LV10) i W2 (CORE CAN) z R1 znikają: zastępuje je J_BP i płytka połączeń P12.']
 (P/'docs/ZAKUPY.md').write_text('\n'.join(L)+'\n',encoding='utf-8')

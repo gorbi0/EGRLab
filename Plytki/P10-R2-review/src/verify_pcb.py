@@ -11,7 +11,9 @@ from sexpr import parse, one, sub
 from provenance import run_fresh_drc
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from heights import height
-from board import NAME, REV, CLASS, SLOTS, SIGNAL_W, SUPPORT_KEEPOUT
+from board import NAME, REV, CLASS, SLOTS, SIGNAL_W, SUPPORT_KEEPOUT, JBP as JBP_ZL, JSV as JSV_ZL, PIN_MARKS
+import ast as _ast
+TYTUL = f"{REV} S1-{CLASS} {SLOTS[0] if len(SLOTS) == 1 else SLOTS[0] + '-' + SLOTS[-1]}"   # S1 §9 (jak P02 R4)
 P = Path(__file__).resolve().parents[1]
 path = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else P / f'eda/{NAME}.kicad_pcb'
 out = Path(sys.argv[2]).resolve() if len(sys.argv) > 2 else P / 'verification'
@@ -238,7 +240,8 @@ jd = {'centre_x': round(cx, 3), 'pin1': pads1['1'], 'fab_front_y': fab and round
 check('J1 = J_BP (edge A): IDC 2x5 angled, body front at y = 0, pin centre x = 26.5, pin 1 at the smaller x, pinout = docs/J_BP.csv (P12 contract)', ok, jd)
 # ---------------- 4. edge B: service header J2 (contract docs/SERWIS.csv) ----------------
 texts = [(t.GetText(), t) for t in b.GetDrawings() if isinstance(t, p.PCB_TEXT) and t.GetLayer() == p.F_SilkS]
-labels = json.loads((P / 'routing/silkscreen.json').read_text(encoding='utf-8')).get('service_labels', {})
+LABEL = next(_ast.literal_eval(n.value) for n in _ast.parse((P / 'src/silkscreen.py').read_text(encoding='utf-8')).body
+             if isinstance(n, _ast.Assign) and any(getattr(t, 'id', '') == 'LABEL' for t in n.targets))   # 1.10 (recenzja): wzorzec niezależny od wyniku
 f = fmap['J2']; problems = []; rows = []
 pd = sorted(((int(a.GetNumber()), a) for a in f.Pads()), key=lambda q: q[0]); fab = layer_bbox(f, p.F_Fab)
 xs = [p.ToMM(a.GetPosition().x) for _, a in pd]; lo, hi = S1['krawedz_B']['zakres_x_w_slocie']
@@ -246,6 +249,9 @@ if len(pd) > S1['krawedz_B']['max_pinow_na_slot']: problems.append('too many pin
 if min(xs) - .85 < lo - 1e-6 or max(xs) + .85 > hi + 1e-6: problems.append(f'pins outside x {lo}..{hi}')
 if not fab or fab[3] - H < 5.0: problems.append(f'pins not ~6 mm beyond edge B (fab {fab})')
 if net(pd[0][1]) != 'GND' or net(pd[-1][1]) != 'GND': problems.append('GND not on both ends')
+for n, a in (pd[0], pd[-1]):
+    if len([t for s_, t in texts if s_ == LABEL['GND'] and abs(p.ToMM(t.GetPosition().x) - p.ToMM(a.GetPosition().x)) < 1.3 and 80 < p.ToMM(t.GetPosition().y) < H]) != 1:
+        problems.append(f'pin {n}: no single GND label')
 for n, a in pd[1:-1]:
     want_net, want_res = SERW[n]
     members = [(ff.GetReference(), q) for ff in b.GetFootprints() for q in ff.Pads() if q.GetNetname() == a.GetNetname() and ff.GetReference() != 'J2']
@@ -259,12 +265,23 @@ for n, a in pd[1:-1]:
     want_val = {'1 kΩ': '1K', '10 kΩ': '10K', '4,7 kΩ': '4K7'}[' '.join(want_res.split()[1:3])]
     if val != want_val: problems.append(f'pin {n}: {r} {val}, SERWIS.csv {want_val} (S1 section 6: 1K logic / rails, 10K CAN_H / CAN_L, README)')
     if dist > 10: problems.append(f'pin {n}: {r} not at its node ({dist:.1f} mm)')
-    lab = labels.get(f'J2.{n}')
+    lab = LABEL.get(node)
     tx = [t for s, t in texts if lab and s == lab and abs(p.ToMM(t.GetPosition().x) - p.ToMM(a.GetPosition().x)) < 1.3 and 80 < p.ToMM(t.GetPosition().y) < H]
     if len(tx) != 1: problems.append(f'pin {n}: {len(tx)} silk labels')
     rows.append({'pin': n, 'node': node, 'resistor': r, 'value': val, 'node_dist_mm': round(dist, 1), 'label': lab, 'side': 'B' if fmap[r].IsFlipped() else 'F'})
 check('Service header J2 (edge B, S1 section 6): <= 13 pins in x 10..43, pins out ~6 mm, GND on both ends, one series resistor per pin '
-      'of the value in docs/SERWIS.csv, <= 10 mm from its node, one silk label per pin', not problems, {'problems': problems, 'pins': rows})
+      'of the value in docs/SERWIS.csv, <= 10 mm from its node, one silk label per pin with the name of its node (LABEL in silkscreen.py), GND at the ends', not problems, {'problems': problems, 'pins': rows})
+# ---------------- 4b. reserved strips at the edges (S1 §5 / §6) ----------------
+pasy = {}
+for zl, kraw in [(z, 'A') for z in JBP_ZL] + [(z, 'B') for z in JSV_ZL]:
+    xs_ = [p.ToMM(a.GetPosition().x) for a in fmap[zl].Pads() if a.GetNumber()]; x0 = STEP * int(((min(xs_) + max(xs_)) / 2) // STEP)
+    y0, y1 = (S1['krawedz_A']['strefa_y'] if kraw == 'A' else S1['krawedz_B']['strefa_y']); lo_, hi_ = (10.0, 43.0) if kraw == 'A' else S1['krawedz_B']['zakres_x_w_slocie']
+    pas = (x0 + lo_, y0, x0 + hi_, y1)
+    pasy[f'{zl} ({kraw})'] = {'pas': pas, 'czesci': sorted(r for r in fmap if r not in holes_ref and r != zl
+                                                        and cbox(r)[0] < pas[2] and pas[0] < cbox(r)[2] and cbox(r)[1] < pas[3] and pas[1] < cbox(r)[3])}
+check('Reserved strip of edge A (S1 §5: y 0-10, x 10-43 of each J_BP slot): no other part on either side; '
+      'the edge-B zone of the service headers is reported only (S1 §6 gives the header position, not a reserved strip)',
+      not any(v['czesci'] for k, v in pasy.items() if k.endswith('(A)')), pasy)
 # ---------------- 5. heights ----------------
 hh = {r: height(r, parts) for r in onboard}
 check(f'Every part <= {HMAX} mm above the board (level 4, S1 section 4; src/heights.py)', all(v <= HMAX for v in hh.values()),
@@ -279,17 +296,72 @@ inside = sorted(r for r in fmap if r not in holes_ref and r != 'J3' and not fmap
                 and cbox(r)[0] < strip[2] and strip[0] < cbox(r)[2] and cbox(r)[1] < strip[3] and strip[1] < cbox(r)[3])
 edge_gap = min(W - (a[0] + S1['otwory_M3']['srednica'] / 2) for a in anchors) if anchors else 0
 d1 = {'CAN_H': math.dist(pxy('D1', '2'), p1), 'CAN_L': math.dist(pxy('D1', '1'), p2)}
+
+
+def przez(siec, a, przez_, cel):
+    """1.10 (recenzja): czy każda droga miedzi sieci od pola a do pola cel przechodzi przez pole przez_ (graf odcinków, podział na stykach)."""
+    tr = [t for t in b.GetTracks() if net(t) == siec]; pola = {(ff.GetReference(), q.GetNumber()): q for ff in b.GetFootprints() for q in ff.Pads() if net(q) == siec and q.GetNumber()}
+    pkt = {(round(p.ToMM(v.x), 3), round(p.ToMM(v.y), 3)) for t in tr for v in ((t.GetPosition(),) if isinstance(t, p.PCB_VIA) else (t.GetStart(), t.GetEnd()))}
+    def wezel(xy_):
+        v = xy(*xy_)
+        return next((k for k, q in pola.items() if q.HitTest(v)), xy_)
+    sas = {}
+    for t in tr:
+        if isinstance(t, p.PCB_VIA):
+            continue
+        a0 = (p.ToMM(t.GetStart().x), p.ToMM(t.GetStart().y)); a1 = (p.ToMM(t.GetEnd().x), p.ToMM(t.GetEnd().y)); L = math.dist(a0, a1) or 1e-9
+        na = sorted({q for q in pkt if abs(math.dist(a0, q) + math.dist(q, a1) - L) < .005} | {a0, a1}, key=lambda q: math.dist(a0, q))
+        for u, v in zip(na, na[1:]):
+            u, v = wezel(u), wezel(v); sas.setdefault(u, set()).add(v); sas.setdefault(v, set()).add(u)
+    def dojdzie(blok):
+        seen, stos = {a}, [a]
+        while stos:
+            for m in sas.get(stos.pop(), ()):
+                if m == cel:
+                    return True
+                if m not in seen and m != blok:
+                    seen.add(m); stos.append(m)
+        return False
+    return dojdzie(None) and not dojdzie(przez_)
+
+
+def odstep(q):
+    """Najmniejszy odstęp pola q od miedzi innych sieci (ścieżki, przelotki, wylewki) w mm."""
+    sh = q.GetEffectiveShape(p.F_Cu); dmin = 99.0
+    for t in b.GetTracks():
+        if t.GetNetCode() != q.GetNetCode():
+            for L in (p.F_Cu, p.B_Cu):
+                if t.IsOnLayer(L):
+                    dmin = min(dmin, p.ToMM(sh.GetClearance(t.GetEffectiveShape(L))))
+    for z in b.Zones():
+        if z.GetIsRuleArea() or z.GetNetCode() == q.GetNetCode():
+            continue
+        for L in (p.F_Cu, p.B_Cu):
+            if z.IsOnLayer(L):
+                for k in range(10, 0, -1):   # 1,0 … 0,1 mm: największy pierścień, który nie dotyka wylewki
+                    ps = p.SHAPE_POLY_SET(); q.TransformShapeToPolygon(ps, L, p.FromMM(k / 10), p.FromMM(.005), p.ERROR_INSIDE)
+                    ps.BooleanIntersection(z.GetFilledPolysList(L))
+                    if not ps.OutlineCount() or ps.Area() / 1e12 < 1e-4:
+                        dmin = min(dmin, k / 10 if k < 10 else dmin); break
+                else:
+                    dmin = 0.0
+    return round(dmin, 2)
+
+
+d1_przez = {'CAN_H': przez('CAN_H', ('J3', '1'), ('D1', '2'), ('U1', '7')), 'CAN_L': przez('CAN_L', ('J3', '2'), ('D1', '1'), ('U1', '6'))}
+odst = {f'J3.{n}': odstep(pad('J3', n)) for n in ('1', '2')}
 jd = {'pad1_CAN_H': p1, 'pad2_CAN_L': p2, 'anchors': anchors, 'anchor_to_pads_mm': [round(a[0] - p1[0], 2) for a in anchors],
       'anchor_hole_edge_to_wall_mm': round(edge_gap, 2), 'keepouts': len(rz), 'copper_in_keepouts': cu, 'cable_strip': [round(v, 2) for v in strip],
-      'parts_in_cable_strip': inside, 'D1_pad_to_J3_pad_mm': {k: round(v, 2) for k, v in d1.items()}}
+      'parts_in_cable_strip': inside, 'D1_pad_to_J3_pad_mm': {k: round(v, 2) for k, v in d1.items()}, 'through_D1': d1_przez, 'other_net_copper_to_J3_pads_mm': odst}
 ok = (net(pad('J3', '1')) == 'CAN_H' and net(pad('J3', '2')) == 'CAN_L' and len(anchors) == 2
       and all(a[0] - p1[0] > 11.9 for a in anchors) and p1[1] < p2[1] and abs(p1[0] - p2[0]) < .01
-      and edge_gap >= 2.0 and len(rz) == 2 and all(z.GetDoNotAllowTracks() and z.GetDoNotAllowVias() and z.GetDoNotAllowZoneFills()
+      and 2.0 <= edge_gap <= 6.0 and all(d1_przez.values()) and all(v >= .99 for v in odst.values()) and len(rz) == 2 and all(z.GetDoNotAllowTracks() and z.GetDoNotAllowVias() and z.GetDoNotAllowZoneFills()
                                                    and {p.F_Cu, p.B_Cu} <= set(z.GetLayerSet().Seq()) for z in rz)
       and not cu and not inside and 10 < min(p1[1], p2[1]) and max(p1[1], p2[1]) < 90 and all(v <= 6 for v in d1.values()))
-check(f'J3 (OBD tail, W3) at the input wall: anchor holes towards x = {W} (12 mm from the solder row, hole edge >= 2 mm from the edge), '
-      'pad 1 CAN_H at the smaller y, not in the edge A / B zones; no copper within 3 mm of the anchor holes; no part under the cable '
-      'between the anchor and the wall; D1 (PESD2CAN) pads <= 6 mm from the J3 pads (at the cable entry)', ok, jd)
+check(f'J3 (OBD tail, W3) at the input wall: anchor holes towards x = {W} (12 mm from the solder row, hole edge 2-6 mm from the edge), '
+      'pad 1 CAN_H at the smaller y, not in the edge A / B zones; no copper within 3 mm of the anchor-hole centres; no part under the cable '
+      'between the anchor and the wall; D1 (PESD2CAN) pads <= 6 mm from the J3 pads and CAN_H / CAN_L pass through them to U1; '
+      'other nets >= 1 mm from the J3 pads (hand-soldered wires)', ok, jd)
 # ---------------- 7. placement requirements (decoupling, drivers) ----------------
 DEC = {'C1': ('U1', '3'), 'C2': ('U1', '5'), 'C3': ('U2', '14')}
 dd = {}
@@ -329,9 +401,26 @@ for f in b.GetFootprints():
     if o:
         amb[r] = o
 check('Every visible reference outside the courtyards of other parts', not amb, amb)
-title = [s for s, t in texts if s.startswith(REV + ' S1-1/3')]
+blisko = {}
+for f in b.GetFootprints():
+    r = f.GetReference(); t = f.Reference()
+    if r in holes_ref or not t.IsVisible() or r not in cour:
+        continue
+    c_ = t.GetBoundingBox().GetCenter(); dist_ = lambda poly: 0.0 if poly.Contains(c_) else math.sqrt(poly.SquaredDistance(c_)) / 1e6
+    mine = dist_(cour[r]); inne = sorted((dist_(cy), o) for o, cy in cour.items() if o != r and side[o] == side[r])
+    if inne and inne[0][0] <= mine:
+        blisko[r] = {'own_mm': round(mine, 2), 'nearest_other': inne[0][1], 'other_mm': round(inne[0][0], 2)}
+check('Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)', not blisko, blisko)
+znaki = {}
+for r_, zn in PIN_MARKS.items():
+    for num, t_ in zn.items():
+        q = pad(r_, num); qx, qy = pxy(r_, num)
+        znaki[f'{r_}.{num} {t_}'] = [s_ for s_, t in texts if s_ == t_ and math.dist((p.ToMM(t.GetPosition().x), p.ToMM(t.GetPosition().y)), (qx, qy)) <= 3.0]
+check('Pin 1 / polarity marks of module and wire connectors on the silkscreen, <= 3 mm from their pads (S1 §9; review 1.10)',
+      all(len(v) == 1 for v in znaki.values()), znaki)
+title = [s for s, t in texts if s == TYTUL]
 marks = [s for s, t in texts if s.startswith('KRAWEDZ A') or s.startswith('KRAWEDZ B')]
-check(f'Silkscreen: board name "{REV} S1-1/3", edge markers A and B', bool(title) and any(m.startswith('KRAWEDZ A') for m in marks) and any(m.startswith('KRAWEDZ B') for m in marks), {'title': title, 'marks': marks})
+check(f'Silkscreen: board name "{TYTUL}", edge markers A and B', bool(title) and any(m.startswith('KRAWEDZ A') for m in marks) and any(m.startswith('KRAWEDZ B') for m in marks), {'title': title, 'marks': marks})
 
 res = {'board': str(path), 'board_sha256': hashlib.sha256(path.read_bytes()).hexdigest(), 'checks': checks, 'details': details,
        'passed': sum(c['pass'] for c in checks), 'total': len(checks)}

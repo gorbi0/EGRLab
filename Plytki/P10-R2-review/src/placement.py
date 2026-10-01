@@ -124,6 +124,9 @@ put('U2', 13.0, JY + 1.0, 180)                # 1A (2) next to U1 RXD (4), 1Y (3
 for a, c in [(r, o) for r in list(BOX) for o in list(BOX) if r < o]:
     ba, bc = BOX[a], BOX[c]
     assert not (ba[0] < bc[2] and bc[0] < ba[2] and ba[1] < bc[3] and bc[1] < ba[3]), ('fixed parts overlap', a, c)
+# 1.10: corridor of the locked CAN_H / CAN_L lines (route_critical.py: J3 -> D1 -> U1, 1.4 mm round the D1 pad row) kept free of the
+# parts placed below (a service resistor stood on it and the routing failed)
+BOX['CAN'] = (pad('U1', '7')[0], pad('D1', '2')[1] - 1.9, pad('J3', '1')[0] - 1.0, pad('D1', '1')[1] + 1.9); SIDE['CAN'] = 'F'
 # ---- decoupling and bulk ----
 for c, (u, n) in {'C1': ('U1', 3), 'C2': ('U1', 5), 'C3': ('U2', 14), 'C4': ('J1', 2), 'C5': ('J1', 4)}.items():
     place_near(c, (u, str(n)))

@@ -7,7 +7,8 @@ import pcbnew as p, json, math, sys
 from sexpr import parse, dump, sub, one
 P = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(P / 'src'))
-from board import NAME, REV, JBP, JSV
+from board import NAME, REV, JBP, JSV, CLASS, SLOTS, PIN_MARKS
+TYTUL = f"{REV} S1-{CLASS} {SLOTS[0] if len(SLOTS) == 1 else SLOTS[0] + '-' + SLOTS[-1]}"   # S1 §9: nazwa, rewizja, klasa i sloty (jak P02 R4)
 fn = P / f'eda/{NAME}.kicad_pcb'
 from build_board import W, Hh as H
 FULL = set(JSV)   # P09 / P10: one service header with room above it -> full names on every pin (P03: only J_SV1)
@@ -130,6 +131,14 @@ def free(box, own, bottom=False):
     return not any(r != own and fps[r].IsFlipped() == bottom and cy.Contains(p.VECTOR2I(mm(x), mm(y))) for r, cy in yards.items() for x, y in corners)
 
 
+def najblizej_wlasnej(box, own, bottom=False):
+    """1.10 (recenzja): oznaczenie musi być wyraźnie bliżej własnego obrysu niż każdego innego (było: R1 1 mm od R5, 4,9 mm od R1)."""
+    c = p.VECTOR2I(mm((box[0] + box[2]) / 2), mm((box[1] + box[3]) / 2))
+    d = lambda poly: 0.0 if poly.Contains(c) else math.sqrt(poly.SquaredDistance(c)) / 1e6
+    mine = d(yards[own])
+    return all(mine + .3 < d(cy) for r, cy in yards.items() if r != own and fps[r].IsFlipped() == bottom)
+
+
 def text_box(t):
     return bbox_of(t)
 
@@ -182,7 +191,7 @@ for r in sorted(fps, key=lambda r: (yards[r].BBox().GetArea(), r)):   # 30.09: t
             ref.SetTextSize(p.VECTOR2I(mm(size), mm(size))); ref.SetTextThickness(mm(.15 if size == 1.0 else .12))
             ref.SetTextAngle(p.EDA_ANGLE(a, p.DEGREES_T)); ref.SetPosition(p.VECTOR2I(mm(x), mm(y)))
             bx = text_box(ref)
-            if free(bx, r, f.IsFlipped()):
+            if free(bx, r, f.IsFlipped()) and najblizej_wlasnej(bx, r, f.IsFlipped()):
                 (placed_b if f.IsFlipped() else placed).append(bx); ok = True; break
         if ok:
             break
@@ -216,7 +225,7 @@ def place_text(t, spots, size=1.0, angle=0, just=None, own=None):
 # ---- 3. board texts ----
 res = {}
 # 1/3 board (53 mm wide): title in a free area (P10: the empty middle, then the lower third), short edge markers in the corners next to J1 / J2
-res['title'] = place_text(REV + ' S1-1/3', [(x, y) for y in (35, 80, 82, 78, 84, 76) for x in (26, 22, 30, 18, 34)], 1.2)
+res['title'] = place_text(TYTUL, [(x, y) for y in (35, 80, 82, 78, 84, 76) for x in (26, 22, 30, 18, 34)], 1.2)
 res['edge_A'] = place_text('KRAWEDZ A (P12)', [(x, y) for y in (2.5, 4, 5.5, 7) for x in (8.0, 7.5, 45.0, 45.5)], .8)
 if res['edge_A'] is None:   # 30.09: on 53 mm the long marker does not fit beside J1 -> the short one in a corner
     extra.remove('KRAWEDZ A (P12)'); res['edge_A'] = place_text('KRAWEDZ A', [(x, y) for y in (2.5, 4, 5.5, 7) for x in (6.0, 5.5, 47.0, 47.5)], .8)
@@ -242,6 +251,11 @@ if used and not yy:
 for r in JBP + JSV:
     a = next(q for q in fps[r].Pads() if q.GetNumber() == '1'); ax, ay = p.ToMM(a.GetPosition().x), p.ToMM(a.GetPosition().y); s_ = max(p.ToMM(a.GetSize().x), p.ToMM(a.GetSize().y)) / 2 + .9
     res['pin1_' + r] = place_text('1', [(ax + dx * k, ay + dy * k) for k in (1, 1.5) for dx, dy in [(-s_, 0), (s_, 0), (0, -s_), (0, s_), (-s_, -s_), (s_, -s_), (-s_, s_), (s_, s_)]], .9, own=r)
+for r, znaki in PIN_MARKS.items():   # 1.10 (recenzja): biegunowość / pin 1 złączy modułów i wiązek (S1 §9: pin 1 każdego złącza)
+    for num, t in znaki.items():
+        a = next(q for q in fps[r].Pads() if q.GetNumber() == num); ax, ay = p.ToMM(a.GetPosition().x), p.ToMM(a.GetPosition().y)
+        s_ = max(p.ToMM(a.GetSize().x), p.ToMM(a.GetSize().y)) / 2 + .9
+        res[f'znak_{r}.{num}'] = place_text(t, [(ax + dx * k, ay + dy * k) for k in (1, 1.5) for dx, dy in [(-s_, 0), (s_, 0), (0, -s_), (0, s_), (-s_, -s_), (s_, -s_), (-s_, s_), (s_, s_)]], .9, own=r)
 p.SaveBoard(str(fn), b)
 rep = {'dropped_footprint_silk': n_drop, 'dropped_by_part': dict(sorted(drop_by.items())), 'moved_texts_by_part': dict(sorted(moved_by.items())),
        'hidden_references': missing, 'board_texts': res, 'unplaced_texts': extra, 'service_labels': labels}

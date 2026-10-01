@@ -14,7 +14,8 @@ import json, hashlib, sys, xml.etree.ElementTree as ET
 P = Path(__file__).resolve().parents[1]; O = P / 'output'
 sys.path.insert(0, str(P / 'src'))
 from heights import HEIGHTS
-from board import NAME, REV
+from board import NAME, REV, CLASS, SLOTS
+TYTUL = f"{REV} S1-{CLASS} {SLOTS[0] if len(SLOTS) == 1 else SLOTS[0] + '-' + SLOTS[-1]}"
 checks = json.loads((P / 'verification/pcb-checks.json').read_text(encoding='utf-8')); assert checks['passed'] == checks['total']
 assert checks['board_sha256'] == hashlib.sha256((P / f'eda/{NAME}.kicad_pcb').read_bytes()).hexdigest()
 neg = json.loads((P / 'verification/negative-controls.json').read_text(encoding='utf-8'))
@@ -43,7 +44,7 @@ def start(n, title, subtitle):
     c.setFillColor(HexColor('#172833')); c.setFont('Bold', 18); c.drawString(12 * mm, 190 * mm, title)
     c.setFont('Arial', 9); c.drawString(12 * mm, 182 * mm, subtitle)
     c.setStrokeColor(HexColor('#cdd7dc')); c.line(12 * mm, 14 * mm, 285 * mm, 14 * mm)
-    c.setFont('Arial', 8); c.drawString(12 * mm, 9 * mm, f'{REV} S1-1/3 | 30.09.2026 | PCB do recenzji lokalnej | przymiarka 1:1 i odbiór sprzętu: NIE ZBADANO')
+    c.setFont('Arial', 8); c.drawString(12 * mm, 9 * mm, f'{TYTUL} | 01.10.2026 | PCB do recenzji lokalnej | przymiarka 1:1 i odbiór sprzętu: NIE ZBADANO')
     c.drawRightString(285 * mm, 9 * mm, f'{n} / {NPAGES}')
 
 
@@ -55,6 +56,10 @@ def board(name, x=20, y=42):
     for xx in (x, x + 100):
         c.line(xx * mm, (y - 13) * mm, xx * mm, (y - 7) * mm)
     c.setFont('Arial', 8.5); c.drawString(x * mm, (y - 17) * mm, 'Belka 100 mm. Drukować 100 %, bez dopasowania do strony; zmierzyć belkę przed przymiarką.')
+
+
+def liczba(n, f1, f2, f5):   # 1 zgłoszenie, 2 zgłoszenia, 5 zgłoszeń
+    return f'{n} ' + (f1 if n == 1 else f2 if 2 <= n % 10 <= 4 and not 12 <= n % 100 <= 14 else f5)
 
 
 def h_of(r):
@@ -75,26 +80,27 @@ for t in [f'<b>Płytka:</b> 53 × 100 mm (klasa 1/3), narożniki R1, FR4 1,6 mm,
           'kątowy 1×9 (GND na kołkach 1 i 9; kołki 2–6 przez 1 kΩ, CAN_H / CAN_L przez 10 kΩ, docs/SERWIS.csv); pin 1 od większego x — kątowa listwa '
           'od góry z kołkami za krawędzią B nie pozwala inaczej (README).',
           f'<b>Wejście OBD:</b> J3 (koniec wiązki W3, lutowany do otworów) przy ścianie wejść; kotwa opaski (2 × Ø3,2) 12 mm od rzędu lutów, w stronę ściany; '
-          f'pas pod przewodem od kotwy do krawędzi wolny. D1 (PESD2CAN) przy wejściu kabla ({str(max(jd["D1_pad_to_J3_pad_mm"].values())).replace(".", ",")} mm od pól J3), '
+          f'pas pod przewodem od kotwy do krawędzi wolny. D1 (PESD2CAN) przy wejściu kabla (środki pól {str(max(jd["D1_pad_to_J3_pad_mm"].values())).replace(".", ",")} mm od środków pól J3, CAN_H i CAN_L przechodzą przez jego pola), '
           'dalej U1 (TCAN1051V, S i TXD na stałe do VIO) i bufor U2 z Ioff.',
           f'<b>Kontrole:</b> DRC: {len(drc["unconnected_items"])} niepołączonych, {len(drc["schematic_parity"])} niezgodności ze schematem, '
           f'{len(drc["violations"]) - nlib} innych naruszeń'
-          + (f'; {nlib} zgłoszeń lib_footprint_mismatch u części z przyciętym nadrukiem (przyjęte przez verify_pcb.py)' if nlib else '')
+          + (f'; {liczba(nlib, "zgłoszenie", "zgłoszenia", "zgłoszeń")} lib_footprint_mismatch u części z przyciętym nadrukiem (przyjęte przez verify_pcb.py)' if nlib else '')
           + f'; PCB {checks["passed"]}/{checks["total"]}; próby ujemne PCB {npass}/{len(neg)} (z próbą zerową).',
           '<b>Otwarte:</b> przymiarka 1:1 (strona 5; kotwa J3 i przebieg przewodu), recenzja lokalna; '
-          f'{len(hidden)} oznaczeń ukrytych z braku miejsca{(" (" + ", ".join(hidden) + ")") if hidden else ""}; paczka produkcyjna poza zakresem.']:
+          f'{liczba(len(hidden), "oznaczenie ukryte", "oznaczenia ukryte", "oznaczeń ukrytych")} z braku miejsca{(" (" + ", ".join(hidden) + "; na rysunku montażowym z warstwy F.Fab)") if hidden else ""}; paczka produkcyjna poza zakresem.']:
     y = para(t, 12, y, 150)
 c.drawImage(str(O / 'previews/isometric.png'), 168 * mm, 30 * mm, 120 * mm, 140 * mm, preserveAspectRatio=True, anchor='c', mask='auto')
-para('Render KiCad z modelami bibliotecznymi (koniec wiązki J3 bez modelu 3D).', 170, 30, 115)
+para('Render KiCad bez modeli 3D części (obraz Dockera nie ma biblioteki modeli KiCad).', 170, 30, 115)
 c.showPage()
 pages = [(2, 'Montaż od góry — 1:1', 'assembly', [
-    '<b>J3:</b> skrętka W3 (CAN_H → pole kwadratowe 1, CAN_L → pole 2) lutowana do otworów, opaska na izolacji przez dwa otwory kotwy; przewód biegnie prosto '
-    'do ściany wejść, bez przecinania izolacji krawędzią płytki (docs/WIAZKI.md).',
+    '<b>J3:</b> skrętka W3 (CAN_H → pole kwadratowe 1, nadruk „H”; CAN_L → pole 2, „L”) lutowana do otworów, opaska na izolacji przez dwa otwory kotwy; '
+    'przewód biegnie prosto do ściany wejść, bez przecinania izolacji krawędzią płytki (docs/WIAZKI.md). Wokół pól 1 mm bez innej miedzi.',
     '<b>U1 / U2</b> SOIC lutowane wprost, <b>D1</b> SOT-23. Rezystory R2, R8, R9 (MF0207) i kondensatory 100 n na stojąco; pozostałe R/C SMD 1206.',
     '<b>Od spodu:</b> brak części (poziom 4). Wyprowadzenia THT od spodu przyciąć do ≤ 1,5 mm (S1 §4).']),
     (3, 'Miedź F.Cu — 1:1', 'copper-front', [
     'Natywny eksport KiCad po wypełnieniu stref. Szare pola to miedź (GND).',
-    '<b>Obszary bez miedzi</b> wokół otworów M3 (Ø7) i otworów kotwy J3 (Ø6, na obu warstwach).', 'Wydruk kontrolny, nie plik produkcyjny.']),
+    '<b>Obszary bez miedzi</b> wokół otworów M3 (Ø7), otworów kotwy J3 (Ø6) i pierścień 1 mm wokół pól J3 (na obu warstwach). CAN_H i CAN_L idą z J3 przez pola D1 do U1.',
+    'Wydruk kontrolny, nie plik produkcyjny.']),
     (4, 'Miedź B.Cu — 1:1, widok od spodu', 'copper-back', [
     'Widok od spodu (lustrzany względem strony 3). B.Cu to głównie masa GND.']),
     (5, 'Przymiarka 1:1 — obrys, obrysy części, otwory', 'fit', [

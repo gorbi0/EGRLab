@@ -1,4 +1,4 @@
-2026-09-30T20:10:59.044278566Z main ERROR Could not determine local host name java.net.UnknownHostException: 85ce5d8e03a1: 85ce5d8e03a1: Temporary failure in name resolution
+2026-10-01T07:09:49.724096485Z main ERROR Could not determine local host name java.net.UnknownHostException: 4b5a3f09183c: 4b5a3f09183c: Temporary failure in name resolution
 	at java.base/java.net.InetAddress.getLocalHost(InetAddress.java:1936)
 	at org.apache.logging.log4j.core.util.NetUtils.getHostname(NetUtils.java:71)
 	at org.apache.logging.log4j.core.util.NetUtils.getLocalHostname(NetUtils.java:56)
@@ -14,7 +14,7 @@
 	at org.apache.logging.log4j.LogManager.getLogger(LogManager.java:555)
 	at app.freerouting.logger.FRLogger.traceEntry(FRLogger.java:96)
 	at app.freerouting.Freerouting.main(Freerouting.java:51)
-Caused by: java.net.UnknownHostException: 85ce5d8e03a1: Temporary failure in name resolution
+Caused by: java.net.UnknownHostException: 4b5a3f09183c: Temporary failure in name resolution
 	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
 	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Inet6AddressImpl.java:52)
 	at java.base/java.net.InetAddress$PlatformResolver.lookupByName(InetAddress.java:1211)
@@ -24,7 +24,7 @@ Caused by: java.net.UnknownHostException: 85ce5d8e03a1: Temporary failure in nam
 	at java.base/java.net.InetAddress.getLocalHost(InetAddress.java:1931)
 	... 14 more
 
-2026-09-30T20:10:59.115709389Z main ERROR Could not determine local host name java.net.UnknownHostException: 85ce5d8e03a1: 85ce5d8e03a1: Temporary failure in name resolution
+2026-10-01T07:09:49.807260270Z main ERROR Could not determine local host name java.net.UnknownHostException: 4b5a3f09183c: 4b5a3f09183c: Temporary failure in name resolution
 	at java.base/java.net.InetAddress.getLocalHost(InetAddress.java:1936)
 	at org.apache.logging.log4j.core.util.NetUtils.getHostname(NetUtils.java:71)
 	at org.apache.logging.log4j.core.util.NetUtils.getLocalHostname(NetUtils.java:56)
@@ -40,7 +40,7 @@ Caused by: java.net.UnknownHostException: 85ce5d8e03a1: Temporary failure in nam
 	at app.freerouting.logger.FRLogger.changeFileLogLocation(FRLogger.java:379)
 	at app.freerouting.settings.GlobalSettings.setUserDataPath(GlobalSettings.java:110)
 	at app.freerouting.Freerouting.main(Freerouting.java:92)
-Caused by: java.net.UnknownHostException: 85ce5d8e03a1: Temporary failure in name resolution
+Caused by: java.net.UnknownHostException: 4b5a3f09183c: Temporary failure in name resolution
 	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
 	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Inet6AddressImpl.java:52)
 	at java.base/java.net.InetAddress$PlatformResolver.lookupByName(InetAddress.java:1211)
@@ -50,7 +50,7 @@ Caused by: java.net.UnknownHostException: 85ce5d8e03a1: Temporary failure in nam
 	at java.base/java.net.InetAddress.getLocalHost(InetAddress.java:1931)
 	... 14 more
 
-2026-09-30 22:10:59.173 INFO   Freerouting v2.1.0 (build-date: 2025-04-12)
+2026-10-01 09:09:49.868 INFO   Freerouting v2.1.0 (build-date: 2025-04-12)
 java.util.concurrent.CompletionException: java.net.ConnectException
 	at java.base/java.util.concurrent.CompletableFuture.encodeRelay(CompletableFuture.java:368)
 	at java.base/java.util.concurrent.CompletableFuture.uniComposeStage(CompletableFuture.java:1189)
@@ -90,13 +90,11 @@ Caused by: java.nio.channels.UnresolvedAddressException
 	at java.base/java.security.AccessController.doPrivileged(AccessController.java:571)
 	at java.net.http/jdk.internal.net.http.PlainHttpConnection.connectAsync(PlainHttpConnection.java:212)
 	... 21 more
-2026-09-30 22:11:00.859 INFO   [C2A38B\BA5009] Job 'C2A38B\BA5009' started at 2026-09-30T20:11:00.859674459Z
-2026-09-30 22:11:03.842 INFO   [C2A38B\BA5009] Auto-router pass #1 on board '4c21fdbf544493ce5cf517ec947a2f8b' was completed in 2,73 seconds with the score of 951,87 (5 unrouted), using 1,71 CPU seconds and 449 MB memory.
-2026-09-30 22:11:04.636 INFO   [C2A38B\BA5009] Auto-router pass #2 on board 'a6e75985b99aa8d4c899df36c0a26145' was completed in 0,72 seconds with the score of 964,26 (3 unrouted), using 3,49 CPU seconds and 815 MB memory.
-2026-09-30 22:11:05.056 INFO   [C2A38B\BA5009] Auto-router pass #3 on board '34083869655fabf72491436ec3caade3' was completed in 0,35 seconds with the score of 977,62 (1 unrouted), using 5,90 CPU seconds and 1193 MB memory.
-2026-09-30 22:11:05.618 INFO   [C2A38B\BA5009] Auto-router pass #4 on board 'ccb651710d8a86d39523da87a7db61ad' was completed in 0,51 seconds with the score of 978,99 (1 unrouted), using 5,90 CPU seconds and 1193 MB memory.
-2026-09-30 22:11:05.936 INFO   [C2A38B\BA5009] Auto-router pass #5 on board '9cf46601e9a0e963b1fcaa9d6dd0007b' was completed in 0,29 seconds with the score of 985,38, using 8,94 CPU seconds and 1509 MB memory.
-2026-09-30 22:11:06.014 INFO   [C2A38B\BA5009] Auto-router pass #6 on board 'fc1206af30ae27b6da41b4fc3b6c8e46' was completed in 0,01 seconds with the score of 985,38, using 8,94 CPU seconds and 1509 MB memory.
+2026-10-01 09:09:51.593 INFO   [89456F\32EC61] Job '89456F\32EC61' started at 2026-10-01T07:09:51.593308474Z
+2026-10-01 09:09:54.806 INFO   [89456F\32EC61] Auto-router pass #1 on board '4fcc0ae41f684623caef09055824c50a' was completed in 2,91 seconds with the score of 949,97 (5 unrouted), using 3,49 CPU seconds and 791 MB memory.
+2026-10-01 09:09:55.350 INFO   [89456F\32EC61] Auto-router pass #2 on board 'cc0d9638e84f211774db380170afe8f7' was completed in 0,46 seconds with the score of 979,13 (1 unrouted), using 3,49 CPU seconds and 791 MB memory.
+2026-10-01 09:09:55.591 INFO   [89456F\32EC61] Auto-router pass #3 on board 'b898fffa714a25ac16b35f27359d5e6a' was completed in 0,17 seconds with the score of 985,13, using 3,49 CPU seconds and 791 MB memory.
+2026-10-01 09:09:55.626 INFO   [89456F\32EC61] Auto-router pass #4 on board '5d67c600212779ccd039f6ca1fbc73ee' was completed in 0,01 seconds with the score of 985,13, using 5,90 CPU seconds and 1123 MB memory.
 {
   "host": "KiCad's Pcbnew,10.0.6",
   "unit": "mm",
@@ -119,14 +117,14 @@ Caused by: java.nio.channels.UnresolvedAddressException
     "signal_count": 2
   },
   "items": {
-    "total_count": 439,
+    "total_count": 452,
     "trace_count": 77,
-    "via_count": 14,
+    "via_count": 13,
     "conduction_area_count": 1,
     "drill_item_count": 74,
     "pin_count": 0,
     "component_count": 240,
-    "other_count": 33
+    "other_count": 47
   },
   "components": {
     "total_count": 24
@@ -139,28 +137,28 @@ Caused by: java.nio.channels.UnresolvedAddressException
     "class_count": 2
   },
   "connections": {
-    "maximum_count": 147,
+    "maximum_count": 146,
     "incomplete_count": 0
   },
   "traces": {
     "total_count": 77,
-    "total_segment_count": 166,
-    "total_length": 7003.689,
-    "total_weighted_length": 2.555591E7,
-    "average_length": 90.957,
-    "total_vertical_length": 3423.125,
-    "total_horizontal_length": 1563.667,
-    "total_angled_length": 1746.6388
+    "total_segment_count": 172,
+    "total_length": 7084.4746,
+    "total_weighted_length": 2.5063754E7,
+    "average_length": 92.006165,
+    "total_vertical_length": 4070.807,
+    "total_horizontal_length": 1769.997,
+    "total_angled_length": 1715.1488
   },
   "bends": {
-    "total_count": 89,
-    "90_degree_count": 0,
-    "45_degree_count": 89,
+    "total_count": 95,
+    "90_degree_count": 1,
+    "45_degree_count": 94,
     "other_angle_count": 0
   },
   "vias": {
-    "total_count": 14,
-    "through_hole_count": 14,
+    "total_count": 13,
+    "through_hole_count": 13,
     "blind_count": 0,
     "buried_count": 0
   },

@@ -92,6 +92,23 @@ def ref_on_part(b):                                                             
     bb = c.GetBoundingBox(); f.Reference().SetPosition(bb.GetCenter())
 
 
+def ref_far(b):                                                                     # R1's reference printed on R5 (review 1.10)
+    f = fp(b, 'R1'); f.Reference().SetVisible(True); f.Reference().SetPosition(fp(b, 'R5').GetPosition())
+
+
+def strip_part(b): fp(b, 'C4').SetPosition(xy(12.0, 5.0))                            # C4 in the reserved strip of edge A
+
+
+def can_bypass(b):                                                                  # CAN_H from J3.1 straight to the D1-U1 part
+    t = p.PCB_TRACK(b); t.SetLayer(p.F_Cu); t.SetWidth(mm(.3)); t.SetStart(pad(b, 'J3', '1').GetPosition())
+    t.SetEnd(xy(28.875, 55.2)); t.SetNet(pad(b, 'J3', '1').GetNet()); b.Add(t)
+
+
+def j3_close(b):                                                                    # GND track 0.5 mm right of J3 pad 1
+    c = pad(b, 'J3', '1').GetPosition(); x, y = p.ToMM(c.x) + 1.5, p.ToMM(c.y)
+    track(b, p.B_Cu, x, y - 1, x, y + 1, 'GND')
+
+
 def null_control(b): pass
 
 
@@ -99,7 +116,9 @@ CASES = [(null_control, None), (mount_shift, 'M3 holes'), (jbp_shift, 'J1 = J_BP
          (sv_pin_without_resistor, 'Service header J2'), (sv_resistor_far, 'Service header J2'), ('label_missing', 'Service header J2'),
          ('too_tall', 'Every part <='), (obd_turned, 'J3 (OBD tail'), (anchor_track, 'J3 (OBD tail'), (cable_blocked, 'J3 (OBD tail'),
          (d1_far, 'J3 (OBD tail'), (decap_far, 'Decoupling'), (driver_far, 'Series resistor at its driver'), (narrow_track, 'Every track >='),
-         (bottom_soic, 'S1-2 section 4'), (gnd_pour_removed, 'GND pours'), (ref_on_part, 'Every visible reference')]
+         (bottom_soic, 'S1-2 section 4'), (gnd_pour_removed, 'GND pours'), (ref_on_part, 'Every visible reference'),
+         (ref_far, 'Every visible reference nearer'), ('label_swap', 'Service header J2'), (strip_part, 'Reserved strip of edge A'),
+         ('mark_missing', 'Pin 1 / polarity marks'), (can_bypass, 'J3 (OBD tail'), (j3_close, 'J3 (OBD tail')]
 assert root.resolve().is_relative_to(P.resolve()) and root.name == 'negative-controls'
 shutil.rmtree(root, ignore_errors=True); root.mkdir(parents=True)
 labels = json.loads((P / 'routing/silkscreen.json').read_text(encoding='utf-8'))['service_labels']
@@ -117,6 +136,18 @@ for fn, expected in CASES:
         t = parse(copy.read_text(encoding='utf-8')); lab = labels['J2.2']; n0 = len(t)
         t = [g for g in t if not (isinstance(g, list) and g and g[0] == 'gr_text' and g[1] == lab)]
         assert len(t) < n0, lab
+        copy.write_text(dump(t) + '\n', encoding='utf-8')
+    if name == 'label_swap':                                               # labels of J2 pins 7 and 8 (CAN_H / CAN_L) swapped
+        t = parse(copy.read_text(encoding='utf-8')); l7, l8 = labels['J2.7'], labels['J2.8']; k = 0
+        for g in t:
+            if isinstance(g, list) and g and g[0] == 'gr_text' and g[1] in (l7, l8):
+                g[1] = l8 if g[1] == l7 else l7; k += 1
+        assert k == 2, k
+        copy.write_text(dump(t) + '\n', encoding='utf-8')
+    if name == 'mark_missing':                                             # polarity mark "H" at J3.1 deleted
+        t = parse(copy.read_text(encoding='utf-8')); n0 = len(t)
+        t = [g for g in t if not (isinstance(g, list) and g and g[0] == 'gr_text' and g[1] == 'H')]
+        assert len(t) == n0 - 1, n0 - len(t)
         copy.write_text(dump(t) + '\n', encoding='utf-8')
     for f in (P / 'eda').glob('*.kicad_sch'):
         shutil.copy2(f, d / f.name)

@@ -14,3 +14,6 @@ PWR = []                     # nets of class PWR (0.6 mm, clearance 0.3)
 CORE = []                    # nets of class CORE3V3 (0.3 mm)
 SIGNAL_W = .3                # Default track: S1 section 3 (rules as P02-R3)
 SUPPORT_KEEPOUT = {'J3': 3.0}   # NPTH anchor holes of the OBD tail (cable tie): no copper within 3 mm of their centres
+PIN_MARKS = {'J3': {'1': 'H', '2': 'L'}}   # 1.10 (recenzja): biegunowość końca wiązki W3 na nadruku (CAN_H pole kwadratowe, CAN_L)
+PAD_KEEPOUT = {'J3': 1.0}   # 1.10 (recenzja): bez cudzej miedzi 1 mm wokół lutowanych ręcznie pól końca wiązki (było SRV_CAN_TX 0,26 mm);
+                            # strefa w kształcie E otwarta w stronę -x, którędy CAN_H / CAN_L idą do D1

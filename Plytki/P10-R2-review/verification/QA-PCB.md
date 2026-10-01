@@ -1,7 +1,7 @@
 # P10-R2 — QA PCB (format S1, klasa 1/3; plik generowany przez src/run_release.py)
 
-DRC (świeży, wszystkie poziomy): 2 naruszeń / 0 niepołączonych / 0 niezgodności ze schematem (naruszenia to wyłącznie lib_footprint_mismatch części z przyciętym nadrukiem, przyjęte przez verify_pcb.py; szczegóły w pcb-checks.json).
-Kontrole PCB: 21/21. Próby ujemne: 18/18 (w tym próba zerowa).
+DRC (świeży, wszystkie poziomy): naruszenia 2, niepołączone 0, niezgodności ze schematem 0 (naruszenia to wyłącznie lib_footprint_mismatch części z przyciętym nadrukiem, przyjęte przez verify_pcb.py; szczegóły w pcb-checks.json).
+Kontrole PCB: 24/24. Próby ujemne: 24/24 (w tym próba zerowa).
 
 | Kontrola | Wynik |
 |---|---|
@@ -18,14 +18,17 @@ Kontrole PCB: 21/21. Próby ujemne: 18/18 (w tym próba zerowa).
 | Every track >= 0.30 mm (S1 section 3) | PASS |
 | Every PTH pad and via has an annular ring >= 0.25 mm (measured on the copper) | PASS |
 | J1 = J_BP (edge A): IDC 2x5 angled, body front at y = 0, pin centre x = 26.5, pin 1 at the smaller x, pinout = docs/J_BP.csv (P12 contract) | PASS |
-| Service header J2 (edge B, S1 section 6): <= 13 pins in x 10..43, pins out ~6 mm, GND on both ends, one series resistor per pin of the value in docs/SERWIS.csv, <= 10 mm from its node, one silk label per pin | PASS |
+| Service header J2 (edge B, S1 section 6): <= 13 pins in x 10..43, pins out ~6 mm, GND on both ends, one series resistor per pin of the value in docs/SERWIS.csv, <= 10 mm from its node, one silk label per pin with the name of its node (LABEL in silkscreen.py), GND at the ends | PASS |
+| Reserved strip of edge A (S1 §5: y 0-10, x 10-43 of each J_BP slot): no other part on either side; the edge-B zone of the service headers is reported only (S1 §6 gives the header position, not a reserved strip) | PASS |
 | Every part <= 16.5 mm above the board (level 4, S1 section 4; src/heights.py) | PASS |
-| J3 (OBD tail, W3) at the input wall: anchor holes towards x = 53.0 (12 mm from the solder row, hole edge >= 2 mm from the edge), pad 1 CAN_H at the smaller y, not in the edge A / B zones; no copper within 3 mm of the anchor holes; no part under the cable between the anchor and the wall; D1 (PESD2CAN) pads <= 6 mm from the J3 pads (at the cable entry) | PASS |
+| J3 (OBD tail, W3) at the input wall: anchor holes towards x = 53.0 (12 mm from the solder row, hole edge 2-6 mm from the edge), pad 1 CAN_H at the smaller y, not in the edge A / B zones; no copper within 3 mm of the anchor-hole centres; no part under the cable between the anchor and the wall; D1 (PESD2CAN) pads <= 6 mm from the J3 pads and CAN_H / CAN_L pass through them to U1; other nets >= 1 mm from the J3 pads (hand-soldered wires) | PASS |
 | Decoupling at the IC pins: 100 nF pad <= 6 mm from its supply pin (C1 U1.3 VCC, C2 U1.5 VIO, C3 U2.14; limit as P03 R6 / P09 R2) | PASS |
 | Series resistor at its driver: R1 (100 R, CAN_RX to P03) pad <= 6 mm from U2.3 | PASS |
 | GND pours on both layers: B.Cu >= 50 % of the board; island removal always (every island tied) | PASS |
 | Every visible reference outside the courtyards of other parts | PASS |
-| Silkscreen: board name "P10 R2 S1-1/3", edge markers A and B | PASS |
+| Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10) | PASS |
+| Pin 1 / polarity marks of module and wire connectors on the silkscreen, <= 3 mm from their pads (S1 §9; review 1.10) | PASS |
+| Silkscreen: board name "P10 R2 S1-1/3 S3", edge markers A and B | PASS |
 
 ## Próby ujemne
 
@@ -39,17 +42,23 @@ Kontrole PCB: 21/21. Próby ujemne: 18/18 (w tym próba zerowa).
 | sv_resistor_far | Service header J2 | tak | 2 |
 | label_missing | Service header J2 | tak | 1 |
 | too_tall | Every part <= | tak | 1 |
-| obd_turned | J3 (OBD tail | tak | 3 |
+| obd_turned | J3 (OBD tail | tak | 5 |
 | anchor_track | J3 (OBD tail | tak | 2 |
-| cable_blocked | J3 (OBD tail | tak | 4 |
+| cable_blocked | J3 (OBD tail | tak | 3 |
 | d1_far | J3 (OBD tail | tak | 3 |
 | decap_far | Decoupling | tak | 3 |
-| driver_far | Series resistor at its driver | tak | 3 |
+| driver_far | Series resistor at its driver | tak | 4 |
 | narrow_track | Every track >= | tak | 2 |
 | bottom_soic | S1-2 section 4 | tak | 3 |
 | gnd_pour_removed | GND pours | tak | 2 |
-| ref_on_part | Every visible reference | tak | 2 |
+| ref_on_part | Every visible reference | tak | 3 |
+| ref_far | Every visible reference nearer | tak | 2 |
+| label_swap | Service header J2 | tak | 1 |
+| strip_part | Reserved strip of edge A | tak | 2 |
+| mark_missing | Pin 1 / polarity marks | tak | 1 |
+| can_bypass | J3 (OBD tail | tak | 2 |
+| j3_close | J3 (OBD tail | tak | 2 |
 
-Nadruk: ukryte oznaczenia (brak miejsca): R3; nieumieszczone napisy: brak.
+Nadruk: ukryte oznaczenia (brak miejsca): R1, R3, D1; nieumieszczone napisy: brak.
 
-Oględziny PDF: strony 1–5 obejrzane przy tworzeniu pakietu (render w output/previews/pcb-*.png).
+Oględziny PDF: wpis ręczny w README (sekcja „PCB”); render stron w output/previews/pcb-*.png.

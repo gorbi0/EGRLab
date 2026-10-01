@@ -1,6 +1,6 @@
 # P10 R2 — CAN pasywny w formacie S1 (schemat i PCB)
 
-29.09.2026, sesja w chmurze (schemat); 30.09.2026 wieczorem, komputer 24/7 (PCB, sekcja „PCB”). **Status: schemat i PCB do lokalnej recenzji**, sprzęt NIE ZBADANO. R2 powstała na kopii generatora z `Plytki/P10-R1-review` (zamknięty pakiet, niezmieniony); wymagania: `Plytki/Format-S1/SPECYFIKACJA-FORMATU-S1.md` (S1-2) i zadanie `Plytki/Format-S1/zadania/ZADANIE-P09-P10-S1.md`.
+29.09.2026, sesja w chmurze (schemat); 30.09.2026 wieczorem, komputer 24/7 (PCB, sekcja „PCB”). **Status: schemat i PCB do lokalnej recenzji**, sprzęt NIE ZBADANO. R2 powstała na kopii generatora z `Plytki/P10-R1-review` (zamknięty pakiet, niezmieniony); wymagania: `Plytki/Format-S1/SPECYFIKACJA-FORMATU-S1.md` (S1-2; przy layoucie S1-3) i zadanie `Plytki/Format-S1/zadania/ZADANIE-P09-P10-S1.md`.
 
 **Klasa płytki:** 1/3 (53 × 100 mm), slot S3 poziomu 4 (format S1-3, `SPECYFIKACJA-FORMATU-S1.md` §7). Schemat R2 powstał jeszcze dla slotu S1 poziomu 1; przy layoucie sprawdzone: wszystkie części stoją od góry, więc zakaz SOIC od spodu na poziomie 4 niczego nie zmienia, a J3 jest przy ścianie wejść. W schemacie zmieniły się tylko teksty (opis arkusza, noty BOM J1/J2). Topologia bez zmian: TCAN1051V z S i TXD na stałe do VIO, PESD2CAN, bufor RX 74LVC125AD z Ioff, brak terminatora, brak ścieżki CAN_TX do transceivera; tylko odbiór.
 
@@ -37,25 +37,25 @@ Przypisanie części do rejestru wynika z dosłownego dopasowania wartości i ty
 - **Kołek CAN_TX zostaje** (przez 1 kΩ), bo próba „brak TX” w odbiorze wymaga wglądu w ten sygnał (R1: TP6); nadal brak jakiejkolwiek ścieżki do U1.
 - **Rezystory serwisowe 10 kΩ z rejestru (THT na stojąco)** — dosłowne stosowanie reguły „wartość i typ jak w rejestrze”; zużywa zapas, zob. otwarte punkty.
 
-## PCB (30.09.2026 wieczorem, `src/run_release.py`, KiCad 10.0.6 w Dockerze)
+## PCB (30.09.2026, poprawki po recenzji 1.10.2026; `src/run_release.py`, KiCad 10.0.6 w Dockerze)
 
 | Kontrola | Wynik | Raport |
 |---|---|---|
 | DRC świeży, wszystkie poziomy | 0 niepołączonych, 0 niezgodności ze schematem, 0 innych naruszeń; 2 × `lib_footprint_mismatch` (J1, J2: nadruk przycięty przez `silkscreen.py`, przyjęte jawnie) | `verification/drc.json` |
-| Kontrole PCB (`verify_pcb.py`) | 21/21 | `verification/pcb-checks.json`, `QA-PCB.md` |
-| Próby ujemne PCB | 18/18 z zerową | `verification/negative-controls.json` |
-| Trasowanie | Freerouting 2.1.0 (GND jako płaszczyzna B.Cu), pierwsza próba, bez tras planera; 36 przelotek; ścieżki 0,3 mm (F.Cu 0,58 m, B.Cu 0,12 m); wylewki GND F.Cu 81 %, B.Cu 89 % | `routing/attempts.json` |
+| Kontrole PCB (`verify_pcb.py`) | 24/24 | `verification/pcb-checks.json`, `QA-PCB.md` |
+| Próby ujemne PCB | 24/24 z zerową | `verification/negative-controls.json` |
+| Trasowanie | Freerouting 2.1.0 (GND jako płaszczyzna B.Cu) z zablokowanymi liniami CAN, pierwsza próba, bez tras planera; 41 przelotek; ścieżki 0,3 mm (F.Cu 0,61 m, B.Cu 0,10 m); wylewki GND F.Cu 79 %, B.Cu 89 % (liczone z płytki) | `routing/attempts.json`, `pcb-checks.json` |
 
-Łańcuch jak w P09 R2 (skrypty z P03 R6, wartości płytki w `src/board.py`); `run_release.py` odtwarza zapisany wynik routera (`routing/P10.ses`).
+Łańcuch jak w P09 R2 (skrypty z P03 R6, wartości płytki w `src/board.py`); `run_release.py` odtwarza zapisany wynik routera (`routing/P10.ses`). PDF obejrzany (5 stron) 1.10.2026.
 
 **Decyzje (sporne oznaczone):**
 1. Slot S3 poziomu 4 (S1-3): wszystkie części od góry (zajętość 27 %), od spodu nic; ścieżki 0,3 mm przy odstępie 0,25 mm (S1 §3).
-2. J3 (koniec wiązki W3) przy ścianie wejść: kotwa opaski (2 × Ø3,2 mm, 12 mm od rzędu lutów) w stronę ściany, krawędź otworu 4,4 mm od krawędzi płytki; przewód leży prosto od lutów przez kotwę do ściany, a pas pod nim jest bez części. Pole 1 (CAN_H, kwadratowe) ma mniejsze y: patrząc wzdłuż przewodu od ściany jest po prawej, jak w `docs/WIAZKI.md`.
-3. Pola bez miedzi Ø6 wokół otworów kotwy na obu warstwach (opaska nie leży na ścieżkach), kółka na F.Fab.
-4. D1 (PESD2CAN) 3,2 mm od pól J3 (przy wejściu kabla), za nim U1 (CANH/CANL naprzeciw D1 i J3) i bufor U2; R1 przy wyjściu U2, CAN_RX biegnie do J1.8.
+2. J3 (koniec wiązki W3) przy ścianie wejść: kotwa opaski (2 × Ø3,2 mm, 12 mm od rzędu lutów) w stronę ściany, krawędź otworu 4,4 mm od krawędzi płytki (kontrola: 2–6 mm); przewód leży prosto od lutów przez kotwę do ściany, a pas pod nim jest bez części. Pole 1 (CAN_H, kwadratowe, nadruk „H”) ma mniejsze y: patrząc od ściany wejść wzdłuż przewodu jest po prawej, jak w `docs/WIAZKI.md`; pole 2 — „L”.
+3. Pola bez miedzi Ø6 wokół otworów kotwy na obu warstwach (opaska nie leży na ścieżkach), kółka na F.Fab. **Wokół pól J3 pierścień 1 mm bez innej miedzi** (lutowane ręcznie przewody; recenzja 1.10: SRV_CAN_TX szła 0,26 mm od pól) — na F.Cu z wąskim kanałem dla linii do D1, na B.Cu pełny; zmierzone 1,27 mm.
+4. **CAN_H i CAN_L idą z J3 przez pola D1 do U1** (zablokowane ścieżki z `route_critical.py`; recenzja 1.10: CAN_H dochodził do D1 odgałęzieniem 3 mm). Obejście korpusu D1 1,4 mm od rzędu pól zostawia miejsce na przelotkę GND pola D1.3; korytarz linii zablokowany przy rozmieszczaniu. Środki pól D1 3,2 mm od środków pól J3. Za D1: U1, bufor U2, R1 przy wyjściu U2, CAN_RX do J1.8.
 5. **Sporne (dokumentacja):** pin 1 listwy J2 od większego x (x = 36,66 mm) — jak w P09 R2 i P03 R6; kolejność sygnałów od pinu 1 bez zmian; poprawione: nota BOM J2 i `docs/ODBIOR.md`.
-6. Rezystory serwisowe przy węzłach: R3 przy C1 (5V_SYS), R4 przy C2 (3V3_IO), R5 przy U1.4 (RX_RAW), R6 przy R1 (CAN_RX), R7 przy J1.6 (CAN_TX), R8/R9 (10 kΩ) przy J3; ścieżki od rezystorów do J2 są długie, ale idą za rezystorem (S1 §6).
-7. Jedno oznaczenie ukryte z braku miejsca (R3); na rysunku montażowym F.Fab są wszystkie. Wysokość przewodu W3 z opaską ok. 6 mm to szacunek.
+6. Rezystory serwisowe przy węzłach: R3 przy C1 (5V_SYS), R4 przy C2 (3V3_IO), R5 przy U1.4 (RX_RAW), R6 przy R1 (CAN_RX), R7 przy J1.6 (CAN_TX), R8/R9 (10 kΩ) przy J3; ścieżki od rezystorów do J2 są długie, ale idą za rezystorem (S1 §6). Etykiety listwy sprawdzane z tabelą nazw `LABEL` w `silkscreen.py`, nie z wynikiem nadruku.
+7. Nadruk: tytuł z klasą i slotem `P10 R2 S1-1/3 S3` (S1 §9); każde oznaczenie stoi bliżej swojej części niż innych (recenzja 1.10: R1 był 1 mm od R5) — trzy oznaczenia, które się nie mieszczą (R1, R3, D1), są na rysunku montażowym z warstwy F.Fab (strona 2 PDF). Pas zastrzeżony krawędzi A (S1 §5) wolny. Wysokość przewodu W3 z opaską ok. 6 mm to szacunek.
 
 **Otwarte:** przymiarka wydruku 1:1 (strona 5 PDF; kotwa J3 i przebieg przewodu do ściany wejść), recenzja; paczka produkcyjna dopiero po „scal”.
 
@@ -64,7 +64,7 @@ Przypisanie części do rejestru wynika z dosłownego dopasowania wartości i ty
 1. Zapas z rejestru: 10 k — P09 + P10 razem 9 szt. wobec 7; 100 n — razem 6 szt. wobec 5 (opis PR).
 2. Listwa serwisowa musi być **kątowa** (posiadana 1×40 jest prosta); typ IDC J_BP do wyboru w zakupach.
 3. J3 (OBD) i kotwa 12 mm: w layoucie przy ścianie wejść (x = 53 mm, slot S3 poziomu 4; sekcja „PCB”).
-4. `docs/MONTAZ.md` i `REPRODUKCJA.md` z R1 nie są przenoszone (dotyczą PCB 80 × 70 mm); powstaną z layoutem. `docs/INTEGRACJA.md` przeniesione (poprawiona jedna linia o TP6).
+4. `docs/MONTAZ.md` i `REPRODUKCJA.md` z R1 nie są przenoszone (dotyczą PCB 80 × 70 mm). Montaż opisuje PDF PCB (strona 2), a odtwarzanie — sekcja „Uruchomienie” niżej. `docs/INTEGRACJA.md` przeniesione (poprawiona jedna linia o TP6).
 
 ## Uruchomienie
 
