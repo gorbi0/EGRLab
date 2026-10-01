@@ -1,14 +1,14 @@
 ---
 name: p10-r2-state
-description: "P10 R2 (CAN w S1, klasa 1/3, slot S3 poziomu 4 wg S1-3): PCB gotowa do recenzji 30.09 wieczorem (DRC 0/0/0, PCB 21/21, próby 18/18) na p10-r2-pcb; wszystkie części od góry, J3 z kotwą przy ścianie wejść"
+description: "P10 R2 (CAN w S1, klasa 1/3, slot S3 poziomu 4 wg S1-3): PCB scalona 1.10 (PCB 24/24, próby 26/26); wszystkie części od góry, J3 z kotwą przy ścianie wejść"
 metadata:
   node_type: memory
   type: project
   originSessionId: cb9bcc34-135b-58ad-be17-9604396c28c1
-  modified: 2026-09-30T22:40:00.000Z
+  modified: 2026-10-01T12:00:00.000Z
 ---
 
-Stan 30.09.2026 wieczorem (szczegóły: README pakietu `Plytki/P10-R2-review`, sekcja „PCB”; gałąź `p10-r2-pcb`).
+Stan 1.10.2026: scalona do `main` po poprawkach z recenzji (nadruk, linie CAN przez pola D1, pierścień 1 mm wokół pól J3) i odtworzeniu wydania; szczegóły: README pakietu `Plytki/P10-R2-review`, sekcja „PCB”.
 
 - PCB: DRC 0 niepołączonych / 0 niezgodności / 0 innych naruszeń (2 przyjęte `lib_footprint_mismatch` J1/J2), `verify_pcb.py` 21/21, próby ujemne 18/18; router w pierwszej próbie, bez tras planera. PDF `output/pdf/P10-R2-PCB.pdf` (5 stron obejrzanych). Odtwarzanie: `run_release.py`, ok. 3 min.
 - Slot S3 poziomu 4 (S1-3; schemat R2 zakładał S1 poziomu 1): wszystkie części od góry, więc zakaz SOIC od spodu nic nie zmienia; w schemacie zmieniły się tylko teksty (opis arkusza, tytuł, noty J1/J2).

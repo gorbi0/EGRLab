@@ -2,12 +2,24 @@
 
 
 
-Aktualizacja: 30.09.2026. P02 R4: PCB w klasie L scalona (PR #4) i paczka produkcyjna gotowa (`Plytki/P02-PCB-R4-zamowienie`, ZIP aa7b526b…, pod JLCPCB; nie zamówiona). Format S1-3 (P10 na poziomie 4). Schematy S1: P03 R6, P05 R2, P09 R2, P10 R2 scalone, layouty lokalnie. P00 i P04 mają pakiety do zamówienia PCB (`Plytki/Zamowienie-Satland/`), P01 i stare P02 wstrzymane (zasilanie z pakietu 4S). Baza odniesienia: `Rewizje/EGRLab-v6.1-rc1`.
+Aktualizacja: 1.10.2026. Scalone 1.10: P09 R2 i P10 R2 (PCB), P05 R3 (schemat S1, PR #7), przygotowanie P12, wymagania firmware S1, szkic listy zakupowej 3; P03 R6 PCB po bieżącym trasowaniu (decyzje R70 i listwy). P02 R4: PCB w klasie L scalona (PR #4) i paczka produkcyjna gotowa (`Plytki/P02-PCB-R4-zamowienie`, ZIP aa7b526b…, pod JLCPCB; nie zamówiona). Format S1-3 (P10 na poziomie 4). P00 i P04 mają pakiety do zamówienia PCB (`Plytki/Zamowienie-Satland/`), P01 i stare P02 wstrzymane (zasilanie z pakietu 4S). Baza odniesienia: `Rewizje/EGRLab-v6.1-rc1`.
 
 Pakiety płytek i ich recenzje znajdują się w `Plytki/`.
 
 
 
+
+## 1.10.2026 — SCALENIA I DECYZJE UŻYTKOWNIKA
+
+Scalone po „scal” (merge na lokalnym `main`, push robi użytkownik):
+- **P09 R2 PCB** (`Plytki/P09-R2-review`): moduły MAX31856 lutowane wprost (bez gniazd i podpórek), kontrole PCB 25/25, próby ujemne 22/22, 56 przelotek.
+- **P10 R2 PCB** (`Plytki/P10-R2-review`): kontrole PCB 24/24, próby ujemne 26/26 (wydanie odtworzone po wspólnych poprawkach).
+- **P05 R3 schemat** (PR #7, sesja w chmurze + poprawki lokalne): J_SV1 13 kołków (szyny przy GND), bilans z P02 R4, SW1 = E-Switch 100 kątowy M6, C1 = 220 µF; ERC 0, S1 26/26, mutacje 33/33.
+- **P12 przygotowanie** (`Plytki/P12-przygotowanie`): 17 sieci kompletnych, 29 czeka, 0 błędów; **wymagania firmware S1** (`Plytki/Format-S1/zadania/ZADANIE-FIRMWARE-S1.md`); **szkic listy zakupowej 3** (`Plytki/Zakupy-3-szkic`, nie wiążący).
+
+Decyzje 1.10: P09 moduły lutowane wprost; P03 R70 10 kΩ i listwy serwisowe (szyny przy GND, ARS, GND na końcach, legenda na naklejce); P05 SW1 E-Switch 100 kątowy M6 (pionowy 100DP1T1B1M2REH ma ok. 28 mm przy limicie 16,5); pojemność 5V_SYS: P05 C1 i P06 C3 po 220 µF (razem ok. 486 µF wobec 600 µF dla TSR 2-2450); P06 w S1: klasa 2/3, bocznik 2512 Kelvin, BYPASS zostaje (zwykły DPDT ON-ON ≥ 10 A DC na panelu); firmware: D-1 ESP-IDF w Dockerze na komputerze 24/7 (wersja 6.2-s1), D-2 i D-3 według propozycji.
+
+W toku: P03 R6 PCB (nowe trasowanie po zmianie listew). Czeka: rewizja S1 P06 (z decyzjami wyżej), P11, layout P05 R3, lista zakupowa wiążąca.
 
 ## P02 R4 — PACZKA PRODUKCYJNA (30.09.2026)
 
