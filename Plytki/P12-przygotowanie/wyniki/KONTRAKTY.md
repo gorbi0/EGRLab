@@ -2,11 +2,7 @@
 
 *Plik generowany przez `src/kontrakty.py` z `zrodla.json`; nie edytować ręcznie.*
 
-**Wynik:** 1 błędów, 0 uwag; sieci: OK 17, czeka 29, UWAGA 0, BŁĄD 0.
-
-## Błędy
-
-- pojemność na szynach 5 V razem 985.6 µF > 600 µF dopuszczalnych dla TSR 2-2450 (P02 R4 22.1 µF, P03 R6 11.0 µF, P05 (R2; R3 zachowuje C1 według zadania) 472.7 µF, P06 (R1, przed rewizją S1) 470.3 µF, P09 R2 4.7 µF, P10 R2 4.8 µF)
+**Wynik:** 0 błędów, 0 uwag; sieci: OK 17, czeka 29, UWAGA 0, BŁĄD 0.
 
 ## Źródła
 
@@ -14,10 +10,10 @@
 |---|---|---|
 | P02 R4 | PCB scalona (PR #4), paczka produkcyjna | origin/main @ 9b50f9c, blob c2cfb86198 |
 | P03 R6 | PCB do recenzji (gałąź p03-r6-pcb) | origin/p03-r6-pcb @ b094fa7, blob 6993dda42a |
-| P05 R3 | schemat R3 do recenzji (PR #7, gałąź p05-s1; poprawki lokalne 1.10) | origin/p05-s1 @ 27c9201, blob f064b12b9c |
-| P09 R2 | PCB do recenzji (gałąź p09-r2-pcb) | origin/p09-r2-pcb @ abd9036, blob e325a5ac53 |
+| P05 R3 | schemat R3 do recenzji (PR #7, gałąź p05-s1; poprawki lokalne 1.10) | origin/p05-s1 @ 9417a37, blob f064b12b9c |
+| P09 R2 | PCB do recenzji (gałąź p09-r2-pcb) | origin/p09-r2-pcb @ 7ac6d99, blob e325a5ac53 |
 | P06 | czeka na decyzje: bocznik 2512, przełącznik BYPASS, klasa 1/3 albo 2/3 | — |
-| P10 R2 | PCB do recenzji (gałąź p10-r2-pcb) | origin/p10-r2-pcb @ c7848c6, blob 22cf0803e6 |
+| P10 R2 | PCB do recenzji (gałąź p10-r2-pcb) | origin/p10-r2-pcb @ 6ab03fb, blob 22cf0803e6 |
 | P11 | czeka: nowy panel, taśma do P12 (S1 §8: 1 × 2×10) | — |
 | P04 | wariant pełny; S1 §7: na poziomie 4 zostaje tylko S2 | — |
 | P07 | wariant pełny | — |
@@ -115,12 +111,12 @@ Sieci: 5V_SYS (wprost), 5V_M1 (P03: za kluczem Q1), 5VA_P05 (P05: za R1 1 Ω), 5
 |---|---|---|---|
 | P02 R4 | 22,1 | C22 22u / 16V (5V_SYS), C26 100nF / X7R (5V_SYS) | origin/main @ 9b50f9c, blob c2cfb86198 |
 | P03 R6 | 11 | C14 10uF / 16V X7R (5V_M1), C13 1uF / 25V X7R (5V_SYS) | origin/p03-r6-pcb @ b094fa7, blob eb3e1536f1 |
-| P05 (R2; R3 zachowuje C1 według zadania) | 472,7 | C1 470u / 16V (5VA_P05), C2 1u (5VA_P05), C23 1u (5V_SYS) | origin/main @ 9b50f9c, blob 741a030034 |
-| P06 (R1, przed rewizją S1) | 470,3 | C3 470u / 16V (5VA_P06), C6 100n (5VA_P06), C9 100n (5VA_P06) | origin/main @ 9b50f9c, blob bfe61cbcca |
-| P09 R2 | 4,7 | C5 4u7 (5V_SYS) | origin/p09-r2-pcb @ abd9036, blob 8e5d587aa7 |
-| P10 R2 | 4,8 | C4 4u7 (5V_SYS), C1 100n (5V_SYS) | origin/p10-r2-pcb @ c7848c6, blob d226cd47a3 |
+| P05 R3 | 222,7 | C1 220u / 16V (5VA_P05), C2 1u (5VA_P05), C23 1u (5V_SYS) | origin/p05-s1 @ 9417a37, blob 3c516582ab |
+| P06 (R1; C3 220 µF według decyzji 1.10, do rewizji S1) | 220,3 | C3 220u / 16V (5VA_P06), C6 100n (5VA_P06), C9 100n (5VA_P06) | origin/main @ 9b50f9c, blob bfe61cbcca |
+| P09 R2 | 4,7 | C5 4u7 (5V_SYS) | origin/p09-r2-pcb @ 7ac6d99, blob 8e5d587aa7 |
+| P10 R2 | 4,8 | C4 4u7 (5V_SYS), C1 100n (5V_SYS) | origin/p10-r2-pcb @ 6ab03fb, blob d226cd47a3 |
 
-**Razem 985,6 µF.**
+**Razem 485,6 µF.**
 
 ## Opisy położeń w specyfikacji S1
 

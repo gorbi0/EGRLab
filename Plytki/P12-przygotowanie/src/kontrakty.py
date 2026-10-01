@@ -221,8 +221,8 @@ if poj:
         for r, q in parts.items():
             nets = [n.split('/')[-1] for n in q.get('pins', {}).values()]
             if r.startswith('C') and q.get('on_board', True) and 'GND' in nets and any(n in poj['sieci'] for n in nets):
-                c = farad(q.get('value'))
-                rows.append({'ref': r, 'wartosc': q.get('value'), 'siec': next(n for n in nets if n in poj['sieci']), 'uF': round(c * 1e6, 3) if c else None})
+                c = farad(z.get('zamiany', {}).get(r, q.get('value')))   # 1.10: wartość według decyzji przed rewizją płytki (np. P06 C3)
+                rows.append({'ref': r, 'wartosc': z.get('zamiany', {}).get(r, q.get('value')), 'siec': next(n for n in nets if n in poj['sieci']), 'uF': round(c * 1e6, 3) if c else None})
         pojemnosc.append({'plytka': z['plytka'], 'wersja': wersja(z['ref'], z['plik']), 'uF': round(sum(x['uF'] or 0 for x in rows), 1),
                           'najwieksze': sorted(rows, key=lambda x: -(x['uF'] or 0))[:3], 'bez_wartosci': [x['ref'] for x in rows if x['uF'] is None]})
     suma_uF = round(sum(x['uF'] for x in pojemnosc), 1)

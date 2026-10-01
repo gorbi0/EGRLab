@@ -16,6 +16,10 @@ def plan(cfg):
     return z['piny']
 
 
+def pojemnosc_bez_decyzji(cfg):        # P06 C3 z powrotem 470 µF (bez decyzji 1.10): razem ponad 600 µF
+    next(p for p in cfg['pojemnosc_5V']['plytki'] if p['plytka'].startswith('P06'))['zamiany'] = {}
+
+
 def schemat_inny_niz_plan(cfg):        # plan z zadania mówi PFAIL_N na J_BP2.16 P05, schemat ma tam GND
     next(p for p in cfg['plytki'] if p['plytka'] == 'P05 R3')['zrodlo']['plan_piny']['J_BP2']['16'][0] = 'PFAIL_N'
 
@@ -48,7 +52,7 @@ def opis_w_specyfikacji(cfg, tmp):     # stary nagłówek S1 §8 (x = 80,0 mm dl
 
 PROBY = [(None, None), (nazwa_sieci, 'brak na P05'), (brak_nadajnika, 'brak nadajnika'), (dwa_nadajniki, 'więcej niż jeden nadajnik'),
          (prad_ponad_styki, 'na 2 pinach'), (dziura_w_numeracji, 'dziury w numeracji'), (opis_w_specyfikacji, 'slot S3 ma środek'),
-         (schemat_inny_niz_plan, 'plan z zadania PFAIL_N')]
+         (schemat_inny_niz_plan, 'plan z zadania PFAIL_N'), (pojemnosc_bez_decyzji, 'pojemność na szynach 5 V')]
 wyniki = []
 with tempfile.TemporaryDirectory() as t:
     tmp = Path(t)
