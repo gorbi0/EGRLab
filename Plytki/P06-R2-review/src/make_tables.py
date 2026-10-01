@@ -32,7 +32,7 @@ for j in ('J_SV1', 'J_SV2'):
             rows.append([j, p, n[4:], f"{r} {v['value']} / {'1% MF0207 na stojaco' if v['zrodlo'] == REG else '1% 1206'}", why])
 table('SERWIS.csv', ['zlacze', 'pin', 'siec', 'rezystor', 'cel_pomiaru'], rows)
 # --- wires that stay (S1 5): ISERIES and BYPASS, soldered in PTH at the x = 0 edge ---
-W = [('W3/ISERIES', 'J3', 'P11/J_ISERIESA (do zatwierdzenia z P11 S1)', 'P06', '150', '2x2.5mm2', 'MSTB 2.5/4-ST-5.08 >=12A (P11)', '12', '1=ECU_P1;2=EGR_P1;3/4=NC'),
+W = [('W3/ISERIES', 'J3', 'P11/J_ISERIESA (do zatwierdzenia z P11 S1)', 'P06', '150', '2x2.5mm2', 'MSTB 2.5/4-ST-5.08 >=12A (P11)', '12', '1=ECU_P1;2=EGR_P1'),
      ('W4/SW1-A', 'J4', 'SW1.2/3 (panel)', 'oba', '100', '2x2.5mm2', 'brak - oczka lutownicze SW1', '12', '1->SW1.2;2->SW1.3'),
      ('W5/SW1-B', 'J5', 'SW1.4/5/6 (panel)', 'oba', '150', '3xAWG22', 'brak - oczka lutownicze SW1', '12', '1->SW1.4;2->SW1.5;3->SW1.6')]
 table('interfejsy.csv', ['ID', 'P06', 'drugi_koniec', 'ktory_koniec_lutowany', 'dlugosc_mm', 'przewod', 'wtyk_drugi_koniec', 'kotwa_mm', 'piny'], W)
@@ -68,9 +68,9 @@ L += ['', '## Bilans posiadanych części (rejestr 24.09; P01 zbędna po decyzji
       '| 74LVC125AD,118 (Nexperia) | 25 (P06: 2) | 1 | 4 | 2 | 1 | — | 2 | U5, U6 lutowane wprost (adaptery Kamami 575068/575072 z przydziału P06 niepotrzebne) |',
       '| podstawka DIP8 złocona (Kamami 1207058) | 2 (P06) | — | — | — | — | — | 2 | U2, U3 (opcjonalnie; wysokość z podstawką ok. 8 mm) |', '',
       '## Uwagi do zakupów', '',
-      '- **RSH1:** bocznik SMD 2512 z czterema wyprowadzeniami (Kelvin), 5 mΩ, ≤ 1 %, ≥ 1 W. Propozycja: **Vishay WSK2512R0050FEA** — footprint KiCad `R_Shunt_Vishay_WSK2512_6332Metric_T1.19mm` (opis: zakres 5–200 mΩ). Karta Vishay jest w chmurze zablokowana: moc, TCR i wymiary pól sprawdzić lokalnie przed layoutem. Alternatywa Bourns CSS2H-2512K-5L00F ma inny układ pól — przy zmianie potrzebny nowy footprint i sprawdzenie numeracji pól (kontrola `RSH1-KELVIN` w `verify_s1.py` czyta geometrię).',
+      '- **RSH1:** bocznik SMD 2512 z czterema wyprowadzeniami (Kelvin), 5 mΩ, ≤ 1 %, ≥ 1 W. Kod: **Vishay WSK25125L000FEA** (karta 30108, wersja z 11.12.2023, sprawdzona lokalnie 1.10: poniżej 0,01 Ω wartość z literą L, 5 mΩ = 5L000; 1,0 W przy 70 °C, TCR ±35 ppm/K w zakresie 5–200 mΩ). Footprint lokalny `P06:R_Shunt_Vishay_WSK2512_T1.19mm_SenseE1.70`: pola jak w bibliotece KiCada, pola pomiarowe 1,70 mm zamiast 1,40 mm (tabela pól karty). Alternatywa Bourns CSS2H-2512K-5L00F ma inny układ pól — przy zmianie potrzebny nowy footprint i sprawdzenie numeracji pól (kontrola `RSH1-KELVIN` w `verify_s1.py` czyta geometrię).',
       '- **SW1 BYPASS (panel, poza PCB):** DPDT ON-ON, ≥ 10 A przy 12–30 V DC (obciążenie rezystancyjne/indukcyjne silnika EGR do 6 A), oczka lutownicze, montaż w panelu (tuleja z nakrętką). Styki wspólne w środku (2 i 5 w numeracji schematu: BYPASS 2-3 + 5-6, MEASURE 2-1 + 5-4). MPN do potwierdzenia, zakup po akceptacji; NKK S6A nie kupować. Biegun B obciąża R21 (ok. 0,13 A), więc styki srebrne są w porządku.',
-      '- **R21:** Vishay PR02 39 Ω 2 W (kod do potwierdzenia, np. PR02000203909JA100), leżący 3–5 mm nad laminatem.',
+      '- **R21:** Vishay PR02 39 Ω 2 W (kod do potwierdzenia, np. PR02000203909JA100), leżący 3–5 mm nad laminatem — THT zostaje (decyzja użytkownika 1.10).',
       '- **R6:** KNP01U-1R (1 W, drutowy, jak R1 w P05 R3); próba impulsowa z karty (ok. 3 mJ przy ładowaniu C3 220 µF) niepotwierdzona.',
       '- **C3:** 220 µF / 16 V, Panasonic EEUFR1C221 (D6,3 × 11,2 mm, raster 2,5 mm) — ta sama pozycja co C1 w P05 R3.',
       '- **R1–R4 (0,1 %, 25 ppm/K):** Yageo RT1206BRD0710RL (10 Ω — sprawdzić, czy seria RT ma 10 Ω w 0,1 %; zamiennik Panasonic ERA-8AEB100V) i RT1206BRD075K11L (5,11 kΩ, zamiana 1:1 z listy 2).',

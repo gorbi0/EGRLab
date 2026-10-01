@@ -28,8 +28,10 @@ def custom(name,units):
   s+=')'
  return parse(s+')')
 # Wire pigtails (unchanged from P06-R1 src/make_footprints.py): PTH solder joints, two anchor holes 12 mm from the first row.
-def tail(name,n,pitch,drill,pad):
- pts=[(i+1,i*pitch,0,drill,pad) for i in range(n)]+[('',-3.5,-12,3.2,3.2),('',(n-1)*pitch+3.5,-12,3.2,3.2)]
+# R2 local layout (1.10): rev=True numbers the pads from the far end (pad 1 at x = (n-1)*pitch). After the 90 deg turn at the x=0 edge
+# J3.1 then lies above J3.2, so ECU_P1 and EGR_P1 of J3, J4 and RSH1 each stay one piece of copper on both layers (README, PCB).
+def tail(name,n,pitch,drill,pad,rev=False):
+ pts=[(i+1,((n-1-i) if rev else i)*pitch,0,drill,pad) for i in range(n)]+[('',-3.5,-12,3.2,3.2),('',(n-1)*pitch+3.5,-12,3.2,3.2)]
  xmax=(n-1)*pitch
  s=f'(footprint {q(name)} (version 20240108) (generator "pcbnew") (layer "F.Cu") (attr through_hole)'
  for num,x,y,d,w in pts:
@@ -51,7 +53,19 @@ SO8=copyfp('Package_SO','SOIC-8_3.9x4.9mm_P1.27mm');SO14=copyfp('Package_SO','SO
 DIP8=copyfp('Package_DIP','DIP-8_W7.62mm');DIP14=copyfp('Package_DIP','DIP-14_W7.62mm')
 TO92=copyfp('Package_TO_SOT_THT','TO-92_Inline_Wide')
 DIO=copyfp('Diode_THT','D_DO-41_SOD81_P10.16mm_Horizontal');DIO35=copyfp('Diode_THT','D_DO-35_SOD27_P7.62mm_Horizontal')
-SHUNT_FP=copyfp('Resistor_SMD','R_Shunt_Vishay_WSK2512_6332Metric_T1.19mm')
+def shunt_fp():
+ # R2 local review (1.10): Vishay data sheet 30108 (rev. 11-Dec-2023), solder pads for 0.005..0.2 Ohm: a 2.29, b 3.30, c 0.76, d 0.51,
+ # e 1.70, l 3.68 mm. The KiCad library footprint matches except the sense pad length e (1.40): sense pads 1.70 mm from the outer edge.
+ name='R_Shunt_Vishay_WSK2512_T1.19mm_SenseE1.70'
+ t=(K/'footprints/Resistor_SMD.pretty/R_Shunt_Vishay_WSK2512_6332Metric_T1.19mm.kicad_mod').read_text()
+ for a,b in (('(footprint "R_Shunt_Vishay_WSK2512_6332Metric_T1.19mm"',f'(footprint "{name}"'),
+             ('(property "Value" "R_Shunt_Vishay_WSK2512_6332Metric_T1.19mm"',f'(property "Value" "{name}"'),
+             ('(at -3.43 1.27)\n\t\t(size 1.4 0.76)','(at -3.28 1.27)\n\t\t(size 1.7 0.76)'),
+             ('(at 3.43 -1.27)\n\t\t(size 1.4 0.76)','(at 3.28 -1.27)\n\t\t(size 1.7 0.76)')):
+  assert t.count(a)==1,a;t=t.replace(a,b)
+ t=t.replace('(descr "','(descr "EGRLab P06 R2: sense pads e = 1.70 mm per Vishay 30108 rev. 11-Dec-2023 (library: 1.40). ',1)
+ (FP/(name+'.kicad_mod')).write_text(t);return 'P06:'+name
+SHUNT_FP=shunt_fp()
 def add(ref,src,sym,fp,value,mpn,pins,sheet,url='',note='',on_board=True,zrodlo=NEW,**extra):
  PARTS[ref]=dict(ref=ref,source_ref=src,symbol=sym,footprint=fp,display=value,value=value,mpn=mpn,pins={str(k):v for k,v in pins.items()},sheet=sheet,url=url,note=note,qty=1,on_board=on_board,zrodlo=zrodlo,**extra)
 SR=symbol('Device','R');SC=symbol('Device','C');SCP=symbol('Device','C_Polarized')
@@ -83,10 +97,10 @@ for r,src,mpn,rail,out in [('U8','U44','MCP120-300DI/TO',V,'SUP3_N'),('U9','U45'
  add(r,src,sup,TO92,mpn,mpn,{1:out,2:rail,3:G},'READY',URL['MCP120.pdf'],'D bondout: reset=1, VDD=2, GND=3. Open drain.',zrodlo=REG)
 ref=custom('MCP1525_TO92',[( [(3,'VIN','power_in'),(1,'GND','power_in')],[(2,'VOUT','power_out')])])
 add('U10','U42',ref,TO92,'MCP1525-I/TO','MCP1525-I/TO',{1:G,2:'REF25',3:V},'ANA',URL['MCP1525.pdf'],'TO92: 1 GND, 2 OUT, 3 IN; not the SOT23 pin order.',zrodlo=REG)
-# R2: Kelvin shunt SMD 2512 (decision 28.09/1.10) instead of PBV. KiCad footprint pads (WSK2512, T 1.19 mm for 5..200 mOhm):
+# R2: Kelvin shunt SMD 2512 (decision 28.09/1.10) instead of PBV. Footprint pads (WSK2512, T 1.19 mm for 5..200 mOhm, shunt_fp()):
 # 1 force left, 2 sense left, 3 sense right, 4 force right -> nets as R1 by function: force ECU_P1 / EGR_P1, sense K_PLUS next to ECU_P1.
 sh=symbol('Device','R_Shunt','R_Shunt_2512_Kelvin')
-add('RSH1','X24',sh,SHUNT_FP,'5m / 1% / 2512 Kelvin','WSK2512R0050FEA (Vishay WSK2512, 5 mOhm 1%, 4-terminal; alt. Bourns CSS2H-2512K-5L00F - footprint differs)',{1:'ECU_P1',2:'K_PLUS',3:'K_MINUS',4:'EGR_P1'},'FORCE','https://www.vishay.com/docs/30108/wsk.pdf','Pads 1/4 force (current), 2/3 sense (Kelvin). Power, TCR and land pattern to confirm with the WSK data sheet (blocked in the cloud). 6 A: 0.18 W; 10 A passive qualification: 0.5 W.',ohms=.005,tolerance=.01)
+add('RSH1','X24',sh,SHUNT_FP,'5m / 1% / 2512 Kelvin','WSK25125L000FEA (Vishay WSK2512, 5 mOhm 1%, 1 W at 70 C, TCR +-35 ppm/K, 4-terminal; alt. Bourns CSS2H-2512K-5L00F - footprint differs)',{1:'ECU_P1',2:'K_PLUS',3:'K_MINUS',4:'EGR_P1'},'FORCE','https://www.vishay.com/docs/30108/wsk2512.pdf','Pads 1/4 force (current), 2/3 sense (Kelvin). Data sheet 30108 rev. 11-Dec-2023 (checked locally 1.10): 1.0 W at 70 C, TCR +-35 ppm/K for 5..200 mOhm, part code 5L000 for 5 mOhm (L = mOhm below 0.01 Ohm); sense pads e = 1.70 mm (KiCad library 1.40). 6 A: 0.18 W; 10 A passive qualification: 0.5 W.',ohms=.005,tolerance=.01)
 # R2: BYPASS switch off-board on the panel, generic DPDT ON-ON >= 10 A DC (decision 1.10) instead of NKK S6A. Terminal numbering of
 # the KiCad SW_DPDT_x2 symbol: commons 2 and 5 (as S6A): BYPASS 2-3 + 5-6, MEASURE 2-1 + 5-4. Real lug numbers to check with an ohmmeter.
 sw=symbol('Switch','SW_DPDT_x2','SW_DPDT_ONON_PANEL')
@@ -127,9 +141,11 @@ add('D2','ADD_REF_DISCHARGE',symbol('Device','D_Schottky'),DIO35,'BAT85','BAT85,
 for i,(r,rail) in enumerate([('U1',A5),('U2',V),('U3',V),('U4',A5),('U5',V),('U6',V),('U7',V),('U8',V),('U9',A5),('U10',V)],6):
  cap('C'+str(i),'DEC_'+r,'100n',1e-7,rail,G,'P06')
 add('D1','ADD_LDO_DISCHARGE',symbol('Device','D_Schottky'),DIO,'1N5819','1N5819',{1:A5,2:V},'P06','https://www.vishay.com/docs/88525/1n5817.pdf','Anode on local 3.3 V, cathode on 5VA; output-cap discharge path on supply removal.')
-# Wires that stay (S1 5): ISERIES and both BYPASS harnesses, PTH at the x=0 board edge (R1 numbering and pigtail footprints).
-conns=[('J3','J_ISERIESB','ISERIES',tail('PTH_ISERIES',4,7.62,2.4,4.5),{1:'ECU_P1',2:'EGR_P1',3:'NC',4:'NC'}),
- ('J4','ADD_BYPASS_FORCE','SW1 A',tail('PTH_BYPASS',2,17.78,2.4,4.5),{1:'ECU_P1',2:'EGR_P1'}),
+# Wires that stay (S1 5): ISERIES and both BYPASS harnesses, PTH at the x=0 board edge (R1 pigtails: 2.4 mm holes, tie anchor 12 mm).
+# R2 local layout (1.10): J3 with 2 pads (R1 pads 3/4 were empty) and J4 at 7.62 mm instead of 17.78 - with the R1 sizes J3, J4 and J5
+# need 81 mm of the x=0 edge, the M3 zones leave 65 mm. J3 numbered from the far end (tail rev).
+conns=[('J3','J_ISERIESB','ISERIES',tail('PTH_ISERIES',2,7.62,2.4,4.5,rev=True),{1:'ECU_P1',2:'EGR_P1'}),
+ ('J4','ADD_BYPASS_FORCE','SW1 A',tail('PTH_BYPASS',2,7.62,2.4,4.5),{1:'ECU_P1',2:'EGR_P1'}),
  ('J5','ADD_BYPASS_STATUS','SW1 B',tail('PTH_SWSTATUS',3,3.5,1.1,2.2),{1:A5,2:'SW_RAW',3:G})]
 for r,s,n,fp,pins in conns:add(r,s,symbol('Connector_Generic',f'Conn_01x{len(pins):02d}'),fp,n+' / PTH','Soldered harness',pins,'FORCE',note='PTH solder joint at the x=0 edge; tie anchor 12 mm. See docs/WIAZKI.md.')
 # R2 (S1 5): J1 LV06 and J2 ILOG replaced by one angled shrouded IDC 2x8 on edge A, slot S2 (centre x = 80.0 mm). Nets and functions as R1.

@@ -240,10 +240,10 @@
   "RSH1": {
     "ref": "RSH1",
     "source_ref": "X24",
-    "footprint": "Resistor_SMD:R_Shunt_Vishay_WSK2512_6332Metric_T1.19mm",
+    "footprint": "P06:R_Shunt_Vishay_WSK2512_T1.19mm_SenseE1.70",
     "display": "5m / 1% / 2512 Kelvin",
     "value": "5m / 1% / 2512 Kelvin",
-    "mpn": "WSK2512R0050FEA (Vishay WSK2512, 5 mOhm 1%, 4-terminal; alt. Bourns CSS2H-2512K-5L00F - footprint differs)",
+    "mpn": "WSK25125L000FEA (Vishay WSK2512, 5 mOhm 1%, 1 W at 70 C, TCR +-35 ppm/K, 4-terminal; alt. Bourns CSS2H-2512K-5L00F - footprint differs)",
     "pins": {
       "1": "ECU_P1",
       "2": "K_PLUS",
@@ -251,8 +251,8 @@
       "4": "EGR_P1"
     },
     "sheet": "FORCE",
-    "url": "https://www.vishay.com/docs/30108/wsk.pdf",
-    "note": "Pads 1/4 force (current), 2/3 sense (Kelvin). Power, TCR and land pattern to confirm with the WSK data sheet (blocked in the cloud). 6 A: 0.18 W; 10 A passive qualification: 0.5 W.",
+    "url": "https://www.vishay.com/docs/30108/wsk2512.pdf",
+    "note": "Pads 1/4 force (current), 2/3 sense (Kelvin). Data sheet 30108 rev. 11-Dec-2023 (checked locally 1.10): 1.0 W at 70 C, TCR +-35 ppm/K for 5..200 mOhm, part code 5L000 for 5 mOhm (L = mOhm below 0.01 Ohm); sense pads e = 1.70 mm (KiCad library 1.40). 6 A: 0.18 W; 10 A passive qualification: 0.5 W.",
     "qty": 1,
     "on_board": true,
     "zrodlo": "nowe",
@@ -1115,9 +1115,7 @@
     "mpn": "Soldered harness",
     "pins": {
       "1": "ECU_P1",
-      "2": "EGR_P1",
-      "3": "NC",
-      "4": "NC"
+      "2": "EGR_P1"
     },
     "sheet": "FORCE",
     "url": "",

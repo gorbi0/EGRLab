@@ -29,7 +29,7 @@ NEW_PARTS = {'J_BP', 'J_SV1', 'J_SV2', *[f'R{i}' for i in range(25, 39)]}
 R_SMD = 'Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder'; C_SMD = 'Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder'
 R_STAND = 'Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical'
 EXC_FP = {'R6': 'Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P15.24mm_Horizontal', 'R21': 'P06:R_PR02_P17.78',
-          'C3': 'Capacitor_THT:CP_Radial_D6.3mm_P2.50mm', 'RSH1': 'Resistor_SMD:R_Shunt_Vishay_WSK2512_6332Metric_T1.19mm'}
+          'C3': 'Capacitor_THT:CP_Radial_D6.3mm_P2.50mm', 'RSH1': 'P06:R_Shunt_Vishay_WSK2512_T1.19mm_SenseE1.70'}   # 1.10: sense pads per data sheet (parts.py shunt_fp)
 PRECISION = ['R1', 'R2', 'R3', 'R4']
 SHUNT_SIDE = {'ECU_P1': 'K_PLUS', 'EGR_P1': 'K_MINUS'}   # force net -> sense net on the same end of the shunt (R1 functions)
 
@@ -166,7 +166,8 @@ def check(c):
         if r in OLD_CONNECTORS or r.startswith('TP') or r == 'RSH1': continue
         if r not in c: diff.append((r, 'missing')); continue
         for p, n in x['pins'].items():
-            if c[r]['pins'].get(p) != n: diff.append((r, p, n, c[r]['pins'].get(p)))
+            if c[r]['pins'].get(p) != n and not (r == 'J3' and n == 'NC' and p not in c[r]['pins']):   # 1.10: J3 pads 3/4 (empty) dropped
+                diff.append((r, p, n, c[r]['pins'].get(p)))
     extra = sorted(set(c) - set(R1) - NEW_PARTS) + sorted(NEW_PARTS - set(c))
     ok('R1-CIRCUIT-KEPT', not diff and not extra, {'diff': diff[:10], 'extra_or_missing': extra})
     return out

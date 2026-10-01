@@ -13,7 +13,7 @@ Obwód R1 zostaje: INA240A2 z filtrem R1/R2 10 Ω, dzielnik R3/R4 1:2, MCP6022, 
 | Płytka | 120 × 100 mm, 2 × 70 µm, samodzielnie mocowana | klasa 2/3, 106,5 × 100 mm, sloty S1–S2 poziomu 4, dystanse 20 mm, 35 µm |
 | Zasilanie i ILOG | J1 LV06 (Mini-Fit 4p, 200 mm) i J2 ILOG (taśma 8 żył do P03) | **J_BP** IDC 2×8 kątowe, slot S2 (x = 80,0 mm): ADC_SCLK 2, ADC_DOUTA 4 (jak J_BP2 płytek P03 R6 i P05 R3), CS_ILOG_N 6, LOGGER_CURRENT_OK 8, 5V_SYS 10 i 12, 3V3_IO 14, nieparzyste i 16 GND |
 | Przewody | 5 wiązek | zostają J3 ISERIES, J4 BYPASS (tor mocy), J5 status BYPASS — przy brzegu x = 0 |
-| Bocznik RSH1 | PBV-R005-F1-0.5 THT, 3 W | **SMD 2512 Kelvin 5 mΩ 1 %**, propozycja Vishay WSK2512R0050FEA, footprint KiCad `R_Shunt_Vishay_WSK2512_6332Metric_T1.19mm` (pady 1/4 prądowe, 2/3 pomiarowe) |
+| Bocznik RSH1 | PBV-R005-F1-0.5 THT, 3 W | **SMD 2512 Kelvin 5 mΩ 1 %**, Vishay **WSK25125L000FEA**, footprint lokalny `P06:R_Shunt_Vishay_WSK2512_T1.19mm_SenseE1.70` (pady 1/4 prądowe, 2/3 pomiarowe; przegląd 1.10) |
 | SW1 BYPASS | NKK S6A | ogólny **DPDT ON-ON ≥ 10 A DC** z oczkami, na panelu; MPN do potwierdzenia |
 | Punkty pomiarowe | TP1–TP15 | **J_SV1** 1×7 (S1: węzły analogowe przez 10 kΩ) i **J_SV2** 1×13 (S2: szyny i logika); 14 kołków przez rezystory przy węźle R25–R38 |
 | R3/R4 | 5,1 kΩ 0,1 % THT | **5,11 kΩ 0,1 % 1206, 25 ppm/K** (zamiana 1:1 z listy 2); dzielnik 1:2 bez zmian, obciążenie INA240 10,22 kΩ |
@@ -26,7 +26,7 @@ Obwód R1 zostaje: INA240A2 z filtrem R1/R2 10 Ω, dzielnik R3/R4 1:2, MCP6022, 
 **Wyjątki od „nowe = SMD 1206” (S1 §1/§9):**
 - **RSH1** 2512 z czterema polami — tor 5–6 A i pomiar Kelvina (decyzja 28.09/1.10).
 - **R6** 1 Ω / 1 W KNP01U-1R leżący (DIN0411) — rezystor mocy jak R1 w P05 R3; impuls ładowania C3 ok. 3 mJ, a posiadany MF0207 1R ma 0,6 W.
-- **R21** 39 Ω PR02 2 W leżący (footprint `R_PR02_P17.78` z P02 R4). Wydziela 0,64 W przy 5,00 V i 0,71 W przy 5,25 V. W 2512 1 W pracowałby na ok. 70 % mocy z gorącym punktem na laminacie obok toru analogowego; PR02 ma 36 % obciążenia i stoi 3–5 mm nad płytką. 2512 2 W to część specjalna. *Sporne: jeśli wolisz SMD, R21 może być 2512 ≥ 1 W — pytanie w PR.*
+- **R21** 39 Ω PR02 2 W leżący (footprint `R_PR02_P17.78` z P02 R4). Wydziela 0,64 W przy 5,00 V i 0,71 W przy 5,25 V. W 2512 1 W pracowałby na ok. 70 % mocy z gorącym punktem na laminacie obok toru analogowego; PR02 ma 36 % obciążenia i stoi 3–5 mm nad płytką. 2512 2 W to część specjalna. **Decyzja użytkownika 1.10: zostaje THT (PR02).**
 - **C3** elektrolit radialny 220 µF.
 - **D1** 1N5819 (DO-41) i **D2** BAT85 (DO-35), układy scalone — obudowy jak w R1 (SOIC tylko od góry).
 
@@ -34,7 +34,7 @@ Obwód R1 zostaje: INA240A2 z filtrem R1/R2 10 Ω, dzielnik R3/R4 1:2, MCP6022, 
 
 `python src/run_schematic.py` (Python KiCada; w chmurze `scripts/egrlab-docker python3 src/run_schematic.py`, ok. 17 s): schemat, tabele, ERC, netlista, trzy zestawy kontroli, PDF, `verification/QA.md`, manifest.
 
-- ERC **0** na 7 arkuszach; netlista **245/245** pinów zgodnych z `parts.py`, 74 części, 56 sieci (R1: 6 arkuszy, 70 części).
+- ERC **0** na 7 arkuszach; netlista **243/243** pinów zgodnych z `parts.py`, 74 części, 54 sieci (1.10 po przeglądzie lokalnym: J3 bez pustych pól 3/4) (R1: 6 arkuszy, 70 części).
 - `verify_electrical.py` (kontrole R1 dostosowane): **33/33**, mutacje **30/30** — m.in. J_BP i dojście każdego sygnału do tego samego elementu co w R1, dzielnik 5,11 kΩ 0,1 %, C5/C4 z obniżeniem X7R (C5 efektywnie 2,5–5,9 µF w oknie 1–10 µF), C3 220 µF, R6 1 W, R21 2 W ≥ 2 × moc, 3V3_IO tylko do J_BP i kołka, tabela prawdy READY z eksportu.
 - `verify_s1.py` (kontrakt S1, niezależny od generatora): **27/27**, mutacje **37/37** wykryte przez kontrolę docelową, próba zerowa czysta. Pinout J_BP dokładnie jak w zadaniu; ADC_SCLK/ADC_DOUTA na pinach 2/4 jak J_BP2 w `reference/P03-R6-J_BP.csv` (gałąź `p03-r6-pcb`, b094fa7) i `reference/P05-R3-J_BP.csv`; kierunki w `J_BP.csv` przeciwne do P03 R6; każda sieć dawnych J1/J2 na J_BP dokładnie raz (5V_SYS dwa razy); nieparzyste piny GND; J3/J4/J5 i Kelvin poza J_BP; listwy ≤ 13 kołków, GND na końcach, rezystor przy węźle w klasie z S1 §6, zasada sąsiedztwa szyn, pokrycie TP1–TP15 z R1; `J_BP.csv`/`SERWIS.csv` zgodne z netlistą; RSH1: 4 pola, pola prądowe (dwa największe) ECU_P1/EGR_P1, pomiarowe K_PLUS/K_MINUS po tej samej stronie — z geometrii footprintu; C3 220 µF; źródła i obudowy części; obwód R1 bez zmian.
 - kicad-cli wypisuje „schemat posiada błędy numeracji” — dotyczy oznaczenia `J_BP` bez numeru (nazwa z zadania, jak w P02 R4); ERC tego nie zgłasza.
@@ -72,9 +72,9 @@ Szyny stoją tylko obok GND, innej szyny albo linii za 10 kΩ, która nie jest w
 
 ## Otwarte punkty
 
-- **MPN bocznika:** WSK2512R0050FEA — moc, TCR i wymiary pól z karty Vishay do potwierdzenia lokalnie (karta zablokowana w chmurze). Footprint KiCada podaje dla 5–200 mΩ końcówkę T = 1,19 mm. Bourns CSS2H-2512K-5L00F ma inny układ pól: przy zamianie nowy footprint (kontrola `RSH1-KELVIN-2512` czyta geometrię).
+- **MPN bocznika (sprawdzone lokalnie 1.10):** kod **WSK25125L000FEA** (karta 30108: poniżej 0,01 Ω wartość z literą L, więc „R0050” z pierwszej wersji nie jest kodem); 1,0 W przy 70 °C, TCR ±35 ppm/K. Pola pomiarowe według tabeli karty 1,70 mm (biblioteka KiCada 1,40 mm) — footprint lokalny. Bourns CSS2H-2512K-5L00F ma inny układ pól: przy zamianie nowy footprint (kontrola `RSH1-KELVIN-2512` czyta geometrię).
 - **MPN przełącznika BYPASS:** wymagania w `docs/ZAKUPY.md`; zakup po akceptacji. Numery oczek sprawdzić omomierzem (ODBIOR E03).
-- **R21:** PR02 2 W leżący (propozycja) albo 2512 ≥ 1 W — do decyzji.
+- **R21:** PR02 2 W leżący — decyzja użytkownika 1.10 (THT zostaje).
 - **C1:** X7R 1206 (rozrzut τ większy niż PET) albo C0G/film SMD — do decyzji.
 - **Zapas z rejestru:** bilans w `docs/ZAKUPY.md`; z posiadanych THT P06 bierze tylko R11 47 kΩ (ostatnią sztukę po P02 R4 i P05 R3). Adaptery Kamami SO14/SOIC8 z przydziału P06 niepotrzebne (SOIC lutowane wprost).
 - **3V3_IO** jest na J_BP.14 bez odbiorcy (jak w R1). Pin można zwolnić na GND, jeśli P12 nie potrzebuje tej szyny przy P06 — pytanie w PR.

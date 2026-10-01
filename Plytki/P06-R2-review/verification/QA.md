@@ -1,6 +1,6 @@
 # P06-R2 — QA schematu (plik generowany przez src/run_schematic.py)
 
-ERC: 0 naruszeń na 7 arkuszach. Netlista: 74 części, 245 pinów sprawdzonych pin po pinie względem `parts.py`, 0 błędów, 56 sieci.
+ERC: 0 naruszeń na 7 arkuszach. Netlista: 74 części, 243 pinów sprawdzonych pin po pinie względem `parts.py`, 0 błędów, 54 sieci.
 
 Kontrole elektryczne (`verify_electrical.py`): 33/33 PASS; mutacje 30/30 wykrytych.
 Filtr: τ nominalnie 1200.9 µs (132.5 Hz), pasmo z tolerancją R 0,1 % i C1 X7R ±10 % / temperatura: 918–1388 µs. Dzielnik 1:2 w narożnikach (0,1 % + 25 ppm/K × 50 K): 0.498875–0.501125.
@@ -42,7 +42,7 @@ Kontrakt S1 (`verify_s1.py`): 27/27 PASS; mutacje 37/37 wykrytych przez kontrol�
 |---|---|---|
 | IF-JBP | PASS | R2: J1 LV06 + J2 ILOG -> J_BP (task ZADANIE-P06-S1 2). |
 | JBP-FUNCTIONS | PASS | Each J_BP signal reaches the same element as R1 J1/J2. |
-| IF-ISERIES | PASS |  |
+| IF-ISERIES | PASS | R2 local layout 1.10: 2 pads (R1 pads 3/4 were empty). |
 | INA-SOIC-PINS | PASS |  |
 | INA-GAIN-MPN | PASS |  |
 | KELVIN | PASS |  |

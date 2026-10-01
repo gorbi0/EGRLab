@@ -27,11 +27,11 @@ def check(c):
  def at(net):return {(r,p) for r,x in c.items() for p,n in x['pins'].items() if n==net}
  ok('JBP-FUNCTIONS',{('U5',5),('R10',1)}<=at('ADC_SCLK') and {('U5',2),('R8',2)}<=at('CS_ILOG_N') and ('R12',2) in at('ADC_DOUTA')
     and {('R19',2),('R20',1)}<=at('LOGGER_CURRENT_OK') and ('R6',1) in at('5V_SYS'),'Each J_BP signal reaches the same element as R1 J1/J2.')
- ok('IF-ISERIES',pins('J3',{1:'ECU_P1',2:'EGR_P1',3:'NC',4:'NC'}))
+ ok('IF-ISERIES',pins('J3',{1:'ECU_P1',2:'EGR_P1'}),'R2 local layout 1.10: 2 pads (R1 pads 3/4 were empty).')
  ok('INA-SOIC-PINS',pins('U1',{1:'INA_MINUS',2:'GND',3:'REF_BUF',4:'NC',5:'I_L_OUT',6:'5VA_P06',7:'REF_BUF',8:'INA_PLUS'}))
  ok('INA-GAIN-MPN',c['U1']['mpn']=='INA240A2EDRQ1' and 'SOIC-8' in c['U1']['fp'])
  ok('KELVIN',pins('RSH1',{1:'ECU_P1',2:'K_PLUS',3:'K_MINUS',4:'EGR_P1'}) and pair('R1','K_PLUS','INA_PLUS') and pair('R2','K_MINUS','INA_MINUS'))
- ok('SHUNT-VALUE',abs(val(c,'RSH1')-.005)<1e-10 and c['RSH1']['mpn'].startswith('WSK2512R0050') and 'WSK2512' in c['RSH1']['fp'],'R2: Kelvin SMD 2512 (pads 1/4 force, 2/3 sense; geometry checked in verify_s1.py).')
+ ok('SHUNT-VALUE',abs(val(c,'RSH1')-.005)<1e-10 and c['RSH1']['mpn'].startswith('WSK25125L000') and 'WSK2512' in c['RSH1']['fp'],'R2: Kelvin SMD 2512 (pads 1/4 force, 2/3 sense; geometry checked in verify_s1.py).')
  ok('INPUT-RESISTORS',val(c,'R1')==val(c,'R2')==10 and all(c[r]['mpn'].startswith('RT1206BR') for r in ['R1','R2']),'Matched 0.1 % thin film (Yageo RT ...BR... = 0.1 %).')
  ok('OPAMP-FEEDBACK',pins('U2',{1:'ADC_BUF',2:'ADC_BUF',3:'I_DIV',4:'GND',5:'REF25',6:'REF_BUF',7:'REF_BUF',8:'3V3_P06'}))
  ok('REF-PINS',pins('U10',{1:'GND',2:'REF25',3:'3V3_P06'}) and c['U10']['mpn']=='MCP1525-I/TO')

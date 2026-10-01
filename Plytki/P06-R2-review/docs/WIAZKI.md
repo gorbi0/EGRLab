@@ -6,7 +6,7 @@ Pinout zawsze według numerów; prostokątny pad oznacza pin 1. Długości międ
 
 | ID / PCB | Koniec P06 | Drugi koniec | Długość / materiał |
 |---|---|---|---|
-| W3 / J3 ISERIES | lutowane piny 1 i 2, otwory 2,4 mm | MSTB 2,5/4-ST-5,08 do P11/J_ISERIESA (pozycje 3/4 puste) — do potwierdzenia z P11 w S1 | 150 mm; 2 × linka 2,5 mm² (długość sprawdzić na makiecie stosu) |
+| W3 / J3 ISERIES | lutowane piny 1 i 2 (2 pola, od 1.10), otwory 2,4 mm | MSTB 2,5/4-ST-5,08 do P11/J_ISERIESA (pozycje 3/4 puste) — do potwierdzenia z P11 w S1 | 150 mm; 2 × linka 2,5 mm² (długość sprawdzić na makiecie stosu) |
 | W4 / J4 SW1-A | PTH 1/2, otwory 2,4 mm | lutowane do oczek SW1.2 / SW1.3, koszulki termokurczliwe | 100 mm; 2 × 2,5 mm² |
 | W5 / J5 SW1-B | PTH 1/2/3, otwory 1,1 mm | lutowane do SW1.4 / SW1.5 / SW1.6, osobny splot | 150 mm; 3 × AWG22 |
 

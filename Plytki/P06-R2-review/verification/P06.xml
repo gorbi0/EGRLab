@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <export version="E">
   <design>
-    <source>/home/user/EGRLab/Plytki/P06-R2-review/eda/P06.kicad_sch</source>
-    <date>2026-10-01T12:12:26</date>
+    <source>/home/tgorbacz/AI/Claude/EGRLab/.worktrees/p06-r2-pcb/Plytki/P06-R2-review/eda/P06.kicad_sch</source>
+    <date>2026-10-01T18:07:09</date>
     <tool>Eeschema 10.0.6</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
@@ -741,7 +741,7 @@
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
-      <libsource lib="P06" part="Conn_01x04" description=""/>
+      <libsource lib="P06" part="Conn_01x02" description=""/>
       <property name="MPN" value="Soldered harness"/>
       <property name="BaselineRef" value="J_ISERIESB"/>
       <property name="Sheetname" value="FORCE"/>
@@ -753,8 +753,6 @@
           <pins>
             <pin num="1"/>
             <pin num="2"/>
-            <pin num="3"/>
-            <pin num="4"/>
           </pins>
         </unit>
       </units>
@@ -841,17 +839,17 @@
     </comp>
     <comp ref="RSH1">
       <value>5m</value>
-      <footprint>Resistor_SMD:R_Shunt_Vishay_WSK2512_6332Metric_T1.19mm</footprint>
-      <datasheet>https://www.vishay.com/docs/30108/wsk.pdf</datasheet>
+      <footprint>P06:R_Shunt_Vishay_WSK2512_T1.19mm_SenseE1.70</footprint>
+      <datasheet>https://www.vishay.com/docs/30108/wsk2512.pdf</datasheet>
       <fields>
-        <field name="MPN">WSK2512R0050FEA (Vishay WSK2512, 5 mOhm 1%, 4-terminal; alt. Bourns CSS2H-2512K-5L00F - footprint differs)</field>
+        <field name="MPN">WSK25125L000FEA (Vishay WSK2512, 5 mOhm 1%, 1 W at 70 C, TCR +-35 ppm/K, 4-terminal; alt. Bourns CSS2H-2512K-5L00F - footprint differs)</field>
         <field name="BaselineRef">X24</field>
-        <field name="Footprint">Resistor_SMD:R_Shunt_Vishay_WSK2512_6332Metric_T1.19mm</field>
-        <field name="Datasheet">https://www.vishay.com/docs/30108/wsk.pdf</field>
+        <field name="Footprint">P06:R_Shunt_Vishay_WSK2512_T1.19mm_SenseE1.70</field>
+        <field name="Datasheet">https://www.vishay.com/docs/30108/wsk2512.pdf</field>
         <field name="Description"/>
       </fields>
       <libsource lib="P06" part="R_Shunt_2512_Kelvin" description=""/>
-      <property name="MPN" value="WSK2512R0050FEA (Vishay WSK2512, 5 mOhm 1%, 4-terminal; alt. Bourns CSS2H-2512K-5L00F - footprint differs)"/>
+      <property name="MPN" value="WSK25125L000FEA (Vishay WSK2512, 5 mOhm 1%, 1 W at 70 C, TCR +-35 ppm/K, 4-terminal; alt. Bourns CSS2H-2512K-5L00F - footprint differs)"/>
       <property name="BaselineRef" value="X24"/>
       <property name="Sheetname" value="FORCE"/>
       <property name="Sheetfile" value="FORCE.kicad_sch"/>
@@ -2312,21 +2310,6 @@
         <pin num="3" name="Pin_3" type="passive"/>
       </pins>
     </libpart>
-    <libpart lib="P06" part="Conn_01x04">
-      <fields>
-        <field name="Reference"/>
-        <field name="Value"/>
-        <field name="Footprint"/>
-        <field name="Datasheet"/>
-        <field name="Description"/>
-      </fields>
-      <pins>
-        <pin num="1" name="Pin_1" type="passive"/>
-        <pin num="2" name="Pin_2" type="passive"/>
-        <pin num="3" name="Pin_3" type="passive"/>
-        <pin num="4" name="Pin_4" type="passive"/>
-      </pins>
-    </libpart>
     <libpart lib="P06" part="Conn_01x07">
       <fields>
         <field name="Reference"/>
@@ -2918,28 +2901,22 @@
       <node ref="R22" pin="1" pintype="passive"/>
       <node ref="SW1" pin="5" pinfunction="B_5" pintype="passive"/>
     </net>
-    <net code="49" name="unconnected-(J3-Pin_3-Pad3)" class="Default">
-      <node ref="J3" pin="3" pinfunction="Pin_3_3" pintype="passive+no_connect"/>
-    </net>
-    <net code="50" name="unconnected-(J3-Pin_4-Pad4)" class="Default">
-      <node ref="J3" pin="4" pinfunction="Pin_4_4" pintype="passive+no_connect"/>
-    </net>
-    <net code="51" name="unconnected-(SW1A-A-Pad1)" class="Default">
+    <net code="49" name="unconnected-(SW1A-A-Pad1)" class="Default">
       <node ref="SW1" pin="1" pinfunction="A_1" pintype="passive+no_connect"/>
     </net>
-    <net code="52" name="unconnected-(U1B-NC-Pad4)" class="Default">
+    <net code="50" name="unconnected-(U1B-NC-Pad4)" class="Default">
       <node ref="U1" pin="4" pinfunction="NC_4" pintype="no_connect"/>
     </net>
-    <net code="53" name="unconnected-(U5-Pad11)" class="Default">
+    <net code="51" name="unconnected-(U5-Pad11)" class="Default">
       <node ref="U5" pin="11" pintype="tri_state+no_connect"/>
     </net>
-    <net code="54" name="unconnected-(U6-Pad11)" class="Default">
+    <net code="52" name="unconnected-(U6-Pad11)" class="Default">
       <node ref="U6" pin="11" pintype="tri_state+no_connect"/>
     </net>
-    <net code="55" name="unconnected-(U7-Pad8)" class="Default">
+    <net code="53" name="unconnected-(U7-Pad8)" class="Default">
       <node ref="U7" pin="8" pintype="output+no_connect"/>
     </net>
-    <net code="56" name="unconnected-(U7-Pad11)" class="Default">
+    <net code="54" name="unconnected-(U7-Pad11)" class="Default">
       <node ref="U7" pin="11" pintype="output+no_connect"/>
     </net>
   </nets>
