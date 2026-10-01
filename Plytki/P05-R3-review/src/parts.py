@@ -3,7 +3,6 @@ R2 header: All connector numbers preserve v6.1 / P03-R1 snapshot.
 R2 (review P5-02/P5-05, purchase list 2, P02 R4): R5 6.04K, R7 5.11K, R13 47K; U2 REF5025IDR; CH7 = VBAT_SENSE."""
 from cadlib import *
 import shutil,csv
-import make_custom_footprints
 FP=P/'eda/libraries/P05.pretty';FP.mkdir(parents=True,exist_ok=True);PARTS={}
 URL={k:v['url'] for k,v in json.loads((P/'reference/datasheets/sources.json').read_text()).items()}
 G='GND';V='3V3_DAQ';A5='5VA_P05';S5='5V_SYS'
@@ -42,10 +41,13 @@ def custom(name,units):
     s+=f'(pin {typ} line (at {side*(half+5.08)} {(h-2-j*2)*1.27} {0 if side==-1 else 180}) (length 5.08) (name {q(label)} (effects (font (size 1.0 1.0)))) (number "{n}" (effects (font (size 1 1)))))'
   s+=')'
  return parse(s+')')
-RFP=copyfp('Resistor_THT','R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal')
+# R3 (S1 1/4/9): owned THT parts from Zamowione/zamowione.csv where a surplus remains after P09 R2 and P10 R2 (docs/ZAKUPY.md):
+# resistors stand upright; everything new is SMD 1206. Exceptions: R1 1 W lying (power), C1 radial electrolytic, C12/C13 1210.
+RV=copyfp('Resistor_THT','R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical')
+R1206=copyfp('Resistor_SMD','R_1206_3216Metric_Pad1.30x1.75mm_HandSolder');C1206=copyfp('Capacitor_SMD','C_1206_3216Metric_Pad1.33x1.80mm_HandSolder')
+CMKT=localfp('C_TDK_B32529_L7.3_W2.5_P5');CMKS=localfp('C_WIMA_MKS2_1u100V_L7.2_W7.2_P5');CDISC=copyfp('Capacitor_THT','C_Disc_D5.0mm_W2.5mm_P5.00mm')
 RPOWER=copyfp('Resistor_THT','R_Axial_DIN0411_L9.9mm_D3.6mm_P15.24mm_Horizontal')
-C0603=copyfp('Capacitor_SMD','C_0603_1608Metric');C0805=copyfp('Capacitor_SMD','C_0805_2012Metric');C1210=copyfp('Capacitor_SMD','C_1210_3225Metric')
-R0805=copyfp('Resistor_SMD','R_0805_2012Metric')
+C1210=copyfp('Capacitor_SMD','C_1210_3225Metric')
 QFP=copyfp('Package_QFP','LQFP-64_10x10mm_P0.5mm');SO8=copyfp('Package_SO','SOIC-8_3.9x4.9mm_P1.27mm')
 SO14=copyfp('Package_SO','SOIC-14_3.9x8.7mm_P1.27mm');VSSOP8=copyfp('Package_SO','VSSOP-8_3x3mm_P0.65mm')
 DIP14=copyfp('Package_DIP','DIP-14_W7.62mm');DIP18=copyfp('Package_DIP','DIP-18_W7.62mm')
@@ -53,15 +55,27 @@ TO92=copyfp('Package_TO_SOT_THT','TO-92_Inline_Wide');DIO=copyfp('Diode_THT','D_
 CP=copyfp('Capacitor_THT','CP_Radial_D8.0mm_P3.50mm');RELAY=copyfp('Relay_THT','Relay_DPDT_Omron_G6K-2P-Y')
 TPFP=localfp('TestPad_1')
 SR=symbol('Device','R');SC=symbol('Device','C');SCP=symbol('Device','C_Polarized')
-def add(ref,src,sym,fp,value,mpn,pins,sheet,url='',note='',**extra):
- PARTS[ref]=dict(ref=ref,source_ref=src,symbol=sym,footprint=fp,display=value,value=value,mpn=mpn,pins={str(k):v for k,v in pins.items()},sheet=sheet,url=url,note=note,qty=1,on_board=True,**extra)
-def res(ref,src,value,ohms,a,b,sheet,tol=.01,smd=False,power=False):
- mpn=('MBB0207 precision metal film' if tol==.001 else 'metal film resistor')+f' {value} '+('0.1%' if tol==.001 else '1%')
- if smd:mpn='0805 1% 0.125W '+value
- add(ref,src,SR,R0805 if smd else RPOWER if power else RFP,value,mpn,{1:a,2:b},sheet,note=('1W minimum; pulse energy at turn-on >=6mJ. ' if power else '')+'One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.',ohms=ohms,tolerance=tol)
+REG='rejestr';NEW='nowe'
+def add(ref,src,sym,fp,value,mpn,pins,sheet,url='',note='',zrodlo=NEW,**extra):
+ PARTS[ref]=dict(ref=ref,source_ref=src,symbol=sym,footprint=fp,display=value,value=value,mpn=mpn,pins={str(k):v for k,v in pins.items()},sheet=sheet,url=url,note=note,qty=1,on_board=True,zrodlo=zrodlo,**extra)
+# Owned MF0207 (register 24.09: 47K x6, 4.7K x6; P01 is obsolete, P09 R2/P10 R2 use only 10K/100K).
+OWNED_R={'47K':'MF0207FTE-47K','4.7K':'MF0207FTE-4K7'}
+def res(ref,src,value,ohms,a,b,sheet,tol=.01,smd=False,power=False,tcr=None):
+ # tol 0.1 %: thin-film 1206. Window divider (tcr=10): Yageo RT1206BRB07 (0.1 %, 10 ppm/K); channel dividers (tcr=25): RT1206BRD07 (0.1 %, 25 ppm/K).
+ code=value.replace('.','K',1)[:-1] if value.endswith('K') and '.' in value else value
+ if power:add(ref,src,SR,RPOWER,value,'KNP01U-1R (1R 1W wirewound, body 3x9mm)',{1:a,2:b},sheet,note='1W minimum, lying (S1 1: power part); pulse energy at turn-on ~6mJ (470uF x 5V): pulse rating to be confirmed from the data sheet.',ohms=ohms,tolerance=tol)
+ elif tol==.001:
+  tcr=tcr or 25;mpn=('RT1206BRB07' if tcr==10 else 'RT1206BRD07')+code+'L'
+  add(ref,src,SR,R1206,value,mpn,{1:a,2:b},sheet,note=f'Thin film 1206, 0.1 %, {tcr} ppm/K (MPN proposal, data sheet/TME to confirm). One full-value resistor.',ohms=ohms,tolerance=tol,tcr_ppm=tcr)
+ elif value in OWNED_R:add(ref,src,SR,RV,value,OWNED_R[value]+' (Yageo MF0207 1% 0.6W, owned, standing)',{1:a,2:b},sheet,zrodlo=REG,ohms=ohms,tolerance=tol)
+ else:add(ref,src,SR,R1206,value,'RC1206FR-07'+code+'L',{1:a,2:b},sheet,ohms=ohms,tolerance=tol)
+# Owned capacitors used where electrically fine (not at AD7606B pins): film MKT 10n/100n, WIMA MKS2 1u, KEMET C0G 1n.
+OWNED_C={'C25':(CMKT,'B32529C1103J289 (TDK MKT 10n/100V, owned)'),'C26':(CMKT,'B32529C1103J289 (TDK MKT 10n/100V, owned)'),
+ 'C16':(CMKT,'B32529C1104J000 (TDK MKT 100n/100V, owned)'),'C17':(CMKT,'B32529C1104J000 (TDK MKT 100n/100V, owned)'),'C18':(CMKT,'B32529C1104J000 (TDK MKT 100n/100V, owned)'),
+ 'C2':(CMKS,'MKS2D041001K00JO00 (WIMA MKS2 1u/100V, owned)'),'C23':(CMKS,'MKS2D041001K00JO00 (WIMA MKS2 1u/100V, owned)'),'C32':(CDISC,'C320C102J1G5TA (KEMET C0G 1n, owned; lead pitch to check on the 1:1 print)')}
 def cap(ref,src,value,farads,a,b,sheet,large=False,small=False):
- fp=C0603 if small else C1210 if large else C0805
- add(ref,src,SC,fp,value,('C0G 50V 5% ' if farads<1e-9 else 'X7R 25V 10% ')+value,{1:a,2:b},sheet,farads=farads,note='1210: effective capacitance >=10uF at 4.4V required' if large else '')
+ if ref in OWNED_C:fp,mpn=OWNED_C[ref];add(ref,src,SC,fp,value,mpn,{1:a,2:b},sheet,zrodlo=REG,farads=farads);return
+ add(ref,src,SC,C1210 if large else C1206,value,('SMD 1206 C0G 50V 5% ' if farads<1e-9 else 'SMD 1206 X7R 25V 10% ')+value,{1:a,2:b},sheet,farads=farads,note='1210 exception: effective capacitance >=10uF at 4.4V (1206 22u does not reach it reliably)' if large else '')
 B=json.loads((P/'reference/baseline.json').read_text())
 def bp(src):return {k:(V if n=='3V3_IO' else n) for k,n in B[src]['pins'].items()}
 # ADC symbol specialised for hard-strapped serial software mode.
@@ -86,14 +100,14 @@ drv=custom('TBD62083APG',[( [(i,'IN'+str(i),'input') for i in range(1,9)]+[(9,'G
 dp=bp('U18');dp['1']='MEAS_PERMIT';dp['10']=S5
 add('U4','U18',drv,DIP18,'TBD62083APG','TBD62083APG',dp,'TAPS','https://toshiba.semicon-storage.com/us/semiconductor/product/linear-ics/transistor-arrays/detail.TBD62083APG.html','COM to coil supply. Inputs 2..8 tied low. Local diodes at coils.')
 hp=bp('U_READY');hp.update({'9':'MEAS_EN_P05','10':'DAQ_OK','8':'MEAS_PERMIT'})
-add('U5','U_READY',symbol('74xx','74LS08','SN74HC08N'),DIP14,'SN74HC08N','SN74HC08N',hp,'READY','https://www.ti.com/lit/ds/symlink/sn74hc08.pdf')
+add('U5','U_READY',symbol('74xx','74LS08','SN74HC08N'),DIP14,'SN74HC08N','SN74HC08N',hp,'READY','https://www.ti.com/lit/ds/symlink/sn74hc08.pdf','DIP14 in the owned precision socket (Kamami 648).',zrodlo=REG)
 sup=custom('MCP120_D_TO',[([(2,'VDD','power_in')],[(1,'RESET_N','open_collector'),(3,'VSS','power_in')])])
-for r,src,mpn in [('U6','U_SUP3','MCP120-300DI/TO'),('U7','U_SUP5','MCP120-450DI/TO')]:add(r,src,sup,TO92,mpn,mpn,bp(src),'READY',URL['MCP120.pdf'],'D bondout 1 reset, 2 VDD, 3 GND. Open drain.')
+for r,src,mpn in [('U6','U_SUP3','MCP120-300DI/TO'),('U7','U_SUP5','MCP120-450DI/TO')]:add(r,src,sup,TO92,mpn,mpn,bp(src),'READY',URL['MCP120.pdf'],'D bondout 1 reset, 2 VDD, 3 GND. Open drain.',zrodlo=REG)
 lvc=symbol('74xx','74LVC125','74LVC125AD')
 for ref,src,sh in [('U8','U_SUPBUF','READY'),('U9','U_RX1','DIG'),('U10','U_RX2','DIG'),('U11','U_TX','DIG')]:
  pp=bp(src)
  if ref=='U11':pp.update({'4':G,'5':'AD_BUSY_LOCAL','6':'ADC_BUSY'})
- add(ref,src,lvc,SO14,'74LVC125AD','74LVC125AD,118',pp,sh,URL['LVC125.pdf'],'Nexperia Ioff, soldered directly; no adapter.')
+ add(ref,src,lvc,SO14,'74LVC125AD','74LVC125AD,118',pp,sh,URL['LVC125.pdf'],'Nexperia Ioff, soldered directly; no adapter.',zrodlo=REG)
 add('U12','ADDED_LOCAL_LDO',symbol('Regulator_Linear','MCP1700x-330xxTO'),TO92,'MCP1700-3302E/TO','MCP1700-3302E/TO',{1:G,2:A5,3:V},'P05',URL['MCP1700.pdf'],'Local logic supply derived from ADC AVCC. R3: 3V3_IO does not enter P05.')
 # Supplies and reference; 470uF supports controlled switch-off, not a guarantee under hard shorts.
 res('R1','R_FILT','1R',1,S5,A5,'P05',power=True)
@@ -113,7 +127,7 @@ cap('C25','C_RAIL_LOW','10n',1e-8,'RAIL_LOW',G,'READY');cap('C26','C_RAIL_HIGH',
 for i,(src,val,n,a,b) in enumerate([
  ('R_RAIL_T','15K',15000,A5,'RAIL_SENSE'),('R_RAIL_B','10K',10000,'RAIL_SENSE',G),
  ('R_RAIL_LT','6.04K',6040,'REF_2V5','RAIL_LOW'),('R_RAIL_LB','20K',20000,'RAIL_LOW',G),
- ('R_RAIL_HT','5.11K',5110,'REF_2V5','RAIL_HIGH'),('R_RAIL_HB','24.9K',24900,'RAIL_HIGH',G)],3):res('R'+str(i),src,val,n,a,b,'READY',tol=.001)
+ ('R_RAIL_HT','5.11K',5110,'REF_2V5','RAIL_HIGH'),('R_RAIL_HB','24.9K',24900,'RAIL_HIGH',G)],3):res('R'+str(i),src,val,n,a,b,'READY',tol=.001,tcr=10)
 for i,(src,a,b) in enumerate([('R_RAIL_PULL','DAQ_RAIL_N',V),('R_U_SUP3','P05_SUP3_N',V),('R_SUP5_RAW','P05_SUP5_RAW',S5),('R_READY_PD','DAQ_OK',G)],9):res('R'+str(i),src,'10K',10000,a,b,'READY')
 # Digital defaults on both sides, remove baseline duplicate CS/MEAS pull resistors.
 # R2 (P5-05): R13 47K keeps the back-feed into an unpowered 3V3_DAQ through R13/R2 at ~0.07 V (10K: 0.30 V).
@@ -126,7 +140,7 @@ res('R26','ADDED_DOUT_DAMP','33R',33,'DOUT_SER','ADC_DOUTA','DIG',smd=True)
 res('R27','ADDED_BUSY_DAMP','33R',33,'BUSY_SER','ADC_BUSY','DIG',smd=True)
 for i in range(1,4):
  add(f'K{i}',f'KMEAS{i}',symbol('Relay','G6K-2'),RELAY,'G6K-2P-Y DC5','G6K-2P-Y DC5',bp(f'KMEAS{i}'),'TAPS',URL['G6K.pdf'],'THT replacement of same electrical G6K-2F-Y; contacts 3/6 common, 4/5 NO. 5V coil.')
- add(f'D{i}',f'D{i+3}',symbol('Device','D'),DIO,'1N4148','1N4148',{1:S5,2:'MEAS_COIL_LOW'},'TAPS','https://www.vishay.com/docs/81857/1n4148.pdf')
+ add(f'D{i}',f'D{i+3}',symbol('Device','D'),DIO,'1N4148','1N4148',{1:S5,2:'MEAS_COIL_LOW'},'TAPS','https://www.vishay.com/docs/81857/1n4148.pdf',zrodlo=REG)
 for i in range(1,6):cap(f'C{i+26}',f'CF{i}','220p',220e-12,f'ADC_CH{i}',G,'TAPS')
 for r,src,net in [('R28','RB1','ADC_CH1'),('R29','RB2','ADC_CH2')]:res(r,src,'100K',100000,net,G,'TAPS',tol=.001)
 res('R30','R_CH6_ZERO','10K',10000,'ADC_CH6',G,'AUX');cap('C32','CI_ADC','1n',1e-9,'ADC_CH6',G,'AUX')
@@ -135,9 +149,12 @@ res('R32','RB3','100K',100000,'ADC_CH7',G,'AUX',tol=.001);cap('C33','CF6','220p'
 res('R33','RA1','300K',300000,'AUX_HI','ADC_CH8','AUX',tol=.001)
 res('R34','RA3','100K',100000,'AUX_LO','ADC_CH8','AUX',tol=.001)
 res('R35','RB4','100K',100000,'ADC_CH8','AUX_SHUNT','AUX',tol=.001);cap('C34','CF7','220p',220e-12,'ADC_CH8',G,'AUX')
-# AUX range: gold DPDT switch, HI 2-1/5-4, LO 2-3/5-6; software profile selected separately.
-sw=symbol('Switch','SW_DPDT_x2','CK7201_DPDT')
-add('SW1','JP_AUX',sw,'P05:CK_7201SYCBE','AUX HI / LO','7201SYCBE',{1:'AUX_HI',2:'AUX_IN',3:'AUX_LO',4:G,5:'AUX_SHUNT',6:'NC'},'AUX','https://www.ckswitches.com/media/1394/7000toggle.pdf',note='DPDT gold contacts; manufacturer common 2/5. HI 2-1 + 5-4; LO 2-3 + 5-6. No live switching.')
+# AUX range (R3, decision 29.09 'ordinary switch'): C&K JS202011AQN, DPDT ON-ON slide, right angle (lever out of the board edge),
+# stock KiCad footprint Button_Switch_THT:SW_CK_JS202011AQN_DPDT_Angled (from the C&K JS drawing). Footprint rows: 1-2-3 at y=0,
+# 6-5-4 at y=3.3 (pin 6 opposite pin 1). A slider shorts each common (2, 5) to the terminal on the SAME side: position HI = 2-1 + 5-6,
+# LO = 2-3 + 5-4. So the R2 mapping (C&K 7201: HI 2-1 + 5-4) is mirrored on pole B: GND moves from pin 4 to pin 6, pin 4 is NC.
+sw=custom('SW_DPDT_JS202011',[([(2,'COM_A','passive')],[(1,'A_HI','passive'),(3,'A_LO','passive')]),([(5,'COM_B','passive')],[(6,'B_HI','passive'),(4,'B_LO','passive')])])
+add('SW1','JP_AUX',sw,copyfp('Button_Switch_THT','SW_CK_JS202011AQN_DPDT_Angled'),'AUX HI / LO','JS202011AQN',{1:'AUX_HI',2:'AUX_IN',3:'AUX_LO',4:'NC',5:'AUX_SHUNT',6:G},'AUX','https://www.ckswitches.com/media/1422/js.pdf',note='C&K JS DPDT ON-ON right angle. HI = 2-1 + 5-6 (shunt R35 to GND), LO = 2-3 + 5-4 (pin 4 open). Gold contacts and TME stock: to confirm before purchase. No live switching.')
 # Coax solder termination (panel BNC), anchors maintained. No high-frequency ground split.
 add('J6','J_AUX',symbol('Connector_Generic','Conn_01x02'),pigtail('PTH_AUX_2',2),'AUX / coax 50mm','insulated panel BNC + RG174 50mm',{1:'AUX_IN',2:G},'AUX',note='Panel BNC shell must connect to circuit GND; not an isolated differential input.')
 # R3 (format S1, decision 1.10.2026 variant B): J1 B2B DAQ, J2 LV05, J3 DAQOK and J5 VSENSE are replaced by two angled

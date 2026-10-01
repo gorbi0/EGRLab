@@ -3,7 +3,7 @@ U1;U1;AD7606BBSTZ;AD7606BBSTZ;1;Package_QFP:LQFP-64_10x10mm_P0.5mm;True;https://
 U2;U13;REF5025IDR;REF5025IDR;1;Package_SO:SOIC-8_3.9x4.9mm_P1.27mm;True;https://www.ti.com/lit/ds/symlink/ref5025.pdf;"Reference for rail window only; NOT ADC reference. High grade REF5025IDR (0.05 %, 3 ppm/K); REF5025AIDR is NOT equivalent. C24 1uF output (REF50xx: 1..50uF required)."
 U3;U6;TLV1702-Q1;TLV1702AQDGKRQ1;1;Package_SO:VSSOP-8_3x3mm_P0.65mm;True;https://www.ti.com/lit/ds/symlink/tlv1702-q1.pdf;
 U4;U18;TBD62083APG;TBD62083APG;1;Package_DIP:DIP-18_W7.62mm;True;https://toshiba.semicon-storage.com/us/semiconductor/product/linear-ics/transistor-arrays/detail.TBD62083APG.html;COM to coil supply. Inputs 2..8 tied low. Local diodes at coils.
-U5;U_READY;SN74HC08N;SN74HC08N;1;Package_DIP:DIP-14_W7.62mm;True;https://www.ti.com/lit/ds/symlink/sn74hc08.pdf;
+U5;U_READY;SN74HC08N;SN74HC08N;1;Package_DIP:DIP-14_W7.62mm;True;https://www.ti.com/lit/ds/symlink/sn74hc08.pdf;DIP14 in the owned precision socket (Kamami 648).
 U6;U_SUP3;MCP120-300DI/TO;MCP120-300DI/TO;1;Package_TO_SOT_THT:TO-92_Inline_Wide;True;https://ww1.microchip.com/downloads/en/DeviceDoc/11184d.pdf;D bondout 1 reset, 2 VDD, 3 GND. Open drain.
 U7;U_SUP5;MCP120-450DI/TO;MCP120-450DI/TO;1;Package_TO_SOT_THT:TO-92_Inline_Wide;True;https://ww1.microchip.com/downloads/en/DeviceDoc/11184d.pdf;D bondout 1 reset, 2 VDD, 3 GND. Open drain.
 U8;U_SUPBUF;74LVC125AD;74LVC125AD,118;1;Package_SO:SOIC-14_3.9x8.7mm_P1.27mm;True;https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf;"Nexperia Ioff, soldered directly; no adapter."
@@ -11,107 +11,107 @@ U9;U_RX1;74LVC125AD;74LVC125AD,118;1;Package_SO:SOIC-14_3.9x8.7mm_P1.27mm;True;h
 U10;U_RX2;74LVC125AD;74LVC125AD,118;1;Package_SO:SOIC-14_3.9x8.7mm_P1.27mm;True;https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf;"Nexperia Ioff, soldered directly; no adapter."
 U11;U_TX;74LVC125AD;74LVC125AD,118;1;Package_SO:SOIC-14_3.9x8.7mm_P1.27mm;True;https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf;"Nexperia Ioff, soldered directly; no adapter."
 U12;ADDED_LOCAL_LDO;MCP1700-3302E/TO;MCP1700-3302E/TO;1;Package_TO_SOT_THT:TO-92_Inline_Wide;True;https://ww1.microchip.com/downloads/aemDocuments/documents/APID/ProductDocuments/DataSheets/MCP1700-Data-Sheet-20001826F.pdf;Local logic supply derived from ADC AVCC. R3: 3V3_IO does not enter P05.
-R1;R_FILT;1R;metal film resistor 1R 1%;1;Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P15.24mm_Horizontal;True;;"1W minimum; pulse energy at turn-on >=6mJ. One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K."
+R1;R_FILT;1R;KNP01U-1R (1R 1W wirewound, body 3x9mm);1;Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P15.24mm_Horizontal;True;;"1W minimum, lying (S1 1: power part); pulse energy at turn-on ~6mJ (470uF x 5V): pulse rating to be confirmed from the data sheet."
 C1;C_A;470u / 16V;EEUFR1C471;1;Capacitor_THT:CP_Radial_D8.0mm_P3.50mm;True;;"Panasonic FR, D8 x 11.5mm, pitch 3.5mm; 20%."
-C2;ADDED_LDO_IN;1u;X7R 25V 10% 1u;1;Capacitor_SMD:C_0805_2012Metric;True;;
-C3;ADDED_LDO_OUT;2.2u;X7R 25V 10% 2.2u;1;Capacitor_SMD:C_0805_2012Metric;True;;
-R2;ADDED_LDO_BLEED;1K;metal film resistor 1K 1%;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-C4;C_DEC_U1_1;100n;X7R 25V 10% 100n;1;Capacitor_SMD:C_0603_1608Metric;True;;
-C5;C_DEC_U1_37;100n;X7R 25V 10% 100n;1;Capacitor_SMD:C_0603_1608Metric;True;;
-C6;C_DEC_U1_38;100n;X7R 25V 10% 100n;1;Capacitor_SMD:C_0603_1608Metric;True;;
-C7;C_DEC_U1_48;100n;X7R 25V 10% 100n;1;Capacitor_SMD:C_0603_1608Metric;True;;
-C8;C_DEC_U1_23;100n;X7R 25V 10% 100n;1;Capacitor_SMD:C_0603_1608Metric;True;;
-C9;C_REGCAP_A;1u;X7R 25V 10% 1u;1;Capacitor_SMD:C_0805_2012Metric;True;;
-C10;C_REGCAP_D;1u;X7R 25V 10% 1u;1;Capacitor_SMD:C_0805_2012Metric;True;;
-C11;C_ADC_REF;100n;X7R 25V 10% 100n;1;Capacitor_SMD:C_0603_1608Metric;True;;
+C2;ADDED_LDO_IN;1u;MKS2D041001K00JO00 (WIMA MKS2 1u/100V, owned);1;P05:C_WIMA_MKS2_1u100V_L7.2_W7.2_P5;True;;
+C3;ADDED_LDO_OUT;2.2u;SMD 1206 X7R 25V 10% 2.2u;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;;
+R2;ADDED_LDO_BLEED;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;
+C4;C_DEC_U1_1;100n;SMD 1206 X7R 25V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;;
+C5;C_DEC_U1_37;100n;SMD 1206 X7R 25V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;;
+C6;C_DEC_U1_38;100n;SMD 1206 X7R 25V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;;
+C7;C_DEC_U1_48;100n;SMD 1206 X7R 25V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;;
+C8;C_DEC_U1_23;100n;SMD 1206 X7R 25V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;;
+C9;C_REGCAP_A;1u;SMD 1206 X7R 25V 10% 1u;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;;
+C10;C_REGCAP_D;1u;SMD 1206 X7R 25V 10% 1u;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;;
+C11;C_ADC_REF;100n;SMD 1206 X7R 25V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;;
 C12;ADDED_INTERNAL_REF_BULK;22u;C3225X7R1E226M250AB;1;Capacitor_SMD:C_1210_3225Metric;True;https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3225X7R1E226M250AB;22uF 25V X7R 20%, 1210. Ceff >=10uF including bias/tolerance/temperature: procurement acceptance, not yet measured.
 C13;C_REFCAP;22u;C3225X7R1E226M250AB;1;Capacitor_SMD:C_1210_3225Metric;True;https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C3225X7R1E226M250AB;22uF 25V X7R 20%, 1210. Ceff >=10uF including bias/tolerance/temperature: procurement acceptance, not yet measured.
-C14;C_DEC_U2;100n;X7R 25V 10% 100n;1;Capacitor_SMD:C_0805_2012Metric;True;;
-C15;C_DEC_U3;100n;X7R 25V 10% 100n;1;Capacitor_SMD:C_0805_2012Metric;True;;
-C16;C_DEC_U5;100n;X7R 25V 10% 100n;1;Capacitor_SMD:C_0805_2012Metric;True;;
-C17;C_DEC_U6;100n;X7R 25V 10% 100n;1;Capacitor_SMD:C_0805_2012Metric;True;;
-C18;C_DEC_U7;100n;X7R 25V 10% 100n;1;Capacitor_SMD:C_0805_2012Metric;True;;
-C19;C_DEC_U8;100n;X7R 25V 10% 100n;1;Capacitor_SMD:C_0805_2012Metric;True;;
-C20;C_DEC_U9;100n;X7R 25V 10% 100n;1;Capacitor_SMD:C_0805_2012Metric;True;;
-C21;C_DEC_U10;100n;X7R 25V 10% 100n;1;Capacitor_SMD:C_0805_2012Metric;True;;
-C22;C_DEC_U11;100n;X7R 25V 10% 100n;1;Capacitor_SMD:C_0805_2012Metric;True;;
-C23;C_REF_IN;1u;X7R 25V 10% 1u;1;Capacitor_SMD:C_0805_2012Metric;True;;
-C24;C_REF_OUT;1u;X7R 25V 10% 1u;1;Capacitor_SMD:C_0805_2012Metric;True;;
-C25;C_RAIL_LOW;10n;X7R 25V 10% 10n;1;Capacitor_SMD:C_0805_2012Metric;True;;
-C26;C_RAIL_HIGH;10n;X7R 25V 10% 10n;1;Capacitor_SMD:C_0805_2012Metric;True;;
-R3;R_RAIL_T;15K;MBB0207 precision metal film 15K 0.1%;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-R4;R_RAIL_B;10K;MBB0207 precision metal film 10K 0.1%;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-R5;R_RAIL_LT;6.04K;MBB0207 precision metal film 6.04K 0.1%;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-R6;R_RAIL_LB;20K;MBB0207 precision metal film 20K 0.1%;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-R7;R_RAIL_HT;5.11K;MBB0207 precision metal film 5.11K 0.1%;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-R8;R_RAIL_HB;24.9K;MBB0207 precision metal film 24.9K 0.1%;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-R9;R_RAIL_PULL;10K;metal film resistor 10K 1%;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-R10;R_U_SUP3;10K;metal film resistor 10K 1%;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-R11;R_SUP5_RAW;10K;metal film resistor 10K 1%;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-R12;R_READY_PD;10K;metal film resistor 10K 1%;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-R13;R_EXT_ADC_CS;47K;metal film resistor 47K 1%;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-R14;R_EXT_ADC_SCLK;10K;metal film resistor 10K 1%;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-R15;R_EXT_ADC_SDI;10K;metal film resistor 10K 1%;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-R16;R_EXT_ADC_CONVST;10K;metal film resistor 10K 1%;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-R17;R_EXT_ADC_RESET;10K;metal film resistor 10K 1%;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-R18;R_EXT_MEAS_EN;10K;metal film resistor 10K 1%;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-R19;R_LOCAL_ADC_CS_P05;10K;metal film resistor 10K 1%;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-R20;R_LOCAL_ADC_SCLK_P05;10K;metal film resistor 10K 1%;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-R21;R_LOCAL_ADC_SDI_P05;10K;metal film resistor 10K 1%;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-R22;R_LOCAL_ADC_CONVST_P05;10K;metal film resistor 10K 1%;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-R23;R_LOCAL_ADC_RESET_P05;10K;metal film resistor 10K 1%;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-R24;R_LOCAL_MEAS_EN_P05;10K;metal film resistor 10K 1%;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-R25;ADDED_MEAS_PERMIT_PD;10K;metal film resistor 10K 1%;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-R26;ADDED_DOUT_DAMP;33R;0805 1% 0.125W 33R;1;Resistor_SMD:R_0805_2012Metric;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-R27;ADDED_BUSY_DAMP;33R;0805 1% 0.125W 33R;1;Resistor_SMD:R_0805_2012Metric;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
+C14;C_DEC_U2;100n;SMD 1206 X7R 25V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;;
+C15;C_DEC_U3;100n;SMD 1206 X7R 25V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;;
+C16;C_DEC_U5;100n;B32529C1104J000 (TDK MKT 100n/100V, owned);1;P05:C_TDK_B32529_L7.3_W2.5_P5;True;;
+C17;C_DEC_U6;100n;B32529C1104J000 (TDK MKT 100n/100V, owned);1;P05:C_TDK_B32529_L7.3_W2.5_P5;True;;
+C18;C_DEC_U7;100n;B32529C1104J000 (TDK MKT 100n/100V, owned);1;P05:C_TDK_B32529_L7.3_W2.5_P5;True;;
+C19;C_DEC_U8;100n;SMD 1206 X7R 25V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;;
+C20;C_DEC_U9;100n;SMD 1206 X7R 25V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;;
+C21;C_DEC_U10;100n;SMD 1206 X7R 25V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;;
+C22;C_DEC_U11;100n;SMD 1206 X7R 25V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;;
+C23;C_REF_IN;1u;MKS2D041001K00JO00 (WIMA MKS2 1u/100V, owned);1;P05:C_WIMA_MKS2_1u100V_L7.2_W7.2_P5;True;;
+C24;C_REF_OUT;1u;SMD 1206 X7R 25V 10% 1u;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;;
+C25;C_RAIL_LOW;10n;B32529C1103J289 (TDK MKT 10n/100V, owned);1;P05:C_TDK_B32529_L7.3_W2.5_P5;True;;
+C26;C_RAIL_HIGH;10n;B32529C1103J289 (TDK MKT 10n/100V, owned);1;P05:C_TDK_B32529_L7.3_W2.5_P5;True;;
+R3;R_RAIL_T;15K;RT1206BRB0715KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;Thin film 1206, 0.1 %, 10 ppm/K (MPN proposal, data sheet/TME to confirm). One full-value resistor.
+R4;R_RAIL_B;10K;RT1206BRB0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;Thin film 1206, 0.1 %, 10 ppm/K (MPN proposal, data sheet/TME to confirm). One full-value resistor.
+R5;R_RAIL_LT;6.04K;RT1206BRB076K04L;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;Thin film 1206, 0.1 %, 10 ppm/K (MPN proposal, data sheet/TME to confirm). One full-value resistor.
+R6;R_RAIL_LB;20K;RT1206BRB0720KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;Thin film 1206, 0.1 %, 10 ppm/K (MPN proposal, data sheet/TME to confirm). One full-value resistor.
+R7;R_RAIL_HT;5.11K;RT1206BRB075K11L;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;Thin film 1206, 0.1 %, 10 ppm/K (MPN proposal, data sheet/TME to confirm). One full-value resistor.
+R8;R_RAIL_HB;24.9K;RT1206BRB0724K9L;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;Thin film 1206, 0.1 %, 10 ppm/K (MPN proposal, data sheet/TME to confirm). One full-value resistor.
+R9;R_RAIL_PULL;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;
+R10;R_U_SUP3;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;
+R11;R_SUP5_RAW;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;
+R12;R_READY_PD;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;
+R13;R_EXT_ADC_CS;47K;MF0207FTE-47K (Yageo MF0207 1% 0.6W, owned, standing);1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical;True;;
+R14;R_EXT_ADC_SCLK;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;
+R15;R_EXT_ADC_SDI;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;
+R16;R_EXT_ADC_CONVST;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;
+R17;R_EXT_ADC_RESET;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;
+R18;R_EXT_MEAS_EN;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;
+R19;R_LOCAL_ADC_CS_P05;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;
+R20;R_LOCAL_ADC_SCLK_P05;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;
+R21;R_LOCAL_ADC_SDI_P05;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;
+R22;R_LOCAL_ADC_CONVST_P05;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;
+R23;R_LOCAL_ADC_RESET_P05;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;
+R24;R_LOCAL_MEAS_EN_P05;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;
+R25;ADDED_MEAS_PERMIT_PD;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;
+R26;ADDED_DOUT_DAMP;33R;RC1206FR-0733RL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;
+R27;ADDED_BUSY_DAMP;33R;RC1206FR-0733RL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;
 K1;KMEAS1;G6K-2P-Y DC5;G6K-2P-Y DC5;1;Relay_THT:Relay_DPDT_Omron_G6K-2P-Y;True;https://components.omron.com/sites/default/files/datasheet_pdf/K106-E1.pdf;"THT replacement of same electrical G6K-2F-Y; contacts 3/6 common, 4/5 NO. 5V coil."
 D1;D4;1N4148;1N4148;1;Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal;True;https://www.vishay.com/docs/81857/1n4148.pdf;
 K2;KMEAS2;G6K-2P-Y DC5;G6K-2P-Y DC5;1;Relay_THT:Relay_DPDT_Omron_G6K-2P-Y;True;https://components.omron.com/sites/default/files/datasheet_pdf/K106-E1.pdf;"THT replacement of same electrical G6K-2F-Y; contacts 3/6 common, 4/5 NO. 5V coil."
 D2;D5;1N4148;1N4148;1;Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal;True;https://www.vishay.com/docs/81857/1n4148.pdf;
 K3;KMEAS3;G6K-2P-Y DC5;G6K-2P-Y DC5;1;Relay_THT:Relay_DPDT_Omron_G6K-2P-Y;True;https://components.omron.com/sites/default/files/datasheet_pdf/K106-E1.pdf;"THT replacement of same electrical G6K-2F-Y; contacts 3/6 common, 4/5 NO. 5V coil."
 D3;D6;1N4148;1N4148;1;Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal;True;https://www.vishay.com/docs/81857/1n4148.pdf;
-C27;CF1;220p;C0G 50V 5% 220p;1;Capacitor_SMD:C_0805_2012Metric;True;;
-C28;CF2;220p;C0G 50V 5% 220p;1;Capacitor_SMD:C_0805_2012Metric;True;;
-C29;CF3;220p;C0G 50V 5% 220p;1;Capacitor_SMD:C_0805_2012Metric;True;;
-C30;CF4;220p;C0G 50V 5% 220p;1;Capacitor_SMD:C_0805_2012Metric;True;;
-C31;CF5;220p;C0G 50V 5% 220p;1;Capacitor_SMD:C_0805_2012Metric;True;;
-R28;RB1;100K;MBB0207 precision metal film 100K 0.1%;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-R29;RB2;100K;MBB0207 precision metal film 100K 0.1%;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-R30;R_CH6_ZERO;10K;metal film resistor 10K 1%;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-C32;CI_ADC;1n;X7R 25V 10% 1n;1;Capacitor_SMD:C_0805_2012Metric;True;;
-R31;RV1;499K;MBB0207 precision metal film 499K 0.1%;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-R32;RB3;100K;MBB0207 precision metal film 100K 0.1%;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-C33;CF6;220p;C0G 50V 5% 220p;1;Capacitor_SMD:C_0805_2012Metric;True;;
-R33;RA1;300K;MBB0207 precision metal film 300K 0.1%;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-R34;RA3;100K;MBB0207 precision metal film 100K 0.1%;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-R35;RB4;100K;MBB0207 precision metal film 100K 0.1%;1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal;True;;One full-value resistor, no series substitution. Precision parts TCR <=25ppm/K.
-C34;CF7;220p;C0G 50V 5% 220p;1;Capacitor_SMD:C_0805_2012Metric;True;;
-SW1;JP_AUX;AUX HI / LO;7201SYCBE;1;P05:CK_7201SYCBE;True;https://www.ckswitches.com/media/1394/7000toggle.pdf;"DPDT gold contacts; manufacturer common 2/5. HI 2-1 + 5-4; LO 2-3 + 5-6. No live switching."
+C27;CF1;220p;SMD 1206 C0G 50V 5% 220p;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;;
+C28;CF2;220p;SMD 1206 C0G 50V 5% 220p;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;;
+C29;CF3;220p;SMD 1206 C0G 50V 5% 220p;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;;
+C30;CF4;220p;SMD 1206 C0G 50V 5% 220p;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;;
+C31;CF5;220p;SMD 1206 C0G 50V 5% 220p;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;;
+R28;RB1;100K;RT1206BRD07100KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;Thin film 1206, 0.1 %, 25 ppm/K (MPN proposal, data sheet/TME to confirm). One full-value resistor.
+R29;RB2;100K;RT1206BRD07100KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;Thin film 1206, 0.1 %, 25 ppm/K (MPN proposal, data sheet/TME to confirm). One full-value resistor.
+R30;R_CH6_ZERO;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;
+C32;CI_ADC;1n;"C320C102J1G5TA (KEMET C0G 1n, owned; lead pitch to check on the 1:1 print)";1;Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm;True;;
+R31;RV1;499K;RT1206BRD07499KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;Thin film 1206, 0.1 %, 25 ppm/K (MPN proposal, data sheet/TME to confirm). One full-value resistor.
+R32;RB3;100K;RT1206BRD07100KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;Thin film 1206, 0.1 %, 25 ppm/K (MPN proposal, data sheet/TME to confirm). One full-value resistor.
+C33;CF6;220p;SMD 1206 C0G 50V 5% 220p;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;;
+R33;RA1;300K;RT1206BRD07300KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;Thin film 1206, 0.1 %, 25 ppm/K (MPN proposal, data sheet/TME to confirm). One full-value resistor.
+R34;RA3;100K;RT1206BRD07100KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;Thin film 1206, 0.1 %, 25 ppm/K (MPN proposal, data sheet/TME to confirm). One full-value resistor.
+R35;RB4;100K;RT1206BRD07100KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;Thin film 1206, 0.1 %, 25 ppm/K (MPN proposal, data sheet/TME to confirm). One full-value resistor.
+C34;CF7;220p;SMD 1206 C0G 50V 5% 220p;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;;
+SW1;JP_AUX;AUX HI / LO;JS202011AQN;1;Button_Switch_THT:SW_CK_JS202011AQN_DPDT_Angled;True;https://www.ckswitches.com/media/1422/js.pdf;C&K JS DPDT ON-ON right angle. HI = 2-1 + 5-6 (shunt R35 to GND), LO = 2-3 + 5-4 (pin 4 open). Gold contacts and TME stock: to confirm before purchase. No live switching.
 J6;J_AUX;AUX / coax 50mm;insulated panel BNC + RG174 50mm;1;P05:PTH_AUX_2;True;;"Panel BNC shell must connect to circuit GND; not an isolated differential input."
 J_BP1;J_DAQOKB+J_VSENSEB+J_LV05B;J_BP1 / IDC 2x5;IDC header 2x5 2.54mm angled shrouded, Au;1;Connector_IDC:IDC-Header_2x05_P2.54mm_Horizontal;True;;"Edge A, slot S1 (centre x=26.5 mm), pin 1 towards smaller x. Odd pins GND; 5V_SYS x2 (S1 5), DAQ_OK (to P04, no consumer in LOGGER), pin 8 GND reserve separating VBAT_SENSE."
 J_BP2;J_DAQB;J_BP2 / IDC 2x10;IDC header 2x10 2.54mm angled shrouded, Au;1;Connector_IDC:IDC-Header_2x10_P2.54mm_Horizontal;True;;"Edge A, slot S2 (centre x=80.0 mm), pin 1 towards smaller x. DAQ pins = P03 R6 J_BP2; 16 and 20 GND reserve (P03: PFAIL_N, 5V_SYS - P12 must not join them)."
 J4;J_TAPSB;TAPS / PTH;5 pairs AWG24;1;P05:PTH_TAPS_12;True;;Wire, not P12 (S1 5): pairs from P11 soldered into PTH at the x=0 board edge, tie at 11.5..15mm.
-R36;ADDED_SERVICE_S1;1K;0805 1% 0.125W 1K;1;Resistor_SMD:R_0805_2012Metric;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
-R37;ADDED_SERVICE_S1;1K;0805 1% 0.125W 1K;1;Resistor_SMD:R_0805_2012Metric;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
-R38;ADDED_SERVICE_S1;1K;0805 1% 0.125W 1K;1;Resistor_SMD:R_0805_2012Metric;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
-R39;ADDED_SERVICE_S1;10K;0805 1% 0.125W 10K;1;Resistor_SMD:R_0805_2012Metric;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
-R40;ADDED_SERVICE_S1;10K;0805 1% 0.125W 10K;1;Resistor_SMD:R_0805_2012Metric;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
-R41;ADDED_SERVICE_S1;10K;0805 1% 0.125W 10K;1;Resistor_SMD:R_0805_2012Metric;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
-R42;ADDED_SERVICE_S1;10K;0805 1% 0.125W 10K;1;Resistor_SMD:R_0805_2012Metric;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
-R43;ADDED_SERVICE_S1;4.7K;0805 1% 0.125W 4.7K;1;Resistor_SMD:R_0805_2012Metric;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
-R44;ADDED_SERVICE_S1;1K;0805 1% 0.125W 1K;1;Resistor_SMD:R_0805_2012Metric;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
+R36;ADDED_SERVICE_S1;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
+R37;ADDED_SERVICE_S1;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
+R38;ADDED_SERVICE_S1;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
+R39;ADDED_SERVICE_S1;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
+R40;ADDED_SERVICE_S1;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
+R41;ADDED_SERVICE_S1;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
+R42;ADDED_SERVICE_S1;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
+R43;ADDED_SERVICE_S1;4.7K;MF0207FTE-4K7 (Yageo MF0207 1% 0.6W, owned, standing);1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
+R44;ADDED_SERVICE_S1;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
 J_SV1;SERVICE_S1;J_SV1 SERWIS 1x11;Pin header 1x11, 2.54 mm, right angle, Au;1;Connector_PinHeader_2.54mm:PinHeader_1x11_P2.54mm_Horizontal;True;;"Edge B, x=10..43 mm of the slot (S1); pins ~6 mm beyond the edge. Numbering always from pin 1 (angled strip seen from the top has pin 1 at LARGER x)."
-R45;ADDED_SERVICE_S2;1K;0805 1% 0.125W 1K;1;Resistor_SMD:R_0805_2012Metric;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
-R46;ADDED_SERVICE_S2;1K;0805 1% 0.125W 1K;1;Resistor_SMD:R_0805_2012Metric;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
-R47;ADDED_SERVICE_S2;1K;0805 1% 0.125W 1K;1;Resistor_SMD:R_0805_2012Metric;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
-R48;ADDED_SERVICE_S2;1K;0805 1% 0.125W 1K;1;Resistor_SMD:R_0805_2012Metric;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
-R49;ADDED_SERVICE_S2;1K;0805 1% 0.125W 1K;1;Resistor_SMD:R_0805_2012Metric;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
-R50;ADDED_SERVICE_S2;1K;0805 1% 0.125W 1K;1;Resistor_SMD:R_0805_2012Metric;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
-R51;ADDED_SERVICE_S2;1K;0805 1% 0.125W 1K;1;Resistor_SMD:R_0805_2012Metric;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
-R52;ADDED_SERVICE_S2;1K;0805 1% 0.125W 1K;1;Resistor_SMD:R_0805_2012Metric;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
-R53;ADDED_SERVICE_S2;10K;0805 1% 0.125W 10K;1;Resistor_SMD:R_0805_2012Metric;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
-R54;ADDED_SERVICE_S2;10K;0805 1% 0.125W 10K;1;Resistor_SMD:R_0805_2012Metric;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
-R55;ADDED_SERVICE_S2;1K;0805 1% 0.125W 1K;1;Resistor_SMD:R_0805_2012Metric;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
+R45;ADDED_SERVICE_S2;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
+R46;ADDED_SERVICE_S2;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
+R47;ADDED_SERVICE_S2;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
+R48;ADDED_SERVICE_S2;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
+R49;ADDED_SERVICE_S2;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
+R50;ADDED_SERVICE_S2;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
+R51;ADDED_SERVICE_S2;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
+R52;ADDED_SERVICE_S2;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
+R53;ADDED_SERVICE_S2;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
+R54;ADDED_SERVICE_S2;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
+R55;ADDED_SERVICE_S2;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.
 J_SV2;SERVICE_S2;J_SV2 SERWIS 1x13;Pin header 1x13, 2.54 mm, right angle, Au;1;Connector_PinHeader_2.54mm:PinHeader_1x13_P2.54mm_Horizontal;True;;"Edge B, x=10..43 mm of the slot (S2); pins ~6 mm beyond the edge. Numbering always from pin 1 (angled strip seen from the top has pin 1 at LARGER x)."
 TP1;ADDED_TESTPAD;GND;PCB test pad;1;P05:TestPad_1;True;;
 TP2;ADDED_TESTPAD;ADC_REF;PCB test pad;1;P05:TestPad_1;True;;
