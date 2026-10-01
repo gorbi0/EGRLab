@@ -1,4 +1,4 @@
-"""Szkic listy zakupowej 3 (1.10.2026): zapotrzebowanie płytek S1 z gotowym BOM-em (P02 R4, P03 R6, P09 R2, P10 R2)
+"""Szkic listy zakupowej 3 (1.10.2026): zapotrzebowanie płytek S1 z gotowym BOM-em (P02 R4, P03 R6, P09 R2, P10 R2, P05 R3, P06 R2)
 wobec rejestru `Zamowione/zamowione.csv`, z cenami TME z listy 2 (28.09) tam, gdzie pozycja się nie zmieniła.
 
 To nie jest zamówienie ani lista wiążąca: BOM-y P03/P09/P10 czekają na recenzję PR, P05/P06/P11 na rewizje S1,
@@ -17,7 +17,8 @@ ZRODLA = [  # płytka, gałąź, plik, format
     ('P03 R6', 'origin/p03-r6-pcb', 'Plytki/P03-R6-review/docs/zakupy.csv', 'zakupy'),
     ('P09 R2', 'origin/p09-r2-pcb', 'Plytki/P09-R2-review/docs/BOM.csv', 'bom'),
     ('P10 R2', 'origin/p10-r2-pcb', 'Plytki/P10-R2-review/docs/BOM.csv', 'bom'),
-    ('P05 R3', 'origin/p05-s1', 'Plytki/P05-R3-review/docs/BOM.csv', 'bom'),   # 1.10: schemat z PR #7 (poprawki lokalne), bez PCB
+    ('P05 R3', 'origin/p05-r3-pcb', 'Plytki/P05-R3-review/docs/BOM.csv', 'bom'),   # 1.10: schemat z PR #7 + PCB (uwagi grubości od spodu)
+    ('P06 R2', 'origin/p06-r2-pcb', 'Plytki/P06-R2-review/docs/BOM.csv', 'bom'),   # 1.10 wieczorem: schemat z PR #8 po przeglądzie + PCB
 ]
 PLYTKI = [z[0] for z in ZRODLA]
 DO_WYBORU = {  # klucz -> co wybrać (S1: typ nieustalony w BOM)
@@ -27,6 +28,8 @@ DO_WYBORU = {  # klucz -> co wybrać (S1: typ nieustalony w BOM)
     'GOLDPIN 1X13 KĄTOWY': 'typ do wyboru: kątowy goldpin 1×13 (posiadany 1×40 jest prosty); można ciąć z kątowego 1×40',
     'GOLDPIN 1X9 KĄTOWY': 'typ do wyboru: kątowy goldpin 1×9 (jak wyżej)',
     '100DP1T1B4M6RE': 'SW1 P05: E-Switch 100 DPDT ON-ON, kątowy M6 (decyzja 1.10); kod tulei (B4 bez gwintu / B3 z gwintem + H) i dostępność do potwierdzenia (Mouser)',
+    'GOLDPIN 1X7 KĄTOWY': 'typ do wyboru: kątowy goldpin 1×7 (P06 J_SV1); można ciąć z kątowego 1×40',
+    'BYPASS-DPDT-10A': 'SW1 P06 (panel, poza PCB): DPDT ON-ON >= 10 A DC 12-30 V, oczka lutownicze, tuleja z nakrętką; MPN do wyboru (P06 docs/ZAKUPY.md), NKK S6A nie kupować',
 }
 
 
@@ -55,6 +58,8 @@ def klucz(mpn, display, fp):
     if u.startswith('SMD 1206 X7R') or u.startswith('GRM31') or u.startswith('C1206C') or u.startswith('C3216'):
         if u.startswith('SMD'):
             v = u.split()[-1].replace('U', 'u').replace('N', 'n')
+            if re.fullmatch(r'\d+\.\d+[pnu]', v):   # P06: '4.7u' -> '4u7' (jak kody GRM)
+                v = v.replace('.', v[-1])[:-1]
         else:
             kod = re.search(r'(\d{3})[KMJ]', u[4:] if u.startswith('GRM31') else u)
             v = KOD_C.get(kod.group(1), kod.group(1)) if kod else d
@@ -73,6 +78,8 @@ def klucz(mpn, display, fp):
         return 'IDC 2X5 KĄTOWE', 'złącze IDC 2×5 kątowe obudowane, Au (J_BP)'
     if ('1X13' in u or '1X13' in f) and ('ANGLE' in u or 'HORIZONTAL' in f):
         return 'GOLDPIN 1X13 KĄTOWY', 'listwa goldpin 1×13 kątowa (listwa serwisowa)'
+    if ('1X7' in u or '1X07' in f) and ('ANGLE' in u or 'HORIZONTAL' in f):
+        return 'GOLDPIN 1X7 KĄTOWY', 'listwa goldpin 1×7 kątowa (listwa serwisowa)'
     if ('1X9' in u or '1X09' in f) and ('ANGLE' in u or 'HORIZONTAL' in f) and 'GOLDPIN' in u.replace('PIN HEADER', 'GOLDPIN'):
         return 'GOLDPIN 1X9 KĄTOWY', 'listwa goldpin 1×9 kątowa (listwa serwisowa)'
     if u.startswith('SOCKET 1X9'):
@@ -115,6 +122,7 @@ DODATKI = [  # części ukryte w opisach BOM (gniazda, dystanse, zworki) — jak
     ('P03 R6', 'TFF-M2.5X12/DR182', 'dystans poliamidowy M2,5 12 mm', 2, ['SD1']),
     # P09 R2: gniazda ZL262-9SG i dystanse M2,5 odpadły 1.10 (decyzja użytkownika: moduły MAX31856 lutowane wprost)
     ('P09 R2', 'JUMPER-KPL', 'zworka 2,54 (JP1/JP2; początkowo bez zwory)', 2, ['JP1', 'JP2']),
+    ('P06 R2', 'BYPASS-DPDT-10A', 'przełącznik BYPASS na panelu (w BOM P06 poza płytką)', 1, ['SW1']),
 ]
 UWAGI = {  # pozycje z rejestru albo posiadane, których BOM nie nazywa wprost
     'GOLDPIN 1X3 PROSTY': 'z posiadanej prostej listwy 1×40 (rejestr: Kamami 1207864, przydział z adapterami)',
@@ -178,7 +186,7 @@ with open(P / 'zakupy-3-szkic.csv', 'w', encoding='utf-8', newline='') as fh:
     w = csv.DictWriter(fh, fieldnames=list(wiersze[0]), delimiter=';'); w.writeheader(); w.writerows(wiersze)
 koszt = sum(float(w['tme_28_09'].split(': ')[1].split(' zł')[0].replace(',', '.')) * w['razem'] for w in wiersze if w['tme_28_09'] and (w['wniosek'].startswith('kupić') or 'dokupić' in w['wniosek']))
 L = [f"# Lista zakupowa 3 — SZKIC (płytki S1: {', '.join(PLYTKI)})", '',
-     '*1.10.2026, plik generowany przez `src/szkic.py`. Nie zamawiać: P09 R2, P10 R2 i P05 R3 scalone 1.10 (P05 bez PCB), P03 R6 po bieżącym trasowaniu, P06/P11 czekają na rewizje S1; '
+     '*1.10.2026, plik generowany przez `src/szkic.py`. Nie zamawiać: P09 R2, P10 R2 i P03 R6 scalone lokalnie 1.10, P05 R3 i P06 R2 z PCB na gałęziach (czekają na scalenie), P11 czeka na rewizję S1; '
      'ceny i stany TME są z listy 2 (28.09) i trzeba je sprawdzić w przeglądarce.*', '',
      f"Pozycji: {len(wiersze)}; do wyboru typu: {sum(1 for w in wiersze if w['klucz'] in DO_WYBORU)}; do kupienia: "
      f"{sum(1 for w in wiersze if w['wniosek'].startswith('kupić'))}; częściowo z rejestru: {sum(1 for w in wiersze if 'dokupić' in w['wniosek'])}; "
@@ -192,6 +200,6 @@ L += ['', '## Uwagi', '',
       '- „z rejestru” znaczy tylko, że w rejestrze jest tyle sztuk tej części. Część z nich mogła być przewidziana dla płytek spoza szkicu '
       '(P04, P05, P06, P08 — kolumna „kupione dla”); przydział ustalić przy liście wiążącej.',
       '- Rezystory i kondensatory 1206 bez MPN w BOM (P09/P10: „SMD 1206 …”) zgrupowane z tymi samymi wartościami P02/P03 (Yageo RC1206FR-07…, Murata GRM31).',
-      '- Poza szkicem: P00 R3 i P04 R2.2 (bez zmian względem listy 2), P05 R3 (schemat w toku), P06, P08, P11 (rewizje S1), przewody i drobne mechaniczne.']
+      '- Poza szkicem: P00 R3 i P04 R2.2 (bez zmian względem listy 2), P08 i P11 (rewizje S1), przewody i drobne mechaniczne (P06: końce wiązek J3 / J4 / J5 w docs/WIAZKI.md).']
 (P / 'ZAKUPY-3-SZKIC.md').write_text('\n'.join(L) + '\n', encoding='utf-8')
 print(f'{len(wiersze)} pozycji; koszt orientacyjny {koszt:.2f} zł')
