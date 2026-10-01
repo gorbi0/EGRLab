@@ -1,0 +1,168 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-01T09:46:41",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P10.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [RX_RAW] z R5 na F.Cu",
+                    "pos": {
+                        "x": 22.325,
+                        "y": 75.905
+                    },
+                    "uuid": "c9d0fefa-e68a-46d0-8941-29b0bf6cff5e"
+                },
+                {
+                    "description": "Ścieżka [RX_RAW] na F.Cu, długość 1,4374 mm",
+                    "pos": {
+                        "x": 22.325,
+                        "y": 62.4676
+                    },
+                    "uuid": "289da0d5-a8e2-46d1-b865-8673b0516d48"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci /CORE/SRV_RX_RAW oraz RX_RAW)",
+            "items": [
+                {
+                    "description": "Ścieżka [/CORE/SRV_RX_RAW] na F.Cu, długość 22,2400 mm",
+                    "pos": {
+                        "x": 22.325,
+                        "y": 89.245
+                    },
+                    "uuid": "4a7393f4-953c-4598-94db-529cafb2c6b9"
+                },
+                {
+                    "description": "Pole lutownicze 1 [RX_RAW] z R5 na F.Cu",
+                    "pos": {
+                        "x": 22.325,
+                        "y": 75.905
+                    },
+                    "uuid": "c9d0fefa-e68a-46d0-8941-29b0bf6cff5e"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/CORE/SRV_RX_RAW] na F.Cu, długość 22,2400 mm",
+                    "pos": {
+                        "x": 22.325,
+                        "y": 89.245
+                    },
+                    "uuid": "4a7393f4-953c-4598-94db-529cafb2c6b9"
+                },
+                {
+                    "description": "Pole lutownicze 1 [RX_RAW] z R5 na F.Cu",
+                    "pos": {
+                        "x": 22.325,
+                        "y": 75.905
+                    },
+                    "uuid": "c9d0fefa-e68a-46d0-8941-29b0bf6cff5e"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [/CORE/SRV_RX_RAW] na F.Cu, długość 22,2400 mm",
+                    "pos": {
+                        "x": 22.325,
+                        "y": 89.245
+                    },
+                    "uuid": "4a7393f4-953c-4598-94db-529cafb2c6b9"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [RX_RAW] na F.Cu, długość 1,4374 mm",
+                    "pos": {
+                        "x": 22.325,
+                        "y": 62.4676
+                    },
+                    "uuid": "289da0d5-a8e2-46d1-b865-8673b0516d48"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x09_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J2",
+                    "pos": {
+                        "x": 36.66,
+                        "y": 95.96
+                    },
+                    "uuid": "196ea6f0-a478-496a-9a48-7746ebde6821"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x05_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J1",
+                    "pos": {
+                        "x": 21.42,
+                        "y": 13.33
+                    },
+                    "uuid": "e20c3a48-c60e-4aea-a890-06c774a1a50a"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        }
+    ]
+}

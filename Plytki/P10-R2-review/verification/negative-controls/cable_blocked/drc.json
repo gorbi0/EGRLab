@@ -1,0 +1,145 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-01T09:47:13",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P10.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole lutownicze 2 [/CORE/SRV_3V3_IO] z R4 na F.Cu",
+                    "pos": {
+                        "x": 51.3,
+                        "y": 55.2
+                    },
+                    "uuid": "72fd3249-b08b-4e5c-b112-cc1fe3bd9edc"
+                },
+                {
+                    "description": "Ścieżka [/CORE/SRV_3V3_IO] na F.Cu, długość 30,4000 mm",
+                    "pos": {
+                        "x": 31.58,
+                        "y": 95.96
+                    },
+                    "uuid": "9c590958-9e5e-4e62-acc5-cf821ac91a89"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 3,2500 mm",
+                    "pos": {
+                        "x": 30.525,
+                        "y": 61.405
+                    },
+                    "uuid": "29417671-32aa-456d-8486-c10cb0cfff5a"
+                },
+                {
+                    "description": "Pole lutownicze 1 [3V3_IO] z R4 na F.Cu",
+                    "pos": {
+                        "x": 51.3,
+                        "y": 58.3
+                    },
+                    "uuid": "5e4074a5-ea31-4d9e-b066-a08953fbe189"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [/CORE/SRV_3V3_IO] na F.Cu, długość 1,4920 mm",
+                    "pos": {
+                        "x": 31.58,
+                        "y": 65.56
+                    },
+                    "uuid": "841c721b-93e3-4a62-b446-3e04e1ba7c38"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 3,2500 mm",
+                    "pos": {
+                        "x": 30.525,
+                        "y": 61.405
+                    },
+                    "uuid": "29417671-32aa-456d-8486-c10cb0cfff5a"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x09_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J2",
+                    "pos": {
+                        "x": 36.66,
+                        "y": 95.96
+                    },
+                    "uuid": "196ea6f0-a478-496a-9a48-7746ebde6821"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x05_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J1",
+                    "pos": {
+                        "x": 21.42,
+                        "y": 13.33
+                    },
+                    "uuid": "e20c3a48-c60e-4aea-a890-06c774a1a50a"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        }
+    ]
+}

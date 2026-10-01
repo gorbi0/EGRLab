@@ -1,0 +1,137 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-01T09:48:29",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P10.kicad_pcb",
+    "unconnected_items": [],
+    "violations": [
+        {
+            "description": "Naruszenie prześwitu ( prześwit 0,2500 mm; obecnie 0,1072 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [GND] na F.Cu, długość 0,2983 mm",
+                    "pos": {
+                        "x": 30.2734,
+                        "y": 55.5618
+                    },
+                    "uuid": "52d69b2e-3136-4a64-b110-14598476045d"
+                },
+                {
+                    "description": "Ścieżka [CAN_H] na F.Cu, długość 6,1283 mm",
+                    "pos": {
+                        "x": 35.0,
+                        "y": 55.0
+                    },
+                    "uuid": "90bf963f-a811-4e49-8b13-d5d62e107510"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz CAN_H)",
+            "items": [
+                {
+                    "description": "Przelotka [GND] na F.Cu - B.Cu",
+                    "pos": {
+                        "x": 30.2734,
+                        "y": 55.5618
+                    },
+                    "uuid": "5bfeb453-6662-4bd8-84f3-2127d1569151"
+                },
+                {
+                    "description": "Ścieżka [CAN_H] na F.Cu, długość 6,1283 mm",
+                    "pos": {
+                        "x": 35.0,
+                        "y": 55.0
+                    },
+                    "uuid": "90bf963f-a811-4e49-8b13-d5d62e107510"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0572 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [CAN_H] na F.Cu, długość 6,1283 mm",
+                    "pos": {
+                        "x": 35.0,
+                        "y": 55.0
+                    },
+                    "uuid": "90bf963f-a811-4e49-8b13-d5d62e107510"
+                },
+                {
+                    "description": "Przelotka [GND] na F.Cu - B.Cu",
+                    "pos": {
+                        "x": 30.2734,
+                        "y": 55.5618
+                    },
+                    "uuid": "5bfeb453-6662-4bd8-84f3-2127d1569151"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x09_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J2",
+                    "pos": {
+                        "x": 36.66,
+                        "y": 95.96
+                    },
+                    "uuid": "196ea6f0-a478-496a-9a48-7746ebde6821"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x05_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J1",
+                    "pos": {
+                        "x": 21.42,
+                        "y": 13.33
+                    },
+                    "uuid": "e20c3a48-c60e-4aea-a890-06c774a1a50a"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        }
+    ]
+}

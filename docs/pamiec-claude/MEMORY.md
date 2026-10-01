@@ -15,6 +15,7 @@
 - [P09 R2 state](p09-r2-state.md) — PCB TEMP w S1 gotowa do recenzji 30.09 wieczorem (DRC 0/0/0, PCB 22/22, próby 16/16) na p09-r2-pcb; łańcuch z P03 sparametryzowany (src/board.py); sporne: wysokość gniazda = limit, pin 1 J2
 - [P04 R1 review](p04-r1-review.md) — recenzja P04 Astry 26.09: bez blokera; MCP100-315→-300, watchdog tylko przez Q1, 3V3_IO bez ograniczenia; CORE_LINK 0R w moim P03
 - [P04 R2 state](p04-r2-state.md) — P04 R2 (Claude 26.09) → R2.1 Astry (zamknięta) → R2.2 (R17 10k, miedź = R2.1); paczka zamówieniowa R2.2 ZIP 1f7e9b84 (28.09)
+- [P10 R2 state](p10-r2-state.md) — PCB CAN w S1 (slot S3 poziomu 4, S1-3) gotowa do recenzji 30.09 wieczorem (DRC 0/0/0, PCB 21/21, próby 18/18) na p10-r2-pcb; J3 z kotwą przy ścianie wejść
 - [P05 R1 review](p05-r1-review.md) — recenzja P05 Astry 27–28.09: przed PCB odsprzęganie AD7606B + DOUT pod U1, okno DAQ_OK (R5 6,04k, R7 5,11k); karta AD7606B Rev. B lokalnie
 - [PCB fab: Satland](pcb-fab-satland.md) — Satland lub JLCPCB (najtaniej); 35 µm (decyzja: koszt), próba nagrzewania 5 A przed P07; Plytki/Zamowienie-Satland: P00, P01, P02, P04; skrypty pakowania z P04-PCB-R2.2-zamowienie/src; paczki S1 skryptami z P02-PCB-R4-zamowienie/src (obrys R, akceptacja przyciętego nadruku)
 - [Kaseta R1](kaseta-r1.md) — obudowa 29.09: LOGGER 361×209×151 mm, pełny 361×265×151; wiązki v6.1 do wydłużenia; J7 TAPS na P11 przenieść; kabina, nie komora silnika

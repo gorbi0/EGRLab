@@ -1,0 +1,389 @@
+{
+  "board": "/home/tgorbacz/AI/Claude/EGRLab/.worktrees/p10-r2-pcb/Plytki/P10-R2-review/verification/negative-controls/driver_far/P10.kicad_pcb",
+  "board_sha256": "c7755878b6b6351019261b24318a4932ea070bb1656aabec5145773058df4adc",
+  "checks": [
+    {
+      "check": "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "pass": false
+    },
+    {
+      "check": "20 on-board parts + 4 mounting holes, nothing else",
+      "pass": true
+    },
+    {
+      "check": "Every value, footprint ID and pad net equals the exported schematic netlist",
+      "pass": true
+    },
+    {
+      "check": "S1-2 section 4: parts on the bottom only SMD <= 1.5 mm, no SOIC (level 4), >= 1 mm from THT pads",
+      "pass": true
+    },
+    {
+      "check": "2 copper layers, 1.6 mm board (S1: FR4 1.6 mm)",
+      "pass": true
+    },
+    {
+      "check": "Both copper layers 35 um (S1)",
+      "pass": true
+    },
+    {
+      "check": "Outline class 1/3: 53.0 x 100.0 mm, 4 corner arcs R 1.0 mm (format-s1.json)",
+      "pass": true
+    },
+    {
+      "check": "M3 holes: 4 NPTH 3.2 mm exactly at the S1 positions (x_w_slocie + 53.5 k, y 14 / 86)",
+      "pass": true
+    },
+    {
+      "check": "Standoff zones D7: no courtyard and no copper (pads, tracks, vias, pours) within 3.5 mm of a hole centre; rule areas on both layers",
+      "pass": true
+    },
+    {
+      "check": "Rules as P02 R3 / R4 (clearance >= 0.25, track >= 0.30, edge 0.5) and annular ring >= 0.25 mm (S1 section 3); no DRC exclusions",
+      "pass": true
+    },
+    {
+      "check": "Every track >= 0.30 mm (S1 section 3)",
+      "pass": true
+    },
+    {
+      "check": "Every PTH pad and via has an annular ring >= 0.25 mm (measured on the copper)",
+      "pass": true
+    },
+    {
+      "check": "J1 = J_BP (edge A): IDC 2x5 angled, body front at y = 0, pin centre x = 26.5, pin 1 at the smaller x, pinout = docs/J_BP.csv (P12 contract)",
+      "pass": true
+    },
+    {
+      "check": "Service header J2 (edge B, S1 section 6): <= 13 pins in x 10..43, pins out ~6 mm, GND on both ends, one series resistor per pin of the value in docs/SERWIS.csv, <= 10 mm from its node, one silk label per pin with the name of its node (LABEL in silkscreen.py), GND at the ends",
+      "pass": true
+    },
+    {
+      "check": "Reserved strip of edge A (S1 §5: y 0-10, x 10-43 of each J_BP slot): no other part on either side; the edge-B zone of the service headers is reported only (S1 §6 gives the header position, not a reserved strip)",
+      "pass": true
+    },
+    {
+      "check": "Every part <= 16.5 mm above the board (level 4, S1 section 4; src/heights.py)",
+      "pass": true
+    },
+    {
+      "check": "J3 (OBD tail, W3) at the input wall: anchor holes towards x = 53.0 (12 mm from the solder row, hole edge 2-6 mm from the edge), pad 1 CAN_H at the smaller y, not in the edge A / B zones; no copper within 3 mm of the anchor-hole centres; no part under the cable between the anchor and the wall; D1 (PESD2CAN) pads <= 6 mm from the J3 pads and CAN_H / CAN_L pass through them to U1; other nets >= 1 mm from the J3 pads (hand-soldered wires)",
+      "pass": true
+    },
+    {
+      "check": "Decoupling at the IC pins: 100 nF pad <= 6 mm from its supply pin (C1 U1.3 VCC, C2 U1.5 VIO, C3 U2.14; limit as P03 R6 / P09 R2)",
+      "pass": true
+    },
+    {
+      "check": "Series resistor at its driver: R1 (100 R, CAN_RX to P03) pad <= 6 mm from U2.3",
+      "pass": false
+    },
+    {
+      "check": "GND pours on both layers: B.Cu >= 50 % of the board; island removal always (every island tied)",
+      "pass": true
+    },
+    {
+      "check": "Every visible reference outside the courtyards of other parts",
+      "pass": false
+    },
+    {
+      "check": "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)",
+      "pass": false
+    },
+    {
+      "check": "Pin 1 / polarity marks of module and wire connectors on the silkscreen, <= 3 mm from their pads (S1 §9; review 1.10)",
+      "pass": true
+    },
+    {
+      "check": "Silkscreen: board name \"P10 R2 S1-1/3 S3\", edge markers A and B",
+      "pass": true
+    }
+  ],
+  "details": {
+    "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)": {
+      "violations": 12,
+      "unconnected_items": 2,
+      "schematic_parity": 0,
+      "other_violations": 10,
+      "other_types": [
+        "courtyards_overlap",
+        "pth_inside_courtyard",
+        "shorting_items",
+        "silk_over_copper",
+        "silk_overlap",
+        "solder_mask_bridge",
+        "starved_thermal",
+        "track_dangling"
+      ],
+      "accepted_lib_mismatch": [
+        "J1",
+        "J2"
+      ]
+    },
+    "Every value, footprint ID and pad net equals the exported schematic netlist": {
+      "errors": [],
+      "pads": 74
+    },
+    "S1-2 section 4: parts on the bottom only SMD <= 1.5 mm, no SOIC (level 4), >= 1 mm from THT pads": {
+      "bottom_parts": {}
+    },
+    "Both copper layers 35 um (S1)": {
+      "F.Cu": 0.035,
+      "B.Cu": 0.035
+    },
+    "Outline class 1/3: 53.0 x 100.0 mm, 4 corner arcs R 1.0 mm (format-s1.json)": {
+      "bbox_line_centres": [
+        0.0,
+        0.0,
+        53.0,
+        100.0
+      ],
+      "arcs": 4,
+      "segments": 4
+    },
+    "M3 holes: 4 NPTH 3.2 mm exactly at the S1 positions (x_w_slocie + 53.5 k, y 14 / 86)": {
+      "want": [
+        [
+          4.0,
+          14.0
+        ],
+        [
+          4.0,
+          86.0
+        ],
+        [
+          49.0,
+          14.0
+        ],
+        [
+          49.0,
+          86.0
+        ]
+      ],
+      "got": [
+        [
+          4.0,
+          14.0
+        ],
+        [
+          4.0,
+          86.0
+        ],
+        [
+          49.0,
+          14.0
+        ],
+        [
+          49.0,
+          86.0
+        ]
+      ]
+    },
+    "Standoff zones D7: no courtyard and no copper (pads, tracks, vias, pours) within 3.5 mm of a hole centre; rule areas on both layers": {
+      "courtyards": [],
+      "copper": [],
+      "rule_areas": 4
+    },
+    "Every track >= 0.30 mm (S1 section 3)": [],
+    "Every PTH pad and via has an annular ring >= 0.25 mm (measured on the copper)": [],
+    "J1 = J_BP (edge A): IDC 2x5 angled, body front at y = 0, pin centre x = 26.5, pin 1 at the smaller x, pinout = docs/J_BP.csv (P12 contract)": {
+      "centre_x": 26.5,
+      "pin1": [
+        21.42,
+        13.33
+      ],
+      "fab_front_y": 0.0,
+      "pinout_equals_J_BP.csv": true
+    },
+    "Service header J2 (edge B, S1 section 6): <= 13 pins in x 10..43, pins out ~6 mm, GND on both ends, one series resistor per pin of the value in docs/SERWIS.csv, <= 10 mm from its node, one silk label per pin with the name of its node (LABEL in silkscreen.py), GND at the ends": {
+      "problems": [],
+      "pins": [
+        {
+          "pin": 2,
+          "node": "5V_SYS",
+          "resistor": "R3",
+          "value": "1K",
+          "node_dist_mm": 4.0,
+          "label": "5V_SYS",
+          "side": "F"
+        },
+        {
+          "pin": 3,
+          "node": "3V3_IO",
+          "resistor": "R4",
+          "value": "1K",
+          "node_dist_mm": 3.2,
+          "label": "3V3_IO",
+          "side": "F"
+        },
+        {
+          "pin": 4,
+          "node": "RX_RAW",
+          "resistor": "R5",
+          "value": "1K",
+          "node_dist_mm": 5.2,
+          "label": "RX_RAW",
+          "side": "F"
+        },
+        {
+          "pin": 5,
+          "node": "CAN_RX",
+          "resistor": "R6",
+          "value": "1K",
+          "node_dist_mm": 8.5,
+          "label": "CAN_RX",
+          "side": "F"
+        },
+        {
+          "pin": 6,
+          "node": "CAN_TX",
+          "resistor": "R7",
+          "value": "1K",
+          "node_dist_mm": 5.6,
+          "label": "CAN_TX",
+          "side": "F"
+        },
+        {
+          "pin": 7,
+          "node": "CAN_H",
+          "resistor": "R8",
+          "value": "10K",
+          "node_dist_mm": 4.1,
+          "label": "CAN_H",
+          "side": "F"
+        },
+        {
+          "pin": 8,
+          "node": "CAN_L",
+          "resistor": "R9",
+          "value": "10K",
+          "node_dist_mm": 7.8,
+          "label": "CAN_L",
+          "side": "F"
+        }
+      ]
+    },
+    "Reserved strip of edge A (S1 §5: y 0-10, x 10-43 of each J_BP slot): no other part on either side; the edge-B zone of the service headers is reported only (S1 §6 gives the header position, not a reserved strip)": {
+      "J1 (A)": {
+        "pas": [
+          10.0,
+          0.0,
+          43.0,
+          10.0
+        ],
+        "czesci": []
+      },
+      "J2 (B)": {
+        "pas": [
+          10.0,
+          90.0,
+          43.0,
+          100.0
+        ],
+        "czesci": []
+      }
+    },
+    "Every part <= 16.5 mm above the board (level 4, S1 section 4; src/heights.py)": {
+      "max": [
+        "J1",
+        9.2
+      ],
+      "over": {}
+    },
+    "J3 (OBD tail, W3) at the input wall: anchor holes towards x = 53.0 (12 mm from the solder row, hole edge 2-6 mm from the edge), pad 1 CAN_H at the smaller y, not in the edge A / B zones; no copper within 3 mm of the anchor-hole centres; no part under the cable between the anchor and the wall; D1 (PESD2CAN) pads <= 6 mm from the J3 pads and CAN_H / CAN_L pass through them to U1; other nets >= 1 mm from the J3 pads (hand-soldered wires)": {
+      "pad1_CAN_H": [
+        35.0,
+        55.0
+      ],
+      "pad2_CAN_L": [
+        35.0,
+        58.5
+      ],
+      "anchors": [
+        [
+          47.0,
+          51.5
+        ],
+        [
+          47.0,
+          62.0
+        ]
+      ],
+      "anchor_to_pads_mm": [
+        12.0,
+        12.0
+      ],
+      "anchor_hole_edge_to_wall_mm": 4.4,
+      "keepouts": 2,
+      "copper_in_keepouts": [],
+      "cable_strip": [
+        49.05,
+        53.0,
+        53.0,
+        60.5
+      ],
+      "parts_in_cable_strip": [],
+      "D1_pad_to_J3_pad_mm": {
+        "CAN_H": 3.17,
+        "CAN_L": 3.17
+      },
+      "through_D1": {
+        "CAN_H": true,
+        "CAN_L": true
+      },
+      "other_net_copper_to_J3_pads_mm": {
+        "J3.1": 1.27,
+        "J3.2": 1.27
+      }
+    },
+    "Decoupling at the IC pins: 100 nF pad <= 6 mm from its supply pin (C1 U1.3 VCC, C2 U1.5 VIO, C3 U2.14; limit as P03 R6 / P09 R2)": {
+      "C1-U1.3": 3.5,
+      "C2-U1.5": 2.75,
+      "C3-U2.14": 2.5
+    },
+    "Series resistor at its driver: R1 (100 R, CAN_RX to P03) pad <= 6 mm from U2.3": {
+      "R1-U2.3": 14.07
+    },
+    "GND pours on both layers: B.Cu >= 50 % of the board; island removal always (every island tied)": {
+      "cover_percent": {
+        "F.Cu": 79.5,
+        "B.Cu": 88.7
+      },
+      "islands": {
+        "F.Cu": 9,
+        "B.Cu": 1
+      }
+    },
+    "Every visible reference outside the courtyards of other parts": {
+      "R5": [
+        "R1"
+      ]
+    },
+    "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)": {
+      "R5": {
+        "own_mm": 1.02,
+        "nearest_other": "R1",
+        "other_mm": 0.42
+      }
+    },
+    "Pin 1 / polarity marks of module and wire connectors on the silkscreen, <= 3 mm from their pads (S1 §9; review 1.10)": {
+      "J3.1 H": [
+        "H"
+      ],
+      "J3.2 L": [
+        "L"
+      ]
+    },
+    "Silkscreen: board name \"P10 R2 S1-1/3 S3\", edge markers A and B": {
+      "title": [
+        "P10 R2 S1-1/3 S3"
+      ],
+      "marks": [
+        "KRAWEDZ B",
+        "KRAWEDZ A (P12)"
+      ]
+    }
+  },
+  "passed": 20,
+  "total": 24
+}

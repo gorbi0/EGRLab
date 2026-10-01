@@ -1,0 +1,313 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-01T09:47:32",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P10.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [/CORE/RX_BUF] z R1 na F.Cu",
+                    "pos": {
+                        "x": 25.846541,
+                        "y": 66.777246
+                    },
+                    "uuid": "d388a50e-e9ce-4553-84b7-5448ad864409"
+                },
+                {
+                    "description": "Ścieżka [/CORE/RX_BUF] na F.Cu, długość 0,2814 mm",
+                    "pos": {
+                        "x": 18.475,
+                        "y": 60.02
+                    },
+                    "uuid": "83197e32-b8a7-4c9f-b69d-4f9a679c9a10"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Ścieżka [/CORE/CAN_RX] na F.Cu, długość 1,4759 mm",
+                    "pos": {
+                        "x": 22.5694,
+                        "y": 65.62
+                    },
+                    "uuid": "38fb451f-c905-407c-a79b-ccb77daa0b29"
+                },
+                {
+                    "description": "Pole lutownicze 2 [/CORE/CAN_RX] z R1 na F.Cu",
+                    "pos": {
+                        "x": 25.846541,
+                        "y": 69.877246
+                    },
+                    "uuid": "b5aeaae3-4607-4010-b5ac-88df80c11fd9"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz /CORE/RX_BUF)",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [GND] na C2",
+                    "pos": {
+                        "x": 27.275,
+                        "y": 66.405
+                    },
+                    "uuid": "5903117f-7314-4122-af55-0000d8c5a056"
+                },
+                {
+                    "description": "Pole lutownicze 1 [/CORE/RX_BUF] z R1 na F.Cu",
+                    "pos": {
+                        "x": 25.846541,
+                        "y": 66.777246
+                    },
+                    "uuid": "d388a50e-e9ce-4553-84b7-5448ad864409"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint C2",
+                    "pos": {
+                        "x": 27.275,
+                        "y": 61.405
+                    },
+                    "uuid": "1c7d441e-f364-4fe8-91ee-ddcd19b0e8fc"
+                },
+                {
+                    "description": "Footprint R1",
+                    "pos": {
+                        "x": 25.846541,
+                        "y": 68.327246
+                    },
+                    "uuid": "9716a59e-fbd2-461f-b5f7-8d6dce19ecd5"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [GND] na C2",
+                    "pos": {
+                        "x": 27.275,
+                        "y": 66.405
+                    },
+                    "uuid": "5903117f-7314-4122-af55-0000d8c5a056"
+                },
+                {
+                    "description": "Footprint R1",
+                    "pos": {
+                        "x": 25.846541,
+                        "y": 68.327246
+                    },
+                    "uuid": "9716a59e-fbd2-461f-b5f7-8d6dce19ecd5"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "Niekompletne łączenie termiczne ze strefą (warstwa F.Cu; 1 łącz połączonych z izolowanym polem)",
+            "items": [
+                {
+                    "description": "Strefa [GND] na F.Cu, priorytet 0",
+                    "pos": {
+                        "x": 0.3,
+                        "y": 0.3
+                    },
+                    "uuid": "1645b2f3-c0ac-4c6e-81b0-45cd94a56a3a"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na C2",
+                    "pos": {
+                        "x": 27.275,
+                        "y": 66.405
+                    },
+                    "uuid": "5903117f-7314-4122-af55-0000d8c5a056"
+                }
+            ],
+            "severity": "error",
+            "type": "starved_thermal"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [GND] na C2",
+                    "pos": {
+                        "x": 27.275,
+                        "y": 66.405
+                    },
+                    "uuid": "5903117f-7314-4122-af55-0000d8c5a056"
+                },
+                {
+                    "description": "Pole lutownicze 1 [/CORE/RX_BUF] z R1 na F.Cu",
+                    "pos": {
+                        "x": 25.846541,
+                        "y": 66.777246
+                    },
+                    "uuid": "d388a50e-e9ce-4553-84b7-5448ad864409"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [/CORE/RX_BUF] na F.Cu, długość 0,2814 mm",
+                    "pos": {
+                        "x": 18.475,
+                        "y": 60.02
+                    },
+                    "uuid": "83197e32-b8a7-4c9f-b69d-4f9a679c9a10"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [/CORE/CAN_RX] na F.Cu, długość 2,5000 mm",
+                    "pos": {
+                        "x": 18.475,
+                        "y": 63.12
+                    },
+                    "uuid": "b87a3cfb-c13e-4496-b5d7-70dde0bbc26f"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x09_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J2",
+                    "pos": {
+                        "x": 36.66,
+                        "y": 95.96
+                    },
+                    "uuid": "196ea6f0-a478-496a-9a48-7746ebde6821"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x05_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J1",
+                    "pos": {
+                        "x": 21.42,
+                        "y": 13.33
+                    },
+                    "uuid": "e20c3a48-c60e-4aea-a890-06c774a1a50a"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment z C2 na F.Silkscreen",
+                    "pos": {
+                        "x": 25.905,
+                        "y": 66.525
+                    },
+                    "uuid": "f4617687-39e0-4202-be9c-4cd5166196fe"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment z C2 na F.Silkscreen",
+                    "pos": {
+                        "x": 26.242,
+                        "y": 66.525
+                    },
+                    "uuid": "e47618e1-76a7-4089-9d6b-9afea3beb306"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0943 mm)",
+            "items": [
+                {
+                    "description": "Segment z R1 na F.Silkscreen",
+                    "pos": {
+                        "x": 24.936541,
+                        "y": 67.600182
+                    },
+                    "uuid": "a0056785-d3bc-44aa-bb72-9c5717b399ac"
+                },
+                {
+                    "description": "Pole odnośnika do R5",
+                    "pos": {
+                        "x": 24.3,
+                        "y": 68.455
+                    },
+                    "uuid": "b4d73fd2-6442-44bc-906d-38bd11e86c3c"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        }
+    ]
+}

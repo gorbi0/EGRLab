@@ -24,7 +24,7 @@ qa = ['# P10-R2 — QA schematu (plik generowany przez src/run_schematic.py)', '
       f"ERC: {sc['erc_violations']} naruszeń na {sc['erc_sheets']} arkuszach. Netlista: {sc['components']} części, {sc['pin_checks']} pinów sprawdzonych pin po pinie względem `parts.py`, {len(sc['errors'])} błędów, {sc['nets']} sieci.", '',
       f"Kontrole elektryczne: {sum(c['pass'] for c in el['checks'])}/{len(el['checks'])} PASS. Próby ujemne: {sum(t['detected'] for t in neg if t['expected']=='detected')}/{sum(1 for t in neg if t['expected']=='detected')} mutacji wykrytych; próba zerowa (bez zmiany): {'czysta' if not neg[-1]['detected'] else 'NIECZYSTA'}.", '',
       '| Kontrola | Wynik |', '|---|---|'] + [f"| {c['id']} | {'PASS' if c['pass'] else 'FAIL'} |" for c in el['checks']] + ['', '## Próby ujemne', '', '| Mutacja | Oczekiwane | Wykryta | Zgłosiły kontrole |', '|---|---|---|---|'] + \
-     [f"| {t['mutation']} | {t['expected']} | {'tak' if t['detected'] else 'nie'} | {', '.join(t['by']) or '—'} |" for t in neg] + ['', 'Tylko schemat: PCB nie powstało (layout robi sesja lokalna). Kontrole nie zastępują odbioru na sprzęcie.']
+     [f"| {t['mutation']} | {t['expected']} | {'tak' if t['detected'] else 'nie'} | {', '.join(t['by']) or '—'} |" for t in neg] + ['', 'Schemat; PCB w README, sekcja „PCB” (layout 30.09–1.10.2026). Kontrole nie zastępują odbioru na sprzęcie.']
 (P / 'verification/QA.md').write_text('\n'.join(qa) + '\n', encoding='utf-8')
 files = sorted(p for d in ('eda', 'src', 'docs', 'output', 'reference') for p in (P / d).rglob('*') if p.is_file() and '__pycache__' not in p.parts)
 files += sorted(p for p in (P / 'verification').glob('*') if p.is_file() and p.name != 'manifest.json') + [P / 'README.md']

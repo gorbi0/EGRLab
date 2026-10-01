@@ -81,4 +81,4 @@ Kontrole elektryczne: 32/32 PASS. Próby ujemne: 36/36 mutacji wykrytych; próba
 | R1-value | detected | tak | PARTS-SOURCES, RES-R1 |
 | null-control (no change) | clean | nie | — |
 
-Tylko schemat: PCB nie powstało (layout robi sesja lokalna). Kontrole nie zastępują odbioru na sprzęcie.
+Schemat; PCB w README, sekcja „PCB” (layout 30.09–1.10.2026). Kontrole nie zastępują odbioru na sprzęcie.
