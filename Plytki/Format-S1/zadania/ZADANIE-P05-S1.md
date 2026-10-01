@@ -76,12 +76,9 @@ W README zapisać wymaganie dla layoutu: J4, J6 i SW1 od strony x = 0.
 
 ### 4. SW1 (AUX HI/LO)
 
-Decyzja z 29.09.2026: zamiast C&K 7201SYCBE zwykły przełącznik, ze zmianą footprintu. Wymagania:
-- DPDT ON-ON, styki jak w R2: wspólne 2/5, HI 2-1 + 5-4, LO 2-3 + 5-6;
-- montaż na PCB, karta katalogowa z rysunkiem wymiarowym, dostępny w TME;
-- styki złocone, jeśli seria je ma (sygnał analogowy małej mocy).
+Decyzja z 29.09.2026: zamiast C&K 7201SYCBE **E-Switch 100DP1T1B1M2REH** (Mouser 612-100-F1122). Ma złocone styki, nóżki do druku i korpus jak C&K 7201 (`docs/pamiec-claude/egrlab-purchasing-state.md`, baner `Plytki/Zakupy-2/ZAKUPY-2.md`). Styki jak w R2: wspólne 2/5, HI 2-1 + 5-4, LO 2-3 + 5-6 — sprawdzić z kartą E-Switch, a footprint wziąć z karty; rozstaw nóżek był „do potwierdzenia”. Dostęp do dźwigni (przez panel przy x = 0 albo od strony B) rozstrzygnie layout.
 
-Footprint wziąć z karty. Konkretny typ zaproponować w README i w pytaniach PR; zakup po akceptacji użytkownika. Dostęp do dźwigni (przez panel przy x = 0 albo od strony B) rozstrzygnie layout.
+(Poprawka 1.10.2026: pierwsza wersja zadania kazała zaproponować typ — decyzja już była.)
 
 ### 5. Listwy serwisowe (krawędź B, S1 §6)
 
@@ -125,7 +122,8 @@ J_SV1 (slot S1, x = 10–43 mm) i J_SV2 (slot S2, x = 63,5–96,5 mm): kątowy g
 - README:
   - tabela zmian R2 → R3 i liczby z kontroli;
   - wymagania dla layoutu: J4, J6 i SW1 od strony x = 0; J_BP2 w S2; odsprzęganie U1 według `Plytki/P05-R2-review/wip-layout-obrys-R1/` (opisy „Cx przy U1.nn” zostają);
-  - otwarte punkty: MPN SW1, MPN rezystorów precyzyjnych, zapas z rejestru.
+  - otwarte punkty: MPN rezystorów precyzyjnych, zapas z rejestru, rozstaw nóżek SW1 z karty;
+  - pojemność 5V_SYS: C1 470 µF za R1 1 Ω razem z P06 C3 (też 470 µF za 1 Ω) daje ok. 986 µF wobec 600 µF dopuszczalnych dla TSR 2-2450 (karta TRACO; `Plytki/P12-przygotowanie`, gałąź `p12-przygotowanie`). Nie zmieniać C1 bez decyzji użytkownika; zapisać jako otwarty punkt.
 
 ## Wynik
 
