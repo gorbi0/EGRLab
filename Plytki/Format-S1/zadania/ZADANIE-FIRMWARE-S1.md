@@ -35,16 +35,16 @@ Numery GPIO w `firmware/main/board.c` (v6.1) porównane z netlistą P03 R6 (`doc
 | F-08 | P10 R2 `docs/INTEGRACJA.md` | TWAI listen-only także przy sprzętowym S = H; brak TX. Odbiór w osobnym zadaniu opróżniającym kolejkę. Liczniki przepełnień RX i kolejki zdarzeń oraz błędów CAN w logu z czasem. Metadane: bitrate, listen-only, źródło czasu, profil CAN. Dekoder RPM (Mode01 PID0C, ID 0x7E8–0x7EF): kontrola DLC/ISO-TP, wybór jednego ECU, brak danych ≠ 0 rpm. | ODBIOR P10 „Ruch ciągły”: 10 min, liczba ramek w loggerze = we wzorcu. |
 | F-09 | `profiles/hardware.json` (schema 6) | Rewizje płytek S1 i interfejs zamiast „M2”: P02 R4, P03 R6, P05 R3, P09 R2, P10 R2 (P06, P11 po rewizjach). | Profil v6 bez zmian w znaczeniu kalibracji (README v6.1: nie wgrywać V5 jako V6). |
 
-## 3. Do decyzji użytkownika
+## 3. Decyzje użytkownika (1.10.2026)
 
-- **D-1:** kto i gdzie kompiluje (Codex z ESP-IDF na laptopie albo ESP-IDF w Dockerze na komputerze 24/7, ok. 3–5 GB) i numer wersji (np. 6.2-s1).
-- **D-2:** jak firmware rozpoznaje tryb tylko-USB (F-02). Propozycja: PFAIL_N = L od startu przez ≥ 100 ms → tryb stołowy bez zapisu sesji i bez TEST. Zbocze opadające po starcie z H to zawsze prawdziwy PFAIL.
-- **D-3:** napęd przy PFAIL_N. Propozycja: najpierw `board_emergency_stop()`, potem domknięcie pliku. P04 i tak rozbraja sprzętowo przez SAFE_N, ale firmware nie powinien zostawiać PWM aktywnego na czas podtrzymania.
+- **D-1 — przyjęte:** kompilacja ESP-IDF w Dockerze na komputerze 24/7 (ten sam wzorzec co `scripts/egrlab-docker`: najniższa waga CPU i limit rdzeni, bo Frigate ma pierwszeństwo; obraz ok. 3–5 GB). Wersja firmware: 6.2-s1.
+- **D-2 — przyjęte:** tryb tylko-USB (F-02) rozpoznawany po PFAIL_N = L od startu przez ≥ 100 ms → tryb stołowy bez zapisu sesji i bez TEST. Zbocze opadające po starcie z H to zawsze prawdziwy PFAIL.
+- **D-3 — przyjęte:** przy PFAIL_N najpierw `board_emergency_stop()`, potem domknięcie pliku. P04 i tak rozbraja sprzętowo przez SAFE_N, ale firmware nie zostawia PWM aktywnego na czas podtrzymania.
 
 ## 4. Kolejność
 
 1. Bez nowego sprzętu: F-07 (łata gotowa), F-08, F-09 i sprawdzenie F-03.
-2. Po decyzjach D-2 i D-3: F-01 i F-02.
+2. F-01 i F-02 (decyzje D-2 i D-3 przyjęte 1.10).
 3. Przy uruchamianiu P05: F-04 i F-05.
 4. Po rewizji S1 płytki P06: F-06.
 
