@@ -1,11 +1,11 @@
 # P05-R3 — QA schematu (plik generowany przez src/run_schematic.py)
 
-ERC: 0 naruszeń na 9 arkuszach. Netlista: 119 części, 464 pinów sprawdzonych pin po pinie względem `parts.py`, 0 błędów, 111 sieci.
+ERC: 0 naruszeń na 9 arkuszach. Netlista: 119 części, 466 pinów sprawdzonych pin po pinie względem `parts.py`, 0 błędów, 111 sieci.
 
 Kontrole elektryczne (`verify_electrical.py`): 21/21 PASS; mutacje 12/12 wykrytych.
 Okno DAQ_OK (10 ppm/K + 0,1 % na lutowanie/starzenie): dolny 4.7564–4.8445 V, górny 5.1414–5.2304 V.
 
-Kontrakt S1 (`verify_s1.py`): 24/24 PASS; mutacje 29/29 wykrytych przez kontrolę docelową; próba zerowa: czysta.
+Kontrakt S1 (`verify_s1.py`): 26/26 PASS; mutacje 33/33 wykrytych przez kontrolę docelową; próba zerowa: czysta.
 
 | Kontrola S1 | Wynik |
 |---|---|
@@ -19,13 +19,15 @@ Kontrakt S1 (`verify_s1.py`): 24/24 PASS; mutacje 29/29 wykrytych przez kontrol�
 | JBP-3V3_IO-ABSENT | PASS |
 | JBP-NO-TAPS-AUX | PASS |
 | J_SV1-MAX-13-PINS | PASS |
-| J_SV1-GND-ENDS-ONLY | PASS |
+| J_SV1-GND-ENDS | PASS |
 | J_SV1-SERIES-R-AT-NODE-CLASS | PASS |
 | J_SV1-GROUP | PASS |
+| J_SV1-RAILS-NEXT-TO-GND-OR-RAIL | PASS |
 | J_SV2-MAX-13-PINS | PASS |
-| J_SV2-GND-ENDS-ONLY | PASS |
+| J_SV2-GND-ENDS | PASS |
 | J_SV2-SERIES-R-AT-NODE-CLASS | PASS |
 | J_SV2-GROUP | PASS |
+| J_SV2-RAILS-NEXT-TO-GND-OR-RAIL | PASS |
 | SRV-EACH-NODE-ONCE | PASS |
 | SRV-COVERS-ODBIOR | PASS |
 | CSV-J_BP | PASS |
@@ -72,19 +74,23 @@ Kontrakt S1 (`verify_s1.py`): 24/24 PASS; mutacje 29/29 wykrytych przez kontrol�
 | DAQ_OK duplicated on reserve pin 20 | JBP-OLD-NETS-EXACTLY-ONCE | tak | JBP2-PINOUT, JBP-OLD-NETS-EXACTLY-ONCE, CSV-J_BP |
 | 3V3_IO brought back on reserve pin 8 | JBP-3V3_IO-ABSENT | tak | JBP1-PINOUT, JBP-OLD-NETS-EXACTLY-ONCE, JBP-3V3_IO-ABSENT, CSV-J_BP |
 | TAP_P1 routed to J_BP2 pin 16 | JBP-NO-TAPS-AUX | tak | JBP2-PINOUT, JBP-OLD-NETS-EXACTLY-ONCE, JBP-NO-TAPS-AUX, CSV-J_BP |
-| 14th pin on J_SV2 | J_SV2-MAX-13-PINS | tak | J_SV2-MAX-13-PINS, J_SV2-GND-ENDS-ONLY, J_SV2-SERIES-R-AT-NODE-CLASS, CSV-SERWIS |
+| 14th pin on J_SV2 | J_SV2-MAX-13-PINS | tak | J_SV2-MAX-13-PINS, CSV-SERWIS |
 | J_SV1 vertical header | J_SV1-MAX-13-PINS | tak | J_SV1-MAX-13-PINS |
-| first pin of J_SV1 not GND | J_SV1-GND-ENDS-ONLY | tak | J_SV1-GND-ENDS-ONLY, J_SV1-SERIES-R-AT-NODE-CLASS, CSV-SERWIS |
-| extra GND inside J_SV2 | J_SV2-GND-ENDS-ONLY | tak | J_SV2-GND-ENDS-ONLY, J_SV2-SERIES-R-AT-NODE-CLASS, SRV-COVERS-ODBIOR, CSV-SERWIS |
-| pin wired straight to the node (no resistor) | J_SV2-SERIES-R-AT-NODE-CLASS | tak | J_SV2-SERIES-R-AT-NODE-CLASS, SRV-COVERS-ODBIOR |
-| REF_2V5 through 1K instead of 10K | J_SV1-SERIES-R-AT-NODE-CLASS | tak | J_SV1-SERIES-R-AT-NODE-CLASS |
-| VBAT_SENSE through 1K instead of 4.7K | J_SV1-SERIES-R-AT-NODE-CLASS | tak | J_SV1-SERIES-R-AT-NODE-CLASS |
-| service resistor shorted | J_SV1-SERIES-R-AT-NODE-CLASS | tak | J_SV1-SERIES-R-AT-NODE-CLASS, SRV-COVERS-ODBIOR |
+| first pin of J_SV1 not GND | J_SV1-GND-ENDS | tak | J_SV1-GND-ENDS, J_SV1-SERIES-R-AT-NODE-CLASS, J_SV1-RAILS-NEXT-TO-GND-OR-RAIL, CSV-SERWIS |
+| last pin of J_SV2 not GND | J_SV2-GND-ENDS | tak | J_SV2-GND-ENDS, J_SV2-SERIES-R-AT-NODE-CLASS, CSV-SERWIS |
+| REF_2V5 next to 3V3_DAQ (pins 7 and 8 swapped) | J_SV1-RAILS-NEXT-TO-GND-OR-RAIL | tak | J_SV1-RAILS-NEXT-TO-GND-OR-RAIL, CSV-SERWIS |
+| VBAT_SENSE next to 5V_SYS (pins 2 and 3 swapped) | J_SV1-RAILS-NEXT-TO-GND-OR-RAIL | tak | J_SV1-RAILS-NEXT-TO-GND-OR-RAIL, CSV-SERWIS |
+| DAQ node on the analog strip | J_SV1-GROUP | tak | J_SV1-SERIES-R-AT-NODE-CLASS, J_SV1-GROUP, SRV-EACH-NODE-ONCE |
+| pin wired straight to the node (no resistor) | J_SV2-SERIES-R-AT-NODE-CLASS | tak | J_SV2-SERIES-R-AT-NODE-CLASS, SRV-COVERS-ODBIOR, CSV-SERWIS |
+| REF_2V5 through 1K instead of 10K | J_SV1-SERIES-R-AT-NODE-CLASS | tak | J_SV1-SERIES-R-AT-NODE-CLASS, CSV-SERWIS |
+| VBAT_SENSE through 1K instead of 4.7K | J_SV1-SERIES-R-AT-NODE-CLASS | tak | J_SV1-SERIES-R-AT-NODE-CLASS, CSV-SERWIS |
+| service resistor shorted | J_SV1-SERIES-R-AT-NODE-CLASS | tak | J_SV1-SERIES-R-AT-NODE-CLASS, J_SV1-RAILS-NEXT-TO-GND-OR-RAIL, SRV-COVERS-ODBIOR, CSV-SERWIS |
 | analog node on the DAQ strip | J_SV2-GROUP | tak | J_SV2-SERIES-R-AT-NODE-CLASS, J_SV2-GROUP, SRV-EACH-NODE-ONCE |
 | same node on both strips | SRV-EACH-NODE-ONCE | tak | J_SV2-SERIES-R-AT-NODE-CLASS, SRV-EACH-NODE-ONCE |
 | MEAS_COIL_LOW missing (resistor on a dead net) | SRV-COVERS-ODBIOR | tak | J_SV1-SERIES-R-AT-NODE-CLASS, J_SV1-GROUP, SRV-COVERS-ODBIOR |
 | J_BP.csv out of date (netlist moved MEAS_EN) | CSV-J_BP | tak | JBP2-PINOUT, JBP2-DAQ-PINS-AS-P03R6, CSV-J_BP |
 | SERWIS.csv out of date (strip order changed) | CSV-SERWIS | tak | CSV-SERWIS |
+| resistor value differs from SERWIS.csv (R45 10K) | CSV-SERWIS | tak | J_SV2-SERIES-R-AT-NODE-CLASS, CSV-SERWIS |
 | new resistor as 0805 | PARTS-S1-SOURCES | tak | PARTS-S1-SOURCES |
 | standing THT resistor not from the register | PARTS-S1-SOURCES | tak | PARTS-S1-SOURCES |
 | 1210 outside the C12/C13 exception | PARTS-S1-SOURCES | tak | PARTS-S1-SOURCES |

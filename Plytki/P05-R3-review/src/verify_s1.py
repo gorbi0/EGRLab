@@ -29,6 +29,8 @@ ODBIOR_MIN = {'5V_SYS', '5VA_P05', '3V3_DAQ', 'REF_2V5', 'DAQ_OK', 'MEAS_PERMIT'
 GROUP = {'J_SV1': {'5V_SYS', '5VA_P05', '3V3_DAQ', 'REF_2V5', 'RAIL_SENSE', 'RAIL_LOW', 'RAIL_HIGH', 'VBAT_SENSE', 'MEAS_COIL_LOW'},
          'J_SV2': {'ADC_CS', 'ADC_CONVST', 'ADC_BUSY', 'ADC_DOUTA', 'ADC_RESET', 'MEAS_EN', 'MEAS_PERMIT', 'DAQ_OK', 'DAQ_RAIL_N', 'P05_SUP3_N', 'P05_SUP5_N'}}
 SV_FP = 'Connector_PinHeader_2.54mm:PinHeader_1x{:02d}_P2.54mm_Horizontal'
+# 1.10 (local review; rule decided for P03 R6): a rail pin only next to GND or another rail; the pack-level VBAT_SENSE only next to GND
+RAILS = {'5V_SYS', '5VA_P05', '3V3_DAQ'}; PACK = {'VBAT_SENSE'}
 NEW_PARTS = {'J_BP1', 'J_BP2', 'J_SV1', 'J_SV2', *[f'TP{i}' for i in range(1, 6)], *[f'R{i}' for i in range(36, 56)]}
 SW1_R3 = {'4': 'NC', '6': G}                         # pole B mirrored for the JS202011AQN footprint (verify_electrical: geometry)
 # part sources (S1 1/4/9 + exceptions named in the task)
@@ -96,26 +98,39 @@ def check(c):
     for j in ('J_SV1', 'J_SV2'):
         s = pinmap(j); n = max(s)
         ok(j + '-MAX-13-PINS', sorted(s) == list(range(1, n + 1)) and n <= 13 and c[j]['fp'] == SV_FP.format(n))
-        ok(j + '-GND-ENDS-ONLY', s[1] == G and s[n] == G and [p for p, v in s.items() if v == G] == [1, n])
-        good = True; nodes = []
+        ok(j + '-GND-ENDS', s[1] == G and s[n] == G)   # 1.10: interior GND allowed (S1 6 asks for GND on the ends only)
+        good = True; nodes = []; node_at = {}
         for p in range(2, n):
-            net = s.get(p, 'NC'); m = members(net); rr = [r for r, q in m if r.startswith('R')]
+            net = s.get(p, 'NC')
+            if net == G:
+                continue                                       # 1.10: interior GND pin (probe ground next to rails)
+            m = members(net); rr = [r for r, q in m if r.startswith('R')]
             if len(rr) == 1:                                   # the node actually probed through this pin (independent of net names)
                 raw = c[rr[0]]['pins'].get('1') if (rr[0], '2') in m else c[rr[0]]['pins'].get('2')
-                nodes.append(raw); seen[raw] = seen.get(raw, 0) + 1
+                nodes.append(raw); seen[raw] = seen.get(raw, 0) + 1; node_at[p] = raw
             if not net.startswith('SRV_') or len(m) != 2 or len(rr) != 1 or (j, str(p)) not in m or (rr[0], '2') not in m: good = False; continue
             node = c[rr[0]]['pins'].get('1')
             if node != net[4:] or node not in OHM or abs(ohms(c[rr[0]]['value']) - OHM[node]) > 1e-6: good = False; continue
             if len(members(node)) < 3: good = False          # the node must exist beyond the service resistor
         ok(j + '-SERIES-R-AT-NODE-CLASS', good)
         ok(j + '-GROUP', set(nodes) <= GROUP[j], sorted(nodes))
+        nb = lambda q: G if s.get(q) == G else node_at.get(q)
+        bad_nb = [(p, node_at[p], q, nb(q)) for p in node_at for q in (p - 1, p + 1)
+                  if (node_at[p] in RAILS and not (nb(q) == G or nb(q) in RAILS)) or (node_at[p] in PACK and nb(q) != G)]
+        ok(j + '-RAILS-NEXT-TO-GND-OR-RAIL', not bad_nb, bad_nb)
     ok('SRV-EACH-NODE-ONCE', all(v == 1 for v in seen.values()), {k: v for k, v in seen.items() if v != 1})
     ok('SRV-COVERS-ODBIOR', ODBIOR_MIN <= set(seen), sorted(ODBIOR_MIN - set(seen)))
     # --- CSV contracts for P12 and the service strips ---
     jb = {(r['zlacze'], int(r['pin'])): r['siec'] for r in rows('J_BP.csv')}
     ok('CSV-J_BP', jb == {(j, p): n for j, m in both for p, n in m.items()})
     sv = {(r['zlacze'], int(r['pin'])): r['siec'] for r in rows('SERWIS.csv')}
-    ok('CSV-SERWIS', sv == {(j, p): (n[4:] if n.startswith('SRV_') else n) for j in ('J_SV1', 'J_SV2') for p, n in pinmap(j).items()})
+    # 1.10 (local review): the resistor column too - reference and value of the resistor that the netlist puts on that pin
+    rz = {(r['zlacze'], int(r['pin'])): r['rezystor'].split()[:2] for r in rows('SERWIS.csv') if r['rezystor'] != '-'}
+    def res_on(j, p):
+        rr = [r for r, q in members(pinmap(j)[p]) if r.startswith('R')]
+        return [rr[0], c[rr[0]]['value']] if len(rr) == 1 else None
+    ok('CSV-SERWIS', sv == {(j, p): (n[4:] if n.startswith('SRV_') else n) for j in ('J_SV1', 'J_SV2') for p, n in pinmap(j).items()}
+       and all(res_on(j, p) == v for (j, p), v in rz.items()) and set(rz) == {(j, p) for j in ('J_SV1', 'J_SV2') for p, n in pinmap(j).items() if n != G})
     # --- part sources ---
     bad = []
     for r, x in c.items():
@@ -165,9 +180,12 @@ if __name__ == '__main__':
          ('JBP-3V3_IO-ABSENT', '3V3_IO brought back on reserve pin 8', setp('J_BP1', 8, '3V3_IO')),
          ('JBP-NO-TAPS-AUX', 'TAP_P1 routed to J_BP2 pin 16', setp('J_BP2', 16, 'TAP_P1')),
          ('J_SV2-MAX-13-PINS', '14th pin on J_SV2', add_pin('J_SV2', 14, G)),
-         ('J_SV1-MAX-13-PINS', 'J_SV1 vertical header', setf('J_SV1', 'fp', 'Connector_PinHeader_2.54mm:PinHeader_1x11_P2.54mm_Vertical')),
-         ('J_SV1-GND-ENDS-ONLY', 'first pin of J_SV1 not GND', setp('J_SV1', 1, 'SRV_5V_SYS')),
-         ('J_SV2-GND-ENDS-ONLY', 'extra GND inside J_SV2', setp('J_SV2', 7, G)),
+         ('J_SV1-MAX-13-PINS', 'J_SV1 vertical header', setf('J_SV1', 'fp', 'Connector_PinHeader_2.54mm:PinHeader_1x13_P2.54mm_Vertical')),
+         ('J_SV1-GND-ENDS', 'first pin of J_SV1 not GND', setp('J_SV1', 1, 'SRV_5V_SYS')),
+         ('J_SV2-GND-ENDS', 'last pin of J_SV2 not GND', setp('J_SV2', 13, 'SRV_ADC_CS')),
+         ('J_SV1-RAILS-NEXT-TO-GND-OR-RAIL', 'REF_2V5 next to 3V3_DAQ (pins 7 and 8 swapped)', swap('J_SV1', 7, 8)),
+         ('J_SV1-RAILS-NEXT-TO-GND-OR-RAIL', 'VBAT_SENSE next to 5V_SYS (pins 2 and 3 swapped)', swap('J_SV1', 2, 3)),
+         ('J_SV1-GROUP', 'DAQ node on the analog strip', setp('R40', 1, 'DAQ_RAIL_N')),
          ('J_SV2-SERIES-R-AT-NODE-CLASS', 'pin wired straight to the node (no resistor)', setp('J_SV2', 2, 'ADC_CS')),
          ('J_SV1-SERIES-R-AT-NODE-CLASS', 'REF_2V5 through 1K instead of 10K', setf('R39', 'value', '1K')),
          ('J_SV1-SERIES-R-AT-NODE-CLASS', 'VBAT_SENSE through 1K instead of 4.7K', setf('R43', 'value', '1K')),
@@ -177,6 +195,7 @@ if __name__ == '__main__':
          ('SRV-COVERS-ODBIOR', 'MEAS_COIL_LOW missing (resistor on a dead net)', setp('R44', 1, 'NC')),
          ('CSV-J_BP', 'J_BP.csv out of date (netlist moved MEAS_EN)', swap('J_BP2', 14, 18)),
          ('CSV-SERWIS', 'SERWIS.csv out of date (strip order changed)', swap('J_SV2', 2, 3)),
+         ('CSV-SERWIS', 'resistor value differs from SERWIS.csv (R45 10K)', setf('R45', 'value', '10K')),
          ('PARTS-S1-SOURCES', 'new resistor as 0805', setf('R14', 'fp', 'Resistor_SMD:R_0805_2012Metric')),
          ('PARTS-S1-SOURCES', 'standing THT resistor not from the register', setf('R14', 'fp', R_STAND)),
          ('PARTS-S1-SOURCES', '1210 outside the C12/C13 exception', setf('C9', 'fp', 'Capacitor_SMD:C_1210_3225Metric')),

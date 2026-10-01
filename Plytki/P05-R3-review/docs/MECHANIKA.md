@@ -19,13 +19,13 @@ Strona wtyku równo z krawędzią, pin 1 od strony mniejszego x, pas y = 0–10 
 
 ## Krawędź B (y = 100) — listwy serwisowe
 
-J_SV1 (1 × 11) w slocie S1 (x = 10–43 mm), J_SV2 (1 × 13) w slocie S2 (x = 63,5–96,5 mm); goldpin kątowy, kołki ok. 6 mm za krawędzią. GND na pierwszym i ostatnim pinie. Rezystory szeregowe (1206 albo MF0207 na stojąco) **przy węźle**, nie przy listwie — tor od rezystora do kołka może być długi, bo po stronie kołka nie płynie prąd. Nadruk: nazwa sieci przy każdym kołku, czytelna od strony B. Pin 1 kątowej listwy widziany z góry leży przy większym x; layout może przestawić kołki według położenia węzłów — zmienia się wtedy tylko przydział w `SERWIS.csv` (i ponowna kontrola `verify_s1.py`).
+J_SV1 (1 × 13) w slocie S1 (x = 10–43 mm), J_SV2 (1 × 13) w slocie S2 (x = 63,5–96,5 mm); goldpin kątowy, kołki ok. 6 mm za krawędzią. GND na pierwszym i ostatnim pinie, na J_SV1 także na 3 i 7 (1.10: szyny obok GND i siebie, VBAT_SENSE między GND). Rezystory szeregowe (1206 albo MF0207 na stojąco) **przy węźle**, nie przy listwie — tor od rezystora do kołka może być długi, bo po stronie kołka nie płynie prąd. Nadruk: nazwa sieci przy każdym kołku, czytelna od strony B. Pin 1 kątowej listwy widziany z góry leży przy większym x; layout może przestawić kołki według położenia węzłów — w `src/parts.py` (listy SV1/SV2, `SV1_PIN`), potem `run_schematic.py`; zasadę sąsiedztwa szyn sprawdza `verify_s1.py`.
 
 ## Strona panelu (x = 0)
 
 J4 (TAPS, 5 par AWG24 z P11), J6 (AUX, RG174 do BNC na panelu) i SW1 stoją przy brzegu x = 0 — TAPS najkrótszą drogą (S1 §7). Pigtaile lutowane w PTH: otwory 1,1 mm, pady 2,2 mm, dwa otwory kotwy 3,2 mm 11,5 mm od pierwszego rzędu, opaska 2,5 mm na izolacji. Ekran AUX łączy się z GND na J6 (bez izolacji galwanicznej).
 
-SW1 **C&K JS202011AQN** (suwak DPDT ON-ON, kątowy, footprint KiCad `SW_CK_JS202011AQN_DPDT_Angled` z rysunku C&K JS): suwak wystaje za krawędź płytki. Dostęp przez otwór w panelu przy x = 0 albo od strony B rozstrzyga layout i makieta obudowy. Pozycje sprawdzić omomierzem (ODBIOR krok 13): HI = 2–1 + 5–6, LO = 2–3 + 5–4.
+SW1 — **typ do decyzji użytkownika** (README, punkty otwarte: E-Switch 100 kątowy M6 albo suwak); w schemacie **C&K JS202011AQN** (suwak DPDT ON-ON, kątowy, footprint KiCad `SW_CK_JS202011AQN_DPDT_Angled` z rysunku C&K JS): suwak wystaje za krawędź płytki. Dostęp przez otwór w panelu przy x = 0 albo od strony B rozstrzyga layout i makieta obudowy. Pozycje sprawdzić omomierzem (ODBIOR krok 13): HI = 2–1 + 5–6, LO = 2–3 + 5–4.
 
 ## Elementy wymagające szczególnej kontroli
 

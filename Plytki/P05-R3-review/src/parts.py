@@ -41,11 +41,11 @@ def custom(name,units):
     s+=f'(pin {typ} line (at {side*(half+5.08)} {(h-2-j*2)*1.27} {0 if side==-1 else 180}) (length 5.08) (name {q(label)} (effects (font (size 1.0 1.0)))) (number "{n}" (effects (font (size 1 1)))))'
   s+=')'
  return parse(s+')')
-# R3 (S1 1/4/9): owned THT parts from Zamowione/zamowione.csv where a surplus remains after P09 R2 and P10 R2 (docs/ZAKUPY.md):
+# R3 (S1 1/4/9): owned THT parts from Zamowione/zamowione.csv where a surplus remains after P02 R4, P09 R2 and P10 R2 (docs/ZAKUPY.md):
 # resistors stand upright; everything new is SMD 1206. Exceptions: R1 1 W lying (power), C1 radial electrolytic, C12/C13 1210.
 RV=copyfp('Resistor_THT','R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical')
 R1206=copyfp('Resistor_SMD','R_1206_3216Metric_Pad1.30x1.75mm_HandSolder');C1206=copyfp('Capacitor_SMD','C_1206_3216Metric_Pad1.33x1.80mm_HandSolder')
-CMKT=localfp('C_TDK_B32529_L7.3_W2.5_P5');CMKS=localfp('C_WIMA_MKS2_1u100V_L7.2_W7.2_P5');CDISC=copyfp('Capacitor_THT','C_Disc_D5.0mm_W2.5mm_P5.00mm')
+CDISC=copyfp('Capacitor_THT','C_Disc_D5.0mm_W2.5mm_P5.00mm')
 RPOWER=copyfp('Resistor_THT','R_Axial_DIN0411_L9.9mm_D3.6mm_P15.24mm_Horizontal')
 C1210=copyfp('Capacitor_SMD','C_1210_3225Metric')
 QFP=copyfp('Package_QFP','LQFP-64_10x10mm_P0.5mm');SO8=copyfp('Package_SO','SOIC-8_3.9x4.9mm_P1.27mm')
@@ -69,10 +69,10 @@ def res(ref,src,value,ohms,a,b,sheet,tol=.01,smd=False,power=False,tcr=None):
   add(ref,src,SR,R1206,value,mpn,{1:a,2:b},sheet,note=f'Thin film 1206, 0.1 %, {tcr} ppm/K (MPN proposal, data sheet/TME to confirm). One full-value resistor.',ohms=ohms,tolerance=tol,tcr_ppm=tcr)
  elif value in OWNED_R:add(ref,src,SR,RV,value,OWNED_R[value]+' (Yageo MF0207 1% 0.6W, owned, standing)',{1:a,2:b},sheet,zrodlo=REG,ohms=ohms,tolerance=tol)
  else:add(ref,src,SR,R1206,value,'RC1206FR-07'+code+'L',{1:a,2:b},sheet,ohms=ohms,tolerance=tol)
-# Owned capacitors used where electrically fine (not at AD7606B pins): film MKT 10n/100n, WIMA MKS2 1u, KEMET C0G 1n.
-OWNED_C={'C25':(CMKT,'B32529C1103J289 (TDK MKT 10n/100V, owned)'),'C26':(CMKT,'B32529C1103J289 (TDK MKT 10n/100V, owned)'),
- 'C16':(CMKT,'B32529C1104J000 (TDK MKT 100n/100V, owned)'),'C17':(CMKT,'B32529C1104J000 (TDK MKT 100n/100V, owned)'),'C18':(CMKT,'B32529C1104J000 (TDK MKT 100n/100V, owned)'),
- 'C2':(CMKS,'MKS2D041001K00JO00 (WIMA MKS2 1u/100V, owned)'),'C23':(CMKS,'MKS2D041001K00JO00 (WIMA MKS2 1u/100V, owned)'),'C32':(CDISC,'C320C102J1G5TA (KEMET C0G 1n, owned; lead pitch to check on the 1:1 print)')}
+# Owned capacitors used where electrically fine (not at AD7606B pins): KEMET C0G 1n. 1.10 (local review): P02 R4 (merged, ordered) also
+# draws on the P01 film stock (B32529 10n x1, 100n x2, MKS2 1u x1), so one piece of each is left against 2-3 needed here: C2, C23,
+# C16-C18, C25 and C26 are new SMD 1206 like the rest (the cloud task named only P09/P10 for the balance).
+OWNED_C={'C32':(CDISC,'C320C102J1G5TA (KEMET C0G 1n, owned; lead pitch to check on the 1:1 print)')}
 def cap(ref,src,value,farads,a,b,sheet,large=False,small=False):
  if ref in OWNED_C:fp,mpn=OWNED_C[ref];add(ref,src,SC,fp,value,mpn,{1:a,2:b},sheet,zrodlo=REG,farads=farads);return
  add(ref,src,SC,C1210 if large else C1206,value,('SMD 1206 C0G 50V 5% ' if farads<1e-9 else 'SMD 1206 X7R 25V 10% ')+value,{1:a,2:b},sheet,farads=farads,note='1210 exception: effective capacitance >=10uF at 4.4V (1206 22u does not reach it reliably)' if large else '')
@@ -173,13 +173,17 @@ SV1=[(S5,1000,'5V_SYS na P05 (krok 3: 4,93-5,07 V przy ok. 23 C)'),(A5,1000,'5VA
  ('REF_2V5',10000,'REF5025 (U2) dla okna DAQ_OK'),('RAIL_SENSE',10000,'dzielnik 5VA R3/R4 na wejsciach U3'),('RAIL_LOW',10000,'prog dolny okna (R5/R6, C25)'),('RAIL_HIGH',10000,'prog gorny okna (R7/R8, C26)'),
  ('VBAT_SENSE',4700,'akumulator auta z P02 R4 (do ok. 16 V), wejscie dzielnika CH7'),('MEAS_COIL_LOW',1000,'U4.18: VDS przy trzech cewkach <= 0,3 V (krok 10b)')]
 SV2=[('ADC_CS',1000,'CS po stronie J_BP (start: 1)'),('ADC_CONVST',1000,'CONVST po stronie J_BP (start: 0)'),('ADC_BUSY',1000,'BUSY za U11B/R27'),('ADC_DOUTA',1000,'wspolne MISO za R26: stan Z przy CS=1 (krok 9)'),
- ('ADC_RESET',1000,'RESET po stronie J_BP (start: 0)'),('MEAS_EN',1000,'MEAS_EN po stronie J_BP (start: 0)'),('MEAS_PERMIT',1000,'zgoda na cewki = MEAS_EN i DAQ_OK'),('DAQ_OK',1000,'wyjscie U5C do J_BP1.6'),
+ ('ADC_RESET',1000,'RESET po stronie J_BP (start: 0)'),('MEAS_EN',1000,'MEAS_EN po stronie J_BP (start: 0)'),('MEAS_PERMIT',1000,'zgoda na cewki = MEAS_EN i DAQ_OK'),('DAQ_OK',1000,'wyjscie U5B (U5.6) do J_BP1.6'),
  ('DAQ_RAIL_N',10000,'wyjscie okna U3 (OD, 10k R9)'),('P05_SUP3_N',10000,'nadzorca 3V3_DAQ U6 (OD, 10k R10)'),('P05_SUP5_N',1000,'nadzorca 5V_SYS za buforem U8')]
+# 1.10 (local review, rule decided for P03 R6): a rail pin only next to GND or another rail, so a slipped probe cannot drive an analog or
+# logic node from a rail through 2 kOhm; VBAT_SENSE (pack, to ~16 V) between two GND pins and away from 3V3_DAQ (with P05 unpowered it
+# would back-feed VDRIVE). J_SV1 pins given explicitly with interior GND on 3 and 7; the rows keep their order, so R36-R44 keep their nodes.
+SV1_PIN={'VBAT_SENSE':2,S5:4,A5:5,V:6,'REF_2V5':8,'RAIL_SENSE':9,'RAIL_LOW':10,'RAIL_HIGH':11,'MEAS_COIL_LOW':12}
 SERVICE={};nr=36
-for jref,rows,src in [('J_SV1',SV1,'SERVICE_S1'),('J_SV2',SV2,'SERVICE_S2')]:
- n=len(rows)+2;pp={1:G,n:G}
+for jref,rows,src,pin_of in [('J_SV1',SV1,'SERVICE_S1',SV1_PIN),('J_SV2',SV2,'SERVICE_S2',{})]:
+ n=max(pin_of.values())+1 if pin_of else len(rows)+2;pp={k:G for k in range(1,n+1)}
  for k,(net,ohm,why) in enumerate(rows,2):
-  r='R'+str(nr);nr+=1;pp[k]='SRV_'+net;SERVICE[net]=(jref,k,r,ohm,why)
+  k=pin_of.get(net,k);r='R'+str(nr);nr+=1;pp[k]='SRV_'+net;SERVICE[net]=(jref,k,r,ohm,why)
   res(r,'ADDED_'+src,{1000:'1K',4700:'4.7K',10000:'10K'}[ohm],ohm,net,'SRV_'+net,'SERWIS',smd=True)
   PARTS[r]['note']='Service pin series resistor at the node (S1 6): slipped probe cannot damage anything.'
  add(jref,src,symbol('Connector_Generic',f'Conn_01x{n:02d}'),copyfp('Connector_PinHeader_2.54mm',f'PinHeader_1x{n:02d}_P2.54mm_Horizontal'),f'{jref} SERWIS 1x{n}',f'Pin header 1x{n}, 2.54 mm, right angle, Au',pp,'SERWIS',note='Edge B, x=10..43 mm of the slot ('+('S1' if jref=='J_SV1' else 'S2')+'); pins ~6 mm beyond the edge. Numbering always from pin 1 (angled strip seen from the top has pin 1 at LARGER x).')
@@ -191,7 +195,7 @@ def write_tables():
  clean={r:{k:v for k,v in v.items() if k!='symbol'} for r,v in PARTS.items()}
  (P/'docs/parts.json').write_text(json.dumps(clean,indent=2,ensure_ascii=False),encoding='utf-8')
  with (P/'docs/BOM.csv').open('w',newline='',encoding='utf-8-sig') as f:
-  w=csv.DictWriter(f,['ref','source_ref','display','mpn','qty','footprint','on_board','url','note'],delimiter=';',extrasaction='ignore');w.writeheader();w.writerows(PARTS.values())
+  w=csv.DictWriter(f,['ref','source_ref','display','mpn','qty','footprint','on_board','zrodlo','url','note'],delimiter=';',extrasaction='ignore');w.writeheader();w.writerows(PARTS.values())
  libs={v['symbol'][1]:v['symbol'] for v in PARTS.values()};libs[PRJ+':PWR_FLAG']=symbol('power','PWR_FLAG')
  (P/'eda/libraries/P05.kicad_sym').write_text('(kicad_symbol_lib (version 20231120) (generator "kicad_symbol_editor")'+''.join(dump([s[0],s[1].split(':')[1]]+s[2:]) for s in libs.values())+')',encoding='utf-8')
  (P/'eda/sym-lib-table').write_text('(sym_lib_table (lib (name "P05") (type "KiCad") (uri "${KIPRJMOD}/libraries/P05.kicad_sym") (options "") (descr "P05 local symbols")))')

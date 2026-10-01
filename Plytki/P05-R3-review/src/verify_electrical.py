@@ -125,6 +125,14 @@ channels={}
 for name,rs,rb,c in [('MOTOR',300e3,100e3,220e-12),('SENSOR',100e3,math.inf,220e-12),('VSENSE',499e3,100e3,220e-12),('AUX_HI',300e3,100e3,220e-12),('AUX_LO',100e3,math.inf,220e-12)]:
  gain=1+rs/rb+rs/5e6
  channels[name]={'source_R_ohm':rs,'shunt_R_ohm':None if math.isinf(rb) else rb,'inverse_gain':gain,'estimated_input_referred_bias_V':rs*2/5e6,'external_RC_pole_Hz':1/(2*math.pi*(1/(1/rs+1/rb+1/5e6))*c),'scope':'5Mohm to approx 2V equivalent input model; final two-point calibration is mandatory.'}
+# 1.10 (local review): ratio budget of each divider with the parts chosen (0.1 %, 25 ppm/K, RT1206BRD07) and the same 0.1 % soldering /
+# ageing allowance per resistor as the window. k = Rs/Rb/(1+Rs/Rb) is the sensitivity of the gain to opposite resistor errors; the 5 Mohm
+# AD7606B input (its own tolerance is a calibration item, ODBIOR step 12) is left out. Report only: the channels are calibrated in two points.
+for name,v in channels.items():
+ rs,rb=v['source_R_ohm'],v['shunt_R_ohm'];k=0.0 if rb is None else (rs/rb)/(1+rs/rb)
+ v['divider_budget']={'sensitivity_k':round(k,4),'tolerance_pct':round(2*.001*k*100,3),'tolerance_plus_allowance_pct':round(2*(.001+SOLDER)*k*100,3),
+                      'drift_ppm_per_K':round(2*TCR['RT1206BRD07']*1e6*k,1),'drift_25_to_60C_pct':round(2*TCR['RT1206BRD07']*35*k*100,3),
+                      'note':'worst case, opposite errors of the two resistors; single-resistor channels depend on the ADC input impedance only'}
 report={'checks':out,'negative_controls':neg,'truth_table_rows':16,'channels':channels,'window':window}
 (P/'verification/electrical-checks.json').write_text(json.dumps(report,indent=2)+'\n')
 bad=[c['name'] for c in out if not c['pass']];miss=[c['mutation'] for c in neg if not c['detected']]

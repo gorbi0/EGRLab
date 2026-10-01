@@ -150,7 +150,7 @@
    "detail": null
   },
   {
-   "id": "J_SV1-GND-ENDS-ONLY",
+   "id": "J_SV1-GND-ENDS",
    "pass": true,
    "detail": null
   },
@@ -175,12 +175,17 @@
    ]
   },
   {
+   "id": "J_SV1-RAILS-NEXT-TO-GND-OR-RAIL",
+   "pass": true,
+   "detail": []
+  },
+  {
    "id": "J_SV2-MAX-13-PINS",
    "pass": true,
    "detail": null
   },
   {
-   "id": "J_SV2-GND-ENDS-ONLY",
+   "id": "J_SV2-GND-ENDS",
    "pass": true,
    "detail": null
   },
@@ -205,6 +210,11 @@
     "P05_SUP3_N",
     "P05_SUP5_N"
    ]
+  },
+  {
+   "id": "J_SV2-RAILS-NEXT-TO-GND-OR-RAIL",
+   "pass": true,
+   "detail": []
   },
   {
    "id": "SRV-EACH-NODE-ONCE",
@@ -368,8 +378,6 @@
    "detected": true,
    "by": [
     "J_SV2-MAX-13-PINS",
-    "J_SV2-GND-ENDS-ONLY",
-    "J_SV2-SERIES-R-AT-NODE-CLASS",
     "CSV-SERWIS"
    ]
   },
@@ -383,23 +391,51 @@
   },
   {
    "mutation": "first pin of J_SV1 not GND",
-   "target": "J_SV1-GND-ENDS-ONLY",
+   "target": "J_SV1-GND-ENDS",
    "detected": true,
    "by": [
-    "J_SV1-GND-ENDS-ONLY",
+    "J_SV1-GND-ENDS",
     "J_SV1-SERIES-R-AT-NODE-CLASS",
+    "J_SV1-RAILS-NEXT-TO-GND-OR-RAIL",
     "CSV-SERWIS"
    ]
   },
   {
-   "mutation": "extra GND inside J_SV2",
-   "target": "J_SV2-GND-ENDS-ONLY",
+   "mutation": "last pin of J_SV2 not GND",
+   "target": "J_SV2-GND-ENDS",
    "detected": true,
    "by": [
-    "J_SV2-GND-ENDS-ONLY",
+    "J_SV2-GND-ENDS",
     "J_SV2-SERIES-R-AT-NODE-CLASS",
-    "SRV-COVERS-ODBIOR",
     "CSV-SERWIS"
+   ]
+  },
+  {
+   "mutation": "REF_2V5 next to 3V3_DAQ (pins 7 and 8 swapped)",
+   "target": "J_SV1-RAILS-NEXT-TO-GND-OR-RAIL",
+   "detected": true,
+   "by": [
+    "J_SV1-RAILS-NEXT-TO-GND-OR-RAIL",
+    "CSV-SERWIS"
+   ]
+  },
+  {
+   "mutation": "VBAT_SENSE next to 5V_SYS (pins 2 and 3 swapped)",
+   "target": "J_SV1-RAILS-NEXT-TO-GND-OR-RAIL",
+   "detected": true,
+   "by": [
+    "J_SV1-RAILS-NEXT-TO-GND-OR-RAIL",
+    "CSV-SERWIS"
+   ]
+  },
+  {
+   "mutation": "DAQ node on the analog strip",
+   "target": "J_SV1-GROUP",
+   "detected": true,
+   "by": [
+    "J_SV1-SERIES-R-AT-NODE-CLASS",
+    "J_SV1-GROUP",
+    "SRV-EACH-NODE-ONCE"
    ]
   },
   {
@@ -408,7 +444,8 @@
    "detected": true,
    "by": [
     "J_SV2-SERIES-R-AT-NODE-CLASS",
-    "SRV-COVERS-ODBIOR"
+    "SRV-COVERS-ODBIOR",
+    "CSV-SERWIS"
    ]
   },
   {
@@ -416,7 +453,8 @@
    "target": "J_SV1-SERIES-R-AT-NODE-CLASS",
    "detected": true,
    "by": [
-    "J_SV1-SERIES-R-AT-NODE-CLASS"
+    "J_SV1-SERIES-R-AT-NODE-CLASS",
+    "CSV-SERWIS"
    ]
   },
   {
@@ -424,7 +462,8 @@
    "target": "J_SV1-SERIES-R-AT-NODE-CLASS",
    "detected": true,
    "by": [
-    "J_SV1-SERIES-R-AT-NODE-CLASS"
+    "J_SV1-SERIES-R-AT-NODE-CLASS",
+    "CSV-SERWIS"
    ]
   },
   {
@@ -433,7 +472,9 @@
    "detected": true,
    "by": [
     "J_SV1-SERIES-R-AT-NODE-CLASS",
-    "SRV-COVERS-ODBIOR"
+    "J_SV1-RAILS-NEXT-TO-GND-OR-RAIL",
+    "SRV-COVERS-ODBIOR",
+    "CSV-SERWIS"
    ]
   },
   {
@@ -480,6 +521,15 @@
    "target": "CSV-SERWIS",
    "detected": true,
    "by": [
+    "CSV-SERWIS"
+   ]
+  },
+  {
+   "mutation": "resistor value differs from SERWIS.csv (R45 10K)",
+   "target": "CSV-SERWIS",
+   "detected": true,
+   "by": [
+    "J_SV2-SERIES-R-AT-NODE-CLASS",
     "CSV-SERWIS"
    ]
   },

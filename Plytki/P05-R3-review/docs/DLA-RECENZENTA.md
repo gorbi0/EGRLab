@@ -19,14 +19,14 @@ Proszę oceniać tę paczkę, nie tylko tekst ogólnej v6.1. Schemat, PCB i skry
 
 Sprawdzić miedź, nie tylko render3D. Płaszczyzna pod analogiem, ścieżki referencji, odsprzęganie i powroty masy wymagają oceny człowieka. DRC nie symuluje szumu ani odporności na zakłócenia. Sprawdzić rzeczywistą dostępność do lutowaniaU1/U3 oraz sondowaniaTP.
 
-**Mechanicznie otwarty punkt:** mating kątowy P03/P05 i przyporządkowanie poziomów styków. Jest tabela testu1:1; fizycznie jej nie wykonano. Nie uznawać zgodnego logicznego pinoutu za wykonany test mechaniczny. Podobnie SW1: wariant terminaliC i korpus, a nie dowolny7201.
+**Mechanicznie otwarty punkt (R3):** B2B P03/P05 zniknęło — połączenie z P03 to taśma IDC przez P12 (J_BP2 na tych samych pinach co P03 R6 J_BP2). SW1: typ do decyzji użytkownika (README, punkty otwarte); wysokość i dostęp do dźwigni sprawdzić na makiecie.
 
 Sprawdzić realnyCeff C12/C13; w BOM jest kandydat22µF25V1210, a nie deklaracja zmierzonej pojemności pod napięciem. Ogólne rezystory pasywne dobierać według podanej tolerancji, TCR, mocy i rozmiaru; specjalnie nie wymyślono numerów katalogowych części, których konkretnego wariantu nie zweryfikowano.
 
 ## Dowody i ich granice
 
-`verify_electrical.py` odczytuje fizyczne piny zXML i porównuje z niezależnymi regułami. TablicaREADY jest wyliczana z rzeczywistych pinówHC08, a nie z samej oczekiwanej formuły. Dziewięć mutacji musi zostać wykrytych. `verify_pcb.py` uruchamia natywneDRC, porównuje każdy pad zXML, sprawdza geometrię i pięć mutacji. `verify_schematic.py` sprawdza spójność generatora i schematu — nie zastępuje recenzji układu.
+`verify_electrical.py` odczytuje fizyczne piny zXML i porównuje z niezależnymi regułami. TablicaREADY jest wyliczana z rzeczywistych pinówHC08, a nie z samej oczekiwanej formuły. Mutacje `verify_electrical.py` i `verify_s1.py` muszą zostać wykryte (liczby w README). PCB w tym pakiecie nie ma, więc nie ma też `verify_pcb.py` — powstanie z layoutem. `verify_schematic.py` sprawdza spójność generatora i schematu — nie zastępuje recenzji układu.
 
 Automatyczne kontrole **nie dowodzą** poprawnej pracy analogowej, zgodnościEMC, jakości lutowania, matingu zakupionych złączy ani skuteczności diagnozyP0404. FormularzODBIOR pozostaje niewypełniony do czasu prób.
 
-Przed wydaniem do produkcji: zamknięta recenzja, mechanikaB2B/SW1, kwalifikacja kondensatorów, uzgodniona zmiana sekwencji startowej firmware, ponowne kontrole po każdej korekcie i dopiero eksportGerberów/Excellon. P07 pozostajeHOLD.
+Przed wydaniem do produkcji: zamknięta recenzja, typ i mechanika SW1, kwalifikacja kondensatorów, uzgodniona zmiana sekwencji startowej firmware, ponowne kontrole po każdej korekcie i dopiero eksportGerberów/Excellon. P07 pozostajeHOLD.
