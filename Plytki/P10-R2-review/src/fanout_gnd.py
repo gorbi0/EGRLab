@@ -28,7 +28,7 @@ PWR = set(PWR_NETS)
 import os
 MODE = os.environ.get('EGRLAB_FANOUT', 'ic')    # 'ic' (default): SOIC bars + SOT-23 stubs; 'all': also every 1206 GND pad
 PLANE = os.environ.get('EGRLAB_GND_MODE', 'plane') == 'plane'   # prepare_routing.py default: SOT-23 stubs only when GND is out of the router
-MODULES = {'M1', 'SD1'}
+MODULES = {'M1', 'SD1'}   # P03 R6 module references (ESP32 / microSD); none on P09 / P10
 
 
 def V(x, y):

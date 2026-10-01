@@ -95,7 +95,7 @@ MIN_HIT = 1e-3   # mm2
 
 
 def shape_hits_copper(shape):
-    """As rect_hits_copper for any outline (30.09: the SD1 keepouts are circles; their bounding squares caught the pour
+    """As rect_hits_copper for any outline (P03 R6 30.09: the SD1 keepouts are circles; their bounding squares caught the pour
     and two tracks in the corners, outside the rule area). A hit needs more than MIN_HIT mm2 of common area: a pour filled up to
     a circular rule area shares only polygonisation slivers with it (1e-7 mm2 measured on SD1)."""
     hits = []

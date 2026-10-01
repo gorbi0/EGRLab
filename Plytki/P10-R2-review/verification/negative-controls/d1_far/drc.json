@@ -1,7 +1,7 @@
 {
     "$schema": "https://schemas.kicad.org/drc.v1.json",
     "coordinate_units": "mm",
-    "date": "2026-10-01T09:15:49",
+    "date": "2026-10-01T09:47:19",
     "ignored_checks": [
         {
             "description": "Footprint has no courtyard defined",
@@ -37,20 +37,20 @@
             "description": "Missing connection between items",
             "items": [
                 {
-                    "description": "Ścieżka [CAN_L] na F.Cu, długość 1,4000 mm",
+                    "description": "Pole lutownicze 2 [CAN_H] z D1 na F.Cu",
                     "pos": {
                         "x": 31.9375,
-                        "y": 57.7
+                        "y": 45.8
                     },
-                    "uuid": "5d16bc02-4275-46c2-abfd-6832cd5a4acd"
+                    "uuid": "34d465d5-0acb-46a9-8963-ccaf129008e3"
                 },
                 {
-                    "description": "Pole lutownicze 1 [CAN_L] z D1 na F.Cu",
+                    "description": "Ścieżka [CAN_H] na F.Cu, długość 2,2063 mm",
                     "pos": {
-                        "x": 31.9375,
-                        "y": 47.7
+                        "x": 31.25,
+                        "y": 53.9563
                     },
-                    "uuid": "1a7fe550-58c9-46dd-bed9-9df6f97130b9"
+                    "uuid": "595958f7-1e4c-4ee6-9178-4b42213596e1"
                 }
             ],
             "severity": "error",
@@ -60,20 +60,20 @@
             "description": "Missing connection between items",
             "items": [
                 {
-                    "description": "Pole lutownicze 2 [CAN_H] z D1 na F.Cu",
+                    "description": "Ścieżka [CAN_L] na F.Cu, długość 1,4000 mm",
                     "pos": {
                         "x": 31.9375,
-                        "y": 45.8
+                        "y": 57.7
                     },
-                    "uuid": "4a7dc939-c7db-40da-8acd-d87fa31f6d94"
+                    "uuid": "ad944066-2aa7-4610-b171-c24aef509bef"
                 },
                 {
-                    "description": "Pole PTH 1 [CAN_H] na R8",
+                    "description": "Pole lutownicze 1 [CAN_L] z D1 na F.Cu",
                     "pos": {
-                        "x": 31.25,
-                        "y": 51.75
+                        "x": 31.9375,
+                        "y": 47.7
                     },
-                    "uuid": "a1a1dd8e-dedf-4f0f-ab51-526644cf561d"
+                    "uuid": "217f6137-ba39-48fd-b768-42df37627837"
                 }
             ],
             "severity": "error",
@@ -82,92 +82,92 @@
     ],
     "violations": [
         {
-            "description": "Elementy łączą dwie różne sieci (sieci CAN_L oraz /CORE/SRV_CAN_H)",
+            "description": "Elementy łączą dwie różne sieci (sieci /CORE/SRV_CAN_H oraz CAN_L)",
             "items": [
-                {
-                    "description": "Pole lutownicze 1 [CAN_L] z D1 na F.Cu",
-                    "pos": {
-                        "x": 31.9375,
-                        "y": 47.7
-                    },
-                    "uuid": "1a7fe550-58c9-46dd-bed9-9df6f97130b9"
-                },
                 {
                     "description": "Ścieżka [/CORE/SRV_CAN_H] na F.Cu, długość 8,7213 mm",
                     "pos": {
                         "x": 37.4169,
                         "y": 52.8369
                     },
-                    "uuid": "c40eb39b-dd59-470a-99ae-da556fc8c06c"
-                }
-            ],
-            "severity": "error",
-            "type": "shorting_items"
-        },
-        {
-            "description": "Elementy łączą dwie różne sieci (sieci CAN_L oraz /CORE/SRV_CAN_H)",
-            "items": [
+                    "uuid": "1c446136-44aa-4790-a748-f7959867b744"
+                },
                 {
                     "description": "Pole lutownicze 1 [CAN_L] z D1 na F.Cu",
                     "pos": {
                         "x": 31.9375,
                         "y": 47.7
                     },
-                    "uuid": "1a7fe550-58c9-46dd-bed9-9df6f97130b9"
-                },
-                {
-                    "description": "Pole PTH 2 [/CORE/SRV_CAN_H] na R8",
-                    "pos": {
-                        "x": 31.25,
-                        "y": 46.67
-                    },
-                    "uuid": "d98c1e46-68ef-4601-b947-d3aca6097541"
+                    "uuid": "217f6137-ba39-48fd-b768-42df37627837"
                 }
             ],
             "severity": "error",
             "type": "shorting_items"
         },
         {
-            "description": "Elementy łączą dwie różne sieci (sieci CAN_H oraz /CORE/SRV_CAN_H)",
+            "description": "Elementy łączą dwie różne sieci (sieci /CORE/SRV_CAN_H oraz CAN_L)",
             "items": [
                 {
-                    "description": "Pole lutownicze 2 [CAN_H] z D1 na F.Cu",
+                    "description": "Pole PTH 2 [/CORE/SRV_CAN_H] na R8",
+                    "pos": {
+                        "x": 31.25,
+                        "y": 46.67
+                    },
+                    "uuid": "dec4e295-1571-4e7b-96da-1be362a93661"
+                },
+                {
+                    "description": "Pole lutownicze 1 [CAN_L] z D1 na F.Cu",
                     "pos": {
                         "x": 31.9375,
-                        "y": 45.8
+                        "y": 47.7
                     },
-                    "uuid": "4a7dc939-c7db-40da-8acd-d87fa31f6d94"
-                },
-                {
-                    "description": "Pole PTH 2 [/CORE/SRV_CAN_H] na R8",
-                    "pos": {
-                        "x": 31.25,
-                        "y": 46.67
-                    },
-                    "uuid": "d98c1e46-68ef-4601-b947-d3aca6097541"
+                    "uuid": "217f6137-ba39-48fd-b768-42df37627837"
                 }
             ],
             "severity": "error",
             "type": "shorting_items"
         },
         {
-            "description": "Elementy łączą dwie różne sieci (sieci GND oraz /CORE/SRV_CAN_H)",
+            "description": "Elementy łączą dwie różne sieci (sieci /CORE/SRV_CAN_H oraz GND)",
             "items": [
+                {
+                    "description": "Pole PTH 2 [/CORE/SRV_CAN_H] na R8",
+                    "pos": {
+                        "x": 31.25,
+                        "y": 46.67
+                    },
+                    "uuid": "dec4e295-1571-4e7b-96da-1be362a93661"
+                },
                 {
                     "description": "Pole lutownicze 3 [GND] z D1 na F.Cu",
                     "pos": {
                         "x": 30.0625,
                         "y": 46.75
                     },
-                    "uuid": "4eda1779-b5ed-4f60-be3e-11b2873a0b9b"
-                },
+                    "uuid": "2ef7f71b-ceb7-4b19-ac8d-a7c800298164"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci /CORE/SRV_CAN_H oraz CAN_H)",
+            "items": [
                 {
                     "description": "Pole PTH 2 [/CORE/SRV_CAN_H] na R8",
                     "pos": {
                         "x": 31.25,
                         "y": 46.67
                     },
-                    "uuid": "d98c1e46-68ef-4601-b947-d3aca6097541"
+                    "uuid": "dec4e295-1571-4e7b-96da-1be362a93661"
+                },
+                {
+                    "description": "Pole lutownicze 2 [CAN_H] z D1 na F.Cu",
+                    "pos": {
+                        "x": 31.9375,
+                        "y": 45.8
+                    },
+                    "uuid": "34d465d5-0acb-46a9-8963-ccaf129008e3"
                 }
             ],
             "severity": "error",
@@ -177,20 +177,20 @@
             "description": "Courtyards overlap",
             "items": [
                 {
-                    "description": "Footprint D1",
-                    "pos": {
-                        "x": 31.0,
-                        "y": 46.75
-                    },
-                    "uuid": "bc424deb-b015-456c-995c-408129663f16"
-                },
-                {
                     "description": "Footprint R8",
                     "pos": {
                         "x": 31.25,
                         "y": 51.75
                     },
-                    "uuid": "cca68494-6dc4-4fd9-9b1c-df6b62a692c7"
+                    "uuid": "43dd77b7-2e00-4259-8d13-02c9ff3ec667"
+                },
+                {
+                    "description": "Footprint D1",
+                    "pos": {
+                        "x": 31.0,
+                        "y": 46.75
+                    },
+                    "uuid": "66b8dc0b-334d-4896-8313-d1006f9a3bbe"
                 }
             ],
             "severity": "error",
@@ -205,7 +205,7 @@
                         "x": 31.25,
                         "y": 46.67
                     },
-                    "uuid": "d98c1e46-68ef-4601-b947-d3aca6097541"
+                    "uuid": "dec4e295-1571-4e7b-96da-1be362a93661"
                 },
                 {
                     "description": "Footprint D1",
@@ -213,7 +213,7 @@
                         "x": 31.0,
                         "y": 46.75
                     },
-                    "uuid": "bc424deb-b015-456c-995c-408129663f16"
+                    "uuid": "66b8dc0b-334d-4896-8313-d1006f9a3bbe"
                 }
             ],
             "severity": "error",
@@ -228,7 +228,7 @@
                         "x": 31.9375,
                         "y": 47.7
                     },
-                    "uuid": "1a7fe550-58c9-46dd-bed9-9df6f97130b9"
+                    "uuid": "217f6137-ba39-48fd-b768-42df37627837"
                 },
                 {
                     "description": "Pole PTH 2 [/CORE/SRV_CAN_H] na R8",
@@ -236,7 +236,7 @@
                         "x": 31.25,
                         "y": 46.67
                     },
-                    "uuid": "d98c1e46-68ef-4601-b947-d3aca6097541"
+                    "uuid": "dec4e295-1571-4e7b-96da-1be362a93661"
                 }
             ],
             "severity": "error",
@@ -246,20 +246,20 @@
             "description": "Przednia soldermaska łączy elementy o różnych sieciach",
             "items": [
                 {
-                    "description": "Pole lutownicze 2 [CAN_H] z D1 na F.Cu",
-                    "pos": {
-                        "x": 31.9375,
-                        "y": 45.8
-                    },
-                    "uuid": "4a7dc939-c7db-40da-8acd-d87fa31f6d94"
-                },
-                {
                     "description": "Pole PTH 2 [/CORE/SRV_CAN_H] na R8",
                     "pos": {
                         "x": 31.25,
                         "y": 46.67
                     },
-                    "uuid": "d98c1e46-68ef-4601-b947-d3aca6097541"
+                    "uuid": "dec4e295-1571-4e7b-96da-1be362a93661"
+                },
+                {
+                    "description": "Pole lutownicze 2 [CAN_H] z D1 na F.Cu",
+                    "pos": {
+                        "x": 31.9375,
+                        "y": 45.8
+                    },
+                    "uuid": "34d465d5-0acb-46a9-8963-ccaf129008e3"
                 }
             ],
             "severity": "error",
@@ -274,7 +274,7 @@
                         "x": 37.4169,
                         "y": 52.8369
                     },
-                    "uuid": "c40eb39b-dd59-470a-99ae-da556fc8c06c"
+                    "uuid": "1c446136-44aa-4790-a748-f7959867b744"
                 },
                 {
                     "description": "Pole lutownicze 1 [CAN_L] z D1 na F.Cu",
@@ -282,7 +282,7 @@
                         "x": 31.9375,
                         "y": 47.7
                     },
-                    "uuid": "1a7fe550-58c9-46dd-bed9-9df6f97130b9"
+                    "uuid": "217f6137-ba39-48fd-b768-42df37627837"
                 }
             ],
             "severity": "error",
@@ -292,20 +292,20 @@
             "description": "Przednia soldermaska łączy elementy o różnych sieciach",
             "items": [
                 {
-                    "description": "Pole lutownicze 3 [GND] z D1 na F.Cu",
-                    "pos": {
-                        "x": 30.0625,
-                        "y": 46.75
-                    },
-                    "uuid": "4eda1779-b5ed-4f60-be3e-11b2873a0b9b"
-                },
-                {
                     "description": "Pole PTH 2 [/CORE/SRV_CAN_H] na R8",
                     "pos": {
                         "x": 31.25,
                         "y": 46.67
                     },
-                    "uuid": "d98c1e46-68ef-4601-b947-d3aca6097541"
+                    "uuid": "dec4e295-1571-4e7b-96da-1be362a93661"
+                },
+                {
+                    "description": "Pole lutownicze 3 [GND] z D1 na F.Cu",
+                    "pos": {
+                        "x": 30.0625,
+                        "y": 46.75
+                    },
+                    "uuid": "2ef7f71b-ceb7-4b19-ac8d-a7c800298164"
                 }
             ],
             "severity": "error",
@@ -320,7 +320,7 @@
                         "x": 36.66,
                         "y": 95.96
                     },
-                    "uuid": "05ea916c-f845-4281-aacd-e1e23ddbb70f"
+                    "uuid": "196ea6f0-a478-496a-9a48-7746ebde6821"
                 }
             ],
             "severity": "warning",
@@ -335,11 +335,26 @@
                         "x": 21.42,
                         "y": 13.33
                     },
-                    "uuid": "e5b0f1f7-0a5f-43bd-846c-ff8c67803bb0"
+                    "uuid": "e20c3a48-c60e-4aea-a890-06c774a1a50a"
                 }
             ],
             "severity": "warning",
             "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment z R8 na F.Silkscreen",
+                    "pos": {
+                        "x": 31.25,
+                        "y": 50.38
+                    },
+                    "uuid": "c3a975c8-f6d7-4cb8-b747-82d1149e6040"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
         },
         {
             "description": "Silkscreen clipped by solder mask",
@@ -350,7 +365,7 @@
                         "x": 31.76,
                         "y": 46.36
                     },
-                    "uuid": "1ec1f3c0-b242-4dea-aa38-dbb2d643d74a"
+                    "uuid": "53bc2b3a-1a6f-4ecd-97fe-885763dc2ae0"
                 }
             ],
             "severity": "warning",
@@ -365,22 +380,7 @@
                         "x": 32.3,
                         "y": 47.13
                     },
-                    "uuid": "54806c52-506a-4966-b215-2b0e275be2f2"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Segment z R8 na F.Silkscreen",
-                    "pos": {
-                        "x": 31.25,
-                        "y": 50.38
-                    },
-                    "uuid": "21548b97-2e48-46c2-9efb-ac4e4ca07980"
+                    "uuid": "f8cfaab9-4ea0-40ae-87ea-5a0e3969ecd3"
                 }
             ],
             "severity": "warning",
@@ -395,7 +395,7 @@
                         "x": 31.25,
                         "y": 50.38
                     },
-                    "uuid": "21548b97-2e48-46c2-9efb-ac4e4ca07980"
+                    "uuid": "c3a975c8-f6d7-4cb8-b747-82d1149e6040"
                 },
                 {
                     "description": "Segment z D1 na F.Silkscreen",
@@ -403,7 +403,7 @@
                         "x": 31.76,
                         "y": 48.31
                     },
-                    "uuid": "6ed2e46e-ba16-4447-aa2a-358506d0f93a"
+                    "uuid": "d6205eb9-8ddc-402d-9c47-600192ae44b6"
                 }
             ],
             "severity": "warning",

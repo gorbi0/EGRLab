@@ -218,5 +218,22 @@
       "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
       "J3 (OBD tail, W3) at the input wall: anchor holes towards x = 53.0 (12 mm from the solder row, hole edge 2-6 mm from the edge), pad 1 CAN_H at the smaller y, not in the edge A / B zones; no copper within 3 mm of the anchor-hole centres; no part under the cable between the anchor and the wall; D1 (PESD2CAN) pads <= 6 mm from the J3 pads and CAN_H / CAN_L pass through them to U1; other nets >= 1 mm from the J3 pads (hand-soldered wires)"
     ]
+  },
+  {
+    "control": "zone_copper",
+    "expected_failing_check": "Standoff zones D7",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Standoff zones D7: no courtyard and no copper (pads, tracks, vias, pours) within 3.5 mm of a hole centre; rule areas on both layers"
+    ]
+  },
+  {
+    "control": "title_wrong",
+    "expected_failing_check": "Silkscreen: board name",
+    "detected": true,
+    "failed_checks": [
+      "Silkscreen: board name \"P10 R2 S1-1/3 S3\", edge markers A and B"
+    ]
   }
 ]

@@ -1,7 +1,7 @@
 # P10-R2 — QA PCB (format S1, klasa 1/3; plik generowany przez src/run_release.py)
 
 DRC (świeży, wszystkie poziomy): naruszenia 2, niepołączone 0, niezgodności ze schematem 0 (naruszenia to wyłącznie lib_footprint_mismatch części z przyciętym nadrukiem, przyjęte przez verify_pcb.py; szczegóły w pcb-checks.json).
-Kontrole PCB: 24/24. Próby ujemne: 24/24 (w tym próba zerowa).
+Kontrole PCB: 24/24. Próby ujemne: 26/26 (w tym próba zerowa).
 
 | Kontrola | Wynik |
 |---|---|
@@ -58,6 +58,8 @@ Kontrole PCB: 24/24. Próby ujemne: 24/24 (w tym próba zerowa).
 | mark_missing | Pin 1 / polarity marks | tak | 1 |
 | can_bypass | J3 (OBD tail | tak | 2 |
 | j3_close | J3 (OBD tail | tak | 2 |
+| zone_copper | Standoff zones D7 | tak | 2 |
+| title_wrong | Silkscreen: board name | tak | 1 |
 
 Nadruk: ukryte oznaczenia (brak miejsca): R1, R3, D1; nieumieszczone napisy: brak.
 

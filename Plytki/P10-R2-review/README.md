@@ -43,10 +43,10 @@ Przypisanie części do rejestru wynika z dosłownego dopasowania wartości i ty
 |---|---|---|
 | DRC świeży, wszystkie poziomy | 0 niepołączonych, 0 niezgodności ze schematem, 0 innych naruszeń; 2 × `lib_footprint_mismatch` (J1, J2: nadruk przycięty przez `silkscreen.py`, przyjęte jawnie) | `verification/drc.json` |
 | Kontrole PCB (`verify_pcb.py`) | 24/24 | `verification/pcb-checks.json`, `QA-PCB.md` |
-| Próby ujemne PCB | 24/24 z zerową | `verification/negative-controls.json` |
+| Próby ujemne PCB | 26/26 z zerową | `verification/negative-controls.json` |
 | Trasowanie | Freerouting 2.1.0 (GND jako płaszczyzna B.Cu) z zablokowanymi liniami CAN, pierwsza próba, bez tras planera; 41 przelotek; ścieżki 0,3 mm (F.Cu 0,61 m, B.Cu 0,10 m); wylewki GND F.Cu 79 %, B.Cu 89 % (liczone z płytki) | `routing/attempts.json`, `pcb-checks.json` |
 
-Łańcuch jak w P09 R2 (skrypty z P03 R6, wartości płytki w `src/board.py`); `run_release.py` odtwarza zapisany wynik routera (`routing/P10.ses`). PDF obejrzany (5 stron) 1.10.2026.
+Łańcuch jak w P09 R2 (skrypty z P03 R6, wartości płytki w `src/board.py`); `run_release.py` odtwarza zapisany wynik routera (`routing/P10.ses`). PDF obejrzany (5 stron) 1.10.2026. Wydanie odtworzone ponownie 1.10 po wspólnych poprawkach z P09 (nadruk omija strefy Ø7, próby ujemne dla stref D7 i tytułu, próba `gnd_pour_removed` usuwa wylewkę w pliku zamiast `b.Remove()`); ścieżki, przelotki, części i napisy płytki bez zmian.
 
 **Decyzje (sporne oznaczone):**
 1. Slot S3 poziomu 4 (S1-3): wszystkie części od góry (zajętość 27 %), od spodu nic; ścieżki 0,3 mm przy odstępie 0,25 mm (S1 §3).

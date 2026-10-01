@@ -1,7 +1,7 @@
 """P10 R2 silkscreen (format S1, class 1/3; the P03 R6 script via P09 R2, board values from board.py). Run after run_layout.py; changes
 only F.SilkS (and hides values), never copper. Steps as P03 R6: footprint silk that would break DRC dropped at file level,
-references placed at the first free candidate, board texts (name, edge markers, pin 1 of J1 / J2) and one full-name label per
-service pin of J2 (vertical, read from edge B). Every drop is listed in routing/silkscreen.json."""
+references placed at the first free candidate, board texts (name, edge markers, pin 1 of J1 / J2, PIN_MARKS) and one label per
+service pin of J2 (LABEL: the net name, shortened only where it does not fit; vertical, read from edge B). Every drop is listed in routing/silkscreen.json."""
 from pathlib import Path
 import pcbnew as p, json, math, sys
 from sexpr import parse, dump, sub, one
@@ -10,7 +10,8 @@ sys.path.insert(0, str(P / 'src'))
 from board import NAME, REV, JBP, JSV, CLASS, SLOTS, PIN_MARKS
 TYTUL = f"{REV} S1-{CLASS} {SLOTS[0] if len(SLOTS) == 1 else SLOTS[0] + '-' + SLOTS[-1]}"   # S1 §9: nazwa, rewizja, klasa i sloty (jak P02 R4)
 fn = P / f'eda/{NAME}.kicad_pcb'
-from build_board import W, Hh as H
+from build_board import W, Hh as H, holes
+STREFY = [(hx, hy) for hx, hy in holes()]; RZ_M3 = 3.5   # 1.10 (recenzja P09): tekst w strefie Ø7 przykrywa dystans M3 z podkładką
 FULL = set(JSV)   # P09 / P10: one service header with room above it -> full names on every pin (P03: only J_SV1)
 EDGE = .3   # silk-to-edge clearance used by DRC (board setting min_silk... edge 0.3 is KiCad default for silk_edge_clearance)
 LABEL = {  # J_SV1: full names, vertical
@@ -20,8 +21,8 @@ LABEL = {  # J_SV1: full names, vertical
     'MOTOR_INB': 'MOT_INB', 'MOTOR_INA': 'MOT_INA', 'MEAS_BANK': 'MBANK', 'CS_ITEST_N': 'ITEST_N', 'CS_ILOG_N': 'ILOG_N',
     'LOGGER_CURRENT_OK': 'LCUR_OK',
     # P09 R2 J2 (docs/SERWIS.csv)
-    'TC1_VIN': 'TC1VIN', 'TC2_VIN': 'TC2VIN', 'TC1_3VO': 'TC1_3V', 'TC2_3VO': 'TC2_3V', 'CS1_BUF': 'CS1BUF', 'CS2_BUF': 'CS2BUF',
-    'OE1_N': 'OE1_N', 'OE2_N': 'OE2_N', 'SPI3_MISO': 'MISO',
+    'TC1_VIN': 'TC1_VIN', 'TC2_VIN': 'TC2_VIN', 'TC1_3VO': 'TC1_3VO', 'TC2_3VO': 'TC2_3VO', 'CS1_BUF': 'CS1_BUF', 'CS2_BUF': 'CS2_BUF',
+    'OE1_N': 'OE1_N', 'OE2_N': 'OE2_N', 'SPI3_MISO': 'MISO',   # 1.10 (recenzja P09): pełne nazwy sieci; SPI3_MISO skrócone (jedyne MISO na P09)
     # P10 R2 J2 (docs/SERWIS.csv)
     'RX_RAW': 'RX_RAW', 'CAN_RX': 'CAN_RX', 'CAN_TX': 'CAN_TX', 'CAN_H': 'CAN_H', 'CAN_L': 'CAN_L'}
 ABBR = {  # J_SV2 / J_SV3: three letters, horizontal, with a legend
@@ -119,6 +120,8 @@ for r0, g in ftexts:
 
 
 def free(box, own, bottom=False):
+    if any(math.hypot(max(box[0] - hx, 0, hx - box[2]), max(box[1] - hy, 0, hy - box[3])) < RZ_M3 for hx, hy in STREFY):
+        return False
     if box[0] < EDGE + .2 or box[1] < EDGE + .2 or box[2] > W - EDGE - .2 or box[3] > H - EDGE - .2:
         return False
     if any(hit(box, pb, .25) for r, pb in (botpads if bottom else padboxes)):

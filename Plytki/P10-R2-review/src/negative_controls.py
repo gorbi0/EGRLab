@@ -8,7 +8,8 @@ from pathlib import Path
 import pcbnew as p, json, subprocess, sys, shutil, os, math
 from sexpr import parse, dump
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from board import NAME
+from board import NAME, REV, CLASS, SLOTS
+TYTUL = f"{REV} S1-{CLASS} {SLOTS[0] if len(SLOTS) == 1 else SLOTS[0] + '-' + SLOTS[-1]}"   # as verify_pcb.py
 P = Path(__file__).resolve().parents[1]; src = P / f'eda/{NAME}.kicad_pcb'; root = P / 'verification/negative-controls'
 mm = p.FromMM
 
@@ -83,8 +84,7 @@ def bottom_soic(b):                                                             
         f.Flip(f.GetPosition(), True)
 
 
-def gnd_pour_removed(b):                                                            # the B.Cu GND pour deleted
-    b.Remove(next(z for z in b.Zones() if not z.GetIsRuleArea() and z.GetNetname() == 'GND' and z.IsOnLayer(p.B_Cu)))
+def zone_copper(b): track(b, p.B_Cu, 6.0, 13.0, 6.0, 15.0, 'GND')                    # GND track 2 mm from the centre of H1 (D7 zone)
 
 
 def ref_on_part(b):                                                                 # a visible reference inside U2's courtyard
@@ -116,9 +116,10 @@ CASES = [(null_control, None), (mount_shift, 'M3 holes'), (jbp_shift, 'J1 = J_BP
          (sv_pin_without_resistor, 'Service header J2'), (sv_resistor_far, 'Service header J2'), ('label_missing', 'Service header J2'),
          ('too_tall', 'Every part <='), (obd_turned, 'J3 (OBD tail'), (anchor_track, 'J3 (OBD tail'), (cable_blocked, 'J3 (OBD tail'),
          (d1_far, 'J3 (OBD tail'), (decap_far, 'Decoupling'), (driver_far, 'Series resistor at its driver'), (narrow_track, 'Every track >='),
-         (bottom_soic, 'S1-2 section 4'), (gnd_pour_removed, 'GND pours'), (ref_on_part, 'Every visible reference'),
+         (bottom_soic, 'S1-2 section 4'), ('gnd_pour_removed', 'GND pours'), (ref_on_part, 'Every visible reference'),
          (ref_far, 'Every visible reference nearer'), ('label_swap', 'Service header J2'), (strip_part, 'Reserved strip of edge A'),
-         ('mark_missing', 'Pin 1 / polarity marks'), (can_bypass, 'J3 (OBD tail'), (j3_close, 'J3 (OBD tail')]
+         ('mark_missing', 'Pin 1 / polarity marks'), (can_bypass, 'J3 (OBD tail'), (j3_close, 'J3 (OBD tail'),
+         (zone_copper, 'Standoff zones D7'), ('title_wrong', 'Silkscreen: board name')]
 assert root.resolve().is_relative_to(P.resolve()) and root.name == 'negative-controls'
 shutil.rmtree(root, ignore_errors=True); root.mkdir(parents=True)
 labels = json.loads((P / 'routing/silkscreen.json').read_text(encoding='utf-8'))['service_labels']
@@ -137,6 +138,14 @@ for fn, expected in CASES:
         t = [g for g in t if not (isinstance(g, list) and g and g[0] == 'gr_text' and g[1] == lab)]
         assert len(t) < n0, lab
         copy.write_text(dump(t) + '\n', encoding='utf-8')
+    if name == 'gnd_pour_removed':                                         # the B.Cu GND pour deleted at file level (1.10: b.Remove() broke
+        t = parse(copy.read_text(encoding='utf-8')); n0 = len(t)              # SWIG in P09, the next LoadBoard returned a bare SwigPyObject)
+        def gnd_b(g):
+            return (isinstance(g, list) and g and g[0] == 'zone' and any(isinstance(x, list) and x[:2] == ['net', 'GND'] for x in g)
+                    and any(isinstance(x, list) and x and x[0] == 'layer' and x[1] == 'B.Cu' for x in g))
+        t = [g for g in t if not gnd_b(g)]
+        assert len(t) == n0 - 1, n0 - len(t)
+        copy.write_text(dump(t) + '\n', encoding='utf-8')
     if name == 'label_swap':                                               # labels of J2 pins 7 and 8 (CAN_H / CAN_L) swapped
         t = parse(copy.read_text(encoding='utf-8')); l7, l8 = labels['J2.7'], labels['J2.8']; k = 0
         for g in t:
@@ -148,6 +157,13 @@ for fn, expected in CASES:
         t = parse(copy.read_text(encoding='utf-8')); n0 = len(t)
         t = [g for g in t if not (isinstance(g, list) and g and g[0] == 'gr_text' and g[1] == 'H')]
         assert len(t) == n0 - 1, n0 - len(t)
+        copy.write_text(dump(t) + '\n', encoding='utf-8')
+    if name == 'title_wrong':                                              # board name without the slot (as R2 up to 30.09)
+        t = parse(copy.read_text(encoding='utf-8')); k = 0
+        for g in t:
+            if isinstance(g, list) and g and g[0] == 'gr_text' and g[1] == TYTUL:
+                g[1] = TYTUL.rsplit(' ', 1)[0]; k += 1
+        assert k == 1, k
         copy.write_text(dump(t) + '\n', encoding='utf-8')
     for f in (P / 'eda').glob('*.kicad_sch'):
         shutil.copy2(f, d / f.name)
