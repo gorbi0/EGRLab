@@ -150,7 +150,7 @@ Wysokość stosu:
 
 Dokładne pinouty ustala zadanie każdej płytki; P12 powstaje na końcu, z pinoutów wszystkich płytek.
 
-### Pinout P02 R4 J_BP (2×10, slot S3, środek x = 80,0 mm w układzie płytki)
+### Pinout P02 R4 J_BP (2×10, slot S3, środek x = 133,5 mm w układzie płytki)
 
 | Pin | Sieć | Pin | Sieć |
 |---|---|---|---|
