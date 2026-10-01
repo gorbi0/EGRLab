@@ -91,7 +91,7 @@ Kontrakt S1 (`verify_s1.py`): 27/27 PASS; mutacje 37/37 wykrytych przez kontrolÄ
 | last pin of J_SV2 not GND | J_SV2-GND-ENDS | tak | J_SV2-GND-ENDS, J_SV2-SERIES-R-AT-NODE-CLASS, CSV-SERWIS |
 | 3V3_IO next to SHUNT_ENABLED (1K logic) | J_SV2-NEIGHBOURS | tak | J_SV2-NEIGHBOURS, CSV-SERWIS |
 | interior GND pin 5 swapped with SHUNT_ENABLED (3V3_P06 next to 1K logic) | J_SV2-NEIGHBOURS | tak | J_SV2-NEIGHBOURS, CSV-SERWIS |
-| rail on the analog strip next to REF25 | J_SV1-NEIGHBOURS | tak | J_SV1-SERIES-R-AT-NODE-CLASS, J_SV1-GROUP, J_SV1-NEIGHBOURS, SRV-EACH-NODE-ONCE, SRV-COVERS-R1-TESTPADS |
+| rail on the analog strip next to I_L_OUT (ADC_AIN resistor moved to 5VA_P06) | J_SV1-NEIGHBOURS | tak | J_SV1-SERIES-R-AT-NODE-CLASS, J_SV1-GROUP, J_SV1-NEIGHBOURS, SRV-EACH-NODE-ONCE, SRV-COVERS-R1-TESTPADS |
 | logic node on the analog strip | J_SV1-GROUP | tak | J_SV1-SERIES-R-AT-NODE-CLASS, J_SV1-GROUP, SRV-COVERS-R1-TESTPADS |
 | analog node on the rail/logic strip | J_SV2-GROUP | tak | J_SV2-SERIES-R-AT-NODE-CLASS, J_SV2-GROUP, SRV-COVERS-R1-TESTPADS |
 | pin wired straight to the node (no resistor) | J_SV2-SERIES-R-AT-NODE-CLASS | tak | J_SV2-SERIES-R-AT-NODE-CLASS, SRV-COVERS-R1-TESTPADS, CSV-SERWIS |

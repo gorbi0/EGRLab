@@ -198,7 +198,7 @@ if __name__ == '__main__':
          ('J_SV2-GND-ENDS', 'last pin of J_SV2 not GND', setp('J_SV2', 13, 'SRV_CLK_LOCAL')),
          ('J_SV2-NEIGHBOURS', '3V3_IO next to SHUNT_ENABLED (1K logic)', swap('J_SV2', find('J_SV2', 'SUP3_N'), find('J_SV2', 'SHUNT_ENABLED'))),
          ('J_SV2-NEIGHBOURS', 'interior GND pin 5 swapped with SHUNT_ENABLED (3V3_P06 next to 1K logic)', swap('J_SV2', 5, find('J_SV2', 'SHUNT_ENABLED'))),
-         ('J_SV1-NEIGHBOURS', 'rail on the analog strip next to REF25', setp(rof('ADC_AIN'), 1, '5VA_P06')),
+         ('J_SV1-NEIGHBOURS', 'rail on the analog strip next to I_L_OUT (ADC_AIN resistor moved to 5VA_P06)', setp(rof('ADC_AIN'), 1, '5VA_P06')),
          ('J_SV1-GROUP', 'logic node on the analog strip', setp(rof('ADC_AIN'), 1, 'CS_ILOG_N')),
          ('J_SV2-GROUP', 'analog node on the rail/logic strip', setp(rof('CLK_LOCAL'), 1, 'I_DIV')),
          ('J_SV2-SERIES-R-AT-NODE-CLASS', 'pin wired straight to the node (no resistor)', setp('J_SV2', find('J_SV2', 'CS_LOCAL_N'), 'CS_LOCAL_N')),
