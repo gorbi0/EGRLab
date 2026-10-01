@@ -1,7 +1,7 @@
 {
     "$schema": "https://schemas.kicad.org/drc.v1.json",
     "coordinate_units": "mm",
-    "date": "2026-09-30T22:44:43",
+    "date": "2026-10-01T13:20:28",
     "ignored_checks": [
         {
             "description": "Footprint has no courtyard defined",
@@ -42,15 +42,15 @@
                         "x": 51.15197,
                         "y": 38.328664
                     },
-                    "uuid": "31d74e89-3d17-4a5d-8e65-e9db5a979886"
+                    "uuid": "46a4363f-0c12-47ac-9aff-2b6b5a2fdc5d"
                 },
                 {
-                    "description": "Ścieżka [/OUT/ADC_SCLK_DRV] na F.Cu, długość 1,7678 mm",
+                    "description": "Ścieżka [/OUT/ADC_SCLK_DRV] na F.Cu, długość 1,5292 mm",
                     "pos": {
-                        "x": 56.54,
-                        "y": 27.975
+                        "x": 56.3713,
+                        "y": 28.1437
                     },
-                    "uuid": "05bd7233-2fd6-4e37-8223-b900580d0339"
+                    "uuid": "0c9b43ae-ed22-49c2-99e0-68c257569509"
                 }
             ],
             "severity": "error",
@@ -60,20 +60,20 @@
             "description": "Missing connection between items",
             "items": [
                 {
-                    "description": "Ścieżka [ADC_SCLK] na B.Cu, długość 2,5079 mm",
-                    "pos": {
-                        "x": 57.1731,
-                        "y": 35.5312
-                    },
-                    "uuid": "c4e6f1eb-cf0d-4bac-ad1f-08640e4d2ca3"
-                },
-                {
                     "description": "Pole lutownicze 2 [ADC_SCLK] z R36 na F.Cu",
                     "pos": {
                         "x": 51.15197,
                         "y": 41.428664
                     },
-                    "uuid": "189a0622-8045-4979-b4d2-48ac37f15706"
+                    "uuid": "0e97e0eb-6598-4190-b5ca-aa5f15cc1d3c"
+                },
+                {
+                    "description": "Ścieżka [ADC_SCLK] na F.Cu, długość 2,6630 mm",
+                    "pos": {
+                        "x": 55.29,
+                        "y": 32.325
+                    },
+                    "uuid": "3151cd2d-bd3a-41f0-aece-6b9e3d6c67a6"
                 }
             ],
             "severity": "error",
@@ -82,7 +82,53 @@
     ],
     "violations": [
         {
-            "description": "Elementy łączą dwie różne sieci (sieci ADC_SCLK oraz 3V3_CORE)",
+            "description": "Elementy łączą dwie różne sieci (sieci 3V3_CORE oraz ADC_SCLK)",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 2,5000 mm",
+                    "pos": {
+                        "x": 51.7245,
+                        "y": 42.0
+                    },
+                    "uuid": "036ce9da-4564-4274-83c3-282ef8cef75b"
+                },
+                {
+                    "description": "Pole lutownicze 2 [ADC_SCLK] z R36 na F.Cu",
+                    "pos": {
+                        "x": 51.15197,
+                        "y": 41.428664
+                    },
+                    "uuid": "0e97e0eb-6598-4190-b5ca-aa5f15cc1d3c"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci 3V3_CORE oraz ADC_SCLK)",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 0,5133 mm",
+                    "pos": {
+                        "x": 51.7245,
+                        "y": 41.05
+                    },
+                    "uuid": "09c8c51c-f066-43ef-802a-f2e465d9ed84"
+                },
+                {
+                    "description": "Pole lutownicze 2 [ADC_SCLK] z R36 na F.Cu",
+                    "pos": {
+                        "x": 51.15197,
+                        "y": 41.428664
+                    },
+                    "uuid": "0e97e0eb-6598-4190-b5ca-aa5f15cc1d3c"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu ( prześwit 0,2500 mm; obecnie 0,0608 mm)",
             "items": [
                 {
                     "description": "Pole lutownicze 2 [ADC_SCLK] z R36 na F.Cu",
@@ -90,19 +136,65 @@
                         "x": 51.15197,
                         "y": 41.428664
                     },
-                    "uuid": "189a0622-8045-4979-b4d2-48ac37f15706"
+                    "uuid": "0e97e0eb-6598-4190-b5ca-aa5f15cc1d3c"
                 },
                 {
-                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 1,4096 mm",
+                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 1,3435 mm",
                     "pos": {
-                        "x": 49.2245,
-                        "y": 42.0
+                        "x": 52.2378,
+                        "y": 41.05
                     },
-                    "uuid": "e46e0cfd-5cc5-4958-976a-4893179f2c7a"
+                    "uuid": "f13cd78a-d5f3-45ec-9353-119ffc420a1b"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci /OUT/ADC_SCLK_DRV oraz 3V3_CORE)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [/OUT/ADC_SCLK_DRV] z R36 na F.Cu",
+                    "pos": {
+                        "x": 51.15197,
+                        "y": 38.328664
+                    },
+                    "uuid": "46a4363f-0c12-47ac-9aff-2b6b5a2fdc5d"
+                },
+                {
+                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 3,2354 mm",
+                    "pos": {
+                        "x": 50.9,
+                        "y": 37.5
+                    },
+                    "uuid": "8609e975-421f-4236-aca0-9b8933b438df"
                 }
             ],
             "severity": "error",
             "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu ( prześwit 0,2500 mm; obecnie 0,0287 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 4,6150 mm",
+                    "pos": {
+                        "x": 50.9,
+                        "y": 32.884999
+                    },
+                    "uuid": "36f4dbfa-a34d-4868-a4c1-9a4b1676116a"
+                },
+                {
+                    "description": "Pole lutownicze 1 [/OUT/ADC_SCLK_DRV] z R36 na F.Cu",
+                    "pos": {
+                        "x": 51.15197,
+                        "y": 38.328664
+                    },
+                    "uuid": "46a4363f-0c12-47ac-9aff-2b6b5a2fdc5d"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
         },
         {
             "description": "Elementy łączą dwie różne sieci (sieci ADC_SCLK oraz 3V3_CORE)",
@@ -113,15 +205,15 @@
                         "x": 51.15197,
                         "y": 41.428664
                     },
-                    "uuid": "189a0622-8045-4979-b4d2-48ac37f15706"
+                    "uuid": "0e97e0eb-6598-4190-b5ca-aa5f15cc1d3c"
                 },
                 {
-                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 0,7493 mm",
+                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 0,9500 mm",
                     "pos": {
-                        "x": 52.4738,
+                        "x": 51.7245,
                         "y": 41.05
                     },
-                    "uuid": "f8ecca6c-2ef8-4e1d-9d3c-ec527f9a8c98"
+                    "uuid": "276b021c-cfe4-4c3c-ba3f-82686b273cff"
                 }
             ],
             "severity": "error",
@@ -136,199 +228,61 @@
                         "x": 51.15197,
                         "y": 38.328664
                     },
-                    "uuid": "31d74e89-3d17-4a5d-8e65-e9db5a979886"
+                    "uuid": "46a4363f-0c12-47ac-9aff-2b6b5a2fdc5d"
                 },
-                {
-                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 4,2341 mm",
-                    "pos": {
-                        "x": 50.6341,
-                        "y": 42.0
-                    },
-                    "uuid": "fd6f4f7d-4efd-4162-9d61-554a785bb854"
-                }
-            ],
-            "severity": "error",
-            "type": "shorting_items"
-        },
-        {
-            "description": "Elementy łączą dwie różne sieci (sieci ADC_SCLK oraz 3V3_CORE)",
-            "items": [
-                {
-                    "description": "Pole lutownicze 2 [ADC_SCLK] z R36 na F.Cu",
-                    "pos": {
-                        "x": 51.15197,
-                        "y": 41.428664
-                    },
-                    "uuid": "189a0622-8045-4979-b4d2-48ac37f15706"
-                },
-                {
-                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 4,2341 mm",
-                    "pos": {
-                        "x": 50.6341,
-                        "y": 42.0
-                    },
-                    "uuid": "fd6f4f7d-4efd-4162-9d61-554a785bb854"
-                }
-            ],
-            "severity": "error",
-            "type": "shorting_items"
-        },
-        {
-            "description": "Elementy łączą dwie różne sieci (sieci 3V3_CORE oraz /OUT/ADC_SCLK_DRV)",
-            "items": [
-                {
-                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 0,3760 mm",
-                    "pos": {
-                        "x": 50.6341,
-                        "y": 37.7659
-                    },
-                    "uuid": "21e1a19d-3357-4f83-bef9-13d8ea32cc4b"
-                },
-                {
-                    "description": "Pole lutownicze 1 [/OUT/ADC_SCLK_DRV] z R36 na F.Cu",
-                    "pos": {
-                        "x": 51.15197,
-                        "y": 38.328664
-                    },
-                    "uuid": "31d74e89-3d17-4a5d-8e65-e9db5a979886"
-                }
-            ],
-            "severity": "error",
-            "type": "shorting_items"
-        },
-        {
-            "description": "Naruszenie prześwitu ( prześwit 0,2500 mm; obecnie 0,0287 mm)",
-            "items": [
-                {
-                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 0,8086 mm",
-                    "pos": {
-                        "x": 50.3282,
-                        "y": 36.9282
-                    },
-                    "uuid": "0d409935-617b-4c29-88e0-3901353df6bc"
-                },
-                {
-                    "description": "Pole lutownicze 1 [/OUT/ADC_SCLK_DRV] z R36 na F.Cu",
-                    "pos": {
-                        "x": 51.15197,
-                        "y": 38.328664
-                    },
-                    "uuid": "31d74e89-3d17-4a5d-8e65-e9db5a979886"
-                }
-            ],
-            "severity": "error",
-            "type": "clearance"
-        },
-        {
-            "description": "Elementy łączą dwie różne sieci (sieci 3V3_CORE oraz ADC_SCLK)",
-            "items": [
-                {
-                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 1,0904 mm",
-                    "pos": {
-                        "x": 50.6341,
-                        "y": 42.0
-                    },
-                    "uuid": "02ee05c0-b684-4043-87ce-63418ef86c2b"
-                },
-                {
-                    "description": "Pole lutownicze 2 [ADC_SCLK] z R36 na F.Cu",
-                    "pos": {
-                        "x": 51.15197,
-                        "y": 41.428664
-                    },
-                    "uuid": "189a0622-8045-4979-b4d2-48ac37f15706"
-                }
-            ],
-            "severity": "error",
-            "type": "shorting_items"
-        },
-        {
-            "description": "Elementy łączą dwie różne sieci (sieci ADC_SCLK oraz 3V3_CORE)",
-            "items": [
-                {
-                    "description": "Pole lutownicze 2 [ADC_SCLK] z R36 na F.Cu",
-                    "pos": {
-                        "x": 51.15197,
-                        "y": 41.428664
-                    },
-                    "uuid": "189a0622-8045-4979-b4d2-48ac37f15706"
-                },
-                {
-                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 0,9500 mm",
-                    "pos": {
-                        "x": 51.7245,
-                        "y": 42.0
-                    },
-                    "uuid": "1f765d91-ddb1-433e-93a7-f217564928ee"
-                }
-            ],
-            "severity": "error",
-            "type": "shorting_items"
-        },
-        {
-            "description": "Elementy łączą dwie różne sieci (sieci 3V3_CORE oraz /OUT/ADC_SCLK_DRV)",
-            "items": [
                 {
                     "description": "Pole lutownicze 2 [3V3_CORE] z R13 na F.Cu",
                     "pos": {
                         "x": 50.9,
                         "y": 37.5
                     },
-                    "uuid": "1893211d-852f-4a87-8cf4-c181e888eb2c"
-                },
-                {
-                    "description": "Pole lutownicze 1 [/OUT/ADC_SCLK_DRV] z R36 na F.Cu",
-                    "pos": {
-                        "x": 51.15197,
-                        "y": 38.328664
-                    },
-                    "uuid": "31d74e89-3d17-4a5d-8e65-e9db5a979886"
+                    "uuid": "7a1eea9e-85ea-4977-8c29-8027f028bcb2"
                 }
             ],
             "severity": "error",
             "type": "shorting_items"
         },
         {
-            "description": "Elementy łączą dwie różne sieci (sieci ADC_SCLK oraz 3V3_CORE)",
+            "description": "Elementy łączą dwie różne sieci (sieci 3V3_CORE oraz ADC_SCLK)",
             "items": [
-                {
-                    "description": "Pole lutownicze 2 [ADC_SCLK] z R36 na F.Cu",
-                    "pos": {
-                        "x": 51.15197,
-                        "y": 41.428664
-                    },
-                    "uuid": "189a0622-8045-4979-b4d2-48ac37f15706"
-                },
                 {
                     "description": "Pole lutownicze 5 [3V3_CORE] z U3 na F.Cu",
                     "pos": {
                         "x": 51.7245,
                         "y": 41.05
                     },
-                    "uuid": "e7dd348b-254f-438b-aebc-8b2e894fe2c5"
-                }
-            ],
-            "severity": "error",
-            "type": "shorting_items"
-        },
-        {
-            "description": "Elementy łączą dwie różne sieci (sieci ADC_SCLK oraz 3V3_CORE)",
-            "items": [
+                    "uuid": "693d0bc7-36b9-4a40-9d64-babbd3718d43"
+                },
                 {
                     "description": "Pole lutownicze 2 [ADC_SCLK] z R36 na F.Cu",
                     "pos": {
                         "x": 51.15197,
                         "y": 41.428664
                     },
-                    "uuid": "189a0622-8045-4979-b4d2-48ac37f15706"
-                },
+                    "uuid": "0e97e0eb-6598-4190-b5ca-aa5f15cc1d3c"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci 3V3_CORE oraz ADC_SCLK)",
+            "items": [
                 {
                     "description": "Pole lutownicze 6 [3V3_CORE] z U3 na F.Cu",
                     "pos": {
                         "x": 51.7245,
                         "y": 42.0
                     },
-                    "uuid": "de0231f2-9ddc-4921-b766-fd7ee45dc047"
+                    "uuid": "3648b324-0a97-4517-a701-f876a82a30fc"
+                },
+                {
+                    "description": "Pole lutownicze 2 [ADC_SCLK] z R36 na F.Cu",
+                    "pos": {
+                        "x": 51.15197,
+                        "y": 41.428664
+                    },
+                    "uuid": "0e97e0eb-6598-4190-b5ca-aa5f15cc1d3c"
                 }
             ],
             "severity": "error",
@@ -337,44 +291,44 @@
         {
             "description": "Courtyards overlap",
             "items": [
-                {
-                    "description": "Footprint R13",
-                    "pos": {
-                        "x": 52.45,
-                        "y": 37.5
-                    },
-                    "uuid": "414d99e8-595f-4ac7-929b-a5e4d4b78fc7"
-                },
-                {
-                    "description": "Footprint R36",
-                    "pos": {
-                        "x": 51.15197,
-                        "y": 39.878664
-                    },
-                    "uuid": "4161a585-d808-409c-baa8-25aee4df66c0"
-                }
-            ],
-            "severity": "error",
-            "type": "courtyards_overlap"
-        },
-        {
-            "description": "Courtyards overlap",
-            "items": [
-                {
-                    "description": "Footprint R36",
-                    "pos": {
-                        "x": 51.15197,
-                        "y": 39.878664
-                    },
-                    "uuid": "4161a585-d808-409c-baa8-25aee4df66c0"
-                },
                 {
                     "description": "Footprint U3",
                     "pos": {
                         "x": 52.862,
                         "y": 41.05
                     },
-                    "uuid": "46cb4b48-b0f2-44a0-824b-658e3b5a63b6"
+                    "uuid": "63aaae78-3f74-4fc7-b79a-a0b181caabe0"
+                },
+                {
+                    "description": "Footprint R36",
+                    "pos": {
+                        "x": 51.15197,
+                        "y": 39.878664
+                    },
+                    "uuid": "9ad6f277-89d8-4918-8777-289fbcebb270"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint C3",
+                    "pos": {
+                        "x": 47.662,
+                        "y": 42.0
+                    },
+                    "uuid": "776c02f2-49b8-4fef-b91f-5049b56ae891"
+                },
+                {
+                    "description": "Footprint R36",
+                    "pos": {
+                        "x": 51.15197,
+                        "y": 39.878664
+                    },
+                    "uuid": "9ad6f277-89d8-4918-8777-289fbcebb270"
                 }
             ],
             "severity": "error",
@@ -389,15 +343,15 @@
                         "x": 51.15197,
                         "y": 39.878664
                     },
-                    "uuid": "4161a585-d808-409c-baa8-25aee4df66c0"
+                    "uuid": "9ad6f277-89d8-4918-8777-289fbcebb270"
                 },
                 {
-                    "description": "Footprint C3",
+                    "description": "Footprint R13",
                     "pos": {
-                        "x": 47.662,
-                        "y": 42.0
+                        "x": 52.45,
+                        "y": 37.5
                     },
-                    "uuid": "72c801a8-d54b-4f1f-a5a8-e20045774ba8"
+                    "uuid": "9f6c3659-e682-414b-b0e0-710e1c82c1f4"
                 }
             ],
             "severity": "error",
@@ -407,81 +361,12 @@
             "description": "Przednia soldermaska łączy elementy o różnych sieciach",
             "items": [
                 {
-                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 1,4096 mm",
+                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 3,2354 mm",
                     "pos": {
-                        "x": 49.2245,
-                        "y": 42.0
+                        "x": 50.9,
+                        "y": 37.5
                     },
-                    "uuid": "e46e0cfd-5cc5-4958-976a-4893179f2c7a"
-                },
-                {
-                    "description": "Pole lutownicze 2 [ADC_SCLK] z R36 na F.Cu",
-                    "pos": {
-                        "x": 51.15197,
-                        "y": 41.428664
-                    },
-                    "uuid": "189a0622-8045-4979-b4d2-48ac37f15706"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
-            "items": [
-                {
-                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 0,7493 mm",
-                    "pos": {
-                        "x": 52.4738,
-                        "y": 41.05
-                    },
-                    "uuid": "f8ecca6c-2ef8-4e1d-9d3c-ec527f9a8c98"
-                },
-                {
-                    "description": "Pole lutownicze 2 [ADC_SCLK] z R36 na F.Cu",
-                    "pos": {
-                        "x": 51.15197,
-                        "y": 41.428664
-                    },
-                    "uuid": "189a0622-8045-4979-b4d2-48ac37f15706"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
-            "items": [
-                {
-                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 4,2341 mm",
-                    "pos": {
-                        "x": 50.6341,
-                        "y": 42.0
-                    },
-                    "uuid": "fd6f4f7d-4efd-4162-9d61-554a785bb854"
-                },
-                {
-                    "description": "Pole lutownicze 2 [ADC_SCLK] z R36 na F.Cu",
-                    "pos": {
-                        "x": 51.15197,
-                        "y": 41.428664
-                    },
-                    "uuid": "189a0622-8045-4979-b4d2-48ac37f15706"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
-            "items": [
-                {
-                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 4,2341 mm",
-                    "pos": {
-                        "x": 50.6341,
-                        "y": 42.0
-                    },
-                    "uuid": "fd6f4f7d-4efd-4162-9d61-554a785bb854"
+                    "uuid": "8609e975-421f-4236-aca0-9b8933b438df"
                 },
                 {
                     "description": "Pole lutownicze 1 [/OUT/ADC_SCLK_DRV] z R36 na F.Cu",
@@ -489,7 +374,7 @@
                         "x": 51.15197,
                         "y": 38.328664
                     },
-                    "uuid": "31d74e89-3d17-4a5d-8e65-e9db5a979886"
+                    "uuid": "46a4363f-0c12-47ac-9aff-2b6b5a2fdc5d"
                 }
             ],
             "severity": "error",
@@ -499,12 +384,12 @@
             "description": "Przednia soldermaska łączy elementy o różnych sieciach",
             "items": [
                 {
-                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 1,0904 mm",
+                    "description": "Pole lutownicze 5 [3V3_CORE] z U3 na F.Cu",
                     "pos": {
-                        "x": 50.6341,
-                        "y": 42.0
+                        "x": 51.7245,
+                        "y": 41.05
                     },
-                    "uuid": "02ee05c0-b684-4043-87ce-63418ef86c2b"
+                    "uuid": "693d0bc7-36b9-4a40-9d64-babbd3718d43"
                 },
                 {
                     "description": "Pole lutownicze 2 [ADC_SCLK] z R36 na F.Cu",
@@ -512,7 +397,76 @@
                         "x": 51.15197,
                         "y": 41.428664
                     },
-                    "uuid": "189a0622-8045-4979-b4d2-48ac37f15706"
+                    "uuid": "0e97e0eb-6598-4190-b5ca-aa5f15cc1d3c"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole lutownicze 6 [3V3_CORE] z U3 na F.Cu",
+                    "pos": {
+                        "x": 51.7245,
+                        "y": 42.0
+                    },
+                    "uuid": "3648b324-0a97-4517-a701-f876a82a30fc"
+                },
+                {
+                    "description": "Pole lutownicze 2 [ADC_SCLK] z R36 na F.Cu",
+                    "pos": {
+                        "x": 51.15197,
+                        "y": 41.428664
+                    },
+                    "uuid": "0e97e0eb-6598-4190-b5ca-aa5f15cc1d3c"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 2,5000 mm",
+                    "pos": {
+                        "x": 51.7245,
+                        "y": 42.0
+                    },
+                    "uuid": "036ce9da-4564-4274-83c3-282ef8cef75b"
+                },
+                {
+                    "description": "Pole lutownicze 2 [ADC_SCLK] z R36 na F.Cu",
+                    "pos": {
+                        "x": 51.15197,
+                        "y": 41.428664
+                    },
+                    "uuid": "0e97e0eb-6598-4190-b5ca-aa5f15cc1d3c"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 0,5133 mm",
+                    "pos": {
+                        "x": 51.7245,
+                        "y": 41.05
+                    },
+                    "uuid": "09c8c51c-f066-43ef-802a-f2e465d9ed84"
+                },
+                {
+                    "description": "Pole lutownicze 2 [ADC_SCLK] z R36 na F.Cu",
+                    "pos": {
+                        "x": 51.15197,
+                        "y": 41.428664
+                    },
+                    "uuid": "0e97e0eb-6598-4190-b5ca-aa5f15cc1d3c"
                 }
             ],
             "severity": "error",
@@ -525,9 +479,9 @@
                     "description": "Ścieżka [3V3_CORE] na F.Cu, długość 0,9500 mm",
                     "pos": {
                         "x": 51.7245,
-                        "y": 42.0
+                        "y": 41.05
                     },
-                    "uuid": "1f765d91-ddb1-433e-93a7-f217564928ee"
+                    "uuid": "276b021c-cfe4-4c3c-ba3f-82686b273cff"
                 },
                 {
                     "description": "Pole lutownicze 2 [ADC_SCLK] z R36 na F.Cu",
@@ -535,7 +489,7 @@
                         "x": 51.15197,
                         "y": 41.428664
                     },
-                    "uuid": "189a0622-8045-4979-b4d2-48ac37f15706"
+                    "uuid": "0e97e0eb-6598-4190-b5ca-aa5f15cc1d3c"
                 }
             ],
             "severity": "error",
@@ -544,90 +498,21 @@
         {
             "description": "Przednia soldermaska łączy elementy o różnych sieciach",
             "items": [
-                {
-                    "description": "Ścieżka [3V3_CORE] na F.Cu, długość 0,3760 mm",
-                    "pos": {
-                        "x": 50.6341,
-                        "y": 37.7659
-                    },
-                    "uuid": "21e1a19d-3357-4f83-bef9-13d8ea32cc4b"
-                },
                 {
                     "description": "Pole lutownicze 1 [/OUT/ADC_SCLK_DRV] z R36 na F.Cu",
                     "pos": {
                         "x": 51.15197,
                         "y": 38.328664
                     },
-                    "uuid": "31d74e89-3d17-4a5d-8e65-e9db5a979886"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
-            "items": [
+                    "uuid": "46a4363f-0c12-47ac-9aff-2b6b5a2fdc5d"
+                },
                 {
                     "description": "Pole lutownicze 2 [3V3_CORE] z R13 na F.Cu",
                     "pos": {
                         "x": 50.9,
                         "y": 37.5
                     },
-                    "uuid": "1893211d-852f-4a87-8cf4-c181e888eb2c"
-                },
-                {
-                    "description": "Pole lutownicze 1 [/OUT/ADC_SCLK_DRV] z R36 na F.Cu",
-                    "pos": {
-                        "x": 51.15197,
-                        "y": 38.328664
-                    },
-                    "uuid": "31d74e89-3d17-4a5d-8e65-e9db5a979886"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
-            "items": [
-                {
-                    "description": "Pole lutownicze 2 [ADC_SCLK] z R36 na F.Cu",
-                    "pos": {
-                        "x": 51.15197,
-                        "y": 41.428664
-                    },
-                    "uuid": "189a0622-8045-4979-b4d2-48ac37f15706"
-                },
-                {
-                    "description": "Pole lutownicze 6 [3V3_CORE] z U3 na F.Cu",
-                    "pos": {
-                        "x": 51.7245,
-                        "y": 42.0
-                    },
-                    "uuid": "de0231f2-9ddc-4921-b766-fd7ee45dc047"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
-            "items": [
-                {
-                    "description": "Pole lutownicze 2 [ADC_SCLK] z R36 na F.Cu",
-                    "pos": {
-                        "x": 51.15197,
-                        "y": 41.428664
-                    },
-                    "uuid": "189a0622-8045-4979-b4d2-48ac37f15706"
-                },
-                {
-                    "description": "Pole lutownicze 5 [3V3_CORE] z U3 na F.Cu",
-                    "pos": {
-                        "x": 51.7245,
-                        "y": 41.05
-                    },
-                    "uuid": "e7dd348b-254f-438b-aebc-8b2e894fe2c5"
+                    "uuid": "7a1eea9e-85ea-4977-8c29-8027f028bcb2"
                 }
             ],
             "severity": "error",
@@ -637,12 +522,12 @@
             "description": "Track has unconnected end",
             "items": [
                 {
-                    "description": "Ścieżka [/OUT/ADC_SCLK_DRV] na F.Cu, długość 1,7678 mm",
+                    "description": "Ścieżka [/OUT/ADC_SCLK_DRV] na F.Cu, długość 1,5292 mm",
                     "pos": {
-                        "x": 56.54,
-                        "y": 27.975
+                        "x": 56.3713,
+                        "y": 28.1437
                     },
-                    "uuid": "05bd7233-2fd6-4e37-8223-b900580d0339"
+                    "uuid": "0c9b43ae-ed22-49c2-99e0-68c257569509"
                 }
             ],
             "severity": "warning",
@@ -652,16 +537,31 @@
             "description": "Track has unconnected end",
             "items": [
                 {
-                    "description": "Ścieżka [ADC_SCLK] na F.Cu, długość 2,6631 mm",
+                    "description": "Ścieżka [ADC_SCLK] na F.Cu, długość 2,6630 mm",
                     "pos": {
                         "x": 55.29,
                         "y": 32.325
                     },
-                    "uuid": "dfc88ed0-c3ce-4d5b-b309-8b4c1f8cb730"
+                    "uuid": "3151cd2d-bd3a-41f0-aece-6b9e3d6c67a6"
                 }
             ],
             "severity": "warning",
             "type": "track_dangling"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP3",
+                    "pos": {
+                        "x": 122.07,
+                        "y": 13.33
+                    },
+                    "uuid": "09a1dcc6-96a3-470e-96fa-b32bc15b5cb0"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
         },
         {
             "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
@@ -672,7 +572,7 @@
                         "x": 95.24,
                         "y": 95.96
                     },
-                    "uuid": "0a6ee136-4a96-4a2e-a9b7-f32c2df576cb"
+                    "uuid": "5b4edf46-36d7-445d-88fc-f9ce7af3b5e4"
                 }
             ],
             "severity": "warning",
@@ -687,37 +587,7 @@
                         "x": 68.57,
                         "y": 13.33
                     },
-                    "uuid": "6dab7cf8-732d-4f47-ae4b-372922e1d972"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_mismatch"
-        },
-        {
-            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
-            "items": [
-                {
-                    "description": "Footprint J_BP3",
-                    "pos": {
-                        "x": 122.07,
-                        "y": 13.33
-                    },
-                    "uuid": "9266a913-8aed-4afb-9e74-b067e7b3a5b3"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_mismatch"
-        },
-        {
-            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
-            "items": [
-                {
-                    "description": "Footprint J_BP1",
-                    "pos": {
-                        "x": 15.07,
-                        "y": 13.33
-                    },
-                    "uuid": "a80213d2-2787-4048-813b-378ebcf4c217"
+                    "uuid": "9c07bd91-9bc8-4700-a6b2-17477468fe51"
                 }
             ],
             "severity": "warning",
@@ -732,7 +602,22 @@
                         "x": 41.74,
                         "y": 95.96
                     },
-                    "uuid": "b3751391-fdd9-448e-9b38-e99104272b97"
+                    "uuid": "a0d4e1d8-8c46-46dc-b0b5-1592446201e0"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP1",
+                    "pos": {
+                        "x": 15.07,
+                        "y": 13.33
+                    },
+                    "uuid": "cf765136-ac4b-47f7-aeb8-9b08bc11b136"
                 }
             ],
             "severity": "warning",
@@ -747,11 +632,26 @@
                         "x": 148.74,
                         "y": 95.96
                     },
-                    "uuid": "dfccef00-2e4f-4e0a-8e7e-a616339a35e4"
+                    "uuid": "cf9ef047-efe4-428d-b6dd-3750c5209d2a"
                 }
             ],
             "severity": "warning",
             "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment z R36 na F.Silkscreen",
+                    "pos": {
+                        "x": 52.06197,
+                        "y": 39.1516
+                    },
+                    "uuid": "afd8deef-8ff5-4a55-88d1-afac812d426f"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
         },
         {
             "description": "Silkscreen clipped by solder mask",
@@ -762,22 +662,7 @@
                         "x": 53.177064,
                         "y": 38.41
                     },
-                    "uuid": "693e26f2-dc81-4d65-82ed-5543b35395dd"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Segment z R36 na F.Silkscreen",
-                    "pos": {
-                        "x": 52.06197,
-                        "y": 39.1516
-                    },
-                    "uuid": "3312e32d-2427-404a-b0ff-25ed8127094a"
+                    "uuid": "af7a541a-bc90-4a1e-a6bf-d16961525505"
                 }
             ],
             "severity": "warning",
@@ -787,20 +672,20 @@
             "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
             "items": [
                 {
-                    "description": "Segment z R36 na F.Silkscreen",
-                    "pos": {
-                        "x": 52.06197,
-                        "y": 39.1516
-                    },
-                    "uuid": "3312e32d-2427-404a-b0ff-25ed8127094a"
-                },
-                {
                     "description": "Segment z U3 na F.Silkscreen",
                     "pos": {
                         "x": 51.952,
                         "y": 39.49
                     },
-                    "uuid": "945caf58-698b-4137-b9a7-0ffda58c8279"
+                    "uuid": "9775368f-e65c-4212-a27a-aa3cbe8857b2"
+                },
+                {
+                    "description": "Segment z R36 na F.Silkscreen",
+                    "pos": {
+                        "x": 52.06197,
+                        "y": 39.1516
+                    },
+                    "uuid": "afd8deef-8ff5-4a55-88d1-afac812d426f"
                 }
             ],
             "severity": "warning",
@@ -815,7 +700,7 @@
                         "x": 52.06197,
                         "y": 39.1516
                     },
-                    "uuid": "3312e32d-2427-404a-b0ff-25ed8127094a"
+                    "uuid": "afd8deef-8ff5-4a55-88d1-afac812d426f"
                 },
                 {
                     "description": "Segment z U3 na F.Silkscreen",
@@ -823,30 +708,7 @@
                         "x": 51.952,
                         "y": 39.54
                     },
-                    "uuid": "8b32f532-c66f-4749-b2b4-2487e760ff1d"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_overlap"
-        },
-        {
-            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
-            "items": [
-                {
-                    "description": "Pole odnośnika do U4",
-                    "pos": {
-                        "x": 57.0,
-                        "y": 42.493
-                    },
-                    "uuid": "0dda56e1-a9ef-4fa7-b2f0-d2a3775c0df6"
-                },
-                {
-                    "description": "Pole odnośnika do R36",
-                    "pos": {
-                        "x": 57.15197,
-                        "y": 43.173664
-                    },
-                    "uuid": "6380364d-75f5-42b3-a7e3-0848a6bea951"
+                    "uuid": "def6baa4-b754-4ddf-b98a-85b6ce38c949"
                 }
             ],
             "severity": "warning",
@@ -861,7 +723,7 @@
                         "x": 57.15197,
                         "y": 43.173664
                     },
-                    "uuid": "6380364d-75f5-42b3-a7e3-0848a6bea951"
+                    "uuid": "19152d88-f8ca-4f93-8319-60549a88bd05"
                 },
                 {
                     "description": "Wielokąt z U4 na F.Silkscreen",
@@ -869,7 +731,7 @@
                         "x": 55.51,
                         "y": 43.938
                     },
-                    "uuid": "66ab6b26-e02f-4415-a628-f3b87df006f2"
+                    "uuid": "83414505-fd87-48b3-b27f-d7dcbe1e74a7"
                 }
             ],
             "severity": "warning",

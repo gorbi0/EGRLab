@@ -69,11 +69,11 @@ PASS SUP_N low at 3.0V below MCP VIL=0.6V
 PASS P04 R17 default low from worst-case leakage below 0.8V 
 PASS P04 active input high above 2.0V 
 PASS U6 output and P04 receiver retain reviewed topology 
-PASS R6 path estimate within the 10 ns/V limit (estimate, not a guarantee) 
-Reset budget: 8 checks; 4 mutations detected
+PASS R6 path estimate within the 10 ns/V limit, with the service branch behind R70 (estimate, not a guarantee) 
+Reset budget: 8 checks; 5 mutations detected
 > /usr/bin/python3 verify_jbp.py
 PASS C1 every R5 connector signal (J1..J10) and PFAIL_N exactly once on J_BP1..3, no other signals
-PASS C2 5V_SYS twice on J_BP2, 3V3_IO once on J_BP3
+PASS C2 5V_SYS three times on J_BP2, 3V3_IO once on J_BP3
 PASS C0 three 2x10 edge-A connectors, 20 connected pins each
 PASS C3 odd pins are GND except the justified exceptions (static signals or supplies only)
 PASS C4 ADC_SCLK, SPI3_SCLK and MEAS_EN have GND on both ribbon sides
@@ -83,7 +83,9 @@ PASS C7 PFAIL_N GPIO is GPIO3 (J1-13), not PSRAM, 1.8 V, boot strap, UART0 or US
 PASS C8 at most 3 service headers, <= 13 pins, GND on first and last pin
 PASS C9 every service pin except GND reaches its node through one series resistor >= 1K
 PASS C10 service headers cover the ODBIOR minimum (rails, reset, EN = SUP_N, PFAIL_N, start states), no node twice
-PASS C11 series value class (S1 §6): rails 1K, high-impedance nodes 10K
+PASS C11 series value class (S1 §6): rails 1K, high-impedance nodes 10K, SUP_N_OUT 10K (reset edge, exception 1.10)
+PASS C12 rails on the service headers only next to GND, another rail or a 10K high-impedance line
+PASS C13 docs/ODBIOR.md: every service pin reference J_SVn.p names the node of that pin
 OK     null control (no defect) -> []
 OK     J_BP3 pin 7 unconnected -> ['C1', 'C0', 'C3', 'C5']
 OK     CAN_RX lost from J_BP1.8 -> ['C1', 'C0', 'C5']
@@ -103,17 +105,20 @@ OK     series resistor 0R -> ['C6']
 OK     PFAIL_N wired straight to the GPIO -> ['C6', 'C7']
 OK     PFAIL_N on GPIO37 PSRAM -> ['C7']
 OK     PFAIL_N on GPIO46 strap -> ['C7']
-OK     service header without GND at the end -> ['C8', 'C9']
-OK     service pin straight on 3V3_CORE -> ['C9', 'C10']
-OK     service resistor 100R -> ['C9', 'C10']
-OK     SUP_N (EN) not on a service header -> ['C10']
+OK     service header without GND at the end -> ['C8', 'C9', 'C12']
+OK     service pin straight on 3V3_CORE -> ['C9', 'C13']
+OK     service resistor 100R -> ['C9', 'C10', 'C13']
+OK     SUP_N (EN) not on a service header -> ['C10', 'C13']
 OK     5V_SYS service resistor 10K -> ['C11']
-OK     SUP_RAW_N service resistor 1K -> ['C11']
-12 checks; 25/25 controls as expected (1 null); checks without control: []
+OK     SUP_RAW_N service resistor 1K -> ['C11', 'C12']
+OK     SUP_N_OUT service resistor back to 1K (R70) -> ['C11']
+OK     3V3_CORE between CS_ILOG_N and CS_ITEST_N (swap J_SV1 pins 10/6) -> ['C12', 'C13']
+OK     5V_SYS and 5V_M1 swapped on J_SV2 (ODBIOR names J_SV2.2 = 5V_SYS) -> ['C13']
+14 checks; 28/28 controls as expected (1 null); checks without control: []
 > /usr/bin/python3 write_tables.py
 tables: 60 J_BP rows, 39 service rows, 511 netlist rows
 > /usr/bin/python3 /home/tgorbacz/AI/Claude/EGRLab/Plytki/P03-R6-review/verification/check_tables.py
-{'pass': True, 'csv_rows': {'BOM.csv': 122, 'J_BP.csv': 60, 'SERWIS.csv': 39, 'STANY-DOMYSLNE.csv': 26, 'netlist-pinowa.csv': 511, 'zakupy.csv': 23}, 'cad_pins_checked': 511, 'purchase_parts_checked': 114}
+{'pass': True, 'csv_rows': {'BOM.csv': 122, 'J_BP.csv': 60, 'SERWIS.csv': 39, 'STANY-DOMYSLNE.csv': 26, 'netlist-pinowa.csv': 511, 'zakupy.csv': 23}, 'sticker_pins': 39, 'cad_pins_checked': 511, 'purchase_parts_checked': 114}
 > /usr/bin/kicad-cli sch export pdf -o output/pdf/P03-R6-schemat.pdf eda/P03.kicad_sch
 > /opt/egrlab/env/bin/pdftoppm -png -r 60 output/pdf/P03-R6-schemat.pdf output/previews/sch
 P03-R6 schematic stage: generation and checks complete. PCB: local session (layout requirements in README).

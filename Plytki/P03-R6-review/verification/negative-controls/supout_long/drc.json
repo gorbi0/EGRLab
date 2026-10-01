@@ -1,7 +1,7 @@
 {
     "$schema": "https://schemas.kicad.org/drc.v1.json",
     "coordinate_units": "mm",
-    "date": "2026-09-30T22:45:06",
+    "date": "2026-10-01T13:20:51",
     "ignored_checks": [
         {
             "description": "Footprint has no courtyard defined",
@@ -42,7 +42,7 @@
                         "x": 0.3,
                         "y": 0.3
                     },
-                    "uuid": "e31e807b-afc9-4ca1-9168-be0ab2230087"
+                    "uuid": "a523421c-c91f-405f-bad7-1d1eec976d27"
                 },
                 {
                     "description": "Strefa [GND] na F.Cu, priorytet 0",
@@ -50,7 +50,7 @@
                         "x": 0.3,
                         "y": 0.3
                     },
-                    "uuid": "e31e807b-afc9-4ca1-9168-be0ab2230087"
+                    "uuid": "a523421c-c91f-405f-bad7-1d1eec976d27"
                 }
             ],
             "severity": "error",
@@ -60,20 +60,20 @@
             "description": "Missing connection between items",
             "items": [
                 {
-                    "description": "Ścieżka [SUP_N_OUT] na F.Cu, długość 0,3536 mm",
-                    "pos": {
-                        "x": 128.919999,
-                        "y": 16.79
-                    },
-                    "uuid": "95288568-3df4-4318-afcc-ede3b44ccb75"
-                },
-                {
                     "description": "Ścieżka [SUP_N_OUT] na B.Cu, długość 40,0000 mm",
                     "pos": {
                         "x": 129.169999,
                         "y": 16.54
                     },
-                    "uuid": "3930d814-cad1-48fe-8995-72ba9bd4e8c3"
+                    "uuid": "8f21ea37-a228-46b1-a508-6f36a6f11c68"
+                },
+                {
+                    "description": "Pole lutownicze 2 [SUP_N_OUT] z R41 na F.Cu",
+                    "pos": {
+                        "x": 129.17,
+                        "y": 16.54
+                    },
+                    "uuid": "a6d4db27-7831-4095-a44f-1384cc8d9766"
                 }
             ],
             "severity": "error",
@@ -85,12 +85,12 @@
             "description": "Tracks crossing",
             "items": [
                 {
-                    "description": "Ścieżka [3V3_CORE] na B.Cu, długość 18,9420 mm",
+                    "description": "Ścieżka [INTERLOCK] na B.Cu, długość 25,2456 mm",
                     "pos": {
-                        "x": 136.251,
-                        "y": 41.2859
+                        "x": 134.511,
+                        "y": 29.466
                     },
-                    "uuid": "2eb2d5d9-8dfe-49fe-89d2-3d9066548926"
+                    "uuid": "52215853-e35d-4099-8ca0-a48f47358304"
                 },
                 {
                     "description": "Ścieżka [SUP_N_OUT] na B.Cu, długość 40,0000 mm",
@@ -98,7 +98,7 @@
                         "x": 129.169999,
                         "y": 16.54
                     },
-                    "uuid": "3930d814-cad1-48fe-8995-72ba9bd4e8c3"
+                    "uuid": "8f21ea37-a228-46b1-a508-6f36a6f11c68"
                 }
             ],
             "severity": "error",
@@ -113,84 +113,15 @@
                         "x": 129.169999,
                         "y": 16.54
                     },
-                    "uuid": "3930d814-cad1-48fe-8995-72ba9bd4e8c3"
+                    "uuid": "8f21ea37-a228-46b1-a508-6f36a6f11c68"
                 },
                 {
-                    "description": "Ścieżka [/SERWIS/SV_MEAS_EN] na B.Cu, długość 10,0500 mm",
+                    "description": "Ścieżka [HEARTBEAT] na B.Cu, długość 18,1543 mm",
                     "pos": {
-                        "x": 131.05,
-                        "y": 50.0
+                        "x": 138.58,
+                        "y": 15.3787
                     },
-                    "uuid": "cd2a11a3-d62c-4816-8393-e635c0dec5ae"
-                }
-            ],
-            "severity": "error",
-            "type": "tracks_crossing"
-        },
-        {
-            "description": "Naruszenie prześwitu ( prześwit 0,2500 mm; obecnie 0,2300 mm)",
-            "items": [
-                {
-                    "description": "Ścieżka [SUP_N_OUT] na B.Cu, długość 40,0000 mm",
-                    "pos": {
-                        "x": 129.169999,
-                        "y": 16.54
-                    },
-                    "uuid": "3930d814-cad1-48fe-8995-72ba9bd4e8c3"
-                },
-                {
-                    "description": "Przelotka [GND] na F.Cu - B.Cu",
-                    "pos": {
-                        "x": 130.0,
-                        "y": 40.0
-                    },
-                    "uuid": "e6fa4139-f6ff-4d23-9654-3d29fc52c486"
-                }
-            ],
-            "severity": "error",
-            "type": "clearance"
-        },
-        {
-            "description": "Elementy łączą dwie różne sieci (sieci SPI3_SCLK oraz SUP_N_OUT)",
-            "items": [
-                {
-                    "description": "Ścieżka [SPI3_SCLK] na B.Cu, długość 28,2756 mm",
-                    "pos": {
-                        "x": 143.42,
-                        "y": 70.9
-                    },
-                    "uuid": "253813bb-dcde-407e-8039-44f32d707238"
-                },
-                {
-                    "description": "Ścieżka [SUP_N_OUT] na B.Cu, długość 40,0000 mm",
-                    "pos": {
-                        "x": 129.169999,
-                        "y": 16.54
-                    },
-                    "uuid": "3930d814-cad1-48fe-8995-72ba9bd4e8c3"
-                }
-            ],
-            "severity": "error",
-            "type": "shorting_items"
-        },
-        {
-            "description": "Tracks crossing",
-            "items": [
-                {
-                    "description": "Ścieżka [SUP_N_OUT] na B.Cu, długość 40,0000 mm",
-                    "pos": {
-                        "x": 129.169999,
-                        "y": 16.54
-                    },
-                    "uuid": "3930d814-cad1-48fe-8995-72ba9bd4e8c3"
-                },
-                {
-                    "description": "Ścieżka [INTERLOCK] na B.Cu, długość 19,2787 mm",
-                    "pos": {
-                        "x": 133.562099,
-                        "y": 25.2959
-                    },
-                    "uuid": "832773e9-065d-4d2a-bb1f-efd572479fe7"
+                    "uuid": "ad59dae5-4ebb-42c9-b5f4-ced941292a2d"
                 }
             ],
             "severity": "error",
@@ -200,20 +131,20 @@
             "description": "Tracks crossing",
             "items": [
                 {
+                    "description": "Ścieżka [MCU_ARM] na B.Cu, długość 46,1325 mm",
+                    "pos": {
+                        "x": 143.5917,
+                        "y": 13.895
+                    },
+                    "uuid": "0dace734-c7de-42ff-b50f-1bcf20c41f8f"
+                },
+                {
                     "description": "Ścieżka [SUP_N_OUT] na B.Cu, długość 40,0000 mm",
                     "pos": {
                         "x": 129.169999,
                         "y": 16.54
                     },
-                    "uuid": "3930d814-cad1-48fe-8995-72ba9bd4e8c3"
-                },
-                {
-                    "description": "Ścieżka [HW_ARMED] na B.Cu, długość 7,6014 mm",
-                    "pos": {
-                        "x": 132.6587,
-                        "y": 24.4286
-                    },
-                    "uuid": "bc76a433-9bb2-464f-9032-d14a4a4f83d0"
+                    "uuid": "8f21ea37-a228-46b1-a508-6f36a6f11c68"
                 }
             ],
             "severity": "error",
@@ -223,20 +154,20 @@
             "description": "Tracks crossing",
             "items": [
                 {
+                    "description": "Ścieżka [PWM] na B.Cu, długość 10,7895 mm",
+                    "pos": {
+                        "x": 136.0401,
+                        "y": 13.767
+                    },
+                    "uuid": "58613785-25ab-4964-b181-9b867df1e208"
+                },
+                {
                     "description": "Ścieżka [SUP_N_OUT] na B.Cu, długość 40,0000 mm",
                     "pos": {
                         "x": 129.169999,
                         "y": 16.54
                     },
-                    "uuid": "3930d814-cad1-48fe-8995-72ba9bd4e8c3"
-                },
-                {
-                    "description": "Ścieżka [HEARTBEAT] na B.Cu, długość 18,2240 mm",
-                    "pos": {
-                        "x": 133.1104,
-                        "y": 25.084
-                    },
-                    "uuid": "bd696ca2-4401-47a3-bde5-f4c3b309a181"
+                    "uuid": "8f21ea37-a228-46b1-a508-6f36a6f11c68"
                 }
             ],
             "severity": "error",
@@ -246,20 +177,20 @@
             "description": "Tracks crossing",
             "items": [
                 {
+                    "description": "Ścieżka [SUP_N] na B.Cu, długość 11,1985 mm",
+                    "pos": {
+                        "x": 136.2322,
+                        "y": 14.9966
+                    },
+                    "uuid": "7556a2aa-5c8e-4071-bbbf-85420e697d3f"
+                },
+                {
                     "description": "Ścieżka [SUP_N_OUT] na B.Cu, długość 40,0000 mm",
                     "pos": {
                         "x": 129.169999,
                         "y": 16.54
                     },
-                    "uuid": "3930d814-cad1-48fe-8995-72ba9bd4e8c3"
-                },
-                {
-                    "description": "Ścieżka [SPI3_SCLK] na B.Cu, długość 28,3951 mm",
-                    "pos": {
-                        "x": 126.6105,
-                        "y": 34.0993
-                    },
-                    "uuid": "c7dd6e54-596d-4d52-8d8d-469a950629c3"
+                    "uuid": "8f21ea37-a228-46b1-a508-6f36a6f11c68"
                 }
             ],
             "severity": "error",
@@ -269,20 +200,20 @@
             "description": "Tracks crossing",
             "items": [
                 {
+                    "description": "Ścieżka [TC1_CS] na B.Cu, długość 9,0497 mm",
+                    "pos": {
+                        "x": 127.0326,
+                        "y": 20.2449
+                    },
+                    "uuid": "3d925db2-6477-4da0-8cba-9758b753dd96"
+                },
+                {
                     "description": "Ścieżka [SUP_N_OUT] na B.Cu, długość 40,0000 mm",
                     "pos": {
                         "x": 129.169999,
                         "y": 16.54
                     },
-                    "uuid": "3930d814-cad1-48fe-8995-72ba9bd4e8c3"
-                },
-                {
-                    "description": "Ścieżka [SPI3_MOSI] na B.Cu, długość 9,1542 mm",
-                    "pos": {
-                        "x": 133.449199,
-                        "y": 22.4839
-                    },
-                    "uuid": "ce3c4a5c-a89f-4a60-94ea-66320025a139"
+                    "uuid": "8f21ea37-a228-46b1-a508-6f36a6f11c68"
                 }
             ],
             "severity": "error",
@@ -292,58 +223,58 @@
             "description": "Tracks crossing",
             "items": [
                 {
+                    "description": "Ścieżka [HW_ARMED] na B.Cu, długość 28,4336 mm",
+                    "pos": {
+                        "x": 122.2844,
+                        "y": 34.0558
+                    },
+                    "uuid": "01ab7225-ee90-46a8-a82e-f58a32efe611"
+                },
+                {
                     "description": "Ścieżka [SUP_N_OUT] na B.Cu, długość 40,0000 mm",
                     "pos": {
                         "x": 129.169999,
                         "y": 16.54
                     },
-                    "uuid": "3930d814-cad1-48fe-8995-72ba9bd4e8c3"
-                },
-                {
-                    "description": "Ścieżka [SENSOR_ENABLE] na B.Cu, długość 14,2440 mm",
-                    "pos": {
-                        "x": 132.229999,
-                        "y": 18.1441
-                    },
-                    "uuid": "5bf2176f-bd92-4034-a704-0ecd27c146e0"
+                    "uuid": "8f21ea37-a228-46b1-a508-6f36a6f11c68"
                 }
             ],
             "severity": "error",
             "type": "tracks_crossing"
         },
         {
-            "description": "Naruszenie prześwitu ( prześwit 0,2500 mm; obecnie 0,2048 mm)",
+            "description": "Tracks crossing",
             "items": [
+                {
+                    "description": "Ścieżka [3V3_CORE] na B.Cu, długość 19,5037 mm",
+                    "pos": {
+                        "x": 137.4098,
+                        "y": 63.897
+                    },
+                    "uuid": "85476917-5e0d-4a1a-9fa9-ee19db9e4dcb"
+                },
                 {
                     "description": "Ścieżka [SUP_N_OUT] na B.Cu, długość 40,0000 mm",
                     "pos": {
                         "x": 129.169999,
                         "y": 16.54
                     },
-                    "uuid": "3930d814-cad1-48fe-8995-72ba9bd4e8c3"
-                },
-                {
-                    "description": "Przelotka [SUP_N] na F.Cu - B.Cu",
-                    "pos": {
-                        "x": 128.365199,
-                        "y": 20.8111
-                    },
-                    "uuid": "99b969df-5263-4adf-a3ce-e413417a7b73"
+                    "uuid": "8f21ea37-a228-46b1-a508-6f36a6f11c68"
                 }
             ],
             "severity": "error",
-            "type": "clearance"
+            "type": "tracks_crossing"
         },
         {
             "description": "Tracks crossing",
             "items": [
                 {
-                    "description": "Ścieżka [MCU_ARM] na B.Cu, długość 41,6836 mm",
+                    "description": "Ścieżka [GND] na B.Cu, długość 7,2832 mm",
                     "pos": {
-                        "x": 142.5242,
-                        "y": 49.2626
+                        "x": 133.6,
+                        "y": 18.75
                     },
-                    "uuid": "31a9f4a2-c626-46b6-8ed7-8d61515aad71"
+                    "uuid": "40a3c702-ee53-4100-b565-5ab56dfcd1a9"
                 },
                 {
                     "description": "Ścieżka [SUP_N_OUT] na B.Cu, długość 40,0000 mm",
@@ -351,7 +282,7 @@
                         "x": 129.169999,
                         "y": 16.54
                     },
-                    "uuid": "3930d814-cad1-48fe-8995-72ba9bd4e8c3"
+                    "uuid": "8f21ea37-a228-46b1-a508-6f36a6f11c68"
                 }
             ],
             "severity": "error",
@@ -366,11 +297,26 @@
                         "x": 129.169999,
                         "y": 16.54
                     },
-                    "uuid": "3930d814-cad1-48fe-8995-72ba9bd4e8c3"
+                    "uuid": "8f21ea37-a228-46b1-a508-6f36a6f11c68"
                 }
             ],
             "severity": "warning",
             "type": "track_dangling"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP3",
+                    "pos": {
+                        "x": 122.07,
+                        "y": 13.33
+                    },
+                    "uuid": "09a1dcc6-96a3-470e-96fa-b32bc15b5cb0"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
         },
         {
             "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
@@ -381,7 +327,7 @@
                         "x": 95.24,
                         "y": 95.96
                     },
-                    "uuid": "0a6ee136-4a96-4a2e-a9b7-f32c2df576cb"
+                    "uuid": "5b4edf46-36d7-445d-88fc-f9ce7af3b5e4"
                 }
             ],
             "severity": "warning",
@@ -396,37 +342,7 @@
                         "x": 68.57,
                         "y": 13.33
                     },
-                    "uuid": "6dab7cf8-732d-4f47-ae4b-372922e1d972"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_mismatch"
-        },
-        {
-            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
-            "items": [
-                {
-                    "description": "Footprint J_BP3",
-                    "pos": {
-                        "x": 122.07,
-                        "y": 13.33
-                    },
-                    "uuid": "9266a913-8aed-4afb-9e74-b067e7b3a5b3"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_mismatch"
-        },
-        {
-            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
-            "items": [
-                {
-                    "description": "Footprint J_BP1",
-                    "pos": {
-                        "x": 15.07,
-                        "y": 13.33
-                    },
-                    "uuid": "a80213d2-2787-4048-813b-378ebcf4c217"
+                    "uuid": "9c07bd91-9bc8-4700-a6b2-17477468fe51"
                 }
             ],
             "severity": "warning",
@@ -441,7 +357,22 @@
                         "x": 41.74,
                         "y": 95.96
                     },
-                    "uuid": "b3751391-fdd9-448e-9b38-e99104272b97"
+                    "uuid": "a0d4e1d8-8c46-46dc-b0b5-1592446201e0"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP1",
+                    "pos": {
+                        "x": 15.07,
+                        "y": 13.33
+                    },
+                    "uuid": "cf765136-ac4b-47f7-aeb8-9b08bc11b136"
                 }
             ],
             "severity": "warning",
@@ -456,7 +387,7 @@
                         "x": 148.74,
                         "y": 95.96
                     },
-                    "uuid": "dfccef00-2e4f-4e0a-8e7e-a616339a35e4"
+                    "uuid": "cf9ef047-efe4-428d-b6dd-3750c5209d2a"
                 }
             ],
             "severity": "warning",

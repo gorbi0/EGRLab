@@ -29,6 +29,20 @@ for r in sv:
     if r['siec']=='GND':assert hp=='GND' and r['rezystor']=='-',r;continue
     ref,val=r['rezystor'].split(' ',1)
     assert {pins[(ref,'1')],pins[(ref,'2')]}=={r['siec'],hp} and vals[ref]==val,r
+# 1.10 (review): default states - the stated input pin carries the signal and a 10K resistor ties it to the stated rail
+st=tables['STANY-DOMYSLNE.csv'];assert list(st[0])==['sygnal','wejscie','rezystor_do','poziom','rezystancja','grupa','znaczenie']
+for r in st:
+    u,n=r['wejscie'].split('.')
+    assert pins[(u,n)]==r['sygnal'],r
+    assert any(k.startswith('R') and vals[k].startswith('10K') and {pins.get((k,'1')),pins.get((k,'2'))}=={r['sygnal'],r['rezystor_do']} for k in vals),r
+    assert r['poziom']==('0' if r['rezystor_do']=='GND' else '1') and r['rezystancja']=='10k',r
+# 1.10: the service-wall sticker names the node of every pin as SERWIS.csv
+stk={}
+for line in (P/'docs/NAKLEJKA-SERWIS.md').read_text(encoding='utf-8').splitlines():
+    c=[x.strip() for x in line.strip('|').split('|')]
+    if len(c)==4 and c[0].isdigit():
+        for j,cellv in zip(('J_SV1','J_SV2','J_SV3'),c[1:]):stk[(j,c[0])]=cellv.split('= ')[-1]
+assert stk=={(r['zlacze'],r['pin']):r['siec'] for r in sv},'sticker differs from SERWIS.csv'
 parts=json.loads((P/'docs/parts.json').read_text(encoding='utf-8'))
 assert len(tables['BOM.csv'])==len(parts)==len(vals)
 for r in tables['BOM.csv']:
@@ -48,6 +62,6 @@ for r in tables['zakupy.csv']:
     purchase_refs+=refs
 assert len(set(purchase_refs))==len(purchase_refs)
 assert set(purchase_refs)=={r for r in parts if not r.startswith('TP')}
-report={'pass':True,'csv_rows':{n:len(r) for n,r in sorted(tables.items())},'cad_pins_checked':len(pins),'purchase_parts_checked':len(purchase_refs)}
+report={'pass':True,'csv_rows':{n:len(r) for n,r in sorted(tables.items())},'sticker_pins':len(stk),'cad_pins_checked':len(pins),'purchase_parts_checked':len(purchase_refs)}
 (P/'verification/table-checks.json').write_text(json.dumps(report,indent=2)+'\n')
 print(report)

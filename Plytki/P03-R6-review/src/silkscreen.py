@@ -5,10 +5,13 @@ values), never copper.
    other parts or over the silk of a larger part. F.Fab keeps every outline for the assembly drawing.
 2. Every reference is placed at the first candidate position (inside its own courtyard, then around it, horizontal or vertical,
    1.0 mm, then 0.8 mm) that is inside the board, off every pad (0.25 mm), off other courtyards and off already placed silk.
-3. Board texts: name 'P03 R6 S1-L', edge markers A and B, pin 1 of every connector, service-pin labels read from edge B.
+3. Board texts: name 'P03 R6 S1-L S1-S3' (S1 §9: class and slots), edge markers A and B, pin 1 of every connector, service-pin
+   labels read from edge B.
 Service labels (30.09, disputed, README): M1 stands over J_SV2 and SD1 over J_SV3 (both modules stop at the header courtyards),
 so only 1.5 mm is left between the module silk and the pins. J_SV1 gets full names (vertical, as P02 R4); J_SV2 and J_SV3 get
-three-letter abbreviations (horizontal, one per pin) and a legend block elsewhere on the board.
+three-letter abbreviations (horizontal, one per pin, GND on pins 1 and 13 too). 1.10 (review, user decision): the legend of the
+abbreviations is a sticker on the service wall (docs/NAKLEJKA-SERWIS.md, from write_tables.py); on the board it sat under the
+level-3 board, unreadable from edge B. References: nearer their own part than any other, never in the D7 zones (as P09 / P10).
 Every drop is listed per part in routing/silkscreen.json: verify_pcb.py accepts a DRC lib_footprint_mismatch only for these parts.
 """
 from pathlib import Path
@@ -16,7 +19,9 @@ import pcbnew as p, json, math, sys
 from sexpr import parse, dump, sub, one
 P = Path(__file__).resolve().parents[1]; fn = P / 'eda/P03.kicad_pcb'
 sys.path.insert(0, str(P / 'src'))
-from build_board import W, Hh as H
+from build_board import W, Hh as H, holes
+STREFY = [(hx, hy) for hx, hy in holes()]; RZ_M3 = 3.5   # 1.10 (recenzja P09): tekst w strefie Ø7 przykrywa dystans M3 z podkładką
+TYTUL = 'P03 R6 S1-L S1-S3'   # S1 §9: nazwa, rewizja, klasa i sloty (jak P02 R4, P09 / P10 R2)
 EDGE = .3   # silk-to-edge clearance used by DRC (board setting min_silk... edge 0.3 is KiCad default for silk_edge_clearance)
 LABEL = {  # J_SV1: full names, vertical
     'GND': 'GND', '5V_SYS': '5V_SYS', '5V_M1': '5V_M1', '3V3_CORE': '3V3', '3V3_IO': '3V3_IO', 'SUP_RAW_N': 'SUPRAW', 'SUP_N': 'SUP_N',
@@ -24,8 +29,8 @@ LABEL = {  # J_SV1: full names, vertical
     # 30.09 evening: J_SV1 holds the S1 nodes since the regrouping by node position (and LOGGER_CURRENT_OK since the gate swap)
     'MOTOR_INB': 'MOT_INB', 'MOTOR_INA': 'MOT_INA', 'MEAS_BANK': 'MBANK', 'CS_ITEST_N': 'ITEST_N', 'CS_ILOG_N': 'ILOG_N',
     'LOGGER_CURRENT_OK': 'LCUR_OK'}
-ABBR = {  # J_SV2 / J_SV3: three letters, horizontal, with a legend
-    'MEAS_EN': 'MEN', 'ADC_RESET': 'RST', 'ADC_CONVST': 'CNV', 'ADC_CS': 'ACS', 'ADC_BUSY': 'BSY', 'CS_ILOG_N': 'ILG', 'CS_ITEST_N': 'ITS',
+ABBR = {  # J_SV2 / J_SV3: three letters, horizontal; legend on a sticker (1.10: ADC_RESET 'ARS', 'RST' read as the module reset)
+    'MEAS_EN': 'MEN', 'ADC_RESET': 'ARS', 'ADC_CONVST': 'CNV', 'ADC_CS': 'ACS', 'ADC_BUSY': 'BSY', 'CS_ILOG_N': 'ILG', 'CS_ITEST_N': 'ITS',
     'CURRENT_CS_N': 'CCS', 'MEAS_BANK': 'MBK', 'SD_CS': 'SDC', 'TC1_CS': 'TC1', 'TC2_CS': 'TC2', 'PWM': 'PWM', 'HEARTBEAT': 'HBT',
     'MCU_ARM': 'ARM', 'HW_ARMED': 'HWA', 'INTERLOCK': 'ILK', 'SENSOR_ENABLE': 'SEN', 'CORE_LINK': 'LNK', 'MOTOR_INA': 'INA',
     'MOTOR_INB': 'INB', 'LOGGER_CURRENT_OK': 'LCO', 'GND': 'GND',
@@ -119,6 +124,8 @@ for r0, g in ftexts:
 
 
 def free(box, own, bottom=False):
+    if any(math.hypot(max(box[0] - hx, 0, hx - box[2]), max(box[1] - hy, 0, hy - box[3])) < RZ_M3 for hx, hy in STREFY):
+        return False
     if box[0] < EDGE + .2 or box[1] < EDGE + .2 or box[2] > W - EDGE - .2 or box[3] > H - EDGE - .2:
         return False
     if any(hit(box, pb, .25) for r, pb in (botpads if bottom else padboxes)):
@@ -135,6 +142,14 @@ def text_box(t):
     return bbox_of(t)
 
 
+def najblizej_wlasnej(box, own, bottom=False):
+    """1.10 (recenzja P10): oznaczenie musi być wyraźnie bliżej własnego obrysu niż każdego innego."""
+    c = p.VECTOR2I(mm((box[0] + box[2]) / 2), mm((box[1] + box[3]) / 2))
+    d = lambda poly: 0.0 if poly.Contains(c) else math.sqrt(poly.SquaredDistance(c)) / 1e6
+    mine = d(yards[own])
+    return all(mine + .3 < d(cy) for r, cy in yards.items() if r != own and fps[r].IsFlipped() == bottom)
+
+
 # service labels, read from edge B: J_SV1 vertical full names (as P02 R4), J_SV2 / J_SV3 horizontal abbreviations under the modules
 labels = {}; used = {}
 for hdr in ('J_SV1', 'J_SV2', 'J_SV3'):
@@ -148,14 +163,15 @@ for hdr in ('J_SV1', 'J_SV2', 'J_SV3'):
             t = LABEL[node]; tx.SetText(t); tx.SetTextSize(p.VECTOR2I(mm(.7), mm(.8)))
             tx.SetTextAngle(p.EDA_ANGLE(90, p.DEGREES_T)); tx.SetHorizJustify(p.GR_TEXT_H_ALIGN_LEFT); tx.SetPosition(p.VECTOR2I(mm(x), mm(93.9)))
         else:
-            if node == 'GND':   # 30.09: GND on pins 1 and 13 is in the legend; the pin-1 label overlapped the header's pin-1 mark
-                continue
-            t = ABBR[node]; tx.SetText(t); tx.SetTextSize(p.VECTOR2I(mm(.7), mm(.8))); tx.SetPosition(p.VECTOR2I(mm(x), mm(94.25)))   # 0.8 mm: DRC text height
+            # 0.8 mm: DRC text height. Pin 1: 0.45 mm higher, clear of the header's pin-1 mark (L at y 94.63; 1.10: GND has labels
+            # on both ends since the legend moved to the sticker); the modules M1 / SD1 end left of pin 1, so there is room above
+            yl = 94.25 - (.45 if a.GetNumber() == '1' else 0)
+            t = ABBR[node]; tx.SetText(t); tx.SetTextSize(p.VECTOR2I(mm(.7), mm(.8))); tx.SetPosition(p.VECTOR2I(mm(x), mm(yl)))
         b.Add(tx); placed.append(text_box(tx)); labels[f'{hdr}.{a.GetNumber()}'] = t
         if hdr != 'J_SV1' and node != 'GND':
             used[t] = node
 pairs = [f'{k} {used[k]}' for k in sorted(used)]
-LEGEND = ['J_SV2/J_SV3 (skroty; GND: kolki 1 i 13):'] + ['  '.join(pairs[i:i + 2]) for i in range(0, len(pairs), 2)]
+LEGEND = pairs   # 1.10: for the sticker only (docs/NAKLEJKA-SERWIS.md); no legend block on the board
 missing = []
 for r in sorted(fps, key=lambda r: (yards[r].BBox().GetArea(), r)):   # 30.09: ties by reference (board order follows random UUIDs)
     f = fps[r]; ref = f.Reference(); f.Value().SetVisible(False)
@@ -183,7 +199,7 @@ for r in sorted(fps, key=lambda r: (yards[r].BBox().GetArea(), r)):   # 30.09: t
             ref.SetTextSize(p.VECTOR2I(mm(size), mm(size))); ref.SetTextThickness(mm(.15 if size == 1.0 else .12))
             ref.SetTextAngle(p.EDA_ANGLE(a, p.DEGREES_T)); ref.SetPosition(p.VECTOR2I(mm(x), mm(y)))
             bx = text_box(ref)
-            if free(bx, r, f.IsFlipped()):
+            if free(bx, r, f.IsFlipped()) and najblizej_wlasnej(bx, r, f.IsFlipped()):
                 (placed_b if f.IsFlipped() else placed).append(bx); ok = True; break
         if ok:
             break
@@ -217,32 +233,16 @@ def place_text(t, spots, size=1.0, angle=0, just=None, own=None):
 # ---- 3. board texts ----
 res = {}
 LABEL_ZONES = [(9.0, 44.5), (62.5, 97.5), (116.0, 151.5)]   # x ranges of the service labels (y > 86): the title stays out of them
-res['title'] = place_text('P03 R6 S1-L', [(x, y) for y in (66, 70, 75, 80, 62, 58) for x in (26, 20, 32, 14, 38)], 1.2)
+res['title'] = place_text(TYTUL, [(x, y) for y in (66, 70, 75, 80, 62, 58) for x in (26, 20, 32, 14, 38)], 1.2)
 res['edge_A'] = place_text('KRAWEDZ A (P12)', [(x, y) for y in (2.2, 3.5, 5, 7) for x in (53, 54, 52, 107, 108, 106)], .9)
 res['edge_B'] = place_text('KRAWEDZ B (SERWIS)', [(x, y) for y in (98.4, 97.8, 92.5) for x in (107, 106.5, 107.5, 5)], .9)
-yy = None
-for y0 in (64, 60, 56, 68, 44, 40, 36):          # legend of the abbreviations: one block, first free place
-    for x0 in (118, 122, 9, 12, 100):
-        spots = [(x0, y0 + 1.5 * i) for i in range(len(LEGEND))]   # 30.09: 1.25 mm let the 0.8 mm lines overlap (text box ~1.7 x size)
-        trial = []
-        for (x, y), t in zip(spots, LEGEND):
-            a_ = p.PCB_TEXT(b); a_.SetText(t); a_.SetPosition(p.VECTOR2I(mm(x), mm(y))); a_.SetTextSize(p.VECTOR2I(mm(.7), mm(.8)))
-            a_.SetTextThickness(mm(.12)); a_.SetLayer(p.F_SilkS); a_.SetHorizJustify(p.GR_TEXT_H_ALIGN_LEFT); trial.append(a_)
-        if all(free(text_box(a_), None) for a_ in trial):
-            for a_ in trial:
-                b.Add(a_); placed.append(text_box(a_))
-            yy = (x0, y0); break
-    if yy:
-        break
-res['legend'] = yy
-if not yy:
-    extra.append('LEGEND')
+res['legend'] = None   # 1.10: legend on the service-wall sticker (docs/NAKLEJKA-SERWIS.md)
 # pin 1 of every connector
 for r in ('J_BP1', 'J_BP2', 'J_BP3', 'J_SV1', 'J_SV2', 'J_SV3'):
     a = next(q for q in fps[r].Pads() if q.GetNumber() == '1'); ax, ay = p.ToMM(a.GetPosition().x), p.ToMM(a.GetPosition().y); s_ = max(p.ToMM(a.GetSize().x), p.ToMM(a.GetSize().y)) / 2 + .9
     res['pin1_' + r] = place_text('1', [(ax + dx * k, ay + dy * k) for k in (1, 1.5) for dx, dy in [(-s_, 0), (s_, 0), (0, -s_), (0, s_), (-s_, -s_), (s_, -s_), (-s_, s_), (s_, s_)]], .9, own=r)
 p.SaveBoard(str(fn), b)
 rep = {'dropped_footprint_silk': n_drop, 'dropped_by_part': dict(sorted(drop_by.items())), 'moved_texts_by_part': dict(sorted(moved_by.items())),
-       'hidden_references': missing, 'board_texts': res, 'unplaced_texts': extra, 'service_labels': labels}
+       'hidden_references': missing, 'board_texts': res, 'unplaced_texts': extra, 'service_labels': labels, 'legend_sticker': LEGEND}
 (P / 'routing/silkscreen.json').write_text(json.dumps(rep, indent=1, ensure_ascii=False) + '\n', encoding='utf-8')
 print('silk: dropped', n_drop, 'footprint graphics; hidden references', missing, '; unplaced texts', extra)

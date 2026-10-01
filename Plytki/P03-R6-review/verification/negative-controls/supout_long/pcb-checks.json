@@ -1,9 +1,9 @@
 {
   "board": "/home/tgorbacz/AI/Claude/EGRLab/Plytki/P03-R6-review/verification/negative-controls/supout_long/P03.kicad_pcb",
-  "board_sha256": "f84d702c4af4ad1a0785fea0f15afef6b0d0962b1d6742be3b3a460b929efd38",
+  "board_sha256": "a3571776b3e839e181aa8506e00afb10b6d6ad18c4ff7cbfaf2ab5d9acf4c52d",
   "checks": [
     {
-      "check": "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "check": "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (every rule the project does not set to ignore, list in the details; missing_courtyard ignored, so only the M3 holes may lack one; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
       "pass": false
     },
     {
@@ -51,7 +51,11 @@
       "pass": true
     },
     {
-      "check": "Service headers J_SV1..3 (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pins out ~6 mm, GND on both ends, one series resistor per pin as docs/SERWIS.csv and of its S1 class (1K, 10K for pull-up / open-drain nodes) <= 10 mm from its node, one silk label per pin",
+      "check": "Service headers J_SV1..3 (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pins out ~6 mm, GND on both ends, one series resistor per pin as docs/SERWIS.csv and of its S1 class (1K, 10K for pull-up / open-drain nodes and SUP_N_OUT) <= 10 mm from its node, one silk label per pin with the name / abbreviation of its node (tables in silkscreen.py), GND at both ends",
+      "pass": true
+    },
+    {
+      "check": "Reserved strip of edge A (S1 §5: y 0-10, x 10-43 of each J_BP slot): no other part on either side (review 1.10)",
       "pass": true
     },
     {
@@ -87,7 +91,7 @@
       "pass": true
     },
     {
-      "check": "SUP_N_OUT copper on P03 <= 30 mm (reset edge budget: local 3 pF of the 30 pF, README \"Reset do P04\")",
+      "check": "SUP_N_OUT copper on P03 <= 30 mm and its service branch behind 10K (reset edge budget: local 3 pF of the 30 pF, README \"Reset do P04\"; review 1.10: the branch to J_SV3.6 is ~80 mm, bound for any branch length in verify_reset.py)",
       "pass": false
     },
     {
@@ -99,21 +103,44 @@
       "pass": true
     },
     {
-      "check": "Silkscreen: board name \"P03 R6 S1-L\", edge markers A and B",
+      "check": "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)",
+      "pass": true
+    },
+    {
+      "check": "Silkscreen: board name \"P03 R6 S1-L S1-S3\", edge markers A and B",
       "pass": true
     }
   ],
   "details": {
-    "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)": {
-      "violations": 19,
+    "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (every rule the project does not set to ignore, list in the details; missing_courtyard ignored, so only the M3 holes may lack one; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)": {
+      "violations": 16,
       "unconnected_items": 2,
       "schematic_parity": 0,
-      "other_violations": 13,
+      "other_violations": 10,
       "other_types": [
-        "clearance",
-        "shorting_items",
         "track_dangling",
         "tracks_crossing"
+      ],
+      "ignored_rules": [
+        "footprint_filters_mismatch",
+        "footprint_type_mismatch",
+        "missing_courtyard",
+        "track_not_centered_on_via",
+        "tuning_profile_track_geometries"
+      ],
+      "without_courtyard": [
+        "H1",
+        "H10",
+        "H11",
+        "H12",
+        "H2",
+        "H3",
+        "H4",
+        "H5",
+        "H6",
+        "H7",
+        "H8",
+        "H9"
       ],
       "accepted_lib_mismatch": [
         "J_BP1",
@@ -297,7 +324,7 @@
         "ok": true
       }
     },
-    "Service headers J_SV1..3 (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pins out ~6 mm, GND on both ends, one series resistor per pin as docs/SERWIS.csv and of its S1 class (1K, 10K for pull-up / open-drain nodes) <= 10 mm from its node, one silk label per pin": {
+    "Service headers J_SV1..3 (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pins out ~6 mm, GND on both ends, one series resistor per pin as docs/SERWIS.csv and of its S1 class (1K, 10K for pull-up / open-drain nodes and SUP_N_OUT) <= 10 mm from its node, one silk label per pin with the name / abbreviation of its node (tables in silkscreen.py), GND at both ends": {
       "J_SV1": {
         "problems": [],
         "pins": [
@@ -319,19 +346,19 @@
           },
           {
             "pin": 4,
-            "node": "3V3_CORE",
-            "resistor": "R46",
-            "value": "1K",
-            "node_dist_mm": 2.5,
-            "label": "3V3"
-          },
-          {
-            "pin": 5,
             "node": "MEAS_BANK",
-            "resistor": "R47",
+            "resistor": "R46",
             "value": "1K",
             "node_dist_mm": 2.8,
             "label": "MBANK"
+          },
+          {
+            "pin": 5,
+            "node": "CS_ILOG_N",
+            "resistor": "R47",
+            "value": "1K",
+            "node_dist_mm": 2.8,
+            "label": "ILOG_N"
           },
           {
             "pin": 6,
@@ -351,11 +378,11 @@
           },
           {
             "pin": 8,
-            "node": "CS_ILOG_N",
+            "node": "I2C_SCL",
             "resistor": "R50",
-            "value": "1K",
-            "node_dist_mm": 2.8,
-            "label": "ILOG_N"
+            "value": "10K",
+            "node_dist_mm": 2.7,
+            "label": "SCL"
           },
           {
             "pin": 9,
@@ -367,11 +394,11 @@
           },
           {
             "pin": 10,
-            "node": "LOGGER_CURRENT_OK",
+            "node": "3V3_CORE",
             "resistor": "R52",
             "value": "1K",
-            "node_dist_mm": 7.2,
-            "label": "LCUR_OK"
+            "node_dist_mm": 2.5,
+            "label": "3V3"
           },
           {
             "pin": 11,
@@ -383,11 +410,11 @@
           },
           {
             "pin": 12,
-            "node": "I2C_SCL",
+            "node": "LOGGER_CURRENT_OK",
             "resistor": "R54",
-            "value": "10K",
+            "value": "1K",
             "node_dist_mm": 8.5,
-            "label": "SCL"
+            "label": "LCUR_OK"
           }
         ]
       },
@@ -404,11 +431,11 @@
           },
           {
             "pin": 3,
-            "node": "CURRENT_CS_N",
+            "node": "PFAIL_N",
             "resistor": "R56",
-            "value": "1K",
-            "node_dist_mm": 8.5,
-            "label": "CCS"
+            "value": "10K",
+            "node_dist_mm": 2.5,
+            "label": "PFL"
           },
           {
             "pin": 4,
@@ -416,7 +443,7 @@
             "resistor": "R57",
             "value": "1K",
             "node_dist_mm": 5.5,
-            "label": "RST"
+            "label": "ARS"
           },
           {
             "pin": 5,
@@ -452,11 +479,11 @@
           },
           {
             "pin": 9,
-            "node": "PFAIL_N",
+            "node": "CURRENT_CS_N",
             "resistor": "R62",
-            "value": "10K",
-            "node_dist_mm": 2.5,
-            "label": "PFL"
+            "value": "1K",
+            "node_dist_mm": 8.5,
+            "label": "CCS"
           },
           {
             "pin": 10,
@@ -523,7 +550,7 @@
             "pin": 6,
             "node": "SUP_N_OUT",
             "resistor": "R70",
-            "value": "1K",
+            "value": "10K",
             "node_dist_mm": 2.8,
             "label": "SPO"
           },
@@ -576,6 +603,35 @@
             "label": "SUP"
           }
         ]
+      }
+    },
+    "Reserved strip of edge A (S1 §5: y 0-10, x 10-43 of each J_BP slot): no other part on either side (review 1.10)": {
+      "J_BP1": {
+        "pas": [
+          10.0,
+          0.0,
+          43.0,
+          10.0
+        ],
+        "czesci": []
+      },
+      "J_BP2": {
+        "pas": [
+          63.5,
+          0.0,
+          96.5,
+          10.0
+        ],
+        "czesci": []
+      },
+      "J_BP3": {
+        "pas": [
+          117.0,
+          0.0,
+          150.0,
+          10.0
+        ],
+        "czesci": []
       }
     },
     "Every part <= 16.5 mm above the board (level 2, S1 section 4; src/heights.py)": {
@@ -689,30 +745,44 @@
         "R43.1-J_BP2.16": 8
       }
     },
-    "SUP_N_OUT copper on P03 <= 30 mm (reset edge budget: local 3 pF of the 30 pF, README \"Reset do P04\")": {
-      "track_mm": 52.0
+    "SUP_N_OUT copper on P03 <= 30 mm and its service branch behind 10K (reset edge budget: local 3 pF of the 30 pF, README \"Reset do P04\"; review 1.10: the branch to J_SV3.6 is ~80 mm, bound for any branch length in verify_reset.py)": {
+      "track_mm": 52.0,
+      "service_branch_mm": 84.1,
+      "branch_resistor": "R70 10K / 1% 1206"
     },
     "GND pours on both layers: B.Cu >= 50 % of the board; island removal always (every island tied)": {
       "cover_percent": {
-        "F.Cu": 53.2,
-        "B.Cu": 64.3
+        "F.Cu": 53.9,
+        "B.Cu": 63.8
       },
       "islands": {
-        "F.Cu": 69,
-        "B.Cu": 55
+        "F.Cu": 67,
+        "B.Cu": 44
       }
     },
     "Every visible reference outside the courtyards of other parts": {},
-    "Silkscreen: board name \"P03 R6 S1-L\", edge markers A and B": {
+    "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)": {},
+    "Silkscreen: board name \"P03 R6 S1-L S1-S3\", edge markers A and B": {
       "title": [
-        "P03 R6 S1-L"
+        "P03 R6 S1-L S1-S3"
       ],
       "marks": [
         "KRAWEDZ A (P12)",
         "KRAWEDZ B (SERWIS)"
       ]
-    }
+    },
+    "Completion-planner routes (report only, review 1.10)": [
+      {
+        "net": "/SERWIS/SV_ADC_RESET",
+        "from": "J_SV2.4",
+        "to": "R57.2",
+        "routed_mm": 122.1,
+        "straight_mm": 76.6,
+        "layer_changes": 5,
+        "net_copper_mm": 0
+      }
+    ]
   },
-  "passed": 23,
-  "total": 25
+  "passed": 25,
+  "total": 27
 }

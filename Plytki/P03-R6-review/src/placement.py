@@ -24,6 +24,8 @@ S1 = json.loads((P.parents[0] / 'Format-S1/format-s1.json').read_text(encoding='
 parts = json.loads((P / 'docs/parts.json').read_text(encoding='utf-8'))
 W, H = S1['klasy']['L']['W'], S1['klasy']['L']['H']
 HOLES = [(x + S1['rozstaw_slotow'] * k, y) for k in range(3) for x in S1['otwory_M3']['x_w_slocie'] for y in S1['otwory_M3']['y']]
+STRIPS_A = [(S1['rozstaw_slotow'] * k + 10.0, S1['krawedz_A']['strefa_y'][0], S1['rozstaw_slotow'] * k + 43.0, S1['krawedz_A']['strefa_y'][1])
+            for k in range(3)]   # 1.10 (review): S1 §5 reserved strip of each J_BP slot; the J_BP are put() directly
 RZ = S1['otwory_M3']['strefa_dystansu_srednica'] / 2
 GEO = {}
 
@@ -110,7 +112,7 @@ def free(b, m=MARGIN, own=None, lane_ok=False):
         dx = max(b[0] - hx, 0, hx - b[2]); dy = max(b[1] - hy, 0, hy - b[3])
         if math.hypot(dx, dy) < rr + .1:
             return False
-    for z in [ANT, CHANNEL] + ([] if lane_ok else [LANE]):
+    for z in [ANT, CHANNEL] + STRIPS_A + ([] if lane_ok else [LANE]):
         if b[0] < z[2] and z[0] < b[2] and b[1] < z[3] and z[1] < b[3]:
             return False
     return True

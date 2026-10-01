@@ -18,7 +18,7 @@
     "expected_failing_check": "J_BP1..3",
     "detected": true,
     "failed_checks": [
-      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (every rule the project does not set to ignore, list in the details; missing_courtyard ignored, so only the M3 holes may lack one; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
       "J_BP1..3 (edge A): IDC 2x10 angled, body front at y = 0, pin centre x = 26.5 / 80 / 133.5, pin 1 at the smaller x, pinout = docs/J_BP.csv (P12 contract)",
       "5 V path: continuous locked copper >= 1.2 mm J_BP2.19 -> Q1 D and Q1 S -> M1 J1-21; copper resistance <= 50 mOhm (20 C, 35 um)",
       "Every visible reference outside the courtyards of other parts"
@@ -29,9 +29,9 @@
     "expected_failing_check": "Service headers",
     "detected": true,
     "failed_checks": [
-      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (every rule the project does not set to ignore, list in the details; missing_courtyard ignored, so only the M3 holes may lack one; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
       "Every value, footprint ID and pad net equals the exported schematic netlist",
-      "Service headers J_SV1..3 (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pins out ~6 mm, GND on both ends, one series resistor per pin as docs/SERWIS.csv and of its S1 class (1K, 10K for pull-up / open-drain nodes) <= 10 mm from its node, one silk label per pin"
+      "Service headers J_SV1..3 (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pins out ~6 mm, GND on both ends, one series resistor per pin as docs/SERWIS.csv and of its S1 class (1K, 10K for pull-up / open-drain nodes and SUP_N_OUT) <= 10 mm from its node, one silk label per pin with the name / abbreviation of its node (tables in silkscreen.py), GND at both ends"
     ]
   },
   {
@@ -39,9 +39,9 @@
     "expected_failing_check": "Service headers",
     "detected": true,
     "failed_checks": [
-      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (every rule the project does not set to ignore, list in the details; missing_courtyard ignored, so only the M3 holes may lack one; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
       "Every value, footprint ID and pad net equals the exported schematic netlist",
-      "Service headers J_SV1..3 (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pins out ~6 mm, GND on both ends, one series resistor per pin as docs/SERWIS.csv and of its S1 class (1K, 10K for pull-up / open-drain nodes) <= 10 mm from its node, one silk label per pin"
+      "Service headers J_SV1..3 (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pins out ~6 mm, GND on both ends, one series resistor per pin as docs/SERWIS.csv and of its S1 class (1K, 10K for pull-up / open-drain nodes and SUP_N_OUT) <= 10 mm from its node, one silk label per pin with the name / abbreviation of its node (tables in silkscreen.py), GND at both ends"
     ]
   },
   {
@@ -57,7 +57,7 @@
     "expected_failing_check": "M1 Waveshare",
     "detected": true,
     "failed_checks": [
-      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (every rule the project does not set to ignore, list in the details; missing_courtyard ignored, so only the M3 holes may lack one; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
       "M1 Waveshare: two 1x22 rows 22.86 mm apart, USB-C end towards edge B (face <= 6.5 mm inside it), antenna end towards edge A",
       "ANTENNA keepout: M1 antenna end + 3 mm sides + 8 mm beyond, both layers, no track / via / pad / pour inside; no other part inside",
       "5 V path: continuous locked copper >= 1.2 mm J_BP2.19 -> Q1 D and Q1 S -> M1 J1-21; copper resistance <= 50 mOhm (20 C, 35 um)"
@@ -68,7 +68,7 @@
     "expected_failing_check": "SD1 Adafruit",
     "detected": true,
     "failed_checks": [
-      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (every rule the project does not set to ignore, list in the details; missing_courtyard ignored, so only the M3 holes may lack one; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
       "SD1 Adafruit 4682: card towards edge B (tip <= 6.5 mm inside it), M2.5 keepouts r 3 mm around both holes, both layers, no copper"
     ]
   },
@@ -77,7 +77,7 @@
     "expected_failing_check": "ANTENNA keepout",
     "detected": true,
     "failed_checks": [
-      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (every rule the project does not set to ignore, list in the details; missing_courtyard ignored, so only the M3 holes may lack one; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
       "ANTENNA keepout: M1 antenna end + 3 mm sides + 8 mm beyond, both layers, no track / via / pad / pour inside; no other part inside"
     ]
   },
@@ -94,9 +94,10 @@
     "expected_failing_check": "Decoupling",
     "detected": true,
     "failed_checks": [
-      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (every rule the project does not set to ignore, list in the details; missing_courtyard ignored, so only the M3 holes may lack one; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
       "Decoupling at the pins: capacitor pad 1 <= 6 mm from its supply pin (C14 at M1 J1-21)",
-      "Every visible reference outside the courtyards of other parts"
+      "Every visible reference outside the courtyards of other parts",
+      "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)"
     ]
   },
   {
@@ -104,8 +105,9 @@
     "expected_failing_check": "Series / termination",
     "detected": true,
     "failed_checks": [
-      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
-      "Series / termination resistors at their drivers: pad <= 6 mm from the driver pin (R36-R40 source termination, R41, R34)"
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (every rule the project does not set to ignore, list in the details; missing_courtyard ignored, so only the M3 holes may lack one; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
+      "Series / termination resistors at their drivers: pad <= 6 mm from the driver pin (R36-R40 source termination, R41, R34)",
+      "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)"
     ]
   },
   {
@@ -113,10 +115,11 @@
     "expected_failing_check": "README layout requirements",
     "detected": true,
     "failed_checks": [
-      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (every rule the project does not set to ignore, list in the details; missing_courtyard ignored, so only the M3 holes may lack one; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
       "ANTENNA keepout: M1 antenna end + 3 mm sides + 8 mm beyond, both layers, no track / via / pad / pour inside; no other part inside",
       "README layout requirements: U21 by J_BP2 (<= 30 mm), U22 by J_BP1 (<= 30 mm; decision 30.09, disputed: README asked J_BP2), U23 by J_BP3 (<= 25 mm), U6 / R41 / C15 at J_BP3.12, R42 at M1 J1-13, R43 at J_BP2.16",
-      "Every visible reference outside the courtyards of other parts"
+      "Every visible reference outside the courtyards of other parts",
+      "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)"
     ]
   },
   {
@@ -124,8 +127,8 @@
     "expected_failing_check": "SUP_N_OUT copper",
     "detected": true,
     "failed_checks": [
-      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
-      "SUP_N_OUT copper on P03 <= 30 mm (reset edge budget: local 3 pF of the 30 pF, README \"Reset do P04\")"
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (every rule the project does not set to ignore, list in the details; missing_courtyard ignored, so only the M3 holes may lack one; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
+      "SUP_N_OUT copper on P03 <= 30 mm and its service branch behind 10K (reset edge budget: local 3 pF of the 30 pF, README \"Reset do P04\"; review 1.10: the branch to J_SV3.6 is ~80 mm, bound for any branch length in verify_reset.py)"
     ]
   },
   {
@@ -133,7 +136,7 @@
     "expected_failing_check": "Service headers",
     "detected": true,
     "failed_checks": [
-      "Service headers J_SV1..3 (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pins out ~6 mm, GND on both ends, one series resistor per pin as docs/SERWIS.csv and of its S1 class (1K, 10K for pull-up / open-drain nodes) <= 10 mm from its node, one silk label per pin"
+      "Service headers J_SV1..3 (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pins out ~6 mm, GND on both ends, one series resistor per pin as docs/SERWIS.csv and of its S1 class (1K, 10K for pull-up / open-drain nodes and SUP_N_OUT) <= 10 mm from its node, one silk label per pin with the name / abbreviation of its node (tables in silkscreen.py), GND at both ends"
     ]
   },
   {
@@ -141,8 +144,91 @@
     "expected_failing_check": "Every visible reference",
     "detected": true,
     "failed_checks": [
-      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
-      "Every visible reference outside the courtyards of other parts"
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (every rule the project does not set to ignore, list in the details; missing_courtyard ignored, so only the M3 holes may lack one; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
+      "Every visible reference outside the courtyards of other parts",
+      "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)"
+    ]
+  },
+  {
+    "control": "spine_long",
+    "expected_failing_check": "5 V path",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (every rule the project does not set to ignore, list in the details; missing_courtyard ignored, so only the M3 holes may lack one; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
+      "5 V path: continuous locked copper >= 1.2 mm J_BP2.19 -> Q1 D and Q1 S -> M1 J1-21; copper resistance <= 50 mOhm (20 C, 35 um)"
+    ]
+  },
+  {
+    "control": "ref_far",
+    "expected_failing_check": "Every visible reference nearer",
+    "detected": true,
+    "failed_checks": [
+      "Every visible reference outside the courtyards of other parts",
+      "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)"
+    ]
+  },
+  {
+    "control": "label_swap",
+    "expected_failing_check": "Service headers",
+    "detected": true,
+    "failed_checks": [
+      "Service headers J_SV1..3 (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pins out ~6 mm, GND on both ends, one series resistor per pin as docs/SERWIS.csv and of its S1 class (1K, 10K for pull-up / open-drain nodes and SUP_N_OUT) <= 10 mm from its node, one silk label per pin with the name / abbreviation of its node (tables in silkscreen.py), GND at both ends"
+    ]
+  },
+  {
+    "control": "gnd_label_missing",
+    "expected_failing_check": "Service headers",
+    "detected": true,
+    "failed_checks": [
+      "Service headers J_SV1..3 (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pins out ~6 mm, GND on both ends, one series resistor per pin as docs/SERWIS.csv and of its S1 class (1K, 10K for pull-up / open-drain nodes and SUP_N_OUT) <= 10 mm from its node, one silk label per pin with the name / abbreviation of its node (tables in silkscreen.py), GND at both ends"
+    ]
+  },
+  {
+    "control": "strip_part",
+    "expected_failing_check": "Reserved strip of edge A",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (every rule the project does not set to ignore, list in the details; missing_courtyard ignored, so only the M3 holes may lack one; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
+      "Reserved strip of edge A (S1 §5: y 0-10, x 10-43 of each J_BP slot): no other part on either side (review 1.10)",
+      "Decoupling at the pins: capacitor pad 1 <= 6 mm from its supply pin (C14 at M1 J1-21)",
+      "Every visible reference outside the courtyards of other parts",
+      "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)"
+    ]
+  },
+  {
+    "control": "zone_copper",
+    "expected_failing_check": "Standoff zones D7",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (every rule the project does not set to ignore, list in the details; missing_courtyard ignored, so only the M3 holes may lack one; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
+      "Standoff zones D7: no courtyard and no copper (pads, tracks, vias, pours) within 3.5 mm of a hole centre; rule areas on both layers"
+    ]
+  },
+  {
+    "control": "r70_1k",
+    "expected_failing_check": "SUP_N_OUT copper",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (every rule the project does not set to ignore, list in the details; missing_courtyard ignored, so only the M3 holes may lack one; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
+      "Every value, footprint ID and pad net equals the exported schematic netlist",
+      "Service headers J_SV1..3 (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pins out ~6 mm, GND on both ends, one series resistor per pin as docs/SERWIS.csv and of its S1 class (1K, 10K for pull-up / open-drain nodes and SUP_N_OUT) <= 10 mm from its node, one silk label per pin with the name / abbreviation of its node (tables in silkscreen.py), GND at both ends",
+      "SUP_N_OUT copper on P03 <= 30 mm and its service branch behind 10K (reset edge budget: local 3 pF of the 30 pF, README \"Reset do P04\"; review 1.10: the branch to J_SV3.6 is ~80 mm, bound for any branch length in verify_reset.py)"
+    ]
+  },
+  {
+    "control": "title_wrong",
+    "expected_failing_check": "Silkscreen: board name",
+    "detected": true,
+    "failed_checks": [
+      "Silkscreen: board name \"P03 R6 S1-L S1-S3\", edge markers A and B"
+    ]
+  },
+  {
+    "control": "lib_pad_changed",
+    "expected_failing_check": "Fresh native DRC",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (every rule the project does not set to ignore, list in the details; missing_courtyard ignored, so only the M3 holes may lack one; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)"
     ]
   }
 ]

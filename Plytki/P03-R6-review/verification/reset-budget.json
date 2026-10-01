@@ -63,11 +63,12 @@
       }
     },
     {
-      "check": "R6 path estimate within the 10 ns/V limit (estimate, not a guarantee)",
+      "check": "R6 path estimate within the 10 ns/V limit, with the service branch behind R70 (estimate, not a guarantee)",
       "pass": true,
       "detail": {
-        "model": "ideal RC, ns/V = R41*C/0.8 V",
+        "model": "ideal RC, ns/V = R41*C/0.8 V; service branch behind R70 as a source held at its starting level (any capacitance)",
         "R41_ohm": 220.0,
+        "R70_ohm": 10000.0,
         "C_components_pF": {
           "ribbon P03-P12 30 mm": 3.0,
           "ribbon P12-P04 30 mm": 3.0,
@@ -78,6 +79,7 @@
         },
         "C_total_pF": 30.0,
         "estimate_ns_per_V": 8.25,
+        "estimate_with_service_branch_ns_per_V": 8.9,
         "limit_ns_per_V": 10,
         "C_for_limit_pF": 36.4,
         "R5_reference": {
@@ -117,12 +119,20 @@
       "failures": [
         "P04 R17 default low from worst-case leakage below 0.8V"
       ]
+    },
+    {
+      "mutation": "R70=1K / 1%",
+      "detected": true,
+      "failures": [
+        "R6 path estimate within the 10 ns/V limit, with the service branch behind R70 (estimate, not a guarantee)"
+      ]
     }
   ],
   "hardware_tested": false,
   "slew_estimate_R6": {
-    "model": "ideal RC, ns/V = R41*C/0.8 V",
+    "model": "ideal RC, ns/V = R41*C/0.8 V; service branch behind R70 as a source held at its starting level (any capacitance)",
     "R41_ohm": 220.0,
+    "R70_ohm": 10000.0,
     "C_components_pF": {
       "ribbon P03-P12 30 mm": 3.0,
       "ribbon P12-P04 30 mm": 3.0,
@@ -133,6 +143,7 @@
     },
     "C_total_pF": 30.0,
     "estimate_ns_per_V": 8.25,
+    "estimate_with_service_branch_ns_per_V": 8.9,
     "limit_ns_per_V": 10,
     "C_for_limit_pF": 36.4,
     "R5_reference": {

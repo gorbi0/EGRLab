@@ -1,6 +1,15 @@
 # P03 R6 — stan pracy (przekazanie na komputer 24/7 z Ubuntu, 30.09.2026)
 
-Gałąź `p03-r6-pcb`. Etap: **PCB gotowa do recenzji (30.09 wieczorem)** — DRC 0/0/0 (6 przyjętych `lib_footprint_mismatch`), kontrole PCB 25/25, próby ujemne 16/16, PDF `output/pdf/P03-R6-PCB.pdf`; opis, wyniki i decyzje sporne w README (sekcja „PCB”). Praca na komputerze 24/7 (Ubuntu, sesja Claude Code „frigate-claude”); środowisko: `docs/UBUNTU-24-7.md`.
+Gałąź `p03-r6-pcb`. Etap: **PCB po poprawkach z recenzji (1.10)** — DRC 0/0/0 (6 przyjętych `lib_footprint_mismatch`), kontrole PCB 27/27, próby ujemne 25/25, nowe trasowanie (pierwsza próba, 242 przelotki), PDF `output/pdf/P03-R6-PCB.pdf`; opis, wyniki i decyzje sporne w README (sekcja „PCB”). Praca na komputerze 24/7 (Ubuntu, sesja Claude Code „frigate-claude”); środowisko: `docs/UBUNTU-24-7.md`.
+
+## 1.10 — poprawki po niezależnej recenzji PCB (4 MAJOR, 5 MINOR, 4 NIT) i decyzje użytkownika
+
+- **R70 10 kΩ** (decyzja użytkownika): gałąź serwisowa SV_SUP_N_OUT (ok. 80 mm do J_SV3.6) za 1 kΩ spowalniała zbocze resetu do P04 do ok. 11,8 ns/V (limit 10). `verify_reset.py` liczy teraz gałąź (ograniczenie dla dowolnej pojemności: 8,9 ns/V przy 10 kΩ), mutacja R70 = 1 kΩ; w `verify_pcb.py` kontrola SUP_N_OUT z długością gałęzi i wartością rezystora. Wyjątek od S1 §6 (sieć sterowana, a 10 kΩ) w `verify_jbp.py` C11.
+- **Listwy serwisowe** (decyzja użytkownika „kolejność i opisy”): szyny przy GND albo obok siebie, obok nich linie za 10 kΩ (J_SV1: 3V3_IO / 3V3_CORE na 9–10 między SCL i SDA; J_SV2: 5V_SYS na 2 i 5V_M1 na 12 przy GND, obok PFAIL_N i SUP_RAW_N); LOGGER_CURRENT_OK przy GND i SDA (poślizg sondy daje „nie OK”), MOTOR_INB/INA przy GND i MEAS_BANK. Kolejność bliska trasowalnej z 30.09 — wersja z szynami na kołkach 2–3 (4 próby) i wersja z najmniejszą liczbą przecięć linii (3 próby) nie domknęły trasowania. Nowe kontrole `verify_jbp.py` C12 (sąsiedzi szyn) i C13 (odwołania J_SVn.p w ODBIOR) z próbami ujemnymi; ODBIOR przepisany. Rezystory R44–R65 przenumerowane według nowej kolejności (R66–R76 bez zmian). Trasowanie tej kolejności: pierwsza próba; planer dokańczania 1 linia sygnałowa (SV_ADC_RESET, 122 mm) i 5 GND. Napis GND przy kołku 1 J_SV2/J_SV3 0,45 mm wyżej (nachodził na znacznik pinu 1, DRC silk_overlap).
+- **Opisy:** ADC_RESET „ARS” (było „RST”, mylone z resetem modułu), GND przy kołkach 1 i 13 J_SV2/J_SV3, legenda skrótów jako naklejka na ściankę serwisową (`docs/NAKLEJKA-SERWIS.md`, z `write_tables.py`; na płytce leżała pod płytką poziomu 3). Tytuł `P03 R6 S1-L S1-S3`.
+- `docs/STANY-DOMYSLNE.csv` generowany z tabel `verify_function.py` (miał bramki sprzed zamiany U12 → U14) i sprawdzany w `check_tables.py` z netlistą.
+- `verify_pcb.py`: etykiety listew z tabel `silkscreen.py` (nie z wyniku), pas zastrzeżony krawędzi A, bliskość oznaczeń, `lib_footprint_mismatch` tylko przy polach równych bibliotece, lista reguł wyłączonych w projekcie, raport tras planera dokańczania; usunięty martwy kod. Próby ujemne nowe: `spine_long` (próg 50 mΩ przy ciągłej drodze), `ref_far`, `label_swap`, `gnd_label_missing`, `strip_part`, `zone_copper`, `r70_1k`, `title_wrong`, `lib_pad_changed`.
+- Nadruk jak w P09/P10 (strefy Ø7, bliskość oznaczeń), F.Fab ukrytych oznaczeń na rysunku montażowym, teksty PDF (render bez modeli 3D, widok od spodu, J_SV poza rysunkiem), ręczny wpis oględzin PDF w README.
 
 ## 30.09 późnym wieczorem — poprawki wydania (po P09/P10)
 
@@ -32,10 +41,10 @@ Poprawki z recenzji PR #6, przed layoutem — `src/run_schematic.py` przechodzi 
 
 Skrypty w `src/` (wzorzec P02 R4, opis łańcucha w `docs/ODTWARZANIE.md`):
 - `placement.py` → `src/placement.json`: układy i złącza ręcznie, bierne automatem „najbliższe wolne miejsce przy pinie” (obrysy + 0,5 mm, strefy M3, obszar anteny, kanał toru 5 V, pas wzdłuż rzędu J1 M1). Rozmieszczenie opisane w nagłówku skryptu i w `docs/MECHANIKA.md`.
-- `build_board.py` (obrys L, 12 otworów M3 ze strefami D7, obszary ANTENNA M1 i SD1 M2.5), `set_stackup.py`, `set_rules.py` (Default 0,3 mm; PWR 0,6 mm dla 5V_SYS/5V_M1), `route_critical.py` (zablokowany tor 5 V: J_BP2.17/19/20 → C13 → Q1 po F.Cu, od Q1 1,5 mm po B.Cu wzdłuż x = 97,4 i y = 93 do M1 J1-21; budżet ≤ 50 mΩ), `prepare_routing.py` (paski przy krawędziach; **GND wyjęte z listy sieci routera**), `import_routing.py`, `stitch.py`, `complete_routes.py`, `cleanup.py`, `run_layout.py` (do 3 prób, przekroczenie czasu routera = nieudana próba).
-- Po layoucie (jeszcze NIEURUCHOMIONE, kod napisany, może wymagać poprawek): `silkscreen.py` (pełne nazwy przy J_SV1, skróty 3-literowe przy J_SV2/J_SV3 pod modułami + legenda), `verify_pcb.py` (ok. 27 kontroli, w tym tor 5 V w mΩ, obszar anteny, USB/karta ≤ 6,5 mm od krawędzi B, kontrakty `docs/J_BP.csv` i `docs/SERWIS.csv`), `negative_controls.py` (16 prób z zerową), `heights.py`, `export_views.py`, `rasterize.mjs`, `make_pdf.py`.
+- `build_board.py` (obrys L, 12 otworów M3 ze strefami D7, obszary ANTENNA M1 i SD1 M2.5), `set_stackup.py`, `set_rules.py` (od 30.09 wieczorem: Default 0,2 mm, CORE3V3 0,3 mm, PWR 0,6 mm dla 5V_SYS/5V_M1), `route_critical.py` (zablokowany tor 5 V: J_BP2.17/19/20 → C13 → Q1 po F.Cu, od Q1 1,5 mm po B.Cu wzdłuż x = 97,4 i y = 93 do M1 J1-21; budżet ≤ 50 mΩ), `fanout_gnd.py` (belki i grzebienie GND), `prepare_routing.py` (paski przy krawędziach; od 30.09 wieczorem GND w routerze jako płaszczyzna B.Cu — wcześniej wyjęte z listy sieci), `import_routing.py`, `stitch.py`, `complete_routes.py`, `cleanup.py`, `run_layout.py` (do 3 prób, przekroczenie czasu routera = nieudana próba).
+- Po layoucie (uruchomione 30.09, poprawione 1.10): `silkscreen.py` (pełne nazwy przy J_SV1, skróty 3-literowe i GND przy J_SV2/J_SV3, legenda na naklejce), `verify_pcb.py` (tor 5 V w mΩ, obszar anteny, USB/karta ≤ 6,5 mm od krawędzi B, kontrakty `docs/J_BP.csv` i `docs/SERWIS.csv`, liczba kontroli w README), `negative_controls.py`, `heights.py`, `export_views.py`, `rasterize.mjs`, `make_pdf.py`.
 
-## Layout — przebiegi i wnioski (Windows, Freerouting 2.1.0)
+## Layout — przebiegi i wnioski (Windows, Freerouting 2.1.0; historia sprzed 30.09 wieczór)
 
 | Przebieg | Wynik |
 |---|---|
@@ -45,7 +54,7 @@ Skrypty w `src/` (wzorzec P02 R4, opis łańcucha w `docs/ODTWARZANIE.md`):
 | + **3V3_CORE 0,3 mm** (0,5 mm nie mieści się między pinami w rastrze 2,54: szczelina 0,84 mm) | 12–15 po 10 przebiegach; w pełnym przebiegu 13 po 30 |
 | planer dokańczania (próba 1) | dołożył 28 tras, nie domknął: ADC_DOUTA, PWR_GATE (Q1.1), TEST_KEY, TEST_PRESENT_CORE, MEAS_EN(_SRC), SPI3_MOSI_SRC, ADC_CONVST, 3V3_IO, SV_ADC_BUSY, SV_ADC_CS, TC1_CS_SRC + wyspy GND |
 
-**Główny problem na teraz: GND.** Bez GND w routerze wylewki nie dochodzą do pinów masy wciśniętych między sygnały: po zszyciu ok. 60 pól GND bez połączenia (wszystkie piny 1/4/7/10/13 w U11–U14 i U21–U23, część kondensatorów i rezystorów do GND, J_BP3.7/11/19), wyspy F.Cu 73. Propozycje, w tej kolejności:
+**Problem GND (rozwiązany 30.09 wieczorem na Ubuntu: `fanout_gnd.py`, GND jako płaszczyzna, `cleanup.py --tidy`):** Bez GND w routerze wylewki nie dochodzą do pinów masy wciśniętych między sygnały: po zszyciu ok. 60 pól GND bez połączenia (wszystkie piny 1/4/7/10/13 w U11–U14 i U21–U23, część kondensatorów i rezystorów do GND, J_BP3.7/11/19), wyspy F.Cu 73. Propozycje, w tej kolejności:
 1. Wprowadzić GND z powrotem do routera (przyczyną wolnego i złego trasowania była szerokość 3V3, nie GND) i porównać.
 2. Albo krok „fanout” przed routerem: przy każdym polu SMD na GND krótka ścieżka do przelotki (zablokowane), jak w P02 R4 kotwice; wylewka B.Cu łączy przelotki.
 3. Potem planer dokańczania i zszywanie jak w P02 R4.
@@ -53,9 +62,9 @@ Skrypty w `src/` (wzorzec P02 R4, opis łańcucha w `docs/ODTWARZANIE.md`):
 Inne otwarte:
 - Zatłoczenie w S1 pod J_BP1 (U22/U14/U13 i ich rezystory w pasie pod złączem) i przy M1 J1 — jeśli nadal nie domyka, rozsunąć S1 (wolne miejsce: dół S1, środek S3, dół prawej kolumny) albo przenieść część rezystorów serwisowych na spód (S1-2: SMD ≤ 1,5 mm, ≥ 1 mm od pól THT).
 - Freerouting jest niedeterministyczny; przebieg z 30 próbami ok. 10–15 min. Wynik do odtwarzania zapisuje `routing/P03.ses` + `routing/completion-routes.json` (odtwarzanie: `run_layout.py --reuse-ses`).
-- Na Linuksie trasowania P03 jeszcze nikt nie uruchamiał (obraz Dockera ma Freerouting 2.1.0 w `/opt/egrlab/freerouting`, `EGRLAB_FREEROUTING` ustawione w obrazie).
+- Od 30.09 wieczorem trasowanie działa w Dockerze na Ubuntu (Freerouting 2.1.0 w `/opt/egrlab/freerouting`, `EGRLAB_FREEROUTING` ustawione w obrazie).
 
-## Decyzje sporne (do opisania w README przy PR)
+## Decyzje sporne (stan 30.09; aktualna lista: README, sekcja „PCB”)
 
 1. USB-C M1 i karta SD1 ok. 6,2 mm przed krawędzią B: moduły (26 mm) szersze niż przerwy między listwami serwisowymi (19,4 mm), więc kończą się przed obrysami J_SV2/J_SV3; dostęp przy zdjętej ściance B.
 2. U22 w S1 zamiast „blisko J_BP2” (README): wejścia z U1/U2, dwa wyjścia do J_BP1; MEAS_EN i ADC_RESET (statyczne) dłuższą drogą.
@@ -66,6 +75,6 @@ Inne otwarte:
 ## Następne kroki
 
 1. Recenzja PCB (README, sekcja „PCB”: 9 decyzji, w tym sporne) i przymiarka wydruku 1:1 (`output/pdf/P03-R6-PCB.pdf`, strona 5); wysokość M1 na listwach.
-2. Push gałęzi `p03-r6-pcb` i PR — commity są lokalnie na komputerze 24/7; push czeka na logowanie użytkownika do GitHuba na tym komputerze (`gh auth login` albo poświadczenie git). Scalanie dopiero po „scal”.
+2. Gałąź `p03-r6-pcb` wypychana na bieżąco (SSH, alias `github-egrlab`, od 1.10); PR po decyzji użytkownika, scalanie dopiero po „scal”.
 3. Po akceptacji: paczka produkcyjna (skrypty z `Plytki/P02-PCB-R4-zamowienie/src/`).
 4. Odtworzenie: `scripts/egrlab-docker python3 src/run_release.py` (odtwarza `routing/P03.ses` + `completion-routes.json`, ok. 35 min przy 2 rdzeniach); nowe trasowanie: `--new-route` (wynik za każdym razem inny, pętla do 6 prób).

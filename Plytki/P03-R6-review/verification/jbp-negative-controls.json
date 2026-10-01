@@ -50,7 +50,7 @@
     "expected": "C2",
     "detected": true,
     "failed": [
-      "C2 5V_SYS twice on J_BP2, 3V3_IO once on J_BP3"
+      "C2 5V_SYS three times on J_BP2, 3V3_IO once on J_BP3"
     ]
   },
   {
@@ -171,7 +171,8 @@
     "detected": true,
     "failed": [
       "C8 at most 3 service headers, <= 13 pins, GND on first and last pin",
-      "C9 every service pin except GND reaches its node through one series resistor >= 1K"
+      "C9 every service pin except GND reaches its node through one series resistor >= 1K",
+      "C12 rails on the service headers only next to GND, another rail or a 10K high-impedance line"
     ]
   },
   {
@@ -180,7 +181,7 @@
     "detected": true,
     "failed": [
       "C9 every service pin except GND reaches its node through one series resistor >= 1K",
-      "C10 service headers cover the ODBIOR minimum (rails, reset, EN = SUP_N, PFAIL_N, start states), no node twice"
+      "C13 docs/ODBIOR.md: every service pin reference J_SVn.p names the node of that pin"
     ]
   },
   {
@@ -189,7 +190,8 @@
     "detected": true,
     "failed": [
       "C9 every service pin except GND reaches its node through one series resistor >= 1K",
-      "C10 service headers cover the ODBIOR minimum (rails, reset, EN = SUP_N, PFAIL_N, start states), no node twice"
+      "C10 service headers cover the ODBIOR minimum (rails, reset, EN = SUP_N, PFAIL_N, start states), no node twice",
+      "C13 docs/ODBIOR.md: every service pin reference J_SVn.p names the node of that pin"
     ]
   },
   {
@@ -197,7 +199,8 @@
     "expected": "C10",
     "detected": true,
     "failed": [
-      "C10 service headers cover the ODBIOR minimum (rails, reset, EN = SUP_N, PFAIL_N, start states), no node twice"
+      "C10 service headers cover the ODBIOR minimum (rails, reset, EN = SUP_N, PFAIL_N, start states), no node twice",
+      "C13 docs/ODBIOR.md: every service pin reference J_SVn.p names the node of that pin"
     ]
   },
   {
@@ -205,7 +208,7 @@
     "expected": "C11",
     "detected": true,
     "failed": [
-      "C11 series value class (S1 §6): rails 1K, high-impedance nodes 10K"
+      "C11 series value class (S1 §6): rails 1K, high-impedance nodes 10K, SUP_N_OUT 10K (reset edge, exception 1.10)"
     ]
   },
   {
@@ -213,7 +216,33 @@
     "expected": "C11",
     "detected": true,
     "failed": [
-      "C11 series value class (S1 §6): rails 1K, high-impedance nodes 10K"
+      "C11 series value class (S1 §6): rails 1K, high-impedance nodes 10K, SUP_N_OUT 10K (reset edge, exception 1.10)",
+      "C12 rails on the service headers only next to GND, another rail or a 10K high-impedance line"
+    ]
+  },
+  {
+    "control": "SUP_N_OUT service resistor back to 1K (R70)",
+    "expected": "C11",
+    "detected": true,
+    "failed": [
+      "C11 series value class (S1 §6): rails 1K, high-impedance nodes 10K, SUP_N_OUT 10K (reset edge, exception 1.10)"
+    ]
+  },
+  {
+    "control": "3V3_CORE between CS_ILOG_N and CS_ITEST_N (swap J_SV1 pins 10/6)",
+    "expected": "C12",
+    "detected": true,
+    "failed": [
+      "C12 rails on the service headers only next to GND, another rail or a 10K high-impedance line",
+      "C13 docs/ODBIOR.md: every service pin reference J_SVn.p names the node of that pin"
+    ]
+  },
+  {
+    "control": "5V_SYS and 5V_M1 swapped on J_SV2 (ODBIOR names J_SV2.2 = 5V_SYS)",
+    "expected": "C13",
+    "detected": true,
+    "failed": [
+      "C13 docs/ODBIOR.md: every service pin reference J_SVn.p names the node of that pin"
     ]
   }
 ]

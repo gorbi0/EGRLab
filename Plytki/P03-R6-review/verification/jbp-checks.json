@@ -9,7 +9,7 @@
     }
   },
   {
-    "check": "C2 5V_SYS twice on J_BP2, 3V3_IO once on J_BP3",
+    "check": "C2 5V_SYS three times on J_BP2, 3V3_IO once on J_BP3",
     "pass": true,
     "detail": {
       "5V_SYS": [
@@ -157,7 +157,7 @@
           "1"
         ],
         [
-          "R62",
+          "R56",
           "1"
         ]
       ],
@@ -231,8 +231,21 @@
     }
   },
   {
-    "check": "C11 series value class (S1 §6): rails 1K, high-impedance nodes 10K",
+    "check": "C11 series value class (S1 §6): rails 1K, high-impedance nodes 10K, SUP_N_OUT 10K (reset edge, exception 1.10)",
     "pass": true,
     "detail": []
+  },
+  {
+    "check": "C12 rails on the service headers only next to GND, another rail or a 10K high-impedance line",
+    "pass": true,
+    "detail": []
+  },
+  {
+    "check": "C13 docs/ODBIOR.md: every service pin reference J_SVn.p names the node of that pin",
+    "pass": true,
+    "detail": {
+      "references": 21,
+      "wrong": []
+    }
   }
 ]

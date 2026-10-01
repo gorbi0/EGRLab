@@ -2,25 +2,25 @@
 J_SV1;1;GND;-;masa sondy
 J_SV1;2;MOTOR_INB;R44 1K / 1% 1206;"MCP23017; brak ruchu przy starcie"
 J_SV1;3;MOTOR_INA;R45 1K / 1% 1206;"MCP23017; brak ruchu przy starcie"
-J_SV1;4;3V3_CORE;R46 1K / 1% 1206;"LDO modulu; zapad przez 3,07 V"
-J_SV1;5;MEAS_BANK;R47 1K / 1% 1206;wejscie A dekodera, start: 0
+J_SV1;4;MEAS_BANK;R46 1K / 1% 1206;wejscie A dekodera, start: 0
+J_SV1;5;CS_ILOG_N;R47 1K / 1% 1206;start: 1
 J_SV1;6;SCOPE_TRIG;R48 1K / 1% 1206;wyjscie GPIO41 przed R12
 J_SV1;7;CS_ITEST_N;R49 1K / 1% 1206;start: 1
-J_SV1;8;CS_ILOG_N;R50 1K / 1% 1206;start: 1
+J_SV1;8;I2C_SCL;R50 10K / 1% 1206;I2C MCP23017 (OD, 4k7)
 J_SV1;9;3V3_IO;R51 1K / 1% 1206;szyna z P02 R4 (OE U14)
-J_SV1;10;LOGGER_CURRENT_OK;R52 1K / 1% 1206;z P06 (10k R2 do GND)
+J_SV1;10;3V3_CORE;R52 1K / 1% 1206;"LDO modulu; zapad przez 3,07 V"
 J_SV1;11;I2C_SDA;R53 10K / 1% 1206;I2C MCP23017 (OD, 4k7)
-J_SV1;12;I2C_SCL;R54 10K / 1% 1206;I2C MCP23017 (OD, 4k7)
+J_SV1;12;LOGGER_CURRENT_OK;R54 1K / 1% 1206;z P06 (10k R2 do GND)
 J_SV1;13;GND;-;masa sondy
 J_SV2;1;GND;-;masa sondy
 J_SV2;2;5V_SYS;R55 1K / 1% 1206;"szyna z P02 R4; tabela zasilania P02/USB"
-J_SV2;3;CURRENT_CS_N;R56 1K / 1% 1206;/G dekodera U2, start: 1
+J_SV2;3;PFAIL_N;R56 10K / 1% 1206;wejscie z P02 R4 po stronie zlacza (100k R43)
 J_SV2;4;ADC_RESET;R57 1K / 1% 1206;start bez firmware: 0
 J_SV2;5;MEAS_EN;R58 1K / 1% 1206;start bez firmware: 0
 J_SV2;6;ADC_BUSY;R59 1K / 1% 1206;odpowiedz P05 na CONVST
 J_SV2;7;ADC_CONVST;R60 1K / 1% 1206;start bez firmware: 0
 J_SV2;8;ADC_CS;R61 1K / 1% 1206;start: 1 (nieaktywne)
-J_SV2;9;PFAIL_N;R62 10K / 1% 1206;wejscie z P02 R4 po stronie zlacza (100k R43)
+J_SV2;9;CURRENT_CS_N;R62 1K / 1% 1206;/G dekodera U2, start: 1
 J_SV2;10;SD_CS;R63 1K / 1% 1206;karta SD, start: 1
 J_SV2;11;SUP_RAW_N;R64 10K / 1% 1206;wyjscie TPS3808 (OD, 10k R13)
 J_SV2;12;5V_M1;R65 1K / 1% 1206;"zasilanie modulu za blokada U5/Q1; USB-only, prad wsteczny"
@@ -30,7 +30,7 @@ J_SV3;2;MCU_ARM;R66 1K / 1% 1206;"GPIO39; bez ARM stale 0"
 J_SV3;3;HEARTBEAT;R67 1K / 1% 1206;GPIO21 do P04
 J_SV3;4;PWM;R68 1K / 1% 1206;GPIO1 do P04
 J_SV3;5;CORE_LINK;R69 10K / 1% 1206;"R14 1k z 3V3_CORE; na P04 >= 2,7 V"
-J_SV3;6;SUP_N_OUT;R70 1K / 1% 1206;reset do P04 za U6/R41 (zwarcie J_BP3.12: 11-16 mA)
+J_SV3;6;SUP_N_OUT;R70 10K / 1% 1206;"reset do P04 za U6/R41; 10K (1.10, wyjatek od S1 par. 6): galaz serwisowa nie spowalnia zbocza resetu"
 J_SV3;7;SENSOR_ENABLE;R71 1K / 1% 1206;MCP23017 GPA3 do P04
 J_SV3;8;TC2_CS;R72 1K / 1% 1206;start: 1
 J_SV3;9;TC1_CS;R73 1K / 1% 1206;start: 1

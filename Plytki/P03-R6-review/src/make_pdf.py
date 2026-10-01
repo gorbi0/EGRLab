@@ -45,7 +45,7 @@ def start(n, title, subtitle):
     c.setFillColor(HexColor('#172833')); c.setFont('Bold', 18); c.drawString(12 * mm, 190 * mm, title)
     c.setFont('Arial', 9); c.drawString(12 * mm, 182 * mm, subtitle)
     c.setStrokeColor(HexColor('#cdd7dc')); c.line(12 * mm, 14 * mm, 285 * mm, 14 * mm)
-    c.setFont('Arial', 8); c.drawString(12 * mm, 9 * mm, 'P03 R6 S1-L | 30.09.2026 | PCB do recenzji lokalnej | przymiarka 1:1 i odbiór sprzętu: NIE ZBADANO')
+    c.setFont('Arial', 8); c.drawString(12 * mm, 9 * mm, 'P03 R6 S1-L S1-S3 | 01.10.2026 | PCB do recenzji lokalnej | przymiarka 1:1 i odbiór sprzętu: NIE ZBADANO')
     c.drawRightString(285 * mm, 9 * mm, f'{n} / {NPAGES}')
 
 
@@ -57,6 +57,10 @@ def board(name, x=12, y=40):
     for xx in (x, x + 100):
         c.line(xx * mm, (y - 13) * mm, xx * mm, (y - 7) * mm)
     c.setFont('Arial', 8.5); c.drawString(x * mm, (y - 17) * mm, 'Belka 100 mm. Drukować 100 %, bez dopasowania do strony; zmierzyć belkę przed przymiarką.')
+
+
+def liczba(n, f1, f2, f5):   # 1 zgłoszenie, 2 zgłoszenia, 5 zgłoszeń
+    return f'{n} ' + (f1 if n == 1 else f2 if 2 <= n % 10 <= 4 and not 12 <= n % 100 <= 14 else f5)
 
 
 npass = sum(x['detected'] for x in neg)
@@ -71,29 +75,31 @@ for t in [f'<b>Płytka:</b> 160 × 100 mm (klasa L), narożniki R1, FR4 1,6 mm, 
           f'SD1 (Adafruit 4682) w S3, karta w stronę krawędzi B, {pl(sd["card_tip_to_edge_B_mm"])} mm od niej. Oba moduły kończą się przed obrysem listew serwisowych (sporne, README).',
           f'<b>5 V:</b> J_BP2.17/19/20 → Q1 (blokada USB) → ścieżka 1,5 mm po B.Cu wzdłuż prawego boku M1 → M1 J1-21; miedź toru {pl(p5["total_mOhm"])} mΩ (budżet 50 mΩ).',
           f'<b>Kontrole:</b> DRC: {len(drc["unconnected_items"])} niepołączonych, {len(drc["schematic_parity"])} niezgodności ze schematem, '
-          f'{len(drc["violations"]) - nlib} innych naruszeń; {nlib} zgłoszeń lib_footprint_mismatch u części z przyciętym nadrukiem (przyjęte przez verify_pcb.py); '
+          f'{len(drc["violations"]) - nlib} innych naruszeń; {liczba(nlib, "zgłoszenie", "zgłoszenia", "zgłoszeń")} lib_footprint_mismatch u części z przyciętym nadrukiem (przyjęte przez verify_pcb.py po porównaniu pól z biblioteką); '
           f'PCB {checks["passed"]}/{checks["total"]}; próby ujemne PCB {npass}/{len(neg)} (z próbą zerową).',
           f'<b>Otwarte:</b> przymiarka 1:1 (strona 5), wysokość M1 na listwach (szacunek), recenzja lokalna; '
-          f'{len(silk["hidden_references"])} oznaczeń ukrytych z braku miejsca{(" (" + ", ".join(silk["hidden_references"]) + ")") if silk["hidden_references"] else ""}; paczka produkcyjna poza zakresem.']:
+          f'{liczba(len(silk["hidden_references"]), "oznaczenie ukryte", "oznaczenia ukryte", "oznaczeń ukrytych")} z braku miejsca{(" (" + ", ".join(silk["hidden_references"]) + "; na rysunku montażowym z warstwy F.Fab)") if silk["hidden_references"] else ""}; '
+          'długość tras dokańczających (README); paczka produkcyjna poza zakresem.']:
     y = para(t, 12, y, 120)
 c.drawImage(str(O / 'previews/isometric.png'), 138 * mm, 30 * mm, 150 * mm, 125 * mm, preserveAspectRatio=True, anchor='c', mask='auto')
-para('Render KiCad z modelami bibliotecznymi (moduły bez modeli 3D).', 142, 30, 140)
+para('Render KiCad bez modeli 3D części (obraz Dockera nie ma biblioteki modeli KiCad).', 142, 30, 140)
 c.showPage()
 pages = [(2, 'Montaż od góry — 1:1', 'assembly', [
     '<b>M1</b> na dwóch listwach żeńskich 1×22 (rzędy 22,86 mm), USB-C w stronę krawędzi B. <b>SD1</b> na listwie żeńskiej 1×9 i dwóch dystansach M2,5.',
     '<b>U1 (DIP28) i U2 (DIP16)</b> w podstawkach. SOIC-14 i SOT-23 lutowane wprost. Wszystkie rezystory i kondensatory SMD 1206.',
-    '<b>Listwy serwisowe:</b> przy J_SV1 pełne nazwy; przy J_SV2 i J_SV3 skróty trzyliterowe (nad nimi stoją moduły), legenda skrótów na płytce.',
+    '<b>Listwy serwisowe:</b> przy J_SV1 pełne nazwy; przy J_SV2 i J_SV3 skróty trzyliterowe (nad nimi stoją moduły) i GND przy kołkach 1 i 13; '
+    'legenda skrótów na naklejce na ściance serwisowej (docs/NAKLEJKA-SERWIS.md). Szyny przy GND albo obok siebie, z liniami 10 kΩ obok (J_SV1: 3V3_IO / 3V3_CORE na 9–10; J_SV2: 5V_SYS / 5V_M1 na końcach).',
     'Wyprowadzenia THT od spodu przyciąć do ≤ 1,5 mm (S1 §4).']),
     (3, 'Miedź F.Cu — 1:1', 'copper-front', [
     'Natywny eksport KiCad po wypełnieniu stref. Szare pola to miedź (GND).',
     '<b>Obszar bez miedzi</b> pod anteną M1 (obie warstwy) i wokół dystansów M3 i M2,5.', 'Wydruk kontrolny, nie plik produkcyjny.']),
     (4, 'Miedź B.Cu — 1:1, widok od spodu', 'copper-back', [
-    'Widok od spodu (lustrzany względem strony 3).', '<b>Tor 5V_M1:</b> ścieżka 1,5 mm wzdłuż prawego boku M1 i pod końcem USB do J1-21.']),
+    'Widok od spodu (lustrzany względem strony 3).', '<b>Tor 5V_M1:</b> ścieżka 1,5 mm wzdłuż prawego boku M1 (w tym lustrzanym widoku po lewej) i pod końcem USB do J1-21.']),
     (5, 'Przymiarka 1:1 — obrys, obrysy części, otwory', 'fit', [
     'Wydrukować w skali 100 % i położyć na części / w obudowie. Kółka Ø7 wokół otworów M3 to strefy dystansów, kółka Ø6 przy SD1 — '
     'pola dystansów M2,5 modułu karty.',
     f'<b>Wysokości (limit 16,5 mm, poziom 2):</b> M1 na listwach ok. {pl(HEIGHTS["M1"][0])} mm (szacunek), SD1 ok. {pl(HEIGHTS["SD1"][0])} mm, IDC ok. 9,2 mm, DIP w podstawkach ok. 8 mm.',
-    'Kołki listew J_SV wystają ok. 6 mm za krawędź B; J_BP wtyk równo z krawędzią A.'])]
+    'Kołki listew J_SV wystają ok. 6 mm za krawędź B (rysunek obejmuje tylko płytkę 160 × 100 mm); J_BP wtyk równo z krawędzią A.'])]
 for n, title, name, notes in pages:
     start(n, title, 'Geometria z natywnego pliku PCB; sprawdź belkę 100 mm przed przymiarką.'); board(name)
     yy = 172

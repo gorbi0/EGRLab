@@ -29,14 +29,14 @@ run('render-pdf', RENDER, '-scale-to', '1800', '-png', 'output/pdf/P03-R6-PCB.pd
 chk = json.loads((P / 'verification/pcb-checks.json').read_text(encoding='utf-8')); neg = json.loads((P / 'verification/negative-controls.json').read_text(encoding='utf-8'))
 drc = json.loads((P / 'verification/drc.json').read_text()); silk = json.loads((P / 'routing/silkscreen.json').read_text(encoding='utf-8'))
 qa = ['# P03-R6 — QA PCB (format S1, klasa L; plik generowany przez src/run_release.py)', '',
-      f"DRC (świeży, wszystkie poziomy): {len(drc['violations'])} naruszeń / {len(drc['unconnected_items'])} niepołączonych / {len(drc['schematic_parity'])} niezgodności ze schematem "
+      f"DRC (świeży, wszystkie poziomy): naruszenia {len(drc['violations'])}, niepołączone {len(drc['unconnected_items'])}, niezgodności ze schematem {len(drc['schematic_parity'])} "
       f"(naruszenia to wyłącznie lib_footprint_mismatch części z przyciętym nadrukiem, przyjęte przez verify_pcb.py; szczegóły w pcb-checks.json).",
       f"Kontrole PCB: {chk['passed']}/{chk['total']}. Próby ujemne: {sum(x['detected'] for x in neg)}/{len(neg)} (w tym próba zerowa).", '',
       '| Kontrola | Wynik |', '|---|---|'] + [f"| {c['check']} | {'PASS' if c['pass'] else 'FAIL'} |" for c in chk['checks']]
 qa += ['', '## Próby ujemne', '', '| Wada | Oczekiwana kontrola | Wykryta | Zgłoszone |', '|---|---|---|---|']
 qa += [f"| {x['control']} | {x['expected_failing_check']} | {'tak' if x['detected'] else 'NIE'} | {len(x['failed_checks'])} |" for x in neg]
 qa += ['', f"Nadruk: ukryte oznaczenia (brak miejsca): {', '.join(silk['hidden_references']) or 'brak'}; nieumieszczone napisy: {', '.join(silk['unplaced_texts']) or 'brak'}."]
-qa += ['', 'Oględziny PDF: strony 1–5 obejrzane przy tworzeniu pakietu (render w output/previews/pcb-*.png).']
+qa += ['', 'Oględziny PDF: wpis ręczny w README (sekcja „PCB”); render stron w output/previews/pcb-*.png.']
 (P / 'verification/QA-PCB.md').write_text('\n'.join(qa) + '\n', encoding='utf-8')
 files = sorted(q for d in ('eda', 'src', 'docs', 'output', 'routing') for q in (P / d).rglob('*') if q.is_file() and '__pycache__' not in q.parts)
 files += sorted(q for q in (P / 'verification').glob('*') if q.is_file() and q.name != 'manifest.json') + [P / 'README.md']

@@ -6,7 +6,7 @@ docs/J_BP.csv and docs/SERWIS.csv, the README layout requirements and ZASILANIE-
 placement.py or route_critical.py.
 """
 from pathlib import Path
-import pcbnew as p, json, sys, os, math, hashlib, csv, xml.etree.ElementTree as ET
+import pcbnew as p, json, sys, os, math, hashlib, csv, ast, xml.etree.ElementTree as ET
 from sexpr import parse, one, sub
 from provenance import run_fresh_drc
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -30,6 +30,13 @@ with open(P / 'docs/SERWIS.csv', encoding='utf-8-sig') as fh:
     for r in csv.DictReader(fh, delimiter=';'):
         SERW.setdefault(r['zlacze'], {})[int(r['pin'])] = (r['siec'], r['rezystor'])
 HIGHZ = {'SUP_RAW_N', 'SUP_N', 'PFAIL_N', 'I2C_SCL', 'I2C_SDA', 'CORE_LINK'}   # S1 §6: 10 kOhm (pull-up / open drain nodes)
+HIGHZ |= {'SUP_N_OUT'}   # 1.10 (review, user decision): R70 10K although driven, so the service branch stays off the reset edge
+TYTUL = 'P03 R6 S1-L S1-S3'   # S1 §9: name, revision, class and slots (as P02 R4, P09 / P10 R2)
+SILK = {n.targets[0].id: ast.literal_eval(n.value) for n in ast.parse((P / 'src/silkscreen.py').read_text(encoding='utf-8')).body
+        if isinstance(n, ast.Assign) and getattr(n.targets[0], 'id', '') in ('LABEL', 'ABBR')}   # 1.10 (review): labels expected from the tables, not from the result
+# Library F.Fab of PinHeader_1x13_P2.54mm_Horizontal starts 0.37 mm before the pin row (pin stubs); the pin row stands 4.04 mm inside
+# edge B, so the plastic body front is at the edge and the pins stick out ~6 mm (S1 section 6). 1.10 (review): was an inline expression.
+SV_FAB_TOP = S1['klasy'][KLASA]['H'] - 4.04 - .37
 USB_MAX, CARD_MAX = 6.5, 6.5    # decision 30.09 (README): modules stop at the service-header courtyards, ~6.2 mm inside edge B
 
 
@@ -122,12 +129,35 @@ drc, receipt = run_fresh_drc(path, out / 'drc.json')
 _silk = json.loads((P / 'routing/silkscreen.json').read_text(encoding='utf-8'))
 trimmed = set(_silk.get('dropped_by_part', {})) | set(_silk.get('moved_texts_by_part', {}))
 fp_uuid = {f.m_Uuid.AsString(): f.GetReference() for f in b.GetFootprints()}
-lib_ok = [v for v in drc['violations'] if v['type'] == 'lib_footprint_mismatch' and all(fp_uuid.get(i['uuid']) in trimmed for i in v['items'])]
+
+
+def pads_equal_library(ref):
+    """1.10 (review): an accepted lib_footprint_mismatch may differ from the library footprint only outside the copper - every pad
+    (number, position in the footprint, size, drill, shape, type) equals the local library copy (eda/libraries)."""
+    f = fmap.get(ref)
+    if f is None or f.IsFlipped():
+        return False
+    lib, name = f.GetFPIDAsString().split(':'); g = p.FootprintLoad(str(P / 'eda/libraries' / (lib + '.pretty')), name)
+    def sig(a, v):
+        return (a.GetNumber(), round(p.ToMM(v.x), 3), round(p.ToMM(v.y), 3), round(p.ToMM(a.GetSize(p.F_Cu).x), 3), round(p.ToMM(a.GetSize(p.F_Cu).y), 3),
+                round(p.ToMM(a.GetDrillSize().x), 3), int(a.GetShape(p.F_Cu)), int(a.GetAttribute()))
+    return g is not None and sorted(sig(a, a.GetFPRelativePosition()) for a in f.Pads()) == sorted(sig(a, a.GetPosition()) for a in g.Pads())
+
+
+lib_ok = [v for v in drc['violations'] if v['type'] == 'lib_footprint_mismatch'
+          and all(fp_uuid.get(i['uuid']) in trimmed and pads_equal_library(fp_uuid.get(i['uuid'])) for i in v['items'])]
 rest = [v for v in drc['violations'] if v not in lib_ok]
-check('Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts '
-      'whose silk silkscreen.py trimmed)',
-      not rest and not drc['unconnected_items'] and not drc['schematic_parity'],
-      dict(receipt['counts'], other_violations=len(rest), other_types=sorted({v['type'] for v in rest}),
+ignored = sorted(k for k, v in json.loads((P / 'eda/P03.kicad_pro').read_text(encoding='utf-8'))['board']['design_settings']['rule_severities'].items() if v == 'ignore')
+no_yard = []
+for f in b.GetFootprints():
+    f.BuildCourtyardCaches()
+    if not f.GetCourtyard(p.B_CrtYd if f.IsFlipped() else p.F_CrtYd).OutlineCount():
+        no_yard.append(f.GetReference())
+check('Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (every rule the project does not set to ignore, list in the details; '
+      'missing_courtyard ignored, so only the M3 holes may lack one; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed '
+      'and whose pads equal the library)',
+      not rest and not drc['unconnected_items'] and not drc['schematic_parity'] and all(r.startswith('H') and r[1:].isdigit() for r in no_yard),
+      dict(receipt['counts'], other_violations=len(rest), other_types=sorted({v['type'] for v in rest}), ignored_rules=ignored, without_courtyard=sorted(no_yard),
            accepted_lib_mismatch=sorted(fp_uuid.get(i['uuid']) for v in lib_ok for i in v['items'])))
 # ---------------- 2. netlist, parts, board ----------------
 comps = {c.get('ref'): c for c in root.findall('./components/comp')}
@@ -246,7 +276,6 @@ check('J_BP1..3 (edge A): IDC 2x10 angled, body front at y = 0, pin centre x = 2
 # ---------------- 4. edge B: service headers (contract docs/SERWIS.csv) ----------------
 svd = {}; sv_ok = True
 texts = [(t.GetText(), t) for t in b.GetDrawings() if isinstance(t, p.PCB_TEXT) and t.GetLayer() == p.F_SilkS]
-labels = json.loads((P / 'routing/silkscreen.json').read_text(encoding='utf-8')).get('service_labels', {})
 for k, hdr in enumerate(['J_SV1', 'J_SV2', 'J_SV3']):
     f = fmap.get(hdr); x0 = STEP * k; problems = []
     if not f:
@@ -256,8 +285,12 @@ for k, hdr in enumerate(['J_SV1', 'J_SV2', 'J_SV3']):
     if len(pd) > S1['krawedz_B']['max_pinow_na_slot']: problems.append('too many pins')
     lo, hi = S1['krawedz_B']['zakres_x_w_slocie']
     if min(xs) - .85 < x0 + lo - 1e-6 or max(xs) + .85 > x0 + hi + 1e-6: problems.append(f'pins outside x {x0 + lo}..{x0 + hi}')
-    if not fab or fab[3] - H < 5.0 or abs(fab[1] - (H - 4.04 - .37 + 1.5 - 1.5)) > 1.0 and fab[1] > H - 3.5: problems.append(f'body/pins not at edge B (fab {fab})')
+    if not fab or fab[3] - H < 5.0 or abs(fab[1] - SV_FAB_TOP) > 1.0 and fab[1] > H - 3.5: problems.append(f'body/pins not at edge B (fab {fab})')
     if net(pd[0][1]) != 'GND' or net(pd[-1][1]) != 'GND': problems.append('GND not on both ends')
+    tab = SILK['LABEL'] if hdr == 'J_SV1' else SILK['ABBR']   # J_SV1 full names, J_SV2 / J_SV3 abbreviations (legend: sticker, 1.10)
+    for n, a in (pd[0], pd[-1]):   # 1.10 (review): GND marked at both ends of every header
+        if len([t for s_, t in texts if s_ == tab['GND'] and abs(p.ToMM(t.GetPosition().x) - p.ToMM(a.GetPosition().x)) < 1.3 and 86 < p.ToMM(t.GetPosition().y) < H]) != 1:
+            problems.append(f'pin {n}: no single GND label')
     rows = []
     for n, a in pd[1:-1]:
         want_net, want_res = SERW[hdr][n]
@@ -272,14 +305,23 @@ for k, hdr in enumerate(['J_SV1', 'J_SV2', 'J_SV3']):
         if node != want_net or f'{r} {fmap[r].GetValue()}' != want_res: problems.append(f'pin {n}: {r} {val} on {node}, SERWIS.csv {want_net} {want_res}')
         if val != want_val: problems.append(f'pin {n}: {r} {val}, class S1 §6 wants {want_val}')
         if dist > 10: problems.append(f'pin {n}: {r} not at its node ({dist:.1f} mm)')
-        lab = labels.get(f'{hdr}.{n}')
+        lab = tab.get(node)
         tx = [t for s, t in texts if lab and s == lab and abs(p.ToMM(t.GetPosition().x) - p.ToMM(a.GetPosition().x)) < 1.3 and 86 < p.ToMM(t.GetPosition().y) < H]
         if len(tx) != 1: problems.append(f'pin {n}: {len(tx)} silk labels')
         rows.append({'pin': n, 'node': node, 'resistor': r, 'value': val, 'node_dist_mm': round(dist, 1), 'label': lab})
     svd[hdr] = {'problems': problems, 'pins': rows}; sv_ok &= not problems
 check('Service headers J_SV1..3 (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pins out ~6 mm, GND on both ends, one series '
-      'resistor per pin as docs/SERWIS.csv and of its S1 class (1K, 10K for pull-up / open-drain nodes) <= 10 mm from its node, one silk label per pin',
+      'resistor per pin as docs/SERWIS.csv and of its S1 class (1K, 10K for pull-up / open-drain nodes and SUP_N_OUT) <= 10 mm from its node, '
+      'one silk label per pin with the name / abbreviation of its node (tables in silkscreen.py), GND at both ends',
       sv_ok, svd)
+# ---------------- 4b. reserved strips of edge A (S1 §5) ----------------
+pasy = {}
+for k, zl in enumerate(['J_BP1', 'J_BP2', 'J_BP3']):
+    x0 = STEP * k; y0, y1 = S1['krawedz_A']['strefa_y']; pas = (x0 + 10.0, y0, x0 + 43.0, y1)
+    pasy[zl] = {'pas': pas, 'czesci': sorted(r for r in fmap if r not in holes_ref and r != zl
+                                              and cbox(r)[0] < pas[2] and pas[0] < cbox(r)[2] and cbox(r)[1] < pas[3] and pas[1] < cbox(r)[3])}
+check('Reserved strip of edge A (S1 §5: y 0-10, x 10-43 of each J_BP slot): no other part on either side (review 1.10)',
+      not any(v['czesci'] for v in pasy.values()), pasy)
 # ---------------- 5. heights ----------------
 hh = {r: height(r, parts) for r in onboard}
 check(f'Every part <= {HMAX} mm above the board (level 2, S1 section 4; src/heights.py)', all(v <= HMAX for v in hh.values()),
@@ -345,13 +387,7 @@ def path_res(netname, a_ref, a_pad, z_ref, z_pad, wmin=1.2):
                           key=lambda q: math.dist(a0, q))
             for u, v in zip(cuts, cuts[1:]):
                 link((L,) + u, (L,) + v, RHO * math.dist(u, v) * 1e-3 / (p.ToMM(t.GetWidth()) * 1e-3 * T))
-    for nd in list(adj):   # a node inside a THT pad or on a via joins both layers
-        for q in (fmap[a_ref], fmap[z_ref]):
-            pass
     start = [n for n in adj if pad(a_ref, a_pad).HitTest(xy(n[1], n[2]))]; goal = {n for n in adj if pad(z_ref, z_pad).HitTest(xy(n[1], n[2]))}
-    for n in list(adj):   # through-hole pads join the layers
-        if pad(z_ref, z_pad).GetAttribute() == p.PAD_ATTRIB_PTH and n in goal:
-            pass
     import heapq
     dist = {n: 0.0 for n in start}; hq = [(0.0, n) for n in start]; best = None
     while hq:
@@ -395,12 +431,20 @@ req = {'U21-J_BP2': round(math.dist(centre('U21'), jc['J_BP2']), 1), 'U22-J_BP1'
        'U23-J_BP3': round(math.dist(centre('U23'), jc['J_BP3']), 1), 'U6.4-J_BP3.12': round(math.dist(pxy('U6', '4'), pxy('J_BP3', '12')), 1),
        'R41.2-J_BP3.12': round(math.dist(pxy('R41', '2'), pxy('J_BP3', '12')), 1), 'C15.1-U6.5': round(math.dist(pxy('C15', '1'), pxy('U6', '5')), 1),
        'R42.2-M1.J1-13': round(math.dist(pxy('R42', '2'), pxy('M1', 'J1-13')), 1), 'R43.1-J_BP2.16': round(math.dist(pxy('R43', '1'), pxy('J_BP2', '16')), 1)}
+# 1.10 (review): the numbers are this check's reading of "blisko" / "przy" in README "Wymagania dla layoutu", not datasheet values:
+# ribbon-end buffers within 30 mm of their connector centre (U23 25 mm, a smaller S3 cluster), U6 / R41 within 12 mm of J_BP3.12,
+# R42 / R43 within 8 mm of their pin, C15 6 mm as every decoupling capacitor of P03 / P09 / P10.
 lim = {'U21-J_BP2': 30, 'U22-J_BP1': 30, 'U23-J_BP3': 25, 'U6.4-J_BP3.12': 12, 'R41.2-J_BP3.12': 12, 'C15.1-U6.5': 6, 'R42.2-M1.J1-13': 8, 'R43.1-J_BP2.16': 8}
 check('README layout requirements: U21 by J_BP2 (<= 30 mm), U22 by J_BP1 (<= 30 mm; decision 30.09, disputed: README asked J_BP2), '
       'U23 by J_BP3 (<= 25 mm), U6 / R41 / C15 at J_BP3.12, R42 at M1 J1-13, R43 at J_BP2.16',
       all(req[k] <= lim[k] for k in req), {'distance_mm': req, 'limit_mm': lim})
 supo = round(sum(p.ToMM(t.GetLength()) for t in b.GetTracks() if not isinstance(t, p.PCB_VIA) and net(t) == 'SUP_N_OUT'), 1)
-check('SUP_N_OUT copper on P03 <= 30 mm (reset edge budget: local 3 pF of the 30 pF, README "Reset do P04")', supo <= 30, {'track_mm': supo})
+svb = round(sum(p.ToMM(t.GetLength()) for t in b.GetTracks() if not isinstance(t, p.PCB_VIA) and net(t) == 'SV_SUP_N_OUT'), 1)
+r70 = next(r for r in fmap if r.startswith('R') and {net(a) for a in fmap[r].Pads()} == {'SUP_N_OUT', 'SV_SUP_N_OUT'})
+check('SUP_N_OUT copper on P03 <= 30 mm and its service branch behind 10K (reset edge budget: local 3 pF of the 30 pF, README "Reset do P04"; '
+      'review 1.10: the branch to J_SV3.6 is ~80 mm, bound for any branch length in verify_reset.py)',
+      supo <= 30 and fmap[r70].GetValue().upper().startswith('10K'),
+      {'track_mm': supo, 'service_branch_mm': svb, 'branch_resistor': f'{r70} {fmap[r70].GetValue()}'})
 # ---------------- 9. GND ----------------
 isl = {b.GetLayerName(L): sum(z.GetFilledPolysList(L).OutlineCount() for z in b.Zones() if not z.GetIsRuleArea() and z.GetNetname() == 'GND' and z.IsOnLayer(L)) for L in (p.F_Cu, p.B_Cu)}
 cov = {b.GetLayerName(L): round(sum(z.GetFilledPolysList(L).Area() for z in b.Zones() if not z.GetIsRuleArea() and z.GetNetname() == 'GND' and z.IsOnLayer(L)) / 1e12 / (W * H) * 100, 1)
@@ -431,10 +475,31 @@ for f in b.GetFootprints():
     if o:
         amb[r] = o
 check('Every visible reference outside the courtyards of other parts', not amb, amb)
-title = [s for s, t in texts if s.startswith('P03 R6 S1-L')]
+blisko = {}
+for f in b.GetFootprints():
+    r = f.GetReference(); t = f.Reference()
+    if r in holes_ref or not t.IsVisible() or r not in cour:
+        continue
+    c_ = t.GetBoundingBox().GetCenter(); dist_ = lambda poly: 0.0 if poly.Contains(c_) else math.sqrt(poly.SquaredDistance(c_)) / 1e6
+    mine = dist_(cour[r]); inne = sorted((dist_(cy), o) for o, cy in cour.items() if o != r and side[o] == side[r])
+    if inne and inne[0][0] <= mine:
+        blisko[r] = {'own_mm': round(mine, 2), 'nearest_other': inne[0][1], 'other_mm': round(inne[0][0], 2)}
+check('Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)', not blisko, blisko)
+title = [s for s, t in texts if s == TYTUL]
 marks = [s for s, t in texts if s.startswith('KRAWEDZ A') or s.startswith('KRAWEDZ B')]
-check('Silkscreen: board name "P03 R6 S1-L", edge markers A and B', bool(title) and any(m.startswith('KRAWEDZ A') for m in marks) and any(m.startswith('KRAWEDZ B') for m in marks), {'title': title, 'marks': marks})
+check(f'Silkscreen: board name "{TYTUL}", edge markers A and B', bool(title) and any(m.startswith('KRAWEDZ A') for m in marks) and any(m.startswith('KRAWEDZ B') for m in marks), {'title': title, 'marks': marks})
 
+# 1.10 (review): completion-planner routes - routed length against the straight line and the whole copper of the net (report only;
+# README "PCB" lists them; the 30.09 board had 183-261 mm detours on _SRC nets that nobody checked)
+cr = []
+for rec in json.loads((P / 'routing/completion-routes.json').read_text(encoding='utf-8')):
+    pts = rec['points_mm_layer']
+    if rec['net'] == 'GND':
+        continue
+    cr.append({'net': rec['net'], 'from': rec['from'], 'to': rec['to'], 'routed_mm': round(sum(math.dist(u[:2], v[:2]) for u, v in zip(pts, pts[1:])), 1),
+               'straight_mm': round(math.dist(pts[0][:2], pts[-1][:2]), 1), 'layer_changes': sum(u[2] != v[2] for u, v in zip(pts, pts[1:])),
+               'net_copper_mm': round(sum(p.ToMM(t.GetLength()) for t in b.GetTracks() if not isinstance(t, p.PCB_VIA) and net(t) == rec['net']), 1)})
+details['Completion-planner routes (report only, review 1.10)'] = cr
 res = {'board': str(path), 'board_sha256': hashlib.sha256(path.read_bytes()).hexdigest(), 'checks': checks, 'details': details,
        'passed': sum(c['pass'] for c in checks), 'total': len(checks)}
 out.mkdir(parents=True, exist_ok=True)

@@ -1737,11 +1737,11 @@
     "value": "1K / 1% 1206",
     "mpn": "RC1206FR-071KL",
     "pins": {
-      "1": "3V3_CORE",
-      "2": "SV_3V3_CORE"
+      "1": "MEAS_BANK",
+      "2": "SV_MEAS_BANK"
     },
     "url": "",
-    "note": "J_SV1.4 series resistor, placed at the 3V3_CORE node (S1 §6): LDO modulu; zapad przez 3,07 V.",
+    "note": "J_SV1.4 series resistor, placed at the MEAS_BANK node (S1 §6): wejscie A dekodera, start: 0.",
     "qty": 1,
     "sheet": "SERWIS",
     "on_board": true
@@ -1754,11 +1754,11 @@
     "value": "1K / 1% 1206",
     "mpn": "RC1206FR-071KL",
     "pins": {
-      "1": "MEAS_BANK",
-      "2": "SV_MEAS_BANK"
+      "1": "CS_ILOG_N",
+      "2": "SV_CS_ILOG_N"
     },
     "url": "",
-    "note": "J_SV1.5 series resistor, placed at the MEAS_BANK node (S1 §6): wejscie A dekodera, start: 0.",
+    "note": "J_SV1.5 series resistor, placed at the CS_ILOG_N node (S1 §6): start: 1.",
     "qty": 1,
     "sheet": "SERWIS",
     "on_board": true
@@ -1801,15 +1801,15 @@
     "ref": "R50",
     "source_ref": "ADDED_R6_SERVICE_SERIES",
     "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
-    "display": "1K / 1% 1206",
-    "value": "1K / 1% 1206",
-    "mpn": "RC1206FR-071KL",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
     "pins": {
-      "1": "CS_ILOG_N",
-      "2": "SV_CS_ILOG_N"
+      "1": "I2C_SCL",
+      "2": "SV_I2C_SCL"
     },
     "url": "",
-    "note": "J_SV1.8 series resistor, placed at the CS_ILOG_N node (S1 §6): start: 1.",
+    "note": "J_SV1.8 series resistor, placed at the I2C_SCL node (S1 §6): I2C MCP23017 (OD, 4k7).",
     "qty": 1,
     "sheet": "SERWIS",
     "on_board": true
@@ -1839,11 +1839,11 @@
     "value": "1K / 1% 1206",
     "mpn": "RC1206FR-071KL",
     "pins": {
-      "1": "LOGGER_CURRENT_OK",
-      "2": "SV_LOGGER_CURRENT_OK"
+      "1": "3V3_CORE",
+      "2": "SV_3V3_CORE"
     },
     "url": "",
-    "note": "J_SV1.10 series resistor, placed at the LOGGER_CURRENT_OK node (S1 §6): z P06 (10k R2 do GND).",
+    "note": "J_SV1.10 series resistor, placed at the 3V3_CORE node (S1 §6): LDO modulu; zapad przez 3,07 V.",
     "qty": 1,
     "sheet": "SERWIS",
     "on_board": true
@@ -1869,15 +1869,15 @@
     "ref": "R54",
     "source_ref": "ADDED_R6_SERVICE_SERIES",
     "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
-    "display": "10K / 1% 1206",
-    "value": "10K / 1% 1206",
-    "mpn": "RC1206FR-0710KL",
+    "display": "1K / 1% 1206",
+    "value": "1K / 1% 1206",
+    "mpn": "RC1206FR-071KL",
     "pins": {
-      "1": "I2C_SCL",
-      "2": "SV_I2C_SCL"
+      "1": "LOGGER_CURRENT_OK",
+      "2": "SV_LOGGER_CURRENT_OK"
     },
     "url": "",
-    "note": "J_SV1.12 series resistor, placed at the I2C_SCL node (S1 §6): I2C MCP23017 (OD, 4k7).",
+    "note": "J_SV1.12 series resistor, placed at the LOGGER_CURRENT_OK node (S1 §6): z P06 (10k R2 do GND).",
     "qty": 1,
     "sheet": "SERWIS",
     "on_board": true
@@ -1894,15 +1894,15 @@
       "13": "GND",
       "2": "SV_MOTOR_INB",
       "3": "SV_MOTOR_INA",
-      "4": "SV_3V3_CORE",
-      "5": "SV_MEAS_BANK",
+      "4": "SV_MEAS_BANK",
+      "5": "SV_CS_ILOG_N",
       "6": "SV_SCOPE_TRIG",
       "7": "SV_CS_ITEST_N",
-      "8": "SV_CS_ILOG_N",
+      "8": "SV_I2C_SCL",
       "9": "SV_3V3_IO",
-      "10": "SV_LOGGER_CURRENT_OK",
+      "10": "SV_3V3_CORE",
       "11": "SV_I2C_SDA",
-      "12": "SV_I2C_SCL"
+      "12": "SV_LOGGER_CURRENT_OK"
     },
     "url": "",
     "note": "Format S1 edge B, slot S1, x = 10..43 mm in the slot; pins protrude ~6 mm beyond the edge. GND on pins 1 and 13. Silkscreen: signal name at every pin, readable from edge B.",
@@ -1931,15 +1931,15 @@
     "ref": "R56",
     "source_ref": "ADDED_R6_SERVICE_SERIES",
     "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
-    "display": "1K / 1% 1206",
-    "value": "1K / 1% 1206",
-    "mpn": "RC1206FR-071KL",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
     "pins": {
-      "1": "CURRENT_CS_N",
-      "2": "SV_CURRENT_CS_N"
+      "1": "PFAIL_N",
+      "2": "SV_PFAIL_N"
     },
     "url": "",
-    "note": "J_SV2.3 series resistor, placed at the CURRENT_CS_N node (S1 §6): /G dekodera U2, start: 1.",
+    "note": "J_SV2.3 series resistor, placed at the PFAIL_N node (S1 §6): wejscie z P02 R4 po stronie zlacza (100k R43).",
     "qty": 1,
     "sheet": "SERWIS",
     "on_board": true
@@ -2033,15 +2033,15 @@
     "ref": "R62",
     "source_ref": "ADDED_R6_SERVICE_SERIES",
     "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
-    "display": "10K / 1% 1206",
-    "value": "10K / 1% 1206",
-    "mpn": "RC1206FR-0710KL",
+    "display": "1K / 1% 1206",
+    "value": "1K / 1% 1206",
+    "mpn": "RC1206FR-071KL",
     "pins": {
-      "1": "PFAIL_N",
-      "2": "SV_PFAIL_N"
+      "1": "CURRENT_CS_N",
+      "2": "SV_CURRENT_CS_N"
     },
     "url": "",
-    "note": "J_SV2.9 series resistor, placed at the PFAIL_N node (S1 §6): wejscie z P02 R4 po stronie zlacza (100k R43).",
+    "note": "J_SV2.9 series resistor, placed at the CURRENT_CS_N node (S1 §6): /G dekodera U2, start: 1.",
     "qty": 1,
     "sheet": "SERWIS",
     "on_board": true
@@ -2108,13 +2108,13 @@
       "1": "GND",
       "13": "GND",
       "2": "SV_5V_SYS",
-      "3": "SV_CURRENT_CS_N",
+      "3": "SV_PFAIL_N",
       "4": "SV_ADC_RESET",
       "5": "SV_MEAS_EN",
       "6": "SV_ADC_BUSY",
       "7": "SV_ADC_CONVST",
       "8": "SV_ADC_CS",
-      "9": "SV_PFAIL_N",
+      "9": "SV_CURRENT_CS_N",
       "10": "SV_SD_CS",
       "11": "SV_SUP_RAW_N",
       "12": "SV_5V_M1"
@@ -2197,15 +2197,15 @@
     "ref": "R70",
     "source_ref": "ADDED_R6_SERVICE_SERIES",
     "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
-    "display": "1K / 1% 1206",
-    "value": "1K / 1% 1206",
-    "mpn": "RC1206FR-071KL",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
     "pins": {
       "1": "SUP_N_OUT",
       "2": "SV_SUP_N_OUT"
     },
     "url": "",
-    "note": "J_SV3.6 series resistor, placed at the SUP_N_OUT node (S1 §6): reset do P04 za U6/R41 (zwarcie J_BP3.12: 11-16 mA).",
+    "note": "J_SV3.6 series resistor, placed at the SUP_N_OUT node (S1 §6): reset do P04 za U6/R41; 10K (1.10, wyjatek od S1 par. 6): galaz serwisowa nie spowalnia zbocza resetu.",
     "qty": 1,
     "sheet": "SERWIS",
     "on_board": true

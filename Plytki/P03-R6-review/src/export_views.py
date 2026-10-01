@@ -1,5 +1,5 @@
 """Native KiCad plots/renders for the review PDF (from P02 R3 export_views.py). The PCB file is never changed; F.Fab reference
-texts are dropped only in a plot copy. SVGs cover the board area only (page-size-mode 2), so they print at 1:1.
+texts are dropped only in a plot copy, except for parts whose silkscreen reference is hidden (routing/silkscreen.json). SVGs cover the board area only (page-size-mode 2), so they print at 1:1.
 """
 from pathlib import Path
 import subprocess, sys, os
@@ -7,7 +7,12 @@ from sexpr import parse, dump, sub, one
 P = Path(__file__).resolve().parents[1]; cli = os.environ.get('KICAD_CLI', str(Path(sys.executable).with_name('kicad-cli.exe')))
 env = dict(os.environ); env['KICAD_CONFIG_HOME'] = str(P / 'verification/tool-config')
 root = parse((P / 'eda/P03.kicad_pcb').read_text())
+import json
+ukryte = set(json.loads((P / 'routing/silkscreen.json').read_text(encoding='utf-8')).get('hidden_references', []))
 for fp in sub(root, 'footprint'):
+    ref = next((x[2] for x in sub(fp, 'property') if x[1] == 'Reference'), '')
+    if ref in ukryte:   # 1.10 (recenzja P10): części bez oznaczenia na nadruku dostają je z F.Fab na rysunku montażowym
+        continue
     for t in list(sub(fp, 'fp_text')):
         if one(t, 'layer')[1] in ('F.Fab', 'B.Fab'):
             fp.remove(t)
