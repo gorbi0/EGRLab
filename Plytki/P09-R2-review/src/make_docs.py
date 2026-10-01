@@ -26,6 +26,7 @@ f"| MF0207 10 k | {sum(1 for p in PARTS.values() if p['value']=='10K' and p['zro
 f"| MF0207 100 k | {sum(1 for p in PARTS.values() if p['value']=='100K' and p['zrodlo']=='rejestr')} | 7 |",
 f"| K104K15X7RF5TH5 100 n | {sum(1 for p in PARTS.values() if p['value']=='100n')} | 5 |",'',
 'Razem z P10 R2 (3 × 10 k — R2 i dwa rezystory serwisowe CAN, 3 × 100 n): 10 k — 9 wobec 7, 100 k — 7 z 7, 100 n — 6 wobec 5 (zob. opis PR i `P10-R2-review/docs/ZAKUPY.md`).','',
+'**1.10 (recenzja P05):** P02 R4 (scalona, zamówiona) bierze z tego samego zapasu MF0207 10 k ×7, 100 k ×6 i K104 ×6, więc te pozycje P09 R2 i P10 R2 trzeba dokupić jako te same części (bez zmian w PCB). Wiążący bilans: lista zakupowa 3 (`Plytki/Zakupy-3-szkic`).','',
 'Uwagi do zakupów:',
 '- J1 (J_BP): obudowane złącze kątowe IDC 2×8, raster 2,54 mm, styki Au; z płytką połączeń P12 łączy je krótka taśma IDC 2×8 (dwa gniazda zaciskowe, jedno do J_BP, drugie do P12).',
 '- J2 (SERWIS): goldpin **kątowy** 1×13 (posiadana listwa 1×40 z Kamami jest prosta i nie wystarczy).',
