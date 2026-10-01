@@ -12,12 +12,12 @@ def plan(cfg):
     """1.10: P05 czyta schemat z chmury (csv); wady wstrzykujemy do kopii jego pinoutu jako planu (ten sam pinout, sprawdzone)."""
     z = next(p for p in cfg['plytki'] if p['plytka'] == 'P05 R3')['zrodlo']
     if z['typ'] != 'plan':
-        z.update(typ='plan', piny=z.pop('plan_piny'), ref='origin/main', plik=z['plan_plik'])
+        z.update(typ='plan', piny=z.pop('plan_piny'), ref='origin/main', plik=z['plan_plik']); z.pop('pcb_checks', None)   # 1.10: raport PCB jest na gałęzi płytki
     return z['piny']
 
 
-def pojemnosc_bez_decyzji(cfg):        # P06 C3 z powrotem 470 µF (bez decyzji 1.10): razem ponad 600 µF
-    next(p for p in cfg['pojemnosc_5V']['plytki'] if p['plytka'].startswith('P06'))['zamiany'] = {}
+def pojemnosc_bez_decyzji(cfg):        # P06 C3 z powrotem 470 µF (stan sprzed decyzji 1.10): razem ponad 600 µF
+    next(p for p in cfg['pojemnosc_5V']['plytki'] if p['plytka'].startswith('P06'))['zamiany'] = {'C3': '470u / 16V'}
 
 
 def schemat_inny_niz_plan(cfg):        # plan z zadania mówi PFAIL_N na J_BP2.16 P05, schemat ma tam GND

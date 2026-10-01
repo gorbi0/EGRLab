@@ -26,6 +26,8 @@
 
 **Czysto (0 błędów) po decyzji użytkownika 1.10 o pojemności (pkt 5).** 17 sieci jest kompletnych: P02 R4 ↔ P03 R6 ↔ P05 R3 ↔ P09 R2 ↔ P10 R2. 29 sieci czeka na P04, P06, P07, P08 albo P11. Próby ujemne: 9/9 z zerową.
 
+**1.10 wieczorem (po P06 R2):** P06 R2 czytany z `origin/p06-r2-pcb` (schemat z PR #8 po przeglądzie lokalnym, PCB), P05 R3 z `origin/p05-r3-pcb`; środki złączy J_BP obu płytek zmierzone w ich raportach PCB (P05: 26,5 / 80,0 mm, P06: 80,0 mm). **19 sieci kompletnych** (nowe: CS_ILOG_N i LOGGER_CURRENT_OK z P03 R6), **27 czeka** — w wariancie LOGGER już tylko pięć sieci P11 (LOGGER_CLEAR, MARK, N_J_SCOPE_HOT, TEST_KEY, TEST_PRESENT), reszta na P04 / P07 / P08. Pojemność 5 V z `parts.json` płytek bez zamian: razem 485,6 µF (P06 R2 ma C3 220 µF w schemacie). Próby ujemne 9/9 (dwie dostosowane: plan P05 bez raportu PCB, pojemność z P06 C3 470 µF).
+
 **1.10 (po PR #7):** P05 R3 czytany ze schematu z chmury (`origin/p05-s1`, `docs/J_BP.csv`), a tabele z zadania zostały w `zrodla.json` jako `plan_piny`: skrypt porównuje schemat z planem pin po pinie (zgodne; nowa próba ujemna `schemat_inny_niz_plan`).
 
 Ustalenia:
@@ -47,7 +49,8 @@ Ustalenia:
 
 - **Po scaleniu gałęzi płytki:** w `zrodla.json` zmienić jej `ref` na `origin/main`.
 - **P05 (zrobione 1.10):** źródło `csv` z `origin/p05-s1`; po scaleniu PR #7 zmienić `ref` na `origin/main`.
-- **P06, P11, P04, P07, P08:** dopisać źródła, gdy powstaną pinouty.
+- **P06 (zrobione 1.10 wieczorem):** źródło `csv` i raport PCB z `origin/p06-r2-pcb`.
+- **P11, P04, P07, P08:** dopisać źródła, gdy powstaną pinouty.
 
 Uruchomienie (Python 3, bez dodatkowych pakietów; najpierw `git fetch origin`):
 
