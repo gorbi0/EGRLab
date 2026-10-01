@@ -1,0 +1,253 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-01T16:42:18",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [
+        {
+            "description": "Sieć pola (5V_SYS) nie pasuje do sieci nadanej na schemacie (/SERWIS/SRV_5V_SYS)",
+            "items": [
+                {
+                    "description": "Pole PTH 4 [5V_SYS] na J_SV1",
+                    "pos": {
+                        "x": 34.12,
+                        "y": 95.96
+                    },
+                    "uuid": "473fe29a-4ed7-40dd-a0b0-a96fc897159a"
+                }
+            ],
+            "severity": "warning",
+            "type": "net_conflict"
+        }
+    ],
+    "source": "P05.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole PTH 4 [5V_SYS] na J_SV1",
+                    "pos": {
+                        "x": 34.12,
+                        "y": 95.96
+                    },
+                    "uuid": "473fe29a-4ed7-40dd-a0b0-a96fc897159a"
+                },
+                {
+                    "description": "Ścieżka [5V_SYS] na F.Cu, długość 3,4514 mm",
+                    "pos": {
+                        "x": 31.12,
+                        "y": 76.82
+                    },
+                    "uuid": "50c5dd80-f5ed-4602-b9d3-b07590723cd7"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci 5V_SYS oraz /SERWIS/SRV_5V_SYS)",
+            "items": [
+                {
+                    "description": "Pole PTH 4 [5V_SYS] na J_SV1",
+                    "pos": {
+                        "x": 34.12,
+                        "y": 95.96
+                    },
+                    "uuid": "473fe29a-4ed7-40dd-a0b0-a96fc897159a"
+                },
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_5V_SYS] na F.Cu, długość 0,9919 mm",
+                    "pos": {
+                        "x": 34.12,
+                        "y": 94.9681
+                    },
+                    "uuid": "9d9d32ec-c440-4fcc-beb9-6cc8eaaf51f8"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci 5V_SYS oraz /SERWIS/SRV_5V_SYS)",
+            "items": [
+                {
+                    "description": "Pole PTH 4 [5V_SYS] na J_SV1",
+                    "pos": {
+                        "x": 34.12,
+                        "y": 95.96
+                    },
+                    "uuid": "473fe29a-4ed7-40dd-a0b0-a96fc897159a"
+                },
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_5V_SYS] na F.Cu, długość 9,9098 mm",
+                    "pos": {
+                        "x": 27.1127,
+                        "y": 87.9608
+                    },
+                    "uuid": "e8ffc46e-e560-4326-995c-f4b1ee391dc1"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_5V_SYS] na F.Cu, długość 0,9919 mm",
+                    "pos": {
+                        "x": 34.12,
+                        "y": 94.9681
+                    },
+                    "uuid": "9d9d32ec-c440-4fcc-beb9-6cc8eaaf51f8"
+                },
+                {
+                    "description": "Pole PTH 4 [5V_SYS] na J_SV1",
+                    "pos": {
+                        "x": 34.12,
+                        "y": 95.96
+                    },
+                    "uuid": "473fe29a-4ed7-40dd-a0b0-a96fc897159a"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_5V_SYS] na F.Cu, długość 0,9919 mm",
+                    "pos": {
+                        "x": 34.12,
+                        "y": 94.9681
+                    },
+                    "uuid": "9d9d32ec-c440-4fcc-beb9-6cc8eaaf51f8"
+                },
+                {
+                    "description": "Pole PTH 4 [5V_SYS] na J_SV1",
+                    "pos": {
+                        "x": 34.12,
+                        "y": 95.96
+                    },
+                    "uuid": "473fe29a-4ed7-40dd-a0b0-a96fc897159a"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_5V_SYS] na F.Cu, długość 9,9098 mm",
+                    "pos": {
+                        "x": 27.1127,
+                        "y": 87.9608
+                    },
+                    "uuid": "e8ffc46e-e560-4326-995c-f4b1ee391dc1"
+                },
+                {
+                    "description": "Pole PTH 4 [5V_SYS] na J_SV1",
+                    "pos": {
+                        "x": 34.12,
+                        "y": 95.96
+                    },
+                    "uuid": "473fe29a-4ed7-40dd-a0b0-a96fc897159a"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV1",
+                    "pos": {
+                        "x": 41.74,
+                        "y": 95.96
+                    },
+                    "uuid": "46bfd41e-1732-4cba-b6ea-30823f85f90d"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP2",
+                    "pos": {
+                        "x": 68.57,
+                        "y": 13.33
+                    },
+                    "uuid": "4ec27673-7739-4d6c-993f-22280ba5abdb"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x05_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP1",
+                    "pos": {
+                        "x": 21.42,
+                        "y": 13.33
+                    },
+                    "uuid": "ab2658b8-2665-4558-a302-e16000794b24"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV2",
+                    "pos": {
+                        "x": 95.24,
+                        "y": 95.96
+                    },
+                    "uuid": "f81e9399-147e-49f4-8c72-6dc5e0e2c471"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        }
+    ]
+}

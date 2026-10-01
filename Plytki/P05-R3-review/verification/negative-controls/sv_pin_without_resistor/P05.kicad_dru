@@ -1,0 +1,10 @@
+(version 1)
+(rule "S1 tor >= 0.30 mm poza drobnym rastrem"
+  (condition "A.Type == 'Track' && !(A.intersectsCourtyard('U1') || A.intersectsCourtyard('U3'))")
+  (constraint track_width (min 0.30mm)))
+(rule "drobny raster U1 / U3: tor >= 0.20 mm"
+  (condition "A.Type == 'Track' && (A.intersectsCourtyard('U1') || A.intersectsCourtyard('U3'))")
+  (constraint track_width (min 0.20mm)))
+(rule "drobny raster U1 / U3: odstep 0.15 mm miedzy elementami w obrysie ukladu"
+  (condition "(A.intersectsCourtyard('U1') && B.intersectsCourtyard('U1')) || (A.intersectsCourtyard('U3') && B.intersectsCourtyard('U3'))")
+  (constraint clearance (min 0.15mm)))

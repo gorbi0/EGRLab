@@ -83,7 +83,7 @@ node('AUX_IN','ADC_CH7',[('R31',2),('R32',1),('C33',1)],58)
 node('AUX_IN','ADC_CH8',[('R33',2),('R34',2),('R35',1),('C34',1)],123,'x')
 S['AUX_IN'].text('CH6: terminacja zera; prad z MCP3201 na P06/P07 jest osobnym pomiarem. Nie dodawac shunta do CH6.',8,12,1.2)
 S['AUX_IN'].text('CH7 VBAT_SENSE (akumulator auta z P02 R4 przez P12, J_BP1.10): 499k/100k, nominalny mnoznik 6.0898; kalibracja offsetu i gain obowiazkowa.',8,43,1.2)
-S['AUX_IN'].text('SW1 C&K JS202011AQN (suwak, katowy): HI = 2-1 + 5-6, LO = 2-3 + 5-4 (pin 4 wolny). Przelaczac bez napiecia; po zmianie profil AUX.',8,106,1.2)
+S['AUX_IN'].text('SW1 E-Switch 100 DP M6 (katowy, dzwignia przez panel): HI = 2-1 + 5-4 (bocznik R35 do GND), LO = 2-3 + 5-6 (pin 6 wolny). Przelaczac bez napiecia; po zmianie profil AUX.',8,106,1.2)
 ns=collections.defaultdict(set)
 for name,sh in S.items():
  for part,pins in sh.parts.values():

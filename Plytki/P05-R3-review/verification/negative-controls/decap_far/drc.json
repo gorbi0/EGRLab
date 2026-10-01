@@ -1,0 +1,336 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-01T16:44:59",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P05.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [3V3_DAQ] z C20 na F.Cu",
+                    "pos": {
+                        "x": 75.475,
+                        "y": 28.9395
+                    },
+                    "uuid": "7dbeb563-d819-4e9e-86a1-175ff66c300f"
+                },
+                {
+                    "description": "Ścieżka [3V3_DAQ] na F.Cu, długość 0,7056 mm",
+                    "pos": {
+                        "x": 69.4752,
+                        "y": 31.1762
+                    },
+                    "uuid": "c8fb4619-9379-4dc1-bdb2-26b758c7aa7f"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Naruszenie prześwitu (klasa sieci 'Default' prześwit 0,2500 mm; obecnie 0,1960 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [ADC_RESET_P05] na F.Cu, długość 3,2497 mm",
+                    "pos": {
+                        "x": 76.721,
+                        "y": 23.534
+                    },
+                    "uuid": "591966cb-d635-409e-a9af-fa7a25fa6a64"
+                },
+                {
+                    "description": "Pole lutownicze 2 [GND] z C20 na F.Cu",
+                    "pos": {
+                        "x": 75.475,
+                        "y": 25.8145
+                    },
+                    "uuid": "de10e631-a603-44a4-9be9-240317d4e503"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu (klasa sieci 'CORE3V3' prześwit 0,2500 mm; obecnie 0,1960 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [ADC_RESET_P05] na F.Cu, długość 6,4057 mm",
+                    "pos": {
+                        "x": 76.721,
+                        "y": 26.7837
+                    },
+                    "uuid": "0da42ee6-5dc3-4843-8ab9-0c5c808d5db5"
+                },
+                {
+                    "description": "Pole lutownicze 1 [3V3_DAQ] z C20 na F.Cu",
+                    "pos": {
+                        "x": 75.475,
+                        "y": 28.9395
+                    },
+                    "uuid": "7dbeb563-d819-4e9e-86a1-175ff66c300f"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci 3V3_DAQ oraz GND)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [3V3_DAQ] z C20 na F.Cu",
+                    "pos": {
+                        "x": 75.475,
+                        "y": 28.9395
+                    },
+                    "uuid": "7dbeb563-d819-4e9e-86a1-175ff66c300f"
+                },
+                {
+                    "description": "Ścieżka [GND] na F.Cu, długość 3,0200 mm",
+                    "pos": {
+                        "x": 74.675,
+                        "y": 32.29
+                    },
+                    "uuid": "d4a07b15-046b-4bef-b179-04304d55800f"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz 3V3_DAQ)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 2 [GND] z R18 na F.Cu",
+                    "pos": {
+                        "x": 74.675,
+                        "y": 29.27
+                    },
+                    "uuid": "a4e672f2-20b4-4fb5-a7e3-1f4dd55df4c7"
+                },
+                {
+                    "description": "Pole lutownicze 1 [3V3_DAQ] z C20 na F.Cu",
+                    "pos": {
+                        "x": 75.475,
+                        "y": 28.9395
+                    },
+                    "uuid": "7dbeb563-d819-4e9e-86a1-175ff66c300f"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint R17",
+                    "pos": {
+                        "x": 76.225,
+                        "y": 25.46
+                    },
+                    "uuid": "4233a4e5-f124-431b-85fc-cb29075d84ea"
+                },
+                {
+                    "description": "Footprint C20",
+                    "pos": {
+                        "x": 75.475,
+                        "y": 27.377
+                    },
+                    "uuid": "b2aa48d6-d783-4371-b6c2-09117e0a1ccc"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint R18",
+                    "pos": {
+                        "x": 76.225,
+                        "y": 29.27
+                    },
+                    "uuid": "873ee655-d1ad-4002-b532-d0d05fe74589"
+                },
+                {
+                    "description": "Footprint C20",
+                    "pos": {
+                        "x": 75.475,
+                        "y": 27.377
+                    },
+                    "uuid": "b2aa48d6-d783-4371-b6c2-09117e0a1ccc"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole lutownicze 2 [GND] z R18 na F.Cu",
+                    "pos": {
+                        "x": 74.675,
+                        "y": 29.27
+                    },
+                    "uuid": "a4e672f2-20b4-4fb5-a7e3-1f4dd55df4c7"
+                },
+                {
+                    "description": "Pole lutownicze 1 [3V3_DAQ] z C20 na F.Cu",
+                    "pos": {
+                        "x": 75.475,
+                        "y": 28.9395
+                    },
+                    "uuid": "7dbeb563-d819-4e9e-86a1-175ff66c300f"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [GND] na F.Cu, długość 3,0200 mm",
+                    "pos": {
+                        "x": 74.675,
+                        "y": 32.29
+                    },
+                    "uuid": "d4a07b15-046b-4bef-b179-04304d55800f"
+                },
+                {
+                    "description": "Pole lutownicze 1 [3V3_DAQ] z C20 na F.Cu",
+                    "pos": {
+                        "x": 75.475,
+                        "y": 28.9395
+                    },
+                    "uuid": "7dbeb563-d819-4e9e-86a1-175ff66c300f"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV1",
+                    "pos": {
+                        "x": 41.74,
+                        "y": 95.96
+                    },
+                    "uuid": "46bfd41e-1732-4cba-b6ea-30823f85f90d"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP2",
+                    "pos": {
+                        "x": 68.57,
+                        "y": 13.33
+                    },
+                    "uuid": "4ec27673-7739-4d6c-993f-22280ba5abdb"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x05_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP1",
+                    "pos": {
+                        "x": 21.42,
+                        "y": 13.33
+                    },
+                    "uuid": "ab2658b8-2665-4558-a302-e16000794b24"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV2",
+                    "pos": {
+                        "x": 95.24,
+                        "y": 95.96
+                    },
+                    "uuid": "f81e9399-147e-49f4-8c72-6dc5e0e2c471"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment z R17 na F.Silkscreen",
+                    "pos": {
+                        "x": 76.952064,
+                        "y": 26.37
+                    },
+                    "uuid": "285e6156-7602-44a7-a268-304ec3fba062"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment z R18 na F.Silkscreen",
+                    "pos": {
+                        "x": 76.952064,
+                        "y": 28.36
+                    },
+                    "uuid": "8ef05ae7-169c-4e39-bf62-ce3587688043"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        }
+    ]
+}

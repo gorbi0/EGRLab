@@ -4,7 +4,7 @@
 
 **1.10.2026 (lokalnie): poprawki po recenzji PR #7** — listwa J_SV1 13 kołków (szyny obok GND i siebie, VBAT_SENSE między GND), bilans posiadanych części z P02 R4 (kondensatory foliowe jako nowe 1206), punkt otwarty o pojemności 5V_SYS, pomiar REF_2V5 w ODBIOR, kontrola kolumny rezystorów w `SERWIS.csv`, poprawki dokumentów. Decyzje użytkownika 1.10: **SW1 = E-Switch 100 kątowy (M6)** i **C1 = 220 µF**.
 
-**Status: schemat R3 gotowy do recenzji. PCB w tym pakiecie nie ma** — layout robi sesja lokalna (`docs/CHMURA.md`, zasada 6). Sprzętu nie zmontowano ani nie zmierzono.
+**Status (1.10.2026 wieczorem): schemat R3 i PCB gotowe do recenzji** (gałąź `p05-r3-pcb`, sesja lokalna na komputerze 24/7): DRC 0 niepołączonych / 0 niezgodności / 0 innych naruszeń (4 przyjęte `lib_footprint_mismatch`), kontrole PCB 30/30, próby ujemne 31/31, PDF `output/pdf/P05-R3-PCB.pdf`; sekcja „PCB” niżej. Sprzętu nie zmontowano ani nie zmierzono.
 
 Obwód R2 zostaje: okno DAQ_OK z REF5025IDR (R5 6,04 kΩ, R7 5,11 kΩ), R13 47 kΩ, CH7 = VBAT_SENSE, przekaźniki K1–K3, tor AUX. Zmieniają się złącza do innych płytek, punkty pomiarowe i typy części. `verify_s1.py` sprawdza na eksportowanej netliście, że poza wymienionymi złączami każdy pin obwodu R2 ma tę samą sieć co w R2 (`reference/P05-R2.xml`); od 1.10 także SW1 (E-Switch M6 ma układ styków jak C&K 7201 z R2 — wersja z chmury lustrzyła biegun B pod suwak JS).
 
@@ -49,6 +49,33 @@ Zapas 5VA do narożników przy TSR 2-2450 (`electrical-checks.json`, `window.tsr
 - `verify_electrical.py` (obwód R2 dostosowany do S1): **21/21**, mutacje **12/12** — m.in. brak 3V3_IO, VBAT_SENSE na J_BP1.10, SW1 sprawdzany z geometrii footprintu (dźwignia łączy wspólne obu biegunów z polami na tym samym końcu), okno z klasą TCR z MPN.
 - `verify_s1.py` (kontrakt S1, niezależny od generatora): **26/26**, mutacje **33/33** wykryte przez kontrolę docelową, próba zerowa czysta. Pinout J_BP1/J_BP2 dokładnie jak w zadaniu; DAQ na pinach P03 R6 J_BP2 (`reference/P03-R6-J_BP.csv` z gałęzi `p03-r6-pcb`, b094fa7); każda sieć dawnych J1/J2/J3/J5 na J_BP dokładnie raz (5V_SYS dwa razy, 3V3_IO wcale); nieparzyste piny GND; GND po obu stronach ADC_SCLK i MEAS_EN w taśmie; TAPS i AUX poza J_BP; listwy ≤ 13 kołków, GND na końcach (wewnątrz dozwolone), szyny tylko obok GND albo innej szyny i VBAT_SENSE tylko obok GND (1.10), rezystor przy węźle w klasie z S1 §6, pokrycie listy z ODBIOR; `J_BP.csv`/`SERWIS.csv` zgodne z netlistą; źródła i obudowy części; obwód R2 bez zmian.
 
+## PCB (1.10.2026, `src/run_release.py`, KiCad 10.0.6 w Dockerze)
+
+| Kontrola | Wynik | Raport |
+|---|---|---|
+| DRC świeży, wszystkie poziomy | 0 niepołączonych, 0 niezgodności ze schematem, 0 innych naruszeń; 4 × `lib_footprint_mismatch` (J_BP1, J_BP2, J_SV1, J_SV2: nadruk przycięty przez `silkscreen.py`, przyjęte jawnie) | `verification/drc.json` |
+| Kontrole PCB (`verify_pcb.py`) | 30/30 | `verification/pcb-checks.json`, `QA-PCB.md` |
+| Próby ujemne PCB | 31/31 z zerową | `verification/negative-controls.json` |
+| Odsprzęganie U1 (droga po miedzi od pinu do pola) | wszystkie w limitach, mm (pin→kondensator droga/limit): 1→C4 2,28/3,0; 48→C7 2,73/3,0; 37→C5 2,74/3,0; 38→C5 2,74/3,0; 23→C8 2,74/4,0; 36→C9 2,62/3,0; 39→C10 2,06/3,0; 42→C11 2,68/3,0; 42→C12 3,15/6,0; 44→C13 5,29/6,0; 45→C13 4,79/6,0 | `pcb-checks.json` |
+| Trasowanie | Freerouting 2.1.0 (40 przebiegów, 4 wątki, GND jako płaszczyzna B.Cu), piąta próba; planer dokańczania: 2 połączenia 3V3_DAQ (29,1 i 17,6 mm) i 6 GND; nieużyte końce zablokowanych wyprowadzeń przycięte (`trim_stubs.py`); pełne połączenie z wylewką: C32.2, J_BP1.9, U4.3, U4.6, U6.3, U7.3 (szprychy odcięte); 183 przelotki | `routing/attempts.json`, `completion-routes.json` |
+
+**Jak powstało** (łańcuch P03 R6 przez P09 / P10 R2; opisy w nagłówkach skryptów): `placement.py` (U1 i jego kondensatory jawnie, kolumna filtrów C27–C34 w rastrze 2,65 mm, bufory U9 / U11 tuż przy U1, reszta przy swoich pinach, rezystory listew od spodu przy węzłach) → `route_critical.py` (miedź przy U1 i U3 przed routerem: odsprzęganie, wyprowadzenia sygnałów, wachlarz wejść, przelotki do wnętrza U1, wylewka GND wewnątrz pierścienia z 4 przelotkami, mostki 3V3 / 5VA po B.Cu) → `fanout_gnd.py` → `prepare_routing.py` (piny GND U1 poza listą routera; strefa routera tylko we wnętrzu pierścienia U1) → Freerouting → import, `cleanup.py --tidy`, `check_intrusion.py` (próba odpada, gdy miedź routera innej sieci wchodzi w obrys U1 albo jakakolwiek do wnętrza pierścienia) → `stitch.py` → planer `complete_routes.py` (próba odpada od razu przy > 12 przerwach; strefy planera: obrys U1 i U3, B.Cu pod częścią analogową; start z końca wyprowadzenia) → `silkscreen.py`.
+
+**Decyzje (sporne oznaczone):**
+1. **Sporne — reguła drobnego rastra:** odstęp 0,15 mm i tor 0,2 mm tylko między elementami, które oba dotykają obrysu U1 (LQFP-64, raster 0,5 mm) albo U3 (VSSOP-8, 0,65 mm); poza nimi S1 §3 (0,25 / 0,3 jak P02-R3). S1 dopuszcza LQFP, a przy 0,25 mm szczeliny między polami samych footprintów (0,2 / 0,15 mm) są naruszeniem DRC. JLCPCB: 0,1 / 0,1 mm. Reguły w `eda/P05.kicad_dru` (z `set_rules.py`), kontrola treści w `verify_pcb.py`.
+2. **5V_SYS jako sygnał 0,3 mm** (ok. 150 mA: cewki 3 × 30 mA, R1 ok. 60 mA; spadek ok. 25 mV na 100 mm); klasa PWR 0,6 mm tylko dla 5VA_P05 — tor 0,6 mm nie wchodzi w raster 0,65 mm U3.8.
+3. **Odsprzęganie U1** (tabela dróg w `pcb-checks.json`): 1 µF (REGCAP) i 22 µF (REFIN / REFCAP) od góry, bez przelotek; 100 nF od spodu pod korpusem, każdy przez własną przelotkę wewnątrz pierścienia (grubość ≤ 1,5 mm w BOM); REFCAP biegnie 0,2 mm wzdłuż końców pól pod C12 do C13; TP2–TP5 na odgałęzieniach 0,3 mm poza drogą odsprzęgania. AVCC pinu 1 łączy się z resztą po B.Cu (przelotka V1 przy pinie).
+4. **Masa U1:** piny GND do wylewki F.Cu wewnątrz pierścienia (pełne połączenie), 4 przelotki do B.Cu; DOUT po F.Cu w prawo (P5-01).
+5. **Bufory U9 / U11 przy U1** (wcześniej przy J_BP2): linie lokalne 4–15 mm, odgałęzienia magistrali J_BP2 ok. 35 mm — przy szybkościach SPI P05 dużo poniżej długości krytycznej.
+6. **Kondensatory od spodu:** C5, C7, C8, C11 (100 nF) i C26 (10 nF) — uwaga w BOM: grubość ≤ 1,5 mm.
+7. SW1 (E-Switch M6): tuleja i dźwignia za krawędzią x = 0; J4 / J6 z kotwami opasek przy krawędzi.
+
+**Jak doszło do trasowania (1.10, 9 przebiegów):** strefy zakazane w DSN, w których leżą piny (obrys U1 / U3, B.Cu z kondensatorami 100 nF), zostawiały w routerze 20–105 przerw (3V3_DAQ prawie nietrasowane); bez stref router przechodził, ale skracał drogę przez wnętrze pierścienia U1. Obecnie: strefy routera tylko tam, gdzie nie ma pinów (wnętrze pierścienia na F.Cu, pasy B.Cu wokół U1), strefy planera osobno, a kontrola `check_intrusion.py` odrzuca próbę z obcą siecią w obrysie U1.
+
+**Oględziny PDF (1.10, 5 stron, `output/previews/pcb-*.png`):** opis z liczbami z wydania; montaż 1:1 — napisy listew do 7 znaków, czytelne; F.Cu — wachlarz wejść, REFCAP pod C12, odgałęzienia TP; B.Cu — masa z mostkami 5VA / 3V3 pod U1; przymiarka — kółka Ø7. Bez uwag blokujących.
+
+**Otwarte:** przymiarka 1:1 (SW1 w panelu, przewody TAPS / AUX), kod SW1 i C1 przy zakupie, recenzja lokalna; 11 oznaczeń ukrytych z braku miejsca (C10, C12, C14, C20, C25, C28, R5, R7, R11, R18, R33; na rysunku montażowym F.Fab są wszystkie); paczka produkcyjna dopiero po „scal”.
+
 ## Wymagania dla layoutu (sesja lokalna)
 
 - J4 (TAPS), J6 (AUX) i SW1 od strony x = 0; dźwignia SW1 (E-Switch M6, tuleja i dźwignia równolegle do płytki) przez otwór w panelu przy x = 0 — położenie tak, by tuleja sięgała ścianki (makieta).
@@ -66,8 +93,10 @@ Zapas 5VA do narożników przy TSR 2-2450 (`electrical-checks.json`, `window.tsr
 
 ## Pliki
 
-- `eda/` — schemat KiCad 10 (9 arkuszy A3) i biblioteki; bez PCB.
+- `eda/` — schemat KiCad 10 (9 arkuszy A3), biblioteki i **PCB** `P05.kicad_pcb` z regułami `P05.kicad_dru` (drobny raster U1 / U3).
+- `output/pdf/P05-R3-PCB.pdf` (5 stron: opis, montaż 1:1, F.Cu, B.Cu, przymiarka), `output/svg/`, `output/previews/pcb-*.png`.
+- `routing/` — wynik routera `P05.ses` i trasy dokańczające `completion-routes.json` (odtwarzanie: `run_release.py` bez `--new-route`), miedź krytyczna `critical.json`, raporty kroków.
 - `output/pdf/P05-R3-schemat.pdf`, `output/previews/sch-*.png`.
 - `docs/` — `J_BP.csv` i `SERWIS.csv` (kontrakty dla P12 i listew), BOM, `ZAKUPY.md`, `zakupy.csv`, `pinout.csv`, `interfejsy.csv`/`wiazki-BOM.csv` (TAPS, AUX), ODBIOR R3, MECHANIKA R3, INTEGRACJA, PROJEKT.
-- `verification/` — ERC, netlista, `schematic-check.json`, `electrical-checks.json`, `s1-checks.json`, `QA.md`, logi, manifest.
+- `verification/` — ERC, netlista, `schematic-check.json`, `electrical-checks.json`, `s1-checks.json`, `QA.md`; PCB: `drc.json`, `pcb-checks.json`, `negative-controls.json`, `QA-PCB.md`; logi, manifest.
 - `reference/` — `P05-R2.xml` (eksport R2 do porównania), `P03-R6-J_BP.csv`, `baseline.json`, karty.

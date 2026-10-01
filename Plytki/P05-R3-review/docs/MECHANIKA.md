@@ -1,10 +1,10 @@
 # Mechanika, złącza i montaż P05-R3 (format S1)
 
-*R3 (1.10.2026): obrys R1/R2 160 × 120 mm, para B2B P03/P05 (TSW-108-08-G-D-NA / SSW-108-02-G-D-RA) i tabela matingu znikają. Obowiązuje `Plytki/Format-S1/SPECYFIKACJA-FORMATU-S1.md` (S1-3). Layoutu w tym pakiecie nie ma — poniżej wymagania dla sesji lokalnej.*
+*R3 (1.10.2026): obrys R1/R2 160 × 120 mm, para B2B P03/P05 (TSW-108-08-G-D-NA / SSW-108-02-G-D-RA) i tabela matingu znikają. Obowiązuje `Plytki/Format-S1/SPECYFIKACJA-FORMATU-S1.md` (S1-3). Od 1.10 layout jest w pakiecie (sesja lokalna, README sekcja „PCB”); poniżej wymagania, według których powstał.*
 
 ## Płytka
 
-Klasa 2/3: 106,5 × 100,0 mm, sloty S1–S2 poziomu 3, narożniki R 1 mm, FR-4 1,6 mm, 2 warstwy, miedź 35 µm, JLCPCB. Osiem otworów M3 Ø 3,2 mm w x = 4,0 / 49,0 / 57,5 / 102,5 i y = 14,0 / 86,0, strefa Ø 7 mm bez miedzi innych sieci i bez elementów. Dystanse 20 mm: elementy od góry ≤ 16,5 mm (najwyższy C1 Ø 8 × 11,5 mm), od spodu tylko SMD ≤ 1,5 mm, bez SOIC, ≥ 1 mm od pól THT; wyprowadzenia THT przycięte do ≤ 1,5 mm.
+Klasa 2/3: 106,5 × 100,0 mm, sloty S1–S2 poziomu 3, narożniki R 1 mm, FR-4 1,6 mm, 2 warstwy, miedź 35 µm, JLCPCB. Osiem otworów M3 Ø 3,2 mm w x = 4,0 / 49,0 / 57,5 / 102,5 i y = 14,0 / 86,0, strefa Ø 7 mm bez miedzi innych sieci i bez elementów. Dystanse 20 mm: elementy od góry ≤ 16,5 mm (najwyższe C1 Ø 6,3 × 11,2 mm — 220 µF od 1.10 — i SW1 ok. 11,4 mm), od spodu tylko SMD ≤ 1,5 mm, bez SOIC, ≥ 1 mm od pól THT; wyprowadzenia THT przycięte do ≤ 1,5 mm.
 
 Reguły jak w P02-R3 (minimalny prześwit 0,15 mm przy LQFP/VSSOP, pierścień PTH i przelotek ≥ 0,25 mm). Płaszczyzna masy pod rdzeniem ADC, referencją i końcowym rozprowadzeniem wejść jak w R2: bez podziału GND na wyspy łączone mostkiem.
 
@@ -25,7 +25,7 @@ J_SV1 (1 × 13) w slocie S1 (x = 10–43 mm), J_SV2 (1 × 13) w slocie S2 (x = 6
 
 J4 (TAPS, 5 par AWG24 z P11), J6 (AUX, RG174 do BNC na panelu) i SW1 stoją przy brzegu x = 0 — TAPS najkrótszą drogą (S1 §7). Pigtaile lutowane w PTH: otwory 1,1 mm, pady 2,2 mm, dwa otwory kotwy 3,2 mm 11,5 mm od pierwszego rzędu, opaska 2,5 mm na izolacji. Ekran AUX łączy się z GND na J6 (bez izolacji galwanicznej).
 
-SW1 — **E-Switch 100 DPDT ON-ON w wersji kątowej M6** (decyzja 1.10; footprint `P05:ESW_100DP_M6` z rysunku M6-DP, karta s. 11: 2 × 3 otwory Ø1,85 w rastrze 4,70 × 3,81 i dwie nóżki wspornika 12,70 mm przed biegunem A). Obudowa ok. 11,4 mm nad płytką, tuleja i dźwignia równolegle do płytki w stronę x = 0 — przez otwór w panelu. Wersja z chmury (do 1.10): **C&K JS202011AQN** (suwak DPDT ON-ON, kątowy, footprint KiCad `SW_CK_JS202011AQN_DPDT_Angled` z rysunku C&K JS): suwak wystaje za krawędź płytki. Dostęp przez otwór w panelu przy x = 0 albo od strony B rozstrzyga layout i makieta obudowy. Pozycje sprawdzić omomierzem (ODBIOR krok 13): HI = 2–1 + 5–6, LO = 2–3 + 5–4.
+SW1 — **E-Switch 100 DPDT ON-ON w wersji kątowej M6** (decyzja 1.10; footprint `P05:ESW_100DP_M6` z rysunku M6-DP, karta s. 11: 2 × 3 otwory Ø1,85 w rastrze 4,70 × 3,81 i dwie nóżki wspornika 12,70 mm przed biegunem A). Obudowa ok. 11,4 mm nad płytką, tuleja i dźwignia równolegle do płytki w stronę x = 0 — przez otwór w panelu. Wersja z chmury (do 1.10): **C&K JS202011AQN** (suwak DPDT ON-ON, kątowy, footprint KiCad `SW_CK_JS202011AQN_DPDT_Angled` z rysunku C&K JS): suwak wystaje za krawędź płytki. Dostęp przez otwór w panelu przy x = 0 albo od strony B rozstrzyga layout i makieta obudowy. Pozycje sprawdzić omomierzem (ODBIOR krok 13): HI = 2–1 + 5–4 (bocznik R35 do GND), LO = 2–3 + 5–6 (pin 6 wolny) — jak w netliście i BOM (1.10: tu wcześniej zamienione 5–4 / 5–6).
 
 ## Elementy wymagające szczególnej kontroli
 

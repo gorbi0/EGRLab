@@ -1,0 +1,919 @@
+{
+  "board": "/home/tgorbacz/AI/Claude/EGRLab/.worktrees/p05-r3-pcb/Plytki/P05-R3-review/verification/negative-controls/too_tall/P05.kicad_pcb",
+  "board_sha256": "4e6660e5716ef73b6c76ff420209061816d47962511d1653587f6f1b8c811ff8",
+  "checks": [
+    {
+      "check": "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "pass": true
+    },
+    {
+      "check": "119 on-board parts + 8 mounting holes, nothing else",
+      "pass": true
+    },
+    {
+      "check": "Every value, footprint ID and pad net equals the exported schematic netlist",
+      "pass": true
+    },
+    {
+      "check": "S1-2 section 4: parts on the bottom only SMD <= 1.5 mm (heights.py, BOM thickness note for the capacitors), no SOIC, >= 1 mm from THT pads",
+      "pass": true
+    },
+    {
+      "check": "2 copper layers, 1.6 mm board (S1: FR4 1.6 mm)",
+      "pass": true
+    },
+    {
+      "check": "Both copper layers 35 um (S1)",
+      "pass": true
+    },
+    {
+      "check": "Outline class 2/3: 106.5 x 100.0 mm, 4 corner arcs R 1.0 mm (format-s1.json)",
+      "pass": true
+    },
+    {
+      "check": "M3 holes: 8 NPTH 3.2 mm exactly at the S1 positions (x_w_slocie + 53.5 k, y 14 / 86)",
+      "pass": true
+    },
+    {
+      "check": "Standoff zones D7: no courtyard and no copper (pads, tracks, vias, pours) within 3.5 mm of a hole centre; rule areas on both layers",
+      "pass": true
+    },
+    {
+      "check": "Rules as P02 R3 / R4 (net classes: clearance >= 0.25, PWR 0.30, track >= 0.30, edge 0.5), annular ring >= 0.25 mm (S1 section 3); custom rules only: track >= 0.30 outside, clearance 0.15 / track 0.2 only for items touching the courtyard of U1 / U3 (fine pitch, README); no DRC exclusions",
+      "pass": true
+    },
+    {
+      "check": "Every track >= 0.30 mm (S1 section 3); narrower ones (>= 0.2) only where they touch the courtyard of U1 / U3",
+      "pass": true
+    },
+    {
+      "check": "Every PTH pad and via has an annular ring >= 0.25 mm (measured on the copper)",
+      "pass": true
+    },
+    {
+      "check": "J_BP1 / J_BP2 (edge A): IDC 2x5 / 2x10 angled, body front at y = 0, pin centre x = 26.5 / 80.0 (slots S1 / S2), pin 1 at the smaller x, pinout = docs/J_BP.csv (P12 contract)",
+      "pass": true
+    },
+    {
+      "check": "Service headers J_SV1 / J_SV2 (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pin 1 at the larger x, pins out ~6 mm, GND on both ends, one series resistor per pin as docs/SERWIS.csv and of its S1 class (1K, 10K for high-impedance / pull-up nodes, 4.7K VBAT_SENSE) <= 10 mm from its node, one silk label per pin with the name of its node (LABEL in silkscreen.py), GND at both ends",
+      "pass": true
+    },
+    {
+      "check": "Reserved strip of edge A (S1 §5: y 0-10, x 10-43 of each J_BP slot): no other part on either side",
+      "pass": true
+    },
+    {
+      "check": "Every part <= 16.5 mm above the board (level 3, S1 section 4; src/heights.py)",
+      "pass": false
+    },
+    {
+      "check": "U1 decoupling on the copper (R2 table, review P5-01): AVCC 1 / 48 / 37 / 38, REGCAP 36 / 39 and REFIN/OUT 42 (100 nF) <= 3 mm, VDRIVE 23 <= 4 mm, 22 uF on REFIN/OUT 42 and REFCAP 44 / 45 <= 6 mm (pad centre to pad centre)",
+      "pass": true
+    },
+    {
+      "check": "REGCAP_A, REGCAP_D and REFCAP without vias, their capacitors (and the 22 uF on ADC_REF) on top; ADC_REF has one via only (to C11 on the bottom, 100 nF <= 1.5 mm, README)",
+      "pass": true
+    },
+    {
+      "check": "DOUT (AD_DOUT_LOCAL) not under U1 on B.Cu and no via inside the U1 courtyard (review P5-01)",
+      "pass": true
+    },
+    {
+      "check": "U1 ground: every GND pin touches the F.Cu pour inside the pad ring (solid connection) on a piece that holds a GND via, >= 4 GND vias inside the ring to B.Cu",
+      "pass": true
+    },
+    {
+      "check": "No copper of other nets in the U1 courtyard (only the nets of U1 pins: escapes, decoupling, inner pour vias; README)",
+      "pass": true
+    },
+    {
+      "check": "Panel side: TAPS J4 and AUX J6 anchor holes 1.5-6 mm from x = 0 (cables leave through the panel), solder rows <= 25 mm in; SW1 (E-Switch M6) bushing and lever beyond x = 0, support legs and poles on the board",
+      "pass": true
+    },
+    {
+      "check": "Decoupling at the IC pins: capacitor pad <= 6 mm from its supply / output pin (U2-U12; C1 220 uF at R1 pin 2 = 5VA_P05; limit as P03 R6 / P09 R2)",
+      "pass": true
+    },
+    {
+      "check": "Series resistors at the driver (R26 DOUT, R27 BUSY: pad <= 6 mm from U11.3 / U11.6) and flyback diodes at their coils (D1-D3 anode <= 6 mm from K1-K3 pin 8)",
+      "pass": true
+    },
+    {
+      "check": "Input filters C27-C34 on the channel copper <= 12 mm from their U1 inputs (pins 49-63; 45 deg fan to the filter column)",
+      "pass": true
+    },
+    {
+      "check": "GND pours on both layers: B.Cu >= 50 % of the board; island removal always (every island tied)",
+      "pass": true
+    },
+    {
+      "check": "Every visible reference outside the courtyards of other parts",
+      "pass": true
+    },
+    {
+      "check": "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)",
+      "pass": true
+    },
+    {
+      "check": "Pin 1 marks of the wire tails TAPS J4 and AUX J6 on the silkscreen, <= 3 mm from their pads (S1 §9)",
+      "pass": true
+    },
+    {
+      "check": "Silkscreen: board name \"P05 R3 S1-2/3 S1-S2\", edge markers A and B",
+      "pass": true
+    }
+  ],
+  "details": {
+    "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)": {
+      "violations": 4,
+      "unconnected_items": 0,
+      "schematic_parity": 0,
+      "other_violations": 0,
+      "other_types": [],
+      "accepted_lib_mismatch": [
+        "J_BP1",
+        "J_BP2",
+        "J_SV1",
+        "J_SV2"
+      ]
+    },
+    "Every value, footprint ID and pad net equals the exported schematic netlist": {
+      "errors": [],
+      "pads": 466
+    },
+    "S1-2 section 4: parts on the bottom only SMD <= 1.5 mm (heights.py, BOM thickness note for the capacitors), no SOIC, >= 1 mm from THT pads": {
+      "bottom_parts": {
+        "R36": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 2.75
+        },
+        "R39": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 6.0
+        },
+        "R52": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.07
+        },
+        "R54": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.07
+        },
+        "R42": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 3.69
+        },
+        "R38": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 8.98
+        },
+        "R9": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 6.26
+        },
+        "R21": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 3.67
+        },
+        "C8": {
+          "smd": true,
+          "height_mm": 1.25,
+          "soic": false,
+          "min_gap_to_THT_mm": 6.48
+        },
+        "C11": {
+          "smd": true,
+          "height_mm": 1.25,
+          "soic": false,
+          "min_gap_to_THT_mm": 7.47
+        },
+        "R40": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 6.13
+        },
+        "R46": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 2.16
+        },
+        "R45": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.73
+        },
+        "R41": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 2.41
+        },
+        "C7": {
+          "smd": true,
+          "height_mm": 1.25,
+          "soic": false,
+          "min_gap_to_THT_mm": 5.86
+        },
+        "R44": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.18
+        },
+        "C5": {
+          "smd": true,
+          "height_mm": 1.25,
+          "soic": false,
+          "min_gap_to_THT_mm": 5.78
+        },
+        "R47": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.23
+        },
+        "C26": {
+          "smd": true,
+          "height_mm": 1.25,
+          "soic": false,
+          "min_gap_to_THT_mm": 4.41
+        },
+        "R49": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 10.41
+        },
+        "R37": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 5.39
+        },
+        "C25": {
+          "smd": true,
+          "height_mm": 1.25,
+          "soic": false,
+          "min_gap_to_THT_mm": 6.82
+        },
+        "R48": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.23
+        },
+        "R53": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 8.94
+        },
+        "R50": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 12.93
+        },
+        "R55": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.12
+        },
+        "R51": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.07
+        }
+      }
+    },
+    "Both copper layers 35 um (S1)": {
+      "F.Cu": 0.035,
+      "B.Cu": 0.035
+    },
+    "Outline class 2/3: 106.5 x 100.0 mm, 4 corner arcs R 1.0 mm (format-s1.json)": {
+      "bbox_line_centres": [
+        0.0,
+        0.0,
+        106.5,
+        100.0
+      ],
+      "arcs": 4,
+      "segments": 4
+    },
+    "M3 holes: 8 NPTH 3.2 mm exactly at the S1 positions (x_w_slocie + 53.5 k, y 14 / 86)": {
+      "want": [
+        [
+          4.0,
+          14.0
+        ],
+        [
+          4.0,
+          86.0
+        ],
+        [
+          49.0,
+          14.0
+        ],
+        [
+          49.0,
+          86.0
+        ],
+        [
+          57.5,
+          14.0
+        ],
+        [
+          57.5,
+          86.0
+        ],
+        [
+          102.5,
+          14.0
+        ],
+        [
+          102.5,
+          86.0
+        ]
+      ],
+      "got": [
+        [
+          4.0,
+          14.0
+        ],
+        [
+          4.0,
+          86.0
+        ],
+        [
+          49.0,
+          14.0
+        ],
+        [
+          49.0,
+          86.0
+        ],
+        [
+          57.5,
+          14.0
+        ],
+        [
+          57.5,
+          86.0
+        ],
+        [
+          102.5,
+          14.0
+        ],
+        [
+          102.5,
+          86.0
+        ]
+      ]
+    },
+    "Standoff zones D7: no courtyard and no copper (pads, tracks, vias, pours) within 3.5 mm of a hole centre; rule areas on both layers": {
+      "courtyards": [],
+      "copper": [],
+      "rule_areas": 8
+    },
+    "Rules as P02 R3 / R4 (net classes: clearance >= 0.25, PWR 0.30, track >= 0.30, edge 0.5), annular ring >= 0.25 mm (S1 section 3); custom rules only: track >= 0.30 outside, clearance 0.15 / track 0.2 only for items touching the courtyard of U1 / U3 (fine pitch, README); no DRC exclusions": {
+      "board_minimums": {
+        "min_clearance": 0.15,
+        "min_track_width": 0.2,
+        "min_copper_edge_clearance": 0.5,
+        "min_via_annular_width": 0.25
+      },
+      "classes": {
+        "Default": [
+          0.3,
+          0.25
+        ],
+        "CORE3V3": [
+          0.3,
+          0.25
+        ],
+        "PWR": [
+          0.6,
+          0.3
+        ]
+      },
+      "custom_rules": [
+        [
+          "S1 tor >= 0.30 mm poza drobnym rastrem",
+          "A.Type == 'Track' && !(A.intersectsCourtyard('U1') || A.intersectsCourtyard('U3'))",
+          "track_width",
+          "0.30"
+        ],
+        [
+          "drobny raster U1 / U3: tor >= 0.20 mm",
+          "A.Type == 'Track' && (A.intersectsCourtyard('U1') || A.intersectsCourtyard('U3'))",
+          "track_width",
+          "0.20"
+        ],
+        [
+          "drobny raster U1 / U3: odstep 0.15 mm miedzy elementami w obrysie ukladu",
+          "(A.intersectsCourtyard('U1') && B.intersectsCourtyard('U1')) || (A.intersectsCourtyard('U3') && B.intersectsCourtyard('U3'))",
+          "clearance",
+          "0.15"
+        ]
+      ]
+    },
+    "Every track >= 0.30 mm (S1 section 3); narrower ones (>= 0.2) only where they touch the courtyard of U1 / U3": [],
+    "Every PTH pad and via has an annular ring >= 0.25 mm (measured on the copper)": [],
+    "J_BP1 / J_BP2 (edge A): IDC 2x5 / 2x10 angled, body front at y = 0, pin centre x = 26.5 / 80.0 (slots S1 / S2), pin 1 at the smaller x, pinout = docs/J_BP.csv (P12 contract)": {
+      "J_BP1": {
+        "centre_x": 26.5,
+        "pin1": [
+          21.42,
+          13.33
+        ],
+        "fab_front_y": 0.0,
+        "pinout_equals_J_BP.csv": true,
+        "ok": true
+      },
+      "J_BP2": {
+        "centre_x": 80.0,
+        "pin1": [
+          68.57,
+          13.33
+        ],
+        "fab_front_y": 0.0,
+        "pinout_equals_J_BP.csv": true,
+        "ok": true
+      }
+    },
+    "Service headers J_SV1 / J_SV2 (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pin 1 at the larger x, pins out ~6 mm, GND on both ends, one series resistor per pin as docs/SERWIS.csv and of its S1 class (1K, 10K for high-impedance / pull-up nodes, 4.7K VBAT_SENSE) <= 10 mm from its node, one silk label per pin with the name of its node (LABEL in silkscreen.py), GND at both ends": {
+      "J_SV1": {
+        "problems": [],
+        "pins": [
+          {
+            "pin": 2,
+            "node": "VBAT_SENSE",
+            "resistor": "R43",
+            "value": "4.7K",
+            "node_dist_mm": 7.8,
+            "label": "VBAT",
+            "side": "F"
+          },
+          {
+            "pin": 4,
+            "node": "5V_SYS",
+            "resistor": "R36",
+            "value": "1K",
+            "node_dist_mm": 1.0,
+            "label": "5V_SYS",
+            "side": "B"
+          },
+          {
+            "pin": 5,
+            "node": "5VA_P05",
+            "resistor": "R37",
+            "value": "1K",
+            "node_dist_mm": 0.0,
+            "label": "5VA",
+            "side": "B"
+          },
+          {
+            "pin": 6,
+            "node": "3V3_DAQ",
+            "resistor": "R38",
+            "value": "1K",
+            "node_dist_mm": 2.8,
+            "label": "3V3",
+            "side": "B"
+          },
+          {
+            "pin": 8,
+            "node": "REF_2V5",
+            "resistor": "R39",
+            "value": "10K",
+            "node_dist_mm": 2.5,
+            "label": "REF_2V5",
+            "side": "B"
+          },
+          {
+            "pin": 9,
+            "node": "RAIL_SENSE",
+            "resistor": "R40",
+            "value": "10K",
+            "node_dist_mm": 1.1,
+            "label": "R_SENSE",
+            "side": "B"
+          },
+          {
+            "pin": 10,
+            "node": "RAIL_LOW",
+            "resistor": "R41",
+            "value": "10K",
+            "node_dist_mm": 2.0,
+            "label": "R_LOW",
+            "side": "B"
+          },
+          {
+            "pin": 11,
+            "node": "RAIL_HIGH",
+            "resistor": "R42",
+            "value": "10K",
+            "node_dist_mm": 3.0,
+            "label": "R_HIGH",
+            "side": "B"
+          },
+          {
+            "pin": 12,
+            "node": "MEAS_COIL_LOW",
+            "resistor": "R44",
+            "value": "1K",
+            "node_dist_mm": 2.9,
+            "label": "COIL_LO",
+            "side": "B"
+          }
+        ]
+      },
+      "J_SV2": {
+        "problems": [],
+        "pins": [
+          {
+            "pin": 2,
+            "node": "ADC_CS",
+            "resistor": "R45",
+            "value": "1K",
+            "node_dist_mm": 2.1,
+            "label": "ADC_CS",
+            "side": "B"
+          },
+          {
+            "pin": 3,
+            "node": "ADC_CONVST",
+            "resistor": "R46",
+            "value": "1K",
+            "node_dist_mm": 0.0,
+            "label": "CONVST",
+            "side": "B"
+          },
+          {
+            "pin": 4,
+            "node": "ADC_BUSY",
+            "resistor": "R47",
+            "value": "1K",
+            "node_dist_mm": 5.5,
+            "label": "BUSY",
+            "side": "B"
+          },
+          {
+            "pin": 5,
+            "node": "ADC_DOUTA",
+            "resistor": "R48",
+            "value": "1K",
+            "node_dist_mm": 5.5,
+            "label": "DOUTA",
+            "side": "B"
+          },
+          {
+            "pin": 6,
+            "node": "ADC_RESET",
+            "resistor": "R49",
+            "value": "1K",
+            "node_dist_mm": 0.0,
+            "label": "ADC_RST",
+            "side": "B"
+          },
+          {
+            "pin": 7,
+            "node": "MEAS_EN",
+            "resistor": "R50",
+            "value": "1K",
+            "node_dist_mm": 0.0,
+            "label": "MEAS_EN",
+            "side": "B"
+          },
+          {
+            "pin": 8,
+            "node": "MEAS_PERMIT",
+            "resistor": "R51",
+            "value": "1K",
+            "node_dist_mm": 0.2,
+            "label": "PERMIT",
+            "side": "B"
+          },
+          {
+            "pin": 9,
+            "node": "DAQ_OK",
+            "resistor": "R52",
+            "value": "1K",
+            "node_dist_mm": 0.0,
+            "label": "DAQ_OK",
+            "side": "B"
+          },
+          {
+            "pin": 10,
+            "node": "DAQ_RAIL_N",
+            "resistor": "R53",
+            "value": "10K",
+            "node_dist_mm": 2.8,
+            "label": "RAIL_N",
+            "side": "B"
+          },
+          {
+            "pin": 11,
+            "node": "P05_SUP3_N",
+            "resistor": "R54",
+            "value": "10K",
+            "node_dist_mm": 2.8,
+            "label": "SUP3_N",
+            "side": "B"
+          },
+          {
+            "pin": 12,
+            "node": "P05_SUP5_N",
+            "resistor": "R55",
+            "value": "1K",
+            "node_dist_mm": 2.8,
+            "label": "SUP5_N",
+            "side": "B"
+          }
+        ]
+      }
+    },
+    "Reserved strip of edge A (S1 §5: y 0-10, x 10-43 of each J_BP slot): no other part on either side": {
+      "J_BP1": {
+        "pas": [
+          10.0,
+          0.0,
+          43.0,
+          10.0
+        ],
+        "czesci": []
+      },
+      "J_BP2": {
+        "pas": [
+          63.5,
+          0.0,
+          96.5,
+          10.0
+        ],
+        "czesci": []
+      }
+    },
+    "Every part <= 16.5 mm above the board (level 3, S1 section 4; src/heights.py)": {
+      "max": [
+        "C1",
+        17.0
+      ],
+      "over": {
+        "C1": 17.0
+      }
+    },
+    "U1 decoupling on the copper (R2 table, review P5-01): AVCC 1 / 48 / 37 / 38, REGCAP 36 / 39 and REFIN/OUT 42 (100 nF) <= 3 mm, VDRIVE 23 <= 4 mm, 22 uF on REFIN/OUT 42 and REFCAP 44 / 45 <= 6 mm (pad centre to pad centre)": [
+      {
+        "pin": "U1.1",
+        "net": "5VA_P05",
+        "capacitor": "C4",
+        "path_mm": 2.282,
+        "limit_mm": 3.0,
+        "pass": true
+      },
+      {
+        "pin": "U1.48",
+        "net": "5VA_P05",
+        "capacitor": "C7",
+        "path_mm": 2.729,
+        "limit_mm": 3.0,
+        "pass": true
+      },
+      {
+        "pin": "U1.37",
+        "net": "5VA_P05",
+        "capacitor": "C5",
+        "path_mm": 2.739,
+        "limit_mm": 3.0,
+        "pass": true
+      },
+      {
+        "pin": "U1.38",
+        "net": "5VA_P05",
+        "capacitor": "C5",
+        "path_mm": 2.739,
+        "limit_mm": 3.0,
+        "pass": true
+      },
+      {
+        "pin": "U1.23",
+        "net": "3V3_DAQ",
+        "capacitor": "C8",
+        "path_mm": 2.744,
+        "limit_mm": 4.0,
+        "pass": true
+      },
+      {
+        "pin": "U1.36",
+        "net": "REGCAP_A",
+        "capacitor": "C9",
+        "path_mm": 2.625,
+        "limit_mm": 3.0,
+        "pass": true
+      },
+      {
+        "pin": "U1.39",
+        "net": "REGCAP_D",
+        "capacitor": "C10",
+        "path_mm": 2.063,
+        "limit_mm": 3.0,
+        "pass": true
+      },
+      {
+        "pin": "U1.42",
+        "net": "ADC_REF",
+        "capacitor": "C11",
+        "path_mm": 2.683,
+        "limit_mm": 3.0,
+        "pass": true
+      },
+      {
+        "pin": "U1.42",
+        "net": "ADC_REF",
+        "capacitor": "C12",
+        "path_mm": 3.154,
+        "limit_mm": 6.0,
+        "pass": true
+      },
+      {
+        "pin": "U1.44",
+        "net": "REFCAP",
+        "capacitor": "C13",
+        "path_mm": 5.289,
+        "limit_mm": 6.0,
+        "pass": true
+      },
+      {
+        "pin": "U1.45",
+        "net": "REFCAP",
+        "capacitor": "C13",
+        "path_mm": 4.789,
+        "limit_mm": 6.0,
+        "pass": true
+      }
+    ],
+    "REGCAP_A, REGCAP_D and REFCAP without vias, their capacitors (and the 22 uF on ADC_REF) on top; ADC_REF has one via only (to C11 on the bottom, 100 nF <= 1.5 mm, README)": {
+      "vias": {
+        "REGCAP_A": 0,
+        "REGCAP_D": 0,
+        "REFCAP": 0,
+        "ADC_REF": 1
+      },
+      "top": {
+        "C9": true,
+        "C10": true,
+        "C12": true,
+        "C13": true
+      },
+      "C12_path_mm": 3.154
+    },
+    "DOUT (AD_DOUT_LOCAL) not under U1 on B.Cu and no via inside the U1 courtyard (review P5-01)": {
+      "b_cu_tracks_under_U1": [],
+      "vias_in_courtyard": []
+    },
+    "U1 ground: every GND pin touches the F.Cu pour inside the pad ring (solid connection) on a piece that holds a GND via, >= 4 GND vias inside the ring to B.Cu": {
+      "pins_without_pour": [],
+      "pins_on_unstitched_piece": [],
+      "pins_not_solid": [],
+      "inner_vias": [
+        [
+          59.0,
+          56.8
+        ],
+        [
+          54.2,
+          56.8
+        ],
+        [
+          56.6,
+          56.8
+        ],
+        [
+          55.55,
+          52.6
+        ]
+      ]
+    },
+    "No copper of other nets in the U1 courtyard (only the nets of U1 pins: escapes, decoupling, inner pour vias; README)": [],
+    "Panel side: TAPS J4 and AUX J6 anchor holes 1.5-6 mm from x = 0 (cables leave through the panel), solder rows <= 25 mm in; SW1 (E-Switch M6) bushing and lever beyond x = 0, support legs and poles on the board": {
+      "J4": {
+        "anchor_hole_edge_to_x0_mm": [
+          1.9,
+          1.9
+        ],
+        "solder_x_max": 18.5,
+        "ok": true
+      },
+      "J6": {
+        "anchor_hole_edge_to_x0_mm": [
+          1.9,
+          1.9
+        ],
+        "solder_x_max": 18.5,
+        "ok": true
+      },
+      "SW1": {
+        "courtyard_x0": -3.85,
+        "legs": [
+          [
+            3.9,
+            69.04
+          ],
+          [
+            3.9,
+            63.96
+          ]
+        ],
+        "poles_x": [
+          16.6,
+          20.41
+        ],
+        "ok": true
+      }
+    },
+    "Decoupling at the IC pins: capacitor pad <= 6 mm from its supply / output pin (U2-U12; C1 220 uF at R1 pin 2 = 5VA_P05; limit as P03 R6 / P09 R2)": {
+      "C15-U3.8": 3.25,
+      "C14-U2.2": 3.04,
+      "C24-U2.6": 4.26,
+      "C16-U5.14": 2.75,
+      "C17-U6.2": 3.5,
+      "C18-U7.2": 3.5,
+      "C19-U8.14": 2.79,
+      "C20-U9.14": 2.25,
+      "C21-U10.14": 2.25,
+      "C22-U11.14": 2.75,
+      "C2-U12.2": 3.5,
+      "C3-U12.3": 2.5,
+      "C1-R1.2": 4.09
+    },
+    "Series resistors at the driver (R26 DOUT, R27 BUSY: pad <= 6 mm from U11.3 / U11.6) and flyback diodes at their coils (D1-D3 anode <= 6 mm from K1-K3 pin 8)": {
+      "R26-U11.3": 3.09,
+      "R27-U11.6": 3.5,
+      "D1.2-K1.8": 3.02,
+      "D2.2-K2.8": 3.02,
+      "D3.2-K3.8": 3.02
+    },
+    "Input filters C27-C34 on the channel copper <= 12 mm from their U1 inputs (pins 49-63; 45 deg fan to the filter column)": {
+      "C27": 10.248,
+      "C28": 9.564,
+      "C29": 8.881,
+      "C30": 8.197,
+      "C31": 8.135,
+      "C32": 8.943,
+      "C33": 9.751,
+      "C34": 10.434
+    },
+    "GND pours on both layers: B.Cu >= 50 % of the board; island removal always (every island tied)": {
+      "cover_percent": {
+        "F.Cu": 61.3,
+        "B.Cu": 72.1
+      },
+      "islands": {
+        "F.Cu": 37,
+        "B.Cu": 32
+      }
+    },
+    "Every visible reference outside the courtyards of other parts": {},
+    "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)": {},
+    "Pin 1 marks of the wire tails TAPS J4 and AUX J6 on the silkscreen, <= 3 mm from their pads (S1 §9)": {
+      "J4.1 1": [
+        "1"
+      ],
+      "J6.1 1": [
+        "1"
+      ]
+    },
+    "Silkscreen: board name \"P05 R3 S1-2/3 S1-S2\", edge markers A and B": {
+      "title": [
+        "P05 R3 S1-2/3 S1-S2"
+      ],
+      "marks": [
+        "KRAWEDZ A (P12)",
+        "KRAWEDZ B"
+      ]
+    }
+  },
+  "passed": 29,
+  "total": 30
+}

@@ -1,0 +1,589 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-01T16:42:28",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P05.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Ścieżka [ADC_CS] na B.Cu, długość 2,8284 mm",
+                    "pos": {
+                        "x": 78.225,
+                        "y": 47.54
+                    },
+                    "uuid": "651b226e-0e04-45e8-b0dc-e7707676dcc1"
+                },
+                {
+                    "description": "Pole lutownicze 1 [ADC_CS] z R45 na B.Cu",
+                    "pos": {
+                        "x": 80.438481,
+                        "y": 60.77595
+                    },
+                    "uuid": "4e18ec54-472e-4339-b05b-a37310e3b46d"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole lutownicze 2 [/SERWIS/SRV_ADC_CS] z R45 na B.Cu",
+                    "pos": {
+                        "x": 80.438481,
+                        "y": 63.87595
+                    },
+                    "uuid": "e0862a47-f660-43cc-adf1-c93994090c5b"
+                },
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_ADC_CS] na F.Cu, długość 19,3138 mm",
+                    "pos": {
+                        "x": 80.6639,
+                        "y": 78.6081
+                    },
+                    "uuid": "01c45ffe-30f6-4fd7-8d32-0b5d7018b5b3"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Naruszenie prześwitu (klasa sieci 'Default' prześwit 0,2500 mm; obecnie 0,1065 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [P05_SUP3_N] na B.Cu, długość 0,9309 mm",
+                    "pos": {
+                        "x": 82.4824,
+                        "y": 64.4116
+                    },
+                    "uuid": "ba982269-991b-4999-a7ac-3fd6514b111a"
+                },
+                {
+                    "description": "Pole lutownicze 2 [/SERWIS/SRV_ADC_CS] z R45 na B.Cu",
+                    "pos": {
+                        "x": 80.438481,
+                        "y": 63.87595
+                    },
+                    "uuid": "e0862a47-f660-43cc-adf1-c93994090c5b"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci /SERWIS/SRV_P05_SUP5_N oraz ADC_CS)",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_P05_SUP5_N] na B.Cu, długość 5,1508 mm",
+                    "pos": {
+                        "x": 78.5078,
+                        "y": 63.3022
+                    },
+                    "uuid": "0466a389-5681-4095-ace9-29a3da214fb8"
+                },
+                {
+                    "description": "Pole lutownicze 1 [ADC_CS] z R45 na B.Cu",
+                    "pos": {
+                        "x": 80.438481,
+                        "y": 60.77595
+                    },
+                    "uuid": "4e18ec54-472e-4339-b05b-a37310e3b46d"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci ADC_CS oraz /SERWIS/SRV_P05_SUP3_N)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [ADC_CS] z R45 na B.Cu",
+                    "pos": {
+                        "x": 80.438481,
+                        "y": 60.77595
+                    },
+                    "uuid": "4e18ec54-472e-4339-b05b-a37310e3b46d"
+                },
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_P05_SUP3_N] na B.Cu, długość 10,1429 mm",
+                    "pos": {
+                        "x": 81.4827,
+                        "y": 61.2619
+                    },
+                    "uuid": "73503654-5673-4519-8c20-87118cf74baf"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci /SERWIS/SRV_P05_SUP3_N oraz /SERWIS/SRV_ADC_CS)",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_P05_SUP3_N] na B.Cu, długość 10,1429 mm",
+                    "pos": {
+                        "x": 81.4827,
+                        "y": 61.2619
+                    },
+                    "uuid": "73503654-5673-4519-8c20-87118cf74baf"
+                },
+                {
+                    "description": "Pole lutownicze 2 [/SERWIS/SRV_ADC_CS] z R45 na B.Cu",
+                    "pos": {
+                        "x": 80.438481,
+                        "y": 63.87595
+                    },
+                    "uuid": "e0862a47-f660-43cc-adf1-c93994090c5b"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu (klasa sieci 'Default' prześwit 0,2500 mm; obecnie 0,0279 mm)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [ADC_CS] z R45 na B.Cu",
+                    "pos": {
+                        "x": 80.438481,
+                        "y": 60.77595
+                    },
+                    "uuid": "4e18ec54-472e-4339-b05b-a37310e3b46d"
+                },
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_P05_SUP3_N] na B.Cu, długość 1,0165 mm",
+                    "pos": {
+                        "x": 82.4992,
+                        "y": 61.2619
+                    },
+                    "uuid": "5ea7aa8a-8faa-41b8-bdac-05b5474a1b47"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci /SERWIS/SRV_DAQ_OK oraz /SERWIS/SRV_ADC_CS)",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_DAQ_OK] na B.Cu, długość 6,7558 mm",
+                    "pos": {
+                        "x": 77.1813,
+                        "y": 67.4771
+                    },
+                    "uuid": "76323cd4-e0d2-4c6d-9023-e03d1322df29"
+                },
+                {
+                    "description": "Pole lutownicze 2 [/SERWIS/SRV_ADC_CS] z R45 na B.Cu",
+                    "pos": {
+                        "x": 80.438481,
+                        "y": 63.87595
+                    },
+                    "uuid": "e0862a47-f660-43cc-adf1-c93994090c5b"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci P05_SUP3_N oraz /SERWIS/SRV_ADC_CS)",
+            "items": [
+                {
+                    "description": "Przelotka [P05_SUP3_N] na F.Cu - B.Cu",
+                    "pos": {
+                        "x": 81.5515,
+                        "y": 64.4116
+                    },
+                    "uuid": "7c7d0943-f8cd-47b4-bdea-446c1dd68f8c"
+                },
+                {
+                    "description": "Pole lutownicze 2 [/SERWIS/SRV_ADC_CS] z R45 na B.Cu",
+                    "pos": {
+                        "x": 80.438481,
+                        "y": 63.87595
+                    },
+                    "uuid": "e0862a47-f660-43cc-adf1-c93994090c5b"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0565 mm)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 2 [/SERWIS/SRV_ADC_CS] z R45 na B.Cu",
+                    "pos": {
+                        "x": 80.438481,
+                        "y": 63.87595
+                    },
+                    "uuid": "e0862a47-f660-43cc-adf1-c93994090c5b"
+                },
+                {
+                    "description": "Przelotka [P05_SUP3_N] na F.Cu - B.Cu",
+                    "pos": {
+                        "x": 81.5515,
+                        "y": 64.4116
+                    },
+                    "uuid": "7c7d0943-f8cd-47b4-bdea-446c1dd68f8c"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu (klasa sieci 'Default' prześwit 0,2500 mm; obecnie 0,1925 mm)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [ADC_CS] z R45 na B.Cu",
+                    "pos": {
+                        "x": 80.438481,
+                        "y": 60.77595
+                    },
+                    "uuid": "4e18ec54-472e-4339-b05b-a37310e3b46d"
+                },
+                {
+                    "description": "Pole lutownicze 2 [/SERWIS/SRV_P05_SUP5_N] z R55 na B.Cu",
+                    "pos": {
+                        "x": 82.15,
+                        "y": 59.66
+                    },
+                    "uuid": "728afb0b-c57e-4234-8271-72ee81c8849b"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0565 mm)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 2 [/SERWIS/SRV_ADC_CS] z R45 na B.Cu",
+                    "pos": {
+                        "x": 80.438481,
+                        "y": 63.87595
+                    },
+                    "uuid": "e0862a47-f660-43cc-adf1-c93994090c5b"
+                },
+                {
+                    "description": "Przelotka [P05_SUP3_N] na F.Cu - B.Cu",
+                    "pos": {
+                        "x": 81.5515,
+                        "y": 64.4116
+                    },
+                    "uuid": "7c7d0943-f8cd-47b4-bdea-446c1dd68f8c"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu (klasa sieci 'Default' prześwit 0,2500 mm; obecnie 0,2029 mm)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 2 [/SERWIS/SRV_DAQ_OK] z R52 na B.Cu",
+                    "pos": {
+                        "x": 82.15,
+                        "y": 62.7
+                    },
+                    "uuid": "f4c439f5-8b0a-42e4-a70c-18c88de38a94"
+                },
+                {
+                    "description": "Pole lutownicze 2 [/SERWIS/SRV_ADC_CS] z R45 na B.Cu",
+                    "pos": {
+                        "x": 80.438481,
+                        "y": 63.87595
+                    },
+                    "uuid": "e0862a47-f660-43cc-adf1-c93994090c5b"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint R52",
+                    "pos": {
+                        "x": 83.7,
+                        "y": 62.7
+                    },
+                    "uuid": "1df3f7a9-d9c9-4e01-b091-5cfd01ba69cd"
+                },
+                {
+                    "description": "Footprint R45",
+                    "pos": {
+                        "x": 80.438481,
+                        "y": 62.32595
+                    },
+                    "uuid": "8aa8a499-f01e-431e-ae97-bfa699b82484"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint R45",
+                    "pos": {
+                        "x": 80.438481,
+                        "y": 62.32595
+                    },
+                    "uuid": "8aa8a499-f01e-431e-ae97-bfa699b82484"
+                },
+                {
+                    "description": "Footprint R55",
+                    "pos": {
+                        "x": 83.7,
+                        "y": 59.66
+                    },
+                    "uuid": "e3ec6101-1fd4-41d6-9f40-1979427e1c4c"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Przelotka [P05_SUP3_N] na F.Cu - B.Cu",
+                    "pos": {
+                        "x": 81.5515,
+                        "y": 64.4116
+                    },
+                    "uuid": "7c7d0943-f8cd-47b4-bdea-446c1dd68f8c"
+                },
+                {
+                    "description": "Pole lutownicze 2 [/SERWIS/SRV_ADC_CS] z R45 na B.Cu",
+                    "pos": {
+                        "x": 80.438481,
+                        "y": 63.87595
+                    },
+                    "uuid": "e0862a47-f660-43cc-adf1-c93994090c5b"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_P05_SUP3_N] na B.Cu, długość 10,1429 mm",
+                    "pos": {
+                        "x": 81.4827,
+                        "y": 61.2619
+                    },
+                    "uuid": "73503654-5673-4519-8c20-87118cf74baf"
+                },
+                {
+                    "description": "Pole lutownicze 1 [ADC_CS] z R45 na B.Cu",
+                    "pos": {
+                        "x": 80.438481,
+                        "y": 60.77595
+                    },
+                    "uuid": "4e18ec54-472e-4339-b05b-a37310e3b46d"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_P05_SUP3_N] na B.Cu, długość 10,1429 mm",
+                    "pos": {
+                        "x": 81.4827,
+                        "y": 61.2619
+                    },
+                    "uuid": "73503654-5673-4519-8c20-87118cf74baf"
+                },
+                {
+                    "description": "Pole lutownicze 2 [/SERWIS/SRV_ADC_CS] z R45 na B.Cu",
+                    "pos": {
+                        "x": 80.438481,
+                        "y": 63.87595
+                    },
+                    "uuid": "e0862a47-f660-43cc-adf1-c93994090c5b"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_P05_SUP5_N] na B.Cu, długość 5,1508 mm",
+                    "pos": {
+                        "x": 78.5078,
+                        "y": 63.3022
+                    },
+                    "uuid": "0466a389-5681-4095-ace9-29a3da214fb8"
+                },
+                {
+                    "description": "Pole lutownicze 1 [ADC_CS] z R45 na B.Cu",
+                    "pos": {
+                        "x": 80.438481,
+                        "y": 60.77595
+                    },
+                    "uuid": "4e18ec54-472e-4339-b05b-a37310e3b46d"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_DAQ_OK] na B.Cu, długość 6,7558 mm",
+                    "pos": {
+                        "x": 77.1813,
+                        "y": 67.4771
+                    },
+                    "uuid": "76323cd4-e0d2-4c6d-9023-e03d1322df29"
+                },
+                {
+                    "description": "Pole lutownicze 2 [/SERWIS/SRV_ADC_CS] z R45 na B.Cu",
+                    "pos": {
+                        "x": 80.438481,
+                        "y": 63.87595
+                    },
+                    "uuid": "e0862a47-f660-43cc-adf1-c93994090c5b"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [ADC_CS] na B.Cu, długość 2,8284 mm",
+                    "pos": {
+                        "x": 78.225,
+                        "y": 47.54
+                    },
+                    "uuid": "651b226e-0e04-45e8-b0dc-e7707676dcc1"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_ADC_CS] na B.Cu, długość 7,6919 mm",
+                    "pos": {
+                        "x": 76.225,
+                        "y": 52.64
+                    },
+                    "uuid": "d7b41bb4-5ea3-47f8-b2a3-e37193249fea"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV1",
+                    "pos": {
+                        "x": 41.74,
+                        "y": 95.96
+                    },
+                    "uuid": "46bfd41e-1732-4cba-b6ea-30823f85f90d"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP2",
+                    "pos": {
+                        "x": 68.57,
+                        "y": 13.33
+                    },
+                    "uuid": "4ec27673-7739-4d6c-993f-22280ba5abdb"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x05_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP1",
+                    "pos": {
+                        "x": 21.42,
+                        "y": 13.33
+                    },
+                    "uuid": "ab2658b8-2665-4558-a302-e16000794b24"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV2",
+                    "pos": {
+                        "x": 95.24,
+                        "y": 95.96
+                    },
+                    "uuid": "f81e9399-147e-49f4-8c72-6dc5e0e2c471"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        }
+    ]
+}

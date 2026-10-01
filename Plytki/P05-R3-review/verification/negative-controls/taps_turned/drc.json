@@ -1,0 +1,2872 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-01T16:44:48",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P05.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Ścieżka [TAP_P6] na F.Cu, długość 10,3100 mm",
+                    "pos": {
+                        "x": 20.7295,
+                        "y": 50.1
+                    },
+                    "uuid": "17d2257f-b01f-42b0-b065-ea58297434fe"
+                },
+                {
+                    "description": "Pole PTH 9 [TAP_P6] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 55.6
+                    },
+                    "uuid": "cf1a7af1-09bf-46df-a639-dd34b5672050"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole PTH 3 [TAP_P3] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 45.1
+                    },
+                    "uuid": "259e8684-77b6-4f6c-85cc-06676bb102bd"
+                },
+                {
+                    "description": "Ścieżka [TAP_P3] na B.Cu, długość 2,1282 mm",
+                    "pos": {
+                        "x": 16.5049,
+                        "y": 36.5951
+                    },
+                    "uuid": "ab25417a-d188-49ab-846f-af29fba694c3"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Ścieżka [TAP_P4] na B.Cu, długość 1,3217 mm",
+                    "pos": {
+                        "x": 14.3923,
+                        "y": 39.6343
+                    },
+                    "uuid": "9124e355-0642-4a09-8278-f4e44a8cabc9"
+                },
+                {
+                    "description": "Pole PTH 5 [TAP_P4] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 48.6
+                    },
+                    "uuid": "73fbc506-d843-406e-8410-91a5e149ec92"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole PTH 7 [TAP_P5] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 52.1
+                    },
+                    "uuid": "99364a85-6ca2-4c8a-b065-6bcc53054798"
+                },
+                {
+                    "description": "Ścieżka [TAP_P5] na B.Cu, długość 3,5920 mm",
+                    "pos": {
+                        "x": 28.58,
+                        "y": 38.6
+                    },
+                    "uuid": "ee47c4e8-40dd-4d21-be8c-c7e8790d6b8e"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Naruszenie prześwitu (klasa sieci 'Default' prześwit 0,2500 mm; obecnie 0,0280 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [/AUX_IN/AUX_IN] na F.Cu, długość 0,3446 mm",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 54.1017
+                    },
+                    "uuid": "8ed9045a-514d-41b7-a10e-05d460cb7b5d"
+                },
+                {
+                    "description": "Pole PTH 9 [TAP_P6] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 55.6
+                    },
+                    "uuid": "cf1a7af1-09bf-46df-a639-dd34b5672050"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci /AUX_IN/AUX_IN oraz TAP_P6)",
+            "items": [
+                {
+                    "description": "Ścieżka [/AUX_IN/AUX_IN] na F.Cu, długość 10,3109 mm",
+                    "pos": {
+                        "x": 14.7563,
+                        "y": 54.3454
+                    },
+                    "uuid": "c9c7ae7b-e2cb-4205-ae11-e2fd14934082"
+                },
+                {
+                    "description": "Pole PTH 9 [TAP_P6] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 55.6
+                    },
+                    "uuid": "cf1a7af1-09bf-46df-a639-dd34b5672050"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu (klasa sieci 'Default' prześwit 0,2500 mm; obecnie 0,2483 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [/AUX_IN/AUX_IN] na F.Cu, długość 1,5017 mm",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 52.6
+                    },
+                    "uuid": "80cd053f-ec0b-4222-aa0b-5a9ce859c034"
+                },
+                {
+                    "description": "Pole PTH 9 [TAP_P6] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 55.6
+                    },
+                    "uuid": "cf1a7af1-09bf-46df-a639-dd34b5672050"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [/AUX_IN/AUX_IN] na F.Cu, długość 10,3109 mm",
+                    "pos": {
+                        "x": 14.7563,
+                        "y": 54.3454
+                    },
+                    "uuid": "c9c7ae7b-e2cb-4205-ae11-e2fd14934082"
+                },
+                {
+                    "description": "Pole PTH 9 [TAP_P6] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 55.6
+                    },
+                    "uuid": "cf1a7af1-09bf-46df-a639-dd34b5672050"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci /AUX_IN/AUX_IN oraz TAP_P5)",
+            "items": [
+                {
+                    "description": "Ścieżka [/AUX_IN/AUX_IN] na F.Cu, długość 1,5017 mm",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 52.6
+                    },
+                    "uuid": "80cd053f-ec0b-4222-aa0b-5a9ce859c034"
+                },
+                {
+                    "description": "Pole PTH 7 [TAP_P5] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 52.1
+                    },
+                    "uuid": "99364a85-6ca2-4c8a-b065-6bcc53054798"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [/AUX_IN/AUX_IN] na F.Cu, długość 1,5017 mm",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 52.6
+                    },
+                    "uuid": "80cd053f-ec0b-4222-aa0b-5a9ce859c034"
+                },
+                {
+                    "description": "Pole PTH 7 [TAP_P5] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 52.1
+                    },
+                    "uuid": "99364a85-6ca2-4c8a-b065-6bcc53054798"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci unconnected-(J4-Pin_11-Pad11) oraz /AUX_IN/AUX_IN)",
+            "items": [
+                {
+                    "description": "Pole PTH 11 [unconnected-(J4-Pin_11-Pad11)] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 59.1
+                    },
+                    "uuid": "82658bab-05d9-4472-9876-d0a2860c4b80"
+                },
+                {
+                    "description": "Ścieżka [/AUX_IN/AUX_IN] na F.Cu, długość 10,3109 mm",
+                    "pos": {
+                        "x": 14.7563,
+                        "y": 54.3454
+                    },
+                    "uuid": "c9c7ae7b-e2cb-4205-ae11-e2fd14934082"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [/AUX_IN/AUX_IN] na F.Cu, długość 10,3109 mm",
+                    "pos": {
+                        "x": 14.7563,
+                        "y": 54.3454
+                    },
+                    "uuid": "c9c7ae7b-e2cb-4205-ae11-e2fd14934082"
+                },
+                {
+                    "description": "Pole PTH 11 [unconnected-(J4-Pin_11-Pad11)] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 59.1
+                    },
+                    "uuid": "82658bab-05d9-4472-9876-d0a2860c4b80"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [TAP_P5] na B.Cu, długość 3,5920 mm",
+                    "pos": {
+                        "x": 28.58,
+                        "y": 38.6
+                    },
+                    "uuid": "ee47c4e8-40dd-4d21-be8c-c7e8790d6b8e"
+                },
+                {
+                    "description": "Pole NPTH z J4",
+                    "pos": {
+                        "x": 26.5,
+                        "y": 38.3
+                    },
+                    "uuid": "ad485543-919e-4b75-842a-a96afae8f3bd"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,2358 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [ADC_CH3] na B.Cu, długość 0,5698 mm",
+                    "pos": {
+                        "x": 27.242,
+                        "y": 40.142
+                    },
+                    "uuid": "71e29ca1-ce9b-42c1-ac4f-1ca825c338ad"
+                },
+                {
+                    "description": "Pole NPTH z J4",
+                    "pos": {
+                        "x": 26.5,
+                        "y": 38.3
+                    },
+                    "uuid": "ad485543-919e-4b75-842a-a96afae8f3bd"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [ADC_CH3] na B.Cu, długość 5,2920 mm",
+                    "pos": {
+                        "x": 23.5,
+                        "y": 36.4
+                    },
+                    "uuid": "4c402628-19d6-4fe9-b847-c0fcc445245b"
+                },
+                {
+                    "description": "Pole NPTH z J4",
+                    "pos": {
+                        "x": 26.5,
+                        "y": 38.3
+                    },
+                    "uuid": "ad485543-919e-4b75-842a-a96afae8f3bd"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,2114 mm)",
+            "items": [
+                {
+                    "description": "Przelotka [ADC_CH3] na F.Cu - B.Cu",
+                    "pos": {
+                        "x": 27.8118,
+                        "y": 40.142
+                    },
+                    "uuid": "4abd3cc1-68ae-4eac-be5e-f6bc5d117326"
+                },
+                {
+                    "description": "Pole NPTH z J4",
+                    "pos": {
+                        "x": 26.5,
+                        "y": 38.3
+                    },
+                    "uuid": "ad485543-919e-4b75-842a-a96afae8f3bd"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,2114 mm)",
+            "items": [
+                {
+                    "description": "Przelotka [ADC_CH3] na F.Cu - B.Cu",
+                    "pos": {
+                        "x": 27.8118,
+                        "y": 40.142
+                    },
+                    "uuid": "4abd3cc1-68ae-4eac-be5e-f6bc5d117326"
+                },
+                {
+                    "description": "Pole NPTH z J4",
+                    "pos": {
+                        "x": 26.5,
+                        "y": 38.3
+                    },
+                    "uuid": "ad485543-919e-4b75-842a-a96afae8f3bd"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci /SERWIS/SRV_MEAS_COIL_LOW oraz unconnected-(J4-Pin_11-Pad11))",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_MEAS_COIL_LOW] na B.Cu, długość 8,4962 mm",
+                    "pos": {
+                        "x": 20.5341,
+                        "y": 55.2631
+                    },
+                    "uuid": "4e18386f-31c3-41dc-93db-a135b2cfca41"
+                },
+                {
+                    "description": "Pole PTH 11 [unconnected-(J4-Pin_11-Pad11)] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 59.1
+                    },
+                    "uuid": "82658bab-05d9-4472-9876-d0a2860c4b80"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci TAP_P6 oraz TAP_P3)",
+            "items": [
+                {
+                    "description": "Ścieżka [TAP_P6] na F.Cu, długość 10,3100 mm",
+                    "pos": {
+                        "x": 20.7295,
+                        "y": 50.1
+                    },
+                    "uuid": "17d2257f-b01f-42b0-b065-ea58297434fe"
+                },
+                {
+                    "description": "Pole PTH 3 [TAP_P3] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 45.1
+                    },
+                    "uuid": "259e8684-77b6-4f6c-85cc-06676bb102bd"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [TAP_P6] na F.Cu, długość 10,3100 mm",
+                    "pos": {
+                        "x": 20.7295,
+                        "y": 50.1
+                    },
+                    "uuid": "17d2257f-b01f-42b0-b065-ea58297434fe"
+                },
+                {
+                    "description": "Pole PTH 3 [TAP_P3] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 45.1
+                    },
+                    "uuid": "259e8684-77b6-4f6c-85cc-06676bb102bd"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_RAIL_HIGH] na F.Cu, długość 34,1047 mm",
+                    "pos": {
+                        "x": 27.9656,
+                        "y": 53.5045
+                    },
+                    "uuid": "b1db970b-2a77-44a4-afc3-45f75d9fd10b"
+                },
+                {
+                    "description": "Pole NPTH z J4",
+                    "pos": {
+                        "x": 26.5,
+                        "y": 62.4
+                    },
+                    "uuid": "da898e00-97fd-4361-86a5-d53301aaace2"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_RAIL_LOW] na F.Cu, długość 45,7251 mm",
+                    "pos": {
+                        "x": 26.561,
+                        "y": 88.1895
+                    },
+                    "uuid": "7101ce9d-43e7-4ccc-9e02-ffe2e6e1cca9"
+                },
+                {
+                    "description": "Pole NPTH z J4",
+                    "pos": {
+                        "x": 26.5,
+                        "y": 62.4
+                    },
+                    "uuid": "da898e00-97fd-4361-86a5-d53301aaace2"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci TAP_P4 oraz /SERWIS/SRV_REF_2V5)",
+            "items": [
+                {
+                    "description": "Pole PTH 5 [TAP_P4] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 48.6
+                    },
+                    "uuid": "73fbc506-d843-406e-8410-91a5e149ec92"
+                },
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_REF_2V5] na F.Cu, długość 5,9056 mm",
+                    "pos": {
+                        "x": 16.5024,
+                        "y": 49.9859
+                    },
+                    "uuid": "e8c27aa2-da35-453d-9f7a-047f2ac0ec09"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_REF_2V5] na F.Cu, długość 5,9056 mm",
+                    "pos": {
+                        "x": 16.5024,
+                        "y": 49.9859
+                    },
+                    "uuid": "e8c27aa2-da35-453d-9f7a-047f2ac0ec09"
+                },
+                {
+                    "description": "Pole PTH 5 [TAP_P4] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 48.6
+                    },
+                    "uuid": "73fbc506-d843-406e-8410-91a5e149ec92"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz /SERWIS/SRV_REF_2V5)",
+            "items": [
+                {
+                    "description": "Pole PTH 4 [GND] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 45.1
+                    },
+                    "uuid": "3b950000-c7e6-4c8d-96fc-8e0cc1980f2a"
+                },
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_REF_2V5] na F.Cu, długość 5,9056 mm",
+                    "pos": {
+                        "x": 16.5024,
+                        "y": 49.9859
+                    },
+                    "uuid": "e8c27aa2-da35-453d-9f7a-047f2ac0ec09"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz /SERWIS/SRV_REF_2V5)",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [GND] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 41.6
+                    },
+                    "uuid": "815ee318-f042-4280-a366-9f1d3fd2e0d6"
+                },
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_REF_2V5] na F.Cu, długość 21,2061 mm",
+                    "pos": {
+                        "x": 12.3265,
+                        "y": 45.81
+                    },
+                    "uuid": "e38f809d-ac4a-416f-8591-a61c4c252736"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,1265 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_REF_2V5] na F.Cu, długość 21,2061 mm",
+                    "pos": {
+                        "x": 12.3265,
+                        "y": 45.81
+                    },
+                    "uuid": "e38f809d-ac4a-416f-8591-a61c4c252736"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 41.6
+                    },
+                    "uuid": "815ee318-f042-4280-a366-9f1d3fd2e0d6"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz /SERWIS/SRV_REF_2V5)",
+            "items": [
+                {
+                    "description": "Pole PTH 4 [GND] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 45.1
+                    },
+                    "uuid": "3b950000-c7e6-4c8d-96fc-8e0cc1980f2a"
+                },
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_REF_2V5] na F.Cu, długość 21,2061 mm",
+                    "pos": {
+                        "x": 12.3265,
+                        "y": 45.81
+                    },
+                    "uuid": "e38f809d-ac4a-416f-8591-a61c4c252736"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,1265 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_REF_2V5] na F.Cu, długość 21,2061 mm",
+                    "pos": {
+                        "x": 12.3265,
+                        "y": 45.81
+                    },
+                    "uuid": "e38f809d-ac4a-416f-8591-a61c4c252736"
+                },
+                {
+                    "description": "Pole PTH 4 [GND] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 45.1
+                    },
+                    "uuid": "3b950000-c7e6-4c8d-96fc-8e0cc1980f2a"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_RAIL_LOW] na F.Cu, długość 8,4601 mm",
+                    "pos": {
+                        "x": 25.2427,
+                        "y": 41.1461
+                    },
+                    "uuid": "ff1958d4-019c-4ae2-ae14-4216ac0a9893"
+                },
+                {
+                    "description": "Pole NPTH z J4",
+                    "pos": {
+                        "x": 26.5,
+                        "y": 38.3
+                    },
+                    "uuid": "ad485543-919e-4b75-842a-a96afae8f3bd"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_3V3_DAQ] na F.Cu, długość 40,6128 mm",
+                    "pos": {
+                        "x": 24.7868,
+                        "y": 51.094
+                    },
+                    "uuid": "bf4a1b59-a51c-4eb2-8015-6d07684b97ff"
+                },
+                {
+                    "description": "Pole NPTH z J4",
+                    "pos": {
+                        "x": 26.5,
+                        "y": 62.4
+                    },
+                    "uuid": "da898e00-97fd-4361-86a5-d53301aaace2"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_5VA_P05] na F.Cu, długość 36,7072 mm",
+                    "pos": {
+                        "x": 25.6811,
+                        "y": 53.3539
+                    },
+                    "uuid": "99c37445-a59b-439e-a7f5-6f63c2db4ff5"
+                },
+                {
+                    "description": "Pole NPTH z J4",
+                    "pos": {
+                        "x": 26.5,
+                        "y": 62.4
+                    },
+                    "uuid": "da898e00-97fd-4361-86a5-d53301aaace2"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_5V_SYS] na F.Cu, długość 45,7249 mm",
+                    "pos": {
+                        "x": 27.1127,
+                        "y": 42.2359
+                    },
+                    "uuid": "d6acd58f-3788-4a32-9b23-6eceb5009a6e"
+                },
+                {
+                    "description": "Pole NPTH z J4",
+                    "pos": {
+                        "x": 26.5,
+                        "y": 62.4
+                    },
+                    "uuid": "da898e00-97fd-4361-86a5-d53301aaace2"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_5V_SYS] na F.Cu, długość 7,6415 mm",
+                    "pos": {
+                        "x": 25.8547,
+                        "y": 33.336399
+                    },
+                    "uuid": "8868346e-fd65-44c1-b6f3-a94e2763ba3e"
+                },
+                {
+                    "description": "Pole NPTH z J4",
+                    "pos": {
+                        "x": 26.5,
+                        "y": 38.3
+                    },
+                    "uuid": "ad485543-919e-4b75-842a-a96afae8f3bd"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci unconnected-(J4-Pin_12-Pad12) oraz /SERWIS/SRV_VBAT_SENSE)",
+            "items": [
+                {
+                    "description": "Pole PTH 12 [unconnected-(J4-Pin_12-Pad12)] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 59.1
+                    },
+                    "uuid": "b77bc147-13a4-4e08-99fd-5373004e02b3"
+                },
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_VBAT_SENSE] na F.Cu, długość 44,6276 mm",
+                    "pos": {
+                        "x": 12.53,
+                        "y": 96.4811
+                    },
+                    "uuid": "e394d5a9-adb6-42c0-b92d-a066156e3eeb"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz /SERWIS/SRV_VBAT_SENSE)",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [GND] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 41.6
+                    },
+                    "uuid": "815ee318-f042-4280-a366-9f1d3fd2e0d6"
+                },
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_VBAT_SENSE] na F.Cu, długość 35,4056 mm",
+                    "pos": {
+                        "x": 11.7532,
+                        "y": 51.0767
+                    },
+                    "uuid": "ce06d947-b653-45e1-96b8-24d295eaff50"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz /SERWIS/SRV_VBAT_SENSE)",
+            "items": [
+                {
+                    "description": "Pole PTH 8 [GND] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 52.1
+                    },
+                    "uuid": "3b331437-ca18-4ca6-a67c-666ff87d8109"
+                },
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_VBAT_SENSE] na F.Cu, długość 1,0986 mm",
+                    "pos": {
+                        "x": 12.53,
+                        "y": 51.8535
+                    },
+                    "uuid": "893ccb5f-820f-4697-94c6-365b4399aea5"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_VBAT_SENSE] na F.Cu, długość 35,4056 mm",
+                    "pos": {
+                        "x": 11.7532,
+                        "y": 51.0767
+                    },
+                    "uuid": "ce06d947-b653-45e1-96b8-24d295eaff50"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 41.6
+                    },
+                    "uuid": "815ee318-f042-4280-a366-9f1d3fd2e0d6"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,2026 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_VBAT_SENSE] na F.Cu, długość 1,0986 mm",
+                    "pos": {
+                        "x": 12.53,
+                        "y": 51.8535
+                    },
+                    "uuid": "893ccb5f-820f-4697-94c6-365b4399aea5"
+                },
+                {
+                    "description": "Pole PTH 8 [GND] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 52.1
+                    },
+                    "uuid": "3b331437-ca18-4ca6-a67c-666ff87d8109"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz /SERWIS/SRV_VBAT_SENSE)",
+            "items": [
+                {
+                    "description": "Pole PTH 8 [GND] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 52.1
+                    },
+                    "uuid": "3b331437-ca18-4ca6-a67c-666ff87d8109"
+                },
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_VBAT_SENSE] na F.Cu, długość 44,6276 mm",
+                    "pos": {
+                        "x": 12.53,
+                        "y": 96.4811
+                    },
+                    "uuid": "e394d5a9-adb6-42c0-b92d-a066156e3eeb"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz /SERWIS/SRV_VBAT_SENSE)",
+            "items": [
+                {
+                    "description": "Pole PTH 4 [GND] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 45.1
+                    },
+                    "uuid": "3b950000-c7e6-4c8d-96fc-8e0cc1980f2a"
+                },
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_VBAT_SENSE] na F.Cu, długość 35,4056 mm",
+                    "pos": {
+                        "x": 11.7532,
+                        "y": 51.0767
+                    },
+                    "uuid": "ce06d947-b653-45e1-96b8-24d295eaff50"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_VBAT_SENSE] na F.Cu, długość 35,4056 mm",
+                    "pos": {
+                        "x": 11.7532,
+                        "y": 51.0767
+                    },
+                    "uuid": "ce06d947-b653-45e1-96b8-24d295eaff50"
+                },
+                {
+                    "description": "Pole PTH 4 [GND] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 45.1
+                    },
+                    "uuid": "3b950000-c7e6-4c8d-96fc-8e0cc1980f2a"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz /SERWIS/SRV_VBAT_SENSE)",
+            "items": [
+                {
+                    "description": "Pole PTH 6 [GND] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 48.6
+                    },
+                    "uuid": "976ddee6-23c1-4d1c-9d07-7b5d6033654a"
+                },
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_VBAT_SENSE] na F.Cu, długość 35,4056 mm",
+                    "pos": {
+                        "x": 11.7532,
+                        "y": 51.0767
+                    },
+                    "uuid": "ce06d947-b653-45e1-96b8-24d295eaff50"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_VBAT_SENSE] na F.Cu, długość 35,4056 mm",
+                    "pos": {
+                        "x": 11.7532,
+                        "y": 51.0767
+                    },
+                    "uuid": "ce06d947-b653-45e1-96b8-24d295eaff50"
+                },
+                {
+                    "description": "Pole PTH 6 [GND] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 48.6
+                    },
+                    "uuid": "976ddee6-23c1-4d1c-9d07-7b5d6033654a"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci /SERWIS/SRV_VBAT_SENSE oraz GND)",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_VBAT_SENSE] na F.Cu, długość 44,6276 mm",
+                    "pos": {
+                        "x": 12.53,
+                        "y": 96.4811
+                    },
+                    "uuid": "e394d5a9-adb6-42c0-b92d-a066156e3eeb"
+                },
+                {
+                    "description": "Pole PTH 10 [GND] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 55.6
+                    },
+                    "uuid": "fe949501-1845-4386-a428-3b41ceb6dd2f"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz /SERWIS/SRV_VBAT_SENSE)",
+            "items": [
+                {
+                    "description": "Pole PTH 8 [GND] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 52.1
+                    },
+                    "uuid": "3b331437-ca18-4ca6-a67c-666ff87d8109"
+                },
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_VBAT_SENSE] na F.Cu, długość 35,4056 mm",
+                    "pos": {
+                        "x": 11.7532,
+                        "y": 51.0767
+                    },
+                    "uuid": "ce06d947-b653-45e1-96b8-24d295eaff50"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [VBAT_SENSE] na B.Cu, długość 9,7261 mm",
+                    "pos": {
+                        "x": 32.7218,
+                        "y": 62.8052
+                    },
+                    "uuid": "5f90336c-441e-4ac3-aaf2-b2c8ff28f101"
+                },
+                {
+                    "description": "Pole NPTH z J4",
+                    "pos": {
+                        "x": 26.5,
+                        "y": 62.4
+                    },
+                    "uuid": "da898e00-97fd-4361-86a5-d53301aaace2"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci TAP_P4 oraz VBAT_SENSE)",
+            "items": [
+                {
+                    "description": "Pole PTH 5 [TAP_P4] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 48.6
+                    },
+                    "uuid": "73fbc506-d843-406e-8410-91a5e149ec92"
+                },
+                {
+                    "description": "Ścieżka [VBAT_SENSE] na F.Cu, długość 10,2062 mm",
+                    "pos": {
+                        "x": 20.0966,
+                        "y": 52.0728
+                    },
+                    "uuid": "d46974fc-31ee-475b-936a-a454f5895a52"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu (klasa sieci 'Default' prześwit 0,2500 mm; obecnie 0,1297 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [VBAT_SENSE] na F.Cu, długość 17,3056 mm",
+                    "pos": {
+                        "x": 12.8797,
+                        "y": 44.8559
+                    },
+                    "uuid": "4fe60898-66fe-4d55-b779-7b5e9d8b6281"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 41.6
+                    },
+                    "uuid": "815ee318-f042-4280-a366-9f1d3fd2e0d6"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu (klasa sieci 'Default' prześwit 0,2500 mm; obecnie 0,0767 mm)",
+            "items": [
+                {
+                    "description": "Pole PTH 3 [TAP_P3] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 45.1
+                    },
+                    "uuid": "259e8684-77b6-4f6c-85cc-06676bb102bd"
+                },
+                {
+                    "description": "Ścieżka [VBAT_SENSE] na F.Cu, długość 10,2062 mm",
+                    "pos": {
+                        "x": 20.0966,
+                        "y": 52.0728
+                    },
+                    "uuid": "d46974fc-31ee-475b-936a-a454f5895a52"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu (klasa sieci 'Default' prześwit 0,2500 mm; obecnie 0,1511 mm)",
+            "items": [
+                {
+                    "description": "Pole PTH 4 [GND] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 45.1
+                    },
+                    "uuid": "3b950000-c7e6-4c8d-96fc-8e0cc1980f2a"
+                },
+                {
+                    "description": "Ścieżka [VBAT_SENSE] na F.Cu, długość 17,3056 mm",
+                    "pos": {
+                        "x": 12.8797,
+                        "y": 44.8559
+                    },
+                    "uuid": "4fe60898-66fe-4d55-b779-7b5e9d8b6281"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu (klasa sieci 'Default' prześwit 0,2500 mm; obecnie 0,1511 mm)",
+            "items": [
+                {
+                    "description": "Pole PTH 4 [GND] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 45.1
+                    },
+                    "uuid": "3b950000-c7e6-4c8d-96fc-8e0cc1980f2a"
+                },
+                {
+                    "description": "Ścieżka [VBAT_SENSE] na F.Cu, długość 10,2062 mm",
+                    "pos": {
+                        "x": 20.0966,
+                        "y": 52.0728
+                    },
+                    "uuid": "d46974fc-31ee-475b-936a-a454f5895a52"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [MEAS_COIL_LOW] na F.Cu, długość 6,8620 mm",
+                    "pos": {
+                        "x": 26.4068,
+                        "y": 40.7498
+                    },
+                    "uuid": "98da172b-987c-4bb8-af57-dac6865032aa"
+                },
+                {
+                    "description": "Pole NPTH z J4",
+                    "pos": {
+                        "x": 26.5,
+                        "y": 38.3
+                    },
+                    "uuid": "ad485543-919e-4b75-842a-a96afae8f3bd"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [ADC_CH4] na F.Cu, długość 2,5028 mm",
+                    "pos": {
+                        "x": 26.96,
+                        "y": 40.5228
+                    },
+                    "uuid": "d1cf7b09-82ef-4cdc-9d35-7c6a296213be"
+                },
+                {
+                    "description": "Pole NPTH z J4",
+                    "pos": {
+                        "x": 26.5,
+                        "y": 38.3
+                    },
+                    "uuid": "ad485543-919e-4b75-842a-a96afae8f3bd"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [ADC_CH4] na F.Cu, długość 2,2910 mm",
+                    "pos": {
+                        "x": 26.96,
+                        "y": 38.02
+                    },
+                    "uuid": "848a8e4b-e1e2-42eb-a508-b77749638c3a"
+                },
+                {
+                    "description": "Pole NPTH z J4",
+                    "pos": {
+                        "x": 26.5,
+                        "y": 38.3
+                    },
+                    "uuid": "ad485543-919e-4b75-842a-a96afae8f3bd"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Pole PTH 5 [TAP_P5] na K2",
+                    "pos": {
+                        "x": 28.58,
+                        "y": 38.6
+                    },
+                    "uuid": "a1868a13-0b9f-4f74-9866-13d47e2d5718"
+                },
+                {
+                    "description": "Pole NPTH z J4",
+                    "pos": {
+                        "x": 26.5,
+                        "y": 38.3
+                    },
+                    "uuid": "ad485543-919e-4b75-842a-a96afae8f3bd"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Pole PTH 5 [TAP_P5] na K2",
+                    "pos": {
+                        "x": 28.58,
+                        "y": 38.6
+                    },
+                    "uuid": "a1868a13-0b9f-4f74-9866-13d47e2d5718"
+                },
+                {
+                    "description": "Pole NPTH z J4",
+                    "pos": {
+                        "x": 26.5,
+                        "y": 38.3
+                    },
+                    "uuid": "ad485543-919e-4b75-842a-a96afae8f3bd"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci TAP_P5 oraz /AUX_IN/AUX_IN)",
+            "items": [
+                {
+                    "description": "Pole PTH 7 [TAP_P5] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 52.1
+                    },
+                    "uuid": "99364a85-6ca2-4c8a-b065-6bcc53054798"
+                },
+                {
+                    "description": "Pole PTH 1 [/AUX_IN/AUX_IN] na J6",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 52.6
+                    },
+                    "uuid": "c19a4672-c8bd-48ed-92fc-cbf185197b41"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci TAP_P5 oraz /AUX_IN/AUX_IN)",
+            "items": [
+                {
+                    "description": "Pole PTH 7 [TAP_P5] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 52.1
+                    },
+                    "uuid": "99364a85-6ca2-4c8a-b065-6bcc53054798"
+                },
+                {
+                    "description": "Pole PTH 1 [/AUX_IN/AUX_IN] na J6",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 52.6
+                    },
+                    "uuid": "c19a4672-c8bd-48ed-92fc-cbf185197b41"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint U4",
+                    "pos": {
+                        "x": 23.5,
+                        "y": 56.5
+                    },
+                    "uuid": "35544357-7ea4-4b83-b3ec-89ed67996080"
+                },
+                {
+                    "description": "Footprint J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 41.6
+                    },
+                    "uuid": "90aa54ac-7c59-44a1-97d1-486e90322785"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "NPTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole NPTH z J4",
+                    "pos": {
+                        "x": 26.5,
+                        "y": 62.4
+                    },
+                    "uuid": "da898e00-97fd-4361-86a5-d53301aaace2"
+                },
+                {
+                    "description": "Footprint U4",
+                    "pos": {
+                        "x": 23.5,
+                        "y": 56.5
+                    },
+                    "uuid": "35544357-7ea4-4b83-b3ec-89ed67996080"
+                }
+            ],
+            "severity": "error",
+            "type": "npth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 1 [MEAS_PERMIT] na U4",
+                    "pos": {
+                        "x": 23.5,
+                        "y": 56.5
+                    },
+                    "uuid": "d5e87fd7-5af5-4183-b23f-99698370765c"
+                },
+                {
+                    "description": "Footprint J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 41.6
+                    },
+                    "uuid": "90aa54ac-7c59-44a1-97d1-486e90322785"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [GND] na U4",
+                    "pos": {
+                        "x": 23.5,
+                        "y": 59.04
+                    },
+                    "uuid": "b3c9c089-a7dd-46a6-a0be-b7efc5d42f06"
+                },
+                {
+                    "description": "Footprint J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 41.6
+                    },
+                    "uuid": "90aa54ac-7c59-44a1-97d1-486e90322785"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 3 [GND] na U4",
+                    "pos": {
+                        "x": 23.5,
+                        "y": 61.58
+                    },
+                    "uuid": "52e61edf-e113-48b3-b53f-004c83250774"
+                },
+                {
+                    "description": "Footprint J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 41.6
+                    },
+                    "uuid": "90aa54ac-7c59-44a1-97d1-486e90322785"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 4 [GND] na U4",
+                    "pos": {
+                        "x": 23.5,
+                        "y": 64.12
+                    },
+                    "uuid": "a682f901-71cd-4b96-b539-5eacbaaff437"
+                },
+                {
+                    "description": "Footprint J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 41.6
+                    },
+                    "uuid": "90aa54ac-7c59-44a1-97d1-486e90322785"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint K3",
+                    "pos": {
+                        "x": 23.5,
+                        "y": 42.5
+                    },
+                    "uuid": "4ccb5dbd-0d70-4279-b621-53cdb703bf9b"
+                },
+                {
+                    "description": "Footprint J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 41.6
+                    },
+                    "uuid": "90aa54ac-7c59-44a1-97d1-486e90322785"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 1 [5V_SYS] na K3",
+                    "pos": {
+                        "x": 23.5,
+                        "y": 42.5
+                    },
+                    "uuid": "6318e9ce-63c3-4c9e-82b3-cb3558ac5294"
+                },
+                {
+                    "description": "Footprint J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 41.6
+                    },
+                    "uuid": "90aa54ac-7c59-44a1-97d1-486e90322785"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [unconnected-(K3-Pad2)] na K3",
+                    "pos": {
+                        "x": 23.5,
+                        "y": 45.5
+                    },
+                    "uuid": "918bd811-a02a-4271-b470-961512c6cfa2"
+                },
+                {
+                    "description": "Footprint J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 41.6
+                    },
+                    "uuid": "90aa54ac-7c59-44a1-97d1-486e90322785"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 3 [ADC_CH5] na K3",
+                    "pos": {
+                        "x": 23.5,
+                        "y": 47.9
+                    },
+                    "uuid": "a882dc89-c01c-4eb3-b5b3-871f68dfa0c0"
+                },
+                {
+                    "description": "Footprint J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 41.6
+                    },
+                    "uuid": "90aa54ac-7c59-44a1-97d1-486e90322785"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 4 [TAP_P6] na K3",
+                    "pos": {
+                        "x": 23.5,
+                        "y": 50.1
+                    },
+                    "uuid": "5d094e66-f9f6-4717-a1f2-c91e88bd4736"
+                },
+                {
+                    "description": "Footprint J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 41.6
+                    },
+                    "uuid": "90aa54ac-7c59-44a1-97d1-486e90322785"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 5 [unconnected-(K3-Pad5)] na K3",
+                    "pos": {
+                        "x": 28.58,
+                        "y": 50.1
+                    },
+                    "uuid": "13d43bb1-2cd8-4745-b1af-228611d1353b"
+                },
+                {
+                    "description": "Footprint J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 41.6
+                    },
+                    "uuid": "90aa54ac-7c59-44a1-97d1-486e90322785"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 6 [unconnected-(K3-Pad6)] na K3",
+                    "pos": {
+                        "x": 28.58,
+                        "y": 47.9
+                    },
+                    "uuid": "44160944-441a-45a2-b293-2d1bfde41993"
+                },
+                {
+                    "description": "Footprint J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 41.6
+                    },
+                    "uuid": "90aa54ac-7c59-44a1-97d1-486e90322785"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 7 [unconnected-(K3-Pad7)] na K3",
+                    "pos": {
+                        "x": 28.58,
+                        "y": 45.5
+                    },
+                    "uuid": "f18e01bc-b5d0-4746-b575-b126336b4d36"
+                },
+                {
+                    "description": "Footprint J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 41.6
+                    },
+                    "uuid": "90aa54ac-7c59-44a1-97d1-486e90322785"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 8 [MEAS_COIL_LOW] na K3",
+                    "pos": {
+                        "x": 28.58,
+                        "y": 42.5
+                    },
+                    "uuid": "9e272243-4bf9-4ef3-81c0-4d7aa0a485bb"
+                },
+                {
+                    "description": "Footprint J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 41.6
+                    },
+                    "uuid": "90aa54ac-7c59-44a1-97d1-486e90322785"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 41.6
+                    },
+                    "uuid": "90aa54ac-7c59-44a1-97d1-486e90322785"
+                },
+                {
+                    "description": "Footprint J6",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 52.6
+                    },
+                    "uuid": "9e4ea5d9-f814-4756-8374-0f55e3c13c28"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 1 [/AUX_IN/AUX_IN] na J6",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 52.6
+                    },
+                    "uuid": "c19a4672-c8bd-48ed-92fc-cbf185197b41"
+                },
+                {
+                    "description": "Footprint J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 41.6
+                    },
+                    "uuid": "90aa54ac-7c59-44a1-97d1-486e90322785"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [GND] na J6",
+                    "pos": {
+                        "x": 18.5,
+                        "y": 52.6
+                    },
+                    "uuid": "aaff6149-102b-4638-bdb8-b4557e553aed"
+                },
+                {
+                    "description": "Footprint J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 41.6
+                    },
+                    "uuid": "90aa54ac-7c59-44a1-97d1-486e90322785"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 5 [TAP_P4] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 48.6
+                    },
+                    "uuid": "73fbc506-d843-406e-8410-91a5e149ec92"
+                },
+                {
+                    "description": "Footprint J6",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 52.6
+                    },
+                    "uuid": "9e4ea5d9-f814-4756-8374-0f55e3c13c28"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 6 [GND] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 48.6
+                    },
+                    "uuid": "976ddee6-23c1-4d1c-9d07-7b5d6033654a"
+                },
+                {
+                    "description": "Footprint J6",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 52.6
+                    },
+                    "uuid": "9e4ea5d9-f814-4756-8374-0f55e3c13c28"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 7 [TAP_P5] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 52.1
+                    },
+                    "uuid": "99364a85-6ca2-4c8a-b065-6bcc53054798"
+                },
+                {
+                    "description": "Footprint J6",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 52.6
+                    },
+                    "uuid": "9e4ea5d9-f814-4756-8374-0f55e3c13c28"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 8 [GND] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 52.1
+                    },
+                    "uuid": "3b331437-ca18-4ca6-a67c-666ff87d8109"
+                },
+                {
+                    "description": "Footprint J6",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 52.6
+                    },
+                    "uuid": "9e4ea5d9-f814-4756-8374-0f55e3c13c28"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 9 [TAP_P6] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 55.6
+                    },
+                    "uuid": "cf1a7af1-09bf-46df-a639-dd34b5672050"
+                },
+                {
+                    "description": "Footprint J6",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 52.6
+                    },
+                    "uuid": "9e4ea5d9-f814-4756-8374-0f55e3c13c28"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 10 [GND] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 55.6
+                    },
+                    "uuid": "fe949501-1845-4386-a428-3b41ceb6dd2f"
+                },
+                {
+                    "description": "Footprint J6",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 52.6
+                    },
+                    "uuid": "9e4ea5d9-f814-4756-8374-0f55e3c13c28"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 41.6
+                    },
+                    "uuid": "90aa54ac-7c59-44a1-97d1-486e90322785"
+                },
+                {
+                    "description": "Footprint SW1",
+                    "pos": {
+                        "x": 16.6,
+                        "y": 71.2
+                    },
+                    "uuid": "e70da7f9-b305-4505-8420-c6a4ec07b101"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 3 [/AUX_IN/AUX_LO] na SW1",
+                    "pos": {
+                        "x": 16.6,
+                        "y": 61.8
+                    },
+                    "uuid": "e93e333b-6622-4f40-b4b7-18bd20a4d740"
+                },
+                {
+                    "description": "Footprint J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 41.6
+                    },
+                    "uuid": "90aa54ac-7c59-44a1-97d1-486e90322785"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 6 [unconnected-(SW1B-B_LO-Pad6)] na SW1",
+                    "pos": {
+                        "x": 20.41,
+                        "y": 61.8
+                    },
+                    "uuid": "b79d0612-b164-4dbb-8fd8-bcbeb1dcd58f"
+                },
+                {
+                    "description": "Footprint J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 41.6
+                    },
+                    "uuid": "90aa54ac-7c59-44a1-97d1-486e90322785"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 41.6
+                    },
+                    "uuid": "90aa54ac-7c59-44a1-97d1-486e90322785"
+                },
+                {
+                    "description": "Footprint K2",
+                    "pos": {
+                        "x": 23.5,
+                        "y": 31.0
+                    },
+                    "uuid": "f93728a7-d28c-4765-926f-b1585239760c"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 3 [ADC_CH3] na K2",
+                    "pos": {
+                        "x": 23.5,
+                        "y": 36.4
+                    },
+                    "uuid": "69996cbf-cb06-40ce-8078-953291467a3d"
+                },
+                {
+                    "description": "Footprint J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 41.6
+                    },
+                    "uuid": "90aa54ac-7c59-44a1-97d1-486e90322785"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 4 [TAP_P4] na K2",
+                    "pos": {
+                        "x": 23.5,
+                        "y": 38.6
+                    },
+                    "uuid": "82a8cf98-0945-4895-9cbf-25743729db7e"
+                },
+                {
+                    "description": "Footprint J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 41.6
+                    },
+                    "uuid": "90aa54ac-7c59-44a1-97d1-486e90322785"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 5 [TAP_P5] na K2",
+                    "pos": {
+                        "x": 28.58,
+                        "y": 38.6
+                    },
+                    "uuid": "a1868a13-0b9f-4f74-9866-13d47e2d5718"
+                },
+                {
+                    "description": "Footprint J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 41.6
+                    },
+                    "uuid": "90aa54ac-7c59-44a1-97d1-486e90322785"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 6 [ADC_CH4] na K2",
+                    "pos": {
+                        "x": 28.58,
+                        "y": 36.4
+                    },
+                    "uuid": "865bbc43-f256-4edb-8791-6ea6c7ecdbf2"
+                },
+                {
+                    "description": "Footprint J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 41.6
+                    },
+                    "uuid": "90aa54ac-7c59-44a1-97d1-486e90322785"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "NPTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole NPTH z J4",
+                    "pos": {
+                        "x": 26.5,
+                        "y": 38.3
+                    },
+                    "uuid": "ad485543-919e-4b75-842a-a96afae8f3bd"
+                },
+                {
+                    "description": "Footprint K2",
+                    "pos": {
+                        "x": 23.5,
+                        "y": 31.0
+                    },
+                    "uuid": "f93728a7-d28c-4765-926f-b1585239760c"
+                }
+            ],
+            "severity": "error",
+            "type": "npth_inside_courtyard"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [VBAT_SENSE] na F.Cu, długość 10,2062 mm",
+                    "pos": {
+                        "x": 20.0966,
+                        "y": 52.0728
+                    },
+                    "uuid": "d46974fc-31ee-475b-936a-a454f5895a52"
+                },
+                {
+                    "description": "Pole PTH 5 [TAP_P4] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 48.6
+                    },
+                    "uuid": "73fbc506-d843-406e-8410-91a5e149ec92"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_REF_2V5] na F.Cu, długość 21,2061 mm",
+                    "pos": {
+                        "x": 12.3265,
+                        "y": 45.81
+                    },
+                    "uuid": "e38f809d-ac4a-416f-8591-a61c4c252736"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 41.6
+                    },
+                    "uuid": "815ee318-f042-4280-a366-9f1d3fd2e0d6"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_REF_2V5] na F.Cu, długość 21,2061 mm",
+                    "pos": {
+                        "x": 12.3265,
+                        "y": 45.81
+                    },
+                    "uuid": "e38f809d-ac4a-416f-8591-a61c4c252736"
+                },
+                {
+                    "description": "Pole PTH 4 [GND] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 45.1
+                    },
+                    "uuid": "3b950000-c7e6-4c8d-96fc-8e0cc1980f2a"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_REF_2V5] na F.Cu, długość 5,9056 mm",
+                    "pos": {
+                        "x": 16.5024,
+                        "y": 49.9859
+                    },
+                    "uuid": "e8c27aa2-da35-453d-9f7a-047f2ac0ec09"
+                },
+                {
+                    "description": "Pole PTH 4 [GND] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 45.1
+                    },
+                    "uuid": "3b950000-c7e6-4c8d-96fc-8e0cc1980f2a"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_REF_2V5] na F.Cu, długość 5,9056 mm",
+                    "pos": {
+                        "x": 16.5024,
+                        "y": 49.9859
+                    },
+                    "uuid": "e8c27aa2-da35-453d-9f7a-047f2ac0ec09"
+                },
+                {
+                    "description": "Pole PTH 5 [TAP_P4] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 48.6
+                    },
+                    "uuid": "73fbc506-d843-406e-8410-91a5e149ec92"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/AUX_IN/AUX_IN] na F.Cu, długość 1,5017 mm",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 52.6
+                    },
+                    "uuid": "80cd053f-ec0b-4222-aa0b-5a9ce859c034"
+                },
+                {
+                    "description": "Pole PTH 7 [TAP_P5] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 52.1
+                    },
+                    "uuid": "99364a85-6ca2-4c8a-b065-6bcc53054798"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/AUX_IN/AUX_IN] na F.Cu, długość 10,3109 mm",
+                    "pos": {
+                        "x": 14.7563,
+                        "y": 54.3454
+                    },
+                    "uuid": "c9c7ae7b-e2cb-4205-ae11-e2fd14934082"
+                },
+                {
+                    "description": "Pole PTH 9 [TAP_P6] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 55.6
+                    },
+                    "uuid": "cf1a7af1-09bf-46df-a639-dd34b5672050"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/AUX_IN/AUX_IN] na F.Cu, długość 10,3109 mm",
+                    "pos": {
+                        "x": 14.7563,
+                        "y": 54.3454
+                    },
+                    "uuid": "c9c7ae7b-e2cb-4205-ae11-e2fd14934082"
+                },
+                {
+                    "description": "Pole PTH 11 [unconnected-(J4-Pin_11-Pad11)] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 59.1
+                    },
+                    "uuid": "82658bab-05d9-4472-9876-d0a2860c4b80"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole NPTH z J4",
+                    "pos": {
+                        "x": 26.5,
+                        "y": 38.3
+                    },
+                    "uuid": "ad485543-919e-4b75-842a-a96afae8f3bd"
+                },
+                {
+                    "description": "Pole PTH 5 [TAP_P5] na K2",
+                    "pos": {
+                        "x": 28.58,
+                        "y": 38.6
+                    },
+                    "uuid": "a1868a13-0b9f-4f74-9866-13d47e2d5718"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_MEAS_COIL_LOW] na B.Cu, długość 8,4962 mm",
+                    "pos": {
+                        "x": 20.5341,
+                        "y": 55.2631
+                    },
+                    "uuid": "4e18386f-31c3-41dc-93db-a135b2cfca41"
+                },
+                {
+                    "description": "Pole PTH 11 [unconnected-(J4-Pin_11-Pad11)] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 59.1
+                    },
+                    "uuid": "82658bab-05d9-4472-9876-d0a2860c4b80"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole NPTH z J4",
+                    "pos": {
+                        "x": 26.5,
+                        "y": 38.3
+                    },
+                    "uuid": "ad485543-919e-4b75-842a-a96afae8f3bd"
+                },
+                {
+                    "description": "Pole PTH 5 [TAP_P5] na K2",
+                    "pos": {
+                        "x": 28.58,
+                        "y": 38.6
+                    },
+                    "uuid": "a1868a13-0b9f-4f74-9866-13d47e2d5718"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [TAP_P6] na F.Cu, długość 10,3100 mm",
+                    "pos": {
+                        "x": 20.7295,
+                        "y": 50.1
+                    },
+                    "uuid": "17d2257f-b01f-42b0-b065-ea58297434fe"
+                },
+                {
+                    "description": "Pole PTH 3 [TAP_P3] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 45.1
+                    },
+                    "uuid": "259e8684-77b6-4f6c-85cc-06676bb102bd"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole PTH 7 [TAP_P5] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 52.1
+                    },
+                    "uuid": "99364a85-6ca2-4c8a-b065-6bcc53054798"
+                },
+                {
+                    "description": "Pole PTH 1 [/AUX_IN/AUX_IN] na J6",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 52.6
+                    },
+                    "uuid": "c19a4672-c8bd-48ed-92fc-cbf185197b41"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole PTH 7 [TAP_P5] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 52.1
+                    },
+                    "uuid": "99364a85-6ca2-4c8a-b065-6bcc53054798"
+                },
+                {
+                    "description": "Pole PTH 1 [/AUX_IN/AUX_IN] na J6",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 52.6
+                    },
+                    "uuid": "c19a4672-c8bd-48ed-92fc-cbf185197b41"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_VBAT_SENSE] na F.Cu, długość 1,0986 mm",
+                    "pos": {
+                        "x": 12.53,
+                        "y": 51.8535
+                    },
+                    "uuid": "893ccb5f-820f-4697-94c6-365b4399aea5"
+                },
+                {
+                    "description": "Pole PTH 8 [GND] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 52.1
+                    },
+                    "uuid": "3b331437-ca18-4ca6-a67c-666ff87d8109"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_VBAT_SENSE] na F.Cu, długość 35,4056 mm",
+                    "pos": {
+                        "x": 11.7532,
+                        "y": 51.0767
+                    },
+                    "uuid": "ce06d947-b653-45e1-96b8-24d295eaff50"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 41.6
+                    },
+                    "uuid": "815ee318-f042-4280-a366-9f1d3fd2e0d6"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_VBAT_SENSE] na F.Cu, długość 35,4056 mm",
+                    "pos": {
+                        "x": 11.7532,
+                        "y": 51.0767
+                    },
+                    "uuid": "ce06d947-b653-45e1-96b8-24d295eaff50"
+                },
+                {
+                    "description": "Pole PTH 4 [GND] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 45.1
+                    },
+                    "uuid": "3b950000-c7e6-4c8d-96fc-8e0cc1980f2a"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_VBAT_SENSE] na F.Cu, długość 35,4056 mm",
+                    "pos": {
+                        "x": 11.7532,
+                        "y": 51.0767
+                    },
+                    "uuid": "ce06d947-b653-45e1-96b8-24d295eaff50"
+                },
+                {
+                    "description": "Pole PTH 6 [GND] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 48.6
+                    },
+                    "uuid": "976ddee6-23c1-4d1c-9d07-7b5d6033654a"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_VBAT_SENSE] na F.Cu, długość 35,4056 mm",
+                    "pos": {
+                        "x": 11.7532,
+                        "y": 51.0767
+                    },
+                    "uuid": "ce06d947-b653-45e1-96b8-24d295eaff50"
+                },
+                {
+                    "description": "Pole PTH 8 [GND] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 52.1
+                    },
+                    "uuid": "3b331437-ca18-4ca6-a67c-666ff87d8109"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_VBAT_SENSE] na F.Cu, długość 44,6276 mm",
+                    "pos": {
+                        "x": 12.53,
+                        "y": 96.4811
+                    },
+                    "uuid": "e394d5a9-adb6-42c0-b92d-a066156e3eeb"
+                },
+                {
+                    "description": "Pole PTH 8 [GND] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 52.1
+                    },
+                    "uuid": "3b331437-ca18-4ca6-a67c-666ff87d8109"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_VBAT_SENSE] na F.Cu, długość 44,6276 mm",
+                    "pos": {
+                        "x": 12.53,
+                        "y": 96.4811
+                    },
+                    "uuid": "e394d5a9-adb6-42c0-b92d-a066156e3eeb"
+                },
+                {
+                    "description": "Pole PTH 10 [GND] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 55.6
+                    },
+                    "uuid": "fe949501-1845-4386-a428-3b41ceb6dd2f"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_VBAT_SENSE] na F.Cu, długość 44,6276 mm",
+                    "pos": {
+                        "x": 12.53,
+                        "y": 96.4811
+                    },
+                    "uuid": "e394d5a9-adb6-42c0-b92d-a066156e3eeb"
+                },
+                {
+                    "description": "Pole PTH 12 [unconnected-(J4-Pin_12-Pad12)] na J4",
+                    "pos": {
+                        "x": 11.5,
+                        "y": 59.1
+                    },
+                    "uuid": "b77bc147-13a4-4e08-99fd-5373004e02b3"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [TAP_P6] na F.Cu, długość 2,2073 mm",
+                    "pos": {
+                        "x": 13.4392,
+                        "y": 29.1608
+                    },
+                    "uuid": "d407fffc-8b7e-4762-87f1-18e03a20a681"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [TAP_P3] na B.Cu, długość 2,1282 mm",
+                    "pos": {
+                        "x": 16.5049,
+                        "y": 36.5951
+                    },
+                    "uuid": "ab25417a-d188-49ab-846f-af29fba694c3"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [TAP_P4] na B.Cu, długość 2,1811 mm",
+                    "pos": {
+                        "x": 13.4577,
+                        "y": 36.1423
+                    },
+                    "uuid": "c25bfb3d-09dd-4b82-b821-d8afc4b75e7b"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [TAP_P5] na B.Cu, długość 2,2824 mm",
+                    "pos": {
+                        "x": 16.6139,
+                        "y": 32.7139
+                    },
+                    "uuid": "fe4a36cd-cd40-4435-b548-9f545d99649e"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Otwory na wylot zbyt blisko siebie (ograniczenia w konfiguracji płytki minimum 0,3000 mm; obecnie 0,0765 mm)",
+            "items": [
+                {
+                    "description": "Pole PTH 5 [TAP_P5] na K2",
+                    "pos": {
+                        "x": 28.58,
+                        "y": 38.6
+                    },
+                    "uuid": "a1868a13-0b9f-4f74-9866-13d47e2d5718"
+                },
+                {
+                    "description": "Pole NPTH z J4",
+                    "pos": {
+                        "x": 26.5,
+                        "y": 38.3
+                    },
+                    "uuid": "ad485543-919e-4b75-842a-a96afae8f3bd"
+                }
+            ],
+            "severity": "warning",
+            "type": "hole_to_hole"
+        },
+        {
+            "description": "Otwory na wylot zbyt blisko siebie (ograniczenia w konfiguracji płytki minimum 0,3000 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Pole PTH 7 [TAP_P5] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 52.1
+                    },
+                    "uuid": "99364a85-6ca2-4c8a-b065-6bcc53054798"
+                },
+                {
+                    "description": "Pole PTH 1 [/AUX_IN/AUX_IN] na J6",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 52.6
+                    },
+                    "uuid": "c19a4672-c8bd-48ed-92fc-cbf185197b41"
+                }
+            ],
+            "severity": "warning",
+            "type": "hole_to_hole"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV1",
+                    "pos": {
+                        "x": 41.74,
+                        "y": 95.96
+                    },
+                    "uuid": "46bfd41e-1732-4cba-b6ea-30823f85f90d"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP2",
+                    "pos": {
+                        "x": 68.57,
+                        "y": 13.33
+                    },
+                    "uuid": "4ec27673-7739-4d6c-993f-22280ba5abdb"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x05_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP1",
+                    "pos": {
+                        "x": 21.42,
+                        "y": 13.33
+                    },
+                    "uuid": "ab2658b8-2665-4558-a302-e16000794b24"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV2",
+                    "pos": {
+                        "x": 95.24,
+                        "y": 95.96
+                    },
+                    "uuid": "f81e9399-147e-49f4-8c72-6dc5e0e2c471"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Pole odnośnika do J6",
+                    "pos": {
+                        "x": 10.549999,
+                        "y": 52.6
+                    },
+                    "uuid": "c19fa248-e139-4da7-b931-faa548ea558a"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Prostokąt z SW1 na F.Silkscreen",
+                    "pos": {
+                        "x": 13.2,
+                        "y": 73.2
+                    },
+                    "uuid": "7c608383-fa10-4958-8106-ed8ffd94488d"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment z K2 na F.Silkscreen",
+                    "pos": {
+                        "x": 29.4,
+                        "y": 39.9
+                    },
+                    "uuid": "afaea594-552c-485a-a176-2828f046c81f"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        }
+    ]
+}
