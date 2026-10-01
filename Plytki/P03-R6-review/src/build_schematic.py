@@ -20,7 +20,7 @@ put('R42',40,108,90,txt=(-3,-4));put('R43',62,106,txt=(2,-1))
 S['P03'].text('1  CORE / GPIO zachowane z v6.1; EN wspolne z MCP23017; do P04 przez bufor U6 (R4)',8,6,2)
 S['P03'].text('M1: GPIO47/48 nieuzywane. RGB na GPIO38 odlaczyc. 3V3_CORE pochodzi z M1; nigdy nie laczyc z 3V3_IO.',8,58,1.3)
 S['P03'].text('U2: CURRENT_CS_N=1 blokuje oba tory. MEAS_BANK=0 po resecie. U1: A2..A0=0, adres 0x20.',8,62,1.3)
-S['P03'].text('R6: PFAIL_N z P02 R4 (J_BP2.18) -> R42 1K -> GPIO3 (J1-13). R43 10K do 3V3_CORE po stronie zlacza: bez P02 = H (zasilanie OK).',8,102,1.3)
+S['P03'].text('R6: PFAIL_N z P02 R4 (J_BP2.16) -> R42 1K -> GPIO3 (J1-13). R43 100K do 3V3_CORE po stronie zlacza: bez P02 = H (zasilanie OK).',8,102,1.3)
 
 put('U5',61,26,txt=(-6,-7));put('Q1',100,25,90,txt=(-5,-8))
 put('C13',40,33);put('C14',121,32)
@@ -37,7 +37,7 @@ S['POWER'].text('SUP_N = M1 EN + U1 RESET; do P04 przez U6 (Schmitt) i R41 jako 
 S['POWER'].text('R34=220R ogranicza rozladowanie fabrycznego C_EN=1uF. Zachowac kondensator i pull-up 10K na Waveshare.',8,100,1.3)
 S['POWER'].text('U4 LVC1G37: Schmitt + OPEN DRAIN. U6 LVC1G17: Schmitt + push-pull. P04 U9.5: wymagane zbocze <=10 ns/V, do pomiaru.',8,104,1.3)
 
-pulls={'U11':{1:'R32',2:'R31',3:'R33',4:'R30'},'U12':{1:'R3',2:'R26',3:'R2',4:'R7'},'U13':{1:'R28',2:'R29',3:'R6',4:'R8'},'U14':{1:'R27'}}
+pulls={'U11':{1:'R32',2:'R31',3:'R33',4:'R30'},'U12':{1:'R3',2:'R26'},'U13':{1:'R28',2:'R29',3:'R6',4:'R8'},'U14':{1:'R27',2:'R2',3:'R7'}}
 for u,x,c in [('U11',24,'C5'),('U12',62,'C6'),('U13',100,'C7'),('U14',138,'C8')]:
     for i in range(1,5):
         y=23+(i-1)*17;put(u,x,y,u=i,txt=(-2,-4))
@@ -62,7 +62,7 @@ put('TP6',151,18)
 S['LINKS'].text('5  ZLACZA KRAWEDZI A / IDC 2x10 katowe, po jednym na slot (S1, S2, S3); tasma ok. 30 mm do P12',8,6,2)
 S['LINKS'].text('R6 zastepuje J1 (DAQ B2B), J2-J8 (IDC), J9 (PANELCORE) i J10 (LV03). Sieci bez zmian. Pinout i uzasadnienia: docs/J_BP.csv, README.',8,12,1.3)
 S['LINKS'].text('Nieparzyste = GND poza wyjatkami (sygnaly statyczne i zasilanie). ADC_SCLK, SPI3_SCLK i MEAS_EN z GND po obu stronach.',8,15,1.3)
-S['LINKS'].text('5V_SYS (J_BP2.19-20) i 3V3_IO (J_BP3.5) przychodza z P02 R4 przez P12. P12 rozprowadza ADC_SCLK i ADC_DOUTA do P05, P06 i P07.',8,18,1.3)
+S['LINKS'].text('5V_SYS (J_BP2.17, 19, 20) i 3V3_IO (J_BP3.5) przychodza z P02 R4 przez P12. P12 rozprowadza ADC_SCLK i ADC_DOUTA do P05, P06 i P07.',8,18,1.3)
 for k,j in enumerate(['J_SV1','J_SV2','J_SV3']):
     x=20+50*k
     for i in range(2,13):put(SERIES[(j,i)],x,18+3.5*(i-2),90,txt=(-2,-1.2))

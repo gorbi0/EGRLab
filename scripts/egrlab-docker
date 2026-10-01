@@ -11,7 +11,11 @@ MOUNTS=(-v "$REPO:$REPO")
 case "$PWD/" in "$REPO"/*) ;; *) MOUNTS+=(-v "$PWD:$PWD") ;; esac
 for d in ${EGRLAB_EXTRA_MOUNTS:-}; do MOUNTS+=(-v "$d:$d"); done
 TTY=(-i); [ -t 0 ] && [ -t 1 ] && TTY=(-it)   # -i zawsze: stdin (np. heredoc) trafia do kontenera
-exec docker run --rm "${TTY[@]}" --network none \
+# 30.09.2026: komputer 24/7 jest rejestratorem monitoringu (Frigate), który ma pierwszeństwo przed pracą Claude
+# (docs/UBUNTU-24-7.md): najniższa waga CPU (Frigate ma domyślne 1024) i limit rdzeni; EGRLAB_CPUS=0 zdejmuje limit.
+LIMITS=(--cpu-shares "${EGRLAB_CPU_SHARES:-2}")
+if [ "${EGRLAB_CPUS:-2}" != 0 ]; then LIMITS+=(--cpus "${EGRLAB_CPUS:-2}"); fi
+exec docker run --rm "${TTY[@]}" --network none "${LIMITS[@]}" \
   --user "$(id -u):$(id -g)" -e HOME=/tmp/egrlab-home -e TZ="${TZ:-Europe/Warsaw}" \
   ${EGRLAB_LANG:+-e LANG=$EGRLAB_LANG -e LC_ALL=$EGRLAB_LANG -e LANGUAGE=${EGRLAB_LANG%%[._]*}} \
   -e EGRLAB_WINPATHS_VERBOSE="${EGRLAB_WINPATHS_VERBOSE:-}" \

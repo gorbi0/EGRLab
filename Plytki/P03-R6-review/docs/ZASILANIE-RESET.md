@@ -1,6 +1,6 @@
 # Zasilanie i wspólny reset
 
-*R6 (format S1): zasilanie 5V_SYS wchodzi przez J_BP2.19–20 (dawniej J10.1 LV03), reset do P04 wychodzi z J_BP3.12 (dawniej J4.15). Droga do P04: taśma ok. 30 mm, płytka połączeń P12, taśma ok. 30 mm; szacunek zbocza w `verification/reset-budget.json` (`slew_estimate_R6`) i w README. Reszta tekstu bez zmian względem R5.*
+*R6 (format S1): zasilanie 5V_SYS wchodzi przez J_BP2.17, 19 i 20 (trzy żyły od 30.09; dawniej J10.1 LV03), reset do P04 wychodzi z J_BP3.12 (dawniej J4.15). Droga do P04: taśma ok. 30 mm, płytka połączeń P12, taśma ok. 30 mm; szacunek zbocza w `verification/reset-budget.json` (`slew_estimate_R6`) i w README. Reszta tekstu bez zmian względem R5.*
 
 
 Aktualizacja R5: U4 Schmitt/open-drain; reset do P04 przez U6. Współpraca z P04-R2.2 R17=10 kΩ.
@@ -8,7 +8,7 @@ Aktualizacja R5: U4 Schmitt/open-drain; reset do P04 przez U6. Współpraca z P0
 ## Dwa źródła 5 V
 
 ```text
-P02 / J_BP2.19–20 / 5V_SYS ---- D Q1 AO3401A S ---- 5V_M1 ---- M1.J1-21
+P02 / J_BP2.17, 19, 20 / 5V_SYS ---- D Q1 AO3401A S ---- 5V_M1 ---- M1.J1-21
                          |           |           |
                    U5 VIN/GATE     U5 SENSE      C14
 USB ---- fabryczna D1 Waveshare ------------------+
@@ -25,7 +25,7 @@ Q1 ma diodę pasożytniczą od drenu (SYS) do źródła (M1). LTC4412 porównuje
 
 U5/Q1 blokują zasilanie **szyny 5 V** z USB. Nie jest to izolator sygnałów, odłącznik masy ani ogranicznik prądu. Krótkie prądy przejściowe podczas przełączania są możliwe. Zasilanie częściowe przez inne połączenia trzeba sprawdzić z faktycznie zmontowanymi P04/P05/P09/P10, nawet gdy zastosowano bufory Ioff. Nie łączyć 3V3_CORE z 3V3_IO.
 
-Projektowy punkt odbioru: do 0,5 A średnio i 0,8 A w impulsie dla całego CORE, napięcie na J_BP2.19–20 co najmniej 4,85 V pod obciążeniem. To limit roboczy do potwierdzenia, nie zmierzony pobór ani gwarancja Waveshare. Dla oszacowania przyjęto 2 × 85 mΩ MOSFET-u (konserwatywny mnożnik temperaturowy, nie gwarantowana granica producenta) i do 50 mΩ miedzi toru głównego. Przy 0,8 A spadek wynosi ok. 176 mV, zatem 5V_M1 ≈4,67 V. Nominalny spadek przy małym prądzie wynika z regulacji kontrolera. Rezystancję miedzi i obciążenie weryfikuje się pomiarem; nie porównuje się wartości typowej z granicą maksymalną bez zapasu.
+Projektowy punkt odbioru: do 0,5 A średnio i 0,8 A w impulsie dla całego CORE, napięcie na J_BP2.17, 19, 20 co najmniej 4,85 V pod obciążeniem. To limit roboczy do potwierdzenia, nie zmierzony pobór ani gwarancja Waveshare. Dla oszacowania przyjęto 2 × 85 mΩ MOSFET-u (konserwatywny mnożnik temperaturowy, nie gwarantowana granica producenta) i do 50 mΩ miedzi toru głównego. Przy 0,8 A spadek wynosi ok. 176 mV, zatem 5V_M1 ≈4,67 V. Nominalny spadek przy małym prądzie wynika z regulacji kontrolera. Rezystancję miedzi i obciążenie weryfikuje się pomiarem; nie porównuje się wartości typowej z granicą maksymalną bez zapasu.
 
 Przy konserwatywnym budżecie spadku LDO 1,3 V pozostaje ok. 70 mV ponad 3,3 V. Wymagany pomiar: 5V_M1 ≥4,60 V i stabilne 3V3_CORE podczas zapisu SD / używanego trybu radiowego, również po rozgrzaniu. Identyfikować regulator na faktycznej płytce, zamiast zakładać, że każdy moduł rodziny ma identyczny LDO. Jeśli zapas jest za mały, poprawić zasilanie/przewód lub osobno zrewidować zasilanie CORE — nie obniżać progu resetu, aby ukryć zapady.
 

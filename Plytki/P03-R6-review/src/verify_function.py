@@ -19,7 +19,7 @@ RECEIVER={
  'INTERLOCK':('U12','5','GND'), 'TEST_KEY':('U14','2','GND'), 'ENA_DIAG':('U13','2','GND'),
  'ENB_DIAG':('U13','5','GND'), 'CAN_RX':('U11','12','3V3_CORE'), 'ADC_BUSY':('U11','5','GND'),
  'ADC_DOUTA':('U11','2','GND'), 'SPI3_MISO':('U11','9','GND'), 'HW_ARMED':('U12','2','GND'),
- 'LOGGER_CURRENT_OK':('U12','9','GND'), 'SENSOR_HEALTHY':('U12','12','GND'),
+ 'LOGGER_CURRENT_OK':('U14','5','GND'), 'SENSOR_HEALTHY':('U14','9','GND'),
  'LOGGER_CLEAR':('U13','9','GND'), 'TEST_PRESENT':('U13','12','GND')}
 
 def extract(root):
@@ -64,13 +64,16 @@ def checks(root):
  old,_=extract(ET.parse(P/'reference/P03-R1.xml').getroot())
  allowed={('M1','J1-3'):'SUP_N',('M1','J1-21'):'5V_M1',('U3','1'):'SUP_RAW_N',('R13','1'):'SUP_RAW_N',
           ('U21','6'):'ADC_SCLK_DRV',('U21','8'):'ADC_SDI_DRV',('U21','11'):'ADC_CONVST_DRV',
-          ('U23','3'):'SPI3_SCLK_DRV',('U23','6'):'SPI3_MOSI_DRV',('M1','J1-13'):'PFAIL_N_CORE'}
+          ('U23','3'):'SPI3_SCLK_DRV',('U23','6'):'SPI3_MOSI_DRV',('M1','J1-13'):'PFAIL_N_CORE',
+          # R6 layout (30.09, user decision): gate swap U12 ch3/ch4 -> U14 ch2/ch3; U12 ch3/ch4 spare (A, OE = GND, Y open)
+          ('U12','8'):'NC',('U12','9'):'GND',('U12','11'):'NC',('U12','12'):'GND',
+          ('U14','4'):'GND',('U14','5'):'LOGGER_CURRENT_OK',('U14','6'):'LOGGER_CURRENT_OK_CORE',('U14','8'):'SENSOR_HEALTHY_CORE',('U14','9'):'SENSOR_HEALTHY',('U14','10'):'GND'}
  # R6: the R1 harness connectors J1..J10 are gone (their nets are checked on J_BP1..3 in verify_jbp.py).
  differences=[(r,p,n,pins.get((r,p))) for (r,p),n in old.items() if not re.fullmatch(r'J\d+',r) and pins.get((r,p))!=allowed.get((r,p),n)]
  check('R1 pin contract plus exact R2/R4/R6 delta',not differences,differences)
  # R3 (review P3-02): no connector pin may carry a supply rail directly or through < 100 ohm.
- # R6: supply INPUTS from P02 R4 through P12: J_BP2.19/20 = 5V_SYS, J_BP3.5 = 3V3_IO (were J10 LV03); nothing else.
- rails={'3V3_CORE','3V3_IO','5V_SYS','5V_M1'};hot=[];SUPPLY_IN={('J_BP2','19'):'5V_SYS',('J_BP2','20'):'5V_SYS',('J_BP3','5'):'3V3_IO'}
+ # R6: supply INPUTS from P02 R4 through P12: J_BP2.17/19/20 = 5V_SYS (third wire 30.09), J_BP3.5 = 3V3_IO (were J10 LV03); nothing else.
+ rails={'3V3_CORE','3V3_IO','5V_SYS','5V_M1'};hot=[];SUPPLY_IN={('J_BP2','17'):'5V_SYS',('J_BP2','19'):'5V_SYS',('J_BP2','20'):'5V_SYS',('J_BP3','5'):'3V3_IO'}
  for (r,p),n in pins.items():
   if not r.startswith('J') or SUPPLY_IN.get((r,p))==n or n in ('GND','NC'):continue
   if n in rails:hot.append((r,p,n,'direct'))
@@ -78,8 +81,8 @@ def checks(root):
    if rr.startswith('R') and n in (pin(rr,1),pin(rr,2)):
     far=pin(rr,2) if pin(rr,1)==n else pin(rr,1)
     if far in rails and (ohms(comps[rr].findtext('value','')) or 0)<100:hot.append((r,p,n,rr+' '+comps[rr].findtext('value','')))
- check('no supply rail on a connector pin directly or through < 100 ohm (supply inputs J_BP2.19/20, J_BP3.5 excepted)',not hot,hot)
- check('supply inputs from P02 R4 on J_BP2.19/20 and J_BP3.5',all(pin(r,p_)==n for (r,p_),n in SUPPLY_IN.items()))
+ check('no supply rail on a connector pin directly or through < 100 ohm (supply inputs J_BP2.17/19/20, J_BP3.5 excepted)',not hot,hot)
+ check('supply inputs from P02 R4 on J_BP2.17/19/20 and J_BP3.5',all(pin(r,p_)==n for (r,p_),n in SUPPLY_IN.items()))
  check('CORE_LINK from 3V3_CORE through 1K (R14)',between('R14','3V3_CORE','CORE_LINK') and value('R14','1K') and pin('J_BP3',13)=='CORE_LINK')
  return out
 
@@ -115,10 +118,11 @@ def run():
   m=copy.deepcopy(root);move_pin(m,r,p,n);mutants.append((desc,expected,m))
  m=copy.deepcopy(root);m.find("./components/comp[@ref='R34']/value").text='0R';mutants.append(('reset limiter shorted','reset sink current limiter',m))
  m=copy.deepcopy(root);m.find("./components/comp[@ref='U4']/value").text='SN74LVC1G17';mutants.append(('push pull instead of OD','Schmitt-input non-inverting open-drain reset buffer',m))
- m=copy.deepcopy(root);m.find("./components/comp[@ref='R14']/value").text='0R';mutants.append(('R14 back to 0R (R2)','no supply rail on a connector pin directly or through < 100 ohm (supply inputs J_BP2.19/20, J_BP3.5 excepted)',m))
- m=copy.deepcopy(root);move_pin(m,'J_BP3','13','3V3_CORE');mutants.append(('J_BP3.13 tied to 3V3_CORE','no supply rail on a connector pin directly or through < 100 ohm (supply inputs J_BP2.19/20, J_BP3.5 excepted)',m))
- m=copy.deepcopy(root);move_pin(m,'J_BP1','20','5V_SYS');mutants.append(('5V_SYS on a signal pin J_BP1.20','no supply rail on a connector pin directly or through < 100 ohm (supply inputs J_BP2.19/20, J_BP3.5 excepted)',m))
- m=copy.deepcopy(root);move_pin(m,'J_BP2','19','GND');mutants.append(('second 5V_SYS pin lost','supply inputs from P02 R4 on J_BP2.19/20 and J_BP3.5',m))
+ m=copy.deepcopy(root);m.find("./components/comp[@ref='R14']/value").text='0R';mutants.append(('R14 back to 0R (R2)','no supply rail on a connector pin directly or through < 100 ohm (supply inputs J_BP2.17/19/20, J_BP3.5 excepted)',m))
+ m=copy.deepcopy(root);move_pin(m,'J_BP3','13','3V3_CORE');mutants.append(('J_BP3.13 tied to 3V3_CORE','no supply rail on a connector pin directly or through < 100 ohm (supply inputs J_BP2.17/19/20, J_BP3.5 excepted)',m))
+ m=copy.deepcopy(root);move_pin(m,'J_BP1','20','5V_SYS');mutants.append(('5V_SYS on a signal pin J_BP1.20','no supply rail on a connector pin directly or through < 100 ohm (supply inputs J_BP2.17/19/20, J_BP3.5 excepted)',m))
+ m=copy.deepcopy(root);move_pin(m,'J_BP2','19','GND');mutants.append(('second 5V_SYS pin lost','supply inputs from P02 R4 on J_BP2.17/19/20 and J_BP3.5',m))
+ m=copy.deepcopy(root);move_pin(m,'J_BP2','17','GND');mutants.append(('third 5V_SYS pin lost (30.09)','supply inputs from P02 R4 on J_BP2.17/19/20 and J_BP3.5',m))
  m=copy.deepcopy(root);m.find("./components/comp[@ref='U4']/value").text='SN74LVC1G07DBVR';mutants.append(('U4 regressed to non-Schmitt LVC1G07','Schmitt-input non-inverting open-drain reset buffer',m))
  # R4 buffer U6/R41/C15
  m=copy.deepcopy(root);move_pin(m,'J_BP3','12','SUP_N');mutants.append(('J_BP3.12 on SUP_N (buffer bypassed, R3)','reset to P04 through Schmitt buffer U6 and R41',m))

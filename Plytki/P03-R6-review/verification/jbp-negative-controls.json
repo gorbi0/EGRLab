@@ -50,7 +50,7 @@
     "expected": "C2",
     "detected": true,
     "failed": [
-      "C2 5V_SYS twice on J_BP2, 3V3_IO once on J_BP3"
+      "C2 5V_SYS three times on J_BP2, 3V3_IO once on J_BP3"
     ]
   },
   {
@@ -85,7 +85,8 @@
     "detected": true,
     "failed": [
       "C3 odd pins are GND except the justified exceptions (static signals or supplies only)",
-      "C4 ADC_SCLK, SPI3_SCLK and MEAS_EN have GND on both ribbon sides"
+      "C4 ADC_SCLK, SPI3_SCLK and MEAS_EN have GND on both ribbon sides",
+      "C6 PFAIL_N: J_BP2.16 -> 1K series -> module GPIO; 100K pull-up to 3V3_CORE on the connector side (HIGH with J_BP2 open; 30.09: 10K gave 0.95 V > VIL at LM2903 VOL 0.7 V)"
     ]
   },
   {
@@ -107,11 +108,28 @@
     ]
   },
   {
+    "control": "PFAIL_N between the 5V_SYS pins (swap 16/18)",
+    "expected": "C5",
+    "detected": true,
+    "failed": [
+      "C5 every edge signal has a GND ribbon neighbour; every J_BP net classified",
+      "C6 PFAIL_N: J_BP2.16 -> 1K series -> module GPIO; 100K pull-up to 3V3_CORE on the connector side (HIGH with J_BP2 open; 30.09: 10K gave 0.95 V > VIL at LM2903 VOL 0.7 V)"
+    ]
+  },
+  {
+    "control": "PFAIL_N pull-up back to 10K (29.09)",
+    "expected": "C6",
+    "detected": true,
+    "failed": [
+      "C6 PFAIL_N: J_BP2.16 -> 1K series -> module GPIO; 100K pull-up to 3V3_CORE on the connector side (HIGH with J_BP2 open; 30.09: 10K gave 0.95 V > VIL at LM2903 VOL 0.7 V)"
+    ]
+  },
+  {
     "control": "pull-up on GPIO side",
     "expected": "C6",
     "detected": true,
     "failed": [
-      "C6 PFAIL_N: J_BP -> 1K series -> module GPIO; 10K pull-up to 3V3_CORE on the connector side (HIGH with J_BP2 open)"
+      "C6 PFAIL_N: J_BP2.16 -> 1K series -> module GPIO; 100K pull-up to 3V3_CORE on the connector side (HIGH with J_BP2 open; 30.09: 10K gave 0.95 V > VIL at LM2903 VOL 0.7 V)"
     ]
   },
   {
@@ -119,7 +137,7 @@
     "expected": "C6",
     "detected": true,
     "failed": [
-      "C6 PFAIL_N: J_BP -> 1K series -> module GPIO; 10K pull-up to 3V3_CORE on the connector side (HIGH with J_BP2 open)"
+      "C6 PFAIL_N: J_BP2.16 -> 1K series -> module GPIO; 100K pull-up to 3V3_CORE on the connector side (HIGH with J_BP2 open; 30.09: 10K gave 0.95 V > VIL at LM2903 VOL 0.7 V)"
     ]
   },
   {
@@ -127,7 +145,7 @@
     "expected": "C6",
     "detected": true,
     "failed": [
-      "C6 PFAIL_N: J_BP -> 1K series -> module GPIO; 10K pull-up to 3V3_CORE on the connector side (HIGH with J_BP2 open)",
+      "C6 PFAIL_N: J_BP2.16 -> 1K series -> module GPIO; 100K pull-up to 3V3_CORE on the connector side (HIGH with J_BP2 open; 30.09: 10K gave 0.95 V > VIL at LM2903 VOL 0.7 V)",
       "C7 PFAIL_N GPIO is GPIO3 (J1-13), not PSRAM, 1.8 V, boot strap, UART0 or USB"
     ]
   },
@@ -153,7 +171,8 @@
     "detected": true,
     "failed": [
       "C8 at most 3 service headers, <= 13 pins, GND on first and last pin",
-      "C9 every service pin except GND reaches its node through one series resistor >= 1K"
+      "C9 every service pin except GND reaches its node through one series resistor >= 1K",
+      "C12 rails on the service headers only next to GND, another rail or a 10K high-impedance line"
     ]
   },
   {
@@ -162,7 +181,7 @@
     "detected": true,
     "failed": [
       "C9 every service pin except GND reaches its node through one series resistor >= 1K",
-      "C10 service headers cover the ODBIOR minimum (rails, reset, EN = SUP_N, PFAIL_N, start states), no node twice"
+      "C13 docs/ODBIOR.md: every service pin reference J_SVn.p names the node of that pin"
     ]
   },
   {
@@ -171,7 +190,8 @@
     "detected": true,
     "failed": [
       "C9 every service pin except GND reaches its node through one series resistor >= 1K",
-      "C10 service headers cover the ODBIOR minimum (rails, reset, EN = SUP_N, PFAIL_N, start states), no node twice"
+      "C10 service headers cover the ODBIOR minimum (rails, reset, EN = SUP_N, PFAIL_N, start states), no node twice",
+      "C13 docs/ODBIOR.md: every service pin reference J_SVn.p names the node of that pin"
     ]
   },
   {
@@ -179,7 +199,8 @@
     "expected": "C10",
     "detected": true,
     "failed": [
-      "C10 service headers cover the ODBIOR minimum (rails, reset, EN = SUP_N, PFAIL_N, start states), no node twice"
+      "C10 service headers cover the ODBIOR minimum (rails, reset, EN = SUP_N, PFAIL_N, start states), no node twice",
+      "C13 docs/ODBIOR.md: every service pin reference J_SVn.p names the node of that pin"
     ]
   },
   {
@@ -187,7 +208,7 @@
     "expected": "C11",
     "detected": true,
     "failed": [
-      "C11 series value class (S1 §6): rails 1K, high-impedance nodes 10K"
+      "C11 series value class (S1 §6): rails 1K, high-impedance nodes 10K, SUP_N_OUT 10K (reset edge, exception 1.10)"
     ]
   },
   {
@@ -195,7 +216,33 @@
     "expected": "C11",
     "detected": true,
     "failed": [
-      "C11 series value class (S1 §6): rails 1K, high-impedance nodes 10K"
+      "C11 series value class (S1 §6): rails 1K, high-impedance nodes 10K, SUP_N_OUT 10K (reset edge, exception 1.10)",
+      "C12 rails on the service headers only next to GND, another rail or a 10K high-impedance line"
+    ]
+  },
+  {
+    "control": "SUP_N_OUT service resistor back to 1K (R70)",
+    "expected": "C11",
+    "detected": true,
+    "failed": [
+      "C11 series value class (S1 §6): rails 1K, high-impedance nodes 10K, SUP_N_OUT 10K (reset edge, exception 1.10)"
+    ]
+  },
+  {
+    "control": "3V3_CORE between CS_ILOG_N and CS_ITEST_N (swap J_SV1 pins 10/6)",
+    "expected": "C12",
+    "detected": true,
+    "failed": [
+      "C12 rails on the service headers only next to GND, another rail or a 10K high-impedance line",
+      "C13 docs/ODBIOR.md: every service pin reference J_SVn.p names the node of that pin"
+    ]
+  },
+  {
+    "control": "5V_SYS and 5V_M1 swapped on J_SV2 (ODBIOR names J_SV2.2 = 5V_SYS)",
+    "expected": "C13",
+    "detected": true,
+    "failed": [
+      "C13 docs/ODBIOR.md: every service pin reference J_SVn.p names the node of that pin"
     ]
   }
 ]

@@ -31,6 +31,8 @@ EXPECTED = {('M1','J1-21'):'R2 isolated local 5V_M1', ('U3','1'):'R2 reset buffe
             ('U23','3'):'R2 source series R38',('U23','6'):'R2 source series R40',('M1','3'):'R6 GPIO3 = PFAIL_N_CORE (new input, D-02)',
             ('J4','15'):'R4 reset to P04 buffered: SUP_N -> U6 (SN74LVC1G17) -> R41 220R -> SUP_N_OUT',('J8', '4'): 'CAN: 2x3 box header, pin 4 = key (v6.1 4p had no pin 4 in use)',
             ('J8', '5'): 'CAN: added position, NC', ('J8', '6'): 'CAN: added position, NC'}
+EXPECTED.update({('U12', p_): 'R6 layout (30.09): gate swap U12 ch3/ch4 -> U14 ch2/ch3, J_BP1 -> buffer -> U1 stays in S1; U12 ch3/ch4 spare: A, OE = GND, Y open' for p_ in ('8', '9', '11', '12')})
+EXPECTED.update({('U14', p_): 'R6 layout (30.09): gate swap U12 ch3/ch4 -> U14 ch2/ch3, J_BP1 -> buffer -> U1 stays in S1; U14 ch2/ch3 enabled: OE = GND' for p_ in ('4', '5', '6', '8', '9', '10')})
 # R6 (format S1): the v6.1 harness connectors J_*A are replaced by J_BP1..3; their pins are checked by net: every v6.1
 # signal of such a connector must sit on exactly one J_BP pin (GND on several). Detailed rules: verify_jbp.py.
 JBP_NETS = {}

@@ -1,28 +1,44 @@
-"""Rebuild and check the P03 R6 package (schematic stage only; no PCB - layout is done locally, docs/CHMURA.md rule 6).
-usage (KiCad Python, in the cloud: scripts/egrlab-docker python3 src/run_release.py)
-Order: schematic -> ERC -> netlist -> pin-by-pin check -> v6.1 map -> functions/mutations -> reset budget -> J_BP/PFAIL/service
-checks with negative controls -> tables -> table cross-check -> PDF and previews.
+"""P03 R6 (format S1): schematic chain, layout, silkscreen, PCB checks, negative controls, views, review PDF, QA, manifest
+(the P02 R4 release chain). Run with KiCad Python. Nothing for fabrication is produced here.
+  (default)      replays routing/P03.ses and routing/completion-routes.json (identical board from the recorded router result)
+  --new-route    runs Freerouting again (needs EGRLAB_FREEROUTING)
+Env: KICAD_CLI, PDFTOPPM, EGRLAB_NODE / EGRLAB_SHARP (rasterize), EGRLAB_PDF_PYTHON (reportlab).
 """
 from pathlib import Path
-import subprocess, sys, os, shutil
+import sys, os, subprocess, json, hashlib
 P = Path(__file__).resolve().parents[1]; PY = sys.executable
-CLI = os.environ.get('KICAD_CLI', str(Path(PY).with_name('kicad-cli.exe')))
-PDFTOPPM = os.environ.get('PDFTOPPM', 'C:/Users/tgorbacz/.cache/codex-runtimes/codex-primary-runtime/dependencies/native/poppler/Library/bin/pdftoppm.exe')
-if not Path(PDFTOPPM).exists() and shutil.which('pdftoppm'): PDFTOPPM = shutil.which('pdftoppm')
+PDFPY = os.environ.get('EGRLAB_PDF_PYTHON', PY); NODE = os.environ.get('EGRLAB_NODE', 'node'); SHARP = os.environ.get('EGRLAB_SHARP', 'sharp')
+RENDER = os.environ.get('PDFTOPPM', 'pdftoppm')
 
 
-def run(*a, cwd=P / 'src', **k):
-    print('>', ' '.join(str(x) for x in a), flush=True); subprocess.run([str(x) for x in a], cwd=cwd, check=True, **k)
+def run(name, *cmd):
+    r = subprocess.run([str(x) for x in cmd], cwd=P, capture_output=True, text=True, encoding='utf-8', errors='replace')
+    (P / 'verification' / ('run-' + name + '.log')).write_text(r.stdout + '\n' + r.stderr, encoding='utf-8')
+    if r.returncode:
+        raise SystemExit(name + ' FAILED; see verification/run-' + name + '.log')
+    print(name, 'PASS', flush=True)
 
 
-quiet = dict(stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-run(PY, 'build_schematic.py')
-run(CLI, 'sch', 'erc', '--severity-all', '--format', 'json', '-o', 'verification/erc.json', 'eda/P03.kicad_sch', cwd=P, **quiet)
-run(CLI, 'sch', 'export', 'netlist', '--format', 'kicadxml', '-o', 'verification/P03.xml', 'eda/P03.kicad_sch', cwd=P, **quiet)
-run(PY, 'verify_schematic.py'); run(PY, 'compare_v61.py'); run(PY, 'verify_function.py'); run(PY, 'verify_reset.py'); run(PY, 'verify_jbp.py')
-run(PY, 'write_tables.py'); run(PY, str(P / 'verification/check_tables.py'))
-run(CLI, 'sch', 'export', 'pdf', '-o', 'output/pdf/P03-R6-schemat.pdf', 'eda/P03.kicad_sch', cwd=P, **quiet)
-if Path(PDFTOPPM).exists():
-    for f in (P / 'output/previews').glob('sch-*.png'): f.unlink()
-    run(PDFTOPPM, '-png', '-r', '60', 'output/pdf/P03-R6-schemat.pdf', 'output/previews/sch', cwd=P)
-print('P03-R6 schematic stage: generation and checks complete. PCB: local session (layout requirements in README).')
+run('schematic', PY, 'src/run_schematic.py')
+run('layout', PY, 'src/run_layout.py', *(['--reuse-ses'] if '--new-route' not in sys.argv else []))
+run('silk', PY, 'src/silkscreen.py'); run('rules', PY, 'src/set_rules.py')
+run('pcb-check', PY, 'src/verify_pcb.py'); run('negative-controls', PY, 'src/negative_controls.py')
+run('views', PY, 'src/export_views.py'); run('rasterize', NODE, 'src/rasterize.mjs', str(P), SHARP)
+run('pcb-pdf', PDFPY, 'src/make_pdf.py')
+run('render-pdf', RENDER, '-scale-to', '1800', '-png', 'output/pdf/P03-R6-PCB.pdf', 'output/previews/pcb')
+chk = json.loads((P / 'verification/pcb-checks.json').read_text(encoding='utf-8')); neg = json.loads((P / 'verification/negative-controls.json').read_text(encoding='utf-8'))
+drc = json.loads((P / 'verification/drc.json').read_text()); silk = json.loads((P / 'routing/silkscreen.json').read_text(encoding='utf-8'))
+qa = ['# P03-R6 — QA PCB (format S1, klasa L; plik generowany przez src/run_release.py)', '',
+      f"DRC (świeży, wszystkie poziomy): naruszenia {len(drc['violations'])}, niepołączone {len(drc['unconnected_items'])}, niezgodności ze schematem {len(drc['schematic_parity'])} "
+      f"(naruszenia to wyłącznie lib_footprint_mismatch części z przyciętym nadrukiem, przyjęte przez verify_pcb.py; szczegóły w pcb-checks.json).",
+      f"Kontrole PCB: {chk['passed']}/{chk['total']}. Próby ujemne: {sum(x['detected'] for x in neg)}/{len(neg)} (w tym próba zerowa).", '',
+      '| Kontrola | Wynik |', '|---|---|'] + [f"| {c['check']} | {'PASS' if c['pass'] else 'FAIL'} |" for c in chk['checks']]
+qa += ['', '## Próby ujemne', '', '| Wada | Oczekiwana kontrola | Wykryta | Zgłoszone |', '|---|---|---|---|']
+qa += [f"| {x['control']} | {x['expected_failing_check']} | {'tak' if x['detected'] else 'NIE'} | {len(x['failed_checks'])} |" for x in neg]
+qa += ['', f"Nadruk: ukryte oznaczenia (brak miejsca): {', '.join(silk['hidden_references']) or 'brak'}; nieumieszczone napisy: {', '.join(silk['unplaced_texts']) or 'brak'}."]
+qa += ['', 'Oględziny PDF: wpis ręczny w README (sekcja „PCB”); render stron w output/previews/pcb-*.png.']
+(P / 'verification/QA-PCB.md').write_text('\n'.join(qa) + '\n', encoding='utf-8')
+files = sorted(q for d in ('eda', 'src', 'docs', 'output', 'routing') for q in (P / d).rglob('*') if q.is_file() and '__pycache__' not in q.parts)
+files += sorted(q for q in (P / 'verification').glob('*') if q.is_file() and q.name != 'manifest.json') + [P / 'README.md']
+(P / 'verification/manifest.json').write_text(json.dumps({q.relative_to(P).as_posix(): hashlib.sha256(q.read_bytes()).hexdigest() for q in files}, indent=1) + '\n')
+print('PCB gotowa: output/pdf/P03-R6-PCB.pdf, verification/QA-PCB.md')

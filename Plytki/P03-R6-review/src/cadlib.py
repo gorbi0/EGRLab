@@ -6,7 +6,7 @@ import re,json,copy,math,uuid,functools,os
 from pathlib import Path
 P=Path(__file__).resolve().parents[1]
 K=Path(os.environ.get('KICAD_LIBRARY_ROOT','C:/Program Files/KiCad/10.0/share/kicad'))
-PRJ='P03';REV='P03-R6';DATE='2026-09-29';TITLE='EGRLab P03 CORE';COMMENT='Format S1, klasa L, poziom 2 / tylko schemat, do recenzji' 
+PRJ='P03';REV='P03-R6';DATE='2026-09-29';TITLE='EGRLab P03 CORE';COMMENT='Format S1, klasa L, poziom 2 / schemat i PCB do recenzji' 
 class A(str):pass
 def parse(t):
  toks=re.findall(r'"(?:\\.|[^"\\])*"|[()]|[^\s()]+',t);i=0
