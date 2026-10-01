@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <export version="E">
   <design>
-    <source>/home/user/EGRLab/Plytki/P09-R2-review/eda/P09.kicad_sch</source>
-    <date>2026-09-29T18:08:58</date>
+    <source>/home/tgorbacz/AI/Claude/EGRLab/.worktrees/p09-r2-pcb/Plytki/P09-R2-review/eda/P09.kicad_sch</source>
+    <date>2026-10-01T09:38:56</date>
     <tool>Eeschema 10.0.6</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
@@ -11,7 +11,7 @@
         <rev>P09-R2</rev>
         <date>2026-09-29</date>
         <source>P09.kicad_sch</source>
-        <comment number="1" value="Format S1 1/3, slot S3 level 3; schematic only, no PCB; hardware not tested"/>
+        <comment number="1" value="Format S1 1/3, slot S3 level 3; PCB R2 for review; hardware not tested"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
@@ -29,7 +29,7 @@
         <rev>P09-R2</rev>
         <date>2026-09-29</date>
         <source>SPI.kicad_sch</source>
-        <comment number="1" value="Format S1 1/3, slot S3 level 3; schematic only, no PCB; hardware not tested"/>
+        <comment number="1" value="Format S1 1/3, slot S3 level 3; PCB R2 for review; hardware not tested"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
@@ -47,7 +47,7 @@
         <rev>P09-R2</rev>
         <date>2026-09-29</date>
         <source>SELECT.kicad_sch</source>
-        <comment number="1" value="Format S1 1/3, slot S3 level 3; schematic only, no PCB; hardware not tested"/>
+        <comment number="1" value="Format S1 1/3, slot S3 level 3; PCB R2 for review; hardware not tested"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
@@ -65,7 +65,7 @@
         <rev>P09-R2</rev>
         <date>2026-09-29</date>
         <source>CONNECT.kicad_sch</source>
-        <comment number="1" value="Format S1 1/3, slot S3 level 3; schematic only, no PCB; hardware not tested"/>
+        <comment number="1" value="Format S1 1/3, slot S3 level 3; PCB R2 for review; hardware not tested"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
@@ -262,17 +262,17 @@
     </comp>
     <comp ref="J3">
       <value>TC1</value>
-      <footprint>P09:MAX31856_XU_socket</footprint>
+      <footprint>P09:MAX31856_XU</footprint>
       <datasheet>https://allegro.pl/oferta/max31856-modul-termopary-dla-typow-k-j-n-r-s-t-e-b-19-bitowy-modul-xu-18805671895</datasheet>
       <fields>
-        <field name="MPN">Socket 1x9 2.54mm Au + owned MAX31856 module</field>
+        <field name="MPN">Owned MAX31856 XU module, soldered directly by its 1x9 header (no socket)</field>
         <field name="BaselineRef">TC1</field>
-        <field name="Footprint">P09:MAX31856_XU_socket</field>
+        <field name="Footprint">P09:MAX31856_XU</field>
         <field name="Datasheet">https://allegro.pl/oferta/max31856-modul-termopary-dla-typow-k-j-n-r-s-t-e-b-19-bitowy-modul-xu-18805671895</field>
         <field name="Description"/>
       </fields>
-      <libsource lib="P09" part="MAX31856_MODULE_SOCKET" description=""/>
-      <property name="MPN" value="Socket 1x9 2.54mm Au + owned MAX31856 module"/>
+      <libsource lib="P09" part="MAX31856_MODULE" description=""/>
+      <property name="MPN" value="Owned MAX31856 XU module, soldered directly by its 1x9 header (no socket)"/>
       <property name="BaselineRef" value="TC1"/>
       <property name="Sheetname" value="P09"/>
       <property name="Sheetfile" value="P09.kicad_sch"/>
@@ -296,17 +296,17 @@
     </comp>
     <comp ref="J4">
       <value>TC2</value>
-      <footprint>P09:MAX31856_XU_socket</footprint>
+      <footprint>P09:MAX31856_XU</footprint>
       <datasheet>https://allegro.pl/oferta/max31856-modul-termopary-dla-typow-k-j-n-r-s-t-e-b-19-bitowy-modul-xu-18805671895</datasheet>
       <fields>
-        <field name="MPN">Socket 1x9 2.54mm Au + owned MAX31856 module</field>
+        <field name="MPN">Owned MAX31856 XU module, soldered directly by its 1x9 header (no socket)</field>
         <field name="BaselineRef">TC2</field>
-        <field name="Footprint">P09:MAX31856_XU_socket</field>
+        <field name="Footprint">P09:MAX31856_XU</field>
         <field name="Datasheet">https://allegro.pl/oferta/max31856-modul-termopary-dla-typow-k-j-n-r-s-t-e-b-19-bitowy-modul-xu-18805671895</field>
         <field name="Description"/>
       </fields>
-      <libsource lib="P09" part="MAX31856_MODULE_SOCKET" description=""/>
-      <property name="MPN" value="Socket 1x9 2.54mm Au + owned MAX31856 module"/>
+      <libsource lib="P09" part="MAX31856_MODULE" description=""/>
+      <property name="MPN" value="Owned MAX31856 XU module, soldered directly by its 1x9 header (no socket)"/>
       <property name="BaselineRef" value="TC2"/>
       <property name="Sheetname" value="P09"/>
       <property name="Sheetfile" value="P09.kicad_sch"/>
@@ -1530,7 +1530,7 @@
         <pin num="16" name="VCC" type="power_in"/>
       </pins>
     </libpart>
-    <libpart lib="P09" part="MAX31856_MODULE_SOCKET">
+    <libpart lib="P09" part="MAX31856_MODULE">
       <fields>
         <field name="Reference"/>
         <field name="Value"/>

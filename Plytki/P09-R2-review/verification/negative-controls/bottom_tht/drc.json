@@ -1,0 +1,259 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-01T09:41:08",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P09.kicad_pcb",
+    "unconnected_items": [],
+    "violations": [
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz SPI3_SCLK)",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [GND] na C1",
+                    "pos": {
+                        "x": 9.475,
+                        "y": 19.19
+                    },
+                    "uuid": "87020373-084a-44b8-84ed-4668a2e79840"
+                },
+                {
+                    "description": "Ścieżka [SPI3_SCLK] na F.Cu, długość 8,0032 mm",
+                    "pos": {
+                        "x": 13.7699,
+                        "y": 15.4745
+                    },
+                    "uuid": "c10ff113-ea05-42cb-b7d4-1cf25b21d58e"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [SPI3_SCLK] na F.Cu, długość 8,0032 mm",
+                    "pos": {
+                        "x": 13.7699,
+                        "y": 15.4745
+                    },
+                    "uuid": "c10ff113-ea05-42cb-b7d4-1cf25b21d58e"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na C1",
+                    "pos": {
+                        "x": 9.475,
+                        "y": 19.19
+                    },
+                    "uuid": "87020373-084a-44b8-84ed-4668a2e79840"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu ( prześwit 0,2500 mm; obecnie 0,2117 mm)",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [GND] na C1",
+                    "pos": {
+                        "x": 9.475,
+                        "y": 19.19
+                    },
+                    "uuid": "87020373-084a-44b8-84ed-4668a2e79840"
+                },
+                {
+                    "description": "Ścieżka [3V3_IO] na B.Cu, długość 5,4666 mm",
+                    "pos": {
+                        "x": 13.3133,
+                        "y": 18.0283
+                    },
+                    "uuid": "caf97f55-c937-444f-b279-baa55e607912"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [GND] na C1",
+                    "pos": {
+                        "x": 9.475,
+                        "y": 19.19
+                    },
+                    "uuid": "87020373-084a-44b8-84ed-4668a2e79840"
+                },
+                {
+                    "description": "Footprint R2",
+                    "pos": {
+                        "x": 6.645,
+                        "y": 19.23
+                    },
+                    "uuid": "e54869db-a08f-43c8-8bc5-5f564799d646"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [TC2_CS] na R2",
+                    "pos": {
+                        "x": 11.725,
+                        "y": 19.23
+                    },
+                    "uuid": "a34b9942-0bc5-4688-b913-ed65a10db489"
+                },
+                {
+                    "description": "Footprint C1",
+                    "pos": {
+                        "x": 14.475,
+                        "y": 19.19
+                    },
+                    "uuid": "fe278aee-8903-4444-b4f6-d050f4399e77"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "Niekompletne łączenie termiczne ze strefą (warstwa B.Cu; 1 łącz połączonych z izolowanym polem)",
+            "items": [
+                {
+                    "description": "Strefa [GND] na B.Cu, priorytet 0",
+                    "pos": {
+                        "x": 0.3,
+                        "y": 0.3
+                    },
+                    "uuid": "7c9aed13-03f5-4c6b-abcf-4edf21baf5bb"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na C1",
+                    "pos": {
+                        "x": 9.475,
+                        "y": 19.19
+                    },
+                    "uuid": "87020373-084a-44b8-84ed-4668a2e79840"
+                }
+            ],
+            "severity": "error",
+            "type": "starved_thermal"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [SPI3_SCLK] na F.Cu, długość 8,0032 mm",
+                    "pos": {
+                        "x": 13.7699,
+                        "y": 15.4745
+                    },
+                    "uuid": "c10ff113-ea05-42cb-b7d4-1cf25b21d58e"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na C1",
+                    "pos": {
+                        "x": 9.475,
+                        "y": 19.19
+                    },
+                    "uuid": "87020373-084a-44b8-84ed-4668a2e79840"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x08_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J1",
+                    "pos": {
+                        "x": 17.61,
+                        "y": 13.33
+                    },
+                    "uuid": "e0fd208e-a2a9-4a8d-a99f-22f74952bdd0"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J2",
+                    "pos": {
+                        "x": 41.74,
+                        "y": 95.96
+                    },
+                    "uuid": "fef8b5a6-dcf7-4d40-b62e-c03bc25f7682"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment z R2 na F.Silkscreen",
+                    "pos": {
+                        "x": 8.015,
+                        "y": 19.23
+                    },
+                    "uuid": "2fe93b08-8365-40ae-80fa-2c4e0d29bd4c"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C1",
+                    "pos": {
+                        "x": 11.975,
+                        "y": 19.189999
+                    },
+                    "uuid": "a847bd0c-3c81-492c-850b-c715f9976757"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        }
+    ]
+}

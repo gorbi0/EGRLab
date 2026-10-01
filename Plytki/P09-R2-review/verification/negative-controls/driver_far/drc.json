@@ -1,0 +1,130 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-01T09:40:55",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P09.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [/SPI/CLK_BUF] z R14 na F.Cu",
+                    "pos": {
+                        "x": -3.225,
+                        "y": 24.73
+                    },
+                    "uuid": "a0787762-d0ac-4b3b-9961-fdcb7ee0a052"
+                },
+                {
+                    "description": "Ścieżka [/SPI/CLK_BUF] na F.Cu, długość 1,0588 mm",
+                    "pos": {
+                        "x": 3.0237,
+                        "y": 23.4257
+                    },
+                    "uuid": "12f50e57-452a-4080-afc0-24f46bd07182"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Ścieżka [CLK_MODULE] na F.Cu, długość 2,1172 mm",
+                    "pos": {
+                        "x": 3.675,
+                        "y": 24.73
+                    },
+                    "uuid": "3e984bcb-a17a-4fe9-a24b-5d116af03557"
+                },
+                {
+                    "description": "Pole lutownicze 2 [CLK_MODULE] z R14 na F.Cu",
+                    "pos": {
+                        "x": -6.325,
+                        "y": 24.73
+                    },
+                    "uuid": "724a6983-bc0d-4705-b527-34fe3c523b4e"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [CLK_MODULE] na F.Cu, długość 2,1172 mm",
+                    "pos": {
+                        "x": 3.675,
+                        "y": 24.73
+                    },
+                    "uuid": "3e984bcb-a17a-4fe9-a24b-5d116af03557"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x08_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J1",
+                    "pos": {
+                        "x": 17.61,
+                        "y": 13.33
+                    },
+                    "uuid": "e0fd208e-a2a9-4a8d-a99f-22f74952bdd0"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J2",
+                    "pos": {
+                        "x": 41.74,
+                        "y": 95.96
+                    },
+                    "uuid": "fef8b5a6-dcf7-4d40-b62e-c03bc25f7682"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        }
+    ]
+}

@@ -16,7 +16,7 @@ g=collections.defaultdict(list)
 for r,p in PARTS.items():
  g[p['zrodlo'],p['mpn'],p['footprint'].split(':')[-1]].append(r)
 L=['# Zakupy P09-R2 — ilości na jedną płytkę (S1)','',
-'Źródło: **rejestr** = pozycja z `Zamowione/zamowione.csv` (posiadane, montaż THT na stojąco); **nowe** = do kupienia (lista zakupowa 2 do przeliczenia po decyzjach S1). Dwa moduły MAX31856 XU są posiadane (Allegro). Płytka z JLCPCB (klasa 1/3, 53 × 100 mm); tu tylko schemat.','',
+'Źródło: **rejestr** = pozycja z `Zamowione/zamowione.csv` (posiadane, montaż THT na stojąco); **nowe** = do kupienia (lista zakupowa 2 do przeliczenia po decyzjach S1); **posiadane** = dwa moduły MAX31856 XU (Allegro), lutowane wprost — bez gniazd (decyzja 1.10.2026). Płytka z JLCPCB (klasa 1/3, 53 × 100 mm); PCB do recenzji w README, sekcja „PCB”.','',
 '| Źródło | Nazwa | Ilość | Referencje / obudowa |','|---|---|---:|---|']
 for (z,name,fp),refs in sorted(g.items()):L.append(f'| {z} | {name} | {len(refs)} | {", ".join(refs)} / {fp} |')
 def n(zr,pref):return sum(1 for r,p in PARTS.items() if p['zrodlo']==zr and r.startswith(pref) and p['value'] in ('10K','100K','100n'))
@@ -26,12 +26,13 @@ f"| MF0207 10 k | {sum(1 for p in PARTS.values() if p['value']=='10K' and p['zro
 f"| MF0207 100 k | {sum(1 for p in PARTS.values() if p['value']=='100K' and p['zrodlo']=='rejestr')} | 7 |",
 f"| K104K15X7RF5TH5 100 n | {sum(1 for p in PARTS.values() if p['value']=='100n')} | 5 |",'',
 'Razem z P10 R2 (3 × 10 k — R2 i dwa rezystory serwisowe CAN, 3 × 100 n): 10 k — 9 wobec 7, 100 k — 7 z 7, 100 n — 6 wobec 5 (zob. opis PR i `P10-R2-review/docs/ZAKUPY.md`).','',
+'**1.10 (recenzja P05):** P02 R4 (scalona, zamówiona) bierze z tego samego zapasu MF0207 10 k ×7, 100 k ×6 i K104 ×6, więc te pozycje P09 R2 i P10 R2 trzeba dokupić jako te same części (bez zmian w PCB). Wiążący bilans: lista zakupowa 3 (`Plytki/Zakupy-3-szkic`).','',
 'Uwagi do zakupów:',
 '- J1 (J_BP): obudowane złącze kątowe IDC 2×8, raster 2,54 mm, styki Au; z płytką połączeń P12 łączy je krótka taśma IDC 2×8 (dwa gniazda zaciskowe, jedno do J_BP, drugie do P12).',
 '- J2 (SERWIS): goldpin **kątowy** 1×13 (posiadana listwa 1×40 z Kamami jest prosta i nie wystarczy).',
-'- J3/J4: gniazda 1×9 Au (ZL262-9SG z listy 2), JP1/JP2: listwy 1×3 i zwora (zapas), początkowo bez zworek.',
+'- J3/J4: moduły lutowane wprost fabryczną listwą 1×9 (decyzja 1.10.2026) — gniazda ZL262-9SG i słupki nylonowe M2,5 z listy 2 odpadają; JP1/JP2: listwy 1×3 i zwora (zapas), początkowo bez zworek.',
 '- U1/U2 SO14 z Ioff (74LVC125AD, nie HC125), lutowane wprost do płytki (S1 dopuszcza SOIC); U3 DIP16 z podstawką opcjonalnie.',
 '- Kondensatory SMD 1206 X7R 25 V ±10 %; C4/C5 po DC bias ≥ 2,2 µF, C6/C7 ≥ 0,47 µF (1206 zachowuje pojemność lepiej niż 0805).',
 '- Rezystory serwisowe R20…R30: 1 kΩ 1206, od spodu płytki pod listwą (S1 §9).',
-'- Termopary K z izolowaną spoiną, mocowanie nylonowe M2.5 modułów, dystanse M3 20 mm (poziom 3) — bez zmian względem R1, poza dystansem (R1 miała M3 ≥ 10 mm).']
+'- Termopary K z izolowaną spoiną i dystanse M3 20 mm (poziom 3; R1 miała M3 ≥ 10 mm i nylonowe mocowanie modułów, które odpada).']
 (P/'docs/ZAKUPY.md').write_text('\n'.join(L)+'\n',encoding='utf-8');print('J_BP.csv, SERWIS.csv, ZAKUPY.md written')

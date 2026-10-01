@@ -12,6 +12,7 @@
 - [P02 state](p02-r1-state.md) — P02: R1 Claude → R2 Astra → moja recenzja R2 + R3 zamykająca (26.09, zip 215d7e53); ZAMKNIĘTA; F2/F3 SPT T1A, F4 T0,5A
 - [P00 state](p00-r1-state.md) — P00: R1 Claude → R2 Astra → moja recenzja R2 + R3 zamykająca (27.09, zip 97783cea); błąd w ZAKUPY-P00 R3: wiązka do P04 wymaga męskiego IDC16 i Mini-Fit 4p
 - [P03 state](p03-r1-state.md) — P03 CORE: R1 Claude → R2 Astra → R3 zamykająca → R4 (27.09, bufor Schmitta U6 do P04, miedź = R3 + zmiana przy J4, zip 36d73f76); 28.09 pojawiły się P03-R5/P04-R2.2 (U4 1G37, R17 10k)
+- [P09 R2 state](p09-r2-state.md) — PCB TEMP w S1 gotowa do recenzji 30.09 wieczorem (DRC 0/0/0, PCB 22/22, próby 16/16) na p09-r2-pcb; łańcuch z P03 sparametryzowany (src/board.py); sporne: wysokość gniazda = limit, pin 1 J2
 - [P04 R1 review](p04-r1-review.md) — recenzja P04 Astry 26.09: bez blokera; MCP100-315→-300, watchdog tylko przez Q1, 3V3_IO bez ograniczenia; CORE_LINK 0R w moim P03
 - [P04 R2 state](p04-r2-state.md) — P04 R2 (Claude 26.09) → R2.1 Astry (zamknięta) → R2.2 (R17 10k, miedź = R2.1); paczka zamówieniowa R2.2 ZIP 1f7e9b84 (28.09)
 - [P05 R1 review](p05-r1-review.md) — recenzja P05 Astry 27–28.09: przed PCB odsprzęganie AD7606B + DOUT pod U1, okno DAQ_OK (R5 6,04k, R7 5,11k); karta AD7606B Rev. B lokalnie

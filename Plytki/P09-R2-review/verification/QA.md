@@ -100,4 +100,4 @@ Kontrole elektryczne: 52/52 PASS. Próby ujemne: 35/35 mutacji wykrytych; próba
 | U1-mpn | detected | tak | MPN |
 | null-control (no change) | clean | nie | — |
 
-Tylko schemat: PCB nie powstało (layout robi sesja lokalna). Kontrole nie zastępują odbioru na sprzęcie.
+Schemat; PCB w README, sekcja „PCB” (layout 30.09–1.10.2026). Kontrole nie zastępują odbioru na sprzęcie.

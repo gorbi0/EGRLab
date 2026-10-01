@@ -16,6 +16,7 @@ HDR3=copyfp('Connector_PinHeader_2.54mm','PinHeader_1x03_P2.54mm_Vertical')
 IDC16=copyfp('Connector_IDC','IDC-Header_2x08_P2.54mm_Horizontal');HDR13=copyfp('Connector_PinHeader_2.54mm','PinHeader_1x13_P2.54mm_Horizontal')
 REG='rejestr'   # part of Zamowione/zamowione.csv (owned)
 NEW='nowe'      # to be bought (list 2 to be recalculated)
+OWN='posiadane' # owned outside the register (the two MAX31856 XU modules from Allegro)
 def add(r,src,sym,fp,value,mpn,pins,sheet,url='',note='',zrodlo=NEW,**extra):
  PARTS[r]=dict(ref=r,source_ref=src,symbol=sym,footprint=fp,display=value,value=value,mpn=mpn,pins={str(k):v for k,v in pins.items()},sheet=sheet,url=url,note=note,qty=1,on_board=True,zrodlo=zrodlo,**extra)
 OWNED_R={'10K','100K'}
@@ -51,9 +52,9 @@ JBP=[(2,'5V_SYS','zasilanie do P09','P02 R4 (przez P12)','5V_SYS: tylko VIN modu
      (16,'5V_SYS','zasilanie do P09','P02 R4 (przez P12)','drugi pin 5V_SYS (S1 §5)')]
 jbp_pins={i:G for i in range(1,17,2)};jbp_pins.update({p:n for p,n,*_ in JBP})
 add('J1','J_BP',symbol('Connector_Generic','Conn_02x08_Odd_Even'),IDC16,'J_BP / IDC 2x8','IDC header 2x8 2.54mm angled shrouded, Au (type to be chosen in the purchase list)',jbp_pins,'CONNECT',note='Edge A, centre x=26.5 mm of the slot (S3). Odd pins GND, even pins signals/supplies. Pin 1 towards smaller x. Replaces LV09 (P02-R3/J9) and TEMP (P03-R2/J7).')
-mod=custom('MAX31856_MODULE_SOCKET',[( [(1,'VIN','power_in'),(3,'GND','power_in'),(4,'SCK','input'),(6,'SDI','input'),(7,'CS_N','input')],[(2,'3Vo','passive'),(5,'SDO','tri_state'),(8,'FLT_N','output'),(9,'DRDY_N','output')])])
+mod=custom('MAX31856_MODULE',[( [(1,'VIN','power_in'),(3,'GND','power_in'),(4,'SCK','input'),(6,'SDI','input'),(7,'CS_N','input')],[(2,'3Vo','passive'),(5,'SDO','tri_state'),(8,'FLT_N','output'),(9,'DRDY_N','output')])])
 for ch,j in [(1,'J3'),(2,'J4')]:
- add(j,'TC'+str(ch),mod,'P09:MAX31856_XU_socket','TC'+str(ch)+' / MAX31856 XU','Socket 1x9 2.54mm Au + owned MAX31856 module',{1:f'TC{ch}_VIN',2:f'TC{ch}_3VO',3:G,4:'CLK_MODULE',5:f'TC{ch}_MISO',6:'MOSI_MODULE',7:f'TC{ch}_CS_MODULE',8:'NC',9:'NC'},'P09','https://allegro.pl/oferta/max31856-modul-termopary-dla-typow-k-j-n-r-s-t-e-b-19-bitowy-modul-xu-18805671895','Pinout photo6: VIN/3Vo/GND/SCK/SDO/SDI/CS/FLT/DRDY. Pitch/body/hole fit must be measured; carrier mounting holes are oversize 6mm for nylon M2.5 with 8mm washers. FLT_N (8) and DRDY_N (9) are unconnected in R2 (R1 test pads TP10..TP13 dropped; the contract has no spare wire). No Adafruit electrical equivalence assumed.')
+ add(j,'TC'+str(ch),mod,'P09:MAX31856_XU','TC'+str(ch)+' / MAX31856 XU','Owned MAX31856 XU module, soldered directly by its 1x9 header (no socket)',{1:f'TC{ch}_VIN',2:f'TC{ch}_3VO',3:G,4:'CLK_MODULE',5:f'TC{ch}_MISO',6:'MOSI_MODULE',7:f'TC{ch}_CS_MODULE',8:'NC',9:'NC'},'P09','https://allegro.pl/oferta/max31856-modul-termopary-dla-typow-k-j-n-r-s-t-e-b-19-bitowy-modul-xu-18805671895','Pinout photo6: VIN/3Vo/GND/SCK/SDO/SDI/CS/FLT/DRDY. Pitch/body/hole fit must be measured. 1.10.2026 (user decision): soldered directly by the factory male header (plastic spacer under the module), no socket and no support posts; header pins cut to <= 1.5 mm under P09 (S1 section 4). FLT_N (8) and DRDY_N (9) are unconnected in R2 (R1 test pads TP10..TP13 dropped; the contract has no spare wire). No Adafruit electrical equivalence assumed.',zrodlo=OWN)
  add('JP'+str(ch),'ADDED_VIN_SELECT',symbol('Connector_Generic','Conn_01x03'),HDR3,'VIN SELECT / OPEN','Header 1x3 + one shunt (not fitted initially)',{1:V,2:f'TC{ch}_VIN',3:A5},'P09',note='One shunt: 1-2=3.3V initial qualification; 2-3=5V ONLY after regulator and level-shifter qualification. Never two shunts. Power off before change.')
 # Service strip (edge B): GND at both ends, every other pin through a 1k series resistor placed at the node (all P09 nodes are rails or logic).
 SRV=[('3V3_IO','szyna logiki i VIN przy JP 1-2: pobór, brak zwarć, minimum przy zimnym i ciepłym modułem'),
@@ -71,5 +72,5 @@ srv_pins={1:G,13:G};srv_r={}
 for k,(net,_) in enumerate(SRV,2):
  r='R'+str(19+k-1);srv_r[net]=r;srv_pins[k]='SRV_'+net
  res(r,'1K',1000,net,'SRV_'+net,'CONNECT','Serwis: kołek przez 1k przy węźle, zsunięta sonda nic nie uszkodzi')
-add('J2','J_SRV',symbol('Connector_Generic','Conn_01x13'),HDR13,'SERWIS / goldpin 1x13','Goldpin 1x13 2.54mm angled (buy angled strip, owned 1x40 is straight)',srv_pins,'CONNECT',note='Edge B, x=10..43 mm of the slot; pin 1 towards smaller x; pins stick ~6 mm beyond the edge. GND at both ends.')
+add('J2','J_SRV',symbol('Connector_Generic','Conn_01x13'),HDR13,'SERWIS / goldpin 1x13','Goldpin 1x13 2.54mm angled (buy angled strip, owned 1x40 is straight)',srv_pins,'CONNECT',note='Edge B, x=10..43 mm of the slot; pin 1 towards larger x (angled strip on the top side, pins out of edge B: the footprint fixes the order); pins stick ~6 mm beyond the edge. GND at both ends.')
 if __name__=='__main__':write_tables();print(len(PARTS),'parts')
