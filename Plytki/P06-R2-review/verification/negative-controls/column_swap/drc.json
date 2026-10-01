@@ -1,0 +1,161 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-01T18:48:28",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [
+        {
+            "description": "Sieć pola (/FORCE/EGR_P1) nie pasuje do sieci nadanej na schemacie (/FORCE/ECU_P1)",
+            "items": [
+                {
+                    "description": "Pole PTH 1 [/FORCE/EGR_P1] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 52.62
+                    },
+                    "uuid": "7367e673-ad66-4e40-b4f3-179807cd790b"
+                }
+            ],
+            "severity": "warning",
+            "type": "net_conflict"
+        },
+        {
+            "description": "Sieć pola (/FORCE/ECU_P1) nie pasuje do sieci nadanej na schemacie (/FORCE/EGR_P1)",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [/FORCE/ECU_P1] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 45.0
+                    },
+                    "uuid": "f23d2e26-2381-4779-bb23-7717c80ddcfb"
+                }
+            ],
+            "severity": "warning",
+            "type": "net_conflict"
+        }
+    ],
+    "source": "P06.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Strefa 'FORCE ECU_P1 B.Cu' [/FORCE/ECU_P1] na B.Cu, priorytet 10",
+                    "pos": {
+                        "x": 25.9,
+                        "y": 23.654999
+                    },
+                    "uuid": "f5e3b4a6-d2a9-4fe1-b322-c4857137674b"
+                },
+                {
+                    "description": "Pole PTH 2 [/FORCE/ECU_P1] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 45.0
+                    },
+                    "uuid": "f23d2e26-2381-4779-bb23-7717c80ddcfb"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole PTH 1 [/FORCE/EGR_P1] na J4",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 52.62
+                    },
+                    "uuid": "7367e673-ad66-4e40-b4f3-179807cd790b"
+                },
+                {
+                    "description": "Strefa 'FORCE EGR_P1 F.Cu' [/FORCE/EGR_P1] na F.Cu, priorytet 10",
+                    "pos": {
+                        "x": 22.54,
+                        "y": 32.965
+                    },
+                    "uuid": "305d94d9-0997-46e9-8c73-4b542df841b5"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV2",
+                    "pos": {
+                        "x": 95.24,
+                        "y": 95.96
+                    },
+                    "uuid": "63fab37c-b09c-4b8c-b3bc-8595d03059e7"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x07_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV1",
+                    "pos": {
+                        "x": 41.74,
+                        "y": 95.96
+                    },
+                    "uuid": "6bf9c93f-a5ea-4964-a15e-12e6538b49db"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x08_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP",
+                    "pos": {
+                        "x": 71.11,
+                        "y": 13.33
+                    },
+                    "uuid": "a6d90a30-e00a-4770-b6f6-0e4466b8df7f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        }
+    ]
+}

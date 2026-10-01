@@ -1,0 +1,206 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-01T18:45:49",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P06.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_LOGGER_CURRENT_OK] na B.Cu, długość 10,9722 mm",
+                    "pos": {
+                        "x": 73.7406,
+                        "y": 63.0689
+                    },
+                    "uuid": "a2bb39f0-0839-47a9-a2a9-e2909357320c"
+                },
+                {
+                    "description": "Pole lutownicze 2 [/SERWIS/SRV_LOGGER_CURRENT_OK] z R36 na B.Cu",
+                    "pos": {
+                        "x": 45.0,
+                        "y": 66.55
+                    },
+                    "uuid": "0bf1f750-182e-4c78-98b7-54c8e409b047"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Ścieżka [LOGGER_CURRENT_OK] na F.Cu, długość 1,7211 mm",
+                    "pos": {
+                        "x": 82.623,
+                        "y": 35.258
+                    },
+                    "uuid": "bff2dc59-8e2d-4741-b56a-c3c2c3d68c88"
+                },
+                {
+                    "description": "Pole lutownicze 1 [LOGGER_CURRENT_OK] z R36 na B.Cu",
+                    "pos": {
+                        "x": 45.0,
+                        "y": 63.45
+                    },
+                    "uuid": "f32b8c43-0231-42eb-810a-7b7cc4e842fa"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci 5VA_P06 oraz LOGGER_CURRENT_OK)",
+            "items": [
+                {
+                    "description": "Ścieżka [5VA_P06] na B.Cu, długość 37,4767 mm",
+                    "pos": {
+                        "x": 33.5,
+                        "y": 73.5
+                    },
+                    "uuid": "2ccaa0d2-5933-4057-92a3-f3f07b6eb0f9"
+                },
+                {
+                    "description": "Pole lutownicze 1 [LOGGER_CURRENT_OK] z R36 na B.Cu",
+                    "pos": {
+                        "x": 45.0,
+                        "y": 63.45
+                    },
+                    "uuid": "f32b8c43-0231-42eb-810a-7b7cc4e842fa"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [5VA_P06] na B.Cu, długość 37,4767 mm",
+                    "pos": {
+                        "x": 33.5,
+                        "y": 73.5
+                    },
+                    "uuid": "2ccaa0d2-5933-4057-92a3-f3f07b6eb0f9"
+                },
+                {
+                    "description": "Pole lutownicze 1 [LOGGER_CURRENT_OK] z R36 na B.Cu",
+                    "pos": {
+                        "x": 45.0,
+                        "y": 63.45
+                    },
+                    "uuid": "f32b8c43-0231-42eb-810a-7b7cc4e842fa"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_LOGGER_CURRENT_OK] na B.Cu, długość 8,7076 mm",
+                    "pos": {
+                        "x": 81.8872,
+                        "y": 25.5472
+                    },
+                    "uuid": "4240c448-b538-4d6a-935f-e19732e73567"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [LOGGER_CURRENT_OK] na B.Cu, długość 2,0245 mm",
+                    "pos": {
+                        "x": 77.7545,
+                        "y": 16.29
+                    },
+                    "uuid": "ba742a6f-ec19-4b9c-8652-40da1b3fc7c5"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV2",
+                    "pos": {
+                        "x": 95.24,
+                        "y": 95.96
+                    },
+                    "uuid": "63fab37c-b09c-4b8c-b3bc-8595d03059e7"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x07_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV1",
+                    "pos": {
+                        "x": 41.74,
+                        "y": 95.96
+                    },
+                    "uuid": "6bf9c93f-a5ea-4964-a15e-12e6538b49db"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x08_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP",
+                    "pos": {
+                        "x": 71.11,
+                        "y": 13.33
+                    },
+                    "uuid": "a6d90a30-e00a-4770-b6f6-0e4466b8df7f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        }
+    ]
+}

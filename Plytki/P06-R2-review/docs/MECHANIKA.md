@@ -1,6 +1,6 @@
 # Mechanika, złącza i montaż P06-R2 (format S1)
 
-*R2 (1.10.2026): obrys R1 120 × 100 mm z czterema otworami, PBV stojący, wiązki W1 LV06 i W2 ILOG oraz NKK S6A znikają. Obowiązuje `Plytki/Format-S1/SPECYFIKACJA-FORMATU-S1.md` (S1-3). Layoutu w tym pakiecie nie ma — poniżej wymagania dla sesji lokalnej.*
+*R2 (1.10.2026): obrys R1 120 × 100 mm z czterema otworami, PBV stojący, wiązki W1 LV06 i W2 ILOG oraz NKK S6A znikają. Obowiązuje `Plytki/Format-S1/SPECYFIKACJA-FORMATU-S1.md` (S1-3). Layout zrobiła sesja lokalna 1.10 (README, sekcja „PCB”); poniżej wymagania, które sprawdza `src/verify_pcb.py`.*
 
 ## Płytka
 

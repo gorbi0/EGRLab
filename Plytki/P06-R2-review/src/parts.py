@@ -61,7 +61,8 @@ def shunt_fp():
  for a,b in (('(footprint "R_Shunt_Vishay_WSK2512_6332Metric_T1.19mm"',f'(footprint "{name}"'),
              ('(property "Value" "R_Shunt_Vishay_WSK2512_6332Metric_T1.19mm"',f'(property "Value" "{name}"'),
              ('(at -3.43 1.27)\n\t\t(size 1.4 0.76)','(at -3.28 1.27)\n\t\t(size 1.7 0.76)'),
-             ('(at 3.43 -1.27)\n\t\t(size 1.4 0.76)','(at 3.28 -1.27)\n\t\t(size 1.7 0.76)')):
+             ('(at 3.43 -1.27)\n\t\t(size 1.4 0.76)','(at 3.28 -1.27)\n\t\t(size 1.7 0.76)'),
+             ('(start -2.5 1.7)','(start -2.2 1.7)'),('(end 2.53 -1.7)','(end 2.2 -1.7)')):   # body silk 0.23 mm off the longer sense pads
   assert t.count(a)==1,a;t=t.replace(a,b)
  t=t.replace('(descr "','(descr "EGRLab P06 R2: sense pads e = 1.70 mm per Vishay 30108 rev. 11-Dec-2023 (library: 1.40). ',1)
  (FP/(name+'.kicad_mod')).write_text(t);return 'P06:'+name
@@ -140,6 +141,7 @@ cap('C16','ADD_ADC_REF_HF','100n',1e-7,'REF25',G,'ADC')
 add('D2','ADD_REF_DISCHARGE',symbol('Device','D_Schottky'),DIO35,'BAT85','BAT85,133 (Nexperia)',{1:V,2:'REF25'},'ANA','https://assets.nexperia.com/documents/data-sheet/BAT85.pdf','Discharge of reference capacitor into local rail during power removal.')
 for i,(r,rail) in enumerate([('U1',A5),('U2',V),('U3',V),('U4',A5),('U5',V),('U6',V),('U7',V),('U8',V),('U9',A5),('U10',V)],6):
  cap('C'+str(i),'DEC_'+r,'100n',1e-7,rail,G,'P06')
+PARTS['C8']['note']='Bottom side at U3 (layout 1.10, S1-2): thickness <= 1.5 mm, e.g. GRM31MR71H104KA01 (1.15 +/- 0.1 mm).'
 add('D1','ADD_LDO_DISCHARGE',symbol('Device','D_Schottky'),DIO,'1N5819','1N5819',{1:A5,2:V},'P06','https://www.vishay.com/docs/88525/1n5817.pdf','Anode on local 3.3 V, cathode on 5VA; output-cap discharge path on supply removal.')
 # Wires that stay (S1 5): ISERIES and both BYPASS harnesses, PTH at the x=0 board edge (R1 pigtails: 2.4 mm holes, tie anchor 12 mm).
 # R2 local layout (1.10): J3 with 2 pads (R1 pads 3/4 were empty) and J4 at 7.62 mm instead of 17.78 - with the R1 sizes J3, J4 and J5

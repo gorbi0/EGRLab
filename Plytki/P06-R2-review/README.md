@@ -2,7 +2,7 @@
 
 *1.10.2026. Pakiet na kopii łańcucha `P06-R1-review/src` według `Plytki/Format-S1/zadania/ZADANIE-P06-S1.md` (decyzje użytkownika 1.10.2026: klasa 2/3, bocznik 2512 Kelvin, BYPASS na panelu, C3 220 µF). Zamknięty pakiet R1 bez zmian.*
 
-**Status: schemat R2 gotowy do recenzji. PCB w tym pakiecie nie ma** — layout robi sesja lokalna (`docs/CHMURA.md`, zasada 6). Sprzętu nie zmontowano ani nie zmierzono.
+**Status: schemat R2 po przeglądzie lokalnym i PCB R2 (layout lokalny 1.10) do recenzji** — sekcja „PCB” niżej. Sprzętu nie zmontowano ani nie zmierzono.
 
 Obwód R1 zostaje: INA240A2 z filtrem R1/R2 10 Ω, dzielnik R3/R4 1:2, MCP6022, MCP3201, nadzorcy MCP120, bufory 74LVC125 z Ioff, logika LOGGER_CURRENT_OK, R21 (prąd zwilżania styku statusu BYPASS). Zmieniają się złącza do innych płytek, bocznik, punkty pomiarowe i typy części. `verify_s1.py` sprawdza na eksportowanej netliście, że poza J1/J2, bocznikiem i polami testowymi każdy pin obwodu R1 ma tę samą sieć co w R1 (`reference/P06-R1.xml`).
 
@@ -70,6 +70,33 @@ Szyny stoją tylko obok GND, innej szyny albo linii za 10 kΩ, która nie jest w
 - **R21** odsunięty od RSH1, U1 i U10 (gorący element); nad nim nie prowadzić taśmy.
 - Szczegóły: `docs/MECHANIKA.md`.
 
+## PCB (1.10.2026, `src/run_release.py`, KiCad 10.0.6 w Dockerze)
+
+| Kontrola | Wynik | Raport |
+|---|---|---|
+| DRC świeży, wszystkie poziomy | 0 niepołączonych, 0 niezgodności ze schematem, 0 innych naruszeń; 3 × lib_footprint_mismatch (J_BP, J_SV1, J_SV2 — nadruk przycięty przez `silkscreen.py`, przyjęte w `verify_pcb.py`) | `verification/drc.json` |
+| Kontrole PCB (`verify_pcb.py`) | **31/31** | `verification/pcb-checks.json`, `verification/QA-PCB.md` |
+| Próby ujemne PCB | **34/34** z zerową | `verification/negative-controls.json` |
+| Tor prądu silnika | ECU_P1 / EGR_P1 na F.Cu i B.Cu (F.Cu 420,0 / 250,0 mm²), ≥ 4 mm na całej drodze J3–J4 (wypełnienie zwężone o 2 mm zostaje jednym kawałkiem), przelotki zszywające 15 / 12, pełne połączenie pól | `pcb-checks.json` |
+| Para Kelvina | K_PLUS 10,0 mm, K_MINUS 4,18 mm do R1 / R2, dalej 4,491 / 4,491 mm do U1.8 / U1.1; tylko F.Cu, bez przelotek; linie najwyżej 4,2 mm od siebie | `pcb-checks.json` |
+| R21 i U10 | R21 ≥ 40,88 mm od RSH1, U1, U2, U3, U10; C5 3,5 mm od U10.2 (karta: ≤ 5 mm) | `pcb-checks.json` |
+| Trasowanie | Freerouting 2.1.0, próba 2 z 2 (próba 1: planer nie domknął U5.10 i GND C10), 122 przelotki | `routing/attempts.json` |
+
+**Jak powstało** (łańcuch P05 R3 z dodatkami dla toru mocy; opisy w nagłówkach skryptów): `placement.py` (końcówki J3 / J4 / J5 w jednej kolumnie przy x = 0, RSH1 tuż przy J3, R1 / R2 i U1 na przedłużeniu pary Kelvina, tor analogowy U2 / U3 / U10 w prawo, bufory U5 pod J_BP, logika READY i zasilanie po prawej, R21 w lewym dolnym rogu, rezystory listew od spodu przy węzłach) → `route_critical.py` (wylewki ECU_P1 / EGR_P1 na obu warstwach z 27 przelotkami, para Kelvina, strefa zakazana pod bocznikiem na B.Cu) → `fanout_gnd.py` → `prepare_routing.py` (wylewki mocy jako strefy routera, sieci prądowe i Kelvina poza listą routera, strefy routera przy boczniku i między liniami Kelvina — tylko z pinami sieci zablokowanych) → Freerouting → import (GND na F.Cu z otworem nad bocznikiem), `cleanup.py --tidy`, `check_intrusion.py` (próba odpada, gdy obca miedź routera wchodzi w obrys RSH1 albo między linie Kelvina) → `stitch.py` → planer `complete_routes.py` → `trim_stubs.py` → `silkscreen.py`.
+
+**Decyzje (sporne oznaczone):**
+1. **Sporne — J3 2 pola, J4 raster 7,62 mm (przegląd lokalny 1.10):** z wymiarami R1 (J3 4 pola, J4 17,78 mm) trzy końcówki zajmują 81 mm krawędzi x = 0, a między strefami M3 jest 65 mm. Puste pola 3/4 J3 usunięte, J4 ma raster J3. Wiązki W3 / W4 bez zmian, zmienia się tylko rozstaw lutów na P06.
+2. **J3 numerowany od drugiego końca:** w kolumnie przy x = 0 od góry J3.1 ECU, J3.2 EGR, J4.2 EGR, J4.1 ECU. EGR_P1 jest jednym blokiem w środku, ECU_P1 obu złączy łączy pas 5 mm między kotwami opasek a polami (pod przewodami, na masce). Inaczej jedna z sieci prądowych musiałaby objąć bocznik i przeciąć parę Kelvina.
+3. **Bocznik i Kelvin:** RSH1 obrócony o 270° (pole prądowe ECU u góry, EGR u dołu, pola pomiarowe na przekątnej). K_PLUS biegnie z pola pomiarowego w dół i pod korpusem, w szczelinie 3,7 mm między polami prądowymi, w prawo; K_MINUS wprost w prawo. Linie idą równolegle w odstępie 3,3 mm, do 4,2 mm przy U1 (położenie pól pomiarowych WSK2512 i dwa rezystory 1206 jeden nad drugim). Pod bocznikiem na F.Cu jest tylko jego własna sieć K_PLUS, na B.Cu nic (strefa zakazana); GND na F.Cu ma otwór nad obrysem RSH1.
+4. **Wylewki mocy:** pełne połączenie pól (bez termików) na J3 / J4 / RSH1 — do lutowania przewodów 2,5 mm² do pól spiętych z miedzią obu warstw potrzebna mocna lutownica (w R1 miedź 70 µm). Najwęższe miejsce toru to samo pole prądowe bocznika (2,03 mm).
+5. **5V_SYS, 5VA_P06 i SW_RAW w klasie PWR 0,6 mm** (do 180 mA; 130 mA styku statusu przez R21).
+6. **C8 (100 nF przy U3) od spodu** — uwaga w BOM: grubość ≤ 1,5 mm (S1-2).
+7. **R21** w lewym dolnym rogu przy J5, z dala od części analogowych; nadruk ECU / EGR i 5VA / SW / GND przy polach końcówek.
+
+**Oględziny PDF (1.10):** strony 1–5 obejrzane po wydaniu. 1: opis i render. 2: montaż — opisy ECU / EGR przy polach J3 / J4 i 5VA / SW / GND przy J5, etykiety obu listew, cztery ukryte oznaczenia z warstwy F.Fab, oznaczenia krawędzi A / B i nazwa płytki. 3: F.Cu — wylewki ECU_P1 / EGR_P1, K_PLUS z pola pomiarowego w dół i pod korpusem do R1, K_MINUS wprost do R2, bez miedzi przy otworach M3 i kotwach. 4: B.Cu — masa, druga warstwa wylewek, pusto pod bocznikiem. 5: przymiarka — obrysy, kotwy przy x = 0, otwory. Bez uwag blokujących.
+
+**Otwarte:** przymiarka 1:1 (końcówki przewodów przy x = 0 z opaskami, R21 leżący 3–5 mm nad płytką), kod przełącznika BYPASS i C1 przy zakupie, recenzja lokalna; 4 oznaczenia ukryte z braku miejsca (C1, C12, C4, C9; na rysunku montażowym z warstwy F.Fab); paczka produkcyjna dopiero po „scal”.
+
 ## Otwarte punkty
 
 - **MPN bocznika (sprawdzone lokalnie 1.10):** kod **WSK25125L000FEA** (karta 30108: poniżej 0,01 Ω wartość z literą L, więc „R0050” z pierwszej wersji nie jest kodem); 1,0 W przy 70 °C, TCR ±35 ppm/K. Pola pomiarowe według tabeli karty 1,70 mm (biblioteka KiCada 1,40 mm) — footprint lokalny. Bourns CSS2H-2512K-5L00F ma inny układ pól: przy zamianie nowy footprint (kontrola `RSH1-KELVIN-2512` czyta geometrię).
@@ -77,13 +104,15 @@ Szyny stoją tylko obok GND, innej szyny albo linii za 10 kΩ, która nie jest w
 - **R21:** PR02 2 W leżący — decyzja użytkownika 1.10 (THT zostaje).
 - **C1:** X7R 1206 (rozrzut τ większy niż PET) albo C0G/film SMD — do decyzji.
 - **Zapas z rejestru:** bilans w `docs/ZAKUPY.md`; z posiadanych THT P06 bierze tylko R11 47 kΩ (ostatnią sztukę po P02 R4 i P05 R3). Adaptery Kamami SO14/SOIC8 z przydziału P06 niepotrzebne (SOIC lutowane wprost).
-- **3V3_IO** jest na J_BP.14 bez odbiorcy (jak w R1). Pin można zwolnić na GND, jeśli P12 nie potrzebuje tej szyny przy P06 — pytanie w PR.
+- **3V3_IO** jest na J_BP.14 bez odbiorcy (jak w R1). Pin można zwolnić na GND, jeśli P12 nie potrzebuje tej szyny przy P06 — pytanie w PR. Przegląd lokalny 1.10: zostawić — kołek J_SV2.6 pokazuje wtedy obecność 3V3_IO z P12 na tej płytce.
 - **Pojemność 5V_SYS:** P06 220,3 µF + P05 R3 ok. 265,7 µF ≈ 486 µF wobec 600 µF dla TSR 2-2450; start kompletu zmierzyć na stole.
 
 ## Pliki
 
-- `eda/` — schemat KiCad 10 (7 arkuszy A3) i biblioteki; bez PCB.
-- `output/pdf/P06-R2-schemat.pdf`, `output/previews/sch-*.png`.
+- `eda/` — schemat KiCad 10 (7 arkuszy A3), PCB `P06.kicad_pcb` (layout lokalny 1.10) i biblioteki.
+- `output/pdf/P06-R2-schemat.pdf`, `output/previews/sch-*.png`; `output/pdf/P06-R2-PCB.pdf` (PDF do recenzji, 5 stron 1:1), `output/previews/pcb-*.png`, `output/svg/`.
+- `src/` — generatory schematu oraz łańcuch layoutu (`board.py`, `placement.py`, `route_critical.py`, `run_layout.py`, `verify_pcb.py`, `negative_controls.py`, `run_release.py` i skrypty wspólne z P05 R3).
+- `routing/` — DSN, SES (`P06.ses`, próby `attempt-*.ses`), `critical.json`, `attempts.json`, raporty DRC pośrednie, `silkscreen.json`.
 - `docs/` — `J_BP.csv` i `SERWIS.csv` (kontrakty dla P12 i listew), `BOM.csv`, `parts.json`, `ZAKUPY.md`, `zakupy.csv`, `interfejsy.csv`, `WIAZKI.md`, `ODBIOR.md` R2, `MECHANIKA.md`, `PROJEKT.md`, `FIRMWARE.md`, `netlist-pinowa.csv`.
-- `verification/` — ERC, netlista, `schematic-check.json`, `electrical-checks.json`, `s1-checks.json`, `QA.md`, logi, manifest.
+- `verification/` — ERC, netlista, `schematic-check.json`, `electrical-checks.json`, `s1-checks.json`, `QA.md`; PCB: `drc.json`, `pcb-checks.json`, `negative-controls.json`, `QA-PCB.md`; logi, manifest.
 - `reference/` — `P06-R1.xml` (eksport R1 do porównania), `P03-R6-J_BP.csv`, `P05-R3-J_BP.csv`, wyciągi tekstowe kart z R1 (`datasheets/*.txt`).

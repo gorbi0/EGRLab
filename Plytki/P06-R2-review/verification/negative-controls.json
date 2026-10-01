@@ -1,0 +1,321 @@
+[
+  {
+    "control": "null_control",
+    "expected_failing_check": "none (all PASS)",
+    "detected": true,
+    "failed_checks": []
+  },
+  {
+    "control": "mount_shift",
+    "expected_failing_check": "M3 holes",
+    "detected": true,
+    "failed_checks": [
+      "M3 holes: 8 NPTH 3.2 mm exactly at the S1 positions (x_w_slocie + 53.5 k, y 14 / 86)"
+    ]
+  },
+  {
+    "control": "jbp_shift",
+    "expected_failing_check": "J_BP (edge A)",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "S1-2 section 4: parts on the bottom only SMD <= 1.5 mm (heights.py, BOM thickness note for the capacitors), no SOIC, >= 1 mm from THT pads",
+      "J_BP (edge A): IDC 2x8 angled in slot S2, body front at y = 0, pin centre x = 80.0, pin 1 at the smaller x, pinout = docs/J_BP.csv (P12 contract)"
+    ]
+  },
+  {
+    "control": "sv_no_gnd_end",
+    "expected_failing_check": "Service headers",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Every value, footprint ID and pad net equals the exported schematic netlist",
+      "Service headers J_SV1 / J_SV2 (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pin 1 at the larger x, pins out ~6 mm, GND on both ends, one series resistor per pin as docs/SERWIS.csv and of its S1 class (1K, 10K for the analog nodes and supervisor outputs) <= 10 mm from its node, one silk label per pin with the name of its node (LABEL in silkscreen.py), GND at both ends"
+    ]
+  },
+  {
+    "control": "sv_pin_without_resistor",
+    "expected_failing_check": "Service headers",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Every value, footprint ID and pad net equals the exported schematic netlist",
+      "Service headers J_SV1 / J_SV2 (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pin 1 at the larger x, pins out ~6 mm, GND on both ends, one series resistor per pin as docs/SERWIS.csv and of its S1 class (1K, 10K for the analog nodes and supervisor outputs) <= 10 mm from its node, one silk label per pin with the name of its node (LABEL in silkscreen.py), GND at both ends"
+    ]
+  },
+  {
+    "control": "sv_resistor_far",
+    "expected_failing_check": "Service headers",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Service headers J_SV1 / J_SV2 (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pin 1 at the larger x, pins out ~6 mm, GND on both ends, one series resistor per pin as docs/SERWIS.csv and of its S1 class (1K, 10K for the analog nodes and supervisor outputs) <= 10 mm from its node, one silk label per pin with the name of its node (LABEL in silkscreen.py), GND at both ends"
+    ]
+  },
+  {
+    "control": "label_missing",
+    "expected_failing_check": "Service headers",
+    "detected": true,
+    "failed_checks": [
+      "Service headers J_SV1 / J_SV2 (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pin 1 at the larger x, pins out ~6 mm, GND on both ends, one series resistor per pin as docs/SERWIS.csv and of its S1 class (1K, 10K for the analog nodes and supervisor outputs) <= 10 mm from its node, one silk label per pin with the name of its node (LABEL in silkscreen.py), GND at both ends"
+    ]
+  },
+  {
+    "control": "label_swap",
+    "expected_failing_check": "Service headers",
+    "detected": true,
+    "failed_checks": [
+      "Service headers J_SV1 / J_SV2 (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pin 1 at the larger x, pins out ~6 mm, GND on both ends, one series resistor per pin as docs/SERWIS.csv and of its S1 class (1K, 10K for the analog nodes and supervisor outputs) <= 10 mm from its node, one silk label per pin with the name of its node (LABEL in silkscreen.py), GND at both ends"
+    ]
+  },
+  {
+    "control": "too_tall",
+    "expected_failing_check": "Every part <=",
+    "detected": true,
+    "failed_checks": [
+      "Every part <= 16.5 mm above the board (level 4, S1 section 4; src/heights.py)"
+    ]
+  },
+  {
+    "control": "narrow_track",
+    "expected_failing_check": "Every track >=",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Every track >= 0.30 mm (S1 section 3) and every track of 5V_SYS, 5VA_P06, SW_RAW >= 0.6 mm (class PWR)"
+    ]
+  },
+  {
+    "control": "pwr_thin",
+    "expected_failing_check": "Every track >=",
+    "detected": true,
+    "failed_checks": [
+      "Every track >= 0.30 mm (S1 section 3) and every track of 5V_SYS, 5VA_P06, SW_RAW >= 0.6 mm (class PWR)"
+    ]
+  },
+  {
+    "control": "bottom_soic",
+    "expected_failing_check": "S1-2 section 4",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "S1-2 section 4: parts on the bottom only SMD <= 1.5 mm (heights.py, BOM thickness note for the capacitors), no SOIC, >= 1 mm from THT pads",
+      "Decoupling and filter capacitors at their pins: pad <= 6 mm from the supply / input pin (100 nF at every IC, C1 / C2 / C16 / C4), C5 4.7 uF <= 5 mm from U10.2 (MCP1525 data sheet), C3 220 uF <= 8 mm from R6.2 (5VA_P06)",
+      "Every visible reference outside the courtyards of other parts",
+      "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)"
+    ]
+  },
+  {
+    "control": "dru_present",
+    "expected_failing_check": "Rules as P02",
+    "detected": true,
+    "failed_checks": [
+      "Rules as P02 R3 / R4 (clearance >= 0.25, PWR 0.30 / 0.6 mm for 5V_SYS, 5VA_P06, SW_RAW, track >= 0.30, edge 0.5), annular ring >= 0.25 mm (S1 section 3); no custom rule file, no DRC exclusions"
+    ]
+  },
+  {
+    "control": "force_pour_missing",
+    "expected_failing_check": "Force pours ECU_P1",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Force pours ECU_P1 / EGR_P1: one zone per net on F.Cu and on B.Cu, priority above GND, solid connection (no thermals) on every force pad (J3, J4, RSH1 1/4), each pad inside the fill of every layer it is on",
+      "Force path >= 4 mm wide on both layers (fill shrunk by 2 mm stays one piece): J3.1-J4.1 (ECU_P1) and J3.2-J4.2 (EGR_P1); towards the shunt the 4 mm corridor reaches <= 3.5 mm from the force pad centre (the pad itself is 2.03 mm wide)"
+    ]
+  },
+  {
+    "control": "force_thermal",
+    "expected_failing_check": "Force pours ECU_P1",
+    "detected": true,
+    "failed_checks": [
+      "Force pours ECU_P1 / EGR_P1: one zone per net on F.Cu and on B.Cu, priority above GND, solid connection (no thermals) on every force pad (J3, J4, RSH1 1/4), each pad inside the fill of every layer it is on",
+      "Force path >= 4 mm wide on both layers (fill shrunk by 2 mm stays one piece): J3.1-J4.1 (ECU_P1) and J3.2-J4.2 (EGR_P1); towards the shunt the 4 mm corridor reaches <= 3.5 mm from the force pad centre (the pad itself is 2.03 mm wide)"
+    ]
+  },
+  {
+    "control": "force_narrow",
+    "expected_failing_check": "Force path >= 4 mm",
+    "detected": true,
+    "failed_checks": [
+      "Force path >= 4 mm wide on both layers (fill shrunk by 2 mm stays one piece): J3.1-J4.1 (ECU_P1) and J3.2-J4.2 (EGR_P1); towards the shunt the 4 mm corridor reaches <= 3.5 mm from the force pad centre (the pad itself is 2.03 mm wide)"
+    ]
+  },
+  {
+    "control": "via_in_shunt_pad",
+    "expected_failing_check": "Force pours stitched",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Force pours stitched: >= 8 vias per net (plus the PTH pads of J3 / J4); no via in or within 0.3 mm of an RSH1 pad",
+      "Nothing under the shunt: no copper of any net on B.Cu in the RSH1 courtyard (tracks, vias, pours) and on F.Cu only the RSH1 nets (ECU_P1, EGR_P1, K_PLUS, K_MINUS)"
+    ]
+  },
+  {
+    "control": "under_shunt",
+    "expected_failing_check": "Nothing under the shunt",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Nothing under the shunt: no copper of any net on B.Cu in the RSH1 courtyard (tracks, vias, pours) and on F.Cu only the RSH1 nets (ECU_P1, EGR_P1, K_PLUS, K_MINUS)",
+      "No track or via of another net in the box spanned by the Kelvin pair (shunt to U1, both layers; pours allowed)"
+    ]
+  },
+  {
+    "control": "kelvin_via",
+    "expected_failing_check": "Kelvin pair",
+    "detected": true,
+    "failed_checks": [
+      "Kelvin pair from the sense pads (README): K_PLUS RSH1.2 -> R1 <= 12 mm, K_MINUS RSH1.3 -> R2 <= 8 mm, R1 / R2 -> U1.8 / U1.1 <= 6 mm, F.Cu only, no via, no pour on these nets; the two lines run as a pair (every point of K_MINUS / INA_MINUS <= 5 mm from K_PLUS / INA_PLUS)"
+    ]
+  },
+  {
+    "control": "foreign_in_kelvin",
+    "expected_failing_check": "No track or via of another net",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "No track or via of another net in the box spanned by the Kelvin pair (shunt to U1, both layers; pours allowed)"
+    ]
+  },
+  {
+    "control": "anchor_track",
+    "expected_failing_check": "Panel side",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Panel side: J3 / J4 / J5 pad rows in one column <= 18 mm from x = 0, anchor holes 1-6 mm from x = 0 with their 3 mm rule areas and no track in them, no part on the cable between the anchors and the pads; column J3.1 ECU, J3.2 EGR, J4.2 EGR, J4.1 ECU (each force net one piece of copper)"
+    ]
+  },
+  {
+    "control": "part_on_cable",
+    "expected_failing_check": "Panel side",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Panel side: J3 / J4 / J5 pad rows in one column <= 18 mm from x = 0, anchor holes 1-6 mm from x = 0 with their 3 mm rule areas and no track in them, no part on the cable between the anchors and the pads; column J3.1 ECU, J3.2 EGR, J4.2 EGR, J4.1 ECU (each force net one piece of copper)",
+      "Every visible reference outside the courtyards of other parts",
+      "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)"
+    ]
+  },
+  {
+    "control": "tail_turned",
+    "expected_failing_check": "Panel side",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Panel side: J3 / J4 / J5 pad rows in one column <= 18 mm from x = 0, anchor holes 1-6 mm from x = 0 with their 3 mm rule areas and no track in them, no part on the cable between the anchors and the pads; column J3.1 ECU, J3.2 EGR, J4.2 EGR, J4.1 ECU (each force net one piece of copper)",
+      "Every visible reference outside the courtyards of other parts",
+      "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)",
+      "Net marks of the tails J3 / J4 (ECU / EGR) and J5 (5VA / SW / GND) on the silkscreen next to their pads (text centre <= pad edge + 3 mm; S1 §9)"
+    ]
+  },
+  {
+    "control": "column_swap",
+    "expected_failing_check": "Panel side",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Every value, footprint ID and pad net equals the exported schematic netlist",
+      "Force pours ECU_P1 / EGR_P1: one zone per net on F.Cu and on B.Cu, priority above GND, solid connection (no thermals) on every force pad (J3, J4, RSH1 1/4), each pad inside the fill of every layer it is on",
+      "Force path >= 4 mm wide on both layers (fill shrunk by 2 mm stays one piece): J3.1-J4.1 (ECU_P1) and J3.2-J4.2 (EGR_P1); towards the shunt the 4 mm corridor reaches <= 3.5 mm from the force pad centre (the pad itself is 2.03 mm wide)",
+      "Panel side: J3 / J4 / J5 pad rows in one column <= 18 mm from x = 0, anchor holes 1-6 mm from x = 0 with their 3 mm rule areas and no track in them, no part on the cable between the anchors and the pads; column J3.1 ECU, J3.2 EGR, J4.2 EGR, J4.1 ECU (each force net one piece of copper)"
+    ]
+  },
+  {
+    "control": "r21_near",
+    "expected_failing_check": "R21",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Force path >= 4 mm wide on both layers (fill shrunk by 2 mm stays one piece): J3.1-J4.1 (ECU_P1) and J3.2-J4.2 (EGR_P1); towards the shunt the 4 mm corridor reaches <= 3.5 mm from the force pad centre (the pad itself is 2.03 mm wide)",
+      "R21 (PR02, 0.7 W) >= 20 mm (courtyard to courtyard) from RSH1, U1 (INA240), U10 (reference) and the op-amp / ADC U2 / U3; PR02 on top",
+      "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)"
+    ]
+  },
+  {
+    "control": "c5_far",
+    "expected_failing_check": "Decoupling and filter",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Decoupling and filter capacitors at their pins: pad <= 6 mm from the supply / input pin (100 nF at every IC, C1 / C2 / C16 / C4), C5 4.7 uF <= 5 mm from U10.2 (MCP1525 data sheet), C3 220 uF <= 8 mm from R6.2 (5VA_P06)"
+    ]
+  },
+  {
+    "control": "decap_far",
+    "expected_failing_check": "Decoupling and filter",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Decoupling and filter capacitors at their pins: pad <= 6 mm from the supply / input pin (100 nF at every IC, C1 / C2 / C16 / C4), C5 4.7 uF <= 5 mm from U10.2 (MCP1525 data sheet), C3 220 uF <= 8 mm from R6.2 (5VA_P06)",
+      "Every visible reference outside the courtyards of other parts",
+      "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)"
+    ]
+  },
+  {
+    "control": "gnd_pour_removed",
+    "expected_failing_check": "GND pours",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "GND pours on both layers: B.Cu >= 50 % of the board; island removal always (every island tied)"
+    ]
+  },
+  {
+    "control": "ref_on_part",
+    "expected_failing_check": "Every visible reference outside",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Every visible reference outside the courtyards of other parts",
+      "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)"
+    ]
+  },
+  {
+    "control": "ref_far",
+    "expected_failing_check": "Every visible reference nearer",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Every visible reference outside the courtyards of other parts",
+      "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)"
+    ]
+  },
+  {
+    "control": "strip_part",
+    "expected_failing_check": "Reserved strip of edge A",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Reserved strip of edge A (S1 §5: y 0-10 along J_BP, x 63.5-96.5): no other part on either side",
+      "Decoupling and filter capacitors at their pins: pad <= 6 mm from the supply / input pin (100 nF at every IC, C1 / C2 / C16 / C4), C5 4.7 uF <= 5 mm from U10.2 (MCP1525 data sheet), C3 220 uF <= 8 mm from R6.2 (5VA_P06)",
+      "Every visible reference outside the courtyards of other parts",
+      "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)"
+    ]
+  },
+  {
+    "control": "mark_missing",
+    "expected_failing_check": "Net marks of the tails",
+    "detected": true,
+    "failed_checks": [
+      "Net marks of the tails J3 / J4 (ECU / EGR) and J5 (5VA / SW / GND) on the silkscreen next to their pads (text centre <= pad edge + 3 mm; S1 §9)"
+    ]
+  },
+  {
+    "control": "zone_copper",
+    "expected_failing_check": "Standoff zones D7",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Standoff zones D7: no courtyard and no copper (pads, tracks, vias, pours) within 3.5 mm of a hole centre; rule areas on both layers"
+    ]
+  },
+  {
+    "control": "title_wrong",
+    "expected_failing_check": "Silkscreen: board name",
+    "detected": true,
+    "failed_checks": [
+      "Silkscreen: board name \"P06 R2 S1-2/3 S1-S2\", edge markers A and B"
+    ]
+  }
+]
