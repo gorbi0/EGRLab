@@ -1,0 +1,21 @@
+﻿zlacze;pin;siec;rezystor;cel_pomiaru
+J_SV1;1;GND;-;masa sondy
+J_SV1;2;I_L_OUT;R25 10K / 1% 1206;wyjscie INA240: 2,500 V przy 0 A, 0,25 V/A (E04, E11-E13)
+J_SV1;3;ADC_AIN;R26 10K / 1% 1206;wejscie MCP3201 za R5/C2: 1,250 V przy 0 A (E11)
+J_SV1;4;GND;-;masa sondy
+J_SV1;5;REF_BUF;R27 10K / 1% 1206;bufor U2B na REF INA240: = REF25 +/- offset U2 (E04)
+J_SV1;6;REF25;R28 10K / 1% 1206;MCP1525 (U10), VREF ADC: 2,475-2,525 V (E04)
+J_SV1;7;GND;-;masa sondy
+J_SV2;1;GND;-;masa sondy
+J_SV2;2;5V_SYS;R29 1K / 1% 1206;5V_SYS na P06 z J_BP (E04, E05)
+J_SV2;3;5VA_P06;R30 1K / 1% 1206;5VA_P06 za R6 1R (spadek ok. 0,18 V przy 180 mA)
+J_SV2;4;3V3_P06;R31 1K / 1% 1206;"3V3_P06 z U4 (E04; E08: < 0,1 V przy wylaczonym P06)"
+J_SV2;5;GND;-;masa sondy
+J_SV2;6;3V3_IO;R32 1K / 1% 1206;3V3_IO z P02 przez J_BP.14 (bez odbiorcy na P06)
+J_SV2;7;SUP3_N;R33 10K / 1% 1206;nadzorca 3V3_P06 U8 (OD, 10k R14) (E06, E07)
+J_SV2;8;SUP5_N;R34 10K / 1% 1206;nadzorca 5VA U9 za buforem U6A (E06, E07)
+J_SV2;9;SHUNT_ENABLED;R35 1K / 1% 1206;styk MEASURE za U6B: H w MEASURE, L w BYPASS (E07)
+J_SV2;10;LOGGER_CURRENT_OK;R36 1K / 1% 1206;READY do P03 za R19 (E07, E14)
+J_SV2;11;CS_LOCAL_N;R37 1K / 1% 1206;CS MCP3201 za U5A (E08, E10)
+J_SV2;12;CLK_LOCAL;R38 1K / 1% 1206;zegar MCP3201 za U5B (E10)
+J_SV2;13;GND;-;masa sondy
