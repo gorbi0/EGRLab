@@ -12,7 +12,7 @@ Komputer 24/7 (Ubuntu **22.04**, 12 wątków, 31 GB). Projekty Claude w `/home/t
 
 - **Rejestrator monitoringu (Frigate) ma pierwszeństwo** (użytkownik 30.09): `scripts/egrlab-docker` daje kontenerom `--cpu-shares 2` i `--cpus 2`; najwyżej 2 ciężkie zadania naraz; limitu nie podnosić bez zgody. Kontrola: `docker exec frigate curl -s http://127.0.0.1:5000/api/stats` (`skipped_fps` = 0). Kamera cam5_tyl_2 nie działa (przegryziony kabel, naprawi użytkownik) — nie diagnozować.
 - Obraz `egrlab-kicad:10.0.6` z `scripts/setup-chmura.sh` (czcionki z przypiętych paczek noble, bo 22.04 nie ma `fonts-liberation-sans-narrow`).
-- Git: tożsamość lokalnie w repo (Tomasz Gorbaczuk <gorbi@adres.pl>); `gh` nie ma, odczyt repo działa, **push wymaga logowania użytkownika** (30.09 niezrobione — commity czekają lokalnie).
+- Git: tożsamość lokalnie w repo (Tomasz Gorbaczuk <gorbi@adres.pl>); `gh` nie ma. Od 1.10 push przez SSH: remote `git@github-egrlab:gorbi0/EGRLab.git` (alias w `~/.ssh/config`, klucz `~/.ssh/egrlab_deploy`). Gałęzie zadań wypycha sesja; push na `main` robi użytkownik (klasyfikator uprawnień go blokuje); PR-y otwiera użytkownik z linku po pushu.
 - Kolejne płytki równolegle w worktree `.worktrees/<gałąź>` (wykluczone w `.git/info/exclude`), żeby nie przełączać gałęzi w trakcie przebiegów.
 - Wiadomości do innych sesji tylko po „wyślij”; scalanie po „scal”.
 
