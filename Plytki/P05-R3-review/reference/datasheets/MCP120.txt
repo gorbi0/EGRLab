@@ -1,0 +1,927 @@
+  2001 Microchip Technology Inc. DS11184D-page 1
+MCP120/130
+FEATURES
+• Holds microcontroller in reset until supply voltage 
+reaches stable operating level
+ Resets microcontroller during power loss
+ Precision monitoring of 3V, 3.3V and 5V systems
+ 7 voltage trip points available
+ Active low RESET
+ pin
+ Open drain output 
+ Internal pull-up resistor (5 k Ω ) for MCP130
+ Holds RESET
+ for 350 ms (typical)
+ RESET  to VCC = 1.0V
+ Accuracy of ±125 mV for 5V systems and ±75 mV 
+for 3V systems over temperature
+4 5  µA typical operating current
+ Temperature range:
+- Industrial (I): -40 °C to +85°C
+DESCRIPTION
+The Microchip Technology Inc. MCP120/130 is a volt-
+age supervisory device designed to keep a microcon-
+troller in reset until the system voltage has reached the
+proper level and stabilized. It also operates as protec-
+tion from brown-out conditions when the supply voltage
+drops below a safe operating level. Both devices are
+available with a choice of seven different trip voltages
+and both have open drain outputs. The MCP130 has an
+internal 5 kΩ  pullup resistor. Both devices have active
+low RESET
+ pins. The MCP120/130 will assert the
+RESET signal  whenever the voltage on the VDD pin is
+below the trip-point voltage. 
+PACKAGES
+BLOCK DIAGRAM
+VSS
+VDD
+RST VSS VDD
+VSS
+VDD RST VSSVDD
+RST
+VSS
+RST
+VDD
+TO-92 with
+‘D’ Bondout
+TO-92 WITH
+‘F’ BONDOUT
+TO-92 with
+‘G’ Bondout
+TO-92 with
+‘H’ Bondout
+SOT-23-3
+MCP120
+MCP130 MCP130
+MCP120
+MCP130
+MCP120
+MCP120
+MCP130
+RST
+VDD
+NC
+VSS
+1
+2
+3
+4
+8
+7
+6
+5
+NC
+NC
+NC
+NC
+150mil SOIC
+MCP120
+MCP130
+RST
+Delay
+Circuit
+Output
+Driver RESET
+VDD
++
+-
+Comparator pull-up on 
+MCP130 
+5kΩ  internal
+Bandgap
+Reference
+only
+Microcontroller Supervisory Circuit with Open Drain Output
+  2001 Microchip Technology Inc. DS11184D-page 2
+MCP120/130
+1.0 ELECTRICAL CHARACTERISTICS
+1.1 Maximum Ratings*
+VDD........................................................................ 7.0V
+All inputs and outputs w.r.t. VSS .....-0.6V to VDD +1.0V
+Storage temperature ..........................-65°C to +150°C
+Ambient temp. with power applied ..... -65°C to +125°C
+ESD protection on all pins ..................................... ≥ 2 kV
+*Notice: Stresses above those listed under “Maximum
+Ratings” may cause permanent damage to the device.
+This is a stress rating only and functional operation of
+the device at those or any other conditions above those
+indicated in the operational listings of this specification
+is not implied. Exposure to maximum rating conditions
+for extended periods may affect device reliability.
+DC AND AC CHARACTERISTICS
+All parameters apply at the 
+specified temp and voltage 
+ranges unless otherwise noted.
+V
+DD = 1.0 - 5.5V
+Industrial (I): -40°C to +85°C
+Parameter Symbol Min. Typ. Max. Units Test Conditions
+Operating Voltage Range V DD 1.0 — 5.5 V
+VDD Value to RESET VDDMIN 1.0 —— V
+Operating Current I DD — 45 60 µAV DD = 5.5V (no load)
+VDD Trip Point MCP1X0-270
+MCP1X0-300
+MCP1X0-315
+MCP1X0-450
+MCP1X0-460
+MCP1X0-475
+MCP1X0-485
+V
+TRIP 2.55
+2.85
+3.0
+4.25
+4.35
+4.50
+4.60
+2.625
+2.925
+3.075
+4.375
+4.475
+4.625
+4.725
+2.7
+3.0
+3.15
+4.50
+4.60
+4.75
+4.85
+V
+RESET
+ Low 
+Level Output 
+Voltage
+ 
+MCP1X0-270
+MCP1X0-300
+MCP1X0-315
+VOL —— 0.4 V I OL = 3.2 mA, 
+VDD = VTRIPMIN
+MCP1X0-450
+MCP1X0-460
+MCP1X0-475
+MCP1X0-485
+—— 0.6 I
+OL = 8.5 mA, 
+VDD = VTRIPMIN
+RESET High 
+Level Output 
+Voltage  
+(MCP130 Only) 
+MCP130-xxx
+(All V
+TRIP 
+Points)
+VOH VDD-0.7 —— VI OH = 50 µA,VDD > VTRIPMAX
+Pull-up Resistor (MCP130 Only) — 5 — kΩ
+Output Leakage (MCP120 Only) — 1 — µA
+Threshold Hysteresis V HYS — 50 — mV
+VDD Detect to RESET Inactive t RPU 150 350 700 ms
+VDD Detect to RESET tRPD — 10 — µsV DD ramped from VTRIPMAX + 
+250 mV down to VTRIPMIN - 
+250 mV
+Note: Typical values are for 25°C and VDD = 5.0V
+  2001 Microchip Technology Inc. DS11184D-page 3
+MCP120/130
+Figure 1-1: MCP120/130 Timing Diagram
+VDD
+RESET VOH
+tRPU
+VTRIP
+tRPD
+VOH
+MCP120/130
+DS11184D-page 4   2001 Microchip Technology Inc.
+2.0 APPLICATIONS INFORMATION
+2.1 The Need for Supervisory Circuits
+For many of today ’s microcontroller applications, care
+must be taken to prevent low power conditions that can
+cause many different system problems. The most com-
+mon causes are brown-out conditions where the sys-
+tem supply drops below the operating level momentar-
+ily, and the second, is when a slowly decaying power
+supply causes the microcontroller to begin executing
+instructions without enough voltage to sustain SRAM
+and producing indeterminate results.
+Figure 2-1: Typical Application
+2.2 Negative Going V DD Transients
+Many system designers implementing POR circuits are
+concerned about the minimum pulse width required to
+cause a reset. Figure 2-2 shows typical transient
+voltage below the trip point (V
+TRIP - VDD) vs. transient
+duration. It shows that the farther below the trip point
+the transient pulse goes, the duration of the pulse
+required to cause a reset gets shorter. A 0.1 µF bypass
+cap mounted as close as possible to the V
+DD pin pro-
+vides additional transient immunity.
+Figure 2-2: Typical Transient Response
+Microcontroller
+MCLRVSS
+RST
+MCP120
+or 
+RESET
+VSS
+VDD
+VDD
+Bypass
+Capacitor
+VDD
+TIME
+SUPPLY VOLTAGE
+0
+0
+5V
+VTRIPMAX
+VTRIPMIN
+Transient
+Duration
+(VTRIPMIN - VDD)
+0123
+VTRIP - VDD (V)
+10
+8
+6
+4
+2
+0
+TRANSIENT DURATION (µS)
+45
+TA = +25°C
+Transients above the 
+curve will cause a reset
+Transients below
+the curve will NOT
+cause a reset
+  2001 Microchip Technology Inc. DS11184D-page 5
+MCP120/130
+2.3 Effect of Temperature on Timeout 
+Period (tRPU)
+The timeout period (t RPU) determines how long the
+device remains in the reset condition.  This is controlled
+by an internal RC timer and is effected by both VDD
+and temperature. The graph shown in Figure 2-3
+shows typical response for different V DD values and
+temperatures.
+Figure 2-3: tRPU vs. Temperature 
+Figure 2-4: IDD vs. Temperature 
+Figure 2-5: Normalized VTRIP vs. Temperature 
+Figure 2-6: VOL vs. IOL 
+Figure 2-7: Normalized IOL vs. Temperature 
+-40 -20 20 60
+TEMPERATURE (°C)
+600
+500
+400
+300
+200
+100
+TIMEOUT PERIOD (tRPU) (ms)
+80 10004 0
+700
+VDD = 5V
+VDD = 4V
+VDD = 3V
+VDD = 6V
+-40 -20 20 60
+TEMPERATURE (°C)
+50
+40
+30
+20
+10
+0
+OPERATING CURRENT (µA)
+80 10004 0
+60
+VDD = 5V
+VDD = 3V
+VDD = 5.5V
+VDD = 4V
+-40 -20 20 60
+TEMPERATURE (°C)
+1.000
+0.998
+0.996
+0.994
+0.992
+0.997
+NORMALIZED THRESHOLD* (VTRIP)
+80 10004 0
+1.002
+* Multiply value at 25°C by this 
+factor to determine the value at 
+temperature
+02 6 1 0
+500
+400
+300
+200
+100
+0
+VOL (mV)
+1248
+600
+700
+800
+14 16 18 20
+VDD = 3.5VVDD = 1.5V
+VDD = 4.5V
+VDD = 2.5V
+TA = +25°C
+IOL (mA)
+-40 -20 20 60
+TEMPERATURE (°C)
+1.2
+1.1
+1.00
+0.9
+0.8
+0.7
+NORMALIZED IOL*  
+80 10004 0
+1.3
+* Multiply value at 25°C by this 
+factor to determine the value at 
+temperature
+MCP120/130
+DS11184D-page 6   2001 Microchip Technology Inc.
+3.0 PACKAGING INFORMATION
+3.1 Package Marking Information
+3-Lead Plastic Transistor Outline (TO-92) Example:
+3-Lead Plastic Small Outline Transistor (SOT23) Example:
+Legend:   XX...X Customer specific information*
+YY Year code (last 2 digits of calendar year)
+WW Week code (week of January 1 is week ‘01’)
+NNN Alphanumeric traceability code
+Note: In the event the full Microchip part number cannot be marked on one line, it will
+be carried over to the next line thus limiting the number of available characters
+for customer specific information.
+* Standard OTP marking consists of Microchip part number, year code, week code, and traceability code.
+For OTP marking beyond this, certain price adders apply. Please check with your Microchip Sales Office.
+For QTP devices, any special marking adders are included in QTP price.
+XXXXXX
+XXXXXX
+XXXXXX
+YWWNNN
+MCP120
+XXXXXX
+XXXXXX
+YWWNNN
+XXNN PKNN
+SOT23 PARTS LABELING:
+The table below identifies the first 2 characters (XX) in the 4-character field
+(XXNN) for marking of the 3-Lead SOT23 package.
+Mark Part Number Mark Part Number
+SJ MCP120T-270I/TT PJ MCP130T-270I/TT
+SK MCP120T-300I/TT PK MCP130T-300I/TT
+SL MCP120T-315I/TT PL MCP130T-315I/TT
+SM MCP120T-450I/TT PM MCP130T-450I/TT
+SN MCP120T-460I/TT PN MCP130T-460I/TT
+SO MCP120T-475I/TT PO MCP130T-475I/TT
+SP MCP120T-485I/TT PP MCP130T-485I/TT
+8-Lead Plastic Small Outline (SOIC) Example:
+XXXXYYWW
+NNN
+XXXXXXXX
+XXXXYYWW
+NNN
+MCP120
+  2001 Microchip Technology Inc. DS11184D-page 7
+MCP120/130
+3.2 Package Detail Information
+3-Lead Plastic Transistor Outline (TO) (TO-92)
+432432βMold Draft Angle Bottom
+654654α
+0.560.480.41.022.019.016BLead Width
+0.510.430.36.020.017.014cLead Thickness
+2.412.292.16.095.090.085RMolded Package Radius
+4.954.644.32.195.183.170DOverall Length
+4.954.714.45.195.186.175E1Overall Width
+3.943.623.30.155.143.130ABottom to Package Flat
+1.27.050pPitch
+33nNumber of Pins
+MAXNOMMINMAXNOMMINDimension Limits
+MILLIMETERSINCHES*Units
+R
+n1
+3
+α
+p
+L
+B
+A
+c
+β
+1
+D
+2
+E1
+Tip to Seating Plane L .500 .555 .610 12.70 14.10 15.49
+*Controlling Parameter
+Mold Draft Angle Top
+Notes:
+Dimensions D and E1 do not include mold flash or protrusions. Mold flash or protrusions shall not exceed 
+.010” (0.254mm) per side.
+JEDEC Equivalent:  TO-92
+Drawing No. C04-101
+MCP120/130
+DS11184D-page 8   2001 Microchip Technology Inc.
+3-Lead Plastic Small Outline Transistor (TT) (SOT23)
+10501050βMold Draft Angle Bottom
+10501050αMold Draft Angle Top
+0.510.440.37.020.017.015BLead Width
+0.180.140.09.007.006.004cLead Thickness
+10501050φFoot Angle
+0.550.450.35.022.018.014LFoot Length
+3.042.922.80.120.115.110DOverall Length
+1.401.301.20.055.051.047E1Molded Package Width
+2.642.372.10.104.093.083EOverall Width
+0.100.060.01.004.002.000A1Standoff §
+1.020.950.88.040.037.035A2Molded Package Thickness
+1.121.010.89.044.040.035AOverall Height
+1.92.076p1Outside lead pitch (basic)
+0.96.038pPitch
+33nNumber of Pins
+MAXNOMMINMAXNOMMINDimension Limits
+MILLIMETERSINCHES*Units
+2
+1
+p
+DB
+n
+E
+E1
+L
+c
+β
+φ
+α
+A2A
+A1
+p1
+* Controlling Parameter
+Notes:
+Dimensions D and E1 do not include mold flash or protrusions. Mold flash or protrusions shall not exceed 
+.010” (0.254mm) per side.
+JEDEC Equivalent:  TO-236
+Drawing No. C04-104
+§ Significant Characteristic
+  2001 Microchip Technology Inc. DS11184D-page 9
+MCP120/130
+8-Lead Plastic Small Outline (SN) – Narrow, 150 mil (SOIC
+Foot Angle φ 048048
+1512015120βMold Draft Angle Bottom
+1512015120αMold Draft Angle Top
+0.510.420.33.020.017.013BLead Width
+0.250.230.20.010.009.008cLead Thickness
+0.760.620.48.030.025.019LFoot Length
+0.510.380.25.020.015.010hChamfer Distance
+5.004.904.80.197.193.189DOverall Length
+3.993.913.71.157.154.146E1Molded Package Width
+6.206.025.79.244.237.228EOverall Width
+0.250.180.10.010.007.004A1Standoff §
+1.551.421.32.061.056.052A2Molded Package Thickness
+1.751.551.35.069.061.053AOverall Height
+1.27.050pPitch
+88nNumber of Pins
+MAXNOMMINMAXNOMMINDimension Limits
+MILLIMETERSINCHES*Units
+2
+1
+D
+n
+p
+B
+E
+E1
+h
+Lβ
+c
+45°
+φ
+A2
+α
+A
+A1
+* Controlling Parameter
+Notes:
+Dimensions D and E1 do not include mold flash or protrusions. Mold flash or protrusions shall not exceed 
+.010” (0.254mm) per side.
+JEDEC Equivalent:  MS-012
+Drawing No. C04-057
+§ Significant Characteristic
+MCP120/130
+DS11184D-page 10   2001 Microchip Technology Inc.
+ON-LINE SUPPORT
+Microchip provides on-line support on the Microchip
+World Wide Web (WWW) site.
+The web site is used by Microchip as a means to make
+files and information easily available to customers. To
+view the site, the user must have access to the Internet
+and a web browser, such as Netscape or Microsoft
+Explorer. Files are also available for FTP download
+from our FTP site.
+Connecting to the Microchip Internet Web Site      
+The Microchip web site is available by using your
+favorite Internet browser to attach to: 
+www.microchip.com
+The file transfer site is available by using an FTP ser-
+vice to connect to: 
+ftp://ftp.microchip.com
+The web site and file transfer site provide a variety of
+services. Users may download files for the latest
+Development Tools, Data Sheets, Application Notes,
+User’s Guides, Articles and Sample Programs. A vari-
+ety of Microchip specific business information is also
+available, including listings of Microchip sales offices,
+distributors and factory representatives. Other data
+available for consideration is:
+ Latest Microchip Press Releases
+ Technical Support Section with Frequently Asked 
+Questions 
+ Design Tips
+ Device Errata
+ Job Postings
+ Microchip Consultant Program Member Listing
+ Links to other useful web sites related to 
+Microchip Products
+ Conferences for products, Development Systems, 
+technical information and more
+ Listing of seminars and events
+Systems Information and Upgrade Hot Line 
+The Systems Information and Upgrade Line provides
+system users a listing of the latest versions of all of
+Microchip's development systems software products.
+Plus, this line provides information on how customers
+can receive any currently available upgrade kits.The
+Hot Line Numbers are: 
+1-800-755-2345 for U.S. and most of Canada, and 
+1-480-792-7302 for the rest of the world.
+  2001 Microchip Technology Inc. DS11184D-page 11
+MCP120/130
+READER RESPONSE
+It is our intention to provide you with the best documentation possible to ensure successful use of your Microchip prod-
+uct.  If you wish to provide your comments on organization, clarity, subject matter, and ways in which our documentation
+can better serve you, please FAX your comments to the Technical Publications Manager at (480) 792-7578.
+Please list the following information, and use this outline to provide us with your comments about this Data Sheet.
+1. What are the best features of this document?
+2. How does this document meet your hardware and software development needs?
+3. Do you find the organization of this data sheet easy to follow? If not, why?
+4. What additions to the data sheet do you think would enhance the structure and subject?
+5. What deletions from the data sheet could be made without affecting the overall usefulness?
+6. Is there any incorrect or misleading information (what and where)?
+7. How would you improve this document?
+8. How would you improve our software, systems, and silicon products?
+To: Technical Publications Manager
+RE: Reader Response
+Total Pages Sent
+From: Name
+Company
+Address
+City / State / ZIP / Country
+Telephone: (_______) _________ - _________
+Application (optional):
+Would you like a reply?       Y         N
+Device: Literature Number: 
+Questions:
+FAX: (______) _________ - _________
+DS11184DMCP120/130
+MCP120/130
+DS11184D-page 12   2001 Microchip Technology Inc.
+NOTES:
+  2001 Microchip Technology Inc. DS11184D-page 13
+MCP120/130
+NOTES:
+MCP120/130
+DS11184D-page 14   2001 Microchip Technology Inc.
+PRODUCT IDENTIFICATION SYSTEM
+To order or to obtain information (e.g., on pricing or delivery), please refer to the factory or the listed sales offices .
+Sales and Support
+PART NO. X /XX
+PackageTemperature
+Range
+Device
+   
+Device: MCP120: Supervisor circuit with open drain output
+MCP120T: Supervisor circuit with open drain output 
+(tape & reel)
+MCP130: Supervisor circuit with open drain output and 
+internal pull-up resistor
+MCP130T: Supervisor circuit with open drain output and 
+internal pull-up resistor (tape & reel)
+RESET/RESET VTRIP 
+Voltage
+270 = 2.55 ≤ VTRIP ≤ 2.70
+300 = 2.85 ≤ VTRIP ≤ 3.00
+315 = 3.00 ≤ VTRIP ≤ 3.15
+450 = 4.25 ≤ VTRIP ≤ 4.50
+460 = 4.35 ≤ VTRIP ≤ 4.60
+475 = 4.50 ≤ VTRIP ≤ 4.75
+485 = 4.60 ≤ VTRIP ≤ 4.85
+Bondout Option:
+(TO-92 Only)
+D = D Bond Option (see bond option chart)
+F = F Bond Option
+G = G Bond Option
+H = H Bond Option
+Temperature Range: I =  -40
+°C to +85°C (only offered in I)
+Package: SN = SOIC (8-lead, 150 mil body)
+TO = TO-92 (3-lead) [offered in bags only]
+TT = SOT-23 (3-lead) [offered in tape & reel only]
+Examples:
+a) MCP120 –270I/SN = V TRIP range of 2.55V -
+2.70V, Industrial Temp., SOIC package
+b) MCP120 –300DI/TO = VTRIP range of 2.85V -
+3.00V, Bonding Option D, Industrial Temp.,
+TO-92 package
+c) MCP120T –315I/TT = VTRIP range of 3.00V -
+3.15V, Industrial Temp., SOT-23 package
+d) MCP130 –450I/SN = V TRIP range of 4.25V -
+4.50V, Industrial Temp., SOIC package
+e) MCP130 –460FI/TO = VTRIP range of 4.35V -
+4.60V, Bonding Option F, Industrial Temp.,
+TO-92 package
+f) MCP130T –475I/TT = Tape & Reel, V TRIP
+range of 4.50V - 4.75V, Industrial Temp.,
+SOT-23 package
+X
+Bondout
+Option
+X
+RESET/
+RESET
+VTRIP
+Voltage
+VSS
+VDD
+RST VSS
+VDD
+RST
+TO-92 with
+‘D’ Bondout
+TO-92 with
+‘F’ Bondout
+MCP120
+MCP130
+MCP130
+VSS
+VDD
+RST VSSVDD
+RST
+TO-92 with
+‘G’ Bondout
+TO-92 with
+‘H’ Bondout
+MCP120
+MCP130
+MCP120
+Data Sheets
+Products supported by a preliminary Data Sheet may have an errata sheet describing minor operational differences and recom-
+mended workarounds. To determine if an errata sheet exists for a particular device, please contact one of the following:
+1. Your local Microchip sales office
+2. The Microchip Corporate Literature Center U.S. FAX: (480) 792-7277
+3. The Microchip Worldwide Site (www.microchip.com)
+Please specify which device, revision of silicon and Data Sheet (include Literature #) you are using.
+New Customer Notification System
+Register on our web site (www.microchip.com/cn) to receive the most current information on our products.
+  2001 Microchip Technology Inc. DS11184D-page 15
+MCP120/130
+“All rights   reserved.   Copyright ©  2001,   Microchip 
+Technology Incorporated, USA. Information contained
+in this publication regarding device applications and the
+like is intended through suggestion only and may be
+superseded by updates. No representation or warranty
+is   given   and   no   liability   is   assumed by  Microchip 
+Technology Incorporated with respect to the accuracy
+or use of such information, or infringement of patents or
+other intellectual property rights arising from such use
+or otherwise. Use of Microchip ’s products as critical
+components in life support systems is not authorized
+except with express written approval by Microchip. No
+licenses are conveyed, implicitly or otherwise, under
+any intellectual property rights. The Microchip logo and
+name   are    registered    trademarks    of    Microchip 
+Technology Inc. in the U.S.A. and other countries. All
+rights reserved. All other trademarks mentioned herein
+are the property of their respective companies. No
+licenses are conveyed, implicitly or otherwise, under
+any intellectual property rights.”
+Trademarks
+The      Microchip     name,     logo,     PIC,     PICmicro, 
+PICMASTER, PICSTART, PRO MATE, K
+EELOQ,
+SEEVAL,    MPLAB    and    The    Embedded    Control 
+Solutions Company are registered trademarks of
+Microchip Technology Incorporated in the U.S.A. and
+other countries.
+Total Endurance, ICSP , In-Circuit Serial Programming,
+FilterLab, MXDEV, microID, FlexROM, fuzzyLAB,
+MPASM,     MPLINK,    MPLIB,    PICDEM,    ICEPIC, 
+Migratable Memory, FanSense, ECONOMONITOR,
+SelectMode    and    microPort    are    trademarks   of
+Microchip Technology Incorporated in the U.S.A.
+Serialized   Quick   Term   Programming   (SQTP)  is a 
+service mark of Microchip Technology Incorporated in
+the U.S.A.
+All other trademarks mentioned herein are property of
+their respective companies.
+© 2001, Microchip Technology Incorporated, Printed in
+the U.S.A., All Rights Reserved.
+Microchip received QS-9000 quality system 
+certification for its worldwide headquarters, 
+design and wafer fabrication facilities in 
+Chandler and Tempe, Arizona in July 1999. The 
+Company’s quality system processes and 
+procedures are QS-9000 compliant for its 
+PICmicro® 8-bit MCUs, KEELOQ® code hopping 
+devices, Serial EEPROMs and microperipheral 
+products. In addition, Microchip’s quality 
+system for the design and manufacture of 
+development systems is ISO 9001 certified.
+Information contained in this publication regarding device applications and the like is intended through suggestion only and ma y be superseded by
+updates. It is your responsibility to ensure that your application meets with your specifications. No representation or warrant y is given and no liability is
+assumed by Microchip Technology Incorporated with respect to the accuracy or use of such information, or infringement of patent s or other intellectual
+property rights arising from such use or otherwise. Use of Microchip’s products as critical components in life support systems is not authorized except with
+express written approval by Microchip. No licenses are conveyed, implicitly or otherwise, except as maybe explicitly expressed herein, under any intellec-
+tual property rights. The Microchip logo and name are registered trademarks of Microchip Technology Inc. in the U.S.A. and othe r countries. All rights
+reserved. All other trademarks mentioned herein are the property of their respective companies.
+DS11184D-page 16   2001 Microchip Technology Inc.
+All rights reserved.   © 2001 Microchip Technology Incorporated.  Printed in the USA.  2/01  Printed on recycled paper.
+WORLDWIDE SALES AND SERVICE
+AMERICAS
+Corporate Office
+2355 West Chandler Blvd.
+Chandler, AZ  85224-6199
+Tel:  480-792-7200  Fax:  480-792-7277
+Technical Support: 480-792-7627
+Web Address: http://www.microchip.com
+Rocky Mountain
+2355 West Chandler Blvd.
+Chandler, AZ  85224-6199
+Tel:  480-792-7966  Fax:  480-792-7456
+Atlanta
+500 Sugar Mill Road, Suite 200B
+Atlanta, GA  30350
+Tel: 770-640-0034  Fax: 770-640-0307
+Austin
+Analog Product Sales
+8303 MoPac Expressway North
+Suite A-201
+Austin, TX  78759
+Tel: 512-345-2030  Fax: 512-345-6085
+Boston
+2 Lan Drive, Suite 120
+Westford, MA  01886
+Tel: 978-692-3848  Fax: 978-692-3821
+Boston
+Analog Product Sales
+Unit A-8-1 Millbrook Tarry Condominium
+97 Lowell Road
+Concord, MA  01742
+Tel: 978-371-6400  Fax: 978-371-0050
+Chicago
+333 Pierce Road, Suite 180
+Itasca, IL  60143
+Tel: 630-285-0071 Fax: 630-285-0075
+Dallas
+4570 Westgrove Drive, Suite 160
+Addison, TX 75001
+Tel: 972-818-7423  Fax: 972-818-2924
+Dayton
+Two Prestige Place, Suite 130
+Miamisburg, OH 45342
+Tel: 937-291-1654  Fax: 937-291-9175
+Detroit
+Tri-Atria Office Building 
+32255 Northwestern Highway, Suite 190
+Farmington Hills, MI  48334
+Tel: 248-538-2250 Fax: 248-538-2260
+Los Angeles
+18201 Von Karman, Suite 1090
+Irvine, CA  92612
+Tel: 949-263-1888  Fax: 949-263-1338
+Mountain View
+Analog Product Sales
+1300 Terra Bella Avenue
+Mountain View, CA  94043-1836
+Tel: 650-968-9241  Fax: 650-967-1590
+New York
+150 Motor Parkway, Suite 202
+Hauppauge, NY  11788
+Tel: 631-273-5305  Fax: 631-273-5335
+San Jose
+Microchip Technology Inc.
+2107 North First Street, Suite 590
+San Jose, CA  95131
+Tel: 408-436-7950  Fax: 408-436-7955
+Toronto
+6285 Northam Drive, Suite 108
+Mississauga, Ontario L4V 1X5, Canada
+Tel: 905-673-0699  Fax:  905-673-6509
+ASIA/PACIFIC
+Australia
+Microchip Technology Australia Pty Ltd
+Suite 22, 41 Rawson Street
+Epping 2121, NSW
+Australia
+Tel: 61-2-9868-6733 Fax: 61-2-9868-6755
+China - Beijing
+Microchip Technology Beijing Office
+Unit 915
+New China Hong Kong Manhattan Bldg.
+No. 6 Chaoyangmen Beidajie 
+Beijing, 100027, No. China
+Tel: 86-10-85282100 Fax: 86-10-85282104
+China - Shanghai
+Microchip Technology Shanghai Office
+Room 701, Bldg. B
+Far East International Plaza
+No. 317 Xian Xia Road
+Shanghai, 200051
+Tel: 86-21-6275-5700  Fax: 86-21-6275-5060
+Hong Kong
+Microchip Asia Pacific
+RM 2101, Tower 2, Metroplaza
+223 Hing Fong Road
+Kwai Fong, N.T., Hong Kong
+Tel: 852-2401-1200  Fax: 852-2401-3431
+India
+Microchip Technology Inc.
+India Liaison Office
+Divyasree Chambers
+1 Floor, Wing A (A3/A4)
+No. 11, O’Shaugnessey Road
+Bangalore, 560 025, India
+Tel: 91-80-2290061 Fax: 91-80-2290062
+Japan
+Microchip Technology Intl. Inc.
+Benex S-1 6F
+3-18-20, Shinyokohama
+Kohoku-Ku, Yokohama-shi
+Kanagawa, 222-0033, Japan
+Tel: 81-45-471- 6166  Fax: 81-45-471-6122
+ASIA/PACIFIC (continued)
+Korea
+Microchip Technology Korea
+168-1, Youngbo Bldg. 3 Floor
+Samsung-Dong, Kangnam-Ku
+Seoul, Korea
+Tel: 82-2-554-7200  Fax: 82-2-558-5934
+Singapore
+Microchip Technology Singapore Pte Ltd.
+200 Middle Road
+#07-02 Prime Centre
+Singapore, 188980
+Tel:  65-334-8870  Fax: 65-334-8850
+Taiwan
+Microchip Technology Taiwan
+11F-3, No. 207
+Tung Hua North Road
+Taipei, 105, Taiwan
+Tel: 886-2-2717-7175  Fax: 886-2-2545-0139
+EUROPE
+Denmark
+Microchip Technology Denmark ApS
+Regus Business Centre
+Lautrup hoj 1-3
+Ballerup DK-2750 Denmark
+Tel: 45 4420 9895 Fax: 45 4420 9910
+France
+Arizona Microchip Technology SARL
+Parc d’Activite du Moulin de Massy
+43 Rue du Saule Trapu
+Batiment A - ler Etage
+91300 Massy, France
+Tel: 33-1-69-53-63-20  Fax: 33-1-69-30-90-79
+Germany
+Arizona Microchip Technology GmbH
+Gustav-Heinemann Ring 125
+D-81739 Munich, Germany
+Tel: 49-89-627-144 0  Fax: 49-89-627-144-44
+Germany
+Analog Product Sales
+Lochhamer Strasse 13
+D-82152 Martinsried, Germany
+Tel: 49-89-895650-0  Fax: 49-89-895650-22
+Italy
+Arizona Microchip Technology SRL
+Centro Direzionale Colleoni 
+Palazzo Taurus 1 V. Le Colleoni 1
+20041 Agrate Brianza
+Milan, Italy 
+Tel: 39-039-65791-1  Fax: 39-039-6899883
+United Kingdom
+Arizona Microchip Technology Ltd.
+505 Eskdale Road
+Winnersh Triangle
+Wokingham 
+Berkshire, England RG41 5TU
+Tel: 44 118 921 5869 Fax: 44-118 921-5820
+01/30/01
