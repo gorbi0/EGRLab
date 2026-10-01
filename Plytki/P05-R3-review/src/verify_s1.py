@@ -32,11 +32,11 @@ SV_FP = 'Connector_PinHeader_2.54mm:PinHeader_1x{:02d}_P2.54mm_Horizontal'
 # 1.10 (local review; rule decided for P03 R6): a rail pin only next to GND or another rail; the pack-level VBAT_SENSE only next to GND
 RAILS = {'5V_SYS', '5VA_P05', '3V3_DAQ'}; PACK = {'VBAT_SENSE'}
 NEW_PARTS = {'J_BP1', 'J_BP2', 'J_SV1', 'J_SV2', *[f'TP{i}' for i in range(1, 6)], *[f'R{i}' for i in range(36, 56)]}
-SW1_R3 = {'4': 'NC', '6': G}                         # pole B mirrored for the JS202011AQN footprint (verify_electrical: geometry)
+SW1_R3 = {}                                          # 1.10: E-Switch M6 (user decision) restores the R2 mapping of pole B (was mirrored for the JS slide)
 # part sources (S1 1/4/9 + exceptions named in the task)
 R_SMD = 'Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder'; C_SMD = 'Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder'
 R_STAND = 'Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical'
-EXC_FP = {'R1': 'Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P15.24mm_Horizontal', 'C1': 'Capacitor_THT:CP_Radial_D8.0mm_P3.50mm',
+EXC_FP = {'R1': 'Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P15.24mm_Horizontal', 'C1': 'Capacitor_THT:CP_Radial_D6.3mm_P2.50mm',
           'C12': 'Capacitor_SMD:C_1210_3225Metric', 'C13': 'Capacitor_SMD:C_1210_3225Metric'}
 OWNED_THT_C = {'P05:C_TDK_B32529_L7.3_W2.5_P5', 'P05:C_WIMA_MKS2_1u100V_L7.2_W7.2_P5', 'Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm'}
 WINDOW = ['R3', 'R4', 'R5', 'R6', 'R7', 'R8']; DIVIDERS = ['R28', 'R29', 'R31', 'R32', 'R33', 'R34', 'R35']
@@ -201,7 +201,7 @@ if __name__ == '__main__':
          ('PARTS-S1-SOURCES', '1210 outside the C12/C13 exception', setf('C9', 'fp', 'Capacitor_SMD:C_1210_3225Metric')),
          ('PARTS-PRECISION-SERIES', 'window resistor R5 at 25 ppm/K', setf('R5', 'mpn', 'RT1206BRD076K04L')),
          ('R2-CIRCUIT-KEPT', 'comparator inputs swapped', swap('U3', 2, 3)),
-         ('R2-CIRCUIT-KEPT', 'SW1 pole B as in R2 (C&K 7201 mapping)', lambda cc: cc['SW1']['pins'].update({'4': G, '6': 'NC'}))]
+         ('R2-CIRCUIT-KEPT', 'SW1 pole B mirrored (JS202011AQN mapping)', lambda cc: cc['SW1']['pins'].update({'4': 'NC', '6': G}))]
     neg = []
     for target, title, fn in M:
         by = mutate(c, fn); neg.append({'mutation': title, 'target': target, 'detected': target in by, 'by': by})

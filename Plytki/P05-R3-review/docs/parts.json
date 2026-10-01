@@ -381,7 +381,7 @@
     },
     "sheet": "P05",
     "url": "",
-    "note": "1W minimum, lying (S1 1: power part); pulse energy at turn-on ~6mJ (470uF x 5V): pulse rating to be confirmed from the data sheet.",
+    "note": "1W minimum, lying (S1 1: power part); pulse energy at turn-on ~2.8mJ (220uF x 5V, 1.10; was ~6mJ with 470uF): pulse rating to be confirmed from the data sheet.",
     "qty": 1,
     "on_board": true,
     "zrodlo": "nowe",
@@ -391,21 +391,21 @@
   "C1": {
     "ref": "C1",
     "source_ref": "C_A",
-    "footprint": "Capacitor_THT:CP_Radial_D8.0mm_P3.50mm",
-    "display": "470u / 16V",
-    "value": "470u / 16V",
-    "mpn": "EEUFR1C471",
+    "footprint": "Capacitor_THT:CP_Radial_D6.3mm_P2.50mm",
+    "display": "220u / 16V",
+    "value": "220u / 16V",
+    "mpn": "EEUFR1C221",
     "pins": {
       "1": "5VA_P05",
       "2": "GND"
     },
     "sheet": "P05",
     "url": "",
-    "note": "Panasonic FR, D8 x 11.5mm, pitch 3.5mm; 20%.",
+    "note": "Panasonic FR, D6.3 x 11.2mm, pitch 2.5mm; 20%. 1.10 user decision: 220uF (was 470uF) - with P06 C3 the 5V_SYS load stays under the 600uF of the TSR 2-2450 (about 486uF in all). MPN/size to confirm.",
     "qty": 1,
     "on_board": true,
     "zrodlo": "nowe",
-    "farads": 0.00047
+    "farads": 0.00022
   },
   "C2": {
     "ref": "C2",
@@ -1856,21 +1856,21 @@
   "SW1": {
     "ref": "SW1",
     "source_ref": "JP_AUX",
-    "footprint": "Button_Switch_THT:SW_CK_JS202011AQN_DPDT_Angled",
+    "footprint": "P05:ESW_100DP_M6",
     "display": "AUX HI / LO",
     "value": "AUX HI / LO",
-    "mpn": "JS202011AQN",
+    "mpn": "100DP1T1B4M6RE (E-Switch 100, DPDT ON-ON, M6 right angle, gold; code to confirm)",
     "pins": {
       "1": "AUX_HI",
       "2": "AUX_IN",
       "3": "AUX_LO",
-      "4": "NC",
+      "4": "GND",
       "5": "AUX_SHUNT",
-      "6": "GND"
+      "6": "NC"
     },
     "sheet": "AUX",
-    "url": "https://www.ckswitches.com/media/1422/js.pdf",
-    "note": "C&K JS DPDT ON-ON right angle. HI = 2-1 + 5-6 (shunt R35 to GND), LO = 2-3 + 5-4 (pin 4 open). Gold contacts and TME stock: to confirm before purchase. No live switching.",
+    "url": "https://www.e-switch.com/product/100-series-miniature-toggle-switch/",
+    "note": "E-Switch 100 DP M6: lever through the panel at x = 0; HI = 2-1 + 5-4 (shunt R35 to GND), LO = 2-3 + 5-6 (pin 6 open). Positions to label after the ohmmeter check (ODBIOR 13). No live switching.",
     "qty": 1,
     "on_board": true,
     "zrodlo": "nowe"

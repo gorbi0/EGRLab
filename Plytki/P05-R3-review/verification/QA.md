@@ -56,7 +56,7 @@ Kontrakt S1 (`verify_s1.py`): 26/26 PASS; mutacje 33/33 wykrytych przez kontrolÄ
 | Relay driver input/output/COM and pull-down | PASS |
 | G6K NO contacts and coil polarity | PASS |
 | Channel lower arms and grounded current placeholder | PASS |
-| AUX switch: HI = AUX_HI + shunt, LO = AUX_LO without shunt (JS202011AQN geometry) | PASS |
+| AUX switch: HI = AUX_HI + shunt, LO = AUX_LO without shunt (E-Switch M6 geometry) | PASS |
 | Rail-window tolerance stays inside ADC static limits | PASS |
 | Window corners as computed for R3 (10 ppm/K + 0.1 % allowance) | PASS |
 
@@ -96,7 +96,7 @@ Kontrakt S1 (`verify_s1.py`): 26/26 PASS; mutacje 33/33 wykrytych przez kontrolÄ
 | 1210 outside the C12/C13 exception | PARTS-S1-SOURCES | tak | PARTS-S1-SOURCES |
 | window resistor R5 at 25 ppm/K | PARTS-PRECISION-SERIES | tak | PARTS-PRECISION-SERIES |
 | comparator inputs swapped | R2-CIRCUIT-KEPT | tak | R2-CIRCUIT-KEPT |
-| SW1 pole B as in R2 (C&K 7201 mapping) | R2-CIRCUIT-KEPT | tak | R2-CIRCUIT-KEPT |
+| SW1 pole B mirrored (JS202011AQN mapping) | R2-CIRCUIT-KEPT | tak | R2-CIRCUIT-KEPT |
 | null control (no change) | â€” | nie | â€” |
 
 ## PrÃ³by ujemne elektryczne
@@ -110,7 +110,7 @@ Kontrakt S1 (`verify_s1.py`): 26/26 PASS; mutacje 33/33 wykrytych przez kontrolÄ
 | Relay permit bypasses READY | READY and relay permit: actual HC08 truth table | tak |
 | MISO always enabled | MISO tri-state and BUSY Ioff output | tak |
 | Relay on NC terminal | G6K NO contacts and coil polarity | tak |
-| AUX LO still shunted (R2 pole-B mapping) | AUX switch: HI = AUX_HI + shunt, LO = AUX_LO without shunt (JS202011AQN geometry) | tak |
+| AUX LO still shunted (pole B mirrored as for the JS slide) | AUX switch: HI = AUX_HI + shunt, LO = AUX_LO without shunt (E-Switch M6 geometry) | tak |
 | Missing CS default | Defaults on both sides of RX buffers | tak |
 | REF TEMP pin loaded | Window reference REF50xx SOIC-8: 2 VIN, 4 GND, 6 VOUT, others open | tak |
 | CH7 back on VPROT | Channel lower arms and grounded current placeholder | tak |

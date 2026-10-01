@@ -19,7 +19,7 @@ Proszę oceniać tę paczkę, nie tylko tekst ogólnej v6.1. Schemat, PCB i skry
 
 Sprawdzić miedź, nie tylko render3D. Płaszczyzna pod analogiem, ścieżki referencji, odsprzęganie i powroty masy wymagają oceny człowieka. DRC nie symuluje szumu ani odporności na zakłócenia. Sprawdzić rzeczywistą dostępność do lutowaniaU1/U3 oraz sondowaniaTP.
 
-**Mechanicznie otwarty punkt (R3):** B2B P03/P05 zniknęło — połączenie z P03 to taśma IDC przez P12 (J_BP2 na tych samych pinach co P03 R6 J_BP2). SW1: typ do decyzji użytkownika (README, punkty otwarte); wysokość i dostęp do dźwigni sprawdzić na makiecie.
+**Mechanicznie otwarty punkt (R3):** B2B P03/P05 zniknęło — połączenie z P03 to taśma IDC przez P12 (J_BP2 na tych samych pinach co P03 R6 J_BP2). SW1: E-Switch 100 kątowy M6 (decyzja 1.10); wysokość i dostęp do dźwigni przez panel sprawdzić na makiecie.
 
 Sprawdzić realnyCeff C12/C13; w BOM jest kandydat22µF25V1210, a nie deklaracja zmierzonej pojemności pod napięciem. Ogólne rezystory pasywne dobierać według podanej tolerancji, TCR, mocy i rozmiaru; specjalnie nie wymyślono numerów katalogowych części, których konkretnego wariantu nie zweryfikowano.
 
@@ -29,4 +29,4 @@ Sprawdzić realnyCeff C12/C13; w BOM jest kandydat22µF25V1210, a nie deklaracja
 
 Automatyczne kontrole **nie dowodzą** poprawnej pracy analogowej, zgodnościEMC, jakości lutowania, matingu zakupionych złączy ani skuteczności diagnozyP0404. FormularzODBIOR pozostaje niewypełniony do czasu prób.
 
-Przed wydaniem do produkcji: zamknięta recenzja, typ i mechanika SW1, kwalifikacja kondensatorów, uzgodniona zmiana sekwencji startowej firmware, ponowne kontrole po każdej korekcie i dopiero eksportGerberów/Excellon. P07 pozostajeHOLD.
+Przed wydaniem do produkcji: zamknięta recenzja, mechanika SW1 (kod tulei, przymiarka), kwalifikacja kondensatorów, uzgodniona zmiana sekwencji startowej firmware, ponowne kontrole po każdej korekcie i dopiero eksportGerberów/Excellon. P07 pozostajeHOLD.

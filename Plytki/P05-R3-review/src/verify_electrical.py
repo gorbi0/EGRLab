@@ -1,5 +1,5 @@
 """P05-R3: R2 checks adapted to format S1 (no B2B/LV05/VSENSE connectors - verify_s1.py checks J_BP/J_SV; 3V3_IO absent; SW1 from the
-JS202011AQN footprint geometry; DAQ_OK window budget from the TCR class in the exported MPN plus a soldering/aging allowance).
+footprint geometry (1.10: E-Switch 100 DP M6 right angle, user decision); DAQ_OK window budget from the TCR class in the exported MPN plus a soldering/aging allowance).
 R2 header: Independent pin-level acceptance of the exported netlist; no import from parts.py.
 Pin numbers below are frozen from manufacturers' data sheets. Deliberate mutations
 demonstrate that wrong wiring is rejected. Analog budgets are estimates, not SPICE or bench evidence.
@@ -16,10 +16,14 @@ def resistance(s):
  s=s.upper().replace('OHM','').strip();return float(s.replace('K','').replace('R',''))*(1000 if 'K' in s else 1)
 R={r:resistance(v) for r,v in values.items() if r.startswith('R')}
 import re
-SWFP=(P/'eda/libraries/Button_Switch_THT.pretty/SW_CK_JS202011AQN_DPDT_Angled.kicad_mod').read_text()
+SWFP=(P/'eda/libraries/P05.pretty/ESW_100DP_M6.kicad_mod').read_text()
 _pads=[(m[1],float(m[2]),float(m[3])) for m in re.finditer(r'\(pad "(\d)"\s+thru_hole\s+\w+\s*\(at ([-\d.]+) ([-\d.]+)',SWFP)]
-SWROWS=[sorted([(n,x) for n,x,y in _pads if y==yy],key=lambda q:q[1]) for yy in sorted({y for _,_,y in _pads})]
-assert len(_pads)==6 and all(len(r)==3 for r in SWROWS),_pads
+# A pole = three numbered pads on one line (common in the middle). 1.10: the E-Switch M6 has its poles as columns (same x), the JS slide
+# of the cloud version had them as rows (same y); the lever / slider joins BOTH commons to the pads at the same end (data sheet p. 2:
+# position 3 = 2-1 + 5-4, position 1 = 2-3 + 5-6).
+_col=len({x for _,x,_ in _pads})==2
+SWROWS=[sorted([(n,y if _col else x) for n,x,y in _pads if (x if _col else y)==k],key=lambda q:q[1]) for k in sorted({x if _col else y for _,x,y in _pads})]
+assert len(_pads)==6 and len(SWROWS)==2 and all(len(r)==3 for r in SWROWS),_pads
 def checks(n):
  out=[]
  def ck(name,v,detail=None):out.append(dict(name=name,pass_=bool(v),detail=detail))
@@ -55,7 +59,7 @@ def checks(n):
  contact=[('K1',3,4,'ADC_CH1','TAP_P1'),('K1',6,5,'ADC_CH2','TAP_P3'),('K2',3,4,'ADC_CH3','TAP_P4'),('K2',6,5,'ADC_CH4','TAP_P5'),('K3',3,4,'ADC_CH5','TAP_P6')]
  ck('G6K NO contacts and coil polarity',all(pins(r,{c:a,no:z,1:'5V_SYS',8:'MEAS_COIL_LOW'}) for r,c,no,a,z in contact) and all(nc(r,p) for r in ['K1','K2','K3'] for p in [2,7]) and all(pins('D'+str(i),{1:'5V_SYS',2:'MEAS_COIL_LOW'}) for i in range(1,4)))
  ck('Channel lower arms and grounded current placeholder',pins('R28',{1:'ADC_CH1',2:'GND'}) and pins('R29',{1:'ADC_CH2',2:'GND'}) and pins('R30',{1:'ADC_CH6',2:'GND'}) and pins('R31',{1:'VBAT_SENSE',2:'ADC_CH7'}) and pins('J_BP1',{9:'GND',10:'VBAT_SENSE'}) and pins('R32',{1:'ADC_CH7',2:'GND'}))
- # R3: slide switch. Positions follow the footprint geometry: a slider joins each common (row middle) to the outer pad on ONE side.
+ # Positions follow the footprint geometry: the lever joins each common (middle of its pole) to the outer pad at ONE end of both poles.
  pos={}
  for side in (min,max):
   got={}
@@ -63,7 +67,7 @@ def checks(n):
    com=row[1][0];end=side(row,key=lambda q:q[1])[0];got[nn('SW1',com)]='NC' if nc('SW1',end) else nn('SW1',end)
   pos[side.__name__]=got
  hi={'AUX_IN':'AUX_HI','AUX_SHUNT':'GND'};lo={'AUX_IN':'AUX_LO','AUX_SHUNT':'NC'}
- ck('AUX switch: HI = AUX_HI + shunt, LO = AUX_LO without shunt (JS202011AQN geometry)',sorted([pos['min'],pos['max']],key=str)==sorted([hi,lo],key=str) and pins('R33',{1:'AUX_HI',2:'ADC_CH8'}) and pins('R34',{1:'AUX_LO',2:'ADC_CH8'}) and pins('R35',{1:'ADC_CH8',2:'AUX_SHUNT'}),pos)
+ ck('AUX switch: HI = AUX_HI + shunt, LO = AUX_LO without shunt (E-Switch M6 geometry)',sorted([pos['min'],pos['max']],key=str)==sorted([hi,lo],key=str) and pins('R33',{1:'AUX_HI',2:'ADC_CH8'}) and pins('R34',{1:'AUX_LO',2:'ADC_CH8'}) and pins('R35',{1:'ADC_CH8',2:'AUX_SHUNT'}),pos)
  return [dict(name=x['name'],**{'pass':x['pass_']},detail=x['detail']) for x in out]
 out=checks(N);neg=[]
 for title,r,p,net,target in [
@@ -74,7 +78,7 @@ for title,r,p,net,target in [
  ('Relay permit bypasses READY','U5','10','3V3_DAQ','READY and relay permit: actual HC08 truth table'),
  ('MISO always enabled','U11','1','GND','MISO tri-state and BUSY Ioff output'),
  ('Relay on NC terminal','K1','4','GND','G6K NO contacts and coil polarity'),
- ('AUX LO still shunted (R2 pole-B mapping)','SW1','4','GND','AUX switch: HI = AUX_HI + shunt, LO = AUX_LO without shunt (JS202011AQN geometry)'),
+ ('AUX LO still shunted (pole B mirrored as for the JS slide)','SW1','6','GND','AUX switch: HI = AUX_HI + shunt, LO = AUX_LO without shunt (E-Switch M6 geometry)'),
  ('Missing CS default','R13','2','GND','Defaults on both sides of RX buffers'),
  ('REF TEMP pin loaded','U2','3','REF_2V5','Window reference REF50xx SOIC-8: 2 VIN, 4 GND, 6 VOUT, others open'),
  ('CH7 back on VPROT','R31','1','VPROT_SENSE','Channel lower arms and grounded current placeholder')]:

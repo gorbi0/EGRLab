@@ -31,7 +31,7 @@ Offset i wzmocnienie kalibrować **w firmware**, nie w rejestrach AD7606B. CHx_O
 
 ## Budżet pojemności 5V_SYS (P5-07)
 
-**1.10.2026 (R3): budżet niżej jest nieaktualny.** Po P02 R4 i z P06 w formacie S1 szyny 5 V mają razem ok. 986 µF wobec 600 µF dopuszczalnych dla TSR 2-2450 (P05 C1 i P06 C3 po 470 µF za 1 Ω; raport `Plytki/P12-przygotowanie`, gałąź `p12-przygotowanie`). Do decyzji użytkownika — README, punkty otwarte.
+**1.10.2026 (R3): budżet niżej jest nieaktualny.** Po P02 R4 i z P06 w formacie S1 szyny 5 V mają razem ok. 986 µF wobec 600 µF dopuszczalnych dla TSR 2-2450 (P05 C1 i P06 C3 po 470 µF za 1 Ω; raport `Plytki/P12-przygotowanie`, gałąź `p12-przygotowanie`). Decyzja użytkownika 1.10: P05 C1 i P06 C3 po 220 µF — razem ok. 486 µF.
 
 TSR 2-2450 dopuszcza 600µF obciążenia pojemnościowego. Suma kondensatorów na szynach 5V w pakietach P00–P11 (stan 27.09) to ok.538µF, z tego 470µF to C1 w P05; bez P01 i bez kondensatorów modułu Waveshare. R1 1Ω i miękki start TSR ograniczają prąd ładowania C1 (ok.0,5A przy narastaniu 5V w 5ms). Przy pierwszym uruchomieniu kompletu sprawdzić, że 5V_SYS narasta bez restartów czkawkowych. Nie wpinać taśmy J_BP1 pod napięciem: 5 V na C1 przez 1 Ω to udar do 5 A. Budżet trzeba przeliczyć dla P02 R4 (zasilanie z pakietu 4S) — to poza tą paczką.
 

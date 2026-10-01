@@ -28,7 +28,7 @@ S['SERWIS'].text('J_SV1 (slot S1, x=10..43): zasilania i analog. J_SV2 (slot S2,
 S['SERWIS'].text('Kazdy kolek przez rezystor przy wezle: 1k szyny/logika, 4.7k VBAT_SENSE, 10k wezly wysokoimpedancyjne. Numeracja zawsze od pinu 1.',8,15.5,1.15)
 for i,n in enumerate([G,S5,A5],1):S['P05'].place({'ref':f'#FLG{i}','display':'PWR_FLAG','symbol':symbol('power','PWR_FLAG'),'source_ref':'ERC_SOURCE','mpn':'','footprint':'','pins':{'1':n}},18+i*26,12)
 S['P05'].text('3V3_DAQ pochodzi z 5VA_P05 (U12). R3: 3V3_IO nie wchodzi na P05 (LV05.3 usuniety).',8,39,1.3)
-S['P05'].text('R1: 1R / 1W. C1: 470u / 16V. C3: efektywnie >=1uF przy 3.3V; R2 rozladowuje szynę lokalna.',8,43,1.2)
+S['P05'].text('R1: 1R / 1W. C1: 220u / 16V (1.10). C3: efektywnie >=1uF przy 3.3V; R2 rozladowuje szynę lokalna.',8,43,1.2)
 for r,x,y in [('J_BP1',30,34),('J_BP2',90,40),('J4',30,82)]:put('ZLACZA',r,x,y)
 S['ZLACZA'].text('J_BP1 (slot S1) i J_BP2 (slot S2): katowe obudowane IDC na krawedzi A, tasma do P12. Pin 1 od strony mniejszego x.',8,12,1.25)
 S['ZLACZA'].text('J_BP2: DAQ na tych samych pinach co P03 R6 J_BP2. Piny 16 i 20 GND (rezerwa); 3V3_IO nie wchodzi na P05.',8,15.5,1.2)

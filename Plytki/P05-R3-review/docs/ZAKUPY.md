@@ -4,14 +4,14 @@
 
 | Źródło | Nazwa (MPN) | Wartość | Ilość | Referencje / obudowa |
 |---|---|---|---:|---|
+| nowe | 100DP1T1B4M6RE (E-Switch 100, DPDT ON-ON, M6 right angle, gold; code to confirm) | AUX HI / LO | 1 | SW1 / ESW_100DP_M6 |
 | nowe | 5 pairs AWG24 | TAPS / PTH | 1 | J4 / PTH_TAPS_12 |
 | nowe | AD7606BBSTZ | AD7606BBSTZ | 1 | U1 / LQFP-64_10x10mm_P0.5mm |
 | nowe | C3225X7R1E226M250AB | 22u | 2 | C12, C13 / C_1210_3225Metric |
-| nowe | EEUFR1C471 | 470u / 16V | 1 | C1 / CP_Radial_D8.0mm_P3.50mm |
+| nowe | EEUFR1C221 | 220u / 16V | 1 | C1 / CP_Radial_D6.3mm_P2.50mm |
 | nowe | G6K-2P-Y DC5 | G6K-2P-Y DC5 | 3 | K1, K2, K3 / Relay_DPDT_Omron_G6K-2P-Y |
 | nowe | IDC header 2x10 2.54mm angled shrouded, Au | J_BP2 / IDC 2x10 | 1 | J_BP2 / IDC-Header_2x10_P2.54mm_Horizontal |
 | nowe | IDC header 2x5 2.54mm angled shrouded, Au | J_BP1 / IDC 2x5 | 1 | J_BP1 / IDC-Header_2x05_P2.54mm_Horizontal |
-| nowe | JS202011AQN | AUX HI / LO | 1 | SW1 / SW_CK_JS202011AQN_DPDT_Angled |
 | nowe | KNP01U-1R (1R 1W wirewound, body 3x9mm) | 1R | 1 | R1 / R_Axial_DIN0411_L9.9mm_D3.6mm_P15.24mm_Horizontal |
 | nowe | MCP1700-3302E/TO | MCP1700-3302E/TO | 1 | U12 / TO-92_Inline_Wide |
 | nowe | Pin header 1x13, 2.54 mm, right angle, Au | J_SV1 SERWIS 1x13 | 1 | J_SV1 / PinHeader_1x13_P2.54mm_Horizontal |
@@ -61,7 +61,7 @@ Zużycie innych płytek z ich BOM-ów (kolumna `zrodlo`): P02 R4 (`main`, zamów
 | B32529C1104J000 MKT 100 n/100 V | 3 | 2 | 0 | 0 | 1 | 0 | za mało na C16–C18 — nowe 1206 |
 | MKS2D041001K00JO00 WIMA 1 µ/100 V | 2 | 1 | 0 | 0 | 1 | 0 | za mało na C2 i C23 — nowe 1206 |
 | C320C102J1G5TA C0G 1 n | 2 | 0 | 0 | 0 | 2 | 1 | C32 (CH6); raster nóżek sprawdzić na wydruku 1:1 |
-| MF0207FTE-1R 0,6 W | 2 | 1 | 0 | 0 | 1 | 0 | R1 wymaga 1 W (udar ładowania C1 ok. 6 mJ) |
+| MF0207FTE-1R 0,6 W | 2 | 1 | 0 | 0 | 1 | 0 | R1 wymaga 1 W (udar ładowania C1 ok. 2,8 mJ przy 220 µF) |
 | MF0207FTE-2K2, -820R, -470K, MF0204 6k8 | 2 | po 1 | 0 | 0 | po 1 | 0 | brak takich wartości w P05 |
 | 74LVC125AD,118 | 25 (P05: 4) | — | 2 | 1 | — | 4 | U8–U11, przydział z zamówienia |
 | MCP120-300DI/TO, MCP120-450DI/TO | przydział P05 | — | — | — | — | 2 | U6, U7 |
@@ -74,9 +74,9 @@ Kondensatory foliowe zostają po jednej sztuce każdego typu (zapas). P03 R6 nie
 
 - **Rezystory precyzyjne 1206 0,1 % (propozycja MPN, do potwierdzenia w TME i karcie Yageo RT):** okno DAQ_OK R3–R8 w klasie **10 ppm/K** (RT1206BRB07…), dzielniki kanałów R28, R29, R31–R35 w klasie 25 ppm/K (RT1206BRD07…). Uzasadnienie i budżet: README, „Okno DAQ_OK”. Zamiennik serii: Panasonic ERA-8AR (10 ppm/K) / ERA-8AE (25 ppm/K), 0,1 %.
 - U2: **REF5025ID** (Mouser 595-REF5025ID, tuba; klasa wysoka jak REF5025IDR — decyzja 29.09). U3: lista 2 ma TLV1702AIDGKR (wersja przemysłowa, ten sam pinout) zamiast TLV1702AQDGKRQ1.
-- R1: KNP01U-1R (1 W, drutowy, z listy 2); próba impulsowa (ok. 6 mJ przy ładowaniu C1) z karty niepotwierdzona.
+- R1: KNP01U-1R (1 W, drutowy, z listy 2); próba impulsowa (ok. 2,8 mJ przy ładowaniu C1 220 µF) z karty niepotwierdzona.
 - C12/C13: 22 µF/25 V X7R **1210**, TDK C3225X7R1E226M250AB (BOM; lista 2 miała Samsung CL32B226KAJNNNE — zamiennik po sprawdzeniu DC-bias); 1206 22 µF przy 4,4 V nie daje pewnie Ceff ≥ 10 µF (krok 11 ODBIOR). Grubość 2,5 mm: tylko od góry.
-- SW1: **do decyzji użytkownika** (1.10). Wybrany 29.09 E-Switch 100DP1T1B1M2REH to wersja pionowa (M2): obudowa z tuleją ok. 17,8 mm, z dźwignią ok. 28 mm — ponad 16,5 mm poziomu 3. Warianty: E-Switch kątowy M6 (np. 100DP1T1B3M6REH, ok. 11,5 mm nad płytką, dźwignia przez ściankę przy x = 0) albo C&K JS202011AQN (suwak kątowy, obecnie w schemacie). Karta E-Switch: `reference/E-Switch-100-series.pdf`. Nie kupować przed decyzją.
+- SW1: **E-Switch 100 DPDT ON-ON, kątowy M6** (decyzja 1.10; np. 100DP1T1B4M6RE — tuleja B4 bez gwintu, standard dla M6; B3 z gwintem + H, jeśli przykręcać do panelu; kod i dostępność do potwierdzenia, Mouser seria 612-100…). Karta: `reference/E-Switch-100-series.pdf`. C&K JS202011AQN z wersji w chmurze i pionowy 100DP1T1B1M2REH z listy 2 — nie kupować.
 - J_BP1/J_BP2: obudowane kątowe IDC 2×5 i 2×10, raster 2,54 mm, styki Au; taśmy IDC do P12 (po dwa gniazda zaciskowe).
 - J_SV1/J_SV2: goldpin **kątowy** 2 × 1×13 (posiadana listwa 1×40 z Kamami jest prosta).
 - Z listy 2 znikają: TSW-108-08-G-D-NA (B2B), wtyki Mini-Fit 4p (LV05) i 14p (VSENSE), IDC 6p (DAQOK) z przewodami; zostają TAPS (Mini-Fit 12p, AWG24) i AUX (BNC-056, RG174).

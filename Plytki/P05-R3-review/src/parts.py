@@ -52,7 +52,7 @@ QFP=copyfp('Package_QFP','LQFP-64_10x10mm_P0.5mm');SO8=copyfp('Package_SO','SOIC
 SO14=copyfp('Package_SO','SOIC-14_3.9x8.7mm_P1.27mm');VSSOP8=copyfp('Package_SO','VSSOP-8_3x3mm_P0.65mm')
 DIP14=copyfp('Package_DIP','DIP-14_W7.62mm');DIP18=copyfp('Package_DIP','DIP-18_W7.62mm')
 TO92=copyfp('Package_TO_SOT_THT','TO-92_Inline_Wide');DIO=copyfp('Diode_THT','D_DO-35_SOD27_P7.62mm_Horizontal')
-CP=copyfp('Capacitor_THT','CP_Radial_D8.0mm_P3.50mm');RELAY=copyfp('Relay_THT','Relay_DPDT_Omron_G6K-2P-Y')
+CP63=copyfp('Capacitor_THT','CP_Radial_D6.3mm_P2.50mm');RELAY=copyfp('Relay_THT','Relay_DPDT_Omron_G6K-2P-Y')
 TPFP=localfp('TestPad_1')
 SR=symbol('Device','R');SC=symbol('Device','C');SCP=symbol('Device','C_Polarized')
 REG='rejestr';NEW='nowe'
@@ -63,7 +63,7 @@ OWNED_R={'47K':'MF0207FTE-47K','4.7K':'MF0207FTE-4K7'}
 def res(ref,src,value,ohms,a,b,sheet,tol=.01,smd=False,power=False,tcr=None):
  # tol 0.1 %: thin-film 1206. Window divider (tcr=10): Yageo RT1206BRB07 (0.1 %, 10 ppm/K); channel dividers (tcr=25): RT1206BRD07 (0.1 %, 25 ppm/K).
  code=value.replace('.','K',1)[:-1] if value.endswith('K') and '.' in value else value
- if power:add(ref,src,SR,RPOWER,value,'KNP01U-1R (1R 1W wirewound, body 3x9mm)',{1:a,2:b},sheet,note='1W minimum, lying (S1 1: power part); pulse energy at turn-on ~6mJ (470uF x 5V): pulse rating to be confirmed from the data sheet.',ohms=ohms,tolerance=tol)
+ if power:add(ref,src,SR,RPOWER,value,'KNP01U-1R (1R 1W wirewound, body 3x9mm)',{1:a,2:b},sheet,note='1W minimum, lying (S1 1: power part); pulse energy at turn-on ~2.8mJ (220uF x 5V, 1.10; was ~6mJ with 470uF): pulse rating to be confirmed from the data sheet.',ohms=ohms,tolerance=tol)
  elif tol==.001:
   tcr=tcr or 25;mpn=('RT1206BRB07' if tcr==10 else 'RT1206BRD07')+code+'L'
   add(ref,src,SR,R1206,value,mpn,{1:a,2:b},sheet,note=f'Thin film 1206, 0.1 %, {tcr} ppm/K (MPN proposal, data sheet/TME to confirm). One full-value resistor.',ohms=ohms,tolerance=tol,tcr_ppm=tcr)
@@ -109,9 +109,9 @@ for ref,src,sh in [('U8','U_SUPBUF','READY'),('U9','U_RX1','DIG'),('U10','U_RX2'
  if ref=='U11':pp.update({'4':G,'5':'AD_BUSY_LOCAL','6':'ADC_BUSY'})
  add(ref,src,lvc,SO14,'74LVC125AD','74LVC125AD,118',pp,sh,URL['LVC125.pdf'],'Nexperia Ioff, soldered directly; no adapter.',zrodlo=REG)
 add('U12','ADDED_LOCAL_LDO',symbol('Regulator_Linear','MCP1700x-330xxTO'),TO92,'MCP1700-3302E/TO','MCP1700-3302E/TO',{1:G,2:A5,3:V},'P05',URL['MCP1700.pdf'],'Local logic supply derived from ADC AVCC. R3: 3V3_IO does not enter P05.')
-# Supplies and reference; 470uF supports controlled switch-off, not a guarantee under hard shorts.
+# Supplies and reference; C1 (220uF since 1.10) supports controlled switch-off, not a guarantee under hard shorts.
 res('R1','R_FILT','1R',1,S5,A5,'P05',power=True)
-add('C1','C_A',SCP,CP,'470u / 16V','EEUFR1C471',{1:A5,2:G},'P05',farads=470e-6,note='Panasonic FR, D8 x 11.5mm, pitch 3.5mm; 20%.')
+add('C1','C_A',SCP,CP63,'220u / 16V','EEUFR1C221',{1:A5,2:G},'P05',farads=220e-6,note='Panasonic FR, D6.3 x 11.2mm, pitch 2.5mm; 20%. 1.10 user decision: 220uF (was 470uF) - with P06 C3 the 5V_SYS load stays under the 600uF of the TSR 2-2450 (about 486uF in all). MPN/size to confirm.')
 cap('C2','ADDED_LDO_IN','1u',1e-6,A5,G,'P05');cap('C3','ADDED_LDO_OUT','2.2u',2.2e-6,V,G,'P05')
 res('R2','ADDED_LDO_BLEED','1K',1000,V,G,'P05')
 for i,pin in enumerate([1,37,38,48,23],4):cap(f'C{i}',f'C_DEC_U1_{pin}','100n',1e-7,V if pin==23 else A5,G,'ADC',small=True)
@@ -149,12 +149,12 @@ res('R32','RB3','100K',100000,'ADC_CH7',G,'AUX',tol=.001);cap('C33','CF6','220p'
 res('R33','RA1','300K',300000,'AUX_HI','ADC_CH8','AUX',tol=.001)
 res('R34','RA3','100K',100000,'AUX_LO','ADC_CH8','AUX',tol=.001)
 res('R35','RB4','100K',100000,'ADC_CH8','AUX_SHUNT','AUX',tol=.001);cap('C34','CF7','220p',220e-12,'ADC_CH8',G,'AUX')
-# AUX range (R3, decision 29.09 'ordinary switch'): C&K JS202011AQN, DPDT ON-ON slide, right angle (lever out of the board edge),
-# stock KiCad footprint Button_Switch_THT:SW_CK_JS202011AQN_DPDT_Angled (from the C&K JS drawing). Footprint rows: 1-2-3 at y=0,
-# 6-5-4 at y=3.3 (pin 6 opposite pin 1). A slider shorts each common (2, 5) to the terminal on the SAME side: position HI = 2-1 + 5-6,
-# LO = 2-3 + 5-4. So the R2 mapping (C&K 7201: HI 2-1 + 5-4) is mirrored on pole B: GND moves from pin 4 to pin 6, pin 4 is NC.
-sw=custom('SW_DPDT_JS202011',[([(2,'COM_A','passive')],[(1,'A_HI','passive'),(3,'A_LO','passive')]),([(5,'COM_B','passive')],[(6,'B_HI','passive'),(4,'B_LO','passive')])])
-add('SW1','JP_AUX',sw,copyfp('Button_Switch_THT','SW_CK_JS202011AQN_DPDT_Angled'),'AUX HI / LO','JS202011AQN',{1:'AUX_HI',2:'AUX_IN',3:'AUX_LO',4:'NC',5:'AUX_SHUNT',6:G},'AUX','https://www.ckswitches.com/media/1422/js.pdf',note='C&K JS DPDT ON-ON right angle. HI = 2-1 + 5-6 (shunt R35 to GND), LO = 2-3 + 5-4 (pin 4 open). Gold contacts and TME stock: to confirm before purchase. No live switching.')
+# AUX range: 1.10.2026 user decision - E-Switch 100 series in the right-angle version (M6) instead of the vertical 100DP1T1B1M2REH (~28 mm,
+# over the 16.5 mm of level 3; the cloud session had proposed the C&K JS202011AQN slide). DPDT ON-NONE-ON (DP1), gold contacts (R), epoxy
+# seal; exact order code (bushing B3/B4) to confirm with E-Switch / Mouser. Contacts as R2 (data sheet p. 2): commons 2 / 5, position 3 =
+# 2-1 + 5-4 (HI: shunt R35 to GND), position 1 = 2-3 + 5-6 (LO, pin 6 open). Footprint from the M6-DP drawing (p. 11), reference/E-Switch-100-series.pdf.
+sw=custom('SW_DPDT_ESW100',[([(2,'COM_A','passive')],[(1,'A_HI','passive'),(3,'A_LO','passive')]),([(5,'COM_B','passive')],[(4,'B_HI','passive'),(6,'B_LO','passive')])])
+add('SW1','JP_AUX',sw,localfp('ESW_100DP_M6'),'AUX HI / LO','100DP1T1B4M6RE (E-Switch 100, DPDT ON-ON, M6 right angle, gold; code to confirm)',{1:'AUX_HI',2:'AUX_IN',3:'AUX_LO',4:G,5:'AUX_SHUNT',6:'NC'},'AUX','https://www.e-switch.com/product/100-series-miniature-toggle-switch/',note='E-Switch 100 DP M6: lever through the panel at x = 0; HI = 2-1 + 5-4 (shunt R35 to GND), LO = 2-3 + 5-6 (pin 6 open). Positions to label after the ohmmeter check (ODBIOR 13). No live switching.')
 # Coax solder termination (panel BNC), anchors maintained. No high-frequency ground split.
 add('J6','J_AUX',symbol('Connector_Generic','Conn_01x02'),pigtail('PTH_AUX_2',2),'AUX / coax 50mm','insulated panel BNC + RG174 50mm',{1:'AUX_IN',2:G},'AUX',note='Panel BNC shell must connect to circuit GND; not an isolated differential input.')
 # R3 (format S1, decision 1.10.2026 variant B): J1 B2B DAQ, J2 LV05, J3 DAQOK and J5 VSENSE are replaced by two angled

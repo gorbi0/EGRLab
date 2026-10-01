@@ -93,16 +93,16 @@
       "detail": null
     },
     {
-      "name": "AUX switch: HI = AUX_HI + shunt, LO = AUX_LO without shunt (JS202011AQN geometry)",
+      "name": "AUX switch: HI = AUX_HI + shunt, LO = AUX_LO without shunt (E-Switch M6 geometry)",
       "pass": true,
       "detail": {
         "min": {
-          "AUX_IN": "AUX_HI",
-          "AUX_SHUNT": "GND"
+          "AUX_SHUNT": "GND",
+          "AUX_IN": "AUX_HI"
         },
         "max": {
-          "AUX_IN": "AUX_LO",
-          "AUX_SHUNT": "NC"
+          "AUX_SHUNT": "NC",
+          "AUX_IN": "AUX_LO"
         }
       }
     },
@@ -172,8 +172,8 @@
       "detected": true
     },
     {
-      "mutation": "AUX LO still shunted (R2 pole-B mapping)",
-      "target_check": "AUX switch: HI = AUX_HI + shunt, LO = AUX_LO without shunt (JS202011AQN geometry)",
+      "mutation": "AUX LO still shunted (pole B mirrored as for the JS slide)",
+      "target_check": "AUX switch: HI = AUX_HI + shunt, LO = AUX_LO without shunt (E-Switch M6 geometry)",
       "detected": true
     },
     {

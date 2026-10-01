@@ -25,7 +25,7 @@ J_SV1 (1 × 13) w slocie S1 (x = 10–43 mm), J_SV2 (1 × 13) w slocie S2 (x = 6
 
 J4 (TAPS, 5 par AWG24 z P11), J6 (AUX, RG174 do BNC na panelu) i SW1 stoją przy brzegu x = 0 — TAPS najkrótszą drogą (S1 §7). Pigtaile lutowane w PTH: otwory 1,1 mm, pady 2,2 mm, dwa otwory kotwy 3,2 mm 11,5 mm od pierwszego rzędu, opaska 2,5 mm na izolacji. Ekran AUX łączy się z GND na J6 (bez izolacji galwanicznej).
 
-SW1 — **typ do decyzji użytkownika** (README, punkty otwarte: E-Switch 100 kątowy M6 albo suwak); w schemacie **C&K JS202011AQN** (suwak DPDT ON-ON, kątowy, footprint KiCad `SW_CK_JS202011AQN_DPDT_Angled` z rysunku C&K JS): suwak wystaje za krawędź płytki. Dostęp przez otwór w panelu przy x = 0 albo od strony B rozstrzyga layout i makieta obudowy. Pozycje sprawdzić omomierzem (ODBIOR krok 13): HI = 2–1 + 5–6, LO = 2–3 + 5–4.
+SW1 — **E-Switch 100 DPDT ON-ON w wersji kątowej M6** (decyzja 1.10; footprint `P05:ESW_100DP_M6` z rysunku M6-DP, karta s. 11: 2 × 3 otwory Ø1,85 w rastrze 4,70 × 3,81 i dwie nóżki wspornika 12,70 mm przed biegunem A). Obudowa ok. 11,4 mm nad płytką, tuleja i dźwignia równolegle do płytki w stronę x = 0 — przez otwór w panelu. Wersja z chmury (do 1.10): **C&K JS202011AQN** (suwak DPDT ON-ON, kątowy, footprint KiCad `SW_CK_JS202011AQN_DPDT_Angled` z rysunku C&K JS): suwak wystaje za krawędź płytki. Dostęp przez otwór w panelu przy x = 0 albo od strony B rozstrzyga layout i makieta obudowy. Pozycje sprawdzić omomierzem (ODBIOR krok 13): HI = 2–1 + 5–6, LO = 2–3 + 5–4.
 
 ## Elementy wymagające szczególnej kontroli
 

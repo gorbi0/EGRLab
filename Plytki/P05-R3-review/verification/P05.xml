@@ -2,7 +2,7 @@
 <export version="E">
   <design>
     <source>/home/tgorbacz/AI/Claude/EGRLab/.worktrees/p05-s1/Plytki/P05-R3-review/eda/P05.kicad_sch</source>
-    <date>2026-10-01T10:20:42</date>
+    <date>2026-10-01T11:16:12</date>
     <tool>Eeschema 10.0.6</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
@@ -169,17 +169,17 @@
   </design>
   <components>
     <comp ref="C1">
-      <value>470u / 16V</value>
-      <footprint>Capacitor_THT:CP_Radial_D8.0mm_P3.50mm</footprint>
+      <value>220u / 16V</value>
+      <footprint>Capacitor_THT:CP_Radial_D6.3mm_P2.50mm</footprint>
       <fields>
-        <field name="MPN">EEUFR1C471</field>
+        <field name="MPN">EEUFR1C221</field>
         <field name="BaselineRef">C_A</field>
-        <field name="Footprint">Capacitor_THT:CP_Radial_D8.0mm_P3.50mm</field>
+        <field name="Footprint">Capacitor_THT:CP_Radial_D6.3mm_P2.50mm</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="P05" part="C_Polarized" description=""/>
-      <property name="MPN" value="EEUFR1C471"/>
+      <property name="MPN" value="EEUFR1C221"/>
       <property name="BaselineRef" value="C_A"/>
       <property name="Sheetname" value="P05"/>
       <property name="Sheetfile" value="P05.kicad_sch"/>
@@ -2859,17 +2859,17 @@
     </comp>
     <comp ref="SW1">
       <value>AUX HI / LO</value>
-      <footprint>Button_Switch_THT:SW_CK_JS202011AQN_DPDT_Angled</footprint>
-      <datasheet>https://www.ckswitches.com/media/1422/js.pdf</datasheet>
+      <footprint>P05:ESW_100DP_M6</footprint>
+      <datasheet>https://www.e-switch.com/product/100-series-miniature-toggle-switch/</datasheet>
       <fields>
-        <field name="MPN">JS202011AQN</field>
+        <field name="MPN">100DP1T1B4M6RE (E-Switch 100, DPDT ON-ON, M6 right angle, gold; code to confirm)</field>
         <field name="BaselineRef">JP_AUX</field>
-        <field name="Footprint">Button_Switch_THT:SW_CK_JS202011AQN_DPDT_Angled</field>
-        <field name="Datasheet">https://www.ckswitches.com/media/1422/js.pdf</field>
+        <field name="Footprint">P05:ESW_100DP_M6</field>
+        <field name="Datasheet">https://www.e-switch.com/product/100-series-miniature-toggle-switch/</field>
         <field name="Description"/>
       </fields>
-      <libsource lib="P05" part="SW_DPDT_JS202011" description=""/>
-      <property name="MPN" value="JS202011AQN"/>
+      <libsource lib="P05" part="SW_DPDT_ESW100" description=""/>
+      <property name="MPN" value="100DP1T1B4M6RE (E-Switch 100, DPDT ON-ON, M6 right angle, gold; code to confirm)"/>
       <property name="BaselineRef" value="JP_AUX"/>
       <property name="Sheetname" value="AUX_IN"/>
       <property name="Sheetfile" value="AUX_IN.kicad_sch"/>
@@ -2886,8 +2886,8 @@
         <unit name="B">
           <pins>
             <pin num="5"/>
-            <pin num="6"/>
             <pin num="4"/>
+            <pin num="6"/>
           </pins>
         </unit>
       </units>
@@ -3968,7 +3968,7 @@
         <pin num="14" name="VCC" type="power_in"/>
       </pins>
     </libpart>
-    <libpart lib="P05" part="SW_DPDT_JS202011">
+    <libpart lib="P05" part="SW_DPDT_ESW100">
       <fields>
         <field name="Reference"/>
         <field name="Value"/>
@@ -3980,9 +3980,9 @@
         <pin num="1" name="A_HI" type="passive"/>
         <pin num="2" name="COM_A" type="passive"/>
         <pin num="3" name="A_LO" type="passive"/>
-        <pin num="4" name="B_LO" type="passive"/>
+        <pin num="4" name="B_HI" type="passive"/>
         <pin num="5" name="COM_B" type="passive"/>
-        <pin num="6" name="B_HI" type="passive"/>
+        <pin num="6" name="B_LO" type="passive"/>
       </pins>
     </libpart>
     <libpart lib="P05" part="TBD62083APG">
@@ -4463,7 +4463,7 @@
       <node ref="R4" pin="2" pintype="passive"/>
       <node ref="R6" pin="2" pintype="passive"/>
       <node ref="R8" pin="2" pintype="passive"/>
-      <node ref="SW1" pin="6" pinfunction="B_HI_6" pintype="passive"/>
+      <node ref="SW1" pin="4" pinfunction="B_HI_4" pintype="passive"/>
       <node ref="TP1" pin="1" pinfunction="1_1" pintype="passive"/>
       <node ref="U1" pin="16" pinfunction="DB0_SER_GND_16" pintype="passive"/>
       <node ref="U1" pin="17" pinfunction="DB1_SER_GND_17" pintype="passive"/>
@@ -4665,8 +4665,8 @@
     <net code="86" name="unconnected-(K3-Pad7)" class="Default">
       <node ref="K3" pin="7" pintype="passive+no_connect"/>
     </net>
-    <net code="87" name="unconnected-(SW1B-B_LO-Pad4)" class="Default">
-      <node ref="SW1" pin="4" pinfunction="B_LO_4" pintype="passive+no_connect"/>
+    <net code="87" name="unconnected-(SW1B-B_LO-Pad6)" class="Default">
+      <node ref="SW1" pin="6" pinfunction="B_LO_6" pintype="passive+no_connect"/>
     </net>
     <net code="88" name="unconnected-(U1A-DOUTB-Pad25)" class="Default">
       <node ref="U1" pin="25" pinfunction="DOUTB_25" pintype="tri_state+no_connect"/>
