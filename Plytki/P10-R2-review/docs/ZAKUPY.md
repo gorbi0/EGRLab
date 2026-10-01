@@ -25,6 +25,8 @@
 
 Oba pakiety razem przekraczają rejestr: 10 k o dwie sztuki, 100 n o jedną (decyzja użytkownika w opisie PR).
 
+**1.10 (recenzja P05):** P02 R4 (scalona, zamówiona) bierze z tego samego zapasu MF0207 10 k ×7, 100 k ×6 i K104 ×6, więc te pozycje P09 R2 i P10 R2 trzeba dokupić jako te same części (bez zmian w PCB). Wiążący bilans: lista zakupowa 3 (`Plytki/Zakupy-3-szkic`).
+
 Uwagi do zakupów:
 - U1 koniecznie wariant **V** (VIO na pinie 5): TCAN1051VDRQ1, SOIC-8; U2 Nexperia 74LVC125AD,118 z Ioff (HC125 nie jest zamiennikiem); D1 PESD2CAN,215, SOT-23. Nie kupować terminatora CAN do montażu na P10.
 - J1 (J_BP): obudowane złącze kątowe IDC 2×5, raster 2,54 mm, styki Au; taśma IDC 2×5 do P12 (dwa gniazda zaciskowe).
