@@ -1,5 +1,5 @@
 """Próby ujemne src/kontrakty.py: kopie zrodla.json z jedną wstrzykniętą wadą (i próba zerowa bez zmian).
-Każda wadliwa kopia musi skończyć się kodem 1 i nazwać wadę; zerowa — kodem 0. Kopie i wyniki tylko w katalogu tymczasowym.
+Każda wadliwa kopia musi skończyć się kodem 1 i dodać komunikat o swojej wadzie, którego nie ma w przebiegu bazowym; zerowa ma dać wynik bazowy. Kopie i wyniki tylko w katalogu tymczasowym.
 uruchomienie: python3 Plytki/P12-przygotowanie/src/proby.py
 """
 import copy, json, subprocess, sys, tempfile
@@ -43,6 +43,7 @@ PROBY = [(None, None), (nazwa_sieci, 'brak na P05'), (brak_nadajnika, 'brak nada
 wyniki = []
 with tempfile.TemporaryDirectory() as t:
     tmp = Path(t)
+    baza = subprocess.run([sys.executable, str(P / 'src/kontrakty.py'), str(P / 'zrodla.json'), str(tmp / 'baza')], capture_output=True, text=True).stdout
     for fn, oczek in PROBY:
         cfg = copy.deepcopy(BAZA); nazwa = fn.__name__ if fn else 'proba_zerowa'
         if fn is opis_w_specyfikacji:
@@ -51,7 +52,8 @@ with tempfile.TemporaryDirectory() as t:
             fn(cfg)
         c = tmp / f'{nazwa}.json'; c.write_text(json.dumps(cfg, ensure_ascii=False), encoding='utf-8')
         r = subprocess.run([sys.executable, str(P / 'src/kontrakty.py'), str(c), str(tmp / nazwa)], capture_output=True, text=True)
-        ok = (r.returncode == 0) if oczek is None else (r.returncode == 1 and oczek in r.stdout)
+        # zerowa: wynik jak w przebiegu bazowym (baza może mieć prawdziwe błędy, np. pojemność 5 V); wada: nowy komunikat, którego baza nie ma
+        ok = (r.stdout == baza) if oczek is None else (r.returncode == 1 and oczek in r.stdout and oczek not in baza)
         wyniki.append({'proba': nazwa, 'oczekiwane': oczek or 'brak błędów', 'wykryta': ok, 'wyjscie': r.stdout.strip().splitlines()[:4]})
         print('OK ' if ok else 'ZLE', nazwa, '->', r.stdout.strip().splitlines()[:2])
 (P / 'wyniki/proby.json').write_text(json.dumps(wyniki, indent=1, ensure_ascii=False) + '\n', encoding='utf-8')

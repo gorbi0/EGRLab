@@ -744,6 +744,134 @@
   "P10 R2": 70
  },
  "suma_5V_mA": 1090,
+ "pojemnosc_5V": [
+  {
+   "plytka": "P02 R4",
+   "wersja": "origin/main @ 660b727, blob c2cfb86198",
+   "uF": 22.1,
+   "najwieksze": [
+    {
+     "ref": "C22",
+     "wartosc": "22u / 16V",
+     "siec": "5V_SYS",
+     "uF": 22.0
+    },
+    {
+     "ref": "C26",
+     "wartosc": "100nF / X7R",
+     "siec": "5V_SYS",
+     "uF": 0.1
+    }
+   ],
+   "bez_wartosci": []
+  },
+  {
+   "plytka": "P03 R6",
+   "wersja": "origin/p03-r6-pcb @ b094fa7, blob eb3e1536f1",
+   "uF": 11.0,
+   "najwieksze": [
+    {
+     "ref": "C14",
+     "wartosc": "10uF / 16V X7R",
+     "siec": "5V_M1",
+     "uF": 10.0
+    },
+    {
+     "ref": "C13",
+     "wartosc": "1uF / 25V X7R",
+     "siec": "5V_SYS",
+     "uF": 1.0
+    }
+   ],
+   "bez_wartosci": []
+  },
+  {
+   "plytka": "P05 (R2; R3 zachowuje C1 według zadania)",
+   "wersja": "origin/main @ 660b727, blob 741a030034",
+   "uF": 472.7,
+   "najwieksze": [
+    {
+     "ref": "C1",
+     "wartosc": "470u / 16V",
+     "siec": "5VA_P05",
+     "uF": 470.0
+    },
+    {
+     "ref": "C2",
+     "wartosc": "1u",
+     "siec": "5VA_P05",
+     "uF": 1.0
+    },
+    {
+     "ref": "C23",
+     "wartosc": "1u",
+     "siec": "5V_SYS",
+     "uF": 1.0
+    }
+   ],
+   "bez_wartosci": []
+  },
+  {
+   "plytka": "P06 (R1, przed rewizją S1)",
+   "wersja": "origin/main @ 660b727, blob bfe61cbcca",
+   "uF": 470.3,
+   "najwieksze": [
+    {
+     "ref": "C3",
+     "wartosc": "470u / 16V",
+     "siec": "5VA_P06",
+     "uF": 470.0
+    },
+    {
+     "ref": "C6",
+     "wartosc": "100n",
+     "siec": "5VA_P06",
+     "uF": 0.1
+    },
+    {
+     "ref": "C9",
+     "wartosc": "100n",
+     "siec": "5VA_P06",
+     "uF": 0.1
+    }
+   ],
+   "bez_wartosci": []
+  },
+  {
+   "plytka": "P09 R2",
+   "wersja": "origin/p09-r2-pcb @ 2c7ac77, blob a75adba767",
+   "uF": 4.7,
+   "najwieksze": [
+    {
+     "ref": "C5",
+     "wartosc": "4u7",
+     "siec": "5V_SYS",
+     "uF": 4.7
+    }
+   ],
+   "bez_wartosci": []
+  },
+  {
+   "plytka": "P10 R2",
+   "wersja": "origin/p10-r2-pcb @ 724f17d, blob d226cd47a3",
+   "uF": 4.8,
+   "najwieksze": [
+    {
+     "ref": "C4",
+     "wartosc": "4u7",
+     "siec": "5V_SYS",
+     "uF": 4.7
+    },
+    {
+     "ref": "C1",
+     "wartosc": "100n",
+     "siec": "5V_SYS",
+     "uF": 0.1
+    }
+   ],
+   "bez_wartosci": []
+  }
+ ],
  "opisy_w_specyfikacji": [
   {
    "plik": "Plytki/Format-S1/SPECYFIKACJA-FORMATU-S1.md",
@@ -755,6 +883,8 @@
    "stan": "OK"
   }
  ],
- "bledy": [],
+ "bledy": [
+  "pojemność na szynach 5 V razem 985.6 µF > 600 µF dopuszczalnych dla TSR 2-2450 (P02 R4 22.1 µF, P03 R6 11.0 µF, P05 (R2; R3 zachowuje C1 według zadania) 472.7 µF, P06 (R1, przed rewizją S1) 470.3 µF, P09 R2 4.7 µF, P10 R2 4.8 µF)"
+ ],
  "uwagi": []
 }

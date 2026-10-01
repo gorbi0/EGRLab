@@ -199,6 +199,31 @@ for pl in logger:
 if src5 and suma > src5['max_A'] * 1000:
     bledy.append(f'suma budżetów 5V_SYS {suma} mA > styki źródła {src5["max_A"]} A')
 
+# ---- pojemność na szynach 5 V (obciążenie pojemnościowe TSR 2-2450) ----
+def farad(v):                          # '4u7' -> 4.7e-6, '22u / 16V' -> 22e-6, '100nF / X7R' -> 1e-7
+    m = re.match(r'\s*(\d+(?:[.,]\d+)?)\s*([pnuµm])(\d*)', v or '')
+    if not m:
+        return None
+    x = float(m.group(1).replace(',', '.') + ('.' + m.group(3) if m.group(3) and '.' not in m.group(1) else ''))
+    return x * {'p': 1e-12, 'n': 1e-9, 'u': 1e-6, 'µ': 1e-6, 'm': 1e-3}[m.group(2)]
+
+
+poj = CFG.get('pojemnosc_5V'); pojemnosc = []
+if poj:
+    for z in poj['plytki']:
+        parts = json.loads(show(z['ref'], z['plik'])); rows = []
+        for r, q in parts.items():
+            nets = [n.split('/')[-1] for n in q.get('pins', {}).values()]
+            if r.startswith('C') and q.get('on_board', True) and 'GND' in nets and any(n in poj['sieci'] for n in nets):
+                c = farad(q.get('value'))
+                rows.append({'ref': r, 'wartosc': q.get('value'), 'siec': next(n for n in nets if n in poj['sieci']), 'uF': round(c * 1e6, 3) if c else None})
+        pojemnosc.append({'plytka': z['plytka'], 'wersja': wersja(z['ref'], z['plik']), 'uF': round(sum(x['uF'] or 0 for x in rows), 1),
+                          'najwieksze': sorted(rows, key=lambda x: -(x['uF'] or 0))[:3], 'bez_wartosci': [x['ref'] for x in rows if x['uF'] is None]})
+    suma_uF = round(sum(x['uF'] for x in pojemnosc), 1)
+    if suma_uF > poj['limit_uF']:
+        bledy.append(f"pojemność na szynach 5 V razem {suma_uF} µF > {poj['limit_uF']} µF dopuszczalnych dla TSR 2-2450 (" +
+                     ', '.join(f"{x['plytka']} {x['uF']} µF" for x in pojemnosc) + ')')
+
 # ---- opisy w specyfikacji ----
 opisy = []
 for o in CFG.get('opisy_w_specyfikacji', []):
@@ -220,7 +245,7 @@ with open(W / 'zlacza-P12.csv', 'w', encoding='utf-8', newline='') as fh:
     for z in sorted(zlacza, key=lambda z: (str(z['poziom']), z['slot'])):
         w.writerow([z['poziom'], z['slot'], z['x_stos_mm'], z['z_spodu_plytki_mm'], z['plytka'], z['zlacze'], z['typ'], z['zmierzone_x_mm'], z['stan']])
 res = {'zrodla': {pl['plytka']: pl.get('_wersja') for pl in plytki if pl['_piny']}, 'zlacza': zlacza, 'sieci': wynik_sieci, 'zasilanie': zas,
-       'budzet_5V_mA': {pl['plytka']: pl['prad_5V_mA'] for pl in logger}, 'suma_5V_mA': suma, 'opisy_w_specyfikacji': opisy, 'bledy': bledy, 'uwagi': uwagi}
+       'budzet_5V_mA': {pl['plytka']: pl['prad_5V_mA'] for pl in logger}, 'suma_5V_mA': suma, 'pojemnosc_5V': pojemnosc, 'opisy_w_specyfikacji': opisy, 'bledy': bledy, 'uwagi': uwagi}
 (W / 'kontrakty.json').write_text(json.dumps(res, indent=1, ensure_ascii=False) + '\n', encoding='utf-8')
 
 L = ['# Kontrakty krawędzi A (J_BP) — mapa dla P12', '', '*Plik generowany przez `src/kontrakty.py` z `zrodla.json`; nie edytować ręcznie.*', '',
@@ -249,6 +274,13 @@ pl02 = next(pl for pl in plytki if baza(pl['plytka']) == 'P02')
 L += ['', f"Budżety 5V_SYS z dokumentów płytek (LOGGER): " + ', '.join(f"{pl['plytka']} {pl['prad_5V_mA']} mA" for pl in logger)
       + f" — **razem {suma} mA**. Źródło: {pl02['zasilacz']['5V_SYS']}; styki J_BP P02 R4: {pl_(src5['max_A'])} A. Budżetów 3V3_IO płytki nie podają." if src5 else '', '']
 L += [f"- {pl['plytka']}: {pl['prad_zrodlo']}" for pl in logger] + ['']
+if pojemnosc:
+    L += ['## Pojemność na szynach 5 V', '', f"Sieci: " + ', '.join(f'{k} ({v})' for k, v in poj['sieci'].items()) + f". Limit: {poj['limit_uF']} µF ({poj['limit_zrodlo']}).", '',
+          '| Płytka | µF | Największe | Źródło |', '|---|---|---|---|']
+    for x in pojemnosc:
+        duze = ', '.join('{} {} ({})'.format(y['ref'], y['wartosc'], y['siec']) for y in x['najwieksze'])
+        L.append(f"| {x['plytka']} | {pl_(x['uF'])} | {duze} | {x['wersja']} |")
+    L += ['', f"**Razem {pl_(round(sum(x['uF'] for x in pojemnosc), 1))} µF.**", '']
 if opisy:
     L += ['## Opisy położeń w specyfikacji S1', ''] + [f"- {o.get('plik')}: „{o.get('opis', '')}” — {o['stan']}" + (f" (slot ma środek {pl_(o['x_slotu'])} mm, płytka {pl_(o['zmierzone_x'])} mm)" if o.get('x_slotu') is not None else '') for o in opisy] + ['']
 (W / 'KONTRAKTY.md').write_text('\n'.join(L) + '\n', encoding='utf-8')

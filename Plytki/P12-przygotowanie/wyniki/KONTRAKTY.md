@@ -2,7 +2,11 @@
 
 *Plik generowany przez `src/kontrakty.py` z `zrodla.json`; nie edytować ręcznie.*
 
-**Wynik:** 0 błędów, 0 uwag; sieci: OK 17, czeka 29, UWAGA 0, BŁĄD 0.
+**Wynik:** 1 błędów, 0 uwag; sieci: OK 17, czeka 29, UWAGA 0, BŁĄD 0.
+
+## Błędy
+
+- pojemność na szynach 5 V razem 985.6 µF > 600 µF dopuszczalnych dla TSR 2-2450 (P02 R4 22.1 µF, P03 R6 11.0 µF, P05 (R2; R3 zachowuje C1 według zadania) 472.7 µF, P06 (R1, przed rewizją S1) 470.3 µF, P09 R2 4.7 µF, P10 R2 4.8 µF)
 
 ## Źródła
 
@@ -102,6 +106,21 @@ Budżety 5V_SYS z dokumentów płytek (LOGGER): P03 R6 500 mA, P05 R3 140 mA, P0
 - P09 R2: Plytki/P09-R2-review/docs/PROJEKT.md: rezerwa 200 mA dla obu modułów i logiki (5V_SYS albo 3V3_IO według JP1/JP2)
 - P06: Plytki/P06-R1-review/docs/PROJEKT.md: 180 mA z 5V_SYS w MEASURE
 - P10 R2: Plytki/P10-R2-review/README.md: ok. 70 mA z 5 V (transceiver)
+
+## Pojemność na szynach 5 V
+
+Sieci: 5V_SYS (wprost), 5V_M1 (P03: za kluczem Q1), 5VA_P05 (P05: za R1 1 Ω), 5VA_P06 (P06: za R6 1 Ω). Limit: 600 µF (karta TRACO TSR 2 (Plytki/P02-R3-review/reference/TRACO_TSR2.txt): „Capacitive Load … 5 Vout models: 600 µF max”, start 5 ms typ., przeciążenie: foldback).
+
+| Płytka | µF | Największe | Źródło |
+|---|---|---|---|
+| P02 R4 | 22,1 | C22 22u / 16V (5V_SYS), C26 100nF / X7R (5V_SYS) | origin/main @ 660b727, blob c2cfb86198 |
+| P03 R6 | 11 | C14 10uF / 16V X7R (5V_M1), C13 1uF / 25V X7R (5V_SYS) | origin/p03-r6-pcb @ b094fa7, blob eb3e1536f1 |
+| P05 (R2; R3 zachowuje C1 według zadania) | 472,7 | C1 470u / 16V (5VA_P05), C2 1u (5VA_P05), C23 1u (5V_SYS) | origin/main @ 660b727, blob 741a030034 |
+| P06 (R1, przed rewizją S1) | 470,3 | C3 470u / 16V (5VA_P06), C6 100n (5VA_P06), C9 100n (5VA_P06) | origin/main @ 660b727, blob bfe61cbcca |
+| P09 R2 | 4,7 | C5 4u7 (5V_SYS) | origin/p09-r2-pcb @ 2c7ac77, blob a75adba767 |
+| P10 R2 | 4,8 | C4 4u7 (5V_SYS), C1 100n (5V_SYS) | origin/p10-r2-pcb @ 724f17d, blob d226cd47a3 |
+
+**Razem 985,6 µF.**
 
 ## Opisy położeń w specyfikacji S1
 
