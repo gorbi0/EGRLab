@@ -1,0 +1,25 @@
+﻿zlacze;pin;siec;rezystor;cel_pomiaru
+J_SV1;1;GND;-;masa sondy
+J_SV1;2;5V_SYS;R36 1K / 1% 1206;5V_SYS na P05 (krok 3: 4,93-5,07 V przy ok. 23 C)
+J_SV1;3;5VA_P05;R37 1K / 1% 1206;5VA_P05 za R1 (spadek 12-20 mV)
+J_SV1;4;3V3_DAQ;R38 1K / 1% 1206;"3V3_DAQ z U12 (3,20-3,40 V; krok 7: ok. 0,07 V przy wylaczonym P05)"
+J_SV1;5;REF_2V5;R39 10K / 1% 1206;REF5025 (U2) dla okna DAQ_OK
+J_SV1;6;RAIL_SENSE;R40 10K / 1% 1206;dzielnik 5VA R3/R4 na wejsciach U3
+J_SV1;7;RAIL_LOW;R41 10K / 1% 1206;prog dolny okna (R5/R6, C25)
+J_SV1;8;RAIL_HIGH;R42 10K / 1% 1206;prog gorny okna (R7/R8, C26)
+J_SV1;9;VBAT_SENSE;R43 4.7K / 1% MF0207 na stojaco;akumulator auta z P02 R4 (do ok. 16 V), wejscie dzielnika CH7
+J_SV1;10;MEAS_COIL_LOW;R44 1K / 1% 1206;U4.18: VDS przy trzech cewkach <= 0,3 V (krok 10b)
+J_SV1;11;GND;-;masa sondy
+J_SV2;1;GND;-;masa sondy
+J_SV2;2;ADC_CS;R45 1K / 1% 1206;CS po stronie J_BP (start: 1)
+J_SV2;3;ADC_CONVST;R46 1K / 1% 1206;CONVST po stronie J_BP (start: 0)
+J_SV2;4;ADC_BUSY;R47 1K / 1% 1206;BUSY za U11B/R27
+J_SV2;5;ADC_DOUTA;R48 1K / 1% 1206;wspolne MISO za R26: stan Z przy CS=1 (krok 9)
+J_SV2;6;ADC_RESET;R49 1K / 1% 1206;RESET po stronie J_BP (start: 0)
+J_SV2;7;MEAS_EN;R50 1K / 1% 1206;MEAS_EN po stronie J_BP (start: 0)
+J_SV2;8;MEAS_PERMIT;R51 1K / 1% 1206;zgoda na cewki = MEAS_EN i DAQ_OK
+J_SV2;9;DAQ_OK;R52 1K / 1% 1206;wyjscie U5C do J_BP1.6
+J_SV2;10;DAQ_RAIL_N;R53 10K / 1% 1206;wyjscie okna U3 (OD, 10k R9)
+J_SV2;11;P05_SUP3_N;R54 10K / 1% 1206;nadzorca 3V3_DAQ U6 (OD, 10k R10)
+J_SV2;12;P05_SUP5_N;R55 1K / 1% 1206;nadzorca 5V_SYS za buforem U8
+J_SV2;13;GND;-;masa sondy
