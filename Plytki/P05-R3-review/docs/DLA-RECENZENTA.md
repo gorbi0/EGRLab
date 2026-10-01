@@ -1,5 +1,7 @@
 # Zakres niezależnej recenzji P05-R1
 
+**R3 (1.10.2026, format S1):** recenzji podlega schemat R3: złącza J_BP1/J_BP2, listwy serwisowe, typy części (SMD 1206, posiadane THT, rezystory precyzyjne 1206), SW1 JS202011AQN i budżet okna DAQ_OK — szczegóły w `README.md`. B2B P03/P05 i mating z tekstu niżej już nie obowiązują. Dowody: `verification/QA.md` (`verify_s1.py` i `verify_electrical.py`).
+
 **R2 (29.09.2026):** recenzji podlega tylko schemat R2 (zmiany w `README.md`). PCB nie ma — layout powstanie w formacie S1; `wip-layout-obrys-R1/` to tylko wzór odsprzęgania przy U1. Poniższy tekst pochodzi z R1.
 
 Proszę oceniać tę paczkę, nie tylko tekst ogólnej v6.1. Schemat, PCB i skrypty są edytowalne. Netlista ma pochodzić z eksportu KiCad, a kontrola DRC musi być świeża i powiązana z hashami plików.

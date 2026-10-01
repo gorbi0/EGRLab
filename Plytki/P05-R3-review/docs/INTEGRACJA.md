@@ -1,4 +1,6 @@
-# P05-R2 a pozostałe moduły i firmware
+# P05-R3 a pozostałe moduły i firmware
+
+*R3 (1.10.2026, format S1): połączenia z P02 R4, P03 R6 i P04 przez J_BP1/J_BP2 i płytkę połączeń P12 zamiast B2B i wiązek; firmware i sekwencja startu bez zmian.*
 
 *R2 (29.09.2026): dopisane czasy z karty AD7606B Rev. B, kalibracja w firmware (P5-08) i budżet pojemności 5V_SYS (P5-07). CH7 mierzy akumulator auta (VBAT_SENSE, P02 R4 J11.1).*
 
@@ -29,13 +31,13 @@ Offset i wzmocnienie kalibrować **w firmware**, nie w rejestrach AD7606B. CHx_O
 
 ## Budżet pojemności 5V_SYS (P5-07)
 
-TSR 2-2450 dopuszcza 600µF obciążenia pojemnościowego. Suma kondensatorów na szynach 5V w pakietach P00–P11 (stan 27.09) to ok.538µF, z tego 470µF to C1 w P05; bez P01 i bez kondensatorów modułu Waveshare. R1 1Ω i miękki start TSR ograniczają prąd ładowania C1 (ok.0,5A przy narastaniu 5V w 5ms). Przy pierwszym uruchomieniu kompletu sprawdzić, że 5V_SYS narasta bez restartów czkawkowych. Nie podłączać LV05 pod napięciem: 5V na C1 przez 1Ω to udar do 5A. Budżet trzeba przeliczyć dla P02 R4 (zasilanie z pakietu 4S) — to poza tą paczką.
+TSR 2-2450 dopuszcza 600µF obciążenia pojemnościowego. Suma kondensatorów na szynach 5V w pakietach P00–P11 (stan 27.09) to ok.538µF, z tego 470µF to C1 w P05; bez P01 i bez kondensatorów modułu Waveshare. R1 1Ω i miękki start TSR ograniczają prąd ładowania C1 (ok.0,5A przy narastaniu 5V w 5ms). Przy pierwszym uruchomieniu kompletu sprawdzić, że 5V_SYS narasta bez restartów czkawkowych. Nie wpinać taśmy J_BP1 pod napięciem: 5 V na C1 przez 1 Ω to udar do 5 A. Budżet trzeba przeliczyć dla P02 R4 (zasilanie z pakietu 4S) — to poza tą paczką.
 
 ## Zależności
 
-- P02:5V_SYS utrzymywane w roboczym zakresie przy obciążeniu P05 i rozruchu C1; sprawdzenie wspólnego budżetu prądowego. LV05.3 na P05 jest tylko pomiarem serwisowym.
-- P03: B2B bez taśmy, Ioff w buforach CORE i wykonana kontrola mechaniczna. P05 ma dodatkowy bufor BUSY; uwzględnić jego opóźnienie w pomiarach.
-- P04: DAQOK/J5 pin1 sygnał,2GND,4klucz. Niski DAQ_OK kasuje zgodę sprzętową; wysoki nie potwierdza kalibracji.
+- P02 R4: 5V_SYS (J_BP 2/4/6 → P12 → J_BP1.2/4) utrzymywane w roboczym zakresie przy obciążeniu P05 i rozruchu C1; VBAT_SENSE z J_BP.20 → J_BP1.10. 3V3_IO nie wchodzi na P05.
+- P03 R6: DAQ przez J_BP2 (te same numery pinów po obu stronach P12), Ioff w buforach CORE. Na P03 J_BP2.16/17/19/20 to PFAIL_N i 5V_SYS, na P05 16 i 20 to GND — P12 nie może ich łączyć. P05 ma dodatkowy bufor BUSY; uwzględnić jego opóźnienie, a w stosie zmierzyć SCLK/MISO na końcu taśm (krok 17 ODBIOR).
+- P04 (wariant pełny): DAQ_OK z J_BP1.6 przez P12; w LOGGER bez odbiorcy. Niski DAQ_OK kasuje zgodę sprzętową; wysoki nie potwierdza kalibracji.
 - P11 i adaptery: zachować rezystory przy źródle, odłączanie banków i wspólne odniesienie GND. P05 nie zastępuje rozdziału TEST/LOGGER.
 - P06/P07: tory prądu bez zmian. P07 nadal HOLD dla wariantu BTS7960.
 - MAX31856/temperatury są poza P05; ich kupne moduły zachowują złącza.

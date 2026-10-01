@@ -1,3 +1,5 @@
+*R3 (1.10.2026, format S1): złącza do innych płytek to J_BP1/J_BP2 przez P12; punkty pomiarowe na listwach J_SV1/J_SV2. Obwód jak w R2.*
+
 # Projekt elektryczny P05-R1
 
 ## Zakres
@@ -7,17 +9,17 @@ P05 mierzy napięcia, nie zasila silnika EGR i nie przełącza jego prądu. P06/
 ```text
 P02 5V_SYS -> R1 1R -> 5VA_P05 -> AD7606B AVCC
                            +-> MCP1700 -> 3V3_DAQ -> VDRIVE, bufory, HC08
-P03 B2B -> bufory Ioff -> SPI/CONVST/RESET -> ADC
-ADC DOUT/BUSY -> bufory Ioff -> B2B P03
+P03 R6 J_BP2 (przez P12) -> J_BP2 -> bufory Ioff -> SPI/CONVST/RESET -> ADC
+ADC DOUT/BUSY -> bufory Ioff -> J_BP2 -> P12 -> P03
 P11 TAPS -> K1..K3 NO -> filtry -> CH1..CH5
-GND -> 10k -> CH6; P02 R4 J11.1 (akumulator auta, VBAT_SENSE) -> dzielnik -> CH7; AUX HI/LO -> CH8
+GND -> 10k -> CH6; P02 R4 J_BP.20 -> P12 -> J_BP1.10 (akumulator auta, VBAT_SENSE) -> dzielnik -> CH7; AUX HI/LO -> CH8
 okno 5VA & supervisor 3V3 & supervisor 5V -> DAQ_OK -> P04
 MEAS_EN & DAQ_OK -> TBD62083 -> cewki K1..K3
 ```
 
 ## Zmiany i uzasadnienia
 
-1. U12 MCP1700-3302E/TO tworzy lokalne 3V3_DAQ z 5VA_P05. Pin 3 LV05 zachowuje nazwę 3V3_IO, ale kończy się na TP5. Nie wolno zwierać obu szyn. Rozwiązuje to przypadek prawidłowo zasilonego VDRIVE przy wyłączonym AVCC z osobnego źródła. C1 470µF oraz R2 1k pomagają przy zaniku zasilania. To nie jest dowód zgodności przebiegu przy twardym zwarciu AVCC: VDRIVE ≤ AVCC+0,3V trzeba sprawdzić oscyloskopem, także przy wyłączaniu i szybkim ponownym załączeniu.
+1. U12 MCP1700-3302E/TO tworzy lokalne 3V3_DAQ z 5VA_P05. R3: 3V3_IO nie wchodzi na P05 (dawny LV05.3 był tylko punktem kontrolnym). Nie łączyć 3V3_DAQ z żadną szyną z P12. Rozwiązuje to przypadek prawidłowo zasilonego VDRIVE przy wyłączonym AVCC z osobnego źródła. C1 470µF oraz R2 1k pomagają przy zaniku zasilania. To nie jest dowód zgodności przebiegu przy twardym zwarciu AVCC: VDRIVE ≤ AVCC+0,3V trzeba sprawdzić oscyloskopem, także przy wyłączaniu i szybkim ponownym załączeniu.
 2. Bufory U8–U11 Nexperia 74LVC125AD,118 mają funkcję Ioff. Po obu stronach odbiorników są rezystory określające stany spoczynkowe. CS jest H, pozostałe wejścia L. U11A włącza DOUT tylko przy aktywnym CS. Dodano bufor BUSY i rezystory wyjściowe 33Ω. Nie zastępować tych układów zwykłym HC125.
 3. U5C sprzętowo blokuje cewki przy niepoprawnym DAQ_OK. Układ nie czeka na reakcję programu. Nie jest jednak natychmiastowym odłączeniem odczepów: przekaźniki i diody gaszące wydłużają zwolnienie; rezystory ograniczające w adapterach są wymagane również w tej krótkiej fazie.
 4. K1–K3 to **G6K-2P-Y DC5, THT**. Nie kupować G6K-2F-Y SMD do tych footprintów. U4 COM ma połączenie z 5V_SYS; dodatkowe diody są przy cewkach. Trzy cewki 5V pobierają nominalnie łącznie około 60mA. Driver TBD62083APG jest sterowany 3,3V; wersja 62084 ma inny wymagany poziom wejścia.
@@ -44,7 +46,7 @@ Mnożniki uwzględniają typową rezystancję wejściową 5MΩ. Nie zastępują 
 
 To wejścia względem wspólnej masy, nie izolowane pomiary różnicowe. Napięcie silnika oblicza się jako skalibrowane CH1−CH2. Odwrócenie 5V/GND pinów5/6 jest rozpoznawane przez LOGGER/IDENTYFIKACJĘ, nie przez podawanie próbnego zasilania na nieznany pin. P05 tylko dostarcza pomiarów.
 
-P05 nie zawiera rezystorów 300k/100k znajdujących się przy źródłach w adapterach AT/AL1/AL2. Podanie surowego motoru na J4 zmienia skalę i usuwa przewidziane ograniczenie prądu. J5 pozostaje zależny od bezpiecznika 100mA po stronie P02. Pozycje NC w wiązkach mają pozostać nieobsadzone.
+P05 nie zawiera rezystorów 300k/100k znajdujących się przy źródłach w adapterach AT/AL1/AL2. Podanie surowego motoru na J4 zmienia skalę i usuwa przewidziane ograniczenie prądu. VBAT_SENSE (J_BP1.10) jest ograniczony po stronie P02 R4 (10 kΩ + P6KE24CA). Pozycje NC w wiązkach mają pozostać nieobsadzone.
 
 220pF daje zewnętrzne bieguny około 7,4–9,8kHz, zależnie od kanału. To filtr wejściowy, który nie eliminuje aliasingu przy zapisie 2kSPS. Do oceny PWM/szpilek potrzebny jest tryb szybszy lub równoległy oscyloskop. Oversampling ADC i późniejsze filtrowanie/decymacja muszą odpowiadać celowi badania; przy porównaniu motor/feedback uwzględnić różne opóźnienia torów.
 
