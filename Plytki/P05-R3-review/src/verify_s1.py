@@ -31,7 +31,8 @@ GROUP = {'J_SV1': {'5V_SYS', '5VA_P05', '3V3_DAQ', 'REF_2V5', 'RAIL_SENSE', 'RAI
 SV_FP = 'Connector_PinHeader_2.54mm:PinHeader_1x{:02d}_P2.54mm_Horizontal'
 # 1.10 (local review; rule decided for P03 R6): a rail pin only next to GND or another rail; the pack-level VBAT_SENSE only next to GND
 RAILS = {'5V_SYS', '5VA_P05', '3V3_DAQ'}; PACK = {'VBAT_SENSE'}
-NEW_PARTS = {'J_BP1', 'J_BP2', 'J_SV1', 'J_SV2', *[f'TP{i}' for i in range(1, 6)], *[f'R{i}' for i in range(36, 56)]}
+NEW_PARTS = {'J_BP1', 'J_BP2', 'J_SV1', 'J_SV2', *[f'TP{i}' for i in range(1, 6)], *[f'R{i}' for i in range(36, 56)],
+             'C35'}   # 2.10: AVCC bulk 10 uF (user decision after the PCB review)
 SW1_R3 = {}                                          # 1.10: E-Switch M6 (user decision) restores the R2 mapping of pole B (was mirrored for the JS slide)
 # part sources (S1 1/4/9 + exceptions named in the task)
 R_SMD = 'Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder'; C_SMD = 'Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder'

@@ -115,6 +115,8 @@ add('C1','C_A',SCP,CP63,'220u / 16V','EEUFR1C221',{1:A5,2:G},'P05',farads=220e-6
 cap('C2','ADDED_LDO_IN','1u',1e-6,A5,G,'P05');cap('C3','ADDED_LDO_OUT','2.2u',2.2e-6,V,G,'P05')
 res('R2','ADDED_LDO_BLEED','1K',1000,V,G,'P05')
 for i,pin in enumerate([1,37,38,48,23],4):cap(f'C{i}',f'C_DEC_U1_{pin}','100n',1e-7,V if pin==23 else A5,G,'ADC',small=True)
+# 2.10 (independent PCB review, NOTE 3; user decision): AVCC bulk next to the 5VA feed of U1 (C6 / the B.Cu join above the decoupling); before, only 4 x 100 nF and C6 near U1, C1 about 30 mm away
+cap('C35','ADDED_AVCC_BULK','10u',10e-6,A5,G,'ADC')
 cap('C9','C_REGCAP_A','1u',1e-6,'REGCAP_A',G,'ADC');cap('C10','C_REGCAP_D','1u',1e-6,'REGCAP_D',G,'ADC')
 cap('C11','C_ADC_REF','100n',1e-7,'ADC_REF',G,'ADC',small=True)
 cap('C12','ADDED_INTERNAL_REF_BULK','22u',22e-6,'ADC_REF',G,'ADC',large=True)

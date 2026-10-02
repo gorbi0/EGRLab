@@ -6,7 +6,7 @@ Kontrole PCB: 36/36. Próby ujemne: 35/35 (w tym próba zerowa).
 | Kontrola | Wynik |
 |---|---|
 | Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed) | PASS |
-| 119 on-board parts + 8 mounting holes, nothing else | PASS |
+| 120 on-board parts + 8 mounting holes, nothing else | PASS |
 | Every value, footprint ID and pad net equals the exported schematic netlist | PASS |
 | S1-2 section 4: parts on the bottom only SMD <= 1.5 mm (heights.py, BOM thickness note for the capacitors), no SOIC, >= 1 mm from THT pads | PASS |
 | 2 copper layers, 1.6 mm board (S1: FR4 1.6 mm) | PASS |
@@ -26,7 +26,7 @@ Kontrole PCB: 36/36. Próby ujemne: 35/35 (w tym próba zerowa).
 | DOUT (AD_DOUT_LOCAL) not under U1 on B.Cu and no via inside the U1 courtyard (review P5-01) | PASS |
 | U1 ground: every GND pin touches the F.Cu pour inside the pad ring (solid connection) on a piece that holds a GND via, >= 12 GND vias inside the ring to B.Cu (review 2.10: was 4, all in the lower half) | PASS |
 | No copper of other nets in the U1 courtyard (only the nets of U1 pins: escapes, decoupling, inner pour vias; README) | PASS |
-| Panel side: TAPS J4 and AUX J6 anchor holes 1.5-6 mm from x = 0 (cables leave through the panel), solder rows <= 25 mm in; SW1 (E-Switch M6) bushing and lever beyond x = 0, support legs and poles on the board | PASS |
+| Panel side: TAPS J4 and AUX J6 anchor holes 1.5-6 mm from x = 0 (cables leave through the panel), solder rows <= 25 mm in; SW1 (E-Switch M6) bushing and lever beyond x = 0, support legs and poles on the board, legs on GND (frame for ESD, 2.10) | PASS |
 | Decoupling at the IC pins: capacitor pad <= 6 mm from its supply / output pin (U2-U12; C1 220 uF at R1 pin 2 = 5VA_P05; limit as P03 R6 / P09 R2) | PASS |
 | Series resistors at the driver (R26 DOUT, R27 BUSY: pad <= 6 mm from U11.3 / U11.6) and flyback diodes at their coils (D1-D3 anode <= 6 mm from K1-K3 pin 8) | PASS |
 | Input filters C27-C34 on the channel copper <= 12 mm from their U1 inputs (pins 49-63; 45 deg fan to the filter column) | PASS |
@@ -56,7 +56,7 @@ Kontrole PCB: 36/36. Próby ujemne: 35/35 (w tym próba zerowa).
 | label_swap | Service headers | tak | 1 |
 | too_tall | Every part <= | tak | 1 |
 | refcap_far | U1 decoupling | tak | 5 |
-| regcap_far | U1 decoupling | tak | 5 |
+| regcap_far | U1 decoupling | tak | 7 |
 | refcap_via | REGCAP_A, REGCAP_D and REFCAP | tak | 3 |
 | dout_under | DOUT | tak | 2 |
 | u1_gnd_thermal | U1 ground | tak | 2 |
@@ -82,6 +82,6 @@ Kontrole PCB: 36/36. Próby ujemne: 35/35 (w tym próba zerowa).
 | fan_track | B.Cu under the input fan | tak | 2 |
 | vbat_near | VBAT_SENSE copper | tak | 2 |
 
-Nadruk: ukryte oznaczenia (brak miejsca): R15, R18, R28, R31, R33, R40, R5, R7, C10, C14, C20, C25, C28, C9, C12, C13, D2; nieumieszczone napisy: brak.
+Nadruk: ukryte oznaczenia (brak miejsca): R15, R18, R28, R31, R33, R40, R5, R7, C10, C14, C20, C25, C28, C6, C9, C12, C13, D2; nieumieszczone napisy: brak.
 
 Oględziny PDF: wpis ręczny w README (sekcja „PCB”); render stron w output/previews/pcb-*.png.

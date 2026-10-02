@@ -17,7 +17,7 @@ def resistance(s):
 R={r:resistance(v) for r,v in values.items() if r.startswith('R')}
 import re
 SWFP=(P/'eda/libraries/P05.pretty/ESW_100DP_M6.kicad_mod').read_text()
-_pads=[(m[1],float(m[2]),float(m[3])) for m in re.finditer(r'\(pad "(\d)"\s+thru_hole\s+\w+\s*\(at ([-\d.]+) ([-\d.]+)',SWFP)]
+_pads=[(m[1],float(m[2]),float(m[3])) for m in re.finditer(r'\(pad "(\d)"\s+thru_hole\s+\w+\s*\(at ([-\d.]+) ([-\d.]+)',SWFP) if float(m[2])<10]   # 2.10: support legs (x 12.7) numbered 4 = GND, not contacts
 # A pole = three numbered pads on one line (common in the middle). 1.10: the E-Switch M6 has its poles as columns (same x), the JS slide
 # of the cloud version had them as rows (same y); the lever / slider joins BOTH commons to the pads at the same end (data sheet p. 2:
 # position 3 = 2-1 + 5-4, position 1 = 2-3 + 5-6).

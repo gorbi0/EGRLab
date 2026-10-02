@@ -23,7 +23,7 @@ MARGIN=.05;VIA_R=.45;PWRN=tuple(BOARD_PWR)   # widths and clearances from board.
 import board as _bd;ISO={k:min(v,.5) for k,v in getattr(_bd,'ISOLATE',{}).items()}   # 2.10: own clearance of P05 VBAT_SENSE (router 0.8; the planner
 # had routed it 0.35 mm from a TAP and finds no path at 0.8 through the left column: 0.5 here)
 def clr(name):return max(.30 if name in PWRN else .25,ISO.get(name.split('/')[-1],0))
-def width_of(name):return .3 if name in tuple(CORE)+PWRN else SIGNAL_W
+def width_of(name):return .6 if name in PWRN else (.3 if name in tuple(CORE) else SIGNAL_W)   # 2.10: PWR class 0.6 mm (C17 link on P06 came out 0.3)
 def grown(ps,d):
  q=p.SHAPE_POLY_SET(ps);q.Inflate(mm(d),p.CORNER_STRATEGY_ROUND_ALL_CORNERS,mm(.005));return q
 f={q.GetReference():q for q in b.GetFootprints()}
