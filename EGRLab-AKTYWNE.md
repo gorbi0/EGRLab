@@ -2,12 +2,22 @@
 
 
 
-Aktualizacja: 1.10.2026. Scalone 1.10: P09 R2 i P10 R2 (PCB), P05 R3 (schemat S1, PR #7), przygotowanie P12, wymagania firmware S1, szkic listy zakupowej 3; P03 R6 PCB po recenzji (R70 10 kΩ, listwy według zasady szyn, nowe trasowanie). P02 R4: PCB w klasie L scalona (PR #4) i paczka produkcyjna gotowa (`Plytki/P02-PCB-R4-zamowienie`, ZIP aa7b526b…, pod JLCPCB; nie zamówiona). Format S1-3 (P10 na poziomie 4). P00 i P04 mają pakiety do zamówienia PCB (`Plytki/Zamowienie-Satland/`), P01 i stare P02 wstrzymane (zasilanie z pakietu 4S). Baza odniesienia: `Rewizje/EGRLab-v6.1-rc1`.
+Aktualizacja: 2.10.2026. Scalone 2.10: P05 R3 PCB i P06 R2 PCB po niezależnych recenzjach, nadruk 1,0 mm na P03 / P09 / P10, firmware 6.2-s1, P12 przygotowanie, szkic zakupów 3, przygotowanie P11 S1. Scalone 1.10: P09 R2 i P10 R2 (PCB), P05 R3 (schemat S1, PR #7), przygotowanie P12, wymagania firmware S1, szkic listy zakupowej 3; P03 R6 PCB po recenzji (R70 10 kΩ, listwy według zasady szyn, nowe trasowanie). P02 R4: PCB w klasie L scalona (PR #4) i paczka produkcyjna gotowa (`Plytki/P02-PCB-R4-zamowienie`, ZIP aa7b526b…, pod JLCPCB; nie zamówiona). Format S1-3 (P10 na poziomie 4). P00 i P04 mają pakiety do zamówienia PCB (`Plytki/Zamowienie-Satland/`), P01 i stare P02 wstrzymane (zasilanie z pakietu 4S). Baza odniesienia: `Rewizje/EGRLab-v6.1-rc1`.
 
 Pakiety płytek i ich recenzje znajdują się w `Plytki/`.
 
 
 
+
+## 2.10.2026 — RECENZJE PCB P05 / P06, SCALENIA I DECYZJE
+
+Scalone po „scal” (merge na lokalnym `main`, push robi użytkownik):
+- **P05 R3 PCB** (`Plytki/P05-R3-review`): poprawki po niezależnej recenzji (masa przy U1: przelotki pod kondensatorami i przy AGND / REFGND, bez paska i kręgosłupa 5VA na B.Cu; B.Cu pod wachlarzem wejść tylko masa; kondensatory odsprzęgające według pinu zasilania i GND; tory masy z planera; reguła 0,15 mm dla wylewek tylko w pierścieniu pól; VBAT ≥ 0,6 mm od TAP; nadruk 1,0 / 0,15 mm). DRC 0/0/0, kontrole PCB 36/36, próby ujemne 35/35. Dziewięć dróg powrotnych masy przyjętych jawnie (decyzja użytkownika 1).
+- **P06 R2 PCB** (`Plytki/P06-R2-review`): poprawki po recenzji (nadruk, masa pod U2 / U3, C2 pod U3, R30 przy U9, drogi powrotne odsprzęgania). DRC 0/0/0, kontrole PCB 34/34, próby ujemne 37/37.
+- **Nadruk S1** na P03 R6, P09 R2, P10 R2: wszystkie napisy ≥ 1,0 mm, linia ≥ 0,15 mm (minimum JLCPCB), trasowanie bez zmian.
+- **Firmware 6.2-s1** (`Rewizje/EGRLab-v6.2-s1`), **P12 przygotowanie** (19 OK / 27 czeka, LOGGER czeka na P11), **szkic zakupów 3** (131 pozycji), **przygotowanie P11 S1** (decyzje P11-1…P11-7 otwarte).
+
+Decyzje 2.10: P05 — dziewięć dróg powrotnych przyjętych (wyjątki w `verify_pcb.py`), zmiana schematu: nóżki SW1 do GND i kondensator na AVCC przy U1; P06 — szprychy termiczne na polach J3 / J4 i 100 nF na 5VA przy J5; P02 R4 nie jest zamówione — nadruk do poprawy przed zamówieniem.
 
 ## 1.10.2026 — SCALENIA I DECYZJE UŻYTKOWNIKA
 
