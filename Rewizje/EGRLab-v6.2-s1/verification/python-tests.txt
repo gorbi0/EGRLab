@@ -1,0 +1,110 @@
+test_balanced_braces_and_parens (test_c_sanity.CSanityTests) ... ok
+test_format_specifier_count_matches_arguments (test_c_sanity.CSanityTests)
+Prosta kontrola printf/snprintf: liczba %-specyfikatorow vs przecinki. ... ok
+test_headers_have_include_guard (test_c_sanity.CSanityTests) ... ok
+test_no_line_break_inside_literals (test_c_sanity.CSanityTests) ... ok
+test_no_tabs_in_sources (test_c_sanity.CSanityTests) ... ok
+test_sources_present (test_c_sanity.CSanityTests) ... ok
+test_abi (test_logs.LogTests) ... ok
+test_bad_calibration_length_is_rejected (test_logs.LogTests) ... ok
+test_crc_failure_is_not_recovered (test_logs.LogTests) ... ok
+test_current_invalid_exports_empty_not_zero (test_logs.LogTests) ... ok
+test_current_zero_follows_config (test_logs.LogTests)
+Zero pradu jest per konfiguracja, nie jedno na cala sesje. ... ok
+test_every_channel_permutation_gives_the_same_ratio (test_logs.LogTests) ... ok
+test_export_and_report (test_logs.LogTests) ... ok
+test_invalid_count (test_logs.LogTests) ... ok
+test_missing_config_event_is_reported (test_logs.LogTests) ... ok
+test_non_monotonic_time (test_logs.LogTests) ... ok
+test_older_versions_still_read (test_logs.LogTests) ... ok
+test_range_change_does_not_change_exported_voltage (test_logs.LogTests)
+Ten sam sygnal fizyczny przy dwoch zakresach musi dac to samo napiecie. ... ok
+test_roundtrip_is_version_4 (test_logs.LogTests) ... ok
+test_scan_reads_events (test_logs.LogTests) ... ok
+test_truncated_last_block (test_logs.LogTests) ... ok
+test_unknown_mapping_is_nan_not_zero (test_logs.LogTests) ... ok
+test_v1_supply_pin_mapping_still_works (test_logs.LogTests) ... ok
+test_adc_pins_and_watchdog_cap (test_v4.HardwareNetChecks) ... ok
+test_interlock_graph_detects_wiring_mutations (test_v4.HardwareNetChecks) ... ok
+test_interlock_truth_table (test_v4.HardwareNetChecks) ... ok
+test_mcp_reset_and_output_only_bit (test_v4.HardwareNetChecks) ... ok
+test_no_push_pull_on_safe (test_v4.HardwareNetChecks) ... ok
+test_watchdog_reset_is_independent (test_v4.HardwareNetChecks) ... ok
+test_absent_metadata_does_not_guess_v4 (test_v4.V4Regression) ... ok
+test_config_event_missing_validity_warns (test_v4.V4Regression) ... ok
+test_current_bypass_and_null_temperature_scan (test_v4.V4Regression) ... ok
+test_failed_adc_invalidates_all_physical_values (test_v4.V4Regression) ... ok
+test_invalid_record_flag (test_v4.V4Regression) ... ok
+test_learned_false_leaves_ratio_but_no_position (test_v4.V4Regression) ... ok
+test_legacy_explicit_valid_metadata_still_exports (test_v4.V4Regression) ... ok
+test_legacy_manual_metadata_warns_and_preserves_raw (test_v4.V4Regression) ... ok
+test_missing_snapshot_never_borrows_scale (test_v4.V4Regression) ... ok
+test_profile_import_refuses_unmeasured_zero (test_v4.V4Regression) ... ok
+test_saturated_channel_not_reported_as_voltage (test_v4.V4Regression) ... ok
+test_segments_and_time_window (test_v4.V4Regression) ... ok
+test_single_sample_peak_survives_envelope (test_v4.V4Regression) ... ok
+test_strict_json_rejects_nan (test_v4.V4Regression) ... ok
+test_unknown_range_is_invalid (test_v4.V4Regression) ... ok
+/home/tgorbacz/AI/Claude/EGRLab/.worktrees/fw-6.2-s1/Rewizje/EGRLab-v6.2-s1/tests/test_v5.py:47: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/tgorbacz/AI/Claude/EGRLab/.worktrees/fw-6.2-s1/Rewizje/EGRLab-v6.1-rc1/hardware/wiring.csv' mode='r' encoding='utf-8-sig'>
+  cls.w=list(csv.DictReader((HW/'hardware/wiring.csv').open(encoding='utf-8-sig'),delimiter=';'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+test_cross_board_nets_have_complete_wire_paths (test_v5.V5Hardware) ... ok
+test_every_wire_matches_both_actual_connector_pins (test_v5.V5Hardware) ... ok
+test_idc_mechanical_keys_remove_only_the_specified_position (test_v5.V5Hardware) ... /home/tgorbacz/AI/Claude/EGRLab/.worktrees/fw-6.2-s1/Rewizje/EGRLab-v6.2-s1/tests/test_v5.py:76: ResourceWarning: unclosed file <_io.TextIOWrapper name='/home/tgorbacz/AI/Claude/EGRLab/.worktrees/fw-6.2-s1/Rewizje/EGRLab-v6.1-rc1/hardware/connectors.csv' mode='r' encoding='utf-8-sig'>
+  rows=list(csv.DictReader((HW/'hardware/connectors.csv').open(encoding='utf-8-sig'),delimiter=';'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_interlock_entire_truth_table_from_gate_pins (test_v5.V5Hardware) ... ok
+test_local_permit_requires_latch_and_power (test_v5.V5Hardware) ... ok
+test_no_18volt_gpio_or_b7_input (test_v5.V5Hardware) ... ok
+test_no_abandoned_parallel_oc_dividers_or_current_relay (test_v5.V5Hardware) ... ok
+test_reference_regulator_adc_and_inamp_pins (test_v5.V5Hardware) ... ok
+test_supervisor_has_no_parallel_push_pull_driver (test_v5.V5Hardware) ... ok
+test_current_bad_time_or_unqualified_is_blank (test_v5.V5Logs) ... ok
+test_local_scaling_and_legacy_are_independent (test_v5.V5Logs) ... ok
+test_missing_current_never_becomes_zero_amps (test_v5.V5Logs) ... ok
+test_unqualified_voltage_preserves_raw_and_current (test_v5.V5Logs) ... ok
+test_v5_header_crc_csv_preserves_local_raw (test_v5.V5Logs) ... ok
+test_wrong_record_size_rejected (test_v5.V5Logs) ... ok
+test_complete_profile_emits_no_arm_test_or_qualify (test_v5.V5Profiles) ... ok
+test_module_identity_mismatch_and_nan_rejected (test_v5.V5Profiles) ... ok
+test_synthetic_or_other_drive_class_rejected (test_v5.V5Profiles) ... ok
+test_templates_cannot_commission_hardware (test_v5.V5Profiles) ... ok
+test_adc_lvc_and_other_adapters_follow_assembly_method (test_v6.V6Assembly) ... ok
+test_all_series_pairs_collapsed_without_dangling_midpoints (test_v6.V6Assembly) ... ok
+test_bought_boards_keep_their_original_pins (test_v6.V6Assembly) ... ok
+test_configurable_clocks_are_used_and_timing_limit_retained (test_v6.V6Assembly) ... ok
+test_daq_direct_connection_has_no_harness_or_power_alias (test_v6.V6Assembly) ... ok
+test_errata_order_codes_and_pinout (test_v6.V6Assembly) ... ok
+test_every_harness_is_in_owner_bom_with_length_and_plug (test_v6.V6Assembly) ... ok
+test_firmware_gains_follow_real_resistor_nominals (test_v6.V6Assembly) ... ok
+test_interfaces_copies_and_card_references (test_v6.V6Assembly) ... ok
+test_p01_fault_transistor_bias_is_actually_supplied_by_pg (test_v6.V6Assembly) ... ok
+test_pigtail_is_exactly_one_pth_end_and_one_receiver (test_v6.V6Assembly) ... ok
+test_procurement_sum_does_not_buy_pth_pads_or_duplicate_harnesses (test_v6.V6Assembly) ... ok
+test_reference_caps_parallel_to_adc_and_not_series (test_v6.V6Assembly) ... ok
+test_removed_dead_nets_and_tied_spare_gate (test_v6.V6Assembly) ... ok
+test_taps_sensor_pins_not_grounded_and_local_kelvin (test_v6.V6Assembly) ... ok
+test_v5_profile_rejected_and_commissioning_stays_disabled (test_v6.V6Assembly) ... ok
+test_application_calls_freshness_guard_and_updates_time_with_inputs (test_v61.Stabilization) ... ok
+test_contract_covers_all_rails_and_ports (test_v61.Stabilization) ... ok
+test_health_does_not_feed_enable_and_create_retry_loop (test_v61.Stabilization) ... ok
+test_integrated_p01_keeps_reviewed_analog_circuit (test_v61.Stabilization) ... ok
+test_mutations_are_detected (test_v61.Stabilization) ... ok
+test_real_v6_fails_before_fixes (test_v61.Stabilization) ... ok
+test_sensor_health_truth_table_from_actual_pins (test_v61.Stabilization) ... ok
+test_d2_bench_mode_from_low_pfail_for_100_ms (test_v62_s1.S1Firmware) ... ok
+test_d3_drive_stops_before_files_close (test_v62_s1.S1Firmware) ... ok
+test_f01_pfail_input_without_internal_pulls_and_falling_edge (test_v62_s1.S1Firmware) ... ok
+test_f04_adc_startup_and_meas_enable_order (test_v62_s1.S1Firmware) ... ok
+test_f05_rate_range_counters_and_window (test_v62_s1.S1Firmware) ... ok
+test_f06_logger_current_chain_in_config (test_v62_s1.S1Firmware) ... ok
+test_f07_p09_patch_applied (test_v62_s1.S1Firmware) ... ok
+test_f08_can_has_own_task_and_soft_events (test_v62_s1.S1Firmware) ... ok
+test_f09_profile_s1_revisions_without_calibration_change (test_v62_s1.S1Firmware) ... ok
+test_version (test_v62_s1.S1Firmware) ... ok
+
+----------------------------------------------------------------------
+Ran 96 tests in 1.233s
+
+OK

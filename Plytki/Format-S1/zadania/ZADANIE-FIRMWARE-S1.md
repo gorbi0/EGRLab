@@ -1,8 +1,8 @@
 # Firmware pod format S1 — wymagania ze zmian sprzętu (zadanie, 1.10.2026)
 
-**Stan:** wymagania zebrane z pakietów płytek. Kodu nie zmieniano.
+**Stan (1.10.2026 wieczorem):** wykonane w `Rewizje/EGRLab-v6.2-s1` (gałąź `fw-6.2-s1`, sesja lokalna): F-01…F-09 w kodzie według decyzji D-1…D-3, 5/5 kompilacji ESP-IDF 5.4.3 w Dockerze, kontrole hosta i próby mutacyjne — szczegóły w README rewizji. Odbiór na sprzęcie: NIE ZBADANO.
 **Baza:** `Rewizje/EGRLab-v6.1-rc1/firmware` (zamknięta; nowa wersja powstaje jako kopia).
-**Wykonawca i miejsce kompilacji:** do decyzji. ESP-IDF jest u Codexa na laptopie (`docs/pamiec-claude/egrlab-codex-toolchains.md`); na komputerze 24/7 go nie ma.
+**Wykonawca i miejsce kompilacji:** D-1 (niżej) — komputer 24/7, Docker `espressif/idf:v5.4.3`, `scripts/egrlab-idf`. *(Pierwotnie: do decyzji.)* ESP-IDF jest u Codexa na laptopie (`docs/pamiec-claude/egrlab-codex-toolchains.md`); na komputerze 24/7 od 1.10 jest obraz Dockera `espressif/idf:v5.4.3`.
 
 ## 1. Zgodność pinów — sprawdzone 1.10.2026
 
