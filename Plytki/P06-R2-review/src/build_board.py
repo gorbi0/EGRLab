@@ -150,7 +150,7 @@ if __name__ == '__main__':
         g = p.PCB_SHAPE(); g.SetShape(p.SHAPE_T_ARC); g.SetCenter(xy(cx, cy))
         g.SetStart(xy(cx + R * math.cos(math.radians(a0)), cy + R * math.sin(math.radians(a0))))
         g.SetArcAngleAndEnd(p.EDA_ANGLE(90, p.DEGREES_T), True); g.SetWidth(mm(.05)); g.SetLayer(p.Edge_Cuts); b.Add(g)
-    tb = p.TITLE_BLOCK(); tb.SetTitle(TITLE); tb.SetRevision(NAME + '-R2 PCB'); tb.SetDate('2026-10-01')
+    tb = p.TITLE_BLOCK(); tb.SetTitle(TITLE); tb.SetRevision(NAME + '-R2 PCB'); tb.SetDate('2026-10-02')
     tb.SetComment(0, 'Layout lokalny; recenzja i przymiarka 1:1 przed zamowieniem'); b.SetTitleBlock(tb)
     b.BuildConnectivity(); p.SaveBoard(str(E / f'{NAME}.kicad_pcb'), b)
     print(f'Created {NAME} board:', len(fmap), 'footprints +', len(holes()), 'M3 holes; outline', W, 'x', Hh, '; rule areas:',

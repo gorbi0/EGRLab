@@ -142,6 +142,7 @@ add('D2','ADD_REF_DISCHARGE',symbol('Device','D_Schottky'),DIO35,'BAT85','BAT85,
 for i,(r,rail) in enumerate([('U1',A5),('U2',V),('U3',V),('U4',A5),('U5',V),('U6',V),('U7',V),('U8',V),('U9',A5),('U10',V)],6):
  cap('C'+str(i),'DEC_'+r,'100n',1e-7,rail,G,'P06')
 PARTS['C8']['note']='Bottom side at U3 (layout 1.10, S1-2): thickness <= 1.5 mm, e.g. GRM31MR71H104KA01 (1.15 +/- 0.1 mm).'
+PARTS['C2']['note']='Bottom side under U3 at IN+ / IN- (layout 2.10, review F2, S1-2): thickness <= 1.5 mm (C0G 1206, typically 0.6-1.15 mm).'
 add('D1','ADD_LDO_DISCHARGE',symbol('Device','D_Schottky'),DIO,'1N5819','1N5819',{1:A5,2:V},'P06','https://www.vishay.com/docs/88525/1n5817.pdf','Anode on local 3.3 V, cathode on 5VA; output-cap discharge path on supply removal.')
 # Wires that stay (S1 5): ISERIES and both BYPASS harnesses, PTH at the x=0 board edge (R1 pigtails: 2.4 mm holes, tie anchor 12 mm).
 # R2 local layout (1.10): J3 with 2 pads (R1 pads 3/4 were empty) and J4 at 7.62 mm instead of 17.78 - with the R1 sizes J3, J4 and J5

@@ -47,7 +47,7 @@ def start(n, title, subtitle):
     c.setFillColor(HexColor('#172833')); c.setFont('Bold', 18); c.drawString(12 * mm, 190 * mm, title)
     c.setFont('Arial', 9); c.drawString(12 * mm, 182 * mm, subtitle)
     c.setStrokeColor(HexColor('#cdd7dc')); c.line(12 * mm, 14 * mm, 285 * mm, 14 * mm)
-    c.setFont('Arial', 8); c.drawString(12 * mm, 9 * mm, f'{TYTUL} | 01.10.2026 | PCB do recenzji lokalnej | przymiarka 1:1 i odbiór sprzętu: NIE ZBADANO')
+    c.setFont('Arial', 8); c.drawString(12 * mm, 9 * mm, f'{TYTUL} | 02.10.2026 | PCB po recenzji niezależnej (2.10) | przymiarka 1:1 i odbiór sprzętu: NIE ZBADANO')
     c.drawRightString(285 * mm, 9 * mm, f'{n} / {NPAGES}')
 
 
@@ -94,14 +94,14 @@ for t in [f'<b>Płytka:</b> 106,5 × 100 mm (klasa 2/3), narożniki R1, FR4 1,6 
           + (f'; {liczba(nlib, "zgłoszenie", "zgłoszenia", "zgłoszeń")} lib_footprint_mismatch u części z przyciętym nadrukiem (przyjęte przez verify_pcb.py)' if nlib else '')
           + f'; PCB {checks["passed"]}/{checks["total"]}; próby ujemne PCB {npass}/{len(neg)} (z próbą zerową).',
           '<b>Otwarte:</b> przymiarka 1:1 (strona 5: końcówki przewodów przy x = 0, R21 leżący 3–5 mm nad płytką), kod przełącznika BYPASS i C1 przy zakupie, '
-          f'grubość C8 od spodu (BOM); {liczba(len(hidden), "oznaczenie ukryte", "oznaczenia ukryte", "oznaczeń ukrytych")} z braku miejsca'
+          f'grubość C2 i C8 od spodu (BOM); {liczba(len(hidden), "oznaczenie ukryte", "oznaczenia ukryte", "oznaczeń ukrytych")} z braku miejsca'
           f'{(" (" + ", ".join(hidden) + "; na rysunku montażowym z warstwy F.Fab)") if hidden else ""}; paczka produkcyjna poza zakresem.']:
     y = para(t, 12, y, 120)
 c.drawImage(str(O / 'previews/isometric.png'), 138 * mm, 30 * mm, 150 * mm, 125 * mm, preserveAspectRatio=True, anchor='c', mask='auto')
 para('Render KiCad bez modeli 3D części (obraz Dockera nie ma biblioteki modeli KiCad).', 140, 30, 140)
 c.showPage()
 pages = [(2, 'Montaż od góry — 1:1', 'assembly', [
-    f'<b>Kolejność lutowania:</b> najpierw spód (rezystory listew, C8 100 nF przy U3 — grubość ≤ 1,5 mm), potem góra (S1-2).',
+    f'<b>Kolejność lutowania:</b> najpierw spód (rezystory listew, R10 pod U5, C8 100 nF nad U3 i C2 470 pF pod U3 — grubość ≤ 1,5 mm), potem góra (S1-2).',
     '<b>RSH1</b> (WSK2512, 4 pola): pola pomiarowe 2 / 3 na przekątnej; lutować bez nadmiaru cyny na polach prądowych. <b>U1</b> SOIC-8, U5 / U6 SOIC-14 wprost; '
     'U2 / U3 / U7 w podstawkach (opcjonalnie), TO-92 i elementy THT od góry.',
     '<b>J3 / J4 / J5:</b> przewody lutowane do otworów (opisy ECU / EGR i 5VA / SW / GND obok pól), opaska na izolacji przez dwa otwory kotwy przy x = 0. '

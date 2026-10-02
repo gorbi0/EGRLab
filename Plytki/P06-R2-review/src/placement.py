@@ -152,7 +152,8 @@ put('R21', 10.5, 82.5, 0)                       # pad 1 SW_RAW (x 10.5), pad 2 G
 put('R6', 84.5, 20.0, 180)                      # pad 1 5V_SYS (x 84.5) under J_BP.10/12, pad 2 5VA (x 69.26) towards the consumers on the left
 put('C3', 62.5, 21.5, 0)                        # 220 uF at R6.2, 4.3 mm from the M3 zone at (57.5, 14)
 put('U4', 62.0, 41.0, 0)                        # MCP1702 TO-92: 1 GND, 2 VIN (5VA), 3 VOUT (3V3) between the analog block and the logic
-put('D1', 60.0, 47.0, 0)                        # 1N5819: cathode (pad 1, 5VA) left, anode (pad 2, 3V3) right
+put('D1', 60.0, 50.5, 0)                        # 1N5819: cathode (pad 1, 5VA) left, anode (pad 2, 3V3) right; 2.10: 3.5 mm lower, the
+                                                # input / output capacitors of U4 fit between it and U4 at the GND pin (return-path check)
 # ---- analog chain right of U1 ----
 put('U2', 45.0, 27.0, 0)                        # MCP6022 DIP8: 3 (I_DIV) and 1/2 (ADC_BUF) left, 5..8 right (REF25, REF_BUF, 3V3)
 put('U3', 57.0, 27.0, 0)                        # MCP3201 DIP8: 1 VREF, 2 IN+, 3 IN-, 4 VSS left; 8 VDD, 7 CLK, 6 DOUT, 5 CS right
@@ -164,23 +165,63 @@ put('U5', 75.0, 28.5, 270)                      # LVC125: top row 7..1 faces J_B
 put('U6', 93.0, 34.0, 270)                      # LVC125 (READY): LOGGER_OK_TX (8) -> R19 -> J_BP.8
 put('U7', 76.0, 40.0, 0)                        # HC08 DIP14
 put('U8', 89.0, 45.0, 0); put('U9', 89.0, 52.0, 0)   # MCP120-300 (3V3) / -450 (5VA), D bondout
+# review 2.10 re-route: R10 (100k pull-down of ADC_SCLK at U5.5) on the bottom under U5. DEC put it on top right under U5.10
+# (CS_LOCAL_N, the OE of the DOUT buffer): with the analog keepouts five router attempts in six left U5.10 walled in.
+put('R10', 75.5, 28.5, 90, 'B')
 # ---- reserved areas (no parts): force pours and Kelvin corridor (both layers), cables of the tails (wall .. pad rows) ----
 RESERVED = [('F', (5.5, 18.0, 27.5, 58.2)), ('B', (5.5, 18.0, 27.5, 58.2)),
             ('F', (23.6, 26.5, 33.6, 33.3)), ('B', (17.0, 24.0, 35.0, 35.0)),
-            ('F', (0.0, 18.0, 12.75, 79.0)), ('B', (0.0, 18.0, 12.75, 79.0))]
+            ('F', (0.0, 18.0, 12.75, 79.0)), ('B', (0.0, 18.0, 12.75, 79.0)),
+            ('F', (71.9, 31.9, 75.3, 37.5))]   # review 2.10 re-route: escapes of U5.9 (ADC_DOUT) / U5.10 (CS_LOCAL_N) downwards, no part there
 # passives at the pin they serve: (anchor ref, anchor pad); the part's pad on the same net goes next to it. Order = priority.
 DEC = {'C6': ('U1', '6'), 'C1': ('U2', '3'), 'R4': ('U2', '3'), 'R3': ('U1', '5'), 'R5': ('U2', '1'), 'C2': ('U3', '2'),
        'C5': ('U10', '2'), 'C16': ('U3', '1'), 'C7': ('U2', '8'), 'C8': ('U3', '8'), 'C15': ('U10', '3'),
        'C4': ('U4', '3'), 'C9': ('U4', '2'), 'C10': ('U5', '14'), 'C11': ('U6', '14'), 'C12': ('U7', '14'), 'C13': ('U8', '2'),
-       'C14': ('U9', '2'), 'R7': ('U3', '5'), 'R9': ('U3', '7'), 'R8': ('U5', '2'), 'R10': ('U5', '5'), 'R12': ('U5', '8'),
+       'C14': ('U9', '2'), 'R7': ('U3', '5'), 'R9': ('U3', '7'), 'R8': ('U5', '2'), 'R12': ('U5', '8'),
        'R13': ('U9', '1'), 'R14': ('U8', '1'), 'R15': ('U6', '3'), 'R16': ('U6', '6'), 'R17': ('U7', '3'), 'R18': ('U7', '6'),
        'R19': ('U6', '8'), 'R20': ('J_BP', '8'), 'R22': ('R21', '1'), 'R23': ('U6', '5'), 'R24': ('U4', '3')}
+# review 2.10 (F2, return-path check of verify_pcb.py): a decoupling / filter capacitor also needs its GND pad at the GND pin of its part.
+# With the supply pad alone nearest, C9 / C4 / C10 / C12 had their GND pads on the far side and returns of 40-63 mm through GND copper.
+# These capacitors take the free position with the smallest (supply pad -> pin) + (GND pad -> GND pin), supply side <= SUP_MAX.
+GND_PIN = {'C6': ('U1', '2'), 'C1': ('U2', '4'), 'C2': ('U3', '3'), 'C5': ('U10', '1'), 'C16': ('U3', '4'), 'C7': ('U2', '4'), 'C8': ('U3', '4'),
+           'C15': ('U10', '1'), 'C4': ('U4', '1'), 'C9': ('U4', '1'), 'C10': ('U5', '7'), 'C11': ('U6', '7'), 'C12': ('U7', '7'), 'C13': ('U8', '3'),
+           'C14': ('U9', '3')}
+SUP_MAX = {'C5': 4.5}   # MCP1525 load capacitor <= 5 mm (verify_pcb.py); others <= 5.5 (check: 6)
+
+
+def place_dec(ref, target, gnd, radius=8.0, side='F'):
+    tref, tpad = target; tx, ty = pad(tref, tpad); tnet = parts[tref]['pins'][str(tpad)]
+    own = next(k for k, n in parts[ref]['pins'].items() if n == tnet); gown = next(k for k, n in parts[ref]['pins'].items() if n == 'GND')
+    gx, gy = pad(*gnd); (lx, ly, *_), (mx, my, *_) = geo(ref)[0][own], geo(ref)[0][gown]; step = .25; n = int(radius / step); best = None
+    for i in range(-n, n + 1):
+        for j in range(-n, n + 1):
+            if math.hypot(i, j) * step > radius:
+                continue
+            for r in (0, 90, 180, 270):
+                ox, oy = tf(lx, ly, 0, 0, r); oy = -oy if side == 'B' else oy
+                x, y = tx + i * step - ox, ty + j * step - oy
+                ds = math.dist(tf(lx, ly, x, y, r, side), (tx, ty)); dg = math.dist(tf(mx, my, x, y, r, side), (gx, gy))
+                if ds > SUP_MAX.get(ref, 5.5) or (best and ds + dg >= best[0]):
+                    continue
+                if free(box(ref, (x, y, r), side), .5, own=ref, side=side):
+                    best = (ds + dg, x, y, r, ds)
+    if not best:
+        raise SystemExit(f'no place for {ref} near {target} ({side})')
+    put(ref, best[1], best[2], best[3], side); REPORT[ref] = round(best[4], 2)
+
+
 FAILED = []
 for c, t in DEC.items():
     tries = [('F', 8), ('B', 8), ('F', 16), ('B', 16)] if not is_tht(c) else [('F', 8), ('F', 16)]
+    if c == 'C8':
+        tries = [('B', 8), ('F', 8)]   # under U3 on the bottom as before (no room on top between the DIP rows)
     for side, rad in tries:
         try:
-            place_near(c, t, radius=rad, side=side); break
+            if c in GND_PIN and rad == 8:
+                place_dec(c, t, GND_PIN[c], side=side)
+            else:
+                place_near(c, t, radius=rad, side=side)
+            break
         except SystemExit as e:
             last = e
     else:
@@ -205,8 +246,11 @@ def anchor(ref, nets=None):
 
 rest = [r for r in parts if parts[r].get('on_board', True) and r not in L and r not in SERVICE]
 print('unplaced', rest) if rest else None
+# review 2.10 (F3): R30 (SRV_5VA_P06) sat at the INA240 supply (C6, the first 5VA pad in ANCHOR_ORDER) and its 131 mm track crossed
+# the analog block; any 5VA pad serves the DC check, U9.2 (C14 / R13) is 40 mm above J_SV2.3
+SERVICE_ANCHOR = {'R30': ('U9', '2')}
 for r in SERVICE:   # node side (pin 1) next to a pad of the node; bottom first (S1-2), top if no room
-    a = anchor(r, {parts[r]['pins']['1']})
+    a = SERVICE_ANCHOR.get(r) or anchor(r, {parts[r]['pins']['1']})
     assert a, ('no node', r)
     try:
         place_near(r, (a[0], a[1]), own='1', radius=12, side='B')

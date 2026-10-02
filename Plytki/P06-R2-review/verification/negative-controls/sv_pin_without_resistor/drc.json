@@ -1,7 +1,7 @@
 {
     "$schema": "https://schemas.kicad.org/drc.v1.json",
     "coordinate_units": "mm",
-    "date": "2026-10-01T18:45:41",
+    "date": "2026-10-02T12:51:26",
     "ignored_checks": [
         {
             "description": "Footprint has no courtyard defined",
@@ -40,7 +40,7 @@
                         "x": 92.7,
                         "y": 95.96
                     },
-                    "uuid": "1f278f1b-4a47-4898-a799-385939379ed0"
+                    "uuid": "94440242-bc1d-456c-8aac-59d036583401"
                 }
             ],
             "severity": "warning",
@@ -58,15 +58,15 @@
                         "x": 92.7,
                         "y": 95.96
                     },
-                    "uuid": "1f278f1b-4a47-4898-a799-385939379ed0"
+                    "uuid": "94440242-bc1d-456c-8aac-59d036583401"
                 },
                 {
-                    "description": "Ścieżka [5V_SYS] na B.Cu, długość 0,7970 mm",
+                    "description": "Ścieżka [5V_SYS] na B.Cu, długość 2,7719 mm",
                     "pos": {
-                        "x": 84.5,
-                        "y": 19.203
+                        "x": 82.54,
+                        "y": 18.04
                     },
-                    "uuid": "5cd05c2a-04ad-4a3d-93d6-ba962a9fa1ba"
+                    "uuid": "b2e191f0-d1eb-4bb7-ad54-358b68fc81f8"
                 }
             ],
             "severity": "error",
@@ -75,23 +75,46 @@
     ],
     "violations": [
         {
-            "description": "Elementy łączą dwie różne sieci (sieci 5V_SYS oraz /SERWIS/SRV_5V_SYS)",
+            "description": "Naruszenie prześwitu ( prześwit 0,3000 mm; obecnie 0,2700 mm)",
             "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_3V3_IO] na F.Cu, długość 31,4677 mm",
+                    "pos": {
+                        "x": 91.43,
+                        "y": 96.4811
+                    },
+                    "uuid": "321cc512-4130-4eb9-86ad-bcd26cafb000"
+                },
                 {
                     "description": "Pole PTH 2 [5V_SYS] na J_SV2",
                     "pos": {
                         "x": 92.7,
                         "y": 95.96
                     },
-                    "uuid": "1f278f1b-4a47-4898-a799-385939379ed0"
-                },
+                    "uuid": "94440242-bc1d-456c-8aac-59d036583401"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci /SERWIS/SRV_5V_SYS oraz 5V_SYS)",
+            "items": [
                 {
-                    "description": "Ścieżka [/SERWIS/SRV_5V_SYS] na F.Cu, długość 21,5645 mm",
+                    "description": "Ścieżka [/SERWIS/SRV_5V_SYS] na F.Cu, długość 28,6172 mm",
                     "pos": {
                         "x": 92.7,
                         "y": 95.96
                     },
-                    "uuid": "67697938-246f-4e59-a529-482b13602f64"
+                    "uuid": "17769bb5-1996-47fa-84eb-b81e02d0bee6"
+                },
+                {
+                    "description": "Pole PTH 2 [5V_SYS] na J_SV2",
+                    "pos": {
+                        "x": 92.7,
+                        "y": 95.96
+                    },
+                    "uuid": "94440242-bc1d-456c-8aac-59d036583401"
                 }
             ],
             "severity": "error",
@@ -101,12 +124,12 @@
             "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
             "items": [
                 {
-                    "description": "Ścieżka [/SERWIS/SRV_5V_SYS] na F.Cu, długość 21,5645 mm",
+                    "description": "Ścieżka [/SERWIS/SRV_5V_SYS] na F.Cu, długość 28,6172 mm",
                     "pos": {
                         "x": 92.7,
                         "y": 95.96
                     },
-                    "uuid": "67697938-246f-4e59-a529-482b13602f64"
+                    "uuid": "17769bb5-1996-47fa-84eb-b81e02d0bee6"
                 },
                 {
                     "description": "Pole PTH 2 [5V_SYS] na J_SV2",
@@ -114,7 +137,7 @@
                         "x": 92.7,
                         "y": 95.96
                     },
-                    "uuid": "1f278f1b-4a47-4898-a799-385939379ed0"
+                    "uuid": "94440242-bc1d-456c-8aac-59d036583401"
                 }
             ],
             "severity": "error",
@@ -124,12 +147,12 @@
             "description": "Przednia soldermaska łączy elementy o różnych sieciach",
             "items": [
                 {
-                    "description": "Ścieżka [/SERWIS/SRV_5V_SYS] na F.Cu, długość 21,5645 mm",
+                    "description": "Ścieżka [/SERWIS/SRV_5V_SYS] na F.Cu, długość 28,6172 mm",
                     "pos": {
                         "x": 92.7,
                         "y": 95.96
                     },
-                    "uuid": "67697938-246f-4e59-a529-482b13602f64"
+                    "uuid": "17769bb5-1996-47fa-84eb-b81e02d0bee6"
                 },
                 {
                     "description": "Pole PTH 2 [5V_SYS] na J_SV2",
@@ -137,22 +160,22 @@
                         "x": 92.7,
                         "y": 95.96
                     },
-                    "uuid": "1f278f1b-4a47-4898-a799-385939379ed0"
+                    "uuid": "94440242-bc1d-456c-8aac-59d036583401"
                 }
             ],
             "severity": "error",
             "type": "solder_mask_bridge"
         },
         {
-            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "description": "Footprint 'IDC-Header_2x08_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
             "items": [
                 {
-                    "description": "Footprint J_SV2",
+                    "description": "Footprint J_BP",
                     "pos": {
-                        "x": 95.24,
-                        "y": 95.96
+                        "x": 71.11,
+                        "y": 13.33
                     },
-                    "uuid": "63fab37c-b09c-4b8c-b3bc-8595d03059e7"
+                    "uuid": "47275411-0d57-42a2-955b-88084ecbd773"
                 }
             ],
             "severity": "warning",
@@ -167,22 +190,22 @@
                         "x": 41.74,
                         "y": 95.96
                     },
-                    "uuid": "6bf9c93f-a5ea-4964-a15e-12e6538b49db"
+                    "uuid": "5f94362a-012f-4ec9-9323-fc0641cf012f"
                 }
             ],
             "severity": "warning",
             "type": "lib_footprint_mismatch"
         },
         {
-            "description": "Footprint 'IDC-Header_2x08_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
             "items": [
                 {
-                    "description": "Footprint J_BP",
+                    "description": "Footprint J_SV2",
                     "pos": {
-                        "x": 71.11,
-                        "y": 13.33
+                        "x": 95.24,
+                        "y": 95.96
                     },
-                    "uuid": "a6d90a30-e00a-4770-b6f6-0e4466b8df7f"
+                    "uuid": "b8a7bd47-9dac-4531-91cc-602b6503db7f"
                 }
             ],
             "severity": "warning",

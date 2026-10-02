@@ -14,6 +14,7 @@ Third stage (P02 R4, 29.09, klasa L): a kept pour piece can carry GND pads and s
 (one such B.Cu piece under U9/C27 in the first class-L runs, and one in the router attempt that closed all signal nets).
 GND pads that KiCad connectivity does not join to J1.2 (pack GND) mark such pieces; each gets one via where the piece has
 room and a pour piece of the other layer that is joined to J1.2 has room (same margins as the rescue).
+Review 2.10 (P06 R2 F2, P05 R3 MAJOR-1 / -2): stage 4 places the targeted GND vias of board.EXTRA_GND_VIAS (capacitor GND pads, IC GND pins).
 Klasa L (29.09): the grid covers the whole board (x < 158; the 2/3 pilot stopped at 104.5) and vias keep out of the
 courtyards of the parts on the bottom too.
 """
@@ -21,6 +22,10 @@ from pathlib import Path
 import pcbnew as p, json, math
 P = Path(__file__).resolve().parents[1]
 from board import NAME, GND_REF
+try:
+    from board import EXTRA_GND_VIAS   # review 2.10 (P06 R2): targeted GND vias, stage 4
+except ImportError:
+    EXTRA_GND_VIAS = []
 from build_board import W as BW, Hh as BH
 fn = P / f'eda/{NAME}.kicad_pcb'; b = p.LoadBoard(str(fn)); mm = p.FromMM
 GRID, EDGE_MIN, PAD_MIN, RESCUE_MIN, RESCUE_PAD = 10.0, .7, 3.0, 10.0, 1.5
@@ -175,6 +180,55 @@ for _ in range(3):
     p.ZONE_FILLER(b).Fill(b.Zones())
     if not progress:
         break
+# ---- stage 4 (review 2.10, F2): targeted GND vias (board.EXTRA_GND_VIAS) ----
+# ('pad', ref, num, r): nearest spot within r mm of the pad centre inside the pour piece the pad sits in (its layer) and inside the
+# other layer's pour; ('at', x, y, r): nearest spot within r mm inside both pours. Margin 0.55 mm to the fill edge (the fill keeps the
+# clearance to other nets), >= 0.6 mm from any pad (no via in a pad), hole to hole >= 0.3 mm, outside rule areas; courtyards allowed
+# (the vias are tented). Idempotent: a target that already has a GND via in reach (same piece for 'pad') gets none.
+EM = .55
+targeted = []
+
+
+def disc_r(q, r):
+    return [xy(*q)] + [xy(q[0] + r * math.cos(k * math.pi / 8), q[1] + r * math.sin(k * math.pi / 8)) for k in range(16)]
+
+
+if EXTRA_GND_VIAS and '--targeted' in __import__('sys').argv:   # run_layout.py: only in the call after the completion planner
+    padpolys = []
+    for fp_ in b.GetFootprints():
+        for a in fp_.Pads():
+            for L in (p.F_Cu, p.B_Cu):
+                if a.IsOnLayer(L):
+                    sh = p.SHAPE_POLY_SET(); a.TransformShapeToPolygon(sh, L, mm(.6), mm(.01), p.ERROR_OUTSIDE); padpolys.append(sh)
+    holes = [(p.ToMM(a.GetPosition().x), p.ToMM(a.GetPosition().y), p.ToMM(a.GetDrillSize().x) / 2) for fp_ in b.GetFootprints() for a in fp_.Pads() if a.GetDrillSize().x > 0]
+    holes += [(p.ToMM(t.GetPosition().x), p.ToMM(t.GetPosition().y), p.ToMM(t.GetDrillValue()) / 2) for t in b.GetTracks() if isinstance(t, p.PCB_VIA)]
+    pcs = {L: pieces(L) for L in (p.F_Cu, p.B_Cu)}
+    gvias = [t for t in b.GetTracks() if isinstance(t, p.PCB_VIA) and t.GetNetname() == 'GND']
+    for tg in EXTRA_GND_VIAS:
+        if tg[0] == 'pad':
+            _, ref, num, rad = tg; a = next(q for fp_ in b.GetFootprints() if fp_.GetReference() == ref for q in fp_.Pads() if q.GetNumber() == num)
+            assert a.GetNetname() == 'GND', (ref, num)
+            c = (p.ToMM(a.GetPosition().x), p.ToMM(a.GetPosition().y)); L = p.B_Cu if a.IsOnLayer(p.B_Cu) and not a.IsOnLayer(p.F_Cu) else p.F_Cu
+            O = p.F_Cu if L == p.B_Cu else p.B_Cu; own = [q for q in pcs[L] if touches(q, a, L)]; name = f'{ref}.{num}'
+        else:
+            _, x, y, rad = tg; c = (x, y); L, O, own, name = p.F_Cu, p.B_Cu, pcs[p.F_Cu], f'({x}, {y})'
+        have = [v for v in gvias if math.dist((p.ToMM(v.GetPosition().x), p.ToMM(v.GetPosition().y)), c) <= rad and any(q.Contains(v.GetPosition()) for q in own)]
+        if have:
+            targeted.append({'target': name, 'via': [round(p.ToMM(have[0].GetPosition().x), 2), round(p.ToMM(have[0].GetPosition().y), 2)], 'new': False}); continue
+        n = int(rad / .1); done = None
+        for q in sorted(((c[0] + i * .1, c[1] + j * .1) for i in range(-n, n + 1) for j in range(-n, n + 1) if math.hypot(i, j) * .1 <= rad), key=lambda q: math.dist(q, c)):
+            dd = disc_r(q, EM)
+            if not any(all(k.Contains(v) for v in dd) for k in own) or not any(all(k.Contains(v) for v in dd) for k in pcs[O]):
+                continue
+            if any(z.Outline().Contains(xy(*q)) for z in rules) or any(sh.Contains(xy(*q)) for sh in padpolys):
+                continue
+            if any(math.dist(q, (hx, hy)) < .2 + hr + .3 for hx, hy, hr in holes):
+                continue
+            v = p.PCB_VIA(b); v.SetPosition(xy(*q)); v.SetWidth(mm(.9)); v.SetDrill(mm(.4)); v.SetViaType(p.VIATYPE_THROUGH)
+            v.SetLayerPair(p.F_Cu, p.B_Cu); v.SetNet(gnd); v.SetLocked(True); b.Add(v); obst.append(q); holes.append((*q, .2)); gvias.append(v)
+            done = q; break
+        targeted.append({'target': name, 'via': [round(done[0], 2), round(done[1], 2)] if done else None, 'new': bool(done)})
+    p.ZONE_FILLER(b).Fill(b.Zones())
 left = [f'{a.GetParentFootprint().GetReference()}.{a.GetNumber()}' for a in main_items()[1]]
 final = islands(); area_after = {b.GetLayerName(L): area(L) for L in (p.F_Cu, p.B_Cu)}
 p.SaveBoard(str(fn), b, True)
@@ -182,6 +236,7 @@ p.SaveBoard(str(fn), b, True)
                                                        'rescue_vias': len(rescued), 'rescued': rescued, 'islands_final': final,
                                                        'pour_mm2_before_rescue': area_before, 'pour_mm2_after_rescue': area_after,
                                                        'positions': [[round(x, 2), round(y, 2)] for x, y in added],
-                                                       'tied_gnd_clusters': tied, 'gnd_pads_not_joined': left}, indent=1) + '\n')
+                                                       'tied_gnd_clusters': tied, 'gnd_pads_not_joined': left, 'targeted_vias': targeted}, indent=1) + '\n')
 print('GND stitching:', len(added), 'grid vias, pour islands', before, '->', after, '| rescue:', len(rescued), 'vias, pour mm2', area_before, '->', area_after, 'islands', final,
-      '| tied GND clusters:', len(tied), f'| GND pads not joined to {GND_REF[0]}.{GND_REF[1]}:', left or 'none')
+      '| tied GND clusters:', len(tied), f'| GND pads not joined to {GND_REF[0]}.{GND_REF[1]}:', left or 'none',
+      '| targeted vias:', sum(t['new'] for t in targeted), 'new,', sum(t['via'] is None for t in targeted), 'without a legal spot')

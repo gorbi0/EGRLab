@@ -8,13 +8,14 @@ P06 R2 (1.10.2026): P05 R3 version (GND plane mode, edge strips, board.ROUTER_KE
   the real B.Cu pour is cut by B.Cu tracks, so stitch.py and the completion planner tie the islands;
 - router-only keepouts 0.4 mm wide along the board edges (Freerouting does not know the copper-to-edge clearance, P03 R2 lesson) and
   board.ROUTER_KEEPOUT (pin-free areas: the RSH1 courtyard, the strip between the Kelvin lines). The rule areas (M3 zones, cable-tie
-  anchors, B.Cu under RSH1) are exported by KiCad as keepouts.
+  anchors, B.Cu under RSH1) are exported by KiCad as keepouts;
+- review 2.10: board.TOP_ONLY nets in a DSN class limited to F.Cu (top_only below).
 """
 from pathlib import Path
 import shutil, subprocess, sys, json, re, os
 import pcbnew as p
 P = Path(__file__).resolve().parents[1]; sys.path.insert(0, str(Path(__file__).resolve().parent))
-from board import NAME, CLASS, ROUTER_KEEPOUT, FORCE, KELVIN
+from board import NAME, CLASS, ROUTER_KEEPOUT, FORCE, KELVIN, TOP_ONLY
 f = P / f'routing/{NAME}.dsn'; d = f.read_text()
 assert 'EDGE_STRIP' not in d, 'DSN already prepared; re-run route_critical.py first'
 GND_MODE = os.environ.get('EGRLAB_GND_MODE', 'plane')   # 'plane' (default since 30.09) or 'out' (GND pins out of the net list)
@@ -52,10 +53,29 @@ i = d.index('(keepout'); d = d[:i] + add.lstrip() + '    ' + d[i:]
 if GND_MODE == 'plane':   # the router joins every GND pin to this B.Cu plane (SMD pins: short stub + via where it finds room)
     m = .5; pl = f'    (plane GND (polygon B.Cu 0  {m * 1000:.0f} {-m * 1000:.0f}  {(W - m) * 1000:.0f} {-m * 1000:.0f}  {(W - m) * 1000:.0f} {-(H - m) * 1000:.0f}  {m * 1000:.0f} {-(H - m) * 1000:.0f}))\n'
     i = d.index('(keepout'); d = d[:i] + pl.lstrip() + '    ' + d[i:]
+
+
+def top_only(d):
+    """Review 2.10 (F3): the nets of board.TOP_ONLY leave their DSN class for a copy limited to F.Cu ((circuit (use_layer F.Cu)), read by
+    Freerouting 2.1 as the active routing layers of the class; its per-layer costs in (autoroute_settings) are ignored, tried 2.10)."""
+    i0 = d.index('    (class '); i1 = d.index('  (wiring')
+    out = ''; moved = []
+    for name, nets, body in re.findall(r'    \(class (\S+)((?:\s+(?:"[^"]*"|[^\s()]+))*)\s*\n(.*?)\n    \)\n', d[i0:i1], re.S):
+        toks = re.findall(r'"[^"]*"|[^\s()]+', nets); sel = [t for t in toks if t.strip('"').split('/')[-1] in TOP_ONLY]
+        out += f'    (class {name} ' + ' '.join(t for t in toks if t not in sel) + '\n' + body + '\n    )\n'
+        if sel:
+            assert '(use_via' in body, body
+            out += f'    (class TOP_{name} ' + ' '.join(sel) + '\n' + body.replace('(use_via', '(use_layer F.Cu)\n        (use_via', 1) + '\n    )\n'
+            moved += sel
+    assert sorted(t.strip('"').split('/')[-1] for t in moved) == sorted(TOP_ONLY), (moved, TOP_ONLY)
+    return d[:i0] + out + '  )\n' + d[i1:], moved
+
+
+d, top = top_only(d) if TOP_ONLY else (d, [])
 f.write_text(d)
 nk = d.count('(keepout ')
 (P / 'routing/router-exclusions.json').write_text(json.dumps({'pours_as_keepouts': k, 'removed_pins': removed, 'router_keepouts': ROUTER_KEEPOUT,
-                                                             'keepouts_in_dsn': nk, 'edge_strips': len(strips) * 2, 'gnd_mode': GND_MODE}, indent=1) + '\n')
+                                                             'keepouts_in_dsn': nk, 'edge_strips': len(strips) * 2, 'gnd_mode': GND_MODE, 'top_only': top}, indent=1) + '\n')
 shutil.copy2(P / f'eda/{NAME}.kicad_pcb', P / 'routing/prerouted.kicad_pcb')
 subprocess.run([sys.executable, str(P / 'src/set_rules.py')], check=True)
-print('DSN:', k, 'force pours as keepouts;', nk, 'keepouts in all; pins removed from', len(removed), 'nets; pre-routed board frozen.')
+print('DSN:', k, 'force pours as keepouts;', nk, 'keepouts in all; pins removed from', len(removed), 'nets;', len(top), 'nets on F.Cu only; pre-routed board frozen.')

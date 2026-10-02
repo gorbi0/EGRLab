@@ -11,7 +11,8 @@ README layout requirements (S1 section 3, 35 um copper):
   (3.7 mm gap) to the right, K_MINUS straight right from its pad; both into R1 / R2 (10 Ohm, 0.1 %) and on to U1.8 / U1.1 - parallel,
   3 mm apart, no connector and no via on the way;
 - nothing under the shunt on B.Cu (rule area over its courtyard), no foreign router copper in its courtyard or between the Kelvin
-  lines (DSN keepouts, board.ROUTER_KEEPOUT; check_intrusion.py after every router run).
+  lines (DSN keepouts, board.ROUTER_KEEPOUT; check_intrusion.py after every router run);
+- review 2.10: R10 GND via under U5 (r10_ground); adc_input() was the ADC_AIN path while C2 sat above U3 (kept for the record).
 """
 from pathlib import Path
 import pcbnew as p, sys, json
@@ -150,14 +151,38 @@ def force_and_kelvin(B):
     return {'ecu': ecu, 'egr': egr, 'k_row': yk}
 
 
+def adc_input(B):
+    """Review 2.10 (F2 / F3): ADC_AIN from the filter capacitor C2 (above U3.1) to U3.2 (IN+) on F.Cu, down the strip between U2 and
+    U3. The U2 / U3 interiors and the B.Cu strip became router keepouts (board.ANALOG_KEEPOUT); in the first run with them the router
+    put a 3V3 track in the F.Cu strip and walled U3.2 in (the completion planner found no path either). The track keeps 0.6 mm from
+    U3.1 and leaves the strip left of it free for one more track."""
+    (x0, y0), (x2, y2) = B.pp('C2', 1), B.pp('U3', 2); xg = round(B.pbox('U3', 1)[0] - .75, 2)   # 0.75 mm left of the U3 pad edge
+    B.track('ADC_AIN', [(x0, y0), (xg, y0 + (x0 - xg)), (xg, y2 - .55), (xg + .55, y2), (x2, y2)])
+    # R26 (service, bottom) right above: a via on the vertical part, clear of its pad (bottom edge + 0.1), B.Cu stub to the pad
+    # (run 2.10: the planner found no legal via for R26.1 between C2, the pre-route and the strip keepout)
+    r26 = B.pbox('R26', 1); vy = round(r26[3] + .45 + .1, 2); B.via('ADC_AIN', xg, vy)
+    B.track('ADC_AIN', [(xg, vy), B.pp('R26', 1)], layer=B_)
+    return {'adc_ain_x': xg, 'r26_via': [xg, vy]}
+
+
+def r10_ground(B):
+    """Review 2.10 re-route: R10 (ADC_SCLK pull-down) moved to the bottom under U5; its GND pad gets a via under its body, on the
+    F.Cu GND bar of U5 (fanout_gnd.py), and a B.Cu stub (attempt 2 of the first run left R10.2 a GND island the planner could not reach)."""
+    c = B.f['R10'].GetPosition(); cc = (round(p.ToMM(c.x), 4), round(p.ToMM(c.y), 4))
+    g = next(a for a in B.f['R10'].Pads() if a.GetNetname() == 'GND'); gp = (round(p.ToMM(g.GetPosition().x), 4), round(p.ToMM(g.GetPosition().y), 4))
+    B.via('GND', *cc); B.track('GND', [gp, cc], w=.5, layer=B_)
+    return {'r10_via': list(cc)}
+
+
 if __name__ == '__main__':
     b = p.LoadBoard(str(path)); B = Board(b)
     for f in b.GetFootprints():
         f.BuildCourtyardCaches()
     info = force_and_kelvin(B)
+    info.update(r10_ground(B))   # adc_input() not used since C2 sits under U3 at IN+ / IN- (placement.py, 2.10)
     p.ZONE_FILLER(b).Fill(b.Zones())
     b.BuildConnectivity(); p.SaveBoard(str(path), b)
     (P / 'routing').mkdir(exist_ok=True)
     (P / 'routing/critical.json').write_text(json.dumps(REPORT, indent=1) + '\n')
     assert p.ExportSpecctraDSN(b, str(P / f'routing/{NAME}.dsn'))
-    print(f'{NAME}: force pours ECU_P1 / EGR_P1 (both layers), Kelvin pair and the B.Cu rule area under RSH1 locked ({len(REPORT)} items); DSN exported.')
+    print(f'{NAME}: force pours ECU_P1 / EGR_P1 (both layers), Kelvin pair, the B.Cu rule area under RSH1 and the R10 GND via locked ({len(REPORT)} items); DSN exported.')

@@ -76,11 +76,20 @@ for attempt in range(1, 2 if reuse else NATT + 1):
     assert rc in (0, 3), 'complete_routes.py failed (script error, not a routing gap)'
     solid = set()
     if rc == 0:  # P02 R4: GND stitching before the clean-up, so GND pour islands left by the router are tied first
-        run(PY, 'set_rules.py'); run(PY, 'stitch.py'); run(PY, 'set_rules.py'); d = drc('routing/postroute-drc.json'); solid = starved(d)
+        # review 2.10: the targeted GND vias (stitch.py stage 4, board.EXTRA_GND_VIAS) only now, after the completion routes (replayed exactly)
+        run(PY, 'complete_routes.py', '--ties', *([] if reuse else ['--plan']))   # 2.10: GND tracks for long decoupling returns
+        run(PY, 'set_rules.py'); run(PY, 'stitch.py', '--targeted'); run(PY, 'set_rules.py'); d = drc('routing/postroute-drc.json'); solid = starved(d)
         # P03 R6 (30.09): no harness wires on this board (the P02 rule 'connector GND pads keep thermals, soldered wires' does not
         # apply); J_BP / J_SV / M1 GND pins starved by the even-row signals get a solid pour connection like any other pad
         rc = run(PY, 'cleanup.py', *sorted(solid), check=reuse).returncode
         assert rc in (0, 3), 'cleanup.py failed (script error, not a routing gap)'
+        # 2.10 (P06): an attempt with copper conflicts after the router (11 x I_L_OUT / 5VA_P06 at U1 in one run) counts as failed
+        COPPER = ('clearance', 'shorting_items', 'tracks_crossing', 'hole_clearance', 'copper_edge_clearance', 'hole_to_hole')
+        bad = [v['type'] for v in drc('routing/postroute-drc.json')['violations'] if v['type'] in COPPER] if rc == 0 else []
+        if bad:
+            assert not reuse, f'bundled SES gives copper conflicts: {bad}'
+            attempts.append({'attempt': attempt, 'completion_and_cleanup_ok': False, 'copper_conflicts': len(bad)})
+            print(f'attempt {attempt}: {len(bad)} copper conflicts after the router -> new Freerouting run', flush=True); continue
     attempts.append({'attempt': attempt, 'completion_and_cleanup_ok': rc == 0})
     assert rc == 0 or not reuse, 'bundled SES no longer gives a complete board'
     if rc == 0:

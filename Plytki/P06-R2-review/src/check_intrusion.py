@@ -1,4 +1,4 @@
-"""P06 R2 (1.10): foreign router copper at the shunt or the Kelvin pair? Run after every SES import (run_layout.py). Freerouting gets
+"""P06 R2 (1.10): foreign router copper at the shunt, the Kelvin pair or (review 2.10) the U2 / U3 interiors? Run after every SES import (run_layout.py). Freerouting gets
 DSN keepouts there (board.ROUTER_KEEPOUT), but they are not trusted blindly (P05 lesson: the router echoes copper and may graze):
 an attempt is rejected when unlocked copper of a net other than the force / Kelvin nets touches the RSH1 courtyard (either layer)
 or one of board.ROUTER_KEEPOUT (README: nothing foreign at the shunt, the Kelvin lines stay a clean pair). Echoes of the locked copper

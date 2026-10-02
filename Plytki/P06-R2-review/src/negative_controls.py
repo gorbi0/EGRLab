@@ -3,7 +3,7 @@ copy). verify_pcb.py must fail the named check on every defective copy and pass 
 eda/P06.kicad_pcb is never modified; copies and their reports stay in verification/negative-controls/ (not production files).
 Each copy gets the project, the schematic sheets and absolute library tables, so DRC and parity run as on the release board.
 (Pattern of P05 R3 / P10 R2 / P09 R2 / P03 R6 negative_controls.py; defects chosen for the P06 checks: force pours, shunt, Kelvin pair,
-tails at x = 0, R21.)
+tails at x = 0, R21; review 2.10: silkscreen size, analog block, decoupling return.)
 """
 from pathlib import Path
 import pcbnew as p, json, subprocess, sys, shutil, os, math
@@ -135,6 +135,17 @@ def ref_far(b):                                                                 
 
 
 def strip_part(b): fp(b, 'C11').SetPosition(xy(66.0, 5.0))                          # C11 in the reserved strip of edge A
+
+
+def silk_small(b):                                                                  # review 2.10 F1: the J5 "5VA" mark back to 0.8 / 0.12 mm
+    q = pad(b, 'J5', '1').GetPosition(); j = (p.ToMM(q.x), p.ToMM(q.y))
+    t = next(t for t in b.GetDrawings() if isinstance(t, p.PCB_TEXT) and t.GetText() == '5VA' and math.dist((p.ToMM(t.GetPosition().x), p.ToMM(t.GetPosition().y)), j) < 6)
+    t.SetTextSize(p.VECTOR2I(mm(.7), mm(.8))); t.SetTextThickness(mm(.12))
+
+
+def analog_track(b): track(b, p.F_Cu, 60.8, 26.3, 60.8, 35.3, netname(b, 'CLK_LOCAL'))   # review 2.10 F3: the ADC clock between the U3 pin rows
+
+
 def null_control(b): pass
 
 
@@ -147,7 +158,8 @@ CASES = [(null_control, None), (mount_shift, 'M3 holes'), (jbp_shift, 'J_BP (edg
          (anchor_track, 'Panel side'), (part_on_cable, 'Panel side'), (tail_turned, 'Panel side'), (column_swap, 'Panel side'),
          (r21_near, 'R21'), (c5_far, 'Decoupling and filter'), (decap_far, 'Decoupling and filter'), ('gnd_pour_removed', 'GND pours'),
          (ref_on_part, 'Every visible reference outside'), (ref_far, 'Every visible reference nearer'), (strip_part, 'Reserved strip of edge A'),
-         ('mark_missing', 'Net marks of the tails'), (zone_copper, 'Standoff zones D7'), ('title_wrong', 'Silkscreen: board name')]
+         ('mark_missing', 'Net marks of the tails'), (zone_copper, 'Standoff zones D7'), ('title_wrong', 'Silkscreen: board name'),
+         (silk_small, 'Silkscreen legible'), (analog_track, 'Analog block'), ('return_cut', 'Decoupling return')]
 assert root.resolve().is_relative_to(P.resolve()) and root.name == 'negative-controls'
 shutil.rmtree(root, ignore_errors=True); root.mkdir(parents=True)
 labels = json.loads((P / 'routing/silkscreen.json').read_text(encoding='utf-8'))['service_labels']
@@ -193,6 +205,14 @@ for fn, expected in CASES:
             at = next((x for x in g if isinstance(x, list) and x and x[0] == 'at'), None)
             return at and math.dist((float(at[1]), float(at[2])), j1) <= 6.0
         drop(copy, lambda g: isinstance(g, list) and g and g[0] == 'gr_text' and g[1] == 'ECU' and at_j3(g))
+    if name == 'return_cut':                                               # review 2.10 F2: the planned GND tie C12 -> U7.7 deleted (file level)
+        tie = next(t for t in json.loads((P / 'routing/return-ties.json').read_text()) if t['from'].startswith('C12.'))
+        pts = {(round(x, 3), round(y, 3)) for x, y, _ in tie['points_mm_layer']}
+        on = lambda v: (round(p.ToMM(v.x), 3), round(p.ToMM(v.y), 3)) in pts
+        vs = {t.m_Uuid.AsString() for t in b.GetTracks() if t.GetNetname() == 'GND' and t.IsLocked() and
+              (on(t.GetPosition()) if isinstance(t, p.PCB_VIA) else (on(t.GetStart()) and on(t.GetEnd())))}
+        assert vs, 'no tie copper found'
+        drop(copy, lambda g: isinstance(g, list) and g and g[0] in ('segment', 'via') and any(isinstance(x, list) and x[:1] == ['uuid'] and x[1] in vs for x in g), len(vs))
     if name == 'title_wrong':                                              # board name without the slots (as R2 up to 30.09)
         t = parse(copy.read_text(encoding='utf-8')); k = 0
         for g in t:

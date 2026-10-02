@@ -13,7 +13,7 @@ import pcbnew as p,json,math,heapq,sys,os,subprocess
 from PIL import Image,ImageDraw,ImageFilter
 import numpy as np
 P=Path(__file__).resolve().parents[1]
-from board import NAME, SIGNAL_W, CORE, PWR as BOARD_PWR, PLANNER_KEEPOUT
+from board import NAME, SIGNAL_W, CORE, PWR as BOARD_PWR, PLANNER_KEEPOUT, TOP_ONLY
 from build_board import W as BW,Hh as BH
 fn=P/f'eda/{NAME}.kicad_pcb';b=p.LoadBoard(str(fn));mm=p.FromMM
 # 30.09 evening: 0.05 mm raster (was 0.1) and exact obstacle growth. The old 0.5 mm dilation of every obstacle kept a 0.2 mm
@@ -83,6 +83,7 @@ def plan(net,sxy,gxy,goalmask=None,slay=(0,1),glay=(0,1)):
   dv.rectangle([0,0,W-1,H-1],outline=255,width=int(math.ceil((.5+VIA_R+MARGIN)*R)))
   obs.append(np.array(it)!=0);vmask.append(np.array(iv)!=0)
  via=vmask[0]|vmask[1]
+ if name.split('/')[-1] in TOP_ONLY:obs[1][:]=True;via[:]=True   # review 2.10: board.TOP_ONLY nets stay on F.Cu (no B.Cu, no via)
  s=tuple(round(v*R) for v in sxy);g=tuple(round(v*R) for v in gxy) if goal is None else None
  def h(x,y):
   if g is None:return 0
@@ -246,7 +247,29 @@ def escape(uid,sxy,lay,toward):
     if not blocked(xy(e),L):cands.append((xy(e),L))
  if not cands:return sxy,lay
  return min(cands,key=lambda c:math.dist(c[0],toward) if toward else 0)
-if '--plan' in sys.argv:
+if '--ties' in sys.argv:
+ # 2.10 (review F2 / MAJOR-1, return-path check of verify_pcb.py): a decoupling capacitor whose GND pad reaches the GND pin of its part only
+ # through more than 1.3 x the straight distance + 3 mm of GND copper (gndpath.py) gets a planned GND track pad -> pin, kept when the
+ # track itself is within that limit. --ties --plan plans and records routing/return-ties.json; --ties alone replays it.
+ from board import RETURN_PAIRS
+ tgt=P/'routing/return-ties.json';ties=[]
+ if '--plan' in sys.argv:
+  import gndpath
+  def pp(r,n_):q=pad(r,n_);return xy(q.GetPosition()),pad_layers(q)
+  for cap,(u,n_) in RETURN_PAIRS.items():
+   p.ZONE_FILLER(b).Fill(b.Zones());cu,via=gndpath.copper(b,'GND',BW,BH)
+   g=next(q for q in f[cap].Pads() if q.GetNetname()=='GND');(sxy,sl),(gxy,gl)=(xy(g.GetPosition()),pad_layers(g)),pp(u,n_)
+   lim=1.3*math.dist(sxy,gxy)+3;now=gndpath.distances(cu,via,gndpath.pad_point(b,cap,g.GetNumber()),{'d':gndpath.pad_point(b,u,n_)},limit_mm=150)['d']
+   if now is not None and now<=lim:continue
+   pts=plan(g.GetNetCode(),sxy,gxy,slay=sl,glay=gl)
+   L=None if pts is None else sum(math.dist(a[:2],c[:2]) for a,c in zip(pts,pts[1:]))
+   print('return tie',cap,'->',f'{u}.{n_}','copper',now,'limit',round(lim,1),'planned',None if L is None else round(L,1),flush=True)
+   if pts is None or L>lim:continue
+   ties.append({'from':f'{cap}.{g.GetNumber()}','to':f'{u}.{n_}','copper_before_mm':now,'points_mm_layer':pts});add(g.GetNet(),pts)
+  tgt.write_text(json.dumps(ties,indent=2))
+ else:
+  for t in json.loads(tgt.read_text()):add(b.FindNet('GND'),t['points_mm_layer'])
+elif '--plan' in sys.argv:
  # Rounds: a pad cluster joined to the pour can reveal the next cluster (DRC reports one edge per cluster), so
  # plan, refill, save and ask native DRC again until nothing is left unconnected.
  CLI=os.environ.get('KICAD_CLI',str(Path(sys.executable).with_name('kicad-cli.exe')));rep=P/'routing/precompletion-drc.json'

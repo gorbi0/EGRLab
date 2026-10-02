@@ -26,5 +26,30 @@ GND_INNER = []               # (P05 R3: GND pins tied by an inner pour, out of t
 ROUTER_KEEPOUT = [('F.Cu', 19.8, 23.4, 24.2, 32.9),    # RSH1 courtyard (README: nothing foreign at the shunt)
                   ('F.Cu', 24.2, 27.3, 34.3, 32.4),    # between and around the Kelvin lines up to the U1 pins
                   ('B.Cu', 19.8, 27.3, 34.3, 32.4)]    # under the Kelvin lines: GND pour only, no router tracks
+# review 2.10 (F2 / F3): the router ran service and supply tracks between the pin rows of U2 / U3 (SRV_ADC_AIN and SRV_I_L_OUT 22 mm
+# under U2, SRV_CLK_LOCAL - the 500 kHz ADC clock behind 1k - and SRV_5VA_P06 under U3) and cut the B.Cu plane under both into a
+# 191 mm2 island. Pin-free areas (0.1 mm off the DIP pads, U2 / U3 at x 45 / 52.62 and 57 / 64.62, pins y 27..34.62): both interiors
+# on both layers, on B.Cu also the strip between them; C2 (bottom, under U3 at its IN+ / IN- pins, placement.py) keeps a pocket open
+# towards them. No track and no via other than GND inside (verify_pcb.py); the GND pours fill them.
+ANALOG_KEEPOUT = [('F.Cu', 45.9, 25.8, 51.72, 35.8), ('B.Cu', 45.9, 25.8, 51.72, 35.8),    # U2 interior
+                  ('F.Cu', 57.9, 25.8, 63.72, 35.8),                                      # U3 interior
+                  ('B.Cu', 57.9, 25.8, 63.72, 28.1), ('B.Cu', 61.7, 28.1, 63.72, 35.8),  # U3 interior on B.Cu round the pocket of C2
+                  ('B.Cu', 57.9, 33.6, 61.7, 35.8),                                      # (bottom, at U3.2 / U3.3: placement.py)
+                  ('B.Cu', 53.5, 26.2, 56.1, 35.8),                                       # strip between U2 and U3 (B.Cu)
+                  ('B.Cu', 43.5, 35.9, 56.1, 38.5)]   # 2.10: below the U2 pin rows (SRV_I_L_OUT / SRV_ADC_AIN / REF25 cut C1 -> U2.4, 36 mm)
+ROUTER_KEEPOUT += ANALOG_KEEPOUT
 PLANNER_KEEPOUT = list(ROUTER_KEEPOUT)   # the completion planner (complete_routes.py) keeps out too
+TOP_ONLY = []                # nets in a DSN class limited to F.Cu (use_layer; prepare_routing.py, complete_routes.py). Tried 2.10 for SW_SENSE
+                             # (review F3: 163 mm, most on B.Cu below the analog block): on F.Cu alone the router and the planner could not reach
+                             # U6.5 between R15 / R16 (no complete board); SW_SENSE stays on both layers (static, 1k / 100k)
+# review 2.10 (F2): GND vias placed by stitch.py after the completion planner, nearest legal spot to each target (both pours, own pad's
+# pour piece): ('pad', ref, num, radius) - at a capacitor GND pad; ('at', x, y, radius) - a free spot (the B.Cu island under U2 / U3 had
+# one via). Every SMD decoupling / filter capacitor gets one (verify_pcb.py measures the return to its part's GND pin).
+EXTRA_GND_VIAS = [('pad', c, '2', 2.0) for c in ('C1', 'C2', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10', 'C11', 'C12', 'C13', 'C14', 'C15', 'C16')] + \
+                 [('pad', 'U1', '2', 2.0), ('at', 54.8, 31.4, 2.0), ('at', 60.8, 33.5, 2.0)]   # U1.2: INA240 GND (C6 return)
 SHUNT = 'RSH1'               # check_intrusion.py: no router copper of another net in its courtyard (README: nothing under the shunt)
+# 2.10 (verify_pcb.py return-path check): capacitor -> GND pin of its part; complete_routes.py --ties plans a GND track where the
+# GND copper path is longer than 1.3 x straight + 3 mm
+RETURN_PAIRS = {'C1': ('U2', '4'), 'C2': ('U3', '3'), 'C4': ('U4', '1'), 'C5': ('U10', '1'), 'C6': ('U1', '2'), 'C7': ('U2', '4'), 'C8': ('U3', '4'),
+                'C9': ('U4', '1'), 'C10': ('U5', '7'), 'C11': ('U6', '7'), 'C12': ('U7', '7'), 'C13': ('U8', '3'), 'C14': ('U9', '3'),
+                'C15': ('U10', '1'), 'C16': ('U3', '4')}

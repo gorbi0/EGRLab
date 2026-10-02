@@ -248,6 +248,7 @@
     "failed_checks": [
       "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
       "Decoupling and filter capacitors at their pins: pad <= 6 mm from the supply / input pin (100 nF at every IC, C1 / C2 / C16 / C4), C5 4.7 uF <= 5 mm from U10.2 (MCP1525 data sheet), C3 220 uF <= 8 mm from R6.2 (5VA_P06)",
+      "Decoupling return through GND copper: capacitor GND pad -> GND pin of its part <= 1.3 x straight + 3 mm (both layers, gndpath.py; C6 accepted at <= 14 mm; review 2.10 F2: GND islands under U2 / U3, C15 -> U10.1 about 30 mm)",
       "Every visible reference outside the courtyards of other parts",
       "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)"
     ]
@@ -258,7 +259,8 @@
     "detected": true,
     "failed_checks": [
       "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
-      "GND pours on both layers: B.Cu >= 50 % of the board; island removal always (every island tied)"
+      "GND pours on both layers: B.Cu >= 50 % of the board; island removal always (every island tied)",
+      "Decoupling return through GND copper: capacitor GND pad -> GND pin of its part <= 1.3 x straight + 3 mm (both layers, gndpath.py; C6 accepted at <= 14 mm; review 2.10 F2: GND islands under U2 / U3, C15 -> U10.1 about 30 mm)"
     ]
   },
   {
@@ -289,8 +291,7 @@
       "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
       "Reserved strip of edge A (S1 §5: y 0-10 along J_BP, x 63.5-96.5): no other part on either side",
       "Decoupling and filter capacitors at their pins: pad <= 6 mm from the supply / input pin (100 nF at every IC, C1 / C2 / C16 / C4), C5 4.7 uF <= 5 mm from U10.2 (MCP1525 data sheet), C3 220 uF <= 8 mm from R6.2 (5VA_P06)",
-      "Every visible reference outside the courtyards of other parts",
-      "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)"
+      "Decoupling return through GND copper: capacitor GND pad -> GND pin of its part <= 1.3 x straight + 3 mm (both layers, gndpath.py; C6 accepted at <= 14 mm; review 2.10 F2: GND islands under U2 / U3, C15 -> U10.1 about 30 mm)"
     ]
   },
   {
@@ -316,6 +317,31 @@
     "detected": true,
     "failed_checks": [
       "Silkscreen: board name \"P06 R2 S1-2/3 S1-S2\", edge markers A and B"
+    ]
+  },
+  {
+    "control": "silk_small",
+    "expected_failing_check": "Silkscreen legible",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Silkscreen legible: every visible text on F.SilkS / B.SilkS >= 1.0 mm high with a >= 0.15 mm line (JLCPCB legend minimum; review 2.10 F1: service labels, edge markers, pin marks and six references were 0.8-0.9 / 0.12 mm)"
+    ]
+  },
+  {
+    "control": "analog_track",
+    "expected_failing_check": "Analog block",
+    "detected": true,
+    "failed_checks": [
+      "Analog block: no track and no via other than GND between the pin rows of U2 / U3 (both layers) and in the strip between them (B.Cu); review 2.10 F2 / F3 (service tracks ran under U2 / U3 and cut the B.Cu plane)"
+    ]
+  },
+  {
+    "control": "return_cut",
+    "expected_failing_check": "Decoupling return",
+    "detected": true,
+    "failed_checks": [
+      "Decoupling return through GND copper: capacitor GND pad -> GND pin of its part <= 1.3 x straight + 3 mm (both layers, gndpath.py; C6 accepted at <= 14 mm; review 2.10 F2: GND islands under U2 / U3, C15 -> U10.1 about 30 mm)"
     ]
   }
 ]

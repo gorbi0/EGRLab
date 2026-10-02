@@ -26,6 +26,7 @@ HEIGHTS = {  # footprint id or reference -> (height mm, source)
     'Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder': (1.8, 'max z kart GRM31 (1-4,7 uF: do 1,6 +/- 0,2 mm); od góry'),
     # bottom side (S1-2: <= 1.5 mm): 100 nF 1206 with the BOM thickness note (GRM31M class, 1.15 +/- 0.1 mm)
     'C8': (1.25, 'od spodu: 100 nF 1206 o grubości <= 1,5 mm (uwaga w BOM; np. GRM31MR71H104KA01, 1,15 +/- 0,1 mm)'),
+    'C2': (1.5, 'od spodu pod U3 (2.10): 470 pF 1206 o grubości <= 1,5 mm (uwaga w BOM; C0G 1206 typowo 0,6-1,15 mm)'),
 }
 
 

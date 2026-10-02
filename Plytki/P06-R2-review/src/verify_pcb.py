@@ -469,6 +469,38 @@ cov = {b.GetLayerName(L): round(sum(z.GetFilledPolysList(L).Area() for z in b.Zo
 check('GND pours on both layers: B.Cu >= 50 % of the board; island removal always (every island tied)', cov['B.Cu'] >= 50 and all(z.GetIslandRemovalMode() == p.ISLAND_REMOVAL_MODE_ALWAYS
       for z in b.Zones() if not z.GetIsRuleArea() and z.GetNetname() == 'GND') and len([z for z in b.Zones() if not z.GetIsRuleArea() and z.GetNetname() == 'GND']) == 2,
       {'cover_percent': cov, 'islands': isl})
+# ---------------- 10b. analog ground and return paths (independent review 2.10, F2 / F3) ----------------
+from board import ANALOG_KEEPOUT
+import gndpath
+foreign_a = []
+for kl, x0, y0, x1, y1 in ANALOG_KEEPOUT:
+    L = p.F_Cu if kl == 'F.Cu' else p.B_Cu; box_ = p.SHAPE_POLY_SET(); box_.NewOutline()
+    for x_, y_ in [(x0, y0), (x1, y0), (x1, y1), (x0, y1)]:
+        box_.Append(p.FromMM(x_), p.FromMM(y_))
+    for t in b.GetTracks():
+        if (isinstance(t, p.PCB_VIA) and net(t) == 'GND') or not t.IsOnLayer(L):
+            continue
+        q = p.SHAPE_POLY_SET(); t.TransformShapeToPolygon(q, L, 0, p.FromMM(.005), p.ERROR_INSIDE); q.BooleanIntersection(box_)
+        if q.OutlineCount() and q.Area() > 0:
+            foreign_a.append({'net': net(t), 'layer': kl, 'via': isinstance(t, p.PCB_VIA), 'area': [x0, y0, x1, y1], 'at': pos(t.GetPosition() if isinstance(t, p.PCB_VIA) else t.GetStart())})
+check('Analog block: no track and no via other than GND between the pin rows of U2 / U3 (both layers) and in the strip between them (B.Cu); '
+      'review 2.10 F2 / F3 (service tracks ran under U2 / U3 and cut the B.Cu plane)', not foreign_a, foreign_a)
+# Return path: GND copper (pours, tracks, pads, vias, both layers) from each decoupling / filter capacitor's GND pad to the GND pin of its
+# part (gndpath.py, 0.2 mm raster) <= 1.3 x the straight distance + 3 mm: the return follows the capacitor, no detour around a cut plane.
+# Before review 2.10: C2 -> U3.3 43 mm (straight 11.4), C15 -> U10.1 43 (8.4), C16 -> U3.4 40, C7 -> U2.4 26.
+RET = {'C1': ('U2', '4'), 'C2': ('U3', '3'), 'C4': ('U4', '1'), 'C5': ('U10', '1'), 'C6': ('U1', '2'), 'C7': ('U2', '4'), 'C8': ('U3', '4'),
+       'C9': ('U4', '1'), 'C10': ('U5', '7'), 'C11': ('U6', '7'), 'C12': ('U7', '7'), 'C13': ('U8', '3'), 'C14': ('U9', '3'), 'C15': ('U10', '1'),
+       'C16': ('U3', '4')}
+# Accepted exception (2.10, stated limit): C6 (INA240 VS) -> U1.2 runs round REF_BUF pin 3, NC pin 4 and the service resistor R27 on the
+# bottom (13.2 mm for 5.4 straight); the only shorter way would tie the NC pin to GND (schematic change)
+ACCEPT = {'C6': 14.0}
+cu_, via_ = gndpath.copper(b, 'GND', W, H); ret = {}
+for c, (u, n) in RET.items():
+    cp = next(a for a in fmap[c].Pads() if net(a) == 'GND'); src = gndpath.pad_point(b, c, cp.GetNumber()); dst = gndpath.pad_point(b, u, n)
+    d_ = gndpath.distances(cu_, via_, src, {'d': dst}, limit_mm=120)['d']; st = round(math.dist(src[:2], dst[:2]), 1)
+    ret[f'{c}.{cp.GetNumber()}-{u}.{n}'] = {'path_mm': d_, 'straight_mm': st, 'limit_mm': ACCEPT.get(c, round(1.3 * st + 3, 1)), **({'accepted': True} if c in ACCEPT else {})}
+check('Decoupling return through GND copper: capacitor GND pad -> GND pin of its part <= 1.3 x straight + 3 mm (both layers, gndpath.py; '
+      'C6 accepted at <= 14 mm; review 2.10 F2: GND islands under U2 / U3, C15 -> U10.1 about 30 mm)', all(v['path_mm'] is not None and v['path_mm'] <= v['limit_mm'] for v in ret.values()), ret)
 # ---------------- 11. silkscreen ----------------
 cour = {}; side = {}
 for f in b.GetFootprints():
@@ -509,6 +541,12 @@ for r_, zn_ in PIN_MARKS.items():
         znaki[f'{r_}.{num} {t_}'] = [s_ for s_, t in texts if s_ == t_ and math.dist((p.ToMM(t.GetPosition().x), p.ToMM(t.GetPosition().y)), (qx, qy)) <= lim]
 check('Net marks of the tails J3 / J4 (ECU / EGR) and J5 (5VA / SW / GND) on the silkscreen next to their pads (text centre <= pad edge + 3 mm; S1 §9)',
       all(len(v) == 1 for v in znaki.values()), znaki)
+small = []
+for t in [x for x in b.GetDrawings() if isinstance(x, p.PCB_TEXT)] + [x for f in b.GetFootprints() for x in [f.Reference(), f.Value()] + list(f.GraphicalItems()) if isinstance(x, p.PCB_TEXT)]:
+    if t.GetLayer() in (p.F_SilkS, p.B_SilkS) and t.IsVisible() and (p.ToMM(t.GetTextHeight()) < 1.0 - 1e-6 or p.ToMM(t.GetTextThickness()) < .15 - 1e-6):
+        small.append({'text': t.GetShownText(False), 'height': round(p.ToMM(t.GetTextHeight()), 3), 'line': round(p.ToMM(t.GetTextThickness()), 3), 'at': pos(t.GetPosition())})
+check('Silkscreen legible: every visible text on F.SilkS / B.SilkS >= 1.0 mm high with a >= 0.15 mm line (JLCPCB legend minimum; review 2.10 F1: '
+      'service labels, edge markers, pin marks and six references were 0.8-0.9 / 0.12 mm)', not small, small)
 title = [s for s, t in texts if s == TYTUL]
 marks = [s for s, t in texts if s.startswith('KRAWEDZ A') or s.startswith('KRAWEDZ B')]
 check(f'Silkscreen: board name "{TYTUL}", edge markers A and B', bool(title) and any(m.startswith('KRAWEDZ A') for m in marks) and any(m.startswith('KRAWEDZ B') for m in marks), {'title': title, 'marks': marks})
