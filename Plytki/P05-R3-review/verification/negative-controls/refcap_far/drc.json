@@ -1,0 +1,549 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-02T14:49:53",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P05.kicad_pcb",
+    "unconnected_items": [],
+    "violations": [
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz ADC_CH1)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 2 [GND] z C13 na F.Cu",
+                    "pos": {
+                        "x": 47.4,
+                        "y": 43.275
+                    },
+                    "uuid": "968469af-2fe5-46fd-a1a0-35985c4f9eb2"
+                },
+                {
+                    "description": "Ścieżka [ADC_CH1] na F.Cu, długość 1,4141 mm",
+                    "pos": {
+                        "x": 45.7115,
+                        "y": 44.9615
+                    },
+                    "uuid": "f4dcd65c-c323-4e37-97c8-bbf781bb425c"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci ADC_CH1 oraz GND)",
+            "items": [
+                {
+                    "description": "Ścieżka [ADC_CH1] na F.Cu, długość 0,7734 mm",
+                    "pos": {
+                        "x": 46.7114,
+                        "y": 43.9616
+                    },
+                    "uuid": "153ff26c-c96b-4754-8e2a-614346df13f3"
+                },
+                {
+                    "description": "Pole lutownicze 2 [GND] z C13 na F.Cu",
+                    "pos": {
+                        "x": 47.4,
+                        "y": 43.275
+                    },
+                    "uuid": "968469af-2fe5-46fd-a1a0-35985c4f9eb2"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci REFCAP oraz ADC_CH1)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [REFCAP] z C13 na F.Cu",
+                    "pos": {
+                        "x": 47.4,
+                        "y": 46.225
+                    },
+                    "uuid": "51c9a7fb-f7a0-4a9b-b585-2bac61a4cda6"
+                },
+                {
+                    "description": "Ścieżka [ADC_CH1] na F.Cu, długość 8,2731 mm",
+                    "pos": {
+                        "x": 51.0,
+                        "y": 50.25
+                    },
+                    "uuid": "e0ac0395-7f53-4ef7-af6e-a6b25bb733dd"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz ADC_CH1)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 2 [GND] z C13 na F.Cu",
+                    "pos": {
+                        "x": 47.4,
+                        "y": 43.275
+                    },
+                    "uuid": "968469af-2fe5-46fd-a1a0-35985c4f9eb2"
+                },
+                {
+                    "description": "Przelotka [ADC_CH1] na F.Cu - B.Cu",
+                    "pos": {
+                        "x": 46.7114,
+                        "y": 43.1882
+                    },
+                    "uuid": "b4db902d-cf27-4d11-a54b-2e5d9f3ff7a3"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 2 [GND] z C13 na F.Cu",
+                    "pos": {
+                        "x": 47.4,
+                        "y": 43.275
+                    },
+                    "uuid": "968469af-2fe5-46fd-a1a0-35985c4f9eb2"
+                },
+                {
+                    "description": "Przelotka [ADC_CH1] na F.Cu - B.Cu",
+                    "pos": {
+                        "x": 46.7114,
+                        "y": 43.1882
+                    },
+                    "uuid": "b4db902d-cf27-4d11-a54b-2e5d9f3ff7a3"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu (klasa sieci 'Default' prześwit 0,2500 mm; obecnie 0,1000 mm)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [REFCAP] z C13 na F.Cu",
+                    "pos": {
+                        "x": 47.4,
+                        "y": 46.225
+                    },
+                    "uuid": "51c9a7fb-f7a0-4a9b-b585-2bac61a4cda6"
+                },
+                {
+                    "description": "Ścieżka [ADC_CH2] na F.Cu, długość 5,9397 mm",
+                    "pos": {
+                        "x": 51.0,
+                        "y": 51.25
+                    },
+                    "uuid": "fb3c96d9-a381-4f24-9e2f-8209ef4e36c5"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu (klasa sieci 'Default' prześwit 0,2500 mm; obecnie 0,1000 mm)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [REFCAP] z C13 na F.Cu",
+                    "pos": {
+                        "x": 47.4,
+                        "y": 46.225
+                    },
+                    "uuid": "51c9a7fb-f7a0-4a9b-b585-2bac61a4cda6"
+                },
+                {
+                    "description": "Ścieżka [ADC_CH2] na F.Cu, długość 2,2995 mm",
+                    "pos": {
+                        "x": 46.8,
+                        "y": 47.05
+                    },
+                    "uuid": "62141a3a-26aa-4a2c-b9c8-10978bcda0a5"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 2 [GND] z C13 na F.Cu",
+                    "pos": {
+                        "x": 47.4,
+                        "y": 43.275
+                    },
+                    "uuid": "968469af-2fe5-46fd-a1a0-35985c4f9eb2"
+                },
+                {
+                    "description": "Przelotka [ADC_CH1] na F.Cu - B.Cu",
+                    "pos": {
+                        "x": 46.7114,
+                        "y": 43.1882
+                    },
+                    "uuid": "b4db902d-cf27-4d11-a54b-2e5d9f3ff7a3"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu (klasa sieci 'Default' prześwit 0,2500 mm; obecnie 0,0500 mm)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 2 [GND] z C13 na F.Cu",
+                    "pos": {
+                        "x": 47.4,
+                        "y": 43.275
+                    },
+                    "uuid": "968469af-2fe5-46fd-a1a0-35985c4f9eb2"
+                },
+                {
+                    "description": "Pole PTH 1 [REFCAP] na TP5",
+                    "pos": {
+                        "x": 49.2,
+                        "y": 44.9
+                    },
+                    "uuid": "a1f48661-abfd-44fa-a40d-38c58975e3c8"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint C13",
+                    "pos": {
+                        "x": 47.4,
+                        "y": 44.75
+                    },
+                    "uuid": "36ea604e-1464-4fae-9fb2-61b88e9bc8d4"
+                },
+                {
+                    "description": "Footprint TP5",
+                    "pos": {
+                        "x": 49.2,
+                        "y": 44.9
+                    },
+                    "uuid": "dce63284-6bd7-4140-8b2e-e51ac72b25d3"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 1 [REFCAP] na TP5",
+                    "pos": {
+                        "x": 49.2,
+                        "y": 44.9
+                    },
+                    "uuid": "a1f48661-abfd-44fa-a40d-38c58975e3c8"
+                },
+                {
+                    "description": "Footprint C13",
+                    "pos": {
+                        "x": 47.4,
+                        "y": 44.75
+                    },
+                    "uuid": "36ea604e-1464-4fae-9fb2-61b88e9bc8d4"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [ADC_CH1] na F.Cu, długość 0,7734 mm",
+                    "pos": {
+                        "x": 46.7114,
+                        "y": 43.9616
+                    },
+                    "uuid": "153ff26c-c96b-4754-8e2a-614346df13f3"
+                },
+                {
+                    "description": "Pole lutownicze 2 [GND] z C13 na F.Cu",
+                    "pos": {
+                        "x": 47.4,
+                        "y": 43.275
+                    },
+                    "uuid": "968469af-2fe5-46fd-a1a0-35985c4f9eb2"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole PTH 1 [REFCAP] na TP5",
+                    "pos": {
+                        "x": 49.2,
+                        "y": 44.9
+                    },
+                    "uuid": "a1f48661-abfd-44fa-a40d-38c58975e3c8"
+                },
+                {
+                    "description": "Pole lutownicze 2 [GND] z C13 na F.Cu",
+                    "pos": {
+                        "x": 47.4,
+                        "y": 43.275
+                    },
+                    "uuid": "968469af-2fe5-46fd-a1a0-35985c4f9eb2"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [ADC_CH1] na F.Cu, długość 8,2731 mm",
+                    "pos": {
+                        "x": 51.0,
+                        "y": 50.25
+                    },
+                    "uuid": "e0ac0395-7f53-4ef7-af6e-a6b25bb733dd"
+                },
+                {
+                    "description": "Pole lutownicze 1 [REFCAP] z C13 na F.Cu",
+                    "pos": {
+                        "x": 47.4,
+                        "y": 46.225
+                    },
+                    "uuid": "51c9a7fb-f7a0-4a9b-b585-2bac61a4cda6"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [ADC_CH1] na F.Cu, długość 1,4141 mm",
+                    "pos": {
+                        "x": 45.7115,
+                        "y": 44.9615
+                    },
+                    "uuid": "f4dcd65c-c323-4e37-97c8-bbf781bb425c"
+                },
+                {
+                    "description": "Pole lutownicze 2 [GND] z C13 na F.Cu",
+                    "pos": {
+                        "x": 47.4,
+                        "y": 43.275
+                    },
+                    "uuid": "968469af-2fe5-46fd-a1a0-35985c4f9eb2"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Przelotka [ADC_CH1] na F.Cu - B.Cu",
+                    "pos": {
+                        "x": 46.7114,
+                        "y": 43.1882
+                    },
+                    "uuid": "b4db902d-cf27-4d11-a54b-2e5d9f3ff7a3"
+                },
+                {
+                    "description": "Pole lutownicze 2 [GND] z C13 na F.Cu",
+                    "pos": {
+                        "x": 47.4,
+                        "y": 43.275
+                    },
+                    "uuid": "968469af-2fe5-46fd-a1a0-35985c4f9eb2"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [REFCAP] na F.Cu, długość 0,3000 mm",
+                    "pos": {
+                        "x": 52.4,
+                        "y": 46.225
+                    },
+                    "uuid": "6e6be113-f57a-4557-8050-142c1bcaa62f"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP2",
+                    "pos": {
+                        "x": 68.57,
+                        "y": 13.33
+                    },
+                    "uuid": "76b1faa3-dd55-40f3-b638-ce219a063362"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV2",
+                    "pos": {
+                        "x": 95.24,
+                        "y": 95.96
+                    },
+                    "uuid": "810c12eb-af65-4fa3-a50c-0eb74548145d"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x05_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP1",
+                    "pos": {
+                        "x": 21.42,
+                        "y": 13.33
+                    },
+                    "uuid": "84ab3ecb-2744-491d-a9db-2bff5be4f0ae"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV1",
+                    "pos": {
+                        "x": 41.74,
+                        "y": 95.96
+                    },
+                    "uuid": "b7460ef1-fb26-4b20-a82b-a70a1bf44033"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment z C13 na F.Silkscreen",
+                    "pos": {
+                        "x": 48.76,
+                        "y": 45.461252
+                    },
+                    "uuid": "a7285e35-84c2-450e-9949-d9ef962ead48"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C27",
+                    "pos": {
+                        "x": 46.263,
+                        "y": 44.4
+                    },
+                    "uuid": "2c8297da-68c2-4936-a29c-e5f2784e52f9"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Pole odnośnika do TP5",
+                    "pos": {
+                        "x": 49.2,
+                        "y": 42.555
+                    },
+                    "uuid": "0e8104c3-06c2-4580-9b02-fe8068ce2c77"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Segment z C13 na F.Silkscreen",
+                    "pos": {
+                        "x": 46.04,
+                        "y": 45.461252
+                    },
+                    "uuid": "084e9a4c-a9d6-468f-8173-861248905926"
+                },
+                {
+                    "description": "Pole odnośnika do C27",
+                    "pos": {
+                        "x": 46.263,
+                        "y": 44.4
+                    },
+                    "uuid": "2c8297da-68c2-4936-a29c-e5f2784e52f9"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        }
+    ]
+}

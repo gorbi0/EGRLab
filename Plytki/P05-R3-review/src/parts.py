@@ -124,6 +124,9 @@ for rr in ['C12','C13']:
 for idx,(ref,net) in enumerate([('U2',S5),('U3',S5),('U5',V),('U6',V),('U7',S5),('U8',V),('U9',V),('U10',V),('U11',V)],14):cap(f'C{idx}','C_DEC_'+ref,'100n',1e-7,net,G,'P05')
 cap('C23','C_REF_IN','1u',1e-6,S5,G,'READY');cap('C24','C_REF_OUT','1u',1e-6,'REF_2V5',G,'READY')
 cap('C25','C_RAIL_LOW','10n',1e-8,'RAIL_LOW',G,'READY');cap('C26','C_RAIL_HIGH','10n',1e-8,'RAIL_HIGH',G,'READY')
+# 1.10 layout (S1-2): these sit on the bottom side - C5/C7/C8/C11 under U1 on their own vias, C25/C26 by U3 - so the BOM asks for <= 1.5 mm
+for rr in ['C5','C7','C8','C11','C25','C26']:
+ PARTS[rr]['note']=('Bottom side (S1-2): thickness <= 1.5 mm, e.g. GRM31MR71H104KA01 (100nF 50V X7R, 1.15 mm).' if rr not in ('C25','C26') else 'Bottom side (S1-2): thickness <= 1.5 mm (10nF 1206 X7R is typically 0.6-0.85 mm).')
 for i,(src,val,n,a,b) in enumerate([
  ('R_RAIL_T','15K',15000,A5,'RAIL_SENSE'),('R_RAIL_B','10K',10000,'RAIL_SENSE',G),
  ('R_RAIL_LT','6.04K',6040,'REF_2V5','RAIL_LOW'),('R_RAIL_LB','20K',20000,'RAIL_LOW',G),
