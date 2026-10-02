@@ -10,9 +10,9 @@
 |---|---|---|
 | P02 R4 | PCB scalona (PR #4), paczka produkcyjna | origin/main @ 1d4ff38, blob c2cfb86198 |
 | P03 R6 | PCB scalona lokalnie 1.10 (gałąź p03-r6-pcb; main czeka na push) | origin/p03-r6-pcb @ 7afd1b9, blob 6993dda42a |
-| P05 R3 | PCB do recenzji (gałąź p05-r3-pcb: schemat z PR #7 + layout lokalny 1.10) | origin/p05-r3-pcb @ 3c5a300, blob f064b12b9c |
+| P05 R3 | PCB po recenzji niezależnej i poprawkach 2.10 (gałąź p05-r3-pcb: schemat z PR #7 + layout lokalny) | origin/p05-r3-pcb @ 88515c1, blob f064b12b9c |
 | P09 R2 | PCB scalona lokalnie 1.10 (gałąź p09-r2-pcb; main czeka na push) | origin/p09-r2-pcb @ 7ac6d99, blob e325a5ac53 |
-| P06 R2 | PCB do recenzji (gałąź p06-r2-pcb: schemat z PR #8 + przegląd i layout lokalny 1.10) | origin/p06-r2-pcb @ d2df1ef, blob 508a9de996 |
+| P06 R2 | PCB po recenzji niezależnej i poprawkach 2.10 (gałąź p06-r2-pcb: schemat z PR #8 + przegląd i layout lokalny) | origin/p06-r2-pcb @ fcb65ad, blob 508a9de996 |
 | P10 R2 | PCB scalona lokalnie 1.10 (gałąź p10-r2-pcb; main czeka na push) | origin/p10-r2-pcb @ 6ab03fb, blob 22cf0803e6 |
 | P11 | czeka: nowy panel, taśma do P12 (S1 §8: 1 × 2×10) | — |
 | P04 | wariant pełny; S1 §7: na poziomie 4 zostaje tylko S2 | — |
@@ -111,8 +111,8 @@ Sieci: 5V_SYS (wprost), 5V_M1 (P03: za kluczem Q1), 5VA_P05 (P05: za R1 1 Ω), 5
 |---|---|---|---|
 | P02 R4 | 22,1 | C22 22u / 16V (5V_SYS), C26 100nF / X7R (5V_SYS) | origin/main @ 1d4ff38, blob c2cfb86198 |
 | P03 R6 | 11 | C14 10uF / 16V X7R (5V_M1), C13 1uF / 25V X7R (5V_SYS) | origin/p03-r6-pcb @ 7afd1b9, blob 8d637f6465 |
-| P05 R3 | 222,7 | C1 220u / 16V (5VA_P05), C2 1u (5VA_P05), C23 1u (5V_SYS) | origin/p05-r3-pcb @ 3c5a300, blob 74a6903ebc |
-| P06 R2 | 220,3 | C3 220u / 16V (5VA_P06), C6 100n (5VA_P06), C9 100n (5VA_P06) | origin/p06-r2-pcb @ d2df1ef, blob 78e70f9a26 |
+| P05 R3 | 222,7 | C1 220u / 16V (5VA_P05), C2 1u (5VA_P05), C23 1u (5V_SYS) | origin/p05-r3-pcb @ 88515c1, blob 74a6903ebc |
+| P06 R2 | 220,3 | C3 220u / 16V (5VA_P06), C6 100n (5VA_P06), C9 100n (5VA_P06) | origin/p06-r2-pcb @ fcb65ad, blob 81dcb701df |
 | P09 R2 | 4,7 | C5 4u7 (5V_SYS) | origin/p09-r2-pcb @ 7ac6d99, blob 8e5d587aa7 |
 | P10 R2 | 4,8 | C4 4u7 (5V_SYS), C1 100n (5V_SYS) | origin/p10-r2-pcb @ 6ab03fb, blob d226cd47a3 |
 
