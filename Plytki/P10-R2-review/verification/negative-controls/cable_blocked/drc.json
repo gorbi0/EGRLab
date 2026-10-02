@@ -1,7 +1,7 @@
 {
     "$schema": "https://schemas.kicad.org/drc.v1.json",
     "coordinate_units": "mm",
-    "date": "2026-10-01T09:47:13",
+    "date": "2026-10-02T15:04:23",
     "ignored_checks": [
         {
             "description": "Footprint has no courtyard defined",
@@ -37,20 +37,20 @@
             "description": "Missing connection between items",
             "items": [
                 {
-                    "description": "Pole lutownicze 2 [/CORE/SRV_3V3_IO] z R4 na F.Cu",
+                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 3,2500 mm",
                     "pos": {
-                        "x": 51.3,
-                        "y": 55.2
+                        "x": 30.525,
+                        "y": 61.405
                     },
-                    "uuid": "72fd3249-b08b-4e5c-b112-cc1fe3bd9edc"
+                    "uuid": "2216305e-c07c-45bc-89d1-8802fb5e722e"
                 },
                 {
-                    "description": "Ścieżka [/CORE/SRV_3V3_IO] na F.Cu, długość 30,4000 mm",
+                    "description": "Pole lutownicze 1 [3V3_IO] z R4 na F.Cu",
                     "pos": {
-                        "x": 31.58,
-                        "y": 95.96
+                        "x": 51.3,
+                        "y": 58.3
                     },
-                    "uuid": "9c590958-9e5e-4e62-acc5-cf821ac91a89"
+                    "uuid": "6b0c17bf-a4c2-4961-8606-cf7f480c80b6"
                 }
             ],
             "severity": "error",
@@ -60,20 +60,20 @@
             "description": "Missing connection between items",
             "items": [
                 {
-                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 3,2500 mm",
-                    "pos": {
-                        "x": 30.525,
-                        "y": 61.405
-                    },
-                    "uuid": "29417671-32aa-456d-8486-c10cb0cfff5a"
-                },
-                {
-                    "description": "Pole lutownicze 1 [3V3_IO] z R4 na F.Cu",
+                    "description": "Pole lutownicze 2 [/CORE/SRV_3V3_IO] z R4 na F.Cu",
                     "pos": {
                         "x": 51.3,
-                        "y": 58.3
+                        "y": 55.2
                     },
-                    "uuid": "5e4074a5-ea31-4d9e-b066-a08953fbe189"
+                    "uuid": "fd39b225-c63e-4b59-9147-b3e4ef01c41f"
+                },
+                {
+                    "description": "Ścieżka [/CORE/SRV_3V3_IO] na F.Cu, długość 1,4920 mm",
+                    "pos": {
+                        "x": 31.58,
+                        "y": 65.56
+                    },
+                    "uuid": "25ae041d-482c-4b0b-b788-68ab846400d5"
                 }
             ],
             "severity": "error",
@@ -85,12 +85,12 @@
             "description": "Track has unconnected end",
             "items": [
                 {
-                    "description": "Ścieżka [/CORE/SRV_3V3_IO] na F.Cu, długość 1,4920 mm",
+                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 3,2500 mm",
                     "pos": {
-                        "x": 31.58,
-                        "y": 65.56
+                        "x": 30.525,
+                        "y": 61.405
                     },
-                    "uuid": "841c721b-93e3-4a62-b446-3e04e1ba7c38"
+                    "uuid": "2216305e-c07c-45bc-89d1-8802fb5e722e"
                 }
             ],
             "severity": "warning",
@@ -100,31 +100,16 @@
             "description": "Track has unconnected end",
             "items": [
                 {
-                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 3,2500 mm",
+                    "description": "Ścieżka [/CORE/SRV_3V3_IO] na F.Cu, długość 1,4920 mm",
                     "pos": {
-                        "x": 30.525,
-                        "y": 61.405
+                        "x": 31.58,
+                        "y": 65.56
                     },
-                    "uuid": "29417671-32aa-456d-8486-c10cb0cfff5a"
+                    "uuid": "25ae041d-482c-4b0b-b788-68ab846400d5"
                 }
             ],
             "severity": "warning",
             "type": "track_dangling"
-        },
-        {
-            "description": "Footprint 'PinHeader_1x09_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
-            "items": [
-                {
-                    "description": "Footprint J2",
-                    "pos": {
-                        "x": 36.66,
-                        "y": 95.96
-                    },
-                    "uuid": "196ea6f0-a478-496a-9a48-7746ebde6821"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_mismatch"
         },
         {
             "description": "Footprint 'IDC-Header_2x05_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
@@ -135,7 +120,22 @@
                         "x": 21.42,
                         "y": 13.33
                     },
-                    "uuid": "e20c3a48-c60e-4aea-a890-06c774a1a50a"
+                    "uuid": "924e5d33-77eb-4c09-9e0b-b4579d287e90"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x09_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J2",
+                    "pos": {
+                        "x": 36.66,
+                        "y": 95.96
+                    },
+                    "uuid": "ca7354c8-a268-45d5-816f-9690439d8785"
                 }
             ],
             "severity": "warning",

@@ -1,5 +1,7 @@
 # P10 R2 — CAN pasywny w formacie S1 (schemat i PCB)
 
+**Nadruk 2.10 (gałąź `nadruk-s1`):** wszystkie napisy ≥ 1,0 mm, linia ≥ 0,15 mm (minimum JLCPCB; ustalenie niezależnych recenzji P05 R3 / P06 R2, DRC pilnuje przez `set_rules.py`). Trasowanie bez zmian (wydanie odtworzone); ukryte oznaczenia bez zmian (R1, R3, D1).
+
 29.09.2026, sesja w chmurze (schemat); 30.09.2026 wieczorem, komputer 24/7 (PCB, sekcja „PCB”). **Status: schemat i PCB do lokalnej recenzji**, sprzęt NIE ZBADANO. R2 powstała na kopii generatora z `Plytki/P10-R1-review` (zamknięty pakiet, niezmieniony); wymagania: `Plytki/Format-S1/SPECYFIKACJA-FORMATU-S1.md` (S1-2; przy layoucie S1-3) i zadanie `Plytki/Format-S1/zadania/ZADANIE-P09-P10-S1.md`.
 
 **Klasa płytki:** 1/3 (53 × 100 mm), slot S3 poziomu 4 (format S1-3, `SPECYFIKACJA-FORMATU-S1.md` §7). Schemat R2 powstał jeszcze dla slotu S1 poziomu 1; przy layoucie sprawdzone: wszystkie części stoją od góry, więc zakaz SOIC od spodu na poziomie 4 niczego nie zmienia, a J3 jest przy ścianie wejść. W schemacie zmieniły się tylko teksty (opis arkusza, noty BOM J1/J2). Topologia bez zmian: TCAN1051V z S i TXD na stałe do VIO, PESD2CAN, bufor RX 74LVC125AD z Ioff, brak terminatora, brak ścieżki CAN_TX do transceivera; tylko odbiór.

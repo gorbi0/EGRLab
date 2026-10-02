@@ -58,6 +58,6 @@ Kontrole PCB: 25/25. Próby ujemne: 22/22 (w tym próba zerowa).
 | zone_copper | Standoff zones D7 | tak | 2 |
 | title_wrong | Silkscreen: board name | tak | 1 |
 
-Nadruk: ukryte oznaczenia (brak miejsca): R12, R16, R3, R6, R9; nieumieszczone napisy: brak.
+Nadruk: ukryte oznaczenia (brak miejsca): R11, R12, R15, R16, R3, R4, R9; nieumieszczone napisy: brak.
 
 Oględziny PDF: wpis ręczny w README (sekcja „PCB”); render stron w output/previews/pcb-*.png.

@@ -1,6 +1,6 @@
 {
-  "board": "/home/tgorbacz/AI/Claude/EGRLab/.worktrees/p09-r2-pcb/Plytki/P09-R2-review/verification/negative-controls/sv_pin_without_resistor/P09.kicad_pcb",
-  "board_sha256": "09cb822a1c8c172de1c41a13bfa333e5bc2d527c139ceaa5af2e9dac15013edf",
+  "board": "/home/tgorbacz/AI/Claude/EGRLab/.worktrees/nadruk-s1/Plytki/P09-R2-review/verification/negative-controls/sv_pin_without_resistor/P09.kicad_pcb",
+  "board_sha256": "4722ef57b640bd71a537278b58193d2a5b275c10119e32f0fb45461c468880ff",
   "checks": [
     {
       "check": "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
@@ -133,23 +133,11 @@
           "soic": false,
           "min_gap_to_THT_mm": 3.67
         },
-        "R27": {
+        "R29": {
           "smd": true,
           "height_mm": 0.7,
           "soic": false,
-          "min_gap_to_THT_mm": 2.8
-        },
-        "R20": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 1.5
-        },
-        "R28": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 2.58
+          "min_gap_to_THT_mm": 3.4
         },
         "R30": {
           "smd": true,
@@ -157,11 +145,23 @@
           "soic": false,
           "min_gap_to_THT_mm": 1.07
         },
+        "R26": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.95
+        },
         "R23": {
           "smd": true,
           "height_mm": 0.7,
           "soic": false,
           "min_gap_to_THT_mm": 1.12
+        },
+        "R28": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 2.58
         },
         "R24": {
           "smd": true,
@@ -169,25 +169,25 @@
           "soic": false,
           "min_gap_to_THT_mm": 1.12
         },
-        "R26": {
+        "R27": {
           "smd": true,
           "height_mm": 0.7,
           "soic": false,
-          "min_gap_to_THT_mm": 1.95
+          "min_gap_to_THT_mm": 2.8
         },
-        "R29": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 3.4
-        },
-        "R22": {
+        "R25": {
           "smd": true,
           "height_mm": 0.7,
           "soic": false,
           "min_gap_to_THT_mm": 1.12
         },
-        "R25": {
+        "R20": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.5
+        },
+        "R22": {
           "smd": true,
           "height_mm": 0.7,
           "soic": false,
@@ -265,7 +265,7 @@
     },
     "Service header J2 (edge B, S1 section 6): <= 13 pins in x 10..43, pins out ~6 mm, GND on both ends, one series resistor per pin of the value in docs/SERWIS.csv, <= 10 mm from its node, one silk label per pin with the name of its node (LABEL in silkscreen.py), GND at the ends": {
       "problems": [
-        "pin 2: not exactly one series resistor (['R5', 'R19', 'JP2', 'R18', 'C2', 'U1', 'C4', 'R6', 'U3', 'U3', 'U2', 'U2', 'U2', 'C3', 'J1', 'R2', 'R1', 'JP1', 'C1', 'R20'])"
+        "pin 2: not exactly one series resistor (['R6', 'C1', 'C3', 'R2', 'C4', 'JP1', 'U3', 'U3', 'R18', 'JP2', 'R1', 'C2', 'U2', 'U2', 'U2', 'R5', 'J1', 'U1', 'R19', 'R20'])"
       ],
       "pins": [
         {
@@ -382,7 +382,7 @@
     },
     "Every part <= 16.5 mm above the board (level 3, S1 section 4; src/heights.py; the module height is an upper estimate)": {
       "max": [
-        "J4",
+        "J3",
         14.1
       ],
       "over": {}

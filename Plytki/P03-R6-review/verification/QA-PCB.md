@@ -63,6 +63,6 @@ Kontrole PCB: 27/27. Próby ujemne: 25/25 (w tym próba zerowa).
 | title_wrong | Silkscreen: board name | tak | 1 |
 | lib_pad_changed | Fresh native DRC | tak | 1 |
 
-Nadruk: ukryte oznaczenia (brak miejsca): R14, R2, R27, R28, R41, R48, R50, R51, R65, R66, R7, R70, R71, R9, C13, U6; nieumieszczone napisy: brak.
+Nadruk: ukryte oznaczenia (brak miejsca): R14, R15, R2, R20, R24, R27, R28, R30, R34, R37, R41, R44, R48, R50, R51, R53, R65, R66, R7, R70, R71, R9, C13, C15, C2, C3, U6; nieumieszczone napisy: brak.
 
 Oględziny PDF: wpis ręczny w README (sekcja „PCB”); render stron w output/previews/pcb-*.png.

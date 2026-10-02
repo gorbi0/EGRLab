@@ -1,5 +1,7 @@
 # EGRLab P03-R6 — CORE w formacie S1 (schemat i PCB)
 
+**Nadruk 2.10 (gałąź `nadruk-s1`):** wszystkie napisy ≥ 1,0 mm, linia ≥ 0,15 mm (minimum JLCPCB; ustalenie niezależnych recenzji P05 R3 / P06 R2, DRC pilnuje przez `set_rules.py`). Skróty przy J_SV2 / J_SV3 1,0 mm wysokości i 0,65 mm szerokości (trzy litery w rastrze 2,54 mm), napisy J1 / J3 modułu M1 podniesione do 1,0 mm. Trasowanie bez zmian (wydanie odtworzone). 27 oznaczeń ukrytych z braku miejsca (wcześniej 16; na rysunku montażowym F.Fab są wszystkie).
+
 29.09.2026, sesja w chmurze, zadanie `Plytki/Format-S1/zadania/ZADANIE-P03-S1.md`. **Tylko schemat i kontrole, bez PCB.** Layout i trasowanie robi sesja lokalna (`docs/CHMURA.md`, zasada 6). Sprzęt NIE ZBADANO.
 
 **30.09.2026 wieczorem: PCB gotowa do recenzji** (gałąź `p03-r6-pcb`, komputer 24/7 z Ubuntu, `docs/UBUNTU-24-7.md`): DRC 0 niepołączonych / 0 niezgodności ze schematem / 0 innych naruszeń (6 przyjętych `lib_footprint_mismatch` złączy z przyciętym nadrukiem), kontrole PCB 25/25, próby ujemne 16/16 z zerową, PDF `output/pdf/P03-R6-PCB.pdf`. Szczegóły w sekcji „PCB” niżej; przymiarka 1:1 i sprzęt: NIE ZBADANO.

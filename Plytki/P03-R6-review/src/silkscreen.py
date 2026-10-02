@@ -22,6 +22,7 @@ sys.path.insert(0, str(P / 'src'))
 from build_board import W, Hh as H, holes
 STREFY = [(hx, hy) for hx, hy in holes()]; RZ_M3 = 3.5   # 1.10 (recenzja P09): tekst w strefie Ø7 przykrywa dystans M3 z podkładką
 TYTUL = 'P03 R6 S1-L S1-S3'   # S1 §9: nazwa, rewizja, klasa i sloty (jak P02 R4, P09 / P10 R2)
+MIN_H, MIN_T = 1.0, .15   # 2.10 (independent reviews of P05 R3 / P06 R2): JLCPCB legend minimum, character 1.0 mm, line 0.15 mm
 EDGE = .3   # silk-to-edge clearance used by DRC (board setting min_silk... edge 0.3 is KiCad default for silk_edge_clearance)
 LABEL = {  # J_SV1: full names, vertical
     'GND': 'GND', '5V_SYS': '5V_SYS', '5V_M1': '5V_M1', '3V3_CORE': '3V3', '3V3_IO': '3V3_IO', 'SUP_RAW_N': 'SUPRAW', 'SUP_N': 'SUP_N',
@@ -105,6 +106,9 @@ placed = []; placed_b = []
 # moves to the nearest free spot (0.2 mm grid, up to 3 mm); DRC reports these as silk_overlap inside one footprint. Listed per part.
 moved_by = {}
 ftexts = [(f.GetReference(), g) for f in b.GetFootprints() for g in f.GraphicalItems() if g.GetLayer() == p.F_SilkS and isinstance(g, p.PCB_TEXT)]
+for _, g in ftexts:   # 2.10: footprint user texts (module header names J1 / J3 of M1) up to the legend minimum
+    if p.ToMM(g.GetTextHeight()) < MIN_H or p.ToMM(g.GetTextThickness()) < MIN_T:
+        k = MIN_H / p.ToMM(g.GetTextHeight()); g.SetTextSize(p.VECTOR2I(mm(p.ToMM(g.GetTextWidth()) * k), mm(MIN_H))); g.SetTextThickness(mm(MIN_T))
 for r0, g in ftexts:
     ob = bbox_of(g); others = [sb for r, sb in silk if sb != ob]
     if not any(hit(ob, sb, .2) for sb in others):
@@ -158,15 +162,17 @@ for hdr in ('J_SV1', 'J_SV2', 'J_SV3'):
         if n != 'GND':  # node = the net on the other side of the series resistor
             r = next(f for f in b.GetFootprints() if f.GetReference() != hdr for q in f.Pads() if q.GetNetname() == a.GetNetname())
             node = next(q.GetNetname().split('/')[-1] for q in r.Pads() if q.GetNetname() != a.GetNetname())
-        tx = p.PCB_TEXT(b); tx.SetTextThickness(mm(.12)); tx.SetLayer(p.F_SilkS)
+        tx = p.PCB_TEXT(b); tx.SetTextThickness(mm(MIN_T)); tx.SetLayer(p.F_SilkS)
         if hdr == 'J_SV1':
-            t = LABEL[node]; tx.SetText(t); tx.SetTextSize(p.VECTOR2I(mm(.7), mm(.8)))
+            t = LABEL[node]; tx.SetText(t); tx.SetTextSize(p.VECTOR2I(mm(.9 * MIN_H), mm(MIN_H)))
             tx.SetTextAngle(p.EDA_ANGLE(90, p.DEGREES_T)); tx.SetHorizJustify(p.GR_TEXT_H_ALIGN_LEFT); tx.SetPosition(p.VECTOR2I(mm(x), mm(93.9)))
         else:
-            # 0.8 mm: DRC text height. Pin 1: 0.45 mm higher, clear of the header's pin-1 mark (L at y 94.63; 1.10: GND has labels
+            # Pin 1: 0.45 mm higher, clear of the header's pin-1 mark (L at y 94.63; 1.10: GND has labels
             # on both ends since the legend moved to the sticker); the modules M1 / SD1 end left of pin 1, so there is room above
             yl = 94.25 - (.45 if a.GetNumber() == '1' else 0)
-            t = ABBR[node]; tx.SetText(t); tx.SetTextSize(p.VECTOR2I(mm(.7), mm(.8))); tx.SetPosition(p.VECTOR2I(mm(x), mm(yl)))
+            # 2.10: 1.0 mm high / 0.15 mm line, 0.65 mm wide - three letters at 0.9 mm wide overlap on the 2.54 mm pitch (gap >= 0.22 mm
+            # measured); a second row would hit the M1 outline
+            t = ABBR[node]; tx.SetText(t); tx.SetTextSize(p.VECTOR2I(mm(.65), mm(MIN_H))); tx.SetPosition(p.VECTOR2I(mm(x), mm(yl)))
         b.Add(tx); placed.append(text_box(tx)); labels[f'{hdr}.{a.GetNumber()}'] = t
         if hdr != 'J_SV1' and node != 'GND':
             used[t] = node
@@ -180,7 +186,7 @@ for r in sorted(fps, key=lambda r: (yards[r].BBox().GetArea(), r)):   # 30.09: t
     cb = yards[r].BBox(); x0, y0, x1, y1 = p.ToMM(cb.GetLeft()), p.ToMM(cb.GetTop()), p.ToMM(cb.GetRight()), p.ToMM(cb.GetBottom())
     cx, cy_ = (x0 + x1) / 2, (y0 + y1) / 2
     ok = False
-    for size in (1.0, .8):
+    for size in (MIN_H,):   # 2.10: no 0.8 mm fallback (JLCPCB legend minimum); a reference without room is hidden (F.Fab)
         cands = [(cx, cy_, 0), (cx, cy_, 90), (cx, y0 - size * .8, 0), (cx, y1 + size * .8, 0), (x0 - size * .8, cy_, 90), (x1 + size * .8, cy_, 90)]
         for dx in (-3, 3, -6, 6):
             cands += [(cx + dx, y0 - size * .8, 0), (cx + dx, y1 + size * .8, 0)]
@@ -196,7 +202,7 @@ for r in sorted(fps, key=lambda r: (yards[r].BBox().GetArea(), r)):   # 30.09: t
             cands += [(cx, y0 - k * d, 0), (cx, y1 + k * d, 0), (x0 - k * d, cy_, 90), (x1 + k * d, cy_, 90)]
         cands += [(x0 - half, cy_, 0), (x1 + half, cy_, 0), (cx, y0 - half, 90), (cx, y1 + half, 90)]
         for x, y, a in cands:
-            ref.SetTextSize(p.VECTOR2I(mm(size), mm(size))); ref.SetTextThickness(mm(.15 if size == 1.0 else .12))
+            ref.SetTextSize(p.VECTOR2I(mm(size), mm(size))); ref.SetTextThickness(mm(MIN_T))
             ref.SetTextAngle(p.EDA_ANGLE(a, p.DEGREES_T)); ref.SetPosition(p.VECTOR2I(mm(x), mm(y)))
             bx = text_box(ref)
             if free(bx, r, f.IsFlipped()) and najblizej_wlasnej(bx, r, f.IsFlipped()):
@@ -220,9 +226,10 @@ def txt(t, x, y, size=1.0, angle=0, thick=.15, just=None):
 
 extra = []
 def place_text(t, spots, size=1.0, angle=0, just=None, own=None):
+    size = max(size, MIN_H)   # 2.10: edge markers / pin marks were 0.8-0.9 mm
     for x, y in spots:
         a = p.PCB_TEXT(b); a.SetText(t); a.SetPosition(p.VECTOR2I(mm(x), mm(y))); a.SetTextSize(p.VECTOR2I(mm(size * .9), mm(size)))
-        a.SetTextThickness(mm(.15 if size >= 1 else .12)); a.SetLayer(p.F_SilkS); a.SetTextAngle(p.EDA_ANGLE(angle, p.DEGREES_T))
+        a.SetTextThickness(mm(MIN_T)); a.SetLayer(p.F_SilkS); a.SetTextAngle(p.EDA_ANGLE(angle, p.DEGREES_T))
         if just == 'left': a.SetHorizJustify(p.GR_TEXT_H_ALIGN_LEFT)
         if just == 'right': a.SetHorizJustify(p.GR_TEXT_H_ALIGN_RIGHT)
         if free(text_box(a), own):   # own: the connector of a pin-1 mark (30.09: its own courtyard covers pin 1, so no mark was placed)

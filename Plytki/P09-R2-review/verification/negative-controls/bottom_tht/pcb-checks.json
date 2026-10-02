@@ -1,6 +1,6 @@
 {
-  "board": "/home/tgorbacz/AI/Claude/EGRLab/.worktrees/p09-r2-pcb/Plytki/P09-R2-review/verification/negative-controls/bottom_tht/P09.kicad_pcb",
-  "board_sha256": "39af5d8f973bbfdfbef4922eb97fa8878b1b723f1a415a72a0d3020f0390898f",
+  "board": "/home/tgorbacz/AI/Claude/EGRLab/.worktrees/nadruk-s1/Plytki/P09-R2-review/verification/negative-controls/bottom_tht/P09.kicad_pcb",
+  "board_sha256": "cd9f8a5e00559630c20b4c9937a86bb69c7b24e802b1679321c60763536b29ff",
   "checks": [
     {
       "check": "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
@@ -129,53 +129,17 @@
     },
     "S1-2 section 4: parts on the bottom only SMD <= 1.5 mm, no SOIC (level 3), >= 1 mm from THT pads": {
       "bottom_parts": {
+        "C1": {
+          "smd": false,
+          "height_mm": 7.0,
+          "soic": false,
+          "min_gap_to_THT_mm": -1.6
+        },
         "R21": {
           "smd": true,
           "height_mm": 0.7,
           "soic": false,
           "min_gap_to_THT_mm": 3.41
-        },
-        "R27": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 2.8
-        },
-        "R20": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 1.5
-        },
-        "R28": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 2.58
-        },
-        "R30": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 1.07
-        },
-        "R23": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 1.12
-        },
-        "R24": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 1.12
-        },
-        "R26": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 1.95
         },
         "R29": {
           "smd": true,
@@ -183,11 +147,41 @@
           "soic": false,
           "min_gap_to_THT_mm": 3.4
         },
-        "R22": {
+        "R30": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.07
+        },
+        "R26": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.95
+        },
+        "R23": {
           "smd": true,
           "height_mm": 0.7,
           "soic": false,
           "min_gap_to_THT_mm": 1.12
+        },
+        "R28": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 2.58
+        },
+        "R24": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.12
+        },
+        "R27": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 2.8
         },
         "R25": {
           "smd": true,
@@ -195,11 +189,17 @@
           "soic": false,
           "min_gap_to_THT_mm": 1.12
         },
-        "C1": {
-          "smd": false,
-          "height_mm": 7.0,
+        "R20": {
+          "smd": true,
+          "height_mm": 0.7,
           "soic": false,
-          "min_gap_to_THT_mm": -1.6
+          "min_gap_to_THT_mm": 1.5
+        },
+        "R22": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.12
         }
       }
     },

@@ -1,5 +1,7 @@
 # P09 R2 — TEMP w formacie S1 (schemat i PCB)
 
+**Nadruk 2.10 (gałąź `nadruk-s1`):** wszystkie napisy ≥ 1,0 mm, linia ≥ 0,15 mm (minimum JLCPCB; ustalenie niezależnych recenzji P05 R3 / P06 R2, DRC pilnuje przez `set_rules.py`). Trasowanie bez zmian (wydanie odtworzone). Ukryte oznaczenia: R3, R4, R9, R11, R12, R15, R16 (wcześniej 5; F.Fab ma wszystkie).
+
 29.09.2026, sesja w chmurze (schemat); 30.09.2026 wieczorem, komputer 24/7 (PCB, sekcja „PCB”); 1.10.2026: poprawki po recenzji PCB i moduły lutowane wprost (decyzja użytkownika). **Status: schemat i PCB do lokalnej recenzji**, sprzęt NIE ZBADANO. R2 powstała na kopii generatora z `Plytki/P09-R1-review` (zamknięty pakiet, niezmieniony); wymagania: `Plytki/Format-S1/SPECYFIKACJA-FORMATU-S1.md` (S1-2) i zadanie `Plytki/Format-S1/zadania/ZADANIE-P09-P10-S1.md`.
 
 **Klasa płytki:** 1/3 (53 × 100 mm), slot S3 poziomu 3. Logika (U1/U2 74LVC125AD z Ioff, dekoder U3 HC139, moduły MAX31856 XU, JP1/JP2 wyboru VIN) bez zmian względem R1.
