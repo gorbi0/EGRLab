@@ -11,8 +11,8 @@ except (FileNotFoundError, json.JSONDecodeError):
 d.setdefault('board', {}).setdefault('design_settings', {}).setdefault('rules', {})
 d['board']['design_settings']['rules'].update(
     min_clearance=.25, min_track_width=.3, min_via_annular_width=.25, min_via_diameter=.9, min_through_hole_diameter=.4,
-    min_hole_clearance=.25, min_hole_to_hole=.3, min_copper_edge_clearance=.5, min_silk_clearance=.15, min_text_height=.8,
-    min_text_thickness=.12)
+    min_hole_clearance=.25, min_hole_to_hole=.3, min_copper_edge_clearance=.5, min_silk_clearance=.15, min_text_height=1.0,
+    min_text_thickness=.15)   # 2.10: JLCPCB legend minimum, enforced by DRC
 d['board']['design_settings']['drc_exclusions'] = []
 ns = d.setdefault('net_settings', {'meta': {'version': 5}, 'classes': []})
 base = dict(clearance=.25, via_diameter=.9, via_drill=.4, microvia_diameter=.3, microvia_drill=.1, bus_width=12, wire_width=6,

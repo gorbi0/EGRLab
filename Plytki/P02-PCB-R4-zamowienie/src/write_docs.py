@@ -51,7 +51,7 @@ ring_txt = f'pierścień wokół otworu ≥ {dec(ring_min)} mm' + (
 
 readme = f"""# {N} — pakiet do zamówienia PCB
 
-Wydanie **{DATE}**, źródło **{CFG['source']}**. Plik płytki jest bajtowo zgodny z wydaniem {REV}; nie zmieniano tras, rozmieszczenia, otworów ani opisu. {EXTRA.get('intro', '')}
+Wydanie **{DATE}**, źródło **{CFG['source']}**. Plik płytki jest bajtowo zgodny z wydaniem {REV} (stan 2.10: nowy nadruk; trasy, rozmieszczenie i otwory jak w wydaniu z 30.09). {EXTRA.get('intro', '')}
 
 **Do producenta wgraj `{zip_name}`.** Zawiera wyłącznie {len(CFG['layers'])} warstw Gerber X2 i 2 pliki wierceń Excellon. Parametry: `SPECYFIKACJA-DLA-PRODUCENTA.txt`{'; zamówienie w Satland krok po kroku: `../Zamowienie-Satland/INSTRUKCJA-SATLAND.md`' if FAB == 'Satland' else ' (ustawienia dla JLCPCB i uwagi dla Satlandu)'}.
 

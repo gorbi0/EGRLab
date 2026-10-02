@@ -1,6 +1,6 @@
-# Kontrola wydania do wykonania P02 — 30.09.2026
+# Kontrola wydania do wykonania P02 — 02.10.2026
 
-Źródło: P02-R4-review. SHA-256 płytki: `e78e6829061c43f09f9722833d3ed085047d127e90419b563214e80a6c7e181c` (bajtowo zgodna z wydaniem; `source-snapshot.json`, `source-unchanged.json`).
+Źródło: P02-R4-review. SHA-256 płytki: `711bb60d80d399840e16d41174ea24e9967df54f750fa766a95847295c585a79` (bajtowo zgodna z wydaniem; `source-snapshot.json`, `source-unchanged.json`).
 
 ## Wyniki
 

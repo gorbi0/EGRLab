@@ -1,6 +1,6 @@
 {
-  "board": "C:\\Users\\tgorbacz\\Documents\\GORBI\\Priv\\Kia\\Sportage\\EGRLab\\Plytki\\P02-R4-review\\verification\\negative-controls\\hold_far\\P02.kicad_pcb",
-  "board_sha256": "65987fd276360d5fa799f99f11183366e9ea8b2ac4951f33795be4db186aa481",
+  "board": "/home/tgorbacz/AI/Claude/EGRLab/.worktrees/p02-r4-nadruk/Plytki/P02-R4-review/verification/negative-controls/hold_far/P02.kicad_pcb",
+  "board_sha256": "c90a1b358e9224cfa0f04b5c6f4aa6e62215338fe72fd343966a006778cd3683",
   "checks": [
     {
       "check": "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
@@ -97,10 +97,10 @@
   ],
   "details": {
     "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)": {
-      "violations": 42,
+      "violations": 41,
       "unconnected_items": 1,
       "schematic_parity": 0,
-      "other_violations": 28,
+      "other_violations": 27,
       "accepted_lib_mismatch": [
         "C21",
         "C22",
@@ -124,11 +124,11 @@
     },
     "S1-2 section 4: parts on the bottom only SMD <= 1.5 mm (SOIC allowed on level 1), >= 1 mm from THT pads (standoff zones: check below)": {
       "bottom_parts": {
-        "C27": {
+        "C28": {
           "smd": true,
           "height_mm": 0.88,
           "soic": false,
-          "min_gap_to_THT_mm": 5.63
+          "min_gap_to_THT_mm": 4.08
         },
         "U9": {
           "smd": true,
@@ -136,11 +136,11 @@
           "soic": true,
           "min_gap_to_THT_mm": 3.83
         },
-        "C28": {
+        "C27": {
           "smd": true,
           "height_mm": 0.88,
           "soic": false,
-          "min_gap_to_THT_mm": 4.08
+          "min_gap_to_THT_mm": 5.63
         }
       }
     },
@@ -494,7 +494,7 @@
     },
     "Every part <= 21.5 mm above the board (level 1, S1 section 4; heights in parts.py)": {
       "max": [
-        "Q1",
+        "D2",
         20.5
       ],
       "over": {}
@@ -551,16 +551,16 @@
         "tab_net": "P02_VLOG",
         "foreign": []
       },
-      "Q2": {
-        "tab_net": "P02_OFF_D",
+      "Q9": {
+        "tab_net": "P02_BAT_IN",
         "foreign": []
       },
       "D2": {
         "tab_net": "P02_HOLD_C",
         "foreign": []
       },
-      "Q9": {
-        "tab_net": "P02_BAT_IN",
+      "Q2": {
+        "tab_net": "P02_OFF_D",
         "foreign": []
       }
     },
@@ -595,6 +595,9 @@
       "J2_fab_right": 160.05
     },
     "Every visible reference outside the courtyards of other parts": {
+      "R15": [
+        "C12"
+      ],
       "Q6": [
         "C12"
       ],
@@ -602,12 +605,6 @@
         "C12"
       ],
       "D12": [
-        "C12"
-      ],
-      "R15": [
-        "C12"
-      ],
-      "R16": [
         "C12"
       ]
     },

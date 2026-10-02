@@ -46,6 +46,6 @@ Kontrole PCB: 23/23. Próby ujemne: 12/12 (w tym próba zerowa).
 | hold_far | C_H, D2 and D1 | tak | 3 |
 | label_missing | Service headers | tak | 1 |
 
-Nadruk: ukryte oznaczenia (brak miejsca): R23, R22, Q2, Q9, F3, F1, F2, U6, U5; nieumieszczone napisy: 1, 1, 1, 1, 1, 1.
+Nadruk: ukryte oznaczenia (brak miejsca): R67, R23, D9, R35, R30, R26, R22, R42, R10, R16, Q9, Q2, C6, F1, F2, F3, U6, U5, J_SV2, J_SV1; nieumieszczone napisy: 1, 1, 1, 1, 1, 1.
 
 Oględziny PDF: strony 1–5 obejrzane przy tworzeniu pakietu (render w output/previews/pcb-*.png).

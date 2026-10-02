@@ -1,67 +1,59 @@
-> C:\Program Files\KiCad\10.0\bin\python.exe build_board.py
+> /usr/bin/python3 build_board.py
 Created P02 R4 board: 127 footprints + 12 M3 holes; outline 160.0 x 100.0
-> C:\Program Files\KiCad\10.0\bin\python.exe set_stackup.py
+> /usr/bin/python3 set_stackup.py
 2-layer stackup: Cu35/FR4 1.53/Cu35 (S1: 35 um); nominal 1.60 mm, mask separate.
-> C:\Program Files\KiCad\10.0\bin\python.exe set_rules.py
+> /usr/bin/python3 set_rules.py
 Rules: clearance 0.25 / PWR 0.30, track 0.30 / PWR 0.60, vias 0.9/0.4 (ring 0.25); no DRC exclusions.
-> C:\Program Files\KiCad\10.0\bin\python.exe route_critical.py
+> /usr/bin/python3 route_critical.py
 Power pours, tab strips, GND corridor and anchor tracks locked; DSN exported.
-> C:\Program Files\KiCad\10.0\bin\python.exe prepare_routing.py
+> /usr/bin/python3 prepare_routing.py
 Rules: clearance 0.25 / PWR 0.30, track 0.30 / PWR 0.60, vias 0.9/0.4 (ring 0.25); no DRC exclusions.
 DSN: 9 pours as keepouts; pins removed from 7 nets; edge keepout strips; pre-routed board frozen.
-> C:\Program Files\KiCad\10.0\bin\python.exe import_routing.py
+> /usr/bin/python3 import_routing.py
 SES imported; GND planes filled; saved native board.
-> C:\Program Files\KiCad\10.0\bin\python.exe set_rules.py
+> /usr/bin/python3 set_rules.py
 Rules: clearance 0.25 / PWR 0.30, track 0.30 / PWR 0.60, vias 0.9/0.4 (ring 0.25); no DRC exclusions.
-> C:\Program Files\KiCad\10.0\bin\python.exe stitch.py
+> /usr/bin/python3 stitch.py
 GND stitching: 27 grid vias, pour islands {'F.Cu': 15, 'B.Cu': 6} -> {'F.Cu': 15, 'B.Cu': 6} | rescue: 8 vias, pour mm2 {'F.Cu': 9921.9, 'B.Cu': 11971.6} -> {'F.Cu': 10776.3, 'B.Cu': 11971.6} islands {'F.Cu': 23, 'B.Cu': 6} | tied GND clusters: 0 | GND pads not joined to J1.2: none
-> C:\Program Files\KiCad\10.0\bin\python.exe set_rules.py
+> /usr/bin/python3 set_rules.py
 Rules: clearance 0.25 / PWR 0.30, track 0.30 / PWR 0.60, vias 0.9/0.4 (ring 0.25); no DRC exclusions.
-> C:\Program Files\KiCad\10.0\bin\python.exe complete_routes.py
-> C:\Program Files\KiCad\10.0\bin\python.exe set_rules.py
+> /usr/bin/python3 complete_routes.py
+> /usr/bin/python3 set_rules.py
 Rules: clearance 0.25 / PWR 0.30, track 0.30 / PWR 0.60, vias 0.9/0.4 (ring 0.25); no DRC exclusions.
-> C:\Program Files\KiCad\10.0\bin\python.exe stitch.py
+> /usr/bin/python3 stitch.py
 GND stitching: 2 grid vias, pour islands {'F.Cu': 28, 'B.Cu': 9} -> {'F.Cu': 28, 'B.Cu': 9} | rescue: 1 vias, pour mm2 {'F.Cu': 10434.4, 'B.Cu': 11841.6} -> {'F.Cu': 10449.6, 'B.Cu': 11841.6} islands {'F.Cu': 29, 'B.Cu': 9} | tied GND clusters: 0 | GND pads not joined to J1.2: none
-> C:\Program Files\KiCad\10.0\bin\python.exe set_rules.py
+> /usr/bin/python3 set_rules.py
 Rules: clearance 0.25 / PWR 0.30, track 0.30 / PWR 0.60, vias 0.9/0.4 (ring 0.25); no DRC exclusions.
-> C:\Program Files\KiCad\10.0\bin\kicad-cli.exe pcb drc --format json --severity-all --schematic-parity --all-track-errors --refill-zones -o routing/postroute-drc.json eda/P02.kicad_pcb
+> /usr/bin/kicad-cli pcb drc --format json --severity-all --schematic-parity --all-track-errors --refill-zones -o routing/postroute-drc.json eda/P02.kicad_pcb
 routing/postroute-drc.json {'starved_thermal': 5, 'silk_edge_clearance': 97, 'hole_to_hole': 2, 'silk_over_copper': 23, 'silk_overlap': 84} unconnected 0 parity 0
-> C:\Program Files\KiCad\10.0\bin\python.exe cleanup.py C8.2 D3.2 LED1.1 U10.4 U2.4
+> /usr/bin/python3 cleanup.py C8.2 D3.2 LED1.1 U10.4 U2.4
 removed 2 redundant free items ['GND'] ; dropped 3 tiny; joined 2 near-miss ends; 0 duplicate, 1 via-on-THT-pad and 0 dead-end items; unconnected 0; solid zone connection: ['C8.2', 'D3.2', 'LED1.1', 'U10.4', 'U2.4']
-> C:\Program Files\KiCad\10.0\bin\python.exe set_rules.py
+> /usr/bin/python3 set_rules.py
 Rules: clearance 0.25 / PWR 0.30, track 0.30 / PWR 0.60, vias 0.9/0.4 (ring 0.25); no DRC exclusions.
-> C:\Program Files\KiCad\10.0\bin\kicad-cli.exe pcb drc --format json --severity-all --schematic-parity --all-track-errors --refill-zones -o routing/postclean-drc.json eda/P02.kicad_pcb
+> /usr/bin/kicad-cli pcb drc --format json --severity-all --schematic-parity --all-track-errors --refill-zones -o routing/postclean-drc.json eda/P02.kicad_pcb
 routing/postclean-drc.json {'silk_edge_clearance': 97, 'silk_over_copper': 23, 'silk_overlap': 84} unconnected 0 parity 0
 
-
-Fontconfig error: No writable cache directories
-	C:/WINDOWS/Cache/Fontcache
-Adding duplicate image handler for 'PNG file'
-Adding duplicate image handler for 'JPEG file'
-Adding duplicate image handler for 'TIFF file'
-Adding duplicate image handler for 'GIF file'
-Adding duplicate image handler for 'PNM file'
-Adding duplicate image handler for 'PCX file'
-Adding duplicate image handler for 'IFF file'
-Adding duplicate image handler for 'Windows icon file'
-Adding duplicate image handler for 'Windows cursor file'
-Adding duplicate image handler for 'Windows animated cursor file'
-Adding duplicate image handler for 'TGA file'
-Adding duplicate image handler for 'XPM file'
-Adding duplicate image handler for 'WebP file'
-
-Fontconfig error: No writable cache directories
-	C:/WINDOWS/Cache/Fontcache
-Adding duplicate image handler for 'PNG file'
-Adding duplicate image handler for 'JPEG file'
-Adding duplicate image handler for 'TIFF file'
-Adding duplicate image handler for 'GIF file'
-Adding duplicate image handler for 'PNM file'
-Adding duplicate image handler for 'PCX file'
-Adding duplicate image handler for 'IFF file'
-Adding duplicate image handler for 'Windows icon file'
-Adding duplicate image handler for 'Windows cursor file'
-Adding duplicate image handler for 'Windows animated cursor file'
-Adding duplicate image handler for 'TGA file'
-Adding duplicate image handler for 'XPM file'
-Adding duplicate image handler for 'WebP file'
+15:28:18: Debug: Adding duplicate image handler for 'PNG file'
+15:28:18: Debug: Adding duplicate image handler for 'JPEG file'
+15:28:18: Debug: Adding duplicate image handler for 'TIFF file'
+15:28:18: Debug: Adding duplicate image handler for 'GIF file'
+15:28:18: Debug: Adding duplicate image handler for 'PNM file'
+15:28:18: Debug: Adding duplicate image handler for 'PCX file'
+15:28:18: Debug: Adding duplicate image handler for 'IFF file'
+15:28:18: Debug: Adding duplicate image handler for 'Windows icon file'
+15:28:18: Debug: Adding duplicate image handler for 'Windows cursor file'
+15:28:18: Debug: Adding duplicate image handler for 'Windows animated cursor file'
+15:28:18: Debug: Adding duplicate image handler for 'TGA file'
+15:28:18: Debug: Adding duplicate image handler for 'XPM file'
+15:28:29: Debug: Adding duplicate image handler for 'PNG file'
+15:28:29: Debug: Adding duplicate image handler for 'JPEG file'
+15:28:29: Debug: Adding duplicate image handler for 'TIFF file'
+15:28:29: Debug: Adding duplicate image handler for 'GIF file'
+15:28:29: Debug: Adding duplicate image handler for 'PNM file'
+15:28:29: Debug: Adding duplicate image handler for 'PCX file'
+15:28:29: Debug: Adding duplicate image handler for 'IFF file'
+15:28:29: Debug: Adding duplicate image handler for 'Windows icon file'
+15:28:29: Debug: Adding duplicate image handler for 'Windows cursor file'
+15:28:29: Debug: Adding duplicate image handler for 'Windows animated cursor file'
+15:28:29: Debug: Adding duplicate image handler for 'TGA file'
+15:28:29: Debug: Adding duplicate image handler for 'XPM file'

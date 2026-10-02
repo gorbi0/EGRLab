@@ -1,6 +1,6 @@
 {
-  "board": "C:\\Users\\tgorbacz\\Documents\\GORBI\\Priv\\Kia\\Sportage\\EGRLab\\Plytki\\P02-R4-review\\verification\\negative-controls\\neck_5a\\P02.kicad_pcb",
-  "board_sha256": "f639af902e66af6fae7f7dc0e9b7d5b4a283438190445638bff46ec7c0b075c4",
+  "board": "/home/tgorbacz/AI/Claude/EGRLab/.worktrees/p02-r4-nadruk/Plytki/P02-R4-review/verification/negative-controls/neck_5a/P02.kicad_pcb",
+  "board_sha256": "1755f7bbb2930b4edd3cb17c933efd5ce2cbea51daa875da95a14425e0924971",
   "checks": [
     {
       "check": "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
@@ -124,11 +124,11 @@
     },
     "S1-2 section 4: parts on the bottom only SMD <= 1.5 mm (SOIC allowed on level 1), >= 1 mm from THT pads (standoff zones: check below)": {
       "bottom_parts": {
-        "C27": {
+        "C28": {
           "smd": true,
           "height_mm": 0.88,
           "soic": false,
-          "min_gap_to_THT_mm": 5.63
+          "min_gap_to_THT_mm": 4.08
         },
         "U9": {
           "smd": true,
@@ -136,11 +136,11 @@
           "soic": true,
           "min_gap_to_THT_mm": 3.83
         },
-        "C28": {
+        "C27": {
           "smd": true,
           "height_mm": 0.88,
           "soic": false,
-          "min_gap_to_THT_mm": 4.08
+          "min_gap_to_THT_mm": 5.63
         }
       }
     },
@@ -494,7 +494,7 @@
     },
     "Every part <= 21.5 mm above the board (level 1, S1 section 4; heights in parts.py)": {
       "max": [
-        "D2",
+        "Q2",
         20.5
       ],
       "over": {}
@@ -602,19 +602,19 @@
         "tab_net": "P02_VLOG",
         "foreign": []
       },
-      "Q2": {
-        "tab_net": "P02_OFF_D",
-        "foreign": []
-      },
-      "D2": {
-        "tab_net": "P02_HOLD_C",
-        "foreign": []
-      },
       "Q9": {
         "tab_net": "P02_BAT_IN",
         "foreign": [
           "zone GND"
         ]
+      },
+      "D2": {
+        "tab_net": "P02_HOLD_C",
+        "foreign": []
+      },
+      "Q2": {
+        "tab_net": "P02_OFF_D",
+        "foreign": []
       }
     },
     "Decoupling at the pins (task section 2): capacitor pad <= 8 mm from its pin": {
