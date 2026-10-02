@@ -1,0 +1,183 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-02T12:54:14",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P06.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole lutownicze 2 [/READY/SW_SENSE] z R22 na F.Cu",
+                    "pos": {
+                        "x": 7.5,
+                        "y": 67.55
+                    },
+                    "uuid": "fdf32ce2-d96a-4b0e-912d-56fd9450e7a9"
+                },
+                {
+                    "description": "Ścieżka [/READY/SW_SENSE] na F.Cu, długość 0,6925 mm",
+                    "pos": {
+                        "x": 10.0103,
+                        "y": 88.3
+                    },
+                    "uuid": "b1be259d-5aba-4ee6-b3d0-58cbd610e71f"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Ścieżka [SW_RAW] na F.Cu, długość 6,3640 mm",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 70.0
+                    },
+                    "uuid": "321cb5b5-21e5-485f-b441-4475f1c33006"
+                },
+                {
+                    "description": "Pole lutownicze 1 [SW_RAW] z R22 na F.Cu",
+                    "pos": {
+                        "x": 7.5,
+                        "y": 64.45
+                    },
+                    "uuid": "796b97b3-01fc-4f8c-bccf-4a44decac4fe"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint J5",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 73.5
+                    },
+                    "uuid": "7be4d2b4-40e5-4c1d-bf0d-0abcd9766428"
+                },
+                {
+                    "description": "Footprint R22",
+                    "pos": {
+                        "x": 7.5,
+                        "y": 66.0
+                    },
+                    "uuid": "b30c33e8-f824-42c3-ad57-5ec423cf1c25"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [/READY/SW_SENSE] na F.Cu, długość 1,0603 mm",
+                    "pos": {
+                        "x": 10.5,
+                        "y": 88.7897
+                    },
+                    "uuid": "e6d09b92-5506-4387-a85d-9c34aa48aa34"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [SW_RAW] na F.Cu, długość 4,2500 mm",
+                    "pos": {
+                        "x": 10.5,
+                        "y": 82.5
+                    },
+                    "uuid": "b43f050e-751c-4402-800a-2dad53dceda1"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x08_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP",
+                    "pos": {
+                        "x": 71.11,
+                        "y": 13.33
+                    },
+                    "uuid": "47275411-0d57-42a2-955b-88084ecbd773"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x07_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV1",
+                    "pos": {
+                        "x": 41.74,
+                        "y": 95.96
+                    },
+                    "uuid": "5f94362a-012f-4ec9-9323-fc0641cf012f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV2",
+                    "pos": {
+                        "x": 95.24,
+                        "y": 95.96
+                    },
+                    "uuid": "b8a7bd47-9dac-4531-91cc-602b6503db7f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        }
+    ]
+}

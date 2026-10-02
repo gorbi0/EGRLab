@@ -1,0 +1,631 @@
+{
+ "checks": [
+  {
+   "id": "JBP-PINOUT",
+   "pass": true,
+   "detail": {
+    "14": "3V3_IO",
+    "10": "5V_SYS",
+    "12": "5V_SYS",
+    "4": "ADC_DOUTA",
+    "2": "ADC_SCLK",
+    "6": "CS_ILOG_N",
+    "1": "GND",
+    "11": "GND",
+    "13": "GND",
+    "15": "GND",
+    "16": "GND",
+    "3": "GND",
+    "5": "GND",
+    "7": "GND",
+    "9": "GND",
+    "8": "LOGGER_CURRENT_OK"
+   }
+  },
+  {
+   "id": "JBP-FOOTPRINT",
+   "pass": true,
+   "detail": "Connector_IDC:IDC-Header_2x08_P2.54mm_Horizontal"
+  },
+  {
+   "id": "JBP-BUS-PINS-AS-P03R6-P05R3",
+   "pass": true,
+   "detail": {
+    "ADC_SCLK": [
+     2
+    ],
+    "ADC_DOUTA": [
+     4
+    ]
+   }
+  },
+  {
+   "id": "JBP-ODD-PINS-GND",
+   "pass": true,
+   "detail": null
+  },
+  {
+   "id": "JBP-OLD-NETS-EXACTLY-ONCE",
+   "pass": true,
+   "detail": {
+    "on_jbp": {
+     "3V3_IO": 1,
+     "5V_SYS": 2,
+     "ADC_DOUTA": 1,
+     "ADC_SCLK": 1,
+     "CS_ILOG_N": 1,
+     "LOGGER_CURRENT_OK": 1
+    },
+    "expected": {
+     "3V3_IO": 1,
+     "5V_SYS": 2,
+     "ADC_DOUTA": 1,
+     "ADC_SCLK": 1,
+     "CS_ILOG_N": 1,
+     "LOGGER_CURRENT_OK": 1
+    }
+   }
+  },
+  {
+   "id": "JBP-NO-ISERIES-BYPASS",
+   "pass": true,
+   "detail": [
+    "5VA_P06",
+    "ECU_P1",
+    "EGR_P1",
+    "SW_RAW"
+   ]
+  },
+  {
+   "id": "CSV-J_BP",
+   "pass": true,
+   "detail": null
+  },
+  {
+   "id": "CSV-DIRECTIONS-VS-P03R6",
+   "pass": true,
+   "detail": {
+    "ADC_SCLK": [
+     "in",
+     [
+      "J_BP2",
+      2,
+      "out"
+     ]
+    ],
+    "ADC_DOUTA": [
+     "out",
+     [
+      "J_BP2",
+      4,
+      "in"
+     ]
+    ],
+    "CS_ILOG_N": [
+     "in",
+     [
+      "J_BP1",
+      2,
+      "out"
+     ]
+    ],
+    "LOGGER_CURRENT_OK": [
+     "out",
+     [
+      "J_BP1",
+      11,
+      "in"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "J_SV1-MAX-13-PINS",
+   "pass": true,
+   "detail": null
+  },
+  {
+   "id": "J_SV1-GND-ENDS",
+   "pass": true,
+   "detail": null
+  },
+  {
+   "id": "J_SV1-SERIES-R-AT-NODE-CLASS",
+   "pass": true,
+   "detail": null
+  },
+  {
+   "id": "J_SV1-GROUP",
+   "pass": true,
+   "detail": [
+    "ADC_AIN",
+    "I_L_OUT",
+    "REF25",
+    "REF_BUF"
+   ]
+  },
+  {
+   "id": "J_SV1-NEIGHBOURS",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "J_SV2-MAX-13-PINS",
+   "pass": true,
+   "detail": null
+  },
+  {
+   "id": "J_SV2-GND-ENDS",
+   "pass": true,
+   "detail": null
+  },
+  {
+   "id": "J_SV2-SERIES-R-AT-NODE-CLASS",
+   "pass": true,
+   "detail": null
+  },
+  {
+   "id": "J_SV2-GROUP",
+   "pass": true,
+   "detail": [
+    "3V3_IO",
+    "3V3_P06",
+    "5VA_P06",
+    "5V_SYS",
+    "CLK_LOCAL",
+    "CS_LOCAL_N",
+    "LOGGER_CURRENT_OK",
+    "SHUNT_ENABLED",
+    "SUP3_N",
+    "SUP5_N"
+   ]
+  },
+  {
+   "id": "J_SV2-NEIGHBOURS",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "SRV-EACH-NODE-ONCE",
+   "pass": true,
+   "detail": {}
+  },
+  {
+   "id": "SRV-COVERS-R1-TESTPADS",
+   "pass": true,
+   "detail": {
+    "missing": [],
+    "extra": []
+   }
+  },
+  {
+   "id": "CSV-SERWIS",
+   "pass": true,
+   "detail": null
+  },
+  {
+   "id": "RSH1-KELVIN-2512",
+   "pass": true,
+   "detail": {
+    "1": [
+     [
+      -2.985,
+      -0.635,
+      4.6487
+     ],
+     "ECU_P1"
+    ],
+    "2": [
+     [
+      -3.28,
+      1.27,
+      1.292
+     ],
+     "K_PLUS"
+    ],
+    "3": [
+     [
+      3.28,
+      -1.27,
+      1.292
+     ],
+     "K_MINUS"
+    ],
+    "4": [
+     [
+      2.985,
+      0.635,
+      4.6487
+     ],
+     "EGR_P1"
+    ]
+   }
+  },
+  {
+   "id": "RSH1-5MOHM",
+   "pass": true,
+   "detail": null
+  },
+  {
+   "id": "C3-220U",
+   "pass": true,
+   "detail": "220u"
+  },
+  {
+   "id": "PARTS-S1-SOURCES",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "PARTS-PRECISION-SERIES",
+   "pass": true,
+   "detail": {
+    "R1": "RT1206BRD0710RL",
+    "R2": "RT1206BRD0710RL",
+    "R3": "RT1206BRD075K11L",
+    "R4": "RT1206BRD075K11L"
+   }
+  },
+  {
+   "id": "R1-CIRCUIT-KEPT",
+   "pass": true,
+   "detail": {
+    "diff": [],
+    "extra_or_missing": []
+   }
+  }
+ ],
+ "negative_controls": [
+  {
+   "mutation": "CS_ILOG_N and LOGGER_CURRENT_OK swapped",
+   "target": "JBP-PINOUT",
+   "detected": true,
+   "by": [
+    "JBP-PINOUT",
+    "CSV-J_BP"
+   ]
+  },
+  {
+   "mutation": "vertical IDC header",
+   "target": "JBP-FOOTPRINT",
+   "detected": true,
+   "by": [
+    "JBP-FOOTPRINT"
+   ]
+  },
+  {
+   "mutation": "ADC_SCLK and ADC_DOUTA swapped",
+   "target": "JBP-BUS-PINS-AS-P03R6-P05R3",
+   "detected": true,
+   "by": [
+    "JBP-PINOUT",
+    "JBP-BUS-PINS-AS-P03R6-P05R3",
+    "CSV-J_BP"
+   ]
+  },
+  {
+   "mutation": "odd pin 15 carries 3V3_IO",
+   "target": "JBP-ODD-PINS-GND",
+   "detected": true,
+   "by": [
+    "JBP-PINOUT",
+    "JBP-ODD-PINS-GND",
+    "JBP-OLD-NETS-EXACTLY-ONCE",
+    "CSV-J_BP"
+   ]
+  },
+  {
+   "mutation": "second 5V_SYS pin lost",
+   "target": "JBP-OLD-NETS-EXACTLY-ONCE",
+   "detected": true,
+   "by": [
+    "JBP-PINOUT",
+    "JBP-OLD-NETS-EXACTLY-ONCE",
+    "CSV-J_BP"
+   ]
+  },
+  {
+   "mutation": "CS_ILOG_N duplicated on reserve pin 16",
+   "target": "JBP-OLD-NETS-EXACTLY-ONCE",
+   "detected": true,
+   "by": [
+    "JBP-PINOUT",
+    "JBP-OLD-NETS-EXACTLY-ONCE",
+    "CSV-J_BP"
+   ]
+  },
+  {
+   "mutation": "SW_RAW routed to reserve pin 16",
+   "target": "JBP-NO-ISERIES-BYPASS",
+   "detected": true,
+   "by": [
+    "JBP-PINOUT",
+    "JBP-OLD-NETS-EXACTLY-ONCE",
+    "JBP-NO-ISERIES-BYPASS",
+    "CSV-J_BP"
+   ]
+  },
+  {
+   "mutation": "14th pin on J_SV2",
+   "target": "J_SV2-MAX-13-PINS",
+   "detected": true,
+   "by": [
+    "J_SV2-MAX-13-PINS",
+    "CSV-SERWIS"
+   ]
+  },
+  {
+   "mutation": "J_SV1 vertical header",
+   "target": "J_SV1-MAX-13-PINS",
+   "detected": true,
+   "by": [
+    "J_SV1-MAX-13-PINS"
+   ]
+  },
+  {
+   "mutation": "first pin of J_SV1 not GND",
+   "target": "J_SV1-GND-ENDS",
+   "detected": true,
+   "by": [
+    "J_SV1-GND-ENDS",
+    "J_SV1-SERIES-R-AT-NODE-CLASS",
+    "CSV-SERWIS"
+   ]
+  },
+  {
+   "mutation": "last pin of J_SV2 not GND",
+   "target": "J_SV2-GND-ENDS",
+   "detected": true,
+   "by": [
+    "J_SV2-GND-ENDS",
+    "J_SV2-SERIES-R-AT-NODE-CLASS",
+    "CSV-SERWIS"
+   ]
+  },
+  {
+   "mutation": "3V3_IO next to SHUNT_ENABLED (1K logic)",
+   "target": "J_SV2-NEIGHBOURS",
+   "detected": true,
+   "by": [
+    "J_SV2-NEIGHBOURS",
+    "CSV-SERWIS"
+   ]
+  },
+  {
+   "mutation": "interior GND pin 5 swapped with SHUNT_ENABLED (3V3_P06 next to 1K logic)",
+   "target": "J_SV2-NEIGHBOURS",
+   "detected": true,
+   "by": [
+    "J_SV2-NEIGHBOURS",
+    "CSV-SERWIS"
+   ]
+  },
+  {
+   "mutation": "rail on the analog strip next to I_L_OUT (ADC_AIN resistor moved to 5VA_P06)",
+   "target": "J_SV1-NEIGHBOURS",
+   "detected": true,
+   "by": [
+    "J_SV1-SERIES-R-AT-NODE-CLASS",
+    "J_SV1-GROUP",
+    "J_SV1-NEIGHBOURS",
+    "SRV-EACH-NODE-ONCE",
+    "SRV-COVERS-R1-TESTPADS"
+   ]
+  },
+  {
+   "mutation": "logic node on the analog strip",
+   "target": "J_SV1-GROUP",
+   "detected": true,
+   "by": [
+    "J_SV1-SERIES-R-AT-NODE-CLASS",
+    "J_SV1-GROUP",
+    "SRV-COVERS-R1-TESTPADS"
+   ]
+  },
+  {
+   "mutation": "analog node on the rail/logic strip",
+   "target": "J_SV2-GROUP",
+   "detected": true,
+   "by": [
+    "J_SV2-SERIES-R-AT-NODE-CLASS",
+    "J_SV2-GROUP",
+    "SRV-COVERS-R1-TESTPADS"
+   ]
+  },
+  {
+   "mutation": "pin wired straight to the node (no resistor)",
+   "target": "J_SV2-SERIES-R-AT-NODE-CLASS",
+   "detected": true,
+   "by": [
+    "J_SV2-SERIES-R-AT-NODE-CLASS",
+    "SRV-COVERS-R1-TESTPADS",
+    "CSV-SERWIS"
+   ]
+  },
+  {
+   "mutation": "REF25 through 1K instead of 10K",
+   "target": "J_SV1-SERIES-R-AT-NODE-CLASS",
+   "detected": true,
+   "by": [
+    "J_SV1-SERIES-R-AT-NODE-CLASS",
+    "CSV-SERWIS"
+   ]
+  },
+  {
+   "mutation": "SUP3_N through 1K instead of 10K",
+   "target": "J_SV2-SERIES-R-AT-NODE-CLASS",
+   "detected": true,
+   "by": [
+    "J_SV2-SERIES-R-AT-NODE-CLASS",
+    "CSV-SERWIS"
+   ]
+  },
+  {
+   "mutation": "service resistor shorted",
+   "target": "J_SV2-SERIES-R-AT-NODE-CLASS",
+   "detected": true,
+   "by": [
+    "J_SV2-SERIES-R-AT-NODE-CLASS",
+    "J_SV2-NEIGHBOURS",
+    "SRV-COVERS-R1-TESTPADS",
+    "CSV-SERWIS"
+   ]
+  },
+  {
+   "mutation": "same node on both strips",
+   "target": "SRV-EACH-NODE-ONCE",
+   "detected": true,
+   "by": [
+    "J_SV2-SERIES-R-AT-NODE-CLASS",
+    "J_SV2-GROUP",
+    "SRV-EACH-NODE-ONCE",
+    "SRV-COVERS-R1-TESTPADS"
+   ]
+  },
+  {
+   "mutation": "CLK_LOCAL missing (resistor on a dead net)",
+   "target": "SRV-COVERS-R1-TESTPADS",
+   "detected": true,
+   "by": [
+    "J_SV2-SERIES-R-AT-NODE-CLASS",
+    "J_SV2-GROUP",
+    "SRV-COVERS-R1-TESTPADS"
+   ]
+  },
+  {
+   "mutation": "J_BP.csv out of date (netlist moved 3V3_IO)",
+   "target": "CSV-J_BP",
+   "detected": true,
+   "by": [
+    "JBP-PINOUT",
+    "CSV-J_BP"
+   ]
+  },
+  {
+   "mutation": "SERWIS.csv out of date (strip order changed)",
+   "target": "CSV-SERWIS",
+   "detected": true,
+   "by": [
+    "CSV-SERWIS"
+   ]
+  },
+  {
+   "mutation": "resistor value differs from SERWIS.csv",
+   "target": "CSV-SERWIS",
+   "detected": true,
+   "by": [
+    "J_SV2-SERIES-R-AT-NODE-CLASS",
+    "CSV-SERWIS"
+   ]
+  },
+  {
+   "mutation": "force and sense swapped on the ECU end",
+   "target": "RSH1-KELVIN-2512",
+   "detected": true,
+   "by": [
+    "RSH1-KELVIN-2512"
+   ]
+  },
+  {
+   "mutation": "Kelvin pair crossed",
+   "target": "RSH1-KELVIN-2512",
+   "detected": true,
+   "by": [
+    "RSH1-KELVIN-2512"
+   ]
+  },
+  {
+   "mutation": "shunt in a 2-pad 2512",
+   "target": "RSH1-KELVIN-2512",
+   "detected": true,
+   "by": [
+    "RSH1-KELVIN-2512",
+    "PARTS-S1-SOURCES"
+   ]
+  },
+  {
+   "mutation": "shunt 50 mOhm",
+   "target": "RSH1-5MOHM",
+   "detected": true,
+   "by": [
+    "RSH1-5MOHM"
+   ]
+  },
+  {
+   "mutation": "C3 back to 470 uF",
+   "target": "C3-220U",
+   "detected": true,
+   "by": [
+    "C3-220U"
+   ]
+  },
+  {
+   "mutation": "new resistor as 0805",
+   "target": "PARTS-S1-SOURCES",
+   "detected": true,
+   "by": [
+    "PARTS-S1-SOURCES"
+   ]
+  },
+  {
+   "mutation": "standing THT resistor not from the register",
+   "target": "PARTS-S1-SOURCES",
+   "detected": true,
+   "by": [
+    "PARTS-S1-SOURCES"
+   ]
+  },
+  {
+   "mutation": "electrolytic outside the C3 exception",
+   "target": "PARTS-S1-SOURCES",
+   "detected": true,
+   "by": [
+    "PARTS-S1-SOURCES"
+   ]
+  },
+  {
+   "mutation": "R21 as 2512 without justification in the exception list",
+   "target": "PARTS-S1-SOURCES",
+   "detected": true,
+   "by": [
+    "PARTS-S1-SOURCES"
+   ]
+  },
+  {
+   "mutation": "divider resistor R3 1 %",
+   "target": "PARTS-PRECISION-SERIES",
+   "detected": true,
+   "by": [
+    "PARTS-PRECISION-SERIES"
+   ]
+  },
+  {
+   "mutation": "INA240 inputs swapped",
+   "target": "R1-CIRCUIT-KEPT",
+   "detected": true,
+   "by": [
+    "R1-CIRCUIT-KEPT"
+   ]
+  },
+  {
+   "mutation": "BYPASS commons moved",
+   "target": "R1-CIRCUIT-KEPT",
+   "detected": true,
+   "by": [
+    "R1-CIRCUIT-KEPT"
+   ]
+  },
+  {
+   "mutation": "null control (no change)",
+   "target": null,
+   "detected": false,
+   "by": []
+  }
+ ],
+ "references": [
+  "reference/P06-R1.xml (R1 export)",
+  "reference/P03-R6-J_BP.csv (p03-r6-pcb b094fa7)",
+  "reference/P05-R3-J_BP.csv (main 1d4ff38)"
+ ],
+ "scope": "Netlist/BOM contract only; no PCB exists in this package."
+}

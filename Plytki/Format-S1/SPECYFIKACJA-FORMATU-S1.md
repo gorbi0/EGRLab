@@ -111,7 +111,7 @@ Punkty, których nie ma na listwie, wymagają rozebrania stosu.
 | 1 | 25 mm (wysoki) | P02 R4 | P02 R4 | P02 R4 |
 | 2 | 20 mm | P03 | P03 | P03 |
 | 3 | 20 mm | P05 | P05 | P09 |
-| 4 | 20 mm | P06 | pełny: zob. niżej | P10 |
+| 4 | 20 mm | P06 | P06 (klasa 2/3, decyzja 1.10) | P10 |
 | 5 (pełny) | 20 mm | P08 | P07 | P07 |
 
 Uzasadnienie:
@@ -122,11 +122,11 @@ Uzasadnienie:
 
 Jeśli layout nie zmieści się w klasie:
 - P02 R4 dostaje klasę L, a P10 idzie na poziom 4 — **zastosowane w S1-3**;
-- P06 dostaje klasę 2/3, a wariant pełny ma wtedy 6 poziomów.
+- P06 dostaje klasę 2/3, a wariant pełny ma wtedy 6 poziomów — **zastosowane 1.10.2026** (decyzja użytkownika; P06 R2 w slotach S1–S2 poziomu 4).
 
 Skutki S1-3 (P02 R4 w klasie L, P10 na poziomie 4, slot S3):
 - **P10:** slot S3 leży przy ścianie wejść, więc J3 (OBD) wychodzi tą samą ścianą co pozostałe przewody z auta. Poziom 4 nie jest wysoki: od spodu tylko SMD ≤ 1,5 mm, bez SOIC (§4), elementy od góry ≤ 16,5 mm. Schemat P10 R2 zakładał slot S1 poziomu 1 — do sprawdzenia przed layoutem (obudowy układów od spodu, położenie J3).
-- **Wariant pełny:** na poziomie 4 zostaje wolny tylko S2, więc P04 (2/3) nie mieści się obok P06 i P10. Pełny dostaje szósty poziom (P04 albo P10). **Do decyzji przy wariancie pełnym** (P04, P07, P08 powstają później); wysokość stosu rośnie wtedy o ok. 21,6 mm.
+- **Wariant pełny:** po P06 w klasie 2/3 (1.10) poziom 4 jest pełny (P06 S1–S2, P10 S3), więc P04 (2/3) nie mieści się obok P06 i P10. Pełny dostaje szósty poziom (P04 albo P10). **Do decyzji przy wariancie pełnym** (P04, P07, P08 powstają później); wysokość stosu rośnie wtedy o ok. 21,6 mm.
 - **LOGGER:** liczba poziomów i wysokość stosu bez zmian.
 
 Wysokość stosu:
@@ -141,7 +141,7 @@ Wysokość stosu:
 | P03 | DAQ 8, ILOG 2, ITEST 1, SAFE 8, DIR 4, SFAULT 1, TEMP 5, CAN 2, PANELCORE 5, PFAIL_N — ok. 37 sygnałów + zasilanie i GND | 3 × 2×10 |
 | P04 | SAFE, DRIVE, SENSOR, DAQOK, PSUOK, PG, PANELSAFE | 2 × 2×10 |
 | P05 | DAQ 8 (J_BP2, S2); DAQOK, VBAT_SENSE, 5V_SYS × 2 (J_BP1, S1) | 1 × 2×10 + 1 × 2×5 (decyzja użytkownika 1.10.2026: jedno 2×10 nie mieści 10 sygnałów i dwóch 5V_SYS na pinach parzystych) |
-| P06 | ILOG (ADC_SCLK, ADC_DOUTA, CS_ILOG_N, LOGGER_CURRENT_OK) | 1 × 2×5 |
+| P06 | ILOG (ADC_SCLK, ADC_DOUTA, CS_ILOG_N, LOGGER_CURRENT_OK), 5V_SYS × 2, 3V3_IO | 1 × 2×8 (P06 R2, slot S2, x = 80,0) |
 | P07 | ITEST, DIR, DRIVE | 1 × 2×10 |
 | P08 | SENSOR, SFAULT | 1 × 2×5 |
 | P09 | TEMP (SPI3 i dwa CS) | 1 × 2×5 |

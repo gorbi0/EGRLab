@@ -1,0 +1,75 @@
+﻿ref;source_ref;display;mpn;qty;footprint;on_board;zrodlo;url;note
+U1;U37;INA240A2;INA240A2EDRQ1;1;Package_SO:SOIC-8_3.9x4.9mm_P1.27mm;True;rejestr;https://www.ti.com/lit/ds/symlink/ina240.pdf;"SOIC D pinout. Direct hand soldering, 1.27 mm pitch, top side only (level 4); no socket in Kelvin path."
+U2;U39;MCP6022-I/P;MCP6022-I/P;1;Package_DIP:DIP-8_W7.62mm;True;rejestr;https://ww1.microchip.com/downloads/aemDocuments/documents/MSLD/ProductDocuments/DataSheets/MCP6021-Data-Sheet-DS20001685.pdf;Owned DIP8 socket (Kamami 1207058) optional.
+U3;U38;MCP3201-BI/P;MCP3201-BI/P;1;Package_DIP:DIP-8_W7.62mm;True;rejestr;https://ww1.microchip.com/downloads/en/DeviceDoc/21290F.pdf;
+U4;U40;MCP1702-3302E/TO;MCP1702-3302E/TO;1;Package_TO_SOT_THT:TO-92_Inline_Wide;True;rejestr;https://ww1.microchip.com/downloads/en/devicedoc/22008e.pdf;
+U5;U43;74LVC125AD;74LVC125AD,118 (Nexperia);1;Package_SO:SOIC-14_3.9x8.7mm_P1.27mm;True;rejestr;https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf;Ioff required. Unused OE tied to LOCAL rail. SOIC top side only (level 4).
+U6;U46;74LVC125AD;74LVC125AD,118 (Nexperia);1;Package_SO:SOIC-14_3.9x8.7mm_P1.27mm;True;rejestr;https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf;"5V-tolerant input for 5V supervisor and switch; Ioff on READY output. SOIC top side only."
+U7;U41;SN74HC08N;SN74HC08N;1;Package_DIP:DIP-14_W7.62mm;True;rejestr;https://www.ti.com/lit/ds/symlink/sn74hc08.pdf;Owned DIP14 socket (Kamami 648) optional.
+U8;U44;MCP120-300DI/TO;MCP120-300DI/TO;1;Package_TO_SOT_THT:TO-92_Inline_Wide;True;rejestr;https://ww1.microchip.com/downloads/en/DeviceDoc/11184d.pdf;D bondout: reset=1, VDD=2, GND=3. Open drain.
+U9;U45;MCP120-450DI/TO;MCP120-450DI/TO;1;Package_TO_SOT_THT:TO-92_Inline_Wide;True;rejestr;https://ww1.microchip.com/downloads/en/DeviceDoc/11184d.pdf;D bondout: reset=1, VDD=2, GND=3. Open drain.
+U10;U42;MCP1525-I/TO;MCP1525-I/TO;1;Package_TO_SOT_THT:TO-92_Inline_Wide;True;rejestr;https://ww1.microchip.com/downloads/en/devicedoc/21653c.pdf;"TO92: 1 GND, 2 OUT, 3 IN; not the SOT23 pin order."
+RSH1;X24;5m / 1% / 2512 Kelvin;"WSK25125L000FEA (Vishay WSK2512, 5 mOhm 1%, 1 W at 70 C, TCR +-35 ppm/K, 4-terminal; alt. Bourns CSS2H-2512K-5L00F - footprint differs)";1;P06:R_Shunt_Vishay_WSK2512_T1.19mm_SenseE1.70;True;nowe;https://www.vishay.com/docs/30108/wsk2512.pdf;"Pads 1/4 force (current), 2/3 sense (Kelvin). Data sheet 30108 rev. 11-Dec-2023 (checked locally 1.10): 1.0 W at 70 C, TCR +-35 ppm/K for 5..200 mOhm, part code 5L000 for 5 mOhm (L = mOhm below 0.01 Ohm); sense pads e = 1.70 mm (KiCad library 1.40). 6 A: 0.18 W; 10 A passive qualification: 0.5 W."
+SW1;X36;DPDT ON-ON / BYPASS-MEASURE;DPDT ON-ON panel toggle >=10A 12-30VDC, solder lugs (MPN to confirm);1;P06:OFFBOARD;False;nowe;;"Panel mount. BYPASS 2-3,5-6; MEASURE 2-1,5-4. No motor current in pole B. Switch only with ignition off."
+R1;R22;10R;RT1206BRD0710RL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;Thin film 1206, 0.1 %, 25 ppm/K (Yageo RT, MPN proposal to confirm in TME/data sheet). One full-value resistor.
+R2;R23;10R;RT1206BRD0710RL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;Thin film 1206, 0.1 %, 25 ppm/K (Yageo RT, MPN proposal to confirm in TME/data sheet). One full-value resistor.
+R3;R28;5.11K;RT1206BRD075K11L;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;Thin film 1206, 0.1 %, 25 ppm/K (Yageo RT, MPN proposal to confirm in TME/data sheet). One full-value resistor.
+R4;R29;5.11K;RT1206BRD075K11L;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;Thin film 1206, 0.1 %, 25 ppm/K (Yageo RT, MPN proposal to confirm in TME/data sheet). One full-value resistor.
+R5;R25;47R;RC1206FR-0747RL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;
+R6;R26;1R;KNP01U-1R (1R 1W wirewound, body 3x9mm);1;Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P15.24mm_Horizontal;True;nowe;;"Power exception, lying (as P05 R3 R1). Charge pulse of C3 220uF: ~3.0mJ at 5.25V, tau ~0.22ms (R1: 6.5mJ with 470uF); pulse rating to confirm with the data sheet."
+R7;R27;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;
+R8;R31;100K;RC1206FR-07100KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;
+R9;ADD_CLK_PD;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;
+R10;ADD_CLK_EXT_PD;100K;RC1206FR-07100KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;
+R11;R32;47K;MF0207FTE-47K (Yageo MF0207 1% 0.6W, owned, standing);1;Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical;True;rejestr;;
+R12;ADD_DOUT_SER;47R;RC1206FR-0747RL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;
+R13;R34;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;
+R14;R35;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;
+R15;ADD_SUP5_PD;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;
+R16;R30;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;
+R17;R33;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;
+R18;ADD_READY_PD;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;
+R19;ADD_READY_SER;100R;RC1206FR-07100RL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;
+R20;ADD_READY_EXT_PD;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;
+R21;ADD_CONTACT_WETTING;39R;"PR02000203909JA100 (Vishay PR02 39R 5% 2W, lying; code by analogy with the owned PR02000201009JA100, to confirm)";1;P06:R_PR02_P17.78;True;nowe;https://www.vishay.com/docs/28729/pr010203.pdf;"Power exception: 0.71W max at 5.25V = 36% of 2W; lying 3-5 mm above PCB, away from RSH1/U10."
+R22;ADD_CONTACT_SER;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;
+R23;ADD_CONTACT_PD;100K;RC1206FR-07100KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;
+R24;ADD_LOCAL_BLEED;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;
+C1;C_DIV_L;470n;SMD 1206 X7R 50V 10% 470n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;nowe;;"X7R 1206 50V 10%: trend filter, not precision; tau budget includes X7R tolerance and temperature."
+C2;C_AIN;470p;SMD 1206 C0G 50V 5% 470p;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;nowe;;Bottom side under U3 at IN+ / IN- (layout 2.10, review F2, S1-2): thickness <= 1.5 mm (C0G 1206, typically 0.6-1.15 mm).
+C3;C28;220u / 16V;EEUFR1C221;1;Capacitor_THT:CP_Radial_D6.3mm_P2.50mm;True;nowe;;"Panasonic FR, D6.3 x 11.2mm, pitch 2.5mm; 20%. 1.10 user decision: 220uF (was 470uF) - with P05 C1 220uF the 5V_SYS load stays under the 600uF of the TSR 2-2450 (about 486uF in all). MPN/size to confirm."
+C4;C_LDO_OUT;4.7u;SMD 1206 X7R 25V 10% 4.7u;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;nowe;;
+C5;C_REF;4.7u;SMD 1206 X7R 25V 10% 4.7u;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;nowe;;MCP1525 load capacitor 1..10 uF effective, within 5 mm of U10.
+C16;ADD_ADC_REF_HF;100n;SMD 1206 X7R 50V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;nowe;;
+D2;ADD_REF_DISCHARGE;BAT85;BAT85,133 (Nexperia);1;Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal;True;nowe;https://assets.nexperia.com/documents/data-sheet/BAT85.pdf;Discharge of reference capacitor into local rail during power removal.
+C6;DEC_U1;100n;SMD 1206 X7R 50V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;nowe;;
+C7;DEC_U2;100n;SMD 1206 X7R 50V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;nowe;;
+C8;DEC_U3;100n;SMD 1206 X7R 50V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;nowe;;Bottom side at U3 (layout 1.10, S1-2): thickness <= 1.5 mm, e.g. GRM31MR71H104KA01 (1.15 +/- 0.1 mm).
+C9;DEC_U4;100n;SMD 1206 X7R 50V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;nowe;;
+C10;DEC_U5;100n;SMD 1206 X7R 50V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;nowe;;
+C11;DEC_U6;100n;SMD 1206 X7R 50V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;nowe;;
+C12;DEC_U7;100n;SMD 1206 X7R 50V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;nowe;;
+C13;DEC_U8;100n;SMD 1206 X7R 50V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;nowe;;
+C14;DEC_U9;100n;SMD 1206 X7R 50V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;nowe;;
+C15;DEC_U10;100n;SMD 1206 X7R 50V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;True;nowe;;
+D1;ADD_LDO_DISCHARGE;1N5819;1N5819;1;Diode_THT:D_DO-41_SOD81_P10.16mm_Horizontal;True;nowe;https://www.vishay.com/docs/88525/1n5817.pdf;"Anode on local 3.3 V, cathode on 5VA; output-cap discharge path on supply removal."
+J3;J_ISERIESB;ISERIES / PTH;Soldered harness;1;P06:PTH_ISERIES;True;nowe;;"PTH solder joint at the x=0 edge; tie anchor 12 mm. See docs/WIAZKI.md."
+J4;ADD_BYPASS_FORCE;SW1 A / PTH;Soldered harness;1;P06:PTH_BYPASS;True;nowe;;"PTH solder joint at the x=0 edge; tie anchor 12 mm. See docs/WIAZKI.md."
+J5;ADD_BYPASS_STATUS;SW1 B / PTH;Soldered harness;1;P06:PTH_SWSTATUS;True;nowe;;"PTH solder joint at the x=0 edge; tie anchor 12 mm. See docs/WIAZKI.md."
+J_BP;J_LV06B+J_ILOGB;J_BP / IDC 2x8;IDC header 2x8 2.54mm angled shrouded, Au;1;Connector_IDC:IDC-Header_2x08_P2.54mm_Horizontal;True;nowe;;"Edge A, slot S2 (centre x=80.0 mm), pin 1 towards smaller x. Odd pins GND; 5V_SYS x2 (S1 5); 3V3_IO only to the service strip (no consumer on P06, as R1 LV06.3 -> TP4); 16 GND reserve."
+R25;ADDED_SERVICE_S1;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything. SMD, may sit on the bottom side.
+R26;ADDED_SERVICE_S1;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything. SMD, may sit on the bottom side.
+R27;ADDED_SERVICE_S1;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything. SMD, may sit on the bottom side.
+R28;ADDED_SERVICE_S1;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything. SMD, may sit on the bottom side.
+J_SV1;SERVICE_S1;J_SV1 SERWIS 1x7;Pin header 1x7, 2.54 mm, right angle, Au;1;Connector_PinHeader_2.54mm:PinHeader_1x07_P2.54mm_Horizontal;True;nowe;;"Edge B, x=10..43 mm (slot S1); pins ~6 mm beyond the edge. Numbering always from pin 1 (angled strip seen from the top has pin 1 at LARGER x)."
+R29;ADDED_SERVICE_S2;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything. SMD, may sit on the bottom side.
+R30;ADDED_SERVICE_S2;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything. SMD, may sit on the bottom side.
+R31;ADDED_SERVICE_S2;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything. SMD, may sit on the bottom side.
+R32;ADDED_SERVICE_S2;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything. SMD, may sit on the bottom side.
+R33;ADDED_SERVICE_S2;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything. SMD, may sit on the bottom side.
+R34;ADDED_SERVICE_S2;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything. SMD, may sit on the bottom side.
+R35;ADDED_SERVICE_S2;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything. SMD, may sit on the bottom side.
+R36;ADDED_SERVICE_S2;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything. SMD, may sit on the bottom side.
+R37;ADDED_SERVICE_S2;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything. SMD, may sit on the bottom side.
+R38;ADDED_SERVICE_S2;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;True;nowe;;Service pin series resistor at the node (S1 6): slipped probe cannot damage anything. SMD, may sit on the bottom side.
+J_SV2;SERVICE_S2;J_SV2 SERWIS 1x13;Pin header 1x13, 2.54 mm, right angle, Au;1;Connector_PinHeader_2.54mm:PinHeader_1x13_P2.54mm_Horizontal;True;nowe;;"Edge B, x=63.5..96.5 mm (slot S2); pins ~6 mm beyond the edge. Numbering always from pin 1 (angled strip seen from the top has pin 1 at LARGER x)."
