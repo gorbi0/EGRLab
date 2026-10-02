@@ -11,11 +11,12 @@ GND pads cut off after every run; with the plane 1-2 open after 20 passes. The r
 so stitch.py and the completion planner still tie the islands; cleanup.py keeps the fan-out vias that sit in the pour.
 Router-only keepouts 0.4 mm wide along the board edges (Freerouting does not know the copper-to-edge
 clearance, P03 R2 lesson). The rule areas (M3 zones and the board's own from build_board.py; P03 R6: ANTENNA M1, SD1 M2.5) are exported by KiCad as keepouts.
+Review 2.10: board.ISOLATE nets get their own DSN class clearance (isolate below).
 """
 from pathlib import Path
 import shutil, subprocess, sys, json, re
 P = Path(__file__).resolve().parents[1]; sys_path = __import__('sys').path.insert(0, str(Path(__file__).resolve().parent))
-from board import NAME, CLASS, GND_INNER, ROUTER_KEEPOUT
+from board import NAME, CLASS, GND_INNER, ROUTER_KEEPOUT, ISOLATE
 f = P / f'routing/{NAME}.dsn'; d = f.read_text()
 assert 'EDGE_STRIP' not in d, 'DSN already prepared; re-run route_critical.py first'
 assert '(plane ' not in d, 'unexpected plane in the DSN'
@@ -38,9 +39,28 @@ i = d.index('(keepout'); d = d[:i] + add.lstrip() + '    ' + d[i:]
 if GND_MODE == 'plane':   # the router joins every GND pin to this B.Cu plane (SMD pins: short stub + via where it finds room)
     m = .5; pl = f'    (plane GND (polygon B.Cu 0  {m * 1000:.0f} {-m * 1000:.0f}  {(W - m) * 1000:.0f} {-m * 1000:.0f}  {(W - m) * 1000:.0f} {-(H - m) * 1000:.0f}  {m * 1000:.0f} {-(H - m) * 1000:.0f}))\n'
     i = d.index('(keepout'); d = d[:i] + pl.lstrip() + '    ' + d[i:]
+
+
+def isolate(d):
+    """Review 2.10 (MINOR-2): each net of board.ISOLATE leaves its DSN class for its own class with the given clearance (Freerouting
+    keeps that distance from all other copper; KiCad DRC keeps the S1 rules, verify_pcb.py measures the distance to the TAP_* nets)."""
+    i0 = d.index('    (class '); i1 = d.index('  (wiring')
+    out = ''; moved = {}
+    for name, nets, body in re.findall(r'    \(class (\S+)((?:\s+(?:"[^"]*"|[^\s()]+))*)\s*\n(.*?)\n    \)\n', d[i0:i1], re.S):
+        toks = re.findall(r'"[^"]*"|[^\s()]+', nets); sel = [t for t in toks if t.strip('"').split('/')[-1] in ISOLATE]
+        out += f'    (class {name} ' + ' '.join(t for t in toks if t not in sel) + '\n' + body + '\n    )\n'
+        for t in sel:
+            c = ISOLATE[t.strip('"').split('/')[-1]]; b2 = re.sub(r'\(clearance [0-9.]+\)', f'(clearance {c * 1000:.0f})', body)
+            assert b2 != body, body
+            out += f'    (class ISO_{len(moved)} {t}\n' + b2 + '\n    )\n'; moved[t] = c
+    assert sorted(k.strip('"').split('/')[-1] for k in moved) == sorted(ISOLATE), (moved, ISOLATE)
+    return d[:i0] + out + '  )\n' + d[i1:], moved
+
+
+d, iso = isolate(d) if ISOLATE else (d, {})
 f.write_text(d)
 nk = d.count('(keepout ')
-(P / 'routing/router-exclusions.json').write_text(json.dumps({'gnd_pins_inner_pour': GND_INNER, 'router_keepouts': ROUTER_KEEPOUT, 'keepouts_in_dsn': nk, 'edge_strips': len(strips) * 2, 'gnd_pins_removed': GND_MODE == 'out', 'gnd_mode': GND_MODE}, indent=1) + '\n')
+(P / 'routing/router-exclusions.json').write_text(json.dumps({'gnd_pins_inner_pour': GND_INNER, 'router_keepouts': ROUTER_KEEPOUT, 'keepouts_in_dsn': nk, 'edge_strips': len(strips) * 2, 'gnd_pins_removed': GND_MODE == 'out', 'gnd_mode': GND_MODE, 'isolated_nets_mm': iso}, indent=1) + '\n')
 shutil.copy2(P / f'eda/{NAME}.kicad_pcb', P / 'routing/prerouted.kicad_pcb')
 subprocess.run([sys.executable, str(P / 'src/set_rules.py')], check=True)
-print('DSN:', nk, 'keepouts (rule areas + edge strips); pre-routed board frozen.')
+print('DSN:', nk, 'keepouts (rule areas + edge strips);', len(iso), 'nets with their own clearance; pre-routed board frozen.')

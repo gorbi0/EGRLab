@@ -103,6 +103,22 @@ def ref_far(b):                                                                 
 
 
 def strip_part(b): fp(b, 'C25').SetPosition(xy(12.0, 5.0))                           # C25 in the reserved strip of edge A
+def silk_small(b):                                                                  # review 2.10 MINOR-5: edge marker B back to 0.8 / 0.12 mm
+    t = next(t for t in b.GetDrawings() if isinstance(t, p.PCB_TEXT) and t.GetText().startswith('KRAWEDZ B'))
+    t.SetTextSize(p.VECTOR2I(mm(.7), mm(.8))); t.SetTextThickness(mm(.12))
+
+
+def bar_back(b): track(b, p.B_Cu, 50.6, 47.0, 62.9, 47.0, '5V_SYS', .5)              # review 2.10 MAJOR-1: a B.Cu bar between the top caps and U1 again
+def fan_track(b): track(b, p.B_Cu, 46.0, 55.0, 51.0, 55.0, '5V_SYS')                 # review 2.10 MAJOR-2: a B.Cu track under the input fan
+
+
+def vbat_near(b):                                                                   # review 2.10 MINOR-2: TAP_P6 0.3 mm beside the longest VBAT track
+    t = max((t for t in b.GetTracks() if not isinstance(t, p.PCB_VIA) and t.GetNetname().split('/')[-1] == 'VBAT_SENSE'), key=lambda t: t.GetLength())
+    a, c = t.GetStart(), t.GetEnd(); dx, dy = p.ToMM(c.x - a.x), p.ToMM(c.y - a.y); k = math.hypot(dx, dy); nx, ny = -dy / k * .6, dx / k * .6
+    n = next(q.GetNetname() for q in b.GetNetsByNetcode().values() if q.GetNetname().split('/')[-1] == 'TAP_P6')
+    track(b, t.GetLayer(), p.ToMM(a.x) + nx + dx * .3, p.ToMM(a.y) + ny + dy * .3, p.ToMM(a.x) + nx + dx * .7, p.ToMM(a.y) + ny + dy * .7, n)
+
+
 def null_control(b): pass
 
 
@@ -114,7 +130,9 @@ CASES = [(null_control, None), (mount_shift, 'M3 holes'), (jbp_shift, 'J_BP1 / J
          (decap_far, 'Decoupling at the IC pins'), (driver_far, 'Series resistors at the driver'), (diode_far, 'Series resistors at the driver'),
          (filter_far, 'Input filters'), ('gnd_pour_removed', 'GND pours'), (ref_on_part, 'Every visible reference'),
          (ref_far, 'Every visible reference nearer'), (strip_part, 'Reserved strip of edge A'), ('mark_missing', 'Pin 1 marks'),
-         (zone_copper, 'Standoff zones D7'), ('title_wrong', 'Silkscreen: board name')]
+         (zone_copper, 'Standoff zones D7'), ('title_wrong', 'Silkscreen: board name'),
+         (silk_small, 'Silkscreen legible'), (bar_back, 'U1 decoupling, ground side'), (fan_track, 'B.Cu under the input fan'),
+         (vbat_near, 'VBAT_SENSE copper')]
 assert root.resolve().is_relative_to(P.resolve()) and root.name == 'negative-controls'
 shutil.rmtree(root, ignore_errors=True); root.mkdir(parents=True)
 labels = json.loads((P / 'routing/silkscreen.json').read_text(encoding='utf-8'))['service_labels']

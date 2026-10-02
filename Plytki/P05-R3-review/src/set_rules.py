@@ -15,8 +15,8 @@ d = json.loads(fn.read_text())
 d.setdefault('board', {}).setdefault('design_settings', {}).setdefault('rules', {})
 d['board']['design_settings']['rules'].update(
     min_clearance=FINE_CLEARANCE, min_track_width=FINE_TRACK, min_via_annular_width=.25, min_via_diameter=.9, min_through_hole_diameter=.4,
-    min_hole_clearance=.25, min_hole_to_hole=.3, min_copper_edge_clearance=.5, min_silk_clearance=.15, min_text_height=.8,
-    min_text_thickness=.12)
+    min_hole_clearance=.25, min_hole_to_hole=.3, min_copper_edge_clearance=.5, min_silk_clearance=.15, min_text_height=1.0,
+    min_text_thickness=.15)   # review 2.10 (MINOR-5): JLCPCB legend minimum, enforced by DRC
 d['board']['design_settings']['drc_exclusions'] = []
 ns = d.setdefault('net_settings', {'meta': {'version': 5}, 'classes': []})
 base = dict(clearance=.25, via_diameter=.9, via_drill=.4, microvia_diameter=.3, microvia_drill=.1, bus_width=12, wire_width=6,
@@ -29,6 +29,11 @@ ns['netclass_patterns'] = [{'netclass': 'PWR', 'pattern': n} for n in PWR] + [{'
 fn.write_text(json.dumps(d, indent=2) + '\n')
 touch = lambda who: ' || '.join(f"A.intersectsCourtyard('{r}')" for r in who)
 both = ' || '.join(f"(A.intersectsCourtyard('{r}') && B.intersectsCourtyard('{r}'))" for r in FINE)
+# review 2.10 (MINOR-1): the pours are zones that always touch the courtyards, so the item rule gave them 0.15 mm everywhere (GND pour
+# 0.15 mm from copper up to 3.9 mm outside U1 / U3). Items: no zone in that rule. Pours: 0.15 mm only to copper wholly inside the pad
+# ring (rule areas DRC_ONLY_U1 / _U3: pads, inner stubs and vias - with 0.3 to the vias the pour lost U1.35 / U1.43 in six runs);
+# 0.30 (zone) to the escapes that leave the ring and to everything else.
+ring = ' || '.join(f"B.enclosedByArea('DRC_ONLY_{r}')" for r in FINE)   # rule areas made by import_routing.py
 (P / f'eda/{NAME}.kicad_dru').write_text(f'''(version 1)
 (rule "S1 tor >= {SIGNAL_W:.2f} mm poza drobnym rastrem"
   (condition "A.Type == 'Track' && !({touch(FINE)})")
@@ -36,8 +41,11 @@ both = ' || '.join(f"(A.intersectsCourtyard('{r}') && B.intersectsCourtyard('{r}
 (rule "drobny raster {' / '.join(FINE)}: tor >= {FINE_TRACK:.2f} mm"
   (condition "A.Type == 'Track' && ({touch(FINE)})")
   (constraint track_width (min {FINE_TRACK:.2f}mm)))
-(rule "drobny raster {' / '.join(FINE)}: odstep {FINE_CLEARANCE:.2f} mm miedzy elementami w obrysie ukladu"
-  (condition "{both}")
+(rule "drobny raster {' / '.join(FINE)}: odstep {FINE_CLEARANCE:.2f} mm miedzy elementami w obrysie ukladu (bez wylewek)"
+  (condition "A.Type != 'Zone' && B.Type != 'Zone' && ({both})")
+  (constraint clearance (min {FINE_CLEARANCE:.2f}mm)))
+(rule "drobny raster {' / '.join(FINE)}: wylewka {FINE_CLEARANCE:.2f} mm tylko do miedzi calej w pierscieniu padow"
+  (condition "A.Type == 'Zone' && ({ring})")
   (constraint clearance (min {FINE_CLEARANCE:.2f}mm)))
 ''', encoding='utf-8')
 print(f'Rules: clearance 0.25 / PWR 0.30 (fine pitch {FINE}: {FINE_CLEARANCE} / track {FINE_TRACK}), track {SIGNAL_W:.2f} (Default) / CORE3V3 0.30 / PWR 0.60, vias 0.9/0.4 (ring 0.25); no DRC exclusions.')

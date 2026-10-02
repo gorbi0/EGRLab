@@ -1,6 +1,6 @@
 {
   "board": "/home/tgorbacz/AI/Claude/EGRLab/.worktrees/p05-r3-pcb/Plytki/P05-R3-review/verification/negative-controls/ref_on_part/P05.kicad_pcb",
-  "board_sha256": "c5e4b082b3e253c4fe7ddbc78626948acbc133d345ff048009e79d1561c43b25",
+  "board_sha256": "94abcaf1149f5dff69e00cb08f38479355a935a3cf340ef3e8485dabee73bdfd",
   "checks": [
     {
       "check": "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
@@ -39,7 +39,7 @@
       "pass": true
     },
     {
-      "check": "Rules as P02 R3 / R4 (net classes: clearance >= 0.25, PWR 0.30, track >= 0.30, edge 0.5), annular ring >= 0.25 mm (S1 section 3); custom rules only: track >= 0.30 outside, clearance 0.15 / track 0.2 only for items touching the courtyard of U1 / U3 (fine pitch, README); no DRC exclusions",
+      "check": "Rules as P02 R3 / R4 (net classes: clearance >= 0.25, PWR 0.30, track >= 0.30, edge 0.5), annular ring >= 0.25 mm (S1 section 3); custom rules only: track >= 0.30 outside, clearance 0.15 / track 0.2 only for items touching the courtyard of U1 / U3 and pours to copper wholly in their pad rings (fine pitch, README; review 2.10 MINOR-1); no DRC exclusions",
       "pass": true
     },
     {
@@ -67,7 +67,7 @@
       "pass": true
     },
     {
-      "check": "U1 decoupling on the copper (R2 table, review P5-01): AVCC 1 / 48 / 37 / 38, REGCAP 36 / 39 and REFIN/OUT 42 (100 nF) <= 3 mm, VDRIVE 23 <= 4 mm, 22 uF on REFIN/OUT 42 and REFCAP 44 / 45 <= 6 mm (pad centre to pad centre)",
+      "check": "U1 decoupling on the copper (R2 table, review P5-01): AVCC 1, REGCAP 36 / 39 <= 3 mm, bottom 100 nF at 48 / 37 / 38 / 42 and VDRIVE 23 <= 4 mm (2.10), 22 uF on REFIN/OUT 42 and REFCAP 44 / 45 <= 6 mm (pad centre to pad centre)",
       "pass": true
     },
     {
@@ -79,7 +79,7 @@
       "pass": true
     },
     {
-      "check": "U1 ground: every GND pin touches the F.Cu pour inside the pad ring (solid connection) on a piece that holds a GND via, >= 4 GND vias inside the ring to B.Cu",
+      "check": "U1 ground: every GND pin touches the F.Cu pour inside the pad ring (solid connection) on a piece that holds a GND via, >= 12 GND vias inside the ring to B.Cu (review 2.10: was 4, all in the lower half)",
       "pass": true
     },
     {
@@ -107,6 +107,26 @@
       "pass": true
     },
     {
+      "check": "U1 decoupling, ground side: capacitor GND pad -> its AGND / REFGND pin through GND copper <= 1.3 x straight + 3 mm (gndpath.py; C4 / C13 accepted at 10.5 / 11 mm; review 2.10 MAJOR-1: 15-23 mm behind the 5VA bar)",
+      "pass": true
+    },
+    {
+      "check": "Decoupling of U2-U12, ground side: capacitor GND pad -> GND pin of its part <= 1.3 x straight + 3 mm, C15 / C24 / C17 / C18 accepted (review 2.10 MAJOR-2: U9 / U11 >= 62 mm, U3 51, U5 41, U6 43, U2 33, U12 34)",
+      "pass": true
+    },
+    {
+      "check": "Input filters and bus: C27-C34 GND pad -> the input GND pin of U1 (50-64), J_BP2.1 -> GND of the bus buffers U9 / U10 / U11 <= 1.3 x straight + 3 mm, C27 / C34 / U10 accepted (review 2.10 MAJOR-2: 15-27 mm / 67-80 mm)",
+      "pass": true
+    },
+    {
+      "check": "B.Cu under the input fan (x 45.4-51.3, y 46.4-64.5) and under the top capacitors (x 50.4-63.1, y 40.2-47.3): GND only, plus the locked 5VA stubs (review 2.10: the 5VA bar at y 45 and the spine at x 52.6 cut the returns)",
+      "pass": true
+    },
+    {
+      "check": "VBAT_SENSE copper >= 0.45 mm from every TAP_* track and pad (router class clearance 0.8 mm, planner 0.5; review 2.10 MINOR-2: 0.26 mm beside TAP_P6)",
+      "pass": true
+    },
+    {
       "check": "Every visible reference outside the courtyards of other parts",
       "pass": false
     },
@@ -116,6 +136,10 @@
     },
     {
       "check": "Pin 1 marks of the wire tails TAPS J4 and AUX J6 on the silkscreen, <= 3 mm from their pads (S1 §9)",
+      "pass": true
+    },
+    {
+      "check": "Silkscreen legible: every visible text on F.SilkS / B.SilkS >= 1.0 mm high with a >= 0.15 mm line (JLCPCB legend minimum; review 2.10 MINOR-5: 36 texts were 0.8 / 0.12 mm, the pin marks 0.9 / 0.12)",
       "pass": true
     },
     {
@@ -145,17 +169,17 @@
     },
     "S1-2 section 4: parts on the bottom only SMD <= 1.5 mm (heights.py, BOM thickness note for the capacitors), no SOIC, >= 1 mm from THT pads": {
       "bottom_parts": {
-        "R36": {
+        "R9": {
           "smd": true,
           "height_mm": 0.7,
           "soic": false,
-          "min_gap_to_THT_mm": 2.75
+          "min_gap_to_THT_mm": 6.26
         },
-        "R39": {
+        "C5": {
           "smd": true,
-          "height_mm": 0.7,
+          "height_mm": 1.25,
           "soic": false,
-          "min_gap_to_THT_mm": 6.0
+          "min_gap_to_THT_mm": 5.15
         },
         "R52": {
           "smd": true,
@@ -163,17 +187,11 @@
           "soic": false,
           "min_gap_to_THT_mm": 1.07
         },
-        "R54": {
+        "R49": {
           "smd": true,
           "height_mm": 0.7,
           "soic": false,
-          "min_gap_to_THT_mm": 1.07
-        },
-        "R42": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 3.69
+          "min_gap_to_THT_mm": 10.41
         },
         "R38": {
           "smd": true,
@@ -181,89 +199,17 @@
           "soic": false,
           "min_gap_to_THT_mm": 8.98
         },
-        "R9": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 6.26
-        },
-        "R21": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 3.67
-        },
         "C8": {
           "smd": true,
           "height_mm": 1.25,
           "soic": false,
           "min_gap_to_THT_mm": 6.48
         },
-        "C11": {
-          "smd": true,
-          "height_mm": 1.25,
-          "soic": false,
-          "min_gap_to_THT_mm": 7.47
-        },
-        "R40": {
+        "R36": {
           "smd": true,
           "height_mm": 0.7,
           "soic": false,
-          "min_gap_to_THT_mm": 6.13
-        },
-        "R46": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 2.16
-        },
-        "R45": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 1.73
-        },
-        "R41": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 2.41
-        },
-        "C7": {
-          "smd": true,
-          "height_mm": 1.25,
-          "soic": false,
-          "min_gap_to_THT_mm": 5.86
-        },
-        "R44": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 1.18
-        },
-        "C5": {
-          "smd": true,
-          "height_mm": 1.25,
-          "soic": false,
-          "min_gap_to_THT_mm": 5.78
-        },
-        "R47": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 1.23
-        },
-        "C26": {
-          "smd": true,
-          "height_mm": 1.25,
-          "soic": false,
-          "min_gap_to_THT_mm": 4.41
-        },
-        "R49": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 10.41
+          "min_gap_to_THT_mm": 2.75
         },
         "R37": {
           "smd": true,
@@ -271,23 +217,17 @@
           "soic": false,
           "min_gap_to_THT_mm": 5.39
         },
-        "C25": {
-          "smd": true,
-          "height_mm": 1.25,
-          "soic": false,
-          "min_gap_to_THT_mm": 6.82
-        },
-        "R48": {
+        "R39": {
           "smd": true,
           "height_mm": 0.7,
           "soic": false,
-          "min_gap_to_THT_mm": 1.23
+          "min_gap_to_THT_mm": 6.0
         },
-        "R53": {
+        "R51": {
           "smd": true,
           "height_mm": 0.7,
           "soic": false,
-          "min_gap_to_THT_mm": 8.94
+          "min_gap_to_THT_mm": 1.07
         },
         "R50": {
           "smd": true,
@@ -295,17 +235,101 @@
           "soic": false,
           "min_gap_to_THT_mm": 12.93
         },
+        "R42": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 3.69
+        },
         "R55": {
           "smd": true,
           "height_mm": 0.7,
           "soic": false,
           "min_gap_to_THT_mm": 1.12
         },
-        "R51": {
+        "R21": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 3.77
+        },
+        "R46": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 4.33
+        },
+        "C26": {
+          "smd": true,
+          "height_mm": 1.25,
+          "soic": false,
+          "min_gap_to_THT_mm": 4.41
+        },
+        "R47": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.23
+        },
+        "R44": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.18
+        },
+        "R48": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.23
+        },
+        "R54": {
           "smd": true,
           "height_mm": 0.7,
           "soic": false,
           "min_gap_to_THT_mm": 1.07
+        },
+        "R41": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 2.41
+        },
+        "R40": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 6.13
+        },
+        "R53": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 8.94
+        },
+        "C11": {
+          "smd": true,
+          "height_mm": 1.25,
+          "soic": false,
+          "min_gap_to_THT_mm": 6.62
+        },
+        "C7": {
+          "smd": true,
+          "height_mm": 1.25,
+          "soic": false,
+          "min_gap_to_THT_mm": 7.16
+        },
+        "C25": {
+          "smd": true,
+          "height_mm": 1.25,
+          "soic": false,
+          "min_gap_to_THT_mm": 6.82
+        },
+        "R45": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.73
         }
       }
     },
@@ -398,7 +422,7 @@
       "copper": [],
       "rule_areas": 8
     },
-    "Rules as P02 R3 / R4 (net classes: clearance >= 0.25, PWR 0.30, track >= 0.30, edge 0.5), annular ring >= 0.25 mm (S1 section 3); custom rules only: track >= 0.30 outside, clearance 0.15 / track 0.2 only for items touching the courtyard of U1 / U3 (fine pitch, README); no DRC exclusions": {
+    "Rules as P02 R3 / R4 (net classes: clearance >= 0.25, PWR 0.30, track >= 0.30, edge 0.5), annular ring >= 0.25 mm (S1 section 3); custom rules only: track >= 0.30 outside, clearance 0.15 / track 0.2 only for items touching the courtyard of U1 / U3 and pours to copper wholly in their pad rings (fine pitch, README; review 2.10 MINOR-1); no DRC exclusions": {
       "board_minimums": {
         "min_clearance": 0.15,
         "min_track_width": 0.2,
@@ -433,8 +457,14 @@
           "0.20"
         ],
         [
-          "drobny raster U1 / U3: odstep 0.15 mm miedzy elementami w obrysie ukladu",
-          "(A.intersectsCourtyard('U1') && B.intersectsCourtyard('U1')) || (A.intersectsCourtyard('U3') && B.intersectsCourtyard('U3'))",
+          "drobny raster U1 / U3: odstep 0.15 mm miedzy elementami w obrysie ukladu (bez wylewek)",
+          "A.Type != 'Zone' && B.Type != 'Zone' && ((A.intersectsCourtyard('U1') && B.intersectsCourtyard('U1')) || (A.intersectsCourtyard('U3') && B.intersectsCourtyard('U3')))",
+          "clearance",
+          "0.15"
+        ],
+        [
+          "drobny raster U1 / U3: wylewka 0.15 mm tylko do miedzi calej w pierscieniu padow",
+          "A.Type == 'Zone' && (B.enclosedByArea('DRC_ONLY_U1') || B.enclosedByArea('DRC_ONLY_U3'))",
           "clearance",
           "0.15"
         ]
@@ -559,7 +589,7 @@
             "node": "ADC_CS",
             "resistor": "R45",
             "value": "1K",
-            "node_dist_mm": 2.1,
+            "node_dist_mm": 1.2,
             "label": "ADC_CS",
             "side": "B"
           },
@@ -568,7 +598,7 @@
             "node": "ADC_CONVST",
             "resistor": "R46",
             "value": "1K",
-            "node_dist_mm": 0.0,
+            "node_dist_mm": 2.0,
             "label": "CONVST",
             "side": "B"
           },
@@ -683,7 +713,7 @@
       ],
       "over": {}
     },
-    "U1 decoupling on the copper (R2 table, review P5-01): AVCC 1 / 48 / 37 / 38, REGCAP 36 / 39 and REFIN/OUT 42 (100 nF) <= 3 mm, VDRIVE 23 <= 4 mm, 22 uF on REFIN/OUT 42 and REFCAP 44 / 45 <= 6 mm (pad centre to pad centre)": [
+    "U1 decoupling on the copper (R2 table, review P5-01): AVCC 1, REGCAP 36 / 39 <= 3 mm, bottom 100 nF at 48 / 37 / 38 / 42 and VDRIVE 23 <= 4 mm (2.10), 22 uF on REFIN/OUT 42 and REFCAP 44 / 45 <= 6 mm (pad centre to pad centre)": [
       {
         "pin": "U1.1",
         "net": "5VA_P05",
@@ -696,24 +726,24 @@
         "pin": "U1.48",
         "net": "5VA_P05",
         "capacitor": "C7",
-        "path_mm": 2.729,
-        "limit_mm": 3.0,
+        "path_mm": 3.753,
+        "limit_mm": 4.0,
         "pass": true
       },
       {
         "pin": "U1.37",
         "net": "5VA_P05",
         "capacitor": "C5",
-        "path_mm": 2.739,
-        "limit_mm": 3.0,
+        "path_mm": 3.154,
+        "limit_mm": 4.0,
         "pass": true
       },
       {
         "pin": "U1.38",
         "net": "5VA_P05",
         "capacitor": "C5",
-        "path_mm": 2.739,
-        "limit_mm": 3.0,
+        "path_mm": 3.154,
+        "limit_mm": 4.0,
         "pass": true
       },
       {
@@ -744,8 +774,8 @@
         "pin": "U1.42",
         "net": "ADC_REF",
         "capacitor": "C11",
-        "path_mm": 2.683,
-        "limit_mm": 3.0,
+        "path_mm": 3.025,
+        "limit_mm": 4.0,
         "pass": true
       },
       {
@@ -792,26 +822,58 @@
       "b_cu_tracks_under_U1": [],
       "vias_in_courtyard": []
     },
-    "U1 ground: every GND pin touches the F.Cu pour inside the pad ring (solid connection) on a piece that holds a GND via, >= 4 GND vias inside the ring to B.Cu": {
+    "U1 ground: every GND pin touches the F.Cu pour inside the pad ring (solid connection) on a piece that holds a GND via, >= 12 GND vias inside the ring to B.Cu (review 2.10: was 4, all in the lower half)": {
       "pins_without_pour": [],
       "pins_on_unstitched_piece": [],
       "pins_not_solid": [],
       "inner_vias": [
         [
-          59.0,
-          56.8
+          53.7,
+          57.2
         ],
         [
-          54.2,
-          56.8
+          55.9,
+          52.562
+        ],
+        [
+          60.6,
+          52.562
+        ],
+        [
+          53.7,
+          51.4
+        ],
+        [
+          53.7,
+          53.4
         ],
         [
           56.6,
           56.8
         ],
         [
-          55.55,
-          52.6
+          53.7,
+          55.4
+        ],
+        [
+          59.0,
+          56.8
+        ],
+        [
+          62.3,
+          49.66
+        ],
+        [
+          58.25,
+          52.562
+        ],
+        [
+          55.35,
+          49.66
+        ],
+        [
+          58.4,
+          49.66
         ]
       ]
     },
@@ -854,17 +916,17 @@
     },
     "Decoupling at the IC pins: capacitor pad <= 6 mm from its supply / output pin (U2-U12; C1 220 uF at R1 pin 2 = 5VA_P05; limit as P03 R6 / P09 R2)": {
       "C15-U3.8": 3.25,
-      "C14-U2.2": 3.04,
+      "C14-U2.2": 4.8,
       "C24-U2.6": 4.26,
-      "C16-U5.14": 2.75,
-      "C17-U6.2": 3.5,
-      "C18-U7.2": 3.5,
-      "C19-U8.14": 2.79,
-      "C20-U9.14": 2.25,
-      "C21-U10.14": 2.25,
-      "C22-U11.14": 2.75,
-      "C2-U12.2": 3.5,
-      "C3-U12.3": 2.5,
+      "C16-U5.14": 3.72,
+      "C17-U6.2": 5.41,
+      "C18-U7.2": 5.46,
+      "C19-U8.14": 3.25,
+      "C20-U9.14": 3.25,
+      "C21-U10.14": 3.25,
+      "C22-U11.14": 3.25,
+      "C2-U12.2": 3.76,
+      "C3-U12.3": 4.61,
       "C1-R1.2": 4.09
     },
     "Series resistors at the driver (R26 DOUT, R27 BUSY: pad <= 6 mm from U11.3 / U11.6) and flyback diodes at their coils (D1-D3 anode <= 6 mm from K1-K3 pin 8)": {
@@ -886,13 +948,225 @@
     },
     "GND pours on both layers: B.Cu >= 50 % of the board; island removal always (every island tied)": {
       "cover_percent": {
-        "F.Cu": 61.3,
-        "B.Cu": 72.1
+        "F.Cu": 61.9,
+        "B.Cu": 70.7
       },
       "islands": {
-        "F.Cu": 37,
-        "B.Cu": 32
+        "F.Cu": 33,
+        "B.Cu": 28
       }
+    },
+    "U1 decoupling, ground side: capacitor GND pad -> its AGND / REFGND pin through GND copper <= 1.3 x straight + 3 mm (gndpath.py; C4 / C13 accepted at 10.5 / 11 mm; review 2.10 MAJOR-1: 15-23 mm behind the 5VA bar)": {
+      "C4": {
+        "to": "U1.2",
+        "path_mm": 10.0,
+        "straight_mm": 5.3,
+        "limit_mm": 10.5,
+        "accepted": true
+      },
+      "C5": {
+        "to": "U1.40",
+        "path_mm": 6.0,
+        "straight_mm": 6.3,
+        "limit_mm": 11.2
+      },
+      "C7": {
+        "to": "U1.47",
+        "path_mm": 6.0,
+        "straight_mm": 5.9,
+        "limit_mm": 10.7
+      },
+      "C8": {
+        "to": "U1.22",
+        "path_mm": 4.6,
+        "straight_mm": 4.3,
+        "limit_mm": 8.6
+      },
+      "C9": {
+        "to": "U1.35",
+        "path_mm": 9.8,
+        "straight_mm": 5.2,
+        "limit_mm": 9.8
+      },
+      "C10": {
+        "to": "U1.40",
+        "path_mm": 7.2,
+        "straight_mm": 5.2,
+        "limit_mm": 9.8
+      },
+      "C11": {
+        "to": "U1.43",
+        "path_mm": 6.0,
+        "straight_mm": 6.0,
+        "limit_mm": 10.8
+      },
+      "C12": {
+        "to": "U1.43",
+        "path_mm": 8.0,
+        "straight_mm": 5.1,
+        "limit_mm": 9.6
+      },
+      "C13": {
+        "to": "U1.46",
+        "path_mm": 10.6,
+        "straight_mm": 5.8,
+        "limit_mm": 11.0,
+        "accepted": true
+      }
+    },
+    "Decoupling of U2-U12, ground side: capacitor GND pad -> GND pin of its part <= 1.3 x straight + 3 mm, C15 / C24 / C17 / C18 accepted (review 2.10 MAJOR-2: U9 / U11 >= 62 mm, U3 51, U5 41, U6 43, U2 33, U12 34)": {
+      "C2": {
+        "to": "U12.1",
+        "path_mm": 3.6,
+        "straight_mm": 3.8,
+        "limit_mm": 7.9
+      },
+      "C3": {
+        "to": "U12.1",
+        "path_mm": 4.6,
+        "straight_mm": 4.6,
+        "limit_mm": 9.0
+      },
+      "C14": {
+        "to": "U2.4",
+        "path_mm": 8.0,
+        "straight_mm": 4.4,
+        "limit_mm": 8.7
+      },
+      "C24": {
+        "to": "U2.4",
+        "path_mm": 22.8,
+        "straight_mm": 11.7,
+        "limit_mm": 24.0,
+        "accepted": true
+      },
+      "C15": {
+        "to": "U3.4",
+        "path_mm": 21.4,
+        "straight_mm": 10.8,
+        "limit_mm": 22.5,
+        "accepted": true
+      },
+      "C16": {
+        "to": "U5.7",
+        "path_mm": 15.0,
+        "straight_mm": 14.1,
+        "limit_mm": 21.3
+      },
+      "C17": {
+        "to": "U6.3",
+        "path_mm": 13.4,
+        "straight_mm": 5.1,
+        "limit_mm": 14.5,
+        "accepted": true
+      },
+      "C18": {
+        "to": "U7.3",
+        "path_mm": 16.2,
+        "straight_mm": 3.2,
+        "limit_mm": 17.5,
+        "accepted": true
+      },
+      "C19": {
+        "to": "U8.7",
+        "path_mm": 8.2,
+        "straight_mm": 8.6,
+        "limit_mm": 14.2
+      },
+      "C20": {
+        "to": "U9.7",
+        "path_mm": 8.2,
+        "straight_mm": 8.6,
+        "limit_mm": 14.2
+      },
+      "C21": {
+        "to": "U10.7",
+        "path_mm": 8.2,
+        "straight_mm": 8.6,
+        "limit_mm": 14.2
+      },
+      "C22": {
+        "to": "U11.7",
+        "path_mm": 8.2,
+        "straight_mm": 8.6,
+        "limit_mm": 14.2
+      }
+    },
+    "Input filters and bus: C27-C34 GND pad -> the input GND pin of U1 (50-64), J_BP2.1 -> GND of the bus buffers U9 / U10 / U11 <= 1.3 x straight + 3 mm, C27 / C34 / U10 accepted (review 2.10 MAJOR-2: 15-27 mm / 67-80 mm)": {
+      "filters": {
+        "C27": {
+          "to": "U1.50",
+          "path_mm": 22.8,
+          "straight_mm": 12.7,
+          "limit_mm": 24.0,
+          "accepted": true
+        },
+        "C28": {
+          "to": "U1.52",
+          "path_mm": 13.0,
+          "straight_mm": 11.9,
+          "limit_mm": 18.5
+        },
+        "C29": {
+          "to": "U1.54",
+          "path_mm": 15.0,
+          "straight_mm": 11.4,
+          "limit_mm": 17.8
+        },
+        "C30": {
+          "to": "U1.56",
+          "path_mm": 15.4,
+          "straight_mm": 11.0,
+          "limit_mm": 17.3
+        },
+        "C31": {
+          "to": "U1.58",
+          "path_mm": 15.4,
+          "straight_mm": 11.0,
+          "limit_mm": 17.3
+        },
+        "C32": {
+          "to": "U1.60",
+          "path_mm": 14.8,
+          "straight_mm": 13.0,
+          "limit_mm": 19.9
+        },
+        "C33": {
+          "to": "U1.62",
+          "path_mm": 15.4,
+          "straight_mm": 11.7,
+          "limit_mm": 18.2
+        },
+        "C34": {
+          "to": "U1.64",
+          "path_mm": 23.2,
+          "straight_mm": 12.4,
+          "limit_mm": 24.5,
+          "accepted": true
+        }
+      },
+      "bus": {
+        "J_BP2.1-U9.7": {
+          "path_mm": 44.4,
+          "straight_mm": 35.5,
+          "limit_mm": 49.1
+        },
+        "J_BP2.1-U10.7": {
+          "path_mm": 54.8,
+          "straight_mm": 22.0,
+          "limit_mm": 56.5,
+          "accepted": true
+        },
+        "J_BP2.1-U11.7": {
+          "path_mm": 58.4,
+          "straight_mm": 47.5,
+          "limit_mm": 64.8
+        }
+      }
+    },
+    "B.Cu under the input fan (x 45.4-51.3, y 46.4-64.5) and under the top capacitors (x 50.4-63.1, y 40.2-47.3): GND only, plus the locked 5VA stubs (review 2.10: the 5VA bar at y 45 and the spine at x 52.6 cut the returns)": [],
+    "VBAT_SENSE copper >= 0.45 mm from every TAP_* track and pad (router class clearance 0.8 mm, planner 0.5; review 2.10 MINOR-2: 0.26 mm beside TAP_P6)": {
+      "min_mm": 0.603
     },
     "Every visible reference outside the courtyards of other parts": {
       "R12": [
@@ -914,6 +1188,7 @@
         "1"
       ]
     },
+    "Silkscreen legible: every visible text on F.SilkS / B.SilkS >= 1.0 mm high with a >= 0.15 mm line (JLCPCB legend minimum; review 2.10 MINOR-5: 36 texts were 0.8 / 0.12 mm, the pin marks 0.9 / 0.12)": [],
     "Silkscreen: board name \"P05 R3 S1-2/3 S1-S2\", edge markers A and B": {
       "title": [
         "P05 R3 S1-2/3 S1-S2"
@@ -924,6 +1199,6 @@
       ]
     }
   },
-  "passed": 27,
-  "total": 30
+  "passed": 33,
+  "total": 36
 }

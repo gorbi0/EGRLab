@@ -10,9 +10,11 @@ README layout requirements and review P5-01 (R2 pattern `Plytki/P05-R2-review/wi
 - inputs: 45 deg fan from the pins 49-63 to the filter column C27-C34 (pitch 2.65 mm) and a source stub from each capacitor pad
   through the gap below it to the left (input resistors or x = 39 for the router); DOUT leaves on F.Cu to the right (P5-01: not
   under U1 on B.Cu), the serial pins at the bottom diverge from 0.5 mm to a 1 mm pitch;
-- 5VA_P05 of C7 / C5 leaves on B.Cu up to a 0.5 mm bar under the top capacitors and to its end at x 51.2 (router from there),
-  3V3_DAQ of VDRIVE / REFSEL (pins 23 / 34, C8) on B.Cu to x 66.2, the strap pins 3-8 on an F.Cu bar below the pins (10 joined
-  inside the ring around pin 9).
+- 5VA_P05 of C7 / C5 leaves on B.Cu straight up between the top capacitors to a join above them, fed by C6 (review 2.10: was a
+  0.5 mm bar across the returns at y 45 and a spine under the input pins), 3V3_DAQ of VDRIVE / REFSEL (pins 23 / 34, C8) on B.Cu to
+  x 66.2, the strap pins 3-8 on an F.Cu bar below the pins (10 joined inside the ring around pin 9, via there to C8);
+- review 2.10 (MAJOR-1): GND vias under the top capacitors' bodies, at the AGND / REFGND pins, between the pads of each bottom 100 nF,
+  a column inside the left pins and one at the pin 16 / 17 corner on C8; decoupling GND pads with solid pour connection.
 Clearances inside the U1 courtyard: custom rules of set_rules.py (0.15 / track 0.2 only between items both touching it).
 """
 from pathlib import Path
@@ -73,16 +75,24 @@ def route_u1(B):
     x37, _ = pin(37); x38, _ = pin(38); xm = (x37 + x38) / 2
     B.track('5VA_P05', [(x37, y), (x37, 49.3), (xm, yv)], w=.2); B.track('5VA_P05', [(x38, y), (x38, 49.3), (xm, yv)], w=.2)
     B.via('5VA_P05', xm, yv)
-    x34, _ = pin(34); B.track('3V3_DAQ', [(x34, y), (x34, yv)], w=.2); B.via('3V3_DAQ', x34, yv)
+    x34, _ = pin(34); xv34, yv34 = x34 - .05, 49.66   # 2.10: 0.09 mm up / 0.05 left, clear of C5 moved right (pitch 2.35)
+    B.track('3V3_DAQ', [(x34, y), (x34, 49.2), (xv34, yv34)], w=.2); B.via('3V3_DAQ', xv34, yv34)
     # bottom side: vias -> 100 nF pads 1; 5VA up to the bar under the top capacitors and out to x 51.2 (router); 3V3 -> VDRIVE
     for net, (vx, vy), cap in [('5VA_P05', (x48 - .25, yv), 'C7'), ('ADC_REF', (x42, yv), 'C11'), ('5VA_P05', (xm, yv), 'C5')]:
         B.track(net, [(vx, vy), B.pp(cap, 1)], layer=p.B_Cu)
-    B.track('5VA_P05', [(x48 - .25, yv), (x48 - .25, 45.0)], w=.5, layer=p.B_Cu)
-    B.track('5VA_P05', [(xm, yv), (xm, 45.0), (51.2, 45.0), (51.2, 37.0)], w=.5, layer=p.B_Cu)   # router continues at y 37
+    # review 2.10 (MAJOR-1): the 0.5 mm 5VA bar at y 45 crossed every return from the top capacitors to U1 and the spine at x 52.6 every
+    # input return (B.Cu). Now two 0.3 mm stubs run straight up between the capacitors (parallel to the returns) to a join above their
+    # GND vias, fed by C6 through a via; AVCC 1 joins pin 48 by a spine inside the pad ring (x 54.65), east of the GND via column.
+    xs48, xs37, yj = x48 - .25, 60.1, 41.9
+    c6 = B.pp('C6', 1)
+    B.track('5VA_P05', [(xs48, yv), (xs48, yj)], layer=p.B_Cu)
+    B.track('5VA_P05', [(xm, yv), (xs37, yv - .6), (xs37, yj)], layer=p.B_Cu)
+    B.track('5VA_P05', [(xs48, yj), (xs37, yj)], layer=p.B_Cu)
+    B.via('5VA_P05', c6[0], yj); B.track('5VA_P05', [(c6[0], yj), c6])                                       # -> C6 pad 1 (router on from C6)
     x23, y23 = pin(23); xv23 = 62.25
     B.track('3V3_DAQ', [(x23, y23), (xv23, y23)], w=.2); B.via('3V3_DAQ', xv23, y23)
     c8 = B.pp('C8', 1)
-    B.track('3V3_DAQ', [(x34, yv), (x34 + .6, yv + .6), (x34 + .6, y23 - .6), (xv23, y23)], layer=p.B_Cu)
+    B.track('3V3_DAQ', [(xv34, yv34), (xv34 + .65, yv34 + .65), (xv34 + .65, y23 - .6), (xv23, y23)], layer=p.B_Cu)
     B.track('3V3_DAQ', [(xv23, y23), (c8[0], c8[1] - .4)], layer=p.B_Cu)
     B.track('3V3_DAQ', [(c8[0] + .6, c8[1]), (66.2, c8[1])], layer=p.B_Cu)                                 # router continues
     # test pads on stubs (0.3 mm, S1) off the capacitor pads 1
@@ -90,25 +100,33 @@ def route_u1(B):
     c10 = B.pp('C10', 1); tp4 = B.pp('TP4', 1); B.track('REGCAP_D', [(c10[0] + .6, c10[1]), (tp4[0], c10[1]), (tp4[0], tp4[1] + .3)])
     tp5 = B.pp('TP5', 1); B.track('REFCAP', [(c13x - 1.0, c13y), (c13x - 1.8, c13y), (tp5[0] + .7, tp5[1] + .6)])
     c9 = B.pp('C9', 1); tp3 = B.pp('TP3', 1); B.track('REGCAP_A', [(c9[0] + .65, c9[1]), (c9[0] + 1.85, c9[1]), (tp3[0] - .5, tp3[1] + .5)])
-    # ground vias of the top capacitors (pad 2 of each, short 0.5 mm track)
-    for cap, dx in [('C13', 0), ('C12', 0), ('C10', -.2), ('C9', .15)]:
-        gx, gy = B.pp(cap, 2); B.track('GND', [(gx, gy), (gx + dx, gy - 1.4)], w=.5); B.via('GND', gx + dx, gy - 1.4)
+    # review 2.10 (MAJOR-1): GND via of each top capacitor under its body, between the pads (0.45 mm to each), on a 0.5 mm track from
+    # pad 2: the return drops to B.Cu right under the supply path (before: beyond pad 2, behind the 5VA bar, 15-23 mm to U1's GND pins)
+    for cap in ('C13', 'C12', 'C10', 'C9'):
+        g2, c = B.pp(cap, 2), B.f[cap].GetPosition(); cc = (round(p.ToMM(c.x), 4), round(p.ToMM(c.y), 4))
+        B.track('GND', [g2, cc], w=.5); B.via('GND', *cc)
+        B.pad(cap, 2).SetLocalZoneConnection(p.ZONE_CONNECTION_FULL)
     # ---- bottom row: pins 1-16 (y 59.675) ----
     x1, yb = pin(1); c4 = B.pp('C4', 1); B.track('5VA_P05', [(x1, yb), (x1, 60.75), (c4[0], 61.4)])                    # -> C4 pad 1
     # AVCC 1 joins the other AVCC pins on B.Cu (run 2: the router took a 0.6 mm 5VA track across the inner GND pour): via V1 inside the
     # ring next to pin 1, B.Cu along the left pad row to V48 (C7 / the 5VA bar)
     xv1, yv1 = x1 - .25, 58.25; B.track('5VA_P05', [(x1, yb), (x1, 58.7), (xv1, yv1)], w=.2); B.via('5VA_P05', xv1, yv1)
-    B.track('5VA_P05', [(x48 - .25, yv), (52.6, yv + 1.4), (52.6, yv1 - 1.25), (xv1, yv1)], w=.5, layer=p.B_Cu)
+    xsp = 54.65   # inner spine: 0.2 mm off C7 (x >= 54.85 after placement 2.10), 0.35 mm off the GND via column at x 53.7
+    B.track('5VA_P05', [(x48 - .25, yv), (xsp, yv + .65), (xsp, yv1 - .65), (xv1, yv1)], layer=p.B_Cu)
     g4 = B.pp('C4', 2); B.track('GND', [g4, (g4[0], g4[1] + 1.4)], w=.5); B.via('GND', g4[0], g4[1] + 1.4)
+    c4c = B.f['C4'].GetPosition(); c4c = (round(p.ToMM(c4c.x), 4), round(p.ToMM(c4c.y), 4))                  # and under its body
+    B.track('GND', [g4, c4c], w=.5); B.via('GND', *c4c); B.pad('C4', 2).SetLocalZoneConnection(p.ZONE_CONNECTION_FULL)
     xs = [pin(n)[0] for n in range(3, 9)]; yb3 = 60.8   # bar edge 60.65 inside the courtyard (y <= 60.7 along the pad rows)
     for xn in xs:
         B.track('3V3_DAQ', [(xn, yb), (xn, yb3)])
     B.track('3V3_DAQ', [(xs[0], yb3), (xs[-1], yb3)])
     # run 3: the router left this group and the C8 group apart (both hemmed in by the U1 keepouts) -> joined here: via below the bar,
     # B.Cu to C8 pad 1; the only 3V3 exit of U1 is the B.Cu stub of C8 to x 66.2
-    xb3 = xs[0] + .15; B.track('3V3_DAQ', [(xs[0], yb3), (xb3, 61.8)]); B.via('3V3_DAQ', xb3, 61.8)
-    c8_ = B.pp('C8', 1); B.track('3V3_DAQ', [(xb3, 61.8), (60.3, 61.8), (60.3, 57.2), (c8_[0] - .7, c8_[1] + .3)], layer=p.B_Cu)
     x8, _ = pin(8); x10, _ = pin(10); B.track('3V3_DAQ', [(x8, 59.0), (x8, 58.4), (x10, 58.4), (x10, 59.0)], w=.2)  # 10 around 9
+    # review 2.10 (MAJOR-1): the strap group took 3V3 through a via below the bar and a B.Cu L along y 61.8 / x 60.3 that walled C8's
+    # GND pad in (23 mm to AGND 26); now a via on the loop round pin 9 and 4 mm of B.Cu inside the ring to C8 pad 1
+    xv9 = (x8 + x10) / 2; B.track('3V3_DAQ', [(xv9, 58.4), (xv9, 57.8)], w=.2); B.via('3V3_DAQ', xv9, 57.8)
+    c8_ = B.pp('C8', 1); B.track('3V3_DAQ', [(xv9, 57.8), (59.6, 57.8), (c8_[0] - .7, c8_[1] + .2)], layer=p.B_Cu)
     nets_b = {9: 'ADC_CONVST_P05', 11: 'ADC_RESET_P05', 12: 'ADC_SCLK_P05', 13: 'ADC_CS_P05', 14: 'AD_BUSY_LOCAL'}
     x9, _ = pin(9); B.track(nets_b[9], [(x9, yb), (x9, 63.6)])
     for k, n in enumerate((11, 12, 13, 14)):   # diverge from 0.5 to 1.0 mm inside / just outside the courtyard
@@ -130,8 +148,18 @@ def route_u1(B):
     for a in B.f['U1'].Pads():
         if a.GetNetname().split('/')[-1] == 'GND':
             a.SetLocalZoneConnection(p.ZONE_CONNECTION_FULL)
-    for gx, gy in [(55.55, 52.6), (54.2, 56.8), (56.6, 56.8), (59.0, 56.8)]:
+    # review 2.10 (MAJOR-1 / -2): 4 vias tied the inner pour to B.Cu, all at y >= 52.6. Now: a column just inside the left pins (x 53.7,
+    # the input returns climb here from B.Cu instead of going round a spine), two at the top-row AGND / REFGND pins (y 49.66), one under
+    # each bottom 100 nF between its pads, two more in the lower half, and one at the pin 16 / 17 corner on C8's GND pad (both pins GND)
+    vias = [(53.7, 51.4), (53.7, 53.4), (53.7, 55.4), (53.7, 57.2), (55.35, 49.66), (58.4, 49.66), (62.3, 49.66),
+            (56.6, 56.8), (59.0, 56.8)]
+    vias += [(round(p.ToMM(B.f[c].GetPosition().x), 4), round(p.ToMM(B.f[c].GetPosition().y), 4)) for c in ('C7', 'C11', 'C5')]
+    for gx, gy in vias:
         B.via('GND', gx, gy)
+    for c in ('C7', 'C11', 'C5', 'C8'):
+        B.pad(c, 2).SetLocalZoneConnection(p.ZONE_CONNECTION_FULL)
+    (x16, y16), (x17, y17) = pin(16), pin(17); vc = (round(x17 - .8, 3), round(y16 - .1, 3))
+    B.via('GND', *vc); B.track('GND', [(x16, y16), (x16 + .45, y16), vc], w=.2); B.track('GND', [(x17, y17), (x17 - .45, y17), vc], w=.2)
 
 
 def route_u3(B):

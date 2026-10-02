@@ -44,7 +44,7 @@ def start(n, title, subtitle):
     c.setFillColor(HexColor('#172833')); c.setFont('Bold', 18); c.drawString(12 * mm, 190 * mm, title)
     c.setFont('Arial', 9); c.drawString(12 * mm, 182 * mm, subtitle)
     c.setStrokeColor(HexColor('#cdd7dc')); c.line(12 * mm, 14 * mm, 285 * mm, 14 * mm)
-    c.setFont('Arial', 8); c.drawString(12 * mm, 9 * mm, f'{TYTUL} | 01.10.2026 | PCB do recenzji lokalnej | przymiarka 1:1 i odbiór sprzętu: NIE ZBADANO')
+    c.setFont('Arial', 8); c.drawString(12 * mm, 9 * mm, f'{TYTUL} | 02.10.2026 | PCB po recenzji niezależnej (2.10) | przymiarka 1:1 i odbiór sprzętu: NIE ZBADANO')
     c.drawRightString(285 * mm, 9 * mm, f'{n} / {NPAGES}')
 
 
@@ -84,7 +84,7 @@ for t in [f'<b>Płytka:</b> 106,5 × 100 mm (klasa 2/3), narożniki R1, FR4 1,6 
           f'<b>U1 (AD7606B, LQFP-64):</b> odsprzęganie na miedzi od pinu do pola kondensatora — najbliżej limitu {worst["capacitor"]} przy '
           f'{worst["pin"]}: {str(worst["path_mm"]).replace(".", ",")} mm (limit {str(worst["limit_mm"]).replace(".", ",")}); 1 µF i 22 µF od góry, '
           '100 nF od spodu pod korpusem (przelotki wewnątrz pierścienia pól); REFCAP / REGCAP bez przelotek; piny GND do wylewki wewnątrz pierścienia '
-          'z 4 przelotkami. Reguła drobnego rastra (odstęp 0,15 / tor 0,2 mm) tylko w obrysach U1 i U3, reszta płytki jak P02-R3 (0,25 / 0,3).',
+          'z 12 przelotkami (2.10: kolumna przy pinach wejść, przy AGND / REFGND, pod każdym 100 nF), przelotki GND pod kondensatorami od góry. Reguła drobnego rastra (odstęp 0,15 / tor 0,2 mm) tylko w obrysach U1 i U3, reszta płytki jak P02-R3 (0,25 / 0,3); wylewki 0,15 mm tylko do miedzi w pierścieniu pól.',
           f'<b>Kontrole:</b> DRC: {len(drc["unconnected_items"])} niepołączonych, {len(drc["schematic_parity"])} niezgodności ze schematem, '
           f'{len(drc["violations"]) - nlib} innych naruszeń'
           + (f'; {liczba(nlib, "zgłoszenie", "zgłoszenia", "zgłoszeń")} lib_footprint_mismatch u części z przyciętym nadrukiem (przyjęte przez verify_pcb.py)' if nlib else '')
@@ -107,7 +107,7 @@ pages = [(2, 'Montaż od góry — 1:1', 'assembly', [
     '<b>Bez miedzi</b> wokół otworów M3 (Ø7).',
     'Wydruk kontrolny, nie plik produkcyjny.']),
     (4, 'Miedź B.Cu — 1:1, widok od spodu', 'copper-back', [
-    'Widok od spodu (lustrzany względem strony 3). B.Cu to głównie masa GND; pod U1 kondensatory 100 nF, pasek 5VA i połączenie 3V3 (VDRIVE / REFSEL).']),
+    'Widok od spodu (lustrzany względem strony 3). B.Cu to głównie masa GND; pod U1 kondensatory 100 nF, krótkie łączniki 5VA (pionowo między kondensatorami, kręgosłup wewnątrz pierścienia) i 3V3 (VDRIVE / REFSEL); pod wachlarzem wejść i kondensatorami U1 tylko masa (2.10).']),
     (5, 'Przymiarka 1:1 — obrys, obrysy części, otwory', 'fit', [
     'Wydrukować w skali 100 % i położyć na części / w obudowie. Kółka Ø7 wokół otworów M3 to strefy dystansów.',
     f'<b>Wysokości (limit 16,5 mm, poziom 3):</b> C1 ok. {str(h_of("C1")).replace(".", ",")} mm, SW1 {str(h_of("SW1")).replace(".", ",")} mm, '

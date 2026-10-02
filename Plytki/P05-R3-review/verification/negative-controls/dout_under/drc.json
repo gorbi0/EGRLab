@@ -1,7 +1,7 @@
 {
     "$schema": "https://schemas.kicad.org/drc.v1.json",
     "coordinate_units": "mm",
-    "date": "2026-10-01T16:43:38",
+    "date": "2026-10-02T14:50:29",
     "ignored_checks": [
         {
             "description": "Footprint has no courtyard defined",
@@ -42,7 +42,7 @@
                         "x": 63.675,
                         "y": 54.25
                     },
-                    "uuid": "6f01b31a-ca3b-465a-8f59-7bf3a01c7049"
+                    "uuid": "17ef9522-235b-42f2-a65c-95c2e44428d0"
                 },
                 {
                     "description": "Ścieżka [AD_DOUT_LOCAL] na B.Cu, długość 4,0000 mm",
@@ -50,7 +50,7 @@
                         "x": 57.675,
                         "y": 54.25
                     },
-                    "uuid": "6368ca04-a097-42e4-8071-c8f5c8898125"
+                    "uuid": "71ad629e-9c7a-4d99-a65a-d80a6b3cb2b7"
                 }
             ],
             "severity": "error",
@@ -58,6 +58,29 @@
         }
     ],
     "violations": [
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz AD_DOUT_LOCAL)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 2 [GND] z C5 na B.Cu",
+                    "pos": {
+                        "x": 60.6,
+                        "y": 54.1245
+                    },
+                    "uuid": "093cf247-1763-43d5-b73f-725b40199910"
+                },
+                {
+                    "description": "Ścieżka [AD_DOUT_LOCAL] na B.Cu, długość 4,0000 mm",
+                    "pos": {
+                        "x": 57.675,
+                        "y": 54.25
+                    },
+                    "uuid": "71ad629e-9c7a-4d99-a65a-d80a6b3cb2b7"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
         {
             "description": "Elementy łączą dwie różne sieci (sieci AD_DOUT_LOCAL oraz GND)",
             "items": [
@@ -67,61 +90,15 @@
                         "x": 57.675,
                         "y": 54.25
                     },
-                    "uuid": "6368ca04-a097-42e4-8071-c8f5c8898125"
+                    "uuid": "71ad629e-9c7a-4d99-a65a-d80a6b3cb2b7"
                 },
                 {
                     "description": "Pole lutownicze 2 [GND] z C11 na B.Cu",
                     "pos": {
-                        "x": 57.1,
+                        "x": 58.25,
                         "y": 54.1245
                     },
-                    "uuid": "dcf3b978-465f-4424-b10c-438c8b19d7ae"
-                }
-            ],
-            "severity": "error",
-            "type": "shorting_items"
-        },
-        {
-            "description": "Elementy łączą dwie różne sieci (sieci GND oraz AD_DOUT_LOCAL)",
-            "items": [
-                {
-                    "description": "Pole lutownicze 2 [GND] z C5 na B.Cu",
-                    "pos": {
-                        "x": 59.5,
-                        "y": 54.1245
-                    },
-                    "uuid": "02eb92a3-875c-433b-b733-80ccbe5b4d4c"
-                },
-                {
-                    "description": "Ścieżka [AD_DOUT_LOCAL] na B.Cu, długość 4,0000 mm",
-                    "pos": {
-                        "x": 57.675,
-                        "y": 54.25
-                    },
-                    "uuid": "6368ca04-a097-42e4-8071-c8f5c8898125"
-                }
-            ],
-            "severity": "error",
-            "type": "shorting_items"
-        },
-        {
-            "description": "Elementy łączą dwie różne sieci (sieci 3V3_DAQ oraz AD_DOUT_LOCAL)",
-            "items": [
-                {
-                    "description": "Ścieżka [3V3_DAQ] na B.Cu, długość 3,8000 mm",
-                    "pos": {
-                        "x": 61.85,
-                        "y": 50.35
-                    },
-                    "uuid": "610e9d1a-f90c-4e9a-b5a7-92cc55245002"
-                },
-                {
-                    "description": "Ścieżka [AD_DOUT_LOCAL] na B.Cu, długość 4,0000 mm",
-                    "pos": {
-                        "x": 57.675,
-                        "y": 54.25
-                    },
-                    "uuid": "6368ca04-a097-42e4-8071-c8f5c8898125"
+                    "uuid": "c4d11083-ef75-47c6-9534-0623f6fe0b9b"
                 }
             ],
             "severity": "error",
@@ -136,7 +113,7 @@
                         "x": 57.675,
                         "y": 54.25
                     },
-                    "uuid": "6368ca04-a097-42e4-8071-c8f5c8898125"
+                    "uuid": "71ad629e-9c7a-4d99-a65a-d80a6b3cb2b7"
                 },
                 {
                     "description": "Ścieżka [3V3_DAQ] na B.Cu, długość 0,7211 mm",
@@ -144,7 +121,30 @@
                         "x": 61.85,
                         "y": 54.15
                     },
-                    "uuid": "6967800b-a113-4fd0-8184-dd1c6aae142a"
+                    "uuid": "c232246e-a719-4b92-b996-cedbb88d1d9f"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci 3V3_DAQ oraz AD_DOUT_LOCAL)",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_DAQ] na B.Cu, długość 3,8400 mm",
+                    "pos": {
+                        "x": 61.85,
+                        "y": 50.309999
+                    },
+                    "uuid": "457931e1-2c3a-48ab-af8e-3835d36a8e97"
+                },
+                {
+                    "description": "Ścieżka [AD_DOUT_LOCAL] na B.Cu, długość 4,0000 mm",
+                    "pos": {
+                        "x": 57.675,
+                        "y": 54.25
+                    },
+                    "uuid": "71ad629e-9c7a-4d99-a65a-d80a6b3cb2b7"
                 }
             ],
             "severity": "error",
@@ -159,15 +159,15 @@
                         "x": 57.675,
                         "y": 54.25
                     },
-                    "uuid": "6368ca04-a097-42e4-8071-c8f5c8898125"
+                    "uuid": "71ad629e-9c7a-4d99-a65a-d80a6b3cb2b7"
                 },
                 {
                     "description": "Pole lutownicze 2 [GND] z C5 na B.Cu",
                     "pos": {
-                        "x": 59.5,
+                        "x": 60.6,
                         "y": 54.1245
                     },
-                    "uuid": "02eb92a3-875c-433b-b733-80ccbe5b4d4c"
+                    "uuid": "093cf247-1763-43d5-b73f-725b40199910"
                 }
             ],
             "severity": "error",
@@ -182,34 +182,19 @@
                         "x": 57.675,
                         "y": 54.25
                     },
-                    "uuid": "6368ca04-a097-42e4-8071-c8f5c8898125"
+                    "uuid": "71ad629e-9c7a-4d99-a65a-d80a6b3cb2b7"
                 },
                 {
                     "description": "Pole lutownicze 2 [GND] z C11 na B.Cu",
                     "pos": {
-                        "x": 57.1,
+                        "x": 58.25,
                         "y": 54.1245
                     },
-                    "uuid": "dcf3b978-465f-4424-b10c-438c8b19d7ae"
+                    "uuid": "c4d11083-ef75-47c6-9534-0623f6fe0b9b"
                 }
             ],
             "severity": "error",
             "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
-            "items": [
-                {
-                    "description": "Footprint J_SV1",
-                    "pos": {
-                        "x": 41.74,
-                        "y": 95.96
-                    },
-                    "uuid": "46bfd41e-1732-4cba-b6ea-30823f85f90d"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_mismatch"
         },
         {
             "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
@@ -220,22 +205,7 @@
                         "x": 68.57,
                         "y": 13.33
                     },
-                    "uuid": "4ec27673-7739-4d6c-993f-22280ba5abdb"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_mismatch"
-        },
-        {
-            "description": "Footprint 'IDC-Header_2x05_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
-            "items": [
-                {
-                    "description": "Footprint J_BP1",
-                    "pos": {
-                        "x": 21.42,
-                        "y": 13.33
-                    },
-                    "uuid": "ab2658b8-2665-4558-a302-e16000794b24"
+                    "uuid": "76b1faa3-dd55-40f3-b638-ce219a063362"
                 }
             ],
             "severity": "warning",
@@ -250,7 +220,37 @@
                         "x": 95.24,
                         "y": 95.96
                     },
-                    "uuid": "f81e9399-147e-49f4-8c72-6dc5e0e2c471"
+                    "uuid": "810c12eb-af65-4fa3-a50c-0eb74548145d"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x05_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP1",
+                    "pos": {
+                        "x": 21.42,
+                        "y": 13.33
+                    },
+                    "uuid": "84ab3ecb-2744-491d-a9db-2bff5be4f0ae"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV1",
+                    "pos": {
+                        "x": 41.74,
+                        "y": 95.96
+                    },
+                    "uuid": "b7460ef1-fb26-4b20-a82b-a70a1bf44033"
                 }
             ],
             "severity": "warning",

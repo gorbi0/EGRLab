@@ -13,14 +13,16 @@ import pcbnew as p,json,math,heapq,sys,os,subprocess
 from PIL import Image,ImageDraw,ImageFilter
 import numpy as np
 P=Path(__file__).resolve().parents[1]
-from board import NAME, SIGNAL_W, CORE, PWR as BOARD_PWR, PLANNER_KEEPOUT
+from board import NAME, SIGNAL_W, CORE, PWR as BOARD_PWR, PLANNER_KEEPOUT, TOP_ONLY
 from build_board import W as BW,Hh as BH
 fn=P/f'eda/{NAME}.kicad_pcb';b=p.LoadBoard(str(fn));mm=p.FromMM
 # 30.09 evening: 0.05 mm raster (was 0.1) and exact obstacle growth. The old 0.5 mm dilation of every obstacle kept a 0.2 mm
 # track 0.4 mm from other copper (0.25 needed) and hid the last paths in the dense areas once signals went to 0.2 mm.
 R=int(os.environ.get('EGRLAB_PLAN_RES','20'));W=int(BW*R)+1;H=int(BH*R)+1
 MARGIN=.05;VIA_R=.45;PWRN=tuple(BOARD_PWR)   # widths and clearances from board.py (P03 R6 had them fixed)
-def clr(name):return .30 if name in PWRN else .25
+import board as _bd;ISO={k:min(v,.5) for k,v in getattr(_bd,'ISOLATE',{}).items()}   # 2.10: own clearance of P05 VBAT_SENSE (router 0.8; the planner
+# had routed it 0.35 mm from a TAP and finds no path at 0.8 through the left column: 0.5 here)
+def clr(name):return max(.30 if name in PWRN else .25,ISO.get(name.split('/')[-1],0))
 def width_of(name):return .3 if name in tuple(CORE)+PWRN else SIGNAL_W
 def grown(ps,d):
  q=p.SHAPE_POLY_SET(ps);q.Inflate(mm(d),p.CORNER_STRATEGY_ROUND_ALL_CORNERS,mm(.005));return q
@@ -73,6 +75,7 @@ def plan(net,sxy,gxy,goalmask=None,slay=(0,1),glay=(0,1)):
    if t.GetNetCode()!=net and (isinstance(t,p.PCB_VIA) or t.GetLayer()==layer):block(t)
    elif t.GetNetCode()==net and isinstance(t,p.PCB_VIA):hole(t,p.ToMM(t.GetDrillValue()))
   for zone in b.Zones():
+   if zone.GetIsRuleArea() and zone.GetZoneName().startswith('DRC_ONLY'):continue   # 2.10: DRC rule areas (import_routing.py), no restriction
    if zone.GetIsRuleArea() and zone.IsOnLayer(layer):drawpoly(dt,grown(zone.Outline(),w/2+MARGIN));drawpoly(dv,grown(zone.Outline(),VIA_R+MARGIN))  # P02 R4: only on the layers of the rule area
    elif not zone.GetIsRuleArea() and zone.GetNetCode()!=net and zone.GetNetname()!='GND' and zone.IsOnLayer(layer):  # P02 R4: never cut a power pour
     c=max(cn,clr(zone.GetNetname()));fl=zone.GetFilledPolysList(layer);drawpoly(dt,grown(fl,c+w/2+MARGIN));drawpoly(dv,grown(fl,c+VIA_R+MARGIN))
@@ -83,6 +86,7 @@ def plan(net,sxy,gxy,goalmask=None,slay=(0,1),glay=(0,1)):
   dv.rectangle([0,0,W-1,H-1],outline=255,width=int(math.ceil((.5+VIA_R+MARGIN)*R)))
   obs.append(np.array(it)!=0);vmask.append(np.array(iv)!=0)
  via=vmask[0]|vmask[1]
+ if name.split('/')[-1] in TOP_ONLY:obs[1][:]=True;via[:]=True   # review 2.10: board.TOP_ONLY nets stay on F.Cu (no B.Cu, no via)
  s=tuple(round(v*R) for v in sxy);g=tuple(round(v*R) for v in gxy) if goal is None else None
  def h(x,y):
   if g is None:return 0
@@ -246,7 +250,31 @@ def escape(uid,sxy,lay,toward):
     if not blocked(xy(e),L):cands.append((xy(e),L))
  if not cands:return sxy,lay
  return min(cands,key=lambda c:math.dist(c[0],toward) if toward else 0)
-if '--plan' in sys.argv:
+if '--ties' in sys.argv:
+ # 2.10 (review F2 / MAJOR-1, return-path check of verify_pcb.py): a decoupling capacitor whose GND pad reaches the GND pin of its part only
+ # through more than 1.3 x the straight distance + 3 mm of GND copper (gndpath.py) gets a planned GND track pad -> pin, kept when the
+ # track itself is within that limit. --ties --plan plans and records routing/return-ties.json; --ties alone replays it.
+ from board import RETURN_PAIRS
+ tgt=P/'routing/return-ties.json';ties=[]
+ if '--plan' in sys.argv:
+  import gndpath
+  def pp(r,n_):q=pad(r,n_);return xy(q.GetPosition()),pad_layers(q)
+  for cap,spec in RETURN_PAIRS.items():
+   u,n_=spec[:2]
+   p.ZONE_FILLER(b).Fill(b.Zones());cu,via=gndpath.copper(b,'GND',BW,BH)
+   g=next(q for q in f[cap].Pads() if q.GetNetname()=='GND');(sxy,sl),(gxy,gl)=(xy(g.GetPosition()),pad_layers(g)),pp(u,n_)
+   if len(spec)>2:gxy,gl=list(spec[2]),(0,1)   # goal: a GND via tied to the pin (pin in the planner keepouts)
+   lim=1.3*math.dist(sxy,gxy)+3;now=gndpath.distances(cu,via,gndpath.pad_point(b,cap,g.GetNumber()),{'d':gndpath.pad_point(b,u,n_)},limit_mm=150)['d']
+   if now is not None and now<=lim:continue
+   pts=plan(g.GetNetCode(),sxy,gxy,slay=sl,glay=gl)
+   L=None if pts is None else sum(math.dist(a[:2],c[:2]) for a,c in zip(pts,pts[1:]))
+   print('return tie',cap,'->',f'{u}.{n_}','copper',now,'limit',round(lim,1),'planned',None if L is None else round(L,1),flush=True)
+   if pts is None or (L>lim and not (now is None or L<.8*now)):continue   # kept when within the limit or 20 % shorter than the copper path
+   ties.append({'from':f'{cap}.{g.GetNumber()}','to':f'{u}.{n_}','copper_before_mm':now,'points_mm_layer':pts});add(g.GetNet(),pts)
+  tgt.write_text(json.dumps(ties,indent=2))
+ else:
+  for t in json.loads(tgt.read_text()):add(b.FindNet('GND'),t['points_mm_layer'])
+elif '--plan' in sys.argv:
  # Rounds: a pad cluster joined to the pour can reveal the next cluster (DRC reports one edge per cluster), so
  # plan, refill, save and ask native DRC again until nothing is left unconnected.
  CLI=os.environ.get('KICAD_CLI',str(Path(sys.executable).with_name('kicad-cli.exe')));rep=P/'routing/precompletion-drc.json'

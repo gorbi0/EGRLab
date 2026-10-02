@@ -9,7 +9,7 @@ import pcbnew as p, json, re, math, xml.etree.ElementTree as ET
 P = Path(__file__).resolve().parents[1]; E = P / 'eda'
 S1 = json.loads((P.parents[0] / 'Format-S1/format-s1.json').read_text(encoding='utf-8'))
 mm = p.FromMM
-from board import NAME, TITLE, CLASS, SLOTS, SUPPORT_KEEPOUT
+from board import NAME, REV, TITLE, CLASS, SLOTS, SUPPORT_KEEPOUT
 import board as _board
 PAD_KEEPOUT = getattr(_board, 'PAD_KEEPOUT', {})
 W, Hh = S1['klasy'][CLASS]['W'], S1['klasy'][CLASS]['H']; R = S1['obrys']['promien_naroza']
@@ -150,7 +150,7 @@ if __name__ == '__main__':
         g = p.PCB_SHAPE(); g.SetShape(p.SHAPE_T_ARC); g.SetCenter(xy(cx, cy))
         g.SetStart(xy(cx + R * math.cos(math.radians(a0)), cy + R * math.sin(math.radians(a0))))
         g.SetArcAngleAndEnd(p.EDA_ANGLE(90, p.DEGREES_T), True); g.SetWidth(mm(.05)); g.SetLayer(p.Edge_Cuts); b.Add(g)
-    tb = p.TITLE_BLOCK(); tb.SetTitle(TITLE); tb.SetRevision(NAME + '-R2 PCB'); tb.SetDate('2026-09-30')
+    tb = p.TITLE_BLOCK(); tb.SetTitle(TITLE); tb.SetRevision(REV.replace(' ', '-') + ' PCB'); tb.SetDate('2026-10-02')   # review 2.10: was 'P05-R2 PCB' / 30.09
     tb.SetComment(0, 'Layout lokalny; recenzja i przymiarka 1:1 przed zamowieniem'); b.SetTitleBlock(tb)
     b.BuildConnectivity(); p.SaveBoard(str(E / f'{NAME}.kicad_pcb'), b)
     print(f'Created {NAME} board:', len(fmap), 'footprints +', len(holes()), 'M3 holes; outline', W, 'x', Hh, '; rule areas:',

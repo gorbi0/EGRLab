@@ -180,7 +180,9 @@ put('C4', 53.6, 63.25, 270)                     # AVCC pin 1 (bottom-left corner
 # bottom side under the body (100 nF 1206, BOM: <= 1.5 mm thick, S1-2); rot 90 on the bottom puts pad 1 above the centre.
 # Each one is fed through its own via inside the pad ring (route_critical.py): C7 = AVCC 48, C11 = REFIN/OUT 42, C5 = AVCC 37/38,
 # C8 = VDRIVE 23.
-put('C7', 54.0, 52.5625, 90, 'B'); put('C11', 57.1, 52.5625, 90, 'B'); put('C5', 59.5, 52.5625, 90, 'B')
+# review 2.10 (MAJOR-1): moved right (pitch 2.35 mm, courtyards 0.05 apart) for the 5VA spine at x 54.65 and the GND via column at
+# x 53.7 inside the left pins (route_critical.py); each gets a GND via between its pads
+put('C7', 55.9, 52.5625, 90, 'B'); put('C11', 58.25, 52.5625, 90, 'B'); put('C5', 60.6, 52.5625, 90, 'B')
 put('C8', 61.9, 57.5625, 90, 'B')
 # ---- input filters C27-C34: one column left of U1 (rot 180: pad 1 = ADC_CHn towards U1 at x 44.5, pad 2 = GND), pitch 2.65 mm so
 # a 0.3 mm source stub fits between two capacitors (route_critical.py: 45 deg fan from the pins, stubs to x 39 for the router).
@@ -195,10 +197,11 @@ put('R31', 37.0, STUB_Y['C33'], 0); put('R33', 37.0, STUB_Y['C34'], 0)
 # ---- reserved copper areas (no other parts): input fan, U1 escapes, the 5VA bar under the top capacitors, the B side under U1 ----
 RESERVED = [('F', (44.4, 43.0, 51.3, 65.0)), ('B', (44.4, 43.0, 51.3, 65.0)),
             ('F', (55.0, 60.7, 63.5, 64.2)), ('F', (64.7, 50.5, 67.2, 55.5)), ('B', (62.8, 55.4, 67.2, 56.6)),
-            ('B', (50.8, 36.5, 60.2, 47.3)), ('B', (51.275, 47.275, 64.725, 60.725)),
-            ('F', (51.5, 41.0, 62.5, 42.6)), ('B', (51.5, 41.0, 62.5, 42.6)),   # + the 5VA bar up to y 37, ground vias of the top caps
+            ('B', (50.8, 41.0, 62.0, 47.3)), ('B', (51.275, 47.275, 64.725, 60.725)),   # 2.10: 5VA stubs and join, cap GND vias
+            ('F', (51.5, 41.0, 62.5, 42.6)), ('B', (51.5, 41.0, 62.5, 42.6)),   # C6 via of the 5VA join
             ('F', (36.2, 33.9, 38.3, 37.8)), ('F', (44.7, 33.9, 45.9, 37.1))]   # U3 stubs and its GND via (route_critical.py, route_u3)
 RESERVED += [(L[0], (x0 - .5, y0 - .5, x1 + .5, y1 + .5)) for L, x0, y0, x1, y1 in PLANNER_KEEPOUT]   # no part where the router may not go
+RESERVED += [('F', (9.0, 86.3, 44.0, 95.5)), ('F', (62.5, 86.3, 97.5, 95.5))]   # 2.10: service labels (1.0 mm, up to 7 characters) above J_SV1 / J_SV2
 # passives at the pin they serve: (anchor ref, anchor pad); the part's pad on the same net goes next to it. Order = priority:
 # the window dividers and filters of U3 first (RAIL_* nodes stay short), then the decoupling, pull resistors and the rest.
 # SMD parts go to the bottom when the top has no room near the anchor (S1-2: new SMD R and C fit the bottom best).
@@ -214,12 +217,48 @@ DEC = {'C15': ('U3', '8'), 'R3': ('U3', '3'), 'R4': ('U3', '6'), 'R5': ('U3', '2
        'R26': ('U11', '3'), 'R27': ('U11', '6'),
        'R32': ('R31', '2'), 'R34': ('R33', '2'), 'R35': ('R33', '2'), 'TP1': ('U1', '2')}
 put('C6', 57.3, 38.7, 90)                       # 5VA_P05 100 nF between TP2 and TP4, above the ground vias of C12 / C10
+# review 2.10 (MAJOR-2, return-path checks of verify_pcb.py): a decoupling / filter capacitor also needs its GND pad at the GND pin of its
+# part (C20 -> U9 GND >= 62 mm, C15 -> U3.4 51, C16 -> U5.7 41 before). These take the free position with the smallest
+# (supply pad -> pin) + (GND pad -> GND pin), supply side <= 5.5 mm (check: 6). The DAQ_OK window (C15, C25, C26 at
+# U3) keeps the old rule: re-placed, it pushed C25 under U3 and the planner could not reach C25.1 through the U3 stub keepouts (2.10).
+GND_PIN = {'C14': ('U2', '4'), 'C23': ('U2', '4'), 'C24': ('U2', '4'),
+           'C2': ('U12', '1'), 'C3': ('U12', '1'), 'C16': ('U5', '7'), 'C17': ('U6', '3'), 'C18': ('U7', '3'), 'C19': ('U8', '7'),
+           'C20': ('U9', '7'), 'C21': ('U10', '7'), 'C22': ('U11', '7')}
+SUP_MAX = {}
+
+
+def place_dec(ref, target, gnd, radius=8.0, side='F'):
+    tref, tpad = target; tx, ty = pad(tref, tpad); tnet = parts[tref]['pins'][str(tpad)]
+    own = next(k for k, n in parts[ref]['pins'].items() if n == tnet); gown = next(k for k, n in parts[ref]['pins'].items() if n == 'GND')
+    gx, gy = pad(*gnd); (lx, ly, *_), (mx, my, *_) = geo(ref)[0][own], geo(ref)[0][gown]; step = .25; n = int(radius / step); best = None
+    for i in range(-n, n + 1):
+        for j in range(-n, n + 1):
+            if math.hypot(i, j) * step > radius:
+                continue
+            for r in (0, 90, 180, 270):
+                ox, oy = tf(lx, ly, 0, 0, r); oy = -oy if side == 'B' else oy
+                x, y = tx + i * step - ox, ty + j * step - oy
+                ds = math.dist(tf(lx, ly, x, y, r, side), (tx, ty)); dg = math.dist(tf(mx, my, x, y, r, side), (gx, gy))
+                if ds > SUP_MAX.get(ref, 5.5) or (best and ds + dg >= best[0]):
+                    continue
+                if free(box(ref, (x, y, r), side), .5, own=ref, side=side):
+                    best = (ds + dg, x, y, r, ds)
+    if not best:
+        raise SystemExit(f'no place for {ref} near {target} ({side})')
+    put(ref, best[1], best[2], best[3], side); REPORT[ref] = round(best[4], 2)
+
+
+
 FAILED = []
 for c, t in DEC.items():
     tries = [('F', 8), ('B', 8), ('F', 16), ('B', 16)] if not is_tht(c) else [('F', 8), ('F', 16)]
     for side, rad in tries:
         try:
-            place_near(c, t, radius=rad, side=side); break
+            if c in GND_PIN and rad == 8:
+                place_dec(c, t, GND_PIN[c], side=side)
+            else:
+                place_near(c, t, radius=rad, side=side)
+            break
         except SystemExit as e:
             last = e
     else:

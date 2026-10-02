@@ -61,6 +61,17 @@ for layer in [p.F_Cu,p.B_Cu]:
  o=z.Outline();o.NewOutline()
  for x,y in [(.3,.3),(W-.3,.3),(W-.3,H-.3),(.3,H-.3)]:o.Append(p.FromMM(x),p.FromMM(y))  # S1 outline (fill keeps 0.5 mm from the edge)
  b.Add(z)
+# 2.10 (review MINOR-1): named rule areas over the pad rings of the fine-pitch parts, no restriction in them; set_rules.py gives the GND
+# pours 0.15 mm only to items wholly inside (pads, inner stubs and vias), 0.3 mm to the escapes that leave. Made after the router (a DSN
+# keepout holding pins breaks it); complete_routes.py / stitch.py ignore areas named DRC_ONLY_*.
+from board import FINE
+for ref in FINE:
+ f_=b.FindFootprintByReference(ref);f_.BuildCourtyardCaches();bb=f_.GetCourtyard(p.F_CrtYd).BBox()
+ z=p.ZONE(b);z.SetIsRuleArea(True);z.SetZoneName(f'DRC_ONLY_{ref}');ls=p.LSET();ls.AddLayer(p.F_Cu);ls.AddLayer(p.B_Cu);z.SetLayerSet(ls)
+ z.SetDoNotAllowTracks(False);z.SetDoNotAllowVias(False);z.SetDoNotAllowZoneFills(False);z.SetDoNotAllowPads(False);z.SetDoNotAllowFootprints(False)
+ o=z.Outline();o.NewOutline()
+ for x,y in [(bb.GetLeft(),bb.GetTop()),(bb.GetRight(),bb.GetTop()),(bb.GetRight(),bb.GetBottom()),(bb.GetLeft(),bb.GetBottom())]:o.Append(int(x),int(y))
+ b.Add(z)
 b.BuildConnectivity();p.ZONE_FILLER(b).Fill(b.Zones())
 p.SaveBoard(str(P/f'eda/{NAME}.kicad_pcb'),b)
 (P/'verification/ses-import.json').write_text(json.dumps(counts,indent=2))

@@ -1,4 +1,4 @@
-"""P10 R2 silkscreen (format S1, class 1/3; the P03 R6 script via P09 R2, board values from board.py). Run after run_layout.py; changes
+"""P05 R3 silkscreen (format S1, class 2/3; the P03 R6 script via P09 R2 / P10 R2, board values from board.py). Run after run_layout.py; changes
 only F.SilkS (and hides values), never copper. Steps as P03 R6: footprint silk that would break DRC dropped at file level,
 references placed at the first free candidate, board texts (name, edge markers, pin 1 of J1 / J2, PIN_MARKS) and one label per
 service pin of J2 (LABEL: the net name, shortened only where it does not fit; vertical, read from edge B). Every drop is listed in routing/silkscreen.json."""
@@ -13,6 +13,7 @@ fn = P / f'eda/{NAME}.kicad_pcb'
 from build_board import W, Hh as H, holes
 STREFY = [(hx, hy) for hx, hy in holes()]; RZ_M3 = 3.5   # 1.10 (recenzja P09): tekst w strefie Ø7 przykrywa dystans M3 z podkładką
 FULL = set(JSV)   # P09 / P10: one service header with room above it -> full names on every pin (P03: only J_SV1)
+MIN_H, MIN_T = 1.0, .15   # review 2.10 (MINOR-5): JLCPCB legend minimum (character height 1.0 mm, line 0.15 mm); was 0.8 / 0.12 for labels and marks
 EDGE = .3   # silk-to-edge clearance used by DRC (board setting min_silk... edge 0.3 is KiCad default for silk_edge_clearance)
 LABEL = {  # J_SV1: full names, vertical
     'GND': 'GND', '5V_SYS': '5V_SYS', '5V_M1': '5V_M1', '3V3_CORE': '3V3', '3V3_IO': '3V3_IO', 'SUP_RAW_N': 'SUPRAW', 'SUP_N': 'SUP_N',
@@ -160,14 +161,14 @@ for hdr in JSV:
         if n != 'GND':  # node = the net on the other side of the series resistor
             r = next(f for f in b.GetFootprints() if f.GetReference() != hdr for q in f.Pads() if q.GetNetname() == a.GetNetname())
             node = next(q.GetNetname().split('/')[-1] for q in r.Pads() if q.GetNetname() != a.GetNetname())
-        tx = p.PCB_TEXT(b); tx.SetTextThickness(mm(.12)); tx.SetLayer(p.F_SilkS)
+        tx = p.PCB_TEXT(b); tx.SetTextThickness(mm(MIN_T)); tx.SetLayer(p.F_SilkS)
         if hdr in FULL:
-            t = LABEL[node]; tx.SetText(t); tx.SetTextSize(p.VECTOR2I(mm(.7), mm(.8)))
+            t = LABEL[node]; tx.SetText(t); tx.SetTextSize(p.VECTOR2I(mm(.9 * MIN_H), mm(MIN_H)))
             tx.SetTextAngle(p.EDA_ANGLE(90, p.DEGREES_T)); tx.SetHorizJustify(p.GR_TEXT_H_ALIGN_LEFT); tx.SetPosition(p.VECTOR2I(mm(x), mm(93.9)))
         else:
             if node == 'GND':   # 30.09: GND on pins 1 and 13 is in the legend; the pin-1 label overlapped the header's pin-1 mark
                 continue
-            t = ABBR[node]; tx.SetText(t); tx.SetTextSize(p.VECTOR2I(mm(.7), mm(.8))); tx.SetPosition(p.VECTOR2I(mm(x), mm(94.25)))   # 0.8 mm: DRC text height
+            t = ABBR[node]; tx.SetText(t); tx.SetTextSize(p.VECTOR2I(mm(.9 * MIN_H), mm(MIN_H))); tx.SetPosition(p.VECTOR2I(mm(x), mm(94.25)))
         b.Add(tx); placed.append(text_box(tx)); labels[f'{hdr}.{a.GetNumber()}'] = t
         if hdr not in FULL and node != 'GND':   # 30.09: was hdr != 'J_SV1' (P03 names): P09 asked for a legend of full names
             used[t] = node
@@ -181,7 +182,7 @@ for r in sorted(fps, key=lambda r: (yards[r].BBox().GetArea(), r)):   # 30.09: t
     cb = yards[r].BBox(); x0, y0, x1, y1 = p.ToMM(cb.GetLeft()), p.ToMM(cb.GetTop()), p.ToMM(cb.GetRight()), p.ToMM(cb.GetBottom())
     cx, cy_ = (x0 + x1) / 2, (y0 + y1) / 2
     ok = False
-    for size in (1.0, .8):
+    for size in (MIN_H,):   # review 2.10: no 0.8 mm fallback; a reference without room is hidden (F.Fab, assembly drawing)
         cands = [(cx, cy_, 0), (cx, cy_, 90), (cx, y0 - size * .8, 0), (cx, y1 + size * .8, 0), (x0 - size * .8, cy_, 90), (x1 + size * .8, cy_, 90)]
         for dx in (-3, 3, -6, 6):
             cands += [(cx + dx, y0 - size * .8, 0), (cx + dx, y1 + size * .8, 0)]
@@ -197,7 +198,7 @@ for r in sorted(fps, key=lambda r: (yards[r].BBox().GetArea(), r)):   # 30.09: t
             cands += [(cx, y0 - k * d, 0), (cx, y1 + k * d, 0), (x0 - k * d, cy_, 90), (x1 + k * d, cy_, 90)]
         cands += [(x0 - half, cy_, 0), (x1 + half, cy_, 0), (cx, y0 - half, 90), (cx, y1 + half, 90)]
         for x, y, a in cands:
-            ref.SetTextSize(p.VECTOR2I(mm(size), mm(size))); ref.SetTextThickness(mm(.15 if size == 1.0 else .12))
+            ref.SetTextSize(p.VECTOR2I(mm(size), mm(size))); ref.SetTextThickness(mm(MIN_T))
             ref.SetTextAngle(p.EDA_ANGLE(a, p.DEGREES_T)); ref.SetPosition(p.VECTOR2I(mm(x), mm(y)))
             bx = text_box(ref)
             if free(bx, r, f.IsFlipped()) and najblizej_wlasnej(bx, r, f.IsFlipped()):
@@ -221,9 +222,10 @@ def txt(t, x, y, size=1.0, angle=0, thick=.15, just=None):
 
 extra = []
 def place_text(t, spots, size=1.0, angle=0, just=None, own=None):
+    size = max(size, MIN_H)   # review 2.10 (MINOR-5): the edge markers (0.8) and pin marks (0.9) were below the fab minimum
     for x, y in spots:
         a = p.PCB_TEXT(b); a.SetText(t); a.SetPosition(p.VECTOR2I(mm(x), mm(y))); a.SetTextSize(p.VECTOR2I(mm(size * .9), mm(size)))
-        a.SetTextThickness(mm(.15 if size >= 1 else .12)); a.SetLayer(p.F_SilkS); a.SetTextAngle(p.EDA_ANGLE(angle, p.DEGREES_T))
+        a.SetTextThickness(mm(MIN_T)); a.SetLayer(p.F_SilkS); a.SetTextAngle(p.EDA_ANGLE(angle, p.DEGREES_T))
         if just == 'left': a.SetHorizJustify(p.GR_TEXT_H_ALIGN_LEFT)
         if just == 'right': a.SetHorizJustify(p.GR_TEXT_H_ALIGN_RIGHT)
         if free(text_box(a), own):   # own: the connector of a pin-1 mark (30.09: its own courtyard covers pin 1, so no mark was placed)
@@ -236,18 +238,18 @@ res = {}
 # 1/3 board (53 mm wide): title in a free area (P10: the empty middle, then the lower third), short edge markers in the corners next to J1 / J2
 # P05 R3 (2/3 board): title in the free lower right quarter (between U6 / U7 and J_SV2), then the lower left
 res['title'] = place_text(TYTUL, [(x, y) for y in (82, 84, 80, 78) for x in (78, 72, 84, 66, 30, 24)], 1.2)
-res['edge_A'] = place_text('KRAWEDZ A (P12)', [(x, y) for y in (2.5, 4, 5.5, 7) for x in (50.0, 49.0, 51.0, 8.0, 102.0)], .8)   # P05: between J_BP1 and J_BP2
+res['edge_A'] = place_text('KRAWEDZ A (P12)', [(x, y) for y in (2.5, 4, 5.5, 7) for x in (50.0, 49.0, 51.0, 8.0, 102.0)], MIN_H)   # P05: between J_BP1 and J_BP2
 if res['edge_A'] is None:   # 30.09: on 53 mm the long marker does not fit beside J1 -> the short one in a corner
-    extra.remove('KRAWEDZ A (P12)'); res['edge_A'] = place_text('KRAWEDZ A', [(x, y) for y in (2.5, 4, 5.5, 7) for x in (6.0, 5.5, 47.0, 47.5)], .8)
-res['edge_B'] = place_text('KRAWEDZ B', [(x, y) for y in (97.5, 98.2, 96.5, 95.5) for x in (53.0, 52.0, 54.0, 5.0, 101.5)], .8)   # P05: between J_SV1 and J_SV2
+    extra.remove('KRAWEDZ A (P12)'); res['edge_A'] = place_text('KRAWEDZ A', [(x, y) for y in (2.5, 4, 5.5, 7) for x in (6.0, 5.5, 47.0, 47.5)], MIN_H)
+res['edge_B'] = place_text('KRAWEDZ B', [(x, y) for y in (97.5, 98.2, 96.5, 95.5) for x in (53.0, 52.0, 54.0, 5.0, 101.5)], MIN_H)   # P05: between J_SV1 and J_SV2
 yy = None
 for y0 in ((64, 60, 56, 68, 44, 40, 36) if used else ()):   # legend of the abbreviations (none on P09 / P10): one block, first free place
     for x0 in (118, 122, 9, 12, 100):
-        spots = [(x0, y0 + 1.5 * i) for i in range(len(LEGEND))]   # 30.09: 1.25 mm let the 0.8 mm lines overlap (text box ~1.7 x size)
+        spots = [(x0, y0 + 1.8 * i) for i in range(len(LEGEND))]   # 30.09: 1.25 mm let the 0.8 mm lines overlap (text box ~1.7 x size); 2.10: 1.0 mm text
         trial = []
         for (x, y), t in zip(spots, LEGEND):
-            a_ = p.PCB_TEXT(b); a_.SetText(t); a_.SetPosition(p.VECTOR2I(mm(x), mm(y))); a_.SetTextSize(p.VECTOR2I(mm(.7), mm(.8)))
-            a_.SetTextThickness(mm(.12)); a_.SetLayer(p.F_SilkS); a_.SetHorizJustify(p.GR_TEXT_H_ALIGN_LEFT); trial.append(a_)
+            a_ = p.PCB_TEXT(b); a_.SetText(t); a_.SetPosition(p.VECTOR2I(mm(x), mm(y))); a_.SetTextSize(p.VECTOR2I(mm(.9 * MIN_H), mm(MIN_H)))
+            a_.SetTextThickness(mm(MIN_T)); a_.SetLayer(p.F_SilkS); a_.SetHorizJustify(p.GR_TEXT_H_ALIGN_LEFT); trial.append(a_)
         if all(free(text_box(a_), None) for a_ in trial):
             for a_ in trial:
                 b.Add(a_); placed.append(text_box(a_))
@@ -260,12 +262,12 @@ if used and not yy:
 # pin 1 of every connector
 for r in JBP + JSV:
     a = next(q for q in fps[r].Pads() if q.GetNumber() == '1'); ax, ay = p.ToMM(a.GetPosition().x), p.ToMM(a.GetPosition().y); s_ = max(p.ToMM(a.GetSize().x), p.ToMM(a.GetSize().y)) / 2 + .9
-    res['pin1_' + r] = place_text('1', [(ax + dx * k, ay + dy * k) for k in (1, 1.5) for dx, dy in [(-s_, 0), (s_, 0), (0, -s_), (0, s_), (-s_, -s_), (s_, -s_), (-s_, s_), (s_, s_)]], .9, own=r)
+    res['pin1_' + r] = place_text('1', [(ax + dx * k, ay + dy * k) for k in (1, 1.5) for dx, dy in [(-s_, 0), (s_, 0), (0, -s_), (0, s_), (-s_, -s_), (s_, -s_), (-s_, s_), (s_, s_)]], MIN_H, own=r)
 for r, znaki in PIN_MARKS.items():   # 1.10 (recenzja): biegunowość / pin 1 złączy modułów i wiązek (S1 §9: pin 1 każdego złącza)
     for num, t in znaki.items():
         a = next(q for q in fps[r].Pads() if q.GetNumber() == num); ax, ay = p.ToMM(a.GetPosition().x), p.ToMM(a.GetPosition().y)
         s_ = max(p.ToMM(a.GetSize().x), p.ToMM(a.GetSize().y)) / 2 + .9
-        res[f'znak_{r}.{num}'] = place_text(t, [(ax + dx * k, ay + dy * k) for k in (1, 1.5) for dx, dy in [(-s_, 0), (s_, 0), (0, -s_), (0, s_), (-s_, -s_), (s_, -s_), (-s_, s_), (s_, s_)]], .9, own=r)
+        res[f'znak_{r}.{num}'] = place_text(t, [(ax + dx * k, ay + dy * k) for k in (1, 1.5) for dx, dy in [(-s_, 0), (s_, 0), (0, -s_), (0, s_), (-s_, -s_), (s_, -s_), (-s_, s_), (s_, s_)]], MIN_H, own=r)
 p.SaveBoard(str(fn), b)
 rep = {'dropped_footprint_silk': n_drop, 'dropped_by_part': dict(sorted(drop_by.items())), 'moved_texts_by_part': dict(sorted(moved_by.items())),
        'hidden_references': missing, 'board_texts': res, 'unplaced_texts': extra, 'service_labels': labels}

@@ -196,14 +196,18 @@ dru = _dru.read_text(encoding='utf-8') if _dru.exists() else ''
 dru_rules = re.findall(r'\(rule "([^"]*)"\s*\(condition "([^"]*)"\)\s*\(constraint (\w+) \(min ([\d.]+)mm\)\)\)', dru)
 want_cond = {'track_width': [f"A.Type == 'Track' && !({' || '.join(f'A.intersectsCourtyard({chr(39)}{r}{chr(39)})' for r in FINE)})",
                              f"A.Type == 'Track' && ({' || '.join(f'A.intersectsCourtyard({chr(39)}{r}{chr(39)})' for r in FINE)})"],
-             'clearance': [' || '.join(f"(A.intersectsCourtyard('{r}') && B.intersectsCourtyard('{r}'))" for r in FINE)]}
-dru_ok = (len(dru_rules) == 3 and sorted(c for _, c, k, v in dru_rules if k == 'track_width') == sorted(want_cond['track_width'])
-          and [c for _, c, k, v in dru_rules if k == 'clearance'] == want_cond['clearance']
+             # review 2.10 (MINOR-1): items without zones; zones only to copper wholly inside the pad rings (DRC_ONLY_* rule areas)
+             'clearance': ["A.Type != 'Zone' && B.Type != 'Zone' && (" + ' || '.join(f"(A.intersectsCourtyard('{r}') && B.intersectsCourtyard('{r}'))" for r in FINE) + ')',
+                           "A.Type == 'Zone' && (" + ' || '.join(f"B.enclosedByArea('DRC_ONLY_{r}')" for r in FINE) + ')']}
+ring_areas = sorted(z.GetZoneName() for z in b.Zones() if z.GetIsRuleArea() and z.GetZoneName().startswith('DRC_ONLY_') and not (z.GetDoNotAllowTracks() or
+                    z.GetDoNotAllowVias() or z.GetDoNotAllowZoneFills() or z.GetDoNotAllowPads() or z.GetDoNotAllowFootprints()))
+dru_ok = (len(dru_rules) == 4 and sorted(c for _, c, k, v in dru_rules if k == 'track_width') == sorted(want_cond['track_width'])
+          and [c for _, c, k, v in dru_rules if k == 'clearance'] == want_cond['clearance'] and ring_areas == [f'DRC_ONLY_{r}' for r in FINE]
           and {(k, float(v)) for _, c, k, v in dru_rules} == {('track_width', SIGNAL_W), ('track_width', FINE_TRACK), ('clearance', FINE_CLEARANCE)}
           and all(float(v) == SIGNAL_W for _, c, k, v in dru_rules if k == 'track_width' and c.startswith("A.Type == 'Track' && !(")))
 check(f'Rules as P02 R3 / R4 (net classes: clearance >= 0.25, PWR 0.30, track >= {SIGNAL_W:.2f}, edge 0.5), annular ring >= 0.25 mm (S1 section 3); '
       f'custom rules only: track >= {SIGNAL_W:.2f} outside, clearance {FINE_CLEARANCE} / track {FINE_TRACK} only for items touching the courtyard of '
-      f'{" / ".join(FINE)} (fine pitch, README); no DRC exclusions',
+      f'{" / ".join(FINE)} and pours to copper wholly in their pad rings (fine pitch, README; review 2.10 MINOR-1); no DRC exclusions',
       rules['min_clearance'] >= FINE_CLEARANCE - 1e-9 and rules['min_track_width'] >= FINE_TRACK - 1e-9 and rules['min_copper_edge_clearance'] >= .5
       and rules['min_via_annular_width'] >= .25 and cls['Default']['track_width'] >= .3 - 1e-9 and not ds['drc_exclusions']
       and all(c['clearance'] >= .25 for c in cls.values()) and cls['PWR']['clearance'] >= .3 and cls['PWR']['track_width'] >= .6 and dru_ok,
@@ -330,14 +334,16 @@ def path_mm(netname, a, c, f_only=False):
     return None
 
 
-LIMITS = [('1', 'C4', 3.0), ('48', 'C7', 3.0), ('37', 'C5', 3.0), ('38', 'C5', 3.0), ('23', 'C8', 4.0), ('36', 'C9', 3.0), ('39', 'C10', 3.0),
-          ('42', 'C11', 3.0), ('42', 'C12', 6.0), ('44', 'C13', 6.0), ('45', 'C13', 6.0)]
+# review 2.10: the bottom 100 nF C7 / C11 / C5 moved 1.1-1.9 mm right for the GND via column and the 5VA spine inside the ring: pin -> via ->
+# B.Cu -> pad 3.0-3.75 mm (limit 4 like VDRIVE); their ground side drops from 6-9 mm to <= 6 (ground-side check below)
+LIMITS = [('1', 'C4', 3.0), ('48', 'C7', 4.0), ('37', 'C5', 4.0), ('38', 'C5', 4.0), ('23', 'C8', 4.0), ('36', 'C9', 3.0), ('39', 'C10', 3.0),
+          ('42', 'C11', 4.0), ('42', 'C12', 6.0), ('44', 'C13', 6.0), ('45', 'C13', 6.0)]
 dec = []
 for num, cap, lim in LIMITS:
     n_ = net(pad('U1', num)); cp = next(a for a in fmap[cap].Pads() if net(a) == n_)
     d = path_mm(n_, ('U1', num), (cap, cp.GetNumber())); dec.append({'pin': f'U1.{num}', 'net': n_, 'capacitor': cap, 'path_mm': d, 'limit_mm': lim, 'pass': d is not None and d <= lim})
-check('U1 decoupling on the copper (R2 table, review P5-01): AVCC 1 / 48 / 37 / 38, REGCAP 36 / 39 and REFIN/OUT 42 (100 nF) <= 3 mm, '
-      'VDRIVE 23 <= 4 mm, 22 uF on REFIN/OUT 42 and REFCAP 44 / 45 <= 6 mm (pad centre to pad centre)', all(x['pass'] for x in dec), dec)
+check('U1 decoupling on the copper (R2 table, review P5-01): AVCC 1, REGCAP 36 / 39 <= 3 mm, bottom 100 nF at 48 / 37 / 38 / 42 and '
+      'VDRIVE 23 <= 4 mm (2.10), 22 uF on REFIN/OUT 42 and REFCAP 44 / 45 <= 6 mm (pad centre to pad centre)', all(x['pass'] for x in dec), dec)
 via_nets = {n_: sum(1 for t in b.GetTracks() if isinstance(t, p.PCB_VIA) and net(t) == n_) for n_ in ('REGCAP_A', 'REGCAP_D', 'REFCAP', 'ADC_REF')}
 top_caps = {c: not fmap[c].IsFlipped() for c in ('C9', 'C10', 'C12', 'C13')}
 c12_path = path_mm('ADC_REF', ('U1', '42'), ('C12', '1'), f_only=True) if net(pad('C12', '1')) == 'ADC_REF' else None   # top copper only
@@ -376,7 +382,7 @@ for a in gnd_u1:   # the pour piece each GND pin touches must hold a GND via (ru
         unstitched.append(a.GetNumber())
 solid = [a.GetNumber() for a in gnd_u1 if a.GetLocalZoneConnection() != p.ZONE_CONNECTION_FULL]
 check('U1 ground: every GND pin touches the F.Cu pour inside the pad ring (solid connection) on a piece that holds a GND via, '
-      '>= 4 GND vias inside the ring to B.Cu', not cut and not unstitched and not solid and len(gvias) >= 4,
+      '>= 12 GND vias inside the ring to B.Cu (review 2.10: was 4, all in the lower half)', not cut and not unstitched and not solid and len(gvias) >= 12,
       {'pins_without_pour': cut, 'pins_on_unstitched_piece': unstitched, 'pins_not_solid': solid, 'inner_vias': gvias})
 u1cy = courtyard('U1'); crit_nets = {net(a) for a in fmap['U1'].Pads()}
 foreign = sorted({net(t) for t in b.GetTracks() if net(t) not in crit_nets and not isinstance(t, p.PCB_VIA) and touches(t, u1cy)}
@@ -423,6 +429,89 @@ cov = {b.GetLayerName(L): round(sum(z.GetFilledPolysList(L).Area() for z in b.Zo
 check('GND pours on both layers: B.Cu >= 50 % of the board; island removal always (every island tied)', cov['B.Cu'] >= 50 and all(z.GetIslandRemovalMode() == p.ISLAND_REMOVAL_MODE_ALWAYS
       for z in b.Zones() if not z.GetIsRuleArea() and z.GetNetname() == 'GND') and len([z for z in b.Zones() if not z.GetIsRuleArea() and z.GetNetname() == 'GND']) == 2,
       {'cover_percent': cov, 'islands': isl})
+# ---------------- 9b. return paths through GND copper (independent review 2.10, MAJOR-1 / -2, MINOR-2) ----------------
+# gndpath.py: GND copper (pours, tracks, pads, vias, both layers) on a 0.2 mm raster, shortest path from a capacitor's GND pad to the GND
+# pin(s) of its part. Limit 1.3 x the straight distance + 3 mm: the return follows the capacitor, no detour round a cut plane. Before the
+# review: C12 -> REFGND 43 22.4 mm, C8 -> AGND 26 23.0, C20 -> U9 GND >= 62, C15 -> U3.4 51, the filter capacitors 15-27 mm.
+import gndpath
+cu_, via_ = gndpath.copper(b, 'GND', W, H)
+
+
+def gret(c, targets):
+    cp = next(a for a in fmap[c].Pads() if net(a) == 'GND'); src = gndpath.pad_point(b, c, cp.GetNumber())
+    ds = gndpath.distances(cu_, via_, src, {f'{u}.{n}': gndpath.pad_point(b, u, n) for u, n in targets}, limit_mm=150)
+    k = min((v, t) for t, v in ds.items() if v is not None) if any(v is not None for v in ds.values()) else (None, None)
+    t = k[1] or f'{targets[0][0]}.{targets[0][1]}'; st = round(math.dist(src[:2], gndpath.pad_point(b, *t.split('.'))[:2]), 1)
+    lim = ACCEPT.get(c, round(1.3 * st + 3, 1))
+    return {'to': t, 'path_mm': k[0], 'straight_mm': st, 'limit_mm': lim, **({'accepted': True} if c in ACCEPT else {})}
+
+
+# Accepted by the user 2.10 (decision 1 after the review re-route; README "Otwarte"): measured + about 1 mm, so a worse re-route still fails.
+# C4 / C13 0.1 mm over (raster method ~8 %); C24 / C15 DAQ_OK window reference and comparator (check DAQ_OK chatter at bring-up);
+# C17 / C18 static supervisors; C27 / C34 input filters CH1 / CH8 (input currents negligible); J_BP2 -> U10 RESET / MEAS_EN (static).
+ACCEPT = {'C4': 10.5, 'C13': 11.0, 'C24': 24.0, 'C15': 22.5, 'C17': 14.5, 'C18': 17.5, 'C27': 24.0, 'C34': 24.5}
+ACCEPT_BUS = {'U10': 56.5}
+
+
+RET_U1 = {'C4': [('U1', '2')], 'C5': [('U1', '40'), ('U1', '41')], 'C7': [('U1', '47')], 'C8': [('U1', '22'), ('U1', '26')], 'C9': [('U1', '35')],
+          'C10': [('U1', '40'), ('U1', '41')], 'C11': [('U1', '43')], 'C12': [('U1', '43')], 'C13': [('U1', '46')]}
+ret_u1 = {c: gret(c, t) for c, t in RET_U1.items()}
+okr = lambda v: v['path_mm'] is not None and v['path_mm'] <= v['limit_mm']
+check('U1 decoupling, ground side: capacitor GND pad -> its AGND / REFGND pin through GND copper <= 1.3 x straight + 3 mm (gndpath.py; '
+      'C4 / C13 accepted at 10.5 / 11 mm; review 2.10 MAJOR-1: 15-23 mm behind the 5VA bar)', all(okr(v) for v in ret_u1.values()), ret_u1)
+RET_IC = {'C2': [('U12', '1')], 'C3': [('U12', '1')], 'C14': [('U2', '4')], 'C24': [('U2', '4')], 'C15': [('U3', '4')], 'C16': [('U5', '7')],
+          'C17': [('U6', '3')], 'C18': [('U7', '3')], 'C19': [('U8', '7')], 'C20': [('U9', '7')], 'C21': [('U10', '7')], 'C22': [('U11', '7')]}
+ret_ic = {c: gret(c, t) for c, t in RET_IC.items()}
+check('Decoupling of U2-U12, ground side: capacitor GND pad -> GND pin of its part <= 1.3 x straight + 3 mm, C15 / C24 / C17 / C18 accepted (review 2.10 MAJOR-2: U9 / U11 >= 62 mm, '
+      'U3 51, U5 41, U6 43, U2 33, U12 34)', all(okr(v) for v in ret_ic.values()), ret_ic)
+ret_in = {f'C{27 + i}': gret(f'C{27 + i}', [('U1', str(50 + 2 * i))]) for i in range(8)}
+ret_bus = {}
+src_ = gndpath.pad_point(b, 'J_BP2', '1')
+for u in ('U9', 'U10', 'U11'):
+    dst = gndpath.pad_point(b, u, '7'); d_ = gndpath.distances(cu_, via_, src_, {'d': dst}, limit_mm=200)['d']; st = round(math.dist(src_[:2], dst[:2]), 1)
+    ret_bus[f'J_BP2.1-{u}.7'] = {'path_mm': d_, 'straight_mm': st, 'limit_mm': ACCEPT_BUS.get(u, round(1.3 * st + 3, 1)), **({'accepted': True} if u in ACCEPT_BUS else {})}
+check('Input filters and bus: C27-C34 GND pad -> the input GND pin of U1 (50-64), J_BP2.1 -> GND of the bus buffers U9 / U10 / U11 '
+      '<= 1.3 x straight + 3 mm, C27 / C34 / U10 accepted (review 2.10 MAJOR-2: 15-27 mm / 67-80 mm)', all(okr(v) for v in list(ret_in.values()) + list(ret_bus.values())),
+      {'filters': ret_in, 'bus': ret_bus})
+# B.Cu under the input fan and the top capacitors (board.ROUTER_KEEPOUT, review 2.10): GND copper only, plus the locked 5VA stubs and join
+KO_B = [(45.4, 46.4, 51.3, 64.5), (50.4, 40.2, 63.1, 47.3)]
+ko_hits = []
+for x0, y0, x1, y1 in KO_B:
+    bx = p.SHAPE_POLY_SET(); bx.NewOutline()
+    for x_, y_ in [(x0, y0), (x1, y0), (x1, y1), (x0, y1)]:
+        bx.Append(p.FromMM(x_), p.FromMM(y_))
+    for t in b.GetTracks():
+        if net(t) == 'GND' or not t.IsOnLayer(p.B_Cu) or (net(t) == '5VA_P05' and t.IsLocked()):
+            continue
+        q = p.SHAPE_POLY_SET(); t.TransformShapeToPolygon(q, p.B_Cu, 0, p.FromMM(.005), p.ERROR_INSIDE); q.BooleanIntersection(bx)
+        if q.OutlineCount() and q.Area() > 0:
+            ko_hits.append({'net': net(t), 'via': isinstance(t, p.PCB_VIA), 'at': pos(t.GetPosition() if isinstance(t, p.PCB_VIA) else t.GetStart()), 'box': [x0, y0, x1, y1]})
+check('B.Cu under the input fan (x 45.4-51.3, y 46.4-64.5) and under the top capacitors (x 50.4-63.1, y 40.2-47.3): GND only, plus the locked 5VA '
+      'stubs (review 2.10: the 5VA bar at y 45 and the spine at x 52.6 cut the returns)', not ko_hits, ko_hits)
+# VBAT_SENSE apart from the TAPS (review 2.10 MINOR-2: 13.7 mm parallel to TAP_P6 at 0.26 mm)
+vb = [t for t in b.GetTracks() if net(t) == 'VBAT_SENSE']; tp = [t for t in b.GetTracks() if net(t).startswith('TAP_')]
+tp += [a for f_ in b.GetFootprints() for a in f_.Pads() if net(a).startswith('TAP_')]
+dmin = None
+for t in vb:
+    for L in (p.F_Cu, p.B_Cu):
+        if not t.IsOnLayer(L):
+            continue
+        qa = p.SHAPE_POLY_SET(); t.TransformShapeToPolygon(qa, L, 0, p.FromMM(.005), p.ERROR_INSIDE)
+        for o in tp:
+            if not o.IsOnLayer(L):
+                continue
+            qb = p.SHAPE_POLY_SET(); o.TransformShapeToPolygon(qb, L, 0, p.FromMM(.005), p.ERROR_INSIDE)
+            dd_ = math.inf
+            for k in range(qa.OutlineCount()):
+                for m in range(qb.OutlineCount()):
+                    oa, ob = qa.Outline(k), qb.Outline(m)
+                    for i in range(oa.PointCount()):
+                        dd_ = min(dd_, math.sqrt(ob.SquaredDistance(oa.CPoint(i))) / 1e6)
+                    for i in range(ob.PointCount()):
+                        dd_ = min(dd_, math.sqrt(oa.SquaredDistance(ob.CPoint(i))) / 1e6)
+            dmin = dd_ if dmin is None else min(dmin, dd_)
+check('VBAT_SENSE copper >= 0.45 mm from every TAP_* track and pad (router class clearance 0.8 mm, planner 0.5; review 2.10 MINOR-2: '
+      '0.26 mm beside TAP_P6)', dmin is not None and dmin >= .45, {'min_mm': round(dmin, 3) if dmin is not None else None})
 # ---------------- 10. silkscreen ----------------
 cour = {}; side = {}
 for f in b.GetFootprints():
@@ -463,6 +552,12 @@ for r_, zn in PIN_MARKS.items():
         znaki[f'{r_}.{num} {t_}'] = [s_ for s_, t in texts if s_ == t_ and math.dist((p.ToMM(t.GetPosition().x), p.ToMM(t.GetPosition().y)), (qx, qy)) <= 3.0]
 check('Pin 1 marks of the wire tails TAPS J4 and AUX J6 on the silkscreen, <= 3 mm from their pads (S1 §9)',
       all(len(v) == 1 for v in znaki.values()), znaki)
+small = []
+for t in [x for x in b.GetDrawings() if isinstance(x, p.PCB_TEXT)] + [x for f in b.GetFootprints() for x in [f.Reference(), f.Value()] + list(f.GraphicalItems()) if isinstance(x, p.PCB_TEXT)]:
+    if t.GetLayer() in (p.F_SilkS, p.B_SilkS) and t.IsVisible() and (p.ToMM(t.GetTextHeight()) < 1.0 - 1e-6 or p.ToMM(t.GetTextThickness()) < .15 - 1e-6):
+        small.append({'text': t.GetShownText(False), 'height': round(p.ToMM(t.GetTextHeight()), 3), 'line': round(p.ToMM(t.GetTextThickness()), 3), 'at': pos(t.GetPosition())})
+check('Silkscreen legible: every visible text on F.SilkS / B.SilkS >= 1.0 mm high with a >= 0.15 mm line (JLCPCB legend minimum; review 2.10 MINOR-5: '
+      '36 texts were 0.8 / 0.12 mm, the pin marks 0.9 / 0.12)', not small, small)
 title = [s for s, t in texts if s == TYTUL]
 marks = [s for s, t in texts if s.startswith('KRAWEDZ A') or s.startswith('KRAWEDZ B')]
 check(f'Silkscreen: board name "{TYTUL}", edge markers A and B', bool(title) and any(m.startswith('KRAWEDZ A') for m in marks) and any(m.startswith('KRAWEDZ B') for m in marks), {'title': title, 'marks': marks})

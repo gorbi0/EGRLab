@@ -1,7 +1,7 @@
 {
     "$schema": "https://schemas.kicad.org/drc.v1.json",
     "coordinate_units": "mm",
-    "date": "2026-10-01T16:45:09",
+    "date": "2026-10-02T14:52:18",
     "ignored_checks": [
         {
             "description": "Footprint has no courtyard defined",
@@ -37,20 +37,20 @@
             "description": "Missing connection between items",
             "items": [
                 {
-                    "description": "Ścieżka [ADC_DOUTA] na F.Cu, długość 1,4262 mm",
-                    "pos": {
-                        "x": 68.5335,
-                        "y": 60.5885
-                    },
-                    "uuid": "6a1cd2e5-d593-4ca9-91e5-f001d9b03440"
-                },
-                {
-                    "description": "Pole lutownicze 2 [ADC_DOUTA] z R26 na F.Cu",
+                    "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
                     "pos": {
                         "x": 57.823574,
-                        "y": 62.005356
+                        "y": 58.905356
                     },
-                    "uuid": "5ad7d367-fe91-496c-97a4-d1cd4af24280"
+                    "uuid": "4970408e-84c9-4dac-8d0e-60dcc0453799"
+                },
+                {
+                    "description": "Ścieżka [/DIG/DOUT_SER] na F.Cu, długość 1,0607 mm",
+                    "pos": {
+                        "x": 67.525,
+                        "y": 56.48
+                    },
+                    "uuid": "cf241741-6917-4202-8e16-782f7192db34"
                 }
             ],
             "severity": "error",
@@ -60,20 +60,20 @@
             "description": "Missing connection between items",
             "items": [
                 {
-                    "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
+                    "description": "Pole lutownicze 2 [ADC_DOUTA] z R26 na F.Cu",
                     "pos": {
                         "x": 57.823574,
-                        "y": 58.905356
+                        "y": 62.005356
                     },
-                    "uuid": "1f24908d-a355-4fcf-8944-27952255eea3"
+                    "uuid": "268cd51d-fab7-49b2-af27-02ad22127c9d"
                 },
                 {
-                    "description": "Ścieżka [/DIG/DOUT_SER] na F.Cu, długość 1,0607 mm",
+                    "description": "Przelotka [ADC_DOUTA] na F.Cu - B.Cu",
                     "pos": {
-                        "x": 68.275,
-                        "y": 55.73
+                        "x": 65.937799,
+                        "y": 59.6321
                     },
-                    "uuid": "2d20ccee-2e01-464b-991a-ef4b31d8c13e"
+                    "uuid": "a32abd9b-3ebd-495a-b1ae-fd9e48cce927"
                 }
             ],
             "severity": "error",
@@ -82,7 +82,7 @@
     ],
     "violations": [
         {
-            "description": "Naruszenie prześwitu (klasa sieci 'Default' prześwit 0,2500 mm; obecnie 0,0251 mm)",
+            "description": "Elementy łączą dwie różne sieci (sieci ADC_DOUTA oraz ADC_CONVST_P05)",
             "items": [
                 {
                     "description": "Pole lutownicze 2 [ADC_DOUTA] z R26 na F.Cu",
@@ -90,19 +90,19 @@
                         "x": 57.823574,
                         "y": 62.005356
                     },
-                    "uuid": "5ad7d367-fe91-496c-97a4-d1cd4af24280"
+                    "uuid": "268cd51d-fab7-49b2-af27-02ad22127c9d"
                 },
                 {
-                    "description": "Ścieżka [ADC_CONVST_P05] na F.Cu, długość 0,5351 mm",
+                    "description": "Ścieżka [ADC_CONVST_P05] na F.Cu, długość 3,9250 mm",
                     "pos": {
-                        "x": 58.4984,
-                        "y": 63.3626
+                        "x": 58.25,
+                        "y": 59.675
                     },
-                    "uuid": "8341f5be-afd7-422d-9e71-65afb5e48f14"
+                    "uuid": "fdbd1fc5-7cf6-4af4-b4ed-2cc60351cc73"
                 }
             ],
             "severity": "error",
-            "type": "clearance"
+            "type": "shorting_items"
         },
         {
             "description": "Elementy łączą dwie różne sieci (sieci /DIG/DOUT_SER oraz ADC_CONVST_P05)",
@@ -113,7 +113,7 @@
                         "x": 57.823574,
                         "y": 58.905356
                     },
-                    "uuid": "1f24908d-a355-4fcf-8944-27952255eea3"
+                    "uuid": "4970408e-84c9-4dac-8d0e-60dcc0453799"
                 },
                 {
                     "description": "Ścieżka [ADC_CONVST_P05] na F.Cu, długość 3,9250 mm",
@@ -121,30 +121,7 @@
                         "x": 58.25,
                         "y": 59.675
                     },
-                    "uuid": "957705bd-3a6f-4189-b7fa-e95cd31b5d2c"
-                }
-            ],
-            "severity": "error",
-            "type": "shorting_items"
-        },
-        {
-            "description": "Elementy łączą dwie różne sieci (sieci ADC_DOUTA oraz ADC_CONVST_P05)",
-            "items": [
-                {
-                    "description": "Pole lutownicze 2 [ADC_DOUTA] z R26 na F.Cu",
-                    "pos": {
-                        "x": 57.823574,
-                        "y": 62.005356
-                    },
-                    "uuid": "5ad7d367-fe91-496c-97a4-d1cd4af24280"
-                },
-                {
-                    "description": "Ścieżka [ADC_CONVST_P05] na F.Cu, długość 3,9250 mm",
-                    "pos": {
-                        "x": 58.25,
-                        "y": 59.675
-                    },
-                    "uuid": "957705bd-3a6f-4189-b7fa-e95cd31b5d2c"
+                    "uuid": "fdbd1fc5-7cf6-4af4-b4ed-2cc60351cc73"
                 }
             ],
             "severity": "error",
@@ -159,7 +136,7 @@
                         "x": 57.823574,
                         "y": 58.905356
                     },
-                    "uuid": "1f24908d-a355-4fcf-8944-27952255eea3"
+                    "uuid": "4970408e-84c9-4dac-8d0e-60dcc0453799"
                 },
                 {
                     "description": "Ścieżka [3V3_DAQ] na F.Cu, długość 1,0000 mm",
@@ -167,11 +144,34 @@
                         "x": 57.75,
                         "y": 58.4
                     },
-                    "uuid": "f8028b38-64d5-4209-ad5b-6d9bd6801204"
+                    "uuid": "f829e0ac-a3ec-40d8-809b-6c7d4a9081f5"
                 }
             ],
             "severity": "error",
             "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu (reguła 'drobny raster U1 / U3: odstep 0.15 mm miedzy elementami w obrysie ukladu (bez wylewek)' prześwit 0,1500 mm; obecnie 0,0054 mm)",
+            "items": [
+                {
+                    "description": "Przelotka [3V3_DAQ] na F.Cu - B.Cu",
+                    "pos": {
+                        "x": 58.25,
+                        "y": 57.8
+                    },
+                    "uuid": "43f9c234-a6a4-4244-a21e-2d097b3bafd6"
+                },
+                {
+                    "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
+                    "pos": {
+                        "x": 57.823574,
+                        "y": 58.905356
+                    },
+                    "uuid": "4970408e-84c9-4dac-8d0e-60dcc0453799"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
         },
         {
             "description": "Elementy łączą dwie różne sieci (sieci /DIG/DOUT_SER oraz 3V3_DAQ)",
@@ -182,7 +182,7 @@
                         "x": 57.823574,
                         "y": 58.905356
                     },
-                    "uuid": "1f24908d-a355-4fcf-8944-27952255eea3"
+                    "uuid": "4970408e-84c9-4dac-8d0e-60dcc0453799"
                 },
                 {
                     "description": "Ścieżka [3V3_DAQ] na F.Cu, długość 0,6000 mm",
@@ -190,7 +190,7 @@
                         "x": 57.75,
                         "y": 59.0
                     },
-                    "uuid": "d2f1adf3-2e01-47a2-85f2-9b9e4c3e18aa"
+                    "uuid": "d966665a-720e-491d-be24-1995aff935b2"
                 }
             ],
             "severity": "error",
@@ -205,7 +205,30 @@
                         "x": 57.823574,
                         "y": 58.905356
                     },
-                    "uuid": "1f24908d-a355-4fcf-8944-27952255eea3"
+                    "uuid": "4970408e-84c9-4dac-8d0e-60dcc0453799"
+                },
+                {
+                    "description": "Ścieżka [3V3_DAQ] na F.Cu, długość 1,1250 mm",
+                    "pos": {
+                        "x": 57.25,
+                        "y": 59.675
+                    },
+                    "uuid": "be752566-76f7-48e0-b914-6ddc6f23abc7"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci /DIG/DOUT_SER oraz 3V3_DAQ)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
+                    "pos": {
+                        "x": 57.823574,
+                        "y": 58.905356
+                    },
+                    "uuid": "4970408e-84c9-4dac-8d0e-60dcc0453799"
                 },
                 {
                     "description": "Ścieżka [3V3_DAQ] na F.Cu, długość 1,1250 mm",
@@ -213,7 +236,7 @@
                         "x": 57.75,
                         "y": 59.675
                     },
-                    "uuid": "b58ad68d-4700-4e4e-83bc-f0cb9f4fce58"
+                    "uuid": "6f736922-22a1-4ad8-a7f4-5858d266c014"
                 }
             ],
             "severity": "error",
@@ -228,15 +251,38 @@
                         "x": 57.823574,
                         "y": 58.905356
                     },
-                    "uuid": "1f24908d-a355-4fcf-8944-27952255eea3"
+                    "uuid": "4970408e-84c9-4dac-8d0e-60dcc0453799"
                 },
+                {
+                    "description": "Ścieżka [3V3_DAQ] na F.Cu, długość 0,6000 mm",
+                    "pos": {
+                        "x": 58.25,
+                        "y": 58.4
+                    },
+                    "uuid": "56c8d9a7-85a9-4a39-ad19-b546ddd7cf2c"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci 3V3_DAQ oraz /DIG/DOUT_SER)",
+            "items": [
                 {
                     "description": "Ścieżka [3V3_DAQ] na F.Cu, długość 0,6000 mm",
                     "pos": {
                         "x": 58.75,
                         "y": 58.4
                     },
-                    "uuid": "b50753a3-6b70-4991-b105-a9f2f073c393"
+                    "uuid": "19df7cd2-6d30-41ca-9736-048fed852dca"
+                },
+                {
+                    "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
+                    "pos": {
+                        "x": 57.823574,
+                        "y": 58.905356
+                    },
+                    "uuid": "4970408e-84c9-4dac-8d0e-60dcc0453799"
                 }
             ],
             "severity": "error",
@@ -251,130 +297,107 @@
                         "x": 57.823574,
                         "y": 58.905356
                     },
-                    "uuid": "1f24908d-a355-4fcf-8944-27952255eea3"
+                    "uuid": "4970408e-84c9-4dac-8d0e-60dcc0453799"
                 },
-                {
-                    "description": "Ścieżka [3V3_DAQ] na F.Cu, długość 1,1250 mm",
-                    "pos": {
-                        "x": 57.25,
-                        "y": 59.675
-                    },
-                    "uuid": "97c5e2ed-b824-4caf-9262-da3e543eaf3d"
-                }
-            ],
-            "severity": "error",
-            "type": "shorting_items"
-        },
-        {
-            "description": "Naruszenie prześwitu (reguła 'drobny raster U1 / U3: odstep 0.15 mm miedzy elementami w obrysie ukladu' prześwit 0,1500 mm; obecnie 0,0486 mm)",
-            "items": [
-                {
-                    "description": "Pole lutownicze 6 [3V3_DAQ] z U1 na F.Cu",
-                    "pos": {
-                        "x": 56.75,
-                        "y": 59.675
-                    },
-                    "uuid": "dd1918ec-48e4-4f21-82b7-17c3d34b2f99"
-                },
-                {
-                    "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
-                    "pos": {
-                        "x": 57.823574,
-                        "y": 58.905356
-                    },
-                    "uuid": "1f24908d-a355-4fcf-8944-27952255eea3"
-                }
-            ],
-            "severity": "error",
-            "type": "clearance"
-        },
-        {
-            "description": "Elementy łączą dwie różne sieci (sieci 3V3_DAQ oraz /DIG/DOUT_SER)",
-            "items": [
-                {
-                    "description": "Pole lutownicze 7 [3V3_DAQ] z U1 na F.Cu",
-                    "pos": {
-                        "x": 57.25,
-                        "y": 59.675
-                    },
-                    "uuid": "8d972f1a-fd5e-4802-9546-d6cafff9e107"
-                },
-                {
-                    "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
-                    "pos": {
-                        "x": 57.823574,
-                        "y": 58.905356
-                    },
-                    "uuid": "1f24908d-a355-4fcf-8944-27952255eea3"
-                }
-            ],
-            "severity": "error",
-            "type": "shorting_items"
-        },
-        {
-            "description": "Elementy łączą dwie różne sieci (sieci 3V3_DAQ oraz /DIG/DOUT_SER)",
-            "items": [
                 {
                     "description": "Pole lutownicze 8 [3V3_DAQ] z U1 na F.Cu",
                     "pos": {
                         "x": 57.75,
                         "y": 59.675
                     },
-                    "uuid": "a6593b70-6c3d-45bf-b758-87eee3e5044f"
-                },
-                {
-                    "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
-                    "pos": {
-                        "x": 57.823574,
-                        "y": 58.905356
-                    },
-                    "uuid": "1f24908d-a355-4fcf-8944-27952255eea3"
+                    "uuid": "0ac368e0-ad21-48de-a8ad-eea709818f1a"
                 }
             ],
             "severity": "error",
             "type": "shorting_items"
         },
         {
-            "description": "Elementy łączą dwie różne sieci (sieci ADC_CONVST_P05 oraz /DIG/DOUT_SER)",
+            "description": "Elementy łączą dwie różne sieci (sieci /DIG/DOUT_SER oraz ADC_CONVST_P05)",
             "items": [
+                {
+                    "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
+                    "pos": {
+                        "x": 57.823574,
+                        "y": 58.905356
+                    },
+                    "uuid": "4970408e-84c9-4dac-8d0e-60dcc0453799"
+                },
                 {
                     "description": "Pole lutownicze 9 [ADC_CONVST_P05] z U1 na F.Cu",
                     "pos": {
                         "x": 58.25,
                         "y": 59.675
                     },
-                    "uuid": "8f2a0857-3d81-48b5-a810-bd556c36fe05"
-                },
-                {
-                    "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
-                    "pos": {
-                        "x": 57.823574,
-                        "y": 58.905356
-                    },
-                    "uuid": "1f24908d-a355-4fcf-8944-27952255eea3"
+                    "uuid": "a7327351-1ac6-4efe-9a35-4c883fa209f1"
                 }
             ],
             "severity": "error",
             "type": "shorting_items"
         },
         {
-            "description": "Elementy łączą dwie różne sieci (sieci 3V3_DAQ oraz /DIG/DOUT_SER)",
+            "description": "Elementy łączą dwie różne sieci (sieci /DIG/DOUT_SER oraz 3V3_DAQ)",
             "items": [
-                {
-                    "description": "Pole lutownicze 10 [3V3_DAQ] z U1 na F.Cu",
-                    "pos": {
-                        "x": 58.75,
-                        "y": 59.675
-                    },
-                    "uuid": "909c3340-c44a-4d59-9328-6a4852aedd56"
-                },
                 {
                     "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
                     "pos": {
                         "x": 57.823574,
                         "y": 58.905356
                     },
-                    "uuid": "1f24908d-a355-4fcf-8944-27952255eea3"
+                    "uuid": "4970408e-84c9-4dac-8d0e-60dcc0453799"
+                },
+                {
+                    "description": "Pole lutownicze 10 [3V3_DAQ] z U1 na F.Cu",
+                    "pos": {
+                        "x": 58.75,
+                        "y": 59.675
+                    },
+                    "uuid": "3fcf6434-772e-4cae-92b6-8699a5b9e073"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu (reguła 'drobny raster U1 / U3: odstep 0.15 mm miedzy elementami w obrysie ukladu (bez wylewek)' prześwit 0,1500 mm; obecnie 0,0486 mm)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
+                    "pos": {
+                        "x": 57.823574,
+                        "y": 58.905356
+                    },
+                    "uuid": "4970408e-84c9-4dac-8d0e-60dcc0453799"
+                },
+                {
+                    "description": "Pole lutownicze 6 [3V3_DAQ] z U1 na F.Cu",
+                    "pos": {
+                        "x": 56.75,
+                        "y": 59.675
+                    },
+                    "uuid": "1ae11d7c-9af9-4767-9715-cc78a8ddbefe"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci /DIG/DOUT_SER oraz 3V3_DAQ)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
+                    "pos": {
+                        "x": 57.823574,
+                        "y": 58.905356
+                    },
+                    "uuid": "4970408e-84c9-4dac-8d0e-60dcc0453799"
+                },
+                {
+                    "description": "Pole lutownicze 7 [3V3_DAQ] z U1 na F.Cu",
+                    "pos": {
+                        "x": 57.25,
+                        "y": 59.675
+                    },
+                    "uuid": "08b283c6-f3e7-4785-aac3-480d0e7e5fbb"
                 }
             ],
             "severity": "error",
@@ -384,208 +407,24 @@
             "description": "Courtyards overlap",
             "items": [
                 {
-                    "description": "Footprint U1",
-                    "pos": {
-                        "x": 58.0,
-                        "y": 54.0
-                    },
-                    "uuid": "9cbbd063-8b5b-4161-aac1-0944d8a76e36"
-                },
-                {
                     "description": "Footprint R26",
                     "pos": {
                         "x": 57.823574,
                         "y": 60.455356
                     },
-                    "uuid": "d7bc48ce-e6ce-4cfc-b906-24a96a652f79"
+                    "uuid": "366ff209-efec-443e-a373-5090afd55f5a"
+                },
+                {
+                    "description": "Footprint U1",
+                    "pos": {
+                        "x": 58.0,
+                        "y": 54.0
+                    },
+                    "uuid": "e9218199-a189-4fd5-95c5-242096532d6d"
                 }
             ],
             "severity": "error",
             "type": "courtyards_overlap"
-        },
-        {
-            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
-            "items": [
-                {
-                    "description": "Ścieżka [ADC_CONVST_P05] na F.Cu, długość 3,9250 mm",
-                    "pos": {
-                        "x": 58.25,
-                        "y": 59.675
-                    },
-                    "uuid": "957705bd-3a6f-4189-b7fa-e95cd31b5d2c"
-                },
-                {
-                    "description": "Pole lutownicze 2 [ADC_DOUTA] z R26 na F.Cu",
-                    "pos": {
-                        "x": 57.823574,
-                        "y": 62.005356
-                    },
-                    "uuid": "5ad7d367-fe91-496c-97a4-d1cd4af24280"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
-            "items": [
-                {
-                    "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
-                    "pos": {
-                        "x": 57.823574,
-                        "y": 58.905356
-                    },
-                    "uuid": "1f24908d-a355-4fcf-8944-27952255eea3"
-                },
-                {
-                    "description": "Pole lutownicze 10 [3V3_DAQ] z U1 na F.Cu",
-                    "pos": {
-                        "x": 58.75,
-                        "y": 59.675
-                    },
-                    "uuid": "909c3340-c44a-4d59-9328-6a4852aedd56"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
-            "items": [
-                {
-                    "description": "Ścieżka [ADC_CONVST_P05] na F.Cu, długość 3,9250 mm",
-                    "pos": {
-                        "x": 58.25,
-                        "y": 59.675
-                    },
-                    "uuid": "957705bd-3a6f-4189-b7fa-e95cd31b5d2c"
-                },
-                {
-                    "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
-                    "pos": {
-                        "x": 57.823574,
-                        "y": 58.905356
-                    },
-                    "uuid": "1f24908d-a355-4fcf-8944-27952255eea3"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
-            "items": [
-                {
-                    "description": "Ścieżka [3V3_DAQ] na F.Cu, długość 1,1250 mm",
-                    "pos": {
-                        "x": 57.25,
-                        "y": 59.675
-                    },
-                    "uuid": "97c5e2ed-b824-4caf-9262-da3e543eaf3d"
-                },
-                {
-                    "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
-                    "pos": {
-                        "x": 57.823574,
-                        "y": 58.905356
-                    },
-                    "uuid": "1f24908d-a355-4fcf-8944-27952255eea3"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
-            "items": [
-                {
-                    "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
-                    "pos": {
-                        "x": 57.823574,
-                        "y": 58.905356
-                    },
-                    "uuid": "1f24908d-a355-4fcf-8944-27952255eea3"
-                },
-                {
-                    "description": "Pole lutownicze 6 [3V3_DAQ] z U1 na F.Cu",
-                    "pos": {
-                        "x": 56.75,
-                        "y": 59.675
-                    },
-                    "uuid": "dd1918ec-48e4-4f21-82b7-17c3d34b2f99"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
-            "items": [
-                {
-                    "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
-                    "pos": {
-                        "x": 57.823574,
-                        "y": 58.905356
-                    },
-                    "uuid": "1f24908d-a355-4fcf-8944-27952255eea3"
-                },
-                {
-                    "description": "Pole lutownicze 7 [3V3_DAQ] z U1 na F.Cu",
-                    "pos": {
-                        "x": 57.25,
-                        "y": 59.675
-                    },
-                    "uuid": "8d972f1a-fd5e-4802-9546-d6cafff9e107"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
-            "items": [
-                {
-                    "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
-                    "pos": {
-                        "x": 57.823574,
-                        "y": 58.905356
-                    },
-                    "uuid": "1f24908d-a355-4fcf-8944-27952255eea3"
-                },
-                {
-                    "description": "Pole lutownicze 8 [3V3_DAQ] z U1 na F.Cu",
-                    "pos": {
-                        "x": 57.75,
-                        "y": 59.675
-                    },
-                    "uuid": "a6593b70-6c3d-45bf-b758-87eee3e5044f"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
-            "items": [
-                {
-                    "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
-                    "pos": {
-                        "x": 57.823574,
-                        "y": 58.905356
-                    },
-                    "uuid": "1f24908d-a355-4fcf-8944-27952255eea3"
-                },
-                {
-                    "description": "Pole lutownicze 9 [ADC_CONVST_P05] z U1 na F.Cu",
-                    "pos": {
-                        "x": 58.25,
-                        "y": 59.675
-                    },
-                    "uuid": "8f2a0857-3d81-48b5-a810-bd556c36fe05"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
         },
         {
             "description": "Przednia soldermaska łączy elementy o różnych sieciach",
@@ -596,7 +435,7 @@
                         "x": 58.75,
                         "y": 58.4
                     },
-                    "uuid": "b50753a3-6b70-4991-b105-a9f2f073c393"
+                    "uuid": "19df7cd2-6d30-41ca-9736-048fed852dca"
                 },
                 {
                     "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
@@ -604,7 +443,30 @@
                         "x": 57.823574,
                         "y": 58.905356
                     },
-                    "uuid": "1f24908d-a355-4fcf-8944-27952255eea3"
+                    "uuid": "4970408e-84c9-4dac-8d0e-60dcc0453799"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_DAQ] na F.Cu, długość 0,6000 mm",
+                    "pos": {
+                        "x": 58.25,
+                        "y": 58.4
+                    },
+                    "uuid": "56c8d9a7-85a9-4a39-ad19-b546ddd7cf2c"
+                },
+                {
+                    "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
+                    "pos": {
+                        "x": 57.823574,
+                        "y": 58.905356
+                    },
+                    "uuid": "4970408e-84c9-4dac-8d0e-60dcc0453799"
                 }
             ],
             "severity": "error",
@@ -619,7 +481,7 @@
                         "x": 57.75,
                         "y": 59.675
                     },
-                    "uuid": "b58ad68d-4700-4e4e-83bc-f0cb9f4fce58"
+                    "uuid": "6f736922-22a1-4ad8-a7f4-5858d266c014"
                 },
                 {
                     "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
@@ -627,30 +489,7 @@
                         "x": 57.823574,
                         "y": 58.905356
                     },
-                    "uuid": "1f24908d-a355-4fcf-8944-27952255eea3"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
-            "items": [
-                {
-                    "description": "Ścieżka [3V3_DAQ] na F.Cu, długość 0,6000 mm",
-                    "pos": {
-                        "x": 57.75,
-                        "y": 59.0
-                    },
-                    "uuid": "d2f1adf3-2e01-47a2-85f2-9b9e4c3e18aa"
-                },
-                {
-                    "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
-                    "pos": {
-                        "x": 57.823574,
-                        "y": 58.905356
-                    },
-                    "uuid": "1f24908d-a355-4fcf-8944-27952255eea3"
+                    "uuid": "4970408e-84c9-4dac-8d0e-60dcc0453799"
                 }
             ],
             "severity": "error",
@@ -665,7 +504,7 @@
                         "x": 57.75,
                         "y": 58.4
                     },
-                    "uuid": "f8028b38-64d5-4209-ad5b-6d9bd6801204"
+                    "uuid": "f829e0ac-a3ec-40d8-809b-6c7d4a9081f5"
                 },
                 {
                     "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
@@ -673,7 +512,214 @@
                         "x": 57.823574,
                         "y": 58.905356
                     },
-                    "uuid": "1f24908d-a355-4fcf-8944-27952255eea3"
+                    "uuid": "4970408e-84c9-4dac-8d0e-60dcc0453799"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole lutownicze 6 [3V3_DAQ] z U1 na F.Cu",
+                    "pos": {
+                        "x": 56.75,
+                        "y": 59.675
+                    },
+                    "uuid": "1ae11d7c-9af9-4767-9715-cc78a8ddbefe"
+                },
+                {
+                    "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
+                    "pos": {
+                        "x": 57.823574,
+                        "y": 58.905356
+                    },
+                    "uuid": "4970408e-84c9-4dac-8d0e-60dcc0453799"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_DAQ] na F.Cu, długość 1,1250 mm",
+                    "pos": {
+                        "x": 57.25,
+                        "y": 59.675
+                    },
+                    "uuid": "be752566-76f7-48e0-b914-6ddc6f23abc7"
+                },
+                {
+                    "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
+                    "pos": {
+                        "x": 57.823574,
+                        "y": 58.905356
+                    },
+                    "uuid": "4970408e-84c9-4dac-8d0e-60dcc0453799"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [ADC_CONVST_P05] na F.Cu, długość 3,9250 mm",
+                    "pos": {
+                        "x": 58.25,
+                        "y": 59.675
+                    },
+                    "uuid": "fdbd1fc5-7cf6-4af4-b4ed-2cc60351cc73"
+                },
+                {
+                    "description": "Pole lutownicze 2 [ADC_DOUTA] z R26 na F.Cu",
+                    "pos": {
+                        "x": 57.823574,
+                        "y": 62.005356
+                    },
+                    "uuid": "268cd51d-fab7-49b2-af27-02ad22127c9d"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [ADC_CONVST_P05] na F.Cu, długość 3,9250 mm",
+                    "pos": {
+                        "x": 58.25,
+                        "y": 59.675
+                    },
+                    "uuid": "fdbd1fc5-7cf6-4af4-b4ed-2cc60351cc73"
+                },
+                {
+                    "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
+                    "pos": {
+                        "x": 57.823574,
+                        "y": 58.905356
+                    },
+                    "uuid": "4970408e-84c9-4dac-8d0e-60dcc0453799"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole lutownicze 7 [3V3_DAQ] z U1 na F.Cu",
+                    "pos": {
+                        "x": 57.25,
+                        "y": 59.675
+                    },
+                    "uuid": "08b283c6-f3e7-4785-aac3-480d0e7e5fbb"
+                },
+                {
+                    "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
+                    "pos": {
+                        "x": 57.823574,
+                        "y": 58.905356
+                    },
+                    "uuid": "4970408e-84c9-4dac-8d0e-60dcc0453799"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_DAQ] na F.Cu, długość 0,6000 mm",
+                    "pos": {
+                        "x": 57.75,
+                        "y": 59.0
+                    },
+                    "uuid": "d966665a-720e-491d-be24-1995aff935b2"
+                },
+                {
+                    "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
+                    "pos": {
+                        "x": 57.823574,
+                        "y": 58.905356
+                    },
+                    "uuid": "4970408e-84c9-4dac-8d0e-60dcc0453799"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole lutownicze 8 [3V3_DAQ] z U1 na F.Cu",
+                    "pos": {
+                        "x": 57.75,
+                        "y": 59.675
+                    },
+                    "uuid": "0ac368e0-ad21-48de-a8ad-eea709818f1a"
+                },
+                {
+                    "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
+                    "pos": {
+                        "x": 57.823574,
+                        "y": 58.905356
+                    },
+                    "uuid": "4970408e-84c9-4dac-8d0e-60dcc0453799"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole lutownicze 9 [ADC_CONVST_P05] z U1 na F.Cu",
+                    "pos": {
+                        "x": 58.25,
+                        "y": 59.675
+                    },
+                    "uuid": "a7327351-1ac6-4efe-9a35-4c883fa209f1"
+                },
+                {
+                    "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
+                    "pos": {
+                        "x": 57.823574,
+                        "y": 58.905356
+                    },
+                    "uuid": "4970408e-84c9-4dac-8d0e-60dcc0453799"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole lutownicze 10 [3V3_DAQ] z U1 na F.Cu",
+                    "pos": {
+                        "x": 58.75,
+                        "y": 59.675
+                    },
+                    "uuid": "3fcf6434-772e-4cae-92b6-8699a5b9e073"
+                },
+                {
+                    "description": "Pole lutownicze 1 [/DIG/DOUT_SER] z R26 na F.Cu",
+                    "pos": {
+                        "x": 57.823574,
+                        "y": 58.905356
+                    },
+                    "uuid": "4970408e-84c9-4dac-8d0e-60dcc0453799"
                 }
             ],
             "severity": "error",
@@ -683,12 +729,12 @@
             "description": "Track has unconnected end",
             "items": [
                 {
-                    "description": "Ścieżka [ADC_DOUTA] na F.Cu, długość 1,4262 mm",
+                    "description": "Ścieżka [/DIG/DOUT_SER] na F.Cu, długość 1,0607 mm",
                     "pos": {
-                        "x": 68.5335,
-                        "y": 60.5885
+                        "x": 67.525,
+                        "y": 56.48
                     },
-                    "uuid": "6a1cd2e5-d593-4ca9-91e5-f001d9b03440"
+                    "uuid": "cf241741-6917-4202-8e16-782f7192db34"
                 }
             ],
             "severity": "warning",
@@ -698,31 +744,16 @@
             "description": "Track has unconnected end",
             "items": [
                 {
-                    "description": "Ścieżka [/DIG/DOUT_SER] na F.Cu, długość 1,0607 mm",
+                    "description": "Ścieżka [ADC_DOUTA] na F.Cu, długość 0,0737 mm",
                     "pos": {
-                        "x": 68.275,
-                        "y": 55.73
+                        "x": 67.4729,
+                        "y": 59.6321
                     },
-                    "uuid": "2d20ccee-2e01-464b-991a-ef4b31d8c13e"
+                    "uuid": "c2edc734-8b9e-4a14-ae6d-63c452debd8d"
                 }
             ],
             "severity": "warning",
             "type": "track_dangling"
-        },
-        {
-            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
-            "items": [
-                {
-                    "description": "Footprint J_SV1",
-                    "pos": {
-                        "x": 41.74,
-                        "y": 95.96
-                    },
-                    "uuid": "46bfd41e-1732-4cba-b6ea-30823f85f90d"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_mismatch"
         },
         {
             "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
@@ -733,22 +764,7 @@
                         "x": 68.57,
                         "y": 13.33
                     },
-                    "uuid": "4ec27673-7739-4d6c-993f-22280ba5abdb"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_mismatch"
-        },
-        {
-            "description": "Footprint 'IDC-Header_2x05_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
-            "items": [
-                {
-                    "description": "Footprint J_BP1",
-                    "pos": {
-                        "x": 21.42,
-                        "y": 13.33
-                    },
-                    "uuid": "ab2658b8-2665-4558-a302-e16000794b24"
+                    "uuid": "76b1faa3-dd55-40f3-b638-ce219a063362"
                 }
             ],
             "severity": "warning",
@@ -763,7 +779,37 @@
                         "x": 95.24,
                         "y": 95.96
                     },
-                    "uuid": "f81e9399-147e-49f4-8c72-6dc5e0e2c471"
+                    "uuid": "810c12eb-af65-4fa3-a50c-0eb74548145d"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x05_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP1",
+                    "pos": {
+                        "x": 21.42,
+                        "y": 13.33
+                    },
+                    "uuid": "84ab3ecb-2744-491d-a9db-2bff5be4f0ae"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV1",
+                    "pos": {
+                        "x": 41.74,
+                        "y": 95.96
+                    },
+                    "uuid": "b7460ef1-fb26-4b20-a82b-a70a1bf44033"
                 }
             ],
             "severity": "warning",
@@ -778,7 +824,7 @@
                         "x": 54.823574,
                         "y": 63.750355
                     },
-                    "uuid": "10096a7f-176c-48b6-a146-70c69a13ec13"
+                    "uuid": "cc791c0c-a90c-4667-97e5-1b7bc7381b9b"
                 }
             ],
             "severity": "warning",
@@ -793,7 +839,7 @@
                         "x": 56.913574,
                         "y": 59.728292
                     },
-                    "uuid": "f9bbbee8-c956-4f48-8a34-aeba261f6af9"
+                    "uuid": "2a56c647-a5fa-4038-bb74-b18aad1b4167"
                 }
             ],
             "severity": "warning",
@@ -808,7 +854,7 @@
                         "x": 58.733574,
                         "y": 59.728292
                     },
-                    "uuid": "2f7e3a8d-9a5b-4d25-8c62-ba2ffacd3eec"
+                    "uuid": "f39d1317-17f8-4b53-8c4c-9aa5195764b8"
                 }
             ],
             "severity": "warning",
@@ -823,7 +869,7 @@
                         "x": 54.823574,
                         "y": 63.750355
                     },
-                    "uuid": "10096a7f-176c-48b6-a146-70c69a13ec13"
+                    "uuid": "cc791c0c-a90c-4667-97e5-1b7bc7381b9b"
                 },
                 {
                     "description": "Segment z C4 na F.Silkscreen",
@@ -831,30 +877,30 @@
                         "x": 54.51,
                         "y": 62.538748
                     },
-                    "uuid": "8128dea3-72ff-47a2-8ede-47c1c3a90ad4"
+                    "uuid": "e98ee623-7a7c-40d5-b914-455ed68d010e"
                 }
             ],
             "severity": "warning",
             "type": "silk_overlap"
         },
         {
-            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0204 mm)",
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
             "items": [
-                {
-                    "description": "Pole odnośnika do R26",
-                    "pos": {
-                        "x": 54.823574,
-                        "y": 63.750355
-                    },
-                    "uuid": "10096a7f-176c-48b6-a146-70c69a13ec13"
-                },
                 {
                     "description": "Pole odnośnika do TP1",
                     "pos": {
                         "x": 57.0,
                         "y": 63.58
                     },
-                    "uuid": "77abc10e-4b9f-46e9-b59a-0fd80fe796af"
+                    "uuid": "63e37baa-6b85-4d4f-995e-5e4efa1aa49d"
+                },
+                {
+                    "description": "Pole odnośnika do R26",
+                    "pos": {
+                        "x": 54.823574,
+                        "y": 63.750355
+                    },
+                    "uuid": "cc791c0c-a90c-4667-97e5-1b7bc7381b9b"
                 }
             ],
             "severity": "warning",
