@@ -21,7 +21,7 @@ fn=P/f'eda/{NAME}.kicad_pcb';b=p.LoadBoard(str(fn));mm=p.FromMM
 R=int(os.environ.get('EGRLAB_PLAN_RES','20'));W=int(BW*R)+1;H=int(BH*R)+1
 MARGIN=.05;VIA_R=.45;PWRN=tuple(BOARD_PWR)   # widths and clearances from board.py (P03 R6 had them fixed)
 def clr(name):return .30 if name in PWRN else .25
-def width_of(name):return .3 if name in tuple(CORE)+PWRN else SIGNAL_W
+def width_of(name):return .6 if name in PWRN else (.3 if name in tuple(CORE) else SIGNAL_W)   # 2.10: PWR class 0.6 mm (C17 link on P06 came out 0.3)
 def grown(ps,d):
  q=p.SHAPE_POLY_SET(ps);q.Inflate(mm(d),p.CORNER_STRATEGY_ROUND_ALL_CORNERS,mm(.005));return q
 f={q.GetReference():q for q in b.GetFootprints()}

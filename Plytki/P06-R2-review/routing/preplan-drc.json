@@ -1,7 +1,7 @@
 {
     "$schema": "https://schemas.kicad.org/drc.v1.json",
     "coordinate_units": "mm",
-    "date": "2026-10-02T12:26:12",
+    "date": "2026-10-02T16:07:10",
     "ignored_checks": [
         {
             "description": "Footprint has no courtyard defined",
@@ -32,9 +32,10 @@
     "kicad_version": "10.0.6",
     "schematic_parity": [],
     "source": "P06.kicad_pcb",
-    "unconnected_items": [
+    "unconnected_items": [],
+    "violations": [
         {
-            "description": "Missing connection between items",
+            "description": "Niekompletne łączenie termiczne ze strefą (warstwa F.Cu; strefa min. liczba łącz 2; obecnie 1)",
             "items": [
                 {
                     "description": "Strefa [GND] na F.Cu, priorytet 0",
@@ -42,22 +43,20 @@
                         "x": 0.3,
                         "y": 0.3
                     },
-                    "uuid": "ff7ded34-0165-4141-b6b3-3c3a850a06bc"
+                    "uuid": "0e40f32b-63b2-44dd-9d6c-7d41c67c5708"
                 },
                 {
-                    "description": "Pole PTH 4 [GND] na U2",
+                    "description": "Pole PTH 7 [GND] na J_BP",
                     "pos": {
-                        "x": 45.0,
-                        "y": 34.62
+                        "x": 78.73,
+                        "y": 13.33
                     },
-                    "uuid": "8be46b70-47b7-4d00-8a7d-91dc92bf46fb"
+                    "uuid": "47079ed6-797a-42bc-af3f-383b9f79fdec"
                 }
             ],
             "severity": "error",
-            "type": "unconnected_items"
-        }
-    ],
-    "violations": [
+            "type": "starved_thermal"
+        },
         {
             "description": "Niekompletne łączenie termiczne ze strefą (warstwa B.Cu; 1 łącz połączonych z izolowanym polem)",
             "items": [
@@ -67,7 +66,7 @@
                         "x": 0.3,
                         "y": 0.3
                     },
-                    "uuid": "d241aa36-1a82-4eb5-97e3-dfcabcfc56b5"
+                    "uuid": "6ba2058b-02c7-4351-b240-45069b85ba9e"
                 },
                 {
                     "description": "Pole PTH 15 [GND] na J_BP",
@@ -75,471 +74,11 @@
                         "x": 88.89,
                         "y": 13.33
                     },
-                    "uuid": "dcabcd54-7a24-4433-b5a3-4928b9a24545"
+                    "uuid": "cca5c358-3a2b-4e52-a3ad-94a06eac1af0"
                 }
             ],
             "severity": "error",
             "type": "starved_thermal"
-        },
-        {
-            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0500 mm)",
-            "items": [
-                {
-                    "description": "Segment na Edge.Cuts",
-                    "pos": {
-                        "x": 105.5,
-                        "y": 100.0
-                    },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
-                },
-                {
-                    "description": "Segment z J_SV1 na F.Silkscreen",
-                    "pos": {
-                        "x": 26.07,
-                        "y": 106.11
-                    },
-                    "uuid": "b7ea8236-3c2a-424f-8209-f6fe0721dab5"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_edge_clearance"
-        },
-        {
-            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0500 mm)",
-            "items": [
-                {
-                    "description": "Segment na Edge.Cuts",
-                    "pos": {
-                        "x": 105.5,
-                        "y": 100.0
-                    },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
-                },
-                {
-                    "description": "Segment z J_SV1 na F.Silkscreen",
-                    "pos": {
-                        "x": 26.93,
-                        "y": 100.11
-                    },
-                    "uuid": "dba2428f-c688-43c9-bbdd-daa98221a475"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_edge_clearance"
-        },
-        {
-            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
-            "items": [
-                {
-                    "description": "Segment na Edge.Cuts",
-                    "pos": {
-                        "x": 105.5,
-                        "y": 100.0
-                    },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
-                },
-                {
-                    "description": "Segment z J_SV1 na F.Silkscreen",
-                    "pos": {
-                        "x": 27.77,
-                        "y": 97.35
-                    },
-                    "uuid": "d52c581a-3403-4070-b648-b89554fec3cc"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_edge_clearance"
-        },
-        {
-            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0500 mm)",
-            "items": [
-                {
-                    "description": "Segment na Edge.Cuts",
-                    "pos": {
-                        "x": 105.5,
-                        "y": 100.0
-                    },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
-                },
-                {
-                    "description": "Segment z J_SV1 na F.Silkscreen",
-                    "pos": {
-                        "x": 28.61,
-                        "y": 106.11
-                    },
-                    "uuid": "ac9abbf9-ca13-48f8-9b94-954be45a3980"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_edge_clearance"
-        },
-        {
-            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0500 mm)",
-            "items": [
-                {
-                    "description": "Segment na Edge.Cuts",
-                    "pos": {
-                        "x": 105.5,
-                        "y": 100.0
-                    },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
-                },
-                {
-                    "description": "Segment z J_SV1 na F.Silkscreen",
-                    "pos": {
-                        "x": 29.47,
-                        "y": 100.11
-                    },
-                    "uuid": "eb214fe3-8b56-45b7-b20d-dba668eacfd6"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_edge_clearance"
-        },
-        {
-            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
-            "items": [
-                {
-                    "description": "Segment na Edge.Cuts",
-                    "pos": {
-                        "x": 105.5,
-                        "y": 100.0
-                    },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
-                },
-                {
-                    "description": "Segment z J_SV1 na F.Silkscreen",
-                    "pos": {
-                        "x": 30.31,
-                        "y": 97.35
-                    },
-                    "uuid": "51eaa6c1-f810-40d7-8e9e-78b05b9f072e"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_edge_clearance"
-        },
-        {
-            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0500 mm)",
-            "items": [
-                {
-                    "description": "Segment na Edge.Cuts",
-                    "pos": {
-                        "x": 105.5,
-                        "y": 100.0
-                    },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
-                },
-                {
-                    "description": "Segment z J_SV1 na F.Silkscreen",
-                    "pos": {
-                        "x": 31.15,
-                        "y": 106.11
-                    },
-                    "uuid": "38ed392d-c651-4165-8fd9-de4c90f715c4"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_edge_clearance"
-        },
-        {
-            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0500 mm)",
-            "items": [
-                {
-                    "description": "Segment na Edge.Cuts",
-                    "pos": {
-                        "x": 105.5,
-                        "y": 100.0
-                    },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
-                },
-                {
-                    "description": "Segment z J_SV1 na F.Silkscreen",
-                    "pos": {
-                        "x": 32.01,
-                        "y": 100.11
-                    },
-                    "uuid": "0cfde559-6046-4bf8-9b4a-1ebb712ad81b"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_edge_clearance"
-        },
-        {
-            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
-            "items": [
-                {
-                    "description": "Segment na Edge.Cuts",
-                    "pos": {
-                        "x": 105.5,
-                        "y": 100.0
-                    },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
-                },
-                {
-                    "description": "Segment z J_SV1 na F.Silkscreen",
-                    "pos": {
-                        "x": 32.85,
-                        "y": 97.35
-                    },
-                    "uuid": "0bda5019-1ffe-4b03-a902-dc1c4166b50e"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_edge_clearance"
-        },
-        {
-            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0500 mm)",
-            "items": [
-                {
-                    "description": "Segment na Edge.Cuts",
-                    "pos": {
-                        "x": 105.5,
-                        "y": 100.0
-                    },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
-                },
-                {
-                    "description": "Segment z J_SV1 na F.Silkscreen",
-                    "pos": {
-                        "x": 33.69,
-                        "y": 106.11
-                    },
-                    "uuid": "2e3abd61-6c5c-4c20-a4ae-4adbe3df1e6f"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_edge_clearance"
-        },
-        {
-            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0500 mm)",
-            "items": [
-                {
-                    "description": "Segment na Edge.Cuts",
-                    "pos": {
-                        "x": 105.5,
-                        "y": 100.0
-                    },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
-                },
-                {
-                    "description": "Segment z J_SV1 na F.Silkscreen",
-                    "pos": {
-                        "x": 34.55,
-                        "y": 100.11
-                    },
-                    "uuid": "cac53a24-dcc9-400d-a650-4fb620855e52"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_edge_clearance"
-        },
-        {
-            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
-            "items": [
-                {
-                    "description": "Segment na Edge.Cuts",
-                    "pos": {
-                        "x": 105.5,
-                        "y": 100.0
-                    },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
-                },
-                {
-                    "description": "Segment z J_SV1 na F.Silkscreen",
-                    "pos": {
-                        "x": 35.39,
-                        "y": 97.35
-                    },
-                    "uuid": "fcbc4f7e-ccc4-4308-b106-eaa5306a5326"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_edge_clearance"
-        },
-        {
-            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0500 mm)",
-            "items": [
-                {
-                    "description": "Segment na Edge.Cuts",
-                    "pos": {
-                        "x": 105.5,
-                        "y": 100.0
-                    },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
-                },
-                {
-                    "description": "Segment z J_SV1 na F.Silkscreen",
-                    "pos": {
-                        "x": 36.23,
-                        "y": 106.11
-                    },
-                    "uuid": "5cb0de6c-6e73-413f-8146-a143dcd4fd0a"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_edge_clearance"
-        },
-        {
-            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0500 mm)",
-            "items": [
-                {
-                    "description": "Segment na Edge.Cuts",
-                    "pos": {
-                        "x": 105.5,
-                        "y": 100.0
-                    },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
-                },
-                {
-                    "description": "Segment z J_SV1 na F.Silkscreen",
-                    "pos": {
-                        "x": 37.09,
-                        "y": 100.11
-                    },
-                    "uuid": "613ad7d3-5f53-46c6-b4c8-7bc61886c63c"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_edge_clearance"
-        },
-        {
-            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
-            "items": [
-                {
-                    "description": "Segment na Edge.Cuts",
-                    "pos": {
-                        "x": 105.5,
-                        "y": 100.0
-                    },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
-                },
-                {
-                    "description": "Segment z J_SV1 na F.Silkscreen",
-                    "pos": {
-                        "x": 37.93,
-                        "y": 97.35
-                    },
-                    "uuid": "2f1d365c-23f9-456d-bbd1-e19e05e565f8"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_edge_clearance"
-        },
-        {
-            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0500 mm)",
-            "items": [
-                {
-                    "description": "Segment na Edge.Cuts",
-                    "pos": {
-                        "x": 105.5,
-                        "y": 100.0
-                    },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
-                },
-                {
-                    "description": "Segment z J_SV1 na F.Silkscreen",
-                    "pos": {
-                        "x": 38.77,
-                        "y": 106.11
-                    },
-                    "uuid": "005377eb-87e5-4372-91f7-1220642e7783"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_edge_clearance"
-        },
-        {
-            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0500 mm)",
-            "items": [
-                {
-                    "description": "Segment na Edge.Cuts",
-                    "pos": {
-                        "x": 105.5,
-                        "y": 100.0
-                    },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
-                },
-                {
-                    "description": "Segment z J_SV1 na F.Silkscreen",
-                    "pos": {
-                        "x": 39.63,
-                        "y": 100.11
-                    },
-                    "uuid": "a6c80e56-3ec4-4ff6-b15d-c4e6ebbbecb8"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_edge_clearance"
-        },
-        {
-            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
-            "items": [
-                {
-                    "description": "Segment na Edge.Cuts",
-                    "pos": {
-                        "x": 105.5,
-                        "y": 100.0
-                    },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
-                },
-                {
-                    "description": "Segment z J_SV1 na F.Silkscreen",
-                    "pos": {
-                        "x": 40.47,
-                        "y": 97.35
-                    },
-                    "uuid": "56e8dbd3-d3a7-40f7-9964-e877dc7ddb5b"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_edge_clearance"
-        },
-        {
-            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0500 mm)",
-            "items": [
-                {
-                    "description": "Segment na Edge.Cuts",
-                    "pos": {
-                        "x": 105.5,
-                        "y": 100.0
-                    },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
-                },
-                {
-                    "description": "Prostokąt z J_SV1 na F.Silkscreen",
-                    "pos": {
-                        "x": 42.17,
-                        "y": 100.11
-                    },
-                    "uuid": "48f127a9-6c81-4bf6-b315-f42fd9282621"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_edge_clearance"
-        },
-        {
-            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
-            "items": [
-                {
-                    "description": "Segment na Edge.Cuts",
-                    "pos": {
-                        "x": 105.5,
-                        "y": 100.0
-                    },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
-                },
-                {
-                    "description": "Prostokąt z J_SV1 na F.Silkscreen",
-                    "pos": {
-                        "x": 43.12,
-                        "y": 97.35
-                    },
-                    "uuid": "7eb70e20-830d-4cee-b450-17117576f734"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_edge_clearance"
         },
         {
             "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
@@ -550,7 +89,7 @@
                         "x": 1.0,
                         "y": 0.0
                     },
-                    "uuid": "4364fc3e-5d34-46ec-8595-4e546a9a9c03"
+                    "uuid": "9eb6886a-317a-48db-95df-e22e1d5ed9e9"
                 },
                 {
                     "description": "Segment z J_BP na F.Silkscreen",
@@ -558,7 +97,7 @@
                         "x": 65.9,
                         "y": -0.06
                     },
-                    "uuid": "c3a0ba3b-19aa-4829-90ef-5cd3bc6de411"
+                    "uuid": "9dd5d4a3-50ab-440f-b7b6-8be905875ad2"
                 }
             ],
             "severity": "warning",
@@ -573,7 +112,7 @@
                         "x": 1.0,
                         "y": 0.0
                     },
-                    "uuid": "4364fc3e-5d34-46ec-8595-4e546a9a9c03"
+                    "uuid": "9eb6886a-317a-48db-95df-e22e1d5ed9e9"
                 },
                 {
                     "description": "Segment z J_BP na F.Silkscreen",
@@ -581,7 +120,7 @@
                         "x": 65.9,
                         "y": 9.06
                     },
-                    "uuid": "0f9f6dc8-4668-41c8-a854-d357fcadbf17"
+                    "uuid": "b550f335-235d-46a2-b70a-04879661ed20"
                 }
             ],
             "severity": "warning",
@@ -596,7 +135,7 @@
                         "x": 1.0,
                         "y": 0.0
                     },
-                    "uuid": "4364fc3e-5d34-46ec-8595-4e546a9a9c03"
+                    "uuid": "9eb6886a-317a-48db-95df-e22e1d5ed9e9"
                 },
                 {
                     "description": "Segment z J_BP na F.Silkscreen",
@@ -604,7 +143,7 @@
                         "x": 77.95,
                         "y": 9.06
                     },
-                    "uuid": "318f1e5f-faf4-4aff-9399-d1595fc0c7d2"
+                    "uuid": "942ee488-f509-4848-9431-4f5ebbd4c65f"
                 }
             ],
             "severity": "warning",
@@ -619,7 +158,7 @@
                         "x": 1.0,
                         "y": 0.0
                     },
-                    "uuid": "4364fc3e-5d34-46ec-8595-4e546a9a9c03"
+                    "uuid": "9eb6886a-317a-48db-95df-e22e1d5ed9e9"
                 },
                 {
                     "description": "Segment z J_BP na F.Silkscreen",
@@ -627,7 +166,7 @@
                         "x": 82.05,
                         "y": 9.06
                     },
-                    "uuid": "415cedb9-55a9-4046-b40a-051f766caada"
+                    "uuid": "93d66d52-7fdf-45b9-8c65-bd3eed6afe9e"
                 }
             ],
             "severity": "warning",
@@ -642,7 +181,7 @@
                         "x": 1.0,
                         "y": 0.0
                     },
-                    "uuid": "4364fc3e-5d34-46ec-8595-4e546a9a9c03"
+                    "uuid": "9eb6886a-317a-48db-95df-e22e1d5ed9e9"
                 },
                 {
                     "description": "Segment z J_BP na F.Silkscreen",
@@ -650,7 +189,7 @@
                         "x": 94.1,
                         "y": -0.06
                     },
-                    "uuid": "0c4eb71c-ca03-45bc-b9f3-870be5c66648"
+                    "uuid": "44832992-6425-467c-93b2-a52ae80816a3"
                 }
             ],
             "severity": "warning",
@@ -665,7 +204,467 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
+                },
+                {
+                    "description": "Segment z J_SV1 na F.Silkscreen",
+                    "pos": {
+                        "x": 26.07,
+                        "y": 106.11
+                    },
+                    "uuid": "bb39fb6e-8f07-4df8-b0fa-88017acc1187"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0500 mm)",
+            "items": [
+                {
+                    "description": "Segment na Edge.Cuts",
+                    "pos": {
+                        "x": 105.5,
+                        "y": 100.0
+                    },
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
+                },
+                {
+                    "description": "Segment z J_SV1 na F.Silkscreen",
+                    "pos": {
+                        "x": 26.93,
+                        "y": 100.11
+                    },
+                    "uuid": "680aeb07-8f33-4844-bcf3-54998bb768c9"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Segment na Edge.Cuts",
+                    "pos": {
+                        "x": 105.5,
+                        "y": 100.0
+                    },
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
+                },
+                {
+                    "description": "Segment z J_SV1 na F.Silkscreen",
+                    "pos": {
+                        "x": 27.77,
+                        "y": 97.35
+                    },
+                    "uuid": "9e30e8ed-b519-4c24-b29b-bd27d72a48c7"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0500 mm)",
+            "items": [
+                {
+                    "description": "Segment na Edge.Cuts",
+                    "pos": {
+                        "x": 105.5,
+                        "y": 100.0
+                    },
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
+                },
+                {
+                    "description": "Segment z J_SV1 na F.Silkscreen",
+                    "pos": {
+                        "x": 28.61,
+                        "y": 106.11
+                    },
+                    "uuid": "0c7ec640-4023-4408-8e16-379534d66b0e"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0500 mm)",
+            "items": [
+                {
+                    "description": "Segment na Edge.Cuts",
+                    "pos": {
+                        "x": 105.5,
+                        "y": 100.0
+                    },
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
+                },
+                {
+                    "description": "Segment z J_SV1 na F.Silkscreen",
+                    "pos": {
+                        "x": 29.47,
+                        "y": 100.11
+                    },
+                    "uuid": "f27d52ee-922c-4e58-af9a-c2cb1c141266"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Segment na Edge.Cuts",
+                    "pos": {
+                        "x": 105.5,
+                        "y": 100.0
+                    },
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
+                },
+                {
+                    "description": "Segment z J_SV1 na F.Silkscreen",
+                    "pos": {
+                        "x": 30.31,
+                        "y": 97.35
+                    },
+                    "uuid": "f811aa47-28c2-4fb4-930b-51f7ec2555ba"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0500 mm)",
+            "items": [
+                {
+                    "description": "Segment na Edge.Cuts",
+                    "pos": {
+                        "x": 105.5,
+                        "y": 100.0
+                    },
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
+                },
+                {
+                    "description": "Segment z J_SV1 na F.Silkscreen",
+                    "pos": {
+                        "x": 31.15,
+                        "y": 106.11
+                    },
+                    "uuid": "016cec02-2455-4df1-ac45-c4d6d79c8b79"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0500 mm)",
+            "items": [
+                {
+                    "description": "Segment na Edge.Cuts",
+                    "pos": {
+                        "x": 105.5,
+                        "y": 100.0
+                    },
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
+                },
+                {
+                    "description": "Segment z J_SV1 na F.Silkscreen",
+                    "pos": {
+                        "x": 32.01,
+                        "y": 100.11
+                    },
+                    "uuid": "63969648-824a-4e73-b6fe-fa1c86f5548c"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Segment na Edge.Cuts",
+                    "pos": {
+                        "x": 105.5,
+                        "y": 100.0
+                    },
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
+                },
+                {
+                    "description": "Segment z J_SV1 na F.Silkscreen",
+                    "pos": {
+                        "x": 32.85,
+                        "y": 97.35
+                    },
+                    "uuid": "6fd54638-9e46-4183-b4cf-a25ce238eea1"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0500 mm)",
+            "items": [
+                {
+                    "description": "Segment na Edge.Cuts",
+                    "pos": {
+                        "x": 105.5,
+                        "y": 100.0
+                    },
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
+                },
+                {
+                    "description": "Segment z J_SV1 na F.Silkscreen",
+                    "pos": {
+                        "x": 33.69,
+                        "y": 106.11
+                    },
+                    "uuid": "4995e111-81d9-484e-8150-e013a92e4c8e"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0500 mm)",
+            "items": [
+                {
+                    "description": "Segment na Edge.Cuts",
+                    "pos": {
+                        "x": 105.5,
+                        "y": 100.0
+                    },
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
+                },
+                {
+                    "description": "Segment z J_SV1 na F.Silkscreen",
+                    "pos": {
+                        "x": 34.55,
+                        "y": 100.11
+                    },
+                    "uuid": "7ed5e0d5-12eb-42ff-82c7-66de9b16e321"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Segment na Edge.Cuts",
+                    "pos": {
+                        "x": 105.5,
+                        "y": 100.0
+                    },
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
+                },
+                {
+                    "description": "Segment z J_SV1 na F.Silkscreen",
+                    "pos": {
+                        "x": 35.39,
+                        "y": 97.35
+                    },
+                    "uuid": "1e79eeeb-3b98-4981-8168-12da0c98851a"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0500 mm)",
+            "items": [
+                {
+                    "description": "Segment na Edge.Cuts",
+                    "pos": {
+                        "x": 105.5,
+                        "y": 100.0
+                    },
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
+                },
+                {
+                    "description": "Segment z J_SV1 na F.Silkscreen",
+                    "pos": {
+                        "x": 36.23,
+                        "y": 106.11
+                    },
+                    "uuid": "7b2b0665-2628-44d9-aad4-e1bdaef2e30b"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0500 mm)",
+            "items": [
+                {
+                    "description": "Segment na Edge.Cuts",
+                    "pos": {
+                        "x": 105.5,
+                        "y": 100.0
+                    },
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
+                },
+                {
+                    "description": "Segment z J_SV1 na F.Silkscreen",
+                    "pos": {
+                        "x": 37.09,
+                        "y": 100.11
+                    },
+                    "uuid": "05ae59cf-feb6-47d0-af5b-13d1ae31a091"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Segment na Edge.Cuts",
+                    "pos": {
+                        "x": 105.5,
+                        "y": 100.0
+                    },
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
+                },
+                {
+                    "description": "Segment z J_SV1 na F.Silkscreen",
+                    "pos": {
+                        "x": 37.93,
+                        "y": 97.35
+                    },
+                    "uuid": "ce719eaf-adf8-441d-a493-aa54ddfe22a9"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0500 mm)",
+            "items": [
+                {
+                    "description": "Segment na Edge.Cuts",
+                    "pos": {
+                        "x": 105.5,
+                        "y": 100.0
+                    },
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
+                },
+                {
+                    "description": "Segment z J_SV1 na F.Silkscreen",
+                    "pos": {
+                        "x": 38.77,
+                        "y": 106.11
+                    },
+                    "uuid": "a29b2f4f-fee9-4242-826a-c9a28f6fe676"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0500 mm)",
+            "items": [
+                {
+                    "description": "Segment na Edge.Cuts",
+                    "pos": {
+                        "x": 105.5,
+                        "y": 100.0
+                    },
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
+                },
+                {
+                    "description": "Segment z J_SV1 na F.Silkscreen",
+                    "pos": {
+                        "x": 39.63,
+                        "y": 100.11
+                    },
+                    "uuid": "c9e067f9-3da0-4d32-b5e6-ba13047eb0bb"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Segment na Edge.Cuts",
+                    "pos": {
+                        "x": 105.5,
+                        "y": 100.0
+                    },
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
+                },
+                {
+                    "description": "Segment z J_SV1 na F.Silkscreen",
+                    "pos": {
+                        "x": 40.47,
+                        "y": 97.35
+                    },
+                    "uuid": "cac1672f-f578-4ab5-b959-affb9858d996"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0500 mm)",
+            "items": [
+                {
+                    "description": "Segment na Edge.Cuts",
+                    "pos": {
+                        "x": 105.5,
+                        "y": 100.0
+                    },
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
+                },
+                {
+                    "description": "Prostokąt z J_SV1 na F.Silkscreen",
+                    "pos": {
+                        "x": 42.17,
+                        "y": 100.11
+                    },
+                    "uuid": "857dc24a-2790-4998-a79c-883f4213e2a8"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Segment na Edge.Cuts",
+                    "pos": {
+                        "x": 105.5,
+                        "y": 100.0
+                    },
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
+                },
+                {
+                    "description": "Prostokąt z J_SV1 na F.Silkscreen",
+                    "pos": {
+                        "x": 43.12,
+                        "y": 97.35
+                    },
+                    "uuid": "160ef675-a2c2-40d6-b51b-da66f48c74a3"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Warstwa opisowa przycięta przez obrys płytki (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0500 mm)",
+            "items": [
+                {
+                    "description": "Segment na Edge.Cuts",
+                    "pos": {
+                        "x": 105.5,
+                        "y": 100.0
+                    },
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -673,7 +672,7 @@
                         "x": 64.33,
                         "y": 106.11
                     },
-                    "uuid": "7b2897d5-dcac-46f8-bd98-b7772079be43"
+                    "uuid": "a374cc6c-f65d-4eee-887b-88381205cd1d"
                 }
             ],
             "severity": "warning",
@@ -688,7 +687,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -696,7 +695,7 @@
                         "x": 65.19,
                         "y": 100.11
                     },
-                    "uuid": "40b4629f-d2a4-4750-b114-d0f386912b2f"
+                    "uuid": "4e294a40-72ab-4d3f-ac54-c66e2686df7d"
                 }
             ],
             "severity": "warning",
@@ -711,7 +710,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -719,7 +718,7 @@
                         "x": 66.03,
                         "y": 97.35
                     },
-                    "uuid": "40acc936-f177-4ec2-8ab0-bee95864aef3"
+                    "uuid": "1eeffa3f-1648-435d-93d3-914f7c30627a"
                 }
             ],
             "severity": "warning",
@@ -734,7 +733,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -742,7 +741,7 @@
                         "x": 66.87,
                         "y": 106.11
                     },
-                    "uuid": "7a990609-dd82-4074-a032-2a77831d1cbe"
+                    "uuid": "a4448f30-9144-42dd-9d69-699065d22170"
                 }
             ],
             "severity": "warning",
@@ -757,7 +756,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -765,7 +764,7 @@
                         "x": 67.73,
                         "y": 100.11
                     },
-                    "uuid": "beb6a005-8a0c-48fc-852b-3fa7d6da3b9d"
+                    "uuid": "1cc1f85c-2963-4aab-a515-e3200223bcf0"
                 }
             ],
             "severity": "warning",
@@ -780,7 +779,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -788,7 +787,7 @@
                         "x": 68.57,
                         "y": 97.35
                     },
-                    "uuid": "92384999-17d8-4ae1-9b72-bfcc5bf471a2"
+                    "uuid": "0d9923f2-b7f4-45ea-9ed2-e6a470ab16d5"
                 }
             ],
             "severity": "warning",
@@ -803,7 +802,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -811,7 +810,7 @@
                         "x": 69.41,
                         "y": 106.11
                     },
-                    "uuid": "f9e19d15-793d-4dbc-8c05-fe47c82e76e2"
+                    "uuid": "28b3ed15-7d1e-477d-8eb0-138021356a5d"
                 }
             ],
             "severity": "warning",
@@ -826,7 +825,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -834,7 +833,7 @@
                         "x": 70.27,
                         "y": 100.11
                     },
-                    "uuid": "52d85b77-efa9-4476-91a6-4d4913eee156"
+                    "uuid": "3dc0158a-f3a5-4f5f-b2ff-612e0285c632"
                 }
             ],
             "severity": "warning",
@@ -849,7 +848,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -857,7 +856,7 @@
                         "x": 71.11,
                         "y": 97.35
                     },
-                    "uuid": "4ca8a3bb-188b-4069-b43a-21d944b8ab8b"
+                    "uuid": "26d1f198-25ea-4a0c-8b88-46c6ece443aa"
                 }
             ],
             "severity": "warning",
@@ -872,7 +871,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -880,7 +879,7 @@
                         "x": 71.95,
                         "y": 106.11
                     },
-                    "uuid": "b239351f-3e96-4674-b3f1-8493cda753fb"
+                    "uuid": "ed843d45-a2b5-4528-9c50-412a213af785"
                 }
             ],
             "severity": "warning",
@@ -895,7 +894,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -903,7 +902,7 @@
                         "x": 72.81,
                         "y": 100.11
                     },
-                    "uuid": "b464a363-df9b-455d-9367-82d7e2246bdf"
+                    "uuid": "a44018d2-4d4e-41fd-adba-e211e0e8ac0d"
                 }
             ],
             "severity": "warning",
@@ -918,7 +917,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -926,7 +925,7 @@
                         "x": 73.65,
                         "y": 97.35
                     },
-                    "uuid": "12a0c263-89ae-44ff-87fb-9faa84cf9640"
+                    "uuid": "39cc93b3-d1b7-46b5-b197-2f032621439f"
                 }
             ],
             "severity": "warning",
@@ -941,7 +940,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -949,7 +948,7 @@
                         "x": 74.49,
                         "y": 106.11
                     },
-                    "uuid": "ed9d114c-15f2-4882-a528-7bfac4887bd7"
+                    "uuid": "eb68d459-e6c7-41ee-8246-ccad9fed4366"
                 }
             ],
             "severity": "warning",
@@ -964,7 +963,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -972,7 +971,7 @@
                         "x": 75.35,
                         "y": 100.11
                     },
-                    "uuid": "8d4302eb-6d24-4fe8-b838-9f8a635c2ebe"
+                    "uuid": "fd640cd9-4830-49c3-9989-3e922226458c"
                 }
             ],
             "severity": "warning",
@@ -987,7 +986,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -995,7 +994,7 @@
                         "x": 76.19,
                         "y": 97.35
                     },
-                    "uuid": "f774d701-b74a-4bdc-b098-d7fe4d8cfa92"
+                    "uuid": "2b3d10cc-d245-4dfe-9f36-112cccf86f37"
                 }
             ],
             "severity": "warning",
@@ -1010,7 +1009,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -1018,7 +1017,7 @@
                         "x": 77.03,
                         "y": 106.11
                     },
-                    "uuid": "ee85d9d5-a4b8-471e-922a-fc9a79e6237a"
+                    "uuid": "bb087204-d74c-42a0-baa3-2de961e23b85"
                 }
             ],
             "severity": "warning",
@@ -1033,7 +1032,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -1041,7 +1040,7 @@
                         "x": 77.89,
                         "y": 100.11
                     },
-                    "uuid": "339b7302-c036-477f-a2ef-13f40afb9140"
+                    "uuid": "d05dc1a2-5504-45a1-b592-187315e566ce"
                 }
             ],
             "severity": "warning",
@@ -1056,7 +1055,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -1064,7 +1063,7 @@
                         "x": 78.73,
                         "y": 97.35
                     },
-                    "uuid": "411d8a3f-f580-4943-b5ce-2d01d2602e09"
+                    "uuid": "1c2c0fda-00a2-495d-a0ec-6169d563de7a"
                 }
             ],
             "severity": "warning",
@@ -1079,7 +1078,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -1087,7 +1086,7 @@
                         "x": 79.57,
                         "y": 106.11
                     },
-                    "uuid": "14d06092-73b5-47a5-8f0b-243d8909d468"
+                    "uuid": "45fe2b58-5aae-4b31-9f94-56ed3abbbf5c"
                 }
             ],
             "severity": "warning",
@@ -1102,7 +1101,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -1110,7 +1109,7 @@
                         "x": 80.43,
                         "y": 100.11
                     },
-                    "uuid": "f70afda7-804a-4f39-b306-237cb1323802"
+                    "uuid": "208d78a5-50d4-417e-b365-3c7a3e906778"
                 }
             ],
             "severity": "warning",
@@ -1125,7 +1124,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -1133,7 +1132,7 @@
                         "x": 81.27,
                         "y": 97.35
                     },
-                    "uuid": "74489668-f4d8-4204-a514-36645575f077"
+                    "uuid": "e3bc0c74-a7ca-4097-a742-6f4edfe8e663"
                 }
             ],
             "severity": "warning",
@@ -1148,7 +1147,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -1156,7 +1155,7 @@
                         "x": 82.11,
                         "y": 106.11
                     },
-                    "uuid": "af38c292-0513-43e0-b056-6667f578695c"
+                    "uuid": "22af4e9b-60ae-487a-97ca-871f6d417aef"
                 }
             ],
             "severity": "warning",
@@ -1171,7 +1170,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -1179,7 +1178,7 @@
                         "x": 82.97,
                         "y": 100.11
                     },
-                    "uuid": "5383dce8-0bad-40f7-9ec2-36f9c551ce2e"
+                    "uuid": "e6843875-5755-405d-a5c9-f2cdb7e4f1be"
                 }
             ],
             "severity": "warning",
@@ -1194,7 +1193,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -1202,7 +1201,7 @@
                         "x": 83.81,
                         "y": 97.35
                     },
-                    "uuid": "4f1b7843-33b8-46cf-9b6f-11847e4bca2a"
+                    "uuid": "731d6889-a8f4-4590-8844-265df2291923"
                 }
             ],
             "severity": "warning",
@@ -1217,7 +1216,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -1225,7 +1224,7 @@
                         "x": 84.65,
                         "y": 106.11
                     },
-                    "uuid": "4c3fc8f2-9a85-4406-b724-9fab3774f881"
+                    "uuid": "34ea0464-47da-443a-8670-c780244db3eb"
                 }
             ],
             "severity": "warning",
@@ -1240,7 +1239,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -1248,7 +1247,7 @@
                         "x": 85.51,
                         "y": 100.11
                     },
-                    "uuid": "2c02a3d9-b592-4845-8b27-9feec2a43e53"
+                    "uuid": "e803d332-0f59-4ed7-b02f-f94114764979"
                 }
             ],
             "severity": "warning",
@@ -1263,7 +1262,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -1271,7 +1270,7 @@
                         "x": 86.35,
                         "y": 97.35
                     },
-                    "uuid": "cf1c927f-0546-46ae-bbea-dfd0b866988c"
+                    "uuid": "ddae6a8b-7748-436a-ab04-fff551fb8cc5"
                 }
             ],
             "severity": "warning",
@@ -1286,7 +1285,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -1294,7 +1293,7 @@
                         "x": 87.19,
                         "y": 106.11
                     },
-                    "uuid": "db9314b0-a02e-4f80-b537-408f21458ab2"
+                    "uuid": "20f06476-b4c8-40bb-8a9b-1b1ae24cb706"
                 }
             ],
             "severity": "warning",
@@ -1309,7 +1308,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -1317,7 +1316,7 @@
                         "x": 88.05,
                         "y": 100.11
                     },
-                    "uuid": "740bca34-bdd4-4ec8-a733-60db3910153a"
+                    "uuid": "4a8758ce-67b2-44fd-804d-d3a08c3a454e"
                 }
             ],
             "severity": "warning",
@@ -1332,7 +1331,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -1340,7 +1339,7 @@
                         "x": 88.89,
                         "y": 97.35
                     },
-                    "uuid": "29f0381b-99f2-48ac-b29f-e13ed9524c70"
+                    "uuid": "e97fb477-2cff-4e53-b06e-28ed437d250e"
                 }
             ],
             "severity": "warning",
@@ -1355,7 +1354,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -1363,7 +1362,7 @@
                         "x": 89.73,
                         "y": 106.11
                     },
-                    "uuid": "3571c568-9864-4530-b5ac-7d8d16d0cbf3"
+                    "uuid": "fd21c45a-8aaa-4960-abac-80367763e37c"
                 }
             ],
             "severity": "warning",
@@ -1378,7 +1377,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -1386,7 +1385,7 @@
                         "x": 90.59,
                         "y": 100.11
                     },
-                    "uuid": "88849777-da8a-42cc-ae4c-8a41c5dce374"
+                    "uuid": "66dbf93f-6f93-4626-8e57-bfdea37bab99"
                 }
             ],
             "severity": "warning",
@@ -1401,7 +1400,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -1409,7 +1408,7 @@
                         "x": 91.43,
                         "y": 97.35
                     },
-                    "uuid": "84e467b6-fe67-4248-837f-5d54701bb618"
+                    "uuid": "6d3caba5-129b-4d68-a5c9-bfff25e98521"
                 }
             ],
             "severity": "warning",
@@ -1424,7 +1423,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -1432,7 +1431,7 @@
                         "x": 92.27,
                         "y": 106.11
                     },
-                    "uuid": "d1a08663-c04b-4a16-9844-fe18f544b9af"
+                    "uuid": "ce9fa716-21ad-4012-9262-884fffc26bd4"
                 }
             ],
             "severity": "warning",
@@ -1447,7 +1446,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -1455,7 +1454,7 @@
                         "x": 93.13,
                         "y": 100.11
                     },
-                    "uuid": "53ffbcad-a411-4d94-8c97-e6b4edd88abb"
+                    "uuid": "67744039-3211-4d11-8286-6dec35283c1b"
                 }
             ],
             "severity": "warning",
@@ -1470,7 +1469,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Segment z J_SV2 na F.Silkscreen",
@@ -1478,7 +1477,7 @@
                         "x": 93.97,
                         "y": 97.35
                     },
-                    "uuid": "bfbf7f2a-4713-431c-b7be-5f18f2c2afbc"
+                    "uuid": "9fd6db5d-0366-4f13-89de-15aff6e39f0f"
                 }
             ],
             "severity": "warning",
@@ -1493,7 +1492,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Prostokąt z J_SV2 na F.Silkscreen",
@@ -1501,7 +1500,7 @@
                         "x": 95.67,
                         "y": 100.11
                     },
-                    "uuid": "995fc8ca-ca91-43f0-a47e-4cb25f2bdde3"
+                    "uuid": "0cf0997f-0427-4dd4-9d15-d9c1975afd56"
                 }
             ],
             "severity": "warning",
@@ -1516,7 +1515,7 @@
                         "x": 105.5,
                         "y": 100.0
                     },
-                    "uuid": "0ba529ed-6bdf-47cb-af5a-85f4745db51e"
+                    "uuid": "c21e3eaf-19aa-4edd-abed-f8e20b7c08ec"
                 },
                 {
                     "description": "Prostokąt z J_SV2 na F.Silkscreen",
@@ -1524,86 +1523,11 @@
                         "x": 96.62,
                         "y": 97.35
                     },
-                    "uuid": "e25716b6-3e9f-493b-8c26-ff065673574e"
+                    "uuid": "e7678b28-c713-40af-9ec6-1173296ac7be"
                 }
             ],
             "severity": "warning",
             "type": "silk_edge_clearance"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Pole odnośnika do R7",
-                    "pos": {
-                        "x": 68.669999,
-                        "y": 34.115
-                    },
-                    "uuid": "d7208c13-0235-4441-a28a-dd77b4810ea8"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Pole odnośnika do U2",
-                    "pos": {
-                        "x": 48.805,
-                        "y": 24.354999
-                    },
-                    "uuid": "43029b70-7fc7-4523-ab3d-041758f179dd"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Pole odnośnika do R19",
-                    "pos": {
-                        "x": 85.39,
-                        "y": 32.47
-                    },
-                    "uuid": "4e9547f8-a550-4f9c-8119-c169dacad585"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Pole odnośnika do C1",
-                    "pos": {
-                        "x": 42.0,
-                        "y": 31.537
-                    },
-                    "uuid": "40ef3d19-c131-4baa-8362-11335199c0ea"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Pole odnośnika do R4",
-                    "pos": {
-                        "x": 37.7,
-                        "y": 33.074999
-                    },
-                    "uuid": "08554d5b-cd9f-43f3-8048-596878b0d358"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
         },
         {
             "description": "Silkscreen clipped by solder mask",
@@ -1614,22 +1538,7 @@
                         "x": 77.997999,
                         "y": 31.699999
                     },
-                    "uuid": "271ada7e-1298-414b-9855-4185064ecebd"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Pole odnośnika do C12",
-                    "pos": {
-                        "x": 86.37,
-                        "y": 35.457
-                    },
-                    "uuid": "5ea01312-d190-4cb3-bc96-af17711e12a2"
+                    "uuid": "f082eac5-8c30-4745-a3ee-073f409b69ef"
                 }
             ],
             "severity": "warning",
@@ -1644,22 +1553,7 @@
                         "x": 69.789999,
                         "y": 37.707
                     },
-                    "uuid": "712222c3-32b2-46a9-9a54-5cb67874db10"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Pole odnośnika do U6",
-                    "pos": {
-                        "x": 93.0,
-                        "y": 29.174999
-                    },
-                    "uuid": "7c6c524d-2275-4170-a766-50aa6b600a3a"
+                    "uuid": "e71c85b8-b08d-410f-9059-ddf142af6ef9"
                 }
             ],
             "severity": "warning",
@@ -1674,7 +1568,7 @@
                         "x": 93.997999,
                         "y": 37.199999
                     },
-                    "uuid": "5e754ba9-b5cf-4595-9eed-2de6caff8522"
+                    "uuid": "f530c816-d2c0-4412-9b6c-c4528a0fdfa1"
                 }
             ],
             "severity": "warning",
@@ -1684,12 +1578,12 @@
             "description": "Silkscreen clipped by solder mask",
             "items": [
                 {
-                    "description": "Pole odnośnika do R31",
+                    "description": "Pole odnośnika do C12",
                     "pos": {
-                        "x": 55.58,
-                        "y": 41.725
+                        "x": 86.37,
+                        "y": 35.457
                     },
-                    "uuid": "be93a88a-4680-44ea-b906-4be7828fd04e"
+                    "uuid": "96b12a1c-7d2b-4fb8-944c-f2e3c6297d4f"
                 }
             ],
             "severity": "warning",
@@ -1699,12 +1593,12 @@
             "description": "Silkscreen clipped by solder mask",
             "items": [
                 {
-                    "description": "Pole odnośnika do R28",
+                    "description": "Pole odnośnika do U2",
                     "pos": {
-                        "x": 52.54,
-                        "y": 41.725
+                        "x": 48.805,
+                        "y": 24.354999
                     },
-                    "uuid": "5d3bfea3-9f4c-45fc-ae30-cf40b284d0a9"
+                    "uuid": "324a90ce-4460-4569-b749-2d70e9656dc7"
                 }
             ],
             "severity": "warning",
@@ -1714,12 +1608,72 @@
             "description": "Silkscreen clipped by solder mask",
             "items": [
                 {
-                    "description": "Pole odnośnika do R37",
+                    "description": "Pole odnośnika do R19",
                     "pos": {
-                        "x": 66.17,
-                        "y": 35.365
+                        "x": 85.39,
+                        "y": 32.47
                     },
-                    "uuid": "b15a0e69-673b-4f58-af04-e7df2149826e"
+                    "uuid": "1aa32d66-3865-49f8-bcee-0bcf0b2a699d"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Pole odnośnika do U6",
+                    "pos": {
+                        "x": 93.0,
+                        "y": 29.174999
+                    },
+                    "uuid": "9812ddb6-93e3-4dfc-8e89-1df2f888fc23"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Pole odnośnika do R4",
+                    "pos": {
+                        "x": 37.7,
+                        "y": 33.074999
+                    },
+                    "uuid": "5997e5d9-8ba2-44da-bb5e-87bfa9b318b8"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Pole odnośnika do R7",
+                    "pos": {
+                        "x": 68.669999,
+                        "y": 34.115
+                    },
+                    "uuid": "c2fa2eeb-1998-4d71-b843-ef6297cde592"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C1",
+                    "pos": {
+                        "x": 42.0,
+                        "y": 31.537
+                    },
+                    "uuid": "55c48f62-ae64-4e83-ad04-2a8252f8adf1"
                 }
             ],
             "severity": "warning",
@@ -1734,37 +1688,7 @@
                         "x": 78.73,
                         "y": 14.265
                     },
-                    "uuid": "b99ee765-9271-4d8e-848c-4d96a6ae612c"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Pole odnośnika do R36",
-                    "pos": {
-                        "x": 75.73,
-                        "y": 14.265
-                    },
-                    "uuid": "dbc4e03e-86a6-46fd-8b64-a6644b844f4b"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Pole odnośnika do R29",
-                    "pos": {
-                        "x": 83.07,
-                        "y": 14.285
-                    },
-                    "uuid": "b10f0fef-5761-4756-b127-bb89dabf3377"
+                    "uuid": "c8b24891-93c0-46d8-a0db-cd827f40147e"
                 }
             ],
             "severity": "warning",
@@ -1779,149 +1703,86 @@
                         "x": 91.539999,
                         "y": 52.725
                     },
-                    "uuid": "fba1e342-a86e-4275-a40c-23977a8a4004"
+                    "uuid": "e3473c00-5cfa-4a3c-9070-0650e277809b"
                 }
             ],
             "severity": "warning",
             "type": "silk_over_copper"
         },
         {
-            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "description": "Silkscreen clipped by solder mask",
             "items": [
                 {
-                    "description": "Pole odnośnika do U3",
+                    "description": "Pole odnośnika do R29",
                     "pos": {
-                        "x": 60.804999,
-                        "y": 24.354999
+                        "x": 83.07,
+                        "y": 14.285
                     },
-                    "uuid": "76d37c57-fda6-4ba4-bdf0-939fd9133afc"
-                },
-                {
-                    "description": "Okrąg z C3 na F.Silkscreen",
-                    "pos": {
-                        "x": 63.75,
-                        "y": 21.5
-                    },
-                    "uuid": "a40d8e5e-10b8-4616-8895-c3b023451d17"
+                    "uuid": "8e385fdf-a0f0-49cb-bf2b-c5ddd329dd1b"
                 }
             ],
             "severity": "warning",
-            "type": "silk_overlap"
+            "type": "silk_over_copper"
         },
         {
-            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0067 mm)",
+            "description": "Silkscreen clipped by solder mask",
             "items": [
                 {
-                    "description": "Pole odnośnika do U2",
+                    "description": "Pole odnośnika do R31",
                     "pos": {
-                        "x": 48.805,
-                        "y": 24.354999
+                        "x": 55.58,
+                        "y": 41.725
                     },
-                    "uuid": "43029b70-7fc7-4523-ab3d-041758f179dd"
-                },
-                {
-                    "description": "Segment z C7 na F.Silkscreen",
-                    "pos": {
-                        "x": 50.768252,
-                        "y": 24.66
-                    },
-                    "uuid": "6e1c508c-e035-4acf-88e0-e8c4012d4273"
+                    "uuid": "b8952a84-9624-4517-8b98-21b1d55c1bee"
                 }
             ],
             "severity": "warning",
-            "type": "silk_overlap"
+            "type": "silk_over_copper"
         },
         {
-            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0713 mm)",
+            "description": "Silkscreen clipped by solder mask",
             "items": [
                 {
-                    "description": "Łuk z U9 na F.Silkscreen",
+                    "description": "Pole odnośnika do R28",
                     "pos": {
-                        "x": 91.54,
-                        "y": 52.0
+                        "x": 52.54,
+                        "y": 41.725
                     },
-                    "uuid": "21085905-555d-4774-9243-f53238aabdd2"
-                },
-                {
-                    "description": "Pole odnośnika do R13",
-                    "pos": {
-                        "x": 88.5,
-                        "y": 53.475
-                    },
-                    "uuid": "ac55cb1b-0bdf-434a-a74a-7dadc3beaf69"
+                    "uuid": "f49b9411-a28a-4518-8e80-40f81c854179"
                 }
             ],
             "severity": "warning",
-            "type": "silk_overlap"
+            "type": "silk_over_copper"
         },
         {
-            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "description": "Silkscreen clipped by solder mask",
             "items": [
                 {
-                    "description": "Pole odnośnika do C14",
+                    "description": "Pole odnośnika do R37",
                     "pos": {
-                        "x": 92.853,
-                        "y": 53.475
+                        "x": 66.17,
+                        "y": 35.365
                     },
-                    "uuid": "942a1381-aa7d-42ed-b3a8-eee80bdc43c3"
-                },
-                {
-                    "description": "Segment z U9 na F.Silkscreen",
-                    "pos": {
-                        "x": 89.74,
-                        "y": 53.85
-                    },
-                    "uuid": "b77c3272-be40-40a9-9035-47a540b63694"
+                    "uuid": "5fc132d9-7f47-4e93-a291-542e88417515"
                 }
             ],
             "severity": "warning",
-            "type": "silk_overlap"
+            "type": "silk_over_copper"
         },
         {
-            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "description": "Silkscreen clipped by solder mask",
             "items": [
                 {
-                    "description": "Pole odnośnika do R13",
+                    "description": "Pole odnośnika do R36",
                     "pos": {
-                        "x": 88.5,
-                        "y": 53.475
+                        "x": 75.73,
+                        "y": 14.265
                     },
-                    "uuid": "ac55cb1b-0bdf-434a-a74a-7dadc3beaf69"
-                },
-                {
-                    "description": "Segment z U9 na F.Silkscreen",
-                    "pos": {
-                        "x": 89.74,
-                        "y": 53.85
-                    },
-                    "uuid": "b77c3272-be40-40a9-9035-47a540b63694"
+                    "uuid": "5a3ed57c-46b9-4fcf-af0c-543c4c1515e8"
                 }
             ],
             "severity": "warning",
-            "type": "silk_overlap"
-        },
-        {
-            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0596 mm)",
-            "items": [
-                {
-                    "description": "Łuk z U9 na F.Silkscreen",
-                    "pos": {
-                        "x": 91.54,
-                        "y": 52.0
-                    },
-                    "uuid": "7db190e9-0cbe-4439-890a-74b8fa2421d8"
-                },
-                {
-                    "description": "Pole odnośnika do C14",
-                    "pos": {
-                        "x": 92.853,
-                        "y": 53.475
-                    },
-                    "uuid": "942a1381-aa7d-42ed-b3a8-eee80bdc43c3"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_overlap"
+            "type": "silk_over_copper"
         },
         {
             "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
@@ -1932,7 +1793,7 @@
                         "x": 67.5,
                         "y": 33.0
                     },
-                    "uuid": "1a385495-dfc8-462b-b395-a08e31e9929c"
+                    "uuid": "8356fa4f-e1cd-4532-ab33-82ad5d6f8189"
                 },
                 {
                     "description": "Pole odnośnika do R7",
@@ -1940,30 +1801,7 @@
                         "x": 68.669999,
                         "y": 34.115
                     },
-                    "uuid": "d7208c13-0235-4441-a28a-dd77b4810ea8"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_overlap"
-        },
-        {
-            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
-            "items": [
-                {
-                    "description": "Segment z U4 na F.Silkscreen",
-                    "pos": {
-                        "x": 62.74,
-                        "y": 42.85
-                    },
-                    "uuid": "7875e1f3-dcf9-44fa-9da9-589772d2c6b7"
-                },
-                {
-                    "description": "Pole odnośnika do C4",
-                    "pos": {
-                        "x": 64.516999,
-                        "y": 42.475
-                    },
-                    "uuid": "eb308261-760b-4dcf-8c2a-9f9d57b4871d"
+                    "uuid": "c2fa2eeb-1998-4d71-b843-ef6297cde592"
                 }
             ],
             "severity": "warning",
@@ -1978,7 +1816,7 @@
                         "x": 69.397064,
                         "y": 37.28
                     },
-                    "uuid": "5c4ff274-359e-4a35-a19c-642ceaf79356"
+                    "uuid": "70e5476d-64d1-498e-a799-76f2f82ec799"
                 },
                 {
                     "description": "Pole odnośnika do C9",
@@ -1986,14 +1824,129 @@
                         "x": 69.789999,
                         "y": 37.707
                     },
-                    "uuid": "712222c3-32b2-46a9-9a54-5cb67874db10"
+                    "uuid": "e71c85b8-b08d-410f-9059-ddf142af6ef9"
                 }
             ],
             "severity": "warning",
             "type": "silk_overlap"
         },
         {
-            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,1418 mm)",
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Segment z U4 na F.Silkscreen",
+                    "pos": {
+                        "x": 62.74,
+                        "y": 42.85
+                    },
+                    "uuid": "71f4d869-83dc-4f42-9b97-fe1c651cd045"
+                },
+                {
+                    "description": "Pole odnośnika do C4",
+                    "pos": {
+                        "x": 64.516999,
+                        "y": 42.475
+                    },
+                    "uuid": "d2ea3b7e-3a45-4b09-bf45-e6f3c53072f0"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0713 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do R13",
+                    "pos": {
+                        "x": 88.5,
+                        "y": 53.475
+                    },
+                    "uuid": "8cfd9150-1d10-4404-9337-9653ec2c230d"
+                },
+                {
+                    "description": "Łuk z U9 na F.Silkscreen",
+                    "pos": {
+                        "x": 91.54,
+                        "y": 52.0
+                    },
+                    "uuid": "ba1606fe-fe66-44ee-aed9-8824475f394f"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do R13",
+                    "pos": {
+                        "x": 88.5,
+                        "y": 53.475
+                    },
+                    "uuid": "8cfd9150-1d10-4404-9337-9653ec2c230d"
+                },
+                {
+                    "description": "Segment z U9 na F.Silkscreen",
+                    "pos": {
+                        "x": 89.74,
+                        "y": 53.85
+                    },
+                    "uuid": "f1355514-3a38-4343-b60c-924ce4aab36e"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C14",
+                    "pos": {
+                        "x": 92.853,
+                        "y": 53.475
+                    },
+                    "uuid": "ef992549-5bf1-46d5-91bd-1f16ccf9f135"
+                },
+                {
+                    "description": "Segment z U9 na F.Silkscreen",
+                    "pos": {
+                        "x": 89.74,
+                        "y": 53.85
+                    },
+                    "uuid": "f1355514-3a38-4343-b60c-924ce4aab36e"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0667 mm)",
+            "items": [
+                {
+                    "description": "Łuk z U9 na F.Silkscreen",
+                    "pos": {
+                        "x": 91.54,
+                        "y": 52.0
+                    },
+                    "uuid": "78e4364a-1fb4-46d9-a710-fb6c3498f934"
+                },
+                {
+                    "description": "Pole odnośnika do C14",
+                    "pos": {
+                        "x": 92.853,
+                        "y": 53.475
+                    },
+                    "uuid": "ef992549-5bf1-46d5-91bd-1f16ccf9f135"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0466 mm)",
             "items": [
                 {
                     "description": "Segment z R19 na F.Silkscreen",
@@ -2001,7 +1954,7 @@
                         "x": 86.117064,
                         "y": 35.635
                     },
-                    "uuid": "459d5792-8de8-4368-aef7-56b17ab9b45e"
+                    "uuid": "2e39c8c1-5a9f-4941-b245-675e7e1a2320"
                 },
                 {
                     "description": "Pole odnośnika do C12",
@@ -2009,7 +1962,7 @@
                         "x": 86.37,
                         "y": 35.457
                     },
-                    "uuid": "5ea01312-d190-4cb3-bc96-af17711e12a2"
+                    "uuid": "96b12a1c-7d2b-4fb8-944c-f2e3c6297d4f"
                 }
             ],
             "severity": "warning",
@@ -2019,20 +1972,89 @@
             "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
             "items": [
                 {
-                    "description": "Pole odnośnika do C5",
+                    "description": "Pole odnośnika do U3",
                     "pos": {
-                        "x": 51.227,
-                        "y": 42.475
+                        "x": 60.804999,
+                        "y": 24.354999
                     },
-                    "uuid": "c653a655-0066-490e-9276-cdb8f61b138a"
+                    "uuid": "2b87e350-6d27-40bc-bf6b-497eff79133c"
                 },
+                {
+                    "description": "Okrąg z C3 na F.Silkscreen",
+                    "pos": {
+                        "x": 63.75,
+                        "y": 21.5
+                    },
+                    "uuid": "440f6eac-951c-4166-95c3-8a8487c0539e"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "items": [
                 {
                     "description": "Łuk z U10 na F.Silkscreen",
                     "pos": {
                         "x": 52.54,
                         "y": 41.0
                     },
-                    "uuid": "f2d67d08-0682-4cd6-acb2-5d3b60e1b0cf"
+                    "uuid": "3de57421-a3ee-47ba-be17-5871780c6886"
+                },
+                {
+                    "description": "Pole odnośnika do C5",
+                    "pos": {
+                        "x": 51.227,
+                        "y": 42.475
+                    },
+                    "uuid": "57fe880f-7d06-426a-bea7-70e84d4fabd9"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0780 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C5",
+                    "pos": {
+                        "x": 51.227,
+                        "y": 42.475
+                    },
+                    "uuid": "57fe880f-7d06-426a-bea7-70e84d4fabd9"
+                },
+                {
+                    "description": "Segment z U10 na F.Silkscreen",
+                    "pos": {
+                        "x": 50.74,
+                        "y": 42.85
+                    },
+                    "uuid": "ce755b37-786e-423d-8031-9a422111581c"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0067 mm)",
+            "items": [
+                {
+                    "description": "Pole odnośnika do U2",
+                    "pos": {
+                        "x": 48.805,
+                        "y": 24.354999
+                    },
+                    "uuid": "324a90ce-4460-4569-b749-2d70e9656dc7"
+                },
+                {
+                    "description": "Segment z C7 na F.Silkscreen",
+                    "pos": {
+                        "x": 50.768252,
+                        "y": 24.66
+                    },
+                    "uuid": "9b49a733-76e3-451f-a1b2-36a1e7faa86d"
                 }
             ],
             "severity": "warning",
@@ -2042,43 +2064,20 @@
             "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
             "items": [
                 {
-                    "description": "Segment z U10 na F.Silkscreen",
+                    "description": "Segment z R1 na F.Silkscreen",
                     "pos": {
-                        "x": 50.74,
-                        "y": 42.85
+                        "x": 28.272936,
+                        "y": 29.045
                     },
-                    "uuid": "8325543e-f5a7-4476-8149-0da8af8ee622"
+                    "uuid": "19728757-a229-49a7-9101-8568d4d13d41"
                 },
-                {
-                    "description": "Pole odnośnika do C5",
-                    "pos": {
-                        "x": 51.227,
-                        "y": 42.475
-                    },
-                    "uuid": "c653a655-0066-490e-9276-cdb8f61b138a"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_overlap"
-        },
-        {
-            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,1118 mm)",
-            "items": [
                 {
                     "description": "Pole odnośnika do R2",
                     "pos": {
                         "x": 29.0,
                         "y": 29.16
                     },
-                    "uuid": "4004debd-450d-4a70-b2c9-b2922b9155a2"
-                },
-                {
-                    "description": "Segment z R1 na F.Silkscreen",
-                    "pos": {
-                        "x": 28.272936,
-                        "y": 29.045
-                    },
-                    "uuid": "fc862885-7986-4b19-80dc-55afde459289"
+                    "uuid": "7d136a49-2a30-4ccf-a5ee-cc9dae16eee6"
                 }
             ],
             "severity": "warning",

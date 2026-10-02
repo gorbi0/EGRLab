@@ -1,10 +1,10 @@
 # P06-R2 — QA schematu (plik generowany przez src/run_schematic.py)
 
-ERC: 0 naruszeń na 7 arkuszach. Netlista: 74 części, 243 pinów sprawdzonych pin po pinie względem `parts.py`, 0 błędów, 54 sieci.
+ERC: 0 naruszeń na 7 arkuszach. Netlista: 75 części, 245 pinów sprawdzonych pin po pinie względem `parts.py`, 0 błędów, 54 sieci.
 
 Kontrole elektryczne (`verify_electrical.py`): 33/33 PASS; mutacje 30/30 wykrytych.
 Filtr: τ nominalnie 1200.9 µs (132.5 Hz), pasmo z tolerancją R 0,1 % i C1 X7R ±10 % / temperatura: 918–1388 µs. Dzielnik 1:2 w narożnikach (0,1 % + 25 ppm/K × 50 K): 0.498875–0.501125.
-C3 220 µF: energia ładowania przy 5,25 V 3.03 mJ (tyle wydziela R6), τ = R6·C3 = 220 µs. Pojemność na 5V_SYS: P06 220.3 µF + P05 R3 265.7 µF wobec 600 µF (TSR 2-2450). R21: 0.64 W przy 5,00 V, 0.71 W przy 5,25 V (PR02 2 W).
+C3 220 µF: energia ładowania przy 5,25 V 3.03 mJ (tyle wydziela R6), τ = R6·C3 = 220 µs. Pojemność na 5V_SYS: P06 220.4 µF + P05 R3 265.7 µF wobec 600 µF (TSR 2-2450). R21: 0.64 W przy 5,00 V, 0.71 W przy 5,25 V (PR02 2 W).
 
 Kontrakt S1 (`verify_s1.py`): 27/27 PASS; mutacje 37/37 wykrytych przez kontrolę docelową; próba zerowa: czysta.
 

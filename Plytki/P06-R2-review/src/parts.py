@@ -138,6 +138,8 @@ add('C3','C28',SCP,CP63,'220u / 16V','EEUFR1C221',{1:A5,2:G},'P06',farads=220e-6
 cap('C4','C_LDO_OUT','4.7u',4.7e-6,V,G,'P06',mpn='SMD 1206 X7R 25V 10% 4.7u')
 cap('C5','C_REF','4.7u',4.7e-6,'REF25',G,'ANA',mpn='SMD 1206 X7R 25V 10% 4.7u',note='MCP1525 load capacitor 1..10 uF effective, within 5 mm of U10.')
 cap('C16','ADD_ADC_REF_HF','100n',1e-7,'REF25',G,'ADC')
+# 2.10 (independent PCB review F7, user decision): 5VA_P06 leaves the board at J5.1 for the BYPASS status contact - local 100 nF at the tail
+cap('C17','ADD_J5_5VA_HF','100n',1e-7,A5,G,'P06')
 add('D2','ADD_REF_DISCHARGE',symbol('Device','D_Schottky'),DIO35,'BAT85','BAT85,133 (Nexperia)',{1:V,2:'REF25'},'ANA','https://assets.nexperia.com/documents/data-sheet/BAT85.pdf','Discharge of reference capacitor into local rail during power removal.')
 for i,(r,rail) in enumerate([('U1',A5),('U2',V),('U3',V),('U4',A5),('U5',V),('U6',V),('U7',V),('U8',V),('U9',A5),('U10',V)],6):
  cap('C'+str(i),'DEC_'+r,'100n',1e-7,rail,G,'P06')

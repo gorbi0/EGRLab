@@ -81,7 +81,7 @@ def pwr_thin(b):                                                                
 
 
 def bottom_soic(b): flip(fp(b, 'U5'))                                               # U5 (SOIC-14) flipped to the bottom
-def force_thermal(b): pad(b, 'J3', '1').SetLocalZoneConnection(p.ZONE_CONNECTION_THERMAL)   # ISERIES pad on thermal spokes
+def force_thermal(b): pad(b, 'RSH1', '1').SetLocalZoneConnection(p.ZONE_CONNECTION_THERMAL)   # shunt force pad on thermal spokes (J3 / J4 have them since 2.10)
 
 
 def force_narrow(b):                                                                # ECU_P1 strip cut to 3 mm (x 6..9) by a fill keepout

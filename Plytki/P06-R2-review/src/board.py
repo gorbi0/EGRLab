@@ -45,7 +45,7 @@ TOP_ONLY = []                # nets in a DSN class limited to F.Cu (use_layer; p
 # review 2.10 (F2): GND vias placed by stitch.py after the completion planner, nearest legal spot to each target (both pours, own pad's
 # pour piece): ('pad', ref, num, radius) - at a capacitor GND pad; ('at', x, y, radius) - a free spot (the B.Cu island under U2 / U3 had
 # one via). Every SMD decoupling / filter capacitor gets one (verify_pcb.py measures the return to its part's GND pin).
-EXTRA_GND_VIAS = [('pad', c, '2', 2.0) for c in ('C1', 'C2', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10', 'C11', 'C12', 'C13', 'C14', 'C15', 'C16')] + \
+EXTRA_GND_VIAS = [('pad', c, '2', 2.0) for c in ('C1', 'C2', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10', 'C11', 'C12', 'C13', 'C14', 'C15', 'C16', 'C17')] + \
                  [('pad', 'U1', '2', 2.0), ('at', 54.8, 31.4, 2.0), ('at', 60.8, 33.5, 2.0)]   # U1.2: INA240 GND (C6 return)
 SHUNT = 'RSH1'               # check_intrusion.py: no router copper of another net in its courtyard (README: nothing under the shunt)
 # 2.10 (verify_pcb.py return-path check): capacitor -> GND pin of its part; complete_routes.py --ties plans a GND track where the
@@ -53,3 +53,4 @@ SHUNT = 'RSH1'               # check_intrusion.py: no router copper of another n
 RETURN_PAIRS = {'C1': ('U2', '4'), 'C2': ('U3', '3'), 'C4': ('U4', '1'), 'C5': ('U10', '1'), 'C6': ('U1', '2'), 'C7': ('U2', '4'), 'C8': ('U3', '4'),
                 'C9': ('U4', '1'), 'C10': ('U5', '7'), 'C11': ('U6', '7'), 'C12': ('U7', '7'), 'C13': ('U8', '3'), 'C14': ('U9', '3'),
                 'C15': ('U10', '1'), 'C16': ('U3', '4')}
+RETURN_ACCEPT = {'C6': 14.0}   # accepted exception (verify_pcb.py ACCEPT): C6 -> U1.2 round REF_BUF pin 3, NC pin 4 and R27

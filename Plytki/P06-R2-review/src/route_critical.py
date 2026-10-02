@@ -74,6 +74,7 @@ class Board:
             z = p.ZONE(self.b); z.SetLayer(L); z.SetNet(self.net(net)); z.SetAssignedPriority(prio)
             z.SetZoneName(f'FORCE {net} {self.b.GetLayerName(L)}'); z.SetLocalClearance(mm(.3)); z.SetMinThickness(mm(.25))
             z.SetPadConnection(p.ZONE_CONNECTION_FULL); z.SetIslandRemovalMode(p.ISLAND_REMOVAL_MODE_ALWAYS)
+            z.SetThermalReliefSpokeWidth(mm(2.0)); z.SetThermalReliefGap(mm(.5))   # 2.10: spokes of the J3 / J4 wire pads (below)
             ol = z.Outline(); ol.NewOutline()
             for x, y in pts:
                 ol.Append(mm(x), mm(y))
@@ -127,8 +128,8 @@ def force_and_kelvin(B):
     ecu = [(xl, ytop, xr, k_top),                                                 # band over J3.1 and the shunt
            (s2[2] + CL, k_top, xr, yk - w / 2 - CL - .2),                         # right of the K_PLUS pad down to the ECU force pad
            (xl, k_top, kp[0] - w / 2 - CL - .2, j32y - hp - .9),                  # J3.1 and the area left of the K_PLUS track
-           (xl, k_top, xs, j41y + hp + .15),                                      # strip down to J4.1
-           (xl, j42y + hp + GAP, xr, j41y + hp + .15)]                            # J4.1 and right of it
+           (xl, k_top, xs, j41y + hp + 2.6),                                      # strip down to J4.1
+           (xl, j42y + hp + GAP, xr, j41y + hp + 2.6)]                            # J4.1 and right of it (2.10: 2.6 below the pad, room for its 4th spoke)
     e_top = yk + w / 2 + CL + .15                                 # below the K_PLUS row
     egr = [(xs + GAP, e_top, s3[0] - CL, s3[3] + .7),                             # J3.2 -> EGR force pad (left of the K_MINUS pad)
            (xs + GAP, s3[3] + .7, xr, j42y + hp)]                                 # below the shunt down to J4.2
@@ -145,7 +146,12 @@ def force_and_kelvin(B):
     # ---- nothing under the shunt on B.Cu (its courtyard + 0.3) ----
     cy = B.f['RSH1'].GetCourtyard(p.F_CrtYd).BBox()
     B.rule('RSH1: nic pod bocznikiem (B.Cu)', (p.ToMM(cy.GetLeft()) - .3, p.ToMM(cy.GetTop()) - .3, p.ToMM(cy.GetRight()) + .3, p.ToMM(cy.GetBottom()) + .3), [B_])
-    for a in list(B.f['J3'].Pads()) + list(B.f['J4'].Pads()) + list(B.f['RSH1'].Pads()):
+    # 2.10 (review F5, user decision): the wire pads of J3 / J4 on four 2 mm spokes per layer (16 mm of copper over both layers at
+    # 35 um, 5-6 A, 10 A in E15) so a 2.5 mm2 wire can be soldered without preheating 830 mm2 of pour; the shunt pads stay solid
+    for a in list(B.f['J3'].Pads()) + list(B.f['J4'].Pads()):
+        if a.GetNetname().split('/')[-1] in ('ECU_P1', 'EGR_P1'):
+            a.SetLocalZoneConnection(p.ZONE_CONNECTION_THERMAL)
+    for a in B.f['RSH1'].Pads():
         if a.GetNetname().split('/')[-1] in ('ECU_P1', 'EGR_P1'):
             a.SetLocalZoneConnection(p.ZONE_CONNECTION_FULL)
     return {'ecu': ecu, 'egr': egr, 'k_row': yk}

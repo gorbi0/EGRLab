@@ -119,7 +119,7 @@
     "detected": true,
     "failed_checks": [
       "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
-      "Force pours ECU_P1 / EGR_P1: one zone per net on F.Cu and on B.Cu, priority above GND, solid connection (no thermals) on every force pad (J3, J4, RSH1 1/4), each pad inside the fill of every layer it is on",
+      "Force pours ECU_P1 / EGR_P1: one zone per net on F.Cu and on B.Cu, priority above GND, RSH1 1/4 solid inside the fill, J3 / J4 wire pads on >= 4 spokes >= 2 mm on every layer (2.10, review F5)",
       "Force path >= 4 mm wide on both layers (fill shrunk by 2 mm stays one piece): J3.1-J4.1 (ECU_P1) and J3.2-J4.2 (EGR_P1); towards the shunt the 4 mm corridor reaches <= 3.5 mm from the force pad centre (the pad itself is 2.03 mm wide)"
     ]
   },
@@ -128,8 +128,7 @@
     "expected_failing_check": "Force pours ECU_P1",
     "detected": true,
     "failed_checks": [
-      "Force pours ECU_P1 / EGR_P1: one zone per net on F.Cu and on B.Cu, priority above GND, solid connection (no thermals) on every force pad (J3, J4, RSH1 1/4), each pad inside the fill of every layer it is on",
-      "Force path >= 4 mm wide on both layers (fill shrunk by 2 mm stays one piece): J3.1-J4.1 (ECU_P1) and J3.2-J4.2 (EGR_P1); towards the shunt the 4 mm corridor reaches <= 3.5 mm from the force pad centre (the pad itself is 2.03 mm wide)"
+      "Force pours ECU_P1 / EGR_P1: one zone per net on F.Cu and on B.Cu, priority above GND, RSH1 1/4 solid inside the fill, J3 / J4 wire pads on >= 4 spokes >= 2 mm on every layer (2.10, review F5)"
     ]
   },
   {
@@ -216,8 +215,7 @@
     "failed_checks": [
       "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
       "Every value, footprint ID and pad net equals the exported schematic netlist",
-      "Force pours ECU_P1 / EGR_P1: one zone per net on F.Cu and on B.Cu, priority above GND, solid connection (no thermals) on every force pad (J3, J4, RSH1 1/4), each pad inside the fill of every layer it is on",
-      "Force path >= 4 mm wide on both layers (fill shrunk by 2 mm stays one piece): J3.1-J4.1 (ECU_P1) and J3.2-J4.2 (EGR_P1); towards the shunt the 4 mm corridor reaches <= 3.5 mm from the force pad centre (the pad itself is 2.03 mm wide)",
+      "Force pours ECU_P1 / EGR_P1: one zone per net on F.Cu and on B.Cu, priority above GND, RSH1 1/4 solid inside the fill, J3 / J4 wire pads on >= 4 spokes >= 2 mm on every layer (2.10, review F5)",
       "Panel side: J3 / J4 / J5 pad rows in one column <= 18 mm from x = 0, anchor holes 1-6 mm from x = 0 with their 3 mm rule areas and no track in them, no part on the cable between the anchors and the pads; column J3.1 ECU, J3.2 EGR, J4.2 EGR, J4.1 ECU (each force net one piece of copper)"
     ]
   },
@@ -227,7 +225,6 @@
     "detected": true,
     "failed_checks": [
       "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
-      "Force path >= 4 mm wide on both layers (fill shrunk by 2 mm stays one piece): J3.1-J4.1 (ECU_P1) and J3.2-J4.2 (EGR_P1); towards the shunt the 4 mm corridor reaches <= 3.5 mm from the force pad centre (the pad itself is 2.03 mm wide)",
       "R21 (PR02, 0.7 W) >= 20 mm (courtyard to courtyard) from RSH1, U1 (INA240), U10 (reference) and the op-amp / ADC U2 / U3; PR02 on top",
       "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)"
     ]

@@ -1,5 +1,5 @@
 > /usr/bin/python3 build_board.py
-Created P06 board: 73 footprints + 8 M3 holes; outline 106.5 x 100.0 ; rule areas: J3 support 1, J3 support 2, J4 support 1, J4 support 2, J5 support 1, J5 support 2
+Created P06 board: 74 footprints + 8 M3 holes; outline 106.5 x 100.0 ; rule areas: J3 support 1, J3 support 2, J4 support 1, J4 support 2, J5 support 1, J5 support 2
 > /usr/bin/python3 set_stackup.py
 2-layer stackup: Cu35/FR4 1.53/Cu35 (S1: 35 um); nominal 1.60 mm, mask separate.
 > /usr/bin/python3 set_rules.py
@@ -16,13 +16,13 @@ SES imported; GND planes filled; saved native board.
 > /usr/bin/python3 set_rules.py
 Rules: clearance 0.25 / PWR 0.30, track 0.30 (Default) / CORE3V3 0.30 / PWR 0.60, vias 0.9/0.4 (ring 0.25); no DRC exclusions.
 > /usr/bin/python3 cleanup.py --tidy
-tidy (unconnected 1 left for the planner):  removed 0 redundant free items [] ; dropped 5 tiny; joined 3 near-miss ends; 0 duplicate, 0 via-on-THT-pad and 0 dead-end items; solid zone connection: none
+tidy (unconnected 2 left for the planner):  removed 0 redundant free items [] ; dropped 5 tiny; joined 3 near-miss ends; 0 duplicate, 0 via-on-THT-pad and 0 dead-end items; solid zone connection: none
 > /usr/bin/python3 set_rules.py
 Rules: clearance 0.25 / PWR 0.30, track 0.30 (Default) / CORE3V3 0.30 / PWR 0.60, vias 0.9/0.4 (ring 0.25); no DRC exclusions.
 > /usr/bin/python3 check_intrusion.py
 foreign router copper at RSH1 / Kelvin pair: 0 []
 > /usr/bin/python3 stitch.py
-GND stitching: 28 grid vias, pour islands {'F.Cu': 10, 'B.Cu': 12} -> {'F.Cu': 10, 'B.Cu': 12} | rescue: 5 vias, pour mm2 {'F.Cu': 6890.3, 'B.Cu': 7728.7} -> {'F.Cu': 7110.7, 'B.Cu': 7778.6} islands {'F.Cu': 14, 'B.Cu': 13} | tied GND clusters: 0 | GND pads not joined to J_BP.1: ['C6.2'] | targeted vias: 0 new, 0 without a legal spot
+GND stitching: 28 grid vias, pour islands {'F.Cu': 10, 'B.Cu': 12} -> {'F.Cu': 10, 'B.Cu': 12} | rescue: 5 vias, pour mm2 {'F.Cu': 6833.6, 'B.Cu': 7679.0} -> {'F.Cu': 7054.0, 'B.Cu': 7728.9} islands {'F.Cu': 14, 'B.Cu': 13} | tied GND clusters: 0 | GND pads not joined to J_BP.1: ['C6.2'] | targeted vias: 0 new, 0 without a legal spot
 > /usr/bin/python3 set_rules.py
 Rules: clearance 0.25 / PWR 0.30, track 0.30 (Default) / CORE3V3 0.30 / PWR 0.60, vias 0.9/0.4 (ring 0.25); no DRC exclusions.
 > /usr/bin/python3 complete_routes.py
@@ -30,7 +30,7 @@ Rules: clearance 0.25 / PWR 0.30, track 0.30 (Default) / CORE3V3 0.30 / PWR 0.60
 > /usr/bin/python3 set_rules.py
 Rules: clearance 0.25 / PWR 0.30, track 0.30 (Default) / CORE3V3 0.30 / PWR 0.60, vias 0.9/0.4 (ring 0.25); no DRC exclusions.
 > /usr/bin/python3 stitch.py --targeted
-GND stitching: 0 grid vias, pour islands {'F.Cu': 14, 'B.Cu': 13} -> {'F.Cu': 14, 'B.Cu': 13} | rescue: 0 vias, pour mm2 {'F.Cu': 7110.7, 'B.Cu': 7778.6} -> {'F.Cu': 7110.7, 'B.Cu': 7778.6} islands {'F.Cu': 14, 'B.Cu': 13} | tied GND clusters: 0 | GND pads not joined to J_BP.1: none | targeted vias: 7 new, 1 without a legal spot
+GND stitching: 0 grid vias, pour islands {'F.Cu': 14, 'B.Cu': 13} -> {'F.Cu': 14, 'B.Cu': 13} | rescue: 0 vias, pour mm2 {'F.Cu': 7041.6, 'B.Cu': 7720.6} -> {'F.Cu': 7041.6, 'B.Cu': 7720.6} islands {'F.Cu': 14, 'B.Cu': 13} | tied GND clusters: 0 | GND pads not joined to J_BP.1: none | targeted vias: 8 new, 1 without a legal spot
 > /usr/bin/python3 set_rules.py
 Rules: clearance 0.25 / PWR 0.30, track 0.30 (Default) / CORE3V3 0.30 / PWR 0.60, vias 0.9/0.4 (ring 0.25); no DRC exclusions.
 > /usr/bin/kicad-cli pcb drc --format json --severity-all --schematic-parity --all-track-errors --refill-zones -o routing/postroute-drc.json eda/P06.kicad_pcb
@@ -50,51 +50,51 @@ Rules: clearance 0.25 / PWR 0.30, track 0.30 (Default) / CORE3V3 0.30 / PWR 0.60
 > /usr/bin/kicad-cli pcb drc --format json --severity-all --schematic-parity --all-track-errors --refill-zones -o routing/postclean-drc.json eda/P06.kicad_pcb
 routing/postclean-drc.json {'silk_edge_clearance': 63, 'silk_over_copper': 17, 'silk_overlap': 13} unconnected 0 parity 0
 
-12:49:11: Debug: Adding duplicate image handler for 'PNG file'
-12:49:11: Debug: Adding duplicate image handler for 'JPEG file'
-12:49:11: Debug: Adding duplicate image handler for 'TIFF file'
-12:49:11: Debug: Adding duplicate image handler for 'GIF file'
-12:49:11: Debug: Adding duplicate image handler for 'PNM file'
-12:49:11: Debug: Adding duplicate image handler for 'PCX file'
-12:49:11: Debug: Adding duplicate image handler for 'IFF file'
-12:49:11: Debug: Adding duplicate image handler for 'Windows icon file'
-12:49:11: Debug: Adding duplicate image handler for 'Windows cursor file'
-12:49:11: Debug: Adding duplicate image handler for 'Windows animated cursor file'
-12:49:11: Debug: Adding duplicate image handler for 'TGA file'
-12:49:11: Debug: Adding duplicate image handler for 'XPM file'
-12:49:57: Debug: Adding duplicate image handler for 'PNG file'
-12:49:57: Debug: Adding duplicate image handler for 'JPEG file'
-12:49:57: Debug: Adding duplicate image handler for 'TIFF file'
-12:49:57: Debug: Adding duplicate image handler for 'GIF file'
-12:49:57: Debug: Adding duplicate image handler for 'PNM file'
-12:49:57: Debug: Adding duplicate image handler for 'PCX file'
-12:49:57: Debug: Adding duplicate image handler for 'IFF file'
-12:49:57: Debug: Adding duplicate image handler for 'Windows icon file'
-12:49:57: Debug: Adding duplicate image handler for 'Windows cursor file'
-12:49:57: Debug: Adding duplicate image handler for 'Windows animated cursor file'
-12:49:57: Debug: Adding duplicate image handler for 'TGA file'
-12:49:57: Debug: Adding duplicate image handler for 'XPM file'
-12:50:12: Debug: Adding duplicate image handler for 'PNG file'
-12:50:12: Debug: Adding duplicate image handler for 'JPEG file'
-12:50:12: Debug: Adding duplicate image handler for 'TIFF file'
-12:50:12: Debug: Adding duplicate image handler for 'GIF file'
-12:50:12: Debug: Adding duplicate image handler for 'PNM file'
-12:50:12: Debug: Adding duplicate image handler for 'PCX file'
-12:50:12: Debug: Adding duplicate image handler for 'IFF file'
-12:50:12: Debug: Adding duplicate image handler for 'Windows icon file'
-12:50:12: Debug: Adding duplicate image handler for 'Windows cursor file'
-12:50:12: Debug: Adding duplicate image handler for 'Windows animated cursor file'
-12:50:12: Debug: Adding duplicate image handler for 'TGA file'
-12:50:12: Debug: Adding duplicate image handler for 'XPM file'
-12:50:13: Debug: Adding duplicate image handler for 'PNG file'
-12:50:13: Debug: Adding duplicate image handler for 'JPEG file'
-12:50:13: Debug: Adding duplicate image handler for 'TIFF file'
-12:50:13: Debug: Adding duplicate image handler for 'GIF file'
-12:50:13: Debug: Adding duplicate image handler for 'PNM file'
-12:50:13: Debug: Adding duplicate image handler for 'PCX file'
-12:50:13: Debug: Adding duplicate image handler for 'IFF file'
-12:50:13: Debug: Adding duplicate image handler for 'Windows icon file'
-12:50:13: Debug: Adding duplicate image handler for 'Windows cursor file'
-12:50:13: Debug: Adding duplicate image handler for 'Windows animated cursor file'
-12:50:13: Debug: Adding duplicate image handler for 'TGA file'
-12:50:13: Debug: Adding duplicate image handler for 'XPM file'
+16:16:15: Debug: Adding duplicate image handler for 'PNG file'
+16:16:15: Debug: Adding duplicate image handler for 'JPEG file'
+16:16:15: Debug: Adding duplicate image handler for 'TIFF file'
+16:16:15: Debug: Adding duplicate image handler for 'GIF file'
+16:16:15: Debug: Adding duplicate image handler for 'PNM file'
+16:16:15: Debug: Adding duplicate image handler for 'PCX file'
+16:16:15: Debug: Adding duplicate image handler for 'IFF file'
+16:16:15: Debug: Adding duplicate image handler for 'Windows icon file'
+16:16:15: Debug: Adding duplicate image handler for 'Windows cursor file'
+16:16:15: Debug: Adding duplicate image handler for 'Windows animated cursor file'
+16:16:15: Debug: Adding duplicate image handler for 'TGA file'
+16:16:15: Debug: Adding duplicate image handler for 'XPM file'
+16:17:02: Debug: Adding duplicate image handler for 'PNG file'
+16:17:02: Debug: Adding duplicate image handler for 'JPEG file'
+16:17:02: Debug: Adding duplicate image handler for 'TIFF file'
+16:17:02: Debug: Adding duplicate image handler for 'GIF file'
+16:17:02: Debug: Adding duplicate image handler for 'PNM file'
+16:17:02: Debug: Adding duplicate image handler for 'PCX file'
+16:17:02: Debug: Adding duplicate image handler for 'IFF file'
+16:17:02: Debug: Adding duplicate image handler for 'Windows icon file'
+16:17:02: Debug: Adding duplicate image handler for 'Windows cursor file'
+16:17:02: Debug: Adding duplicate image handler for 'Windows animated cursor file'
+16:17:02: Debug: Adding duplicate image handler for 'TGA file'
+16:17:02: Debug: Adding duplicate image handler for 'XPM file'
+16:17:17: Debug: Adding duplicate image handler for 'PNG file'
+16:17:17: Debug: Adding duplicate image handler for 'JPEG file'
+16:17:17: Debug: Adding duplicate image handler for 'TIFF file'
+16:17:17: Debug: Adding duplicate image handler for 'GIF file'
+16:17:17: Debug: Adding duplicate image handler for 'PNM file'
+16:17:17: Debug: Adding duplicate image handler for 'PCX file'
+16:17:17: Debug: Adding duplicate image handler for 'IFF file'
+16:17:17: Debug: Adding duplicate image handler for 'Windows icon file'
+16:17:17: Debug: Adding duplicate image handler for 'Windows cursor file'
+16:17:17: Debug: Adding duplicate image handler for 'Windows animated cursor file'
+16:17:17: Debug: Adding duplicate image handler for 'TGA file'
+16:17:17: Debug: Adding duplicate image handler for 'XPM file'
+16:17:18: Debug: Adding duplicate image handler for 'PNG file'
+16:17:18: Debug: Adding duplicate image handler for 'JPEG file'
+16:17:18: Debug: Adding duplicate image handler for 'TIFF file'
+16:17:18: Debug: Adding duplicate image handler for 'GIF file'
+16:17:18: Debug: Adding duplicate image handler for 'PNM file'
+16:17:18: Debug: Adding duplicate image handler for 'PCX file'
+16:17:18: Debug: Adding duplicate image handler for 'IFF file'
+16:17:18: Debug: Adding duplicate image handler for 'Windows icon file'
+16:17:18: Debug: Adding duplicate image handler for 'Windows cursor file'
+16:17:18: Debug: Adding duplicate image handler for 'Windows animated cursor file'
+16:17:18: Debug: Adding duplicate image handler for 'TGA file'
+16:17:18: Debug: Adding duplicate image handler for 'XPM file'

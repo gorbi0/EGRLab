@@ -1,13 +1,13 @@
 {
-  "board": "/home/tgorbacz/AI/Claude/EGRLab/.worktrees/p06-r2-pcb/Plytki/P06-R2-review/verification/negative-controls/decap_far/P06.kicad_pcb",
-  "board_sha256": "adbab66ab2cc0a1a5ffdfa0a63ba129f583467e59bec59fc09ce2d92e48a5354",
+  "board": "/home/tgorbacz/AI/Claude/EGRLab/.worktrees/p06-r2-j5/Plytki/P06-R2-review/verification/negative-controls/decap_far/P06.kicad_pcb",
+  "board_sha256": "f25e630140c28617bae6557fb606da64284a1fec074a2ce7f60b84483153a852",
   "checks": [
     {
       "check": "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
       "pass": false
     },
     {
-      "check": "73 on-board parts + 8 mounting holes, nothing else",
+      "check": "74 on-board parts + 8 mounting holes, nothing else",
       "pass": true
     },
     {
@@ -67,7 +67,7 @@
       "pass": true
     },
     {
-      "check": "Force pours ECU_P1 / EGR_P1: one zone per net on F.Cu and on B.Cu, priority above GND, solid connection (no thermals) on every force pad (J3, J4, RSH1 1/4), each pad inside the fill of every layer it is on",
+      "check": "Force pours ECU_P1 / EGR_P1: one zone per net on F.Cu and on B.Cu, priority above GND, RSH1 1/4 solid inside the fill, J3 / J4 wire pads on >= 4 spokes >= 2 mm on every layer (2.10, review F5)",
       "pass": true
     },
     {
@@ -161,11 +161,65 @@
     },
     "Every value, footprint ID and pad net equals the exported schematic netlist": {
       "errors": [],
-      "pads": 237
+      "pads": 239
     },
     "S1-2 section 4: parts on the bottom only SMD <= 1.5 mm (heights.py, BOM thickness note for the capacitors), no SOIC, >= 1 mm from THT pads": {
       "bottom_parts": {
-        "R30": {
+        "C2": {
+          "smd": true,
+          "height_mm": 1.5,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.31
+        },
+        "R35": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 7.02
+        },
+        "R14": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.12
+        },
+        "R10": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 6.38
+        },
+        "C8": {
+          "smd": true,
+          "height_mm": 1.25,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.3
+        },
+        "R32": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.28
+        },
+        "R20": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.23
+        },
+        "R25": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.73
+        },
+        "R27": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 2.99
+        },
+        "R28": {
           "smd": true,
           "height_mm": 0.7,
           "soic": false,
@@ -177,41 +231,17 @@
           "soic": false,
           "min_gap_to_THT_mm": 1.27
         },
-        "R33": {
+        "R34": {
           "smd": true,
           "height_mm": 0.7,
           "soic": false,
-          "min_gap_to_THT_mm": 1.07
+          "min_gap_to_THT_mm": 11.85
         },
-        "C8": {
-          "smd": true,
-          "height_mm": 1.25,
-          "soic": false,
-          "min_gap_to_THT_mm": 1.3
-        },
-        "R25": {
+        "R24": {
           "smd": true,
           "height_mm": 0.7,
           "soic": false,
-          "min_gap_to_THT_mm": 1.73
-        },
-        "R35": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 7.02
-        },
-        "R38": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 1.47
-        },
-        "R20": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 1.23
+          "min_gap_to_THT_mm": 1.12
         },
         "R37": {
           "smd": true,
@@ -219,23 +249,11 @@
           "soic": false,
           "min_gap_to_THT_mm": 1.33
         },
-        "R10": {
+        "R38": {
           "smd": true,
           "height_mm": 0.7,
           "soic": false,
-          "min_gap_to_THT_mm": 6.38
-        },
-        "R14": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 1.12
-        },
-        "R32": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 1.28
+          "min_gap_to_THT_mm": 1.47
         },
         "R9": {
           "smd": true,
@@ -243,23 +261,17 @@
           "soic": false,
           "min_gap_to_THT_mm": 1.48
         },
-        "C2": {
-          "smd": true,
-          "height_mm": 1.5,
-          "soic": false,
-          "min_gap_to_THT_mm": 1.31
-        },
-        "R28": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 1.12
-        },
         "R29": {
           "smd": true,
           "height_mm": 0.7,
           "soic": false,
           "min_gap_to_THT_mm": 1.39
+        },
+        "R33": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.07
         },
         "R31": {
           "smd": true,
@@ -273,19 +285,7 @@
           "soic": false,
           "min_gap_to_THT_mm": 1.42
         },
-        "R27": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 2.99
-        },
-        "R34": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 11.85
-        },
-        "R24": {
+        "R30": {
           "smd": true,
           "height_mm": 0.7,
           "soic": false,
@@ -597,16 +597,16 @@
       ],
       "over": {}
     },
-    "Force pours ECU_P1 / EGR_P1: one zone per net on F.Cu and on B.Cu, priority above GND, solid connection (no thermals) on every force pad (J3, J4, RSH1 1/4), each pad inside the fill of every layer it is on": {
+    "Force pours ECU_P1 / EGR_P1: one zone per net on F.Cu and on B.Cu, priority above GND, RSH1 1/4 solid inside the fill, J3 / J4 wire pads on >= 4 spokes >= 2 mm on every layer (2.10, review F5)": {
       "ECU_P1 F.Cu": {
         "zones": 1,
-        "area_mm2": 420.0,
-        "pads_in_fill": {
+        "area_mm2": 435.6,
+        "pads_joined": {
           "J3.1": true,
           "J4.1": true,
           "RSH1.1": true
         },
-        "pads_solid": {
+        "connection_ok": {
           "J3.1": true,
           "J4.1": true,
           "RSH1.1": true
@@ -614,26 +614,25 @@
       },
       "ECU_P1 B.Cu": {
         "zones": 1,
-        "area_mm2": 407.1,
-        "pads_in_fill": {
+        "area_mm2": 422.8,
+        "pads_joined": {
           "J3.1": true,
           "J4.1": true
         },
-        "pads_solid": {
+        "connection_ok": {
           "J3.1": true,
-          "J4.1": true,
-          "RSH1.1": true
+          "J4.1": true
         }
       },
       "EGR_P1 F.Cu": {
         "zones": 1,
-        "area_mm2": 250.0,
-        "pads_in_fill": {
+        "area_mm2": 230.0,
+        "pads_joined": {
           "J3.2": true,
           "J4.2": true,
           "RSH1.4": true
         },
-        "pads_solid": {
+        "connection_ok": {
           "J3.2": true,
           "J4.2": true,
           "RSH1.4": true
@@ -641,15 +640,14 @@
       },
       "EGR_P1 B.Cu": {
         "zones": 1,
-        "area_mm2": 238.6,
-        "pads_in_fill": {
+        "area_mm2": 218.6,
+        "pads_joined": {
           "J3.2": true,
           "J4.2": true
         },
-        "pads_solid": {
+        "connection_ok": {
           "J3.2": true,
-          "J4.2": true,
-          "RSH1.4": true
+          "J4.2": true
         }
       }
     },
@@ -835,12 +833,16 @@
       "C3-R6.2": [
         6.92,
         8
+      ],
+      "C17-J5.1": [
+        4.03,
+        6
       ]
     },
     "GND pours on both layers: B.Cu >= 50 % of the board; island removal always (every island tied)": {
       "cover_percent": {
-        "F.Cu": 67.0,
-        "B.Cu": 73.1
+        "F.Cu": 66.4,
+        "B.Cu": 72.5
       },
       "islands": {
         "F.Cu": 16,

@@ -22,7 +22,7 @@
 | nowe | RT1206BRD075K11L | 5.11K | 2 | R3, R4 / R_1206_3216Metric_Pad1.30x1.75mm_HandSolder |
 | nowe | SMD 1206 C0G 50V 5% 470p | 470p | 1 | C2 / C_1206_3216Metric_Pad1.33x1.80mm_HandSolder |
 | nowe | SMD 1206 X7R 25V 10% 4.7u | 4.7u | 2 | C4, C5 / C_1206_3216Metric_Pad1.33x1.80mm_HandSolder |
-| nowe | SMD 1206 X7R 50V 10% 100n | 100n | 11 | C16, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15 / C_1206_3216Metric_Pad1.33x1.80mm_HandSolder |
+| nowe | SMD 1206 X7R 50V 10% 100n | 100n | 12 | C16, C17, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15 / C_1206_3216Metric_Pad1.33x1.80mm_HandSolder |
 | nowe | SMD 1206 X7R 50V 10% 470n | 470n | 1 | C1 / C_1206_3216Metric_Pad1.33x1.80mm_HandSolder |
 | nowe | Soldered harness | ISERIES / PTH | 1 | J3 / PTH_ISERIES |
 | nowe | Soldered harness | SW1 A / PTH | 1 | J4 / PTH_BYPASS |

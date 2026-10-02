@@ -18,7 +18,7 @@ for i,(ref,unit,capref,x,y,vpin,gpin) in enumerate([('U2',3,'C7',20,53,8,4),('U5
  put('P06',ref,x,y,u=unit,off=(3,-2));put('P06',capref,x+16,y)
  node('P06',V,[(ref,vpin),(capref,1)],y-8)
  node('P06',G,[(ref,gpin),(capref,2)],y+8)
-for r,x,y in [('C8',62,78),('C13',81,78),('C14',100,78),('C15',119,78)]:put('P06',r,x,y)
+for r,x,y in [('C8',62,78),('C13',81,78),('C14',100,78),('C15',119,78),('C17',138,78)]:put('P06',r,x,y)   # C17: 100 nF at J5.1 (2.10)
 for i,(n,x) in enumerate([('5V_SYS',15),(G,38),(A5,62),('3V3_IO',89)],1):
  S['P06'].place({'ref':f'#FLG{i}','display':'PWR_FLAG','symbol':symbol('power','PWR_FLAG'),'source_ref':'ERC_SOURCE','mpn':'','footprint':'','pins':{'1':n}},x,99)
 S['P06'].text('J_BP: 5V_SYS (piny 10/12) zasila plytke. 3V3_IO (J_BP.14) idzie tylko na kolek J_SV2. Logika pracuje z lokalnego 3V3_P06.',8,37,1.25)
