@@ -1,12 +1,14 @@
 """Small auditable KiCad s-expression helpers; no schematic connectivity inferred.
-P11-R2 (format S1): copied unchanged from P06-R2 src/cadlib.py; only PRJ, REV, DATE, TITLE, COMMENT differ. P06: taken over from P02-R1 (itself adapted from the P01-R3 generator by Astra); project name, library prefix,
+P11-R2 (format S1): copied from P06-R2 src/cadlib.py; PRJ, REV, DATE, TITLE, COMMENT, COMPANY differ, and Sheet.place shows a part's
+`variant_label` as a visible field (R1 LOGGER / DNP with P04). P06: taken over from P02-R1 (itself adapted from the P01-R3 generator by Astra); project name, library prefix,
 UUID namespace and title block are parameters (PRJ, REV, TITLE, COMMENT) instead of constants.
 """
 import re,json,copy,math,uuid,functools,os
 from pathlib import Path
 P=Path(__file__).resolve().parents[1]
 K=Path(os.environ.get('KICAD_LIBRARY_ROOT','C:/Program Files/KiCad/10.0/share/kicad'))
-PRJ='P11';REV='P11-R2';DATE='2026-10-04';TITLE='EGRLab P11 PANEL';COMMENT='Panel contact logic and P12 ribbon; format S1 (decisions P11-1..P11-7, 4.10.2026); schematic only, hardware not tested'
+PRJ='P11';REV='P11-R2';DATE='2026-10-04';TITLE='EGRLab P11 PANEL';COMMENT='Panel contacts + P12 ribbon, format S1 (decisions 4.10.2026), schematic only'
+COMPANY='Prototype / schematic review - hardware not tested'
 class A(str):pass
 def parse(t):
  toks=re.findall(r'"(?:\\.|[^"\\])*"|[()]|[^\s()]+',t);i=0
@@ -78,6 +80,7 @@ class Sheet:
   sn=f'(symbol (lib_id {q(name)}) (at {mm(x)} {mm(y)} {a}) '+(f'(mirror {mirror}) ' if mirror else '')+f'(unit {unit}) (in_bom yes) (on_board {ob}) (dnp no) (uuid {uid(k)}) '
   fa=90 if a%180 else 0
   sn+=f'(property "Reference" {q(ref)} (at {tx} {ty} {fa}) {effects}) (property "Value" {q(value)} (at {tx} {ty+2.54} {fa}) {effects})'
+  if part.get('variant_label'):sn+=f'(property "Wariant" {q(part["variant_label"])} (at {tx} {ty+5.08} {fa}) {effects})'
   for prop,val in [('Footprint',part['footprint']),('MPN',part['mpn']),('BaselineRef',part['source_ref']),('Datasheet',part.get('url',''))]:
    sn+=f'(property {q(prop)} {q(val)} (at {mm(x)} {mm(y)} 0) (effects (font (size 1 1)) hide))'
   sn+=''.join(f'(pin {q(n)} (uuid {uid(k+"/"+n)}))' for n in pins)
@@ -118,7 +121,7 @@ class Sheet:
     rad=math.radians(a);end=(round(x-5.08*math.cos(rad),5),round(y+5.08*math.sin(rad),5));self.wire((x,y),end);self.label(net,end,'right' if a==0 else 'left',net in CROSS)
   for p in self.junctions:self.items.append(f'(junction (at {p[0]} {p[1]}) (diameter 0) (color 0 0 0 0) (uuid {uid(self.name+"j"+str(p))}))')
  def save(self):
-  text=f'(kicad_sch (version 20250114) (generator "eeschema") (uuid {uid(self.name)}) (paper "A3") (title_block (title {q(TITLE)}) (date {q(DATE)}) (rev {q(REV)}) (company "Prototype / schematic + PCB review") (comment 1 {q(COMMENT)}))'
+  text=f'(kicad_sch (version 20250114) (generator "eeschema") (uuid {uid(self.name)}) (paper "A3") (title_block (title {q(TITLE)}) (date {q(DATE)}) (rev {q(REV)}) (company {q(COMPANY)}) (comment 1 {q(COMMENT)}))'
   text+='(lib_symbols '+''.join(dump(v) for v in self.libs.values())+')'+''.join(self.items)
   if not self.root or self.root==uid(self.name):text+=f'(sheet_instances (path "/" (page "1")))'
   (P/'eda'/(self.name+'.kicad_sch')).write_text(text+')',encoding='utf-8')

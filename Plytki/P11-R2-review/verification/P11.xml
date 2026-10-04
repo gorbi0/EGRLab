@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <export version="E">
   <design>
-    <source>/home/user/EGRLab/Plytki/P11-R2-review/eda/P11.kicad_sch</source>
-    <date>2026-10-04T14:32:47</date>
+    <source>/home/tgorbacz/AI/Claude/EGRLab/.worktrees/p11-r2-schemat/Plytki/P11-R2-review/eda/P11.kicad_sch</source>
+    <date>2026-10-04T15:34:12</date>
     <tool>Eeschema 10.0.6</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
         <title>EGRLab P11 PANEL</title>
-        <company>Prototype / schematic + PCB review</company>
+        <company>Prototype / schematic review - hardware not tested</company>
         <rev>P11-R2</rev>
         <date>2026-10-04</date>
         <source>P11.kicad_sch</source>
-        <comment number="1" value="Panel contact logic and P12 ribbon; format S1 (decisions P11-1..P11-7, 4.10.2026); schematic only, hardware not tested"/>
+        <comment number="1" value="Panel contacts + P12 ribbon, format S1 (decisions 4.10.2026), schematic only"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
@@ -25,11 +25,11 @@
     <sheet number="2" name="/CONTACTS/" tstamps="/54dc210c-6e85-5fac-be77-849554aaadc5/">
       <title_block>
         <title>EGRLab P11 PANEL</title>
-        <company>Prototype / schematic + PCB review</company>
+        <company>Prototype / schematic review - hardware not tested</company>
         <rev>P11-R2</rev>
         <date>2026-10-04</date>
         <source>CONTACTS.kicad_sch</source>
-        <comment number="1" value="Panel contact logic and P12 ribbon; format S1 (decisions P11-1..P11-7, 4.10.2026); schematic only, hardware not tested"/>
+        <comment number="1" value="Panel contacts + P12 ribbon, format S1 (decisions 4.10.2026), schematic only"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
@@ -43,11 +43,11 @@
     <sheet number="3" name="/PORTY/" tstamps="/076895fb-6020-5b38-a0ac-082bff04b024/">
       <title_block>
         <title>EGRLab P11 PANEL</title>
-        <company>Prototype / schematic + PCB review</company>
+        <company>Prototype / schematic review - hardware not tested</company>
         <rev>P11-R2</rev>
         <date>2026-10-04</date>
         <source>PORTY.kicad_sch</source>
-        <comment number="1" value="Panel contact logic and P12 ribbon; format S1 (decisions P11-1..P11-7, 4.10.2026); schematic only, hardware not tested"/>
+        <comment number="1" value="Panel contacts + P12 ribbon, format S1 (decisions 4.10.2026), schematic only"/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
@@ -87,17 +87,17 @@
       </units>
     </comp>
     <comp ref="J_P12">
-      <value>IDC 2x10 do P12</value>
-      <footprint>Connector_IDC:IDC-Header_2x10_P2.54mm_Vertical</footprint>
+      <value>IDC 2x10 katowe do P12</value>
+      <footprint>Connector_IDC:IDC-Header_2x10_P2.54mm_Horizontal</footprint>
       <fields>
-        <field name="MPN">Box header IDC 2x10 2.54 mm, gold (MPN in purchase task)</field>
+        <field name="MPN">Box header IDC 2x10 2.54 mm, right-angle, gold (MPN in purchase task)</field>
         <field name="BaselineRef">J4+J5</field>
-        <field name="Footprint">Connector_IDC:IDC-Header_2x10_P2.54mm_Vertical</field>
+        <field name="Footprint">Connector_IDC:IDC-Header_2x10_P2.54mm_Horizontal</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="P11" part="Conn_02x10_Odd_Even" description=""/>
-      <property name="MPN" value="Box header IDC 2x10 2.54 mm, gold (MPN in purchase task)"/>
+      <property name="MPN" value="Box header IDC 2x10 2.54 mm, right-angle, gold (MPN in purchase task)"/>
       <property name="BaselineRef" value="J4+J5"/>
       <property name="Sheetname" value="P11"/>
       <property name="Sheetfile" value="P11.kicad_sch"/>
@@ -134,6 +134,7 @@
       <value>100R</value>
       <footprint>Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder</footprint>
       <fields>
+        <field name="Wariant">LOGGER: obsadzony / z P04: DNP</field>
         <field name="MPN">RC1206FR-07100RL</field>
         <field name="BaselineRef">ADDED_P11_3</field>
         <field name="Footprint">Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder</field>
@@ -141,6 +142,7 @@
         <field name="Description"/>
       </fields>
       <libsource lib="P11" part="R" description=""/>
+      <property name="Wariant" value="LOGGER: obsadzony / z P04: DNP"/>
       <property name="MPN" value="RC1206FR-07100RL"/>
       <property name="BaselineRef" value="ADDED_P11_3"/>
       <property name="Sheetname" value="P11"/>
@@ -252,17 +254,17 @@
       </units>
     </comp>
     <comp ref="X8">
-      <value>TEST port AT04-12 key C</value>
+      <value>TEST port AT04-12 key A</value>
       <footprint>P11:OFFBOARD</footprint>
       <fields>
-        <field name="MPN">Amphenol AT04-12PC receptacle (pin contacts per data sheet; purchase task)</field>
+        <field name="MPN">Amphenol AT04-12PA receptacle; cavities 1/2 (motor current): gold pins AT60-215-1631 for 2.0 mm2 / AWG14, mating gold sockets AT62-209-1631; other contacts per data sheet (purchase task)</field>
         <field name="BaselineRef">J8 (R1)</field>
         <field name="Footprint">P11:OFFBOARD</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="P11" part="PORT_TEST" description=""/>
-      <property name="MPN" value="Amphenol AT04-12PC receptacle (pin contacts per data sheet; purchase task)"/>
+      <property name="MPN" value="Amphenol AT04-12PA receptacle; cavities 1/2 (motor current): gold pins AT60-215-1631 for 2.0 mm2 / AWG14, mating gold sockets AT62-209-1631; other contacts per data sheet (purchase task)"/>
       <property name="BaselineRef" value="J8 (R1)"/>
       <property name="Sheetname" value="CONTACTS"/>
       <property name="Sheetfile" value="CONTACTS.kicad_sch"/>
@@ -486,17 +488,17 @@
       </units>
     </comp>
     <comp ref="X2">
-      <value>L1 port AT04-12 key A</value>
+      <value>L1 port AT04-12 key B</value>
       <footprint>P11:OFFBOARD</footprint>
       <fields>
-        <field name="MPN">Amphenol AT04-12PA receptacle (pin contacts per data sheet; purchase task)</field>
+        <field name="MPN">Amphenol AT04-12PB receptacle; cavities 1/2 (motor current): gold pins AT60-215-1631 for 2.0 mm2 / AWG14, mating gold sockets AT62-209-1631; other contacts per data sheet (purchase task)</field>
         <field name="BaselineRef">J2 (R1)</field>
         <field name="Footprint">P11:OFFBOARD</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="P11" part="PORT_L1" description=""/>
-      <property name="MPN" value="Amphenol AT04-12PA receptacle (pin contacts per data sheet; purchase task)"/>
+      <property name="MPN" value="Amphenol AT04-12PB receptacle; cavities 1/2 (motor current): gold pins AT60-215-1631 for 2.0 mm2 / AWG14, mating gold sockets AT62-209-1631; other contacts per data sheet (purchase task)"/>
       <property name="BaselineRef" value="J2 (R1)"/>
       <property name="Sheetname" value="PORTY"/>
       <property name="Sheetfile" value="PORTY.kicad_sch"/>
@@ -523,17 +525,17 @@
       </units>
     </comp>
     <comp ref="X3">
-      <value>L2 port AT04-12 key B</value>
+      <value>L2 port AT04-12 key C</value>
       <footprint>P11:OFFBOARD</footprint>
       <fields>
-        <field name="MPN">Amphenol AT04-12PB receptacle (pin contacts per data sheet; purchase task)</field>
+        <field name="MPN">Amphenol AT04-12PC receptacle; other contacts per data sheet (purchase task)</field>
         <field name="BaselineRef">J3 (R1)</field>
         <field name="Footprint">P11:OFFBOARD</field>
         <field name="Datasheet"/>
         <field name="Description"/>
       </fields>
       <libsource lib="P11" part="PORT_L2" description=""/>
-      <property name="MPN" value="Amphenol AT04-12PB receptacle (pin contacts per data sheet; purchase task)"/>
+      <property name="MPN" value="Amphenol AT04-12PC receptacle; other contacts per data sheet (purchase task)"/>
       <property name="BaselineRef" value="J3 (R1)"/>
       <property name="Sheetname" value="PORTY"/>
       <property name="Sheetfile" value="PORTY.kicad_sch"/>

@@ -2,10 +2,10 @@
   "J_P12": {
     "ref": "J_P12",
     "source_ref": "J4+J5",
-    "footprint": "Connector_IDC:IDC-Header_2x10_P2.54mm_Vertical",
-    "display": "IDC 2x10 do P12",
-    "value": "IDC 2x10 do P12",
-    "mpn": "Box header IDC 2x10 2.54 mm, gold (MPN in purchase task)",
+    "footprint": "Connector_IDC:IDC-Header_2x10_P2.54mm_Horizontal",
+    "display": "IDC 2x10 katowe do P12",
+    "value": "IDC 2x10 katowe do P12",
+    "mpn": "Box header IDC 2x10 2.54 mm, right-angle, gold (MPN in purchase task)",
     "pins": {
       "1": "GND",
       "2": "PANEL_3V3",
@@ -30,7 +30,7 @@
     },
     "sheet": "P12",
     "url": "",
-    "note": "Ribbon to P12 (S1 8). Straight box header assumed (P11 parallel to the panel, ribbon to the rear); right-angle variant = question in README. Replaces R1 J4 PANELCORE and J5 PANELSAFE.",
+    "note": "Ribbon to P12 (S1 8). RIGHT-ANGLE box header on the P11 edge facing wall A (P11 lies flat on the bottom of the panel zone, max approx. 45 x 130 mm; user 4.10). Pins 12/18 GND. Replaces R1 J4 PANELCORE and J5 PANELSAFE.",
     "qty": 1,
     "on_board": true
   },
@@ -47,13 +47,14 @@
     },
     "sheet": "P12",
     "url": "",
-    "note": "LOGGER (no P04): FITTED. Full variant (P04 fitted): DNP - P04 R40 is the only PANEL_3V3 source. 1206 0.25 W; short PANEL_3V3-GND: 33 mA / 0.11 W.",
+    "note": "LOGGER (no P04): FITTED. Full variant (P04 fitted): DNP - P04 R40 is the only PANEL_3V3 source. 1206 0.25 W; short PANEL_3V3-GND: 34 mA / 0.12 W.",
     "qty": 1,
     "on_board": true,
     "variant": {
       "LOGGER": "fitted",
       "FULL": "DNP"
     },
+    "variant_label": "LOGGER: obsadzony / z P04: DNP",
     "ohms": 100.0,
     "tolerance": 0.01,
     "power_W": 0.25
@@ -146,9 +147,9 @@
     "ref": "X2",
     "source_ref": "J2 (R1)",
     "footprint": "P11:OFFBOARD",
-    "display": "L1 port AT04-12 key A",
-    "value": "L1 port AT04-12 key A",
-    "mpn": "Amphenol AT04-12PA receptacle (pin contacts per data sheet; purchase task)",
+    "display": "L1 port AT04-12 key B",
+    "value": "L1 port AT04-12 key B",
+    "mpn": "Amphenol AT04-12PB receptacle; cavities 1/2 (motor current): gold pins AT60-215-1631 for 2.0 mm2 / AWG14, mating gold sockets AT62-209-1631; other contacts per data sheet (purchase task)",
     "pins": {
       "1": "NC",
       "2": "NC",
@@ -165,19 +166,19 @@
     },
     "sheet": "CONTACTS",
     "url": "",
-    "note": "Panel port L1, key A (P11-2). Only cavities 10/11 of TEST reach P11; all other cavities are wired port -> board directly (docs/PORTY.csv). Cavity numbers, not pin positions.",
+    "note": "Panel port L1, key B (as R1, user 4.10). Motor current cavities 1/2: 2.0 mm2 (AWG14) wire over the full length to P06 / P07, not via P11. Only cavities 10/11 of TEST reach P11; all other cavities are wired port -> board directly (docs/PORTY.csv). Cavity numbers, not pin positions.",
     "qty": 1,
     "on_board": false,
     "port": "L1",
-    "key": "A"
+    "key": "B"
   },
   "X3": {
     "ref": "X3",
     "source_ref": "J3 (R1)",
     "footprint": "P11:OFFBOARD",
-    "display": "L2 port AT04-12 key B",
-    "value": "L2 port AT04-12 key B",
-    "mpn": "Amphenol AT04-12PB receptacle (pin contacts per data sheet; purchase task)",
+    "display": "L2 port AT04-12 key C",
+    "value": "L2 port AT04-12 key C",
+    "mpn": "Amphenol AT04-12PC receptacle; other contacts per data sheet (purchase task)",
     "pins": {
       "1": "NC",
       "2": "NC",
@@ -194,19 +195,19 @@
     },
     "sheet": "CONTACTS",
     "url": "",
-    "note": "Panel port L2, key B (P11-2). Only cavities 10/11 of TEST reach P11; all other cavities are wired port -> board directly (docs/PORTY.csv). Cavity numbers, not pin positions.",
+    "note": "Panel port L2, key C (as R1, user 4.10). Only cavities 10/11 of TEST reach P11; all other cavities are wired port -> board directly (docs/PORTY.csv). Cavity numbers, not pin positions.",
     "qty": 1,
     "on_board": false,
     "port": "L2",
-    "key": "B"
+    "key": "C"
   },
   "X8": {
     "ref": "X8",
     "source_ref": "J8 (R1)",
     "footprint": "P11:OFFBOARD",
-    "display": "TEST port AT04-12 key C",
-    "value": "TEST port AT04-12 key C",
-    "mpn": "Amphenol AT04-12PC receptacle (pin contacts per data sheet; purchase task)",
+    "display": "TEST port AT04-12 key A",
+    "value": "TEST port AT04-12 key A",
+    "mpn": "Amphenol AT04-12PA receptacle; cavities 1/2 (motor current): gold pins AT60-215-1631 for 2.0 mm2 / AWG14, mating gold sockets AT62-209-1631; other contacts per data sheet (purchase task)",
     "pins": {
       "1": "NC",
       "2": "NC",
@@ -223,11 +224,11 @@
     },
     "sheet": "CONTACTS",
     "url": "",
-    "note": "Panel port TEST, key C (P11-2). Only cavities 10/11 of TEST reach P11; all other cavities are wired port -> board directly (docs/PORTY.csv). Cavity numbers, not pin positions.",
+    "note": "Panel port TEST, key A (as R1, user 4.10). Motor current cavities 1/2: 2.0 mm2 (AWG14) wire over the full length to P06 / P07, not via P11. Only cavities 10/11 of TEST reach P11; all other cavities are wired port -> board directly (docs/PORTY.csv). Cavity numbers, not pin positions.",
     "qty": 1,
     "on_board": false,
     "port": "TEST",
-    "key": "C"
+    "key": "A"
   },
   "X11": {
     "ref": "X11",
@@ -242,7 +243,7 @@
     },
     "sheet": "CONTACTS",
     "url": "",
-    "note": "Functional terminal numbers; identify physical terminals on the purchased part by continuity test. Gold-plated contacts for low-level duty (approx. 0.3 mA / 3.3 V per closed contact, docs/OBLICZENIA.md); MPN chosen in a separate purchase task. No illumination supply.",
+    "note": "Functional terminal numbers; identify physical terminals on the purchased part by continuity test. Gold-plated contacts for low-level duty (closed contact approx. 0.31-0.32 mA in LOGGER, 0.03-0.87 mA in the full variant, at 3.3 V; verification/QA.md, verify_electrical.py); MPN chosen in a separate purchase task. No illumination supply.",
     "qty": 1,
     "on_board": false,
     "gold": true
@@ -262,7 +263,7 @@
     },
     "sheet": "CONTACTS",
     "url": "",
-    "note": "Functional terminal numbers; identify physical terminals on the purchased part by continuity test. Gold-plated contacts for low-level duty (approx. 0.3 mA / 3.3 V per closed contact, docs/OBLICZENIA.md); MPN chosen in a separate purchase task. No illumination supply.",
+    "note": "Functional terminal numbers; identify physical terminals on the purchased part by continuity test. Gold-plated contacts for low-level duty (closed contact approx. 0.31-0.32 mA in LOGGER, 0.03-0.87 mA in the full variant, at 3.3 V; verification/QA.md, verify_electrical.py); MPN chosen in a separate purchase task. No illumination supply.",
     "qty": 1,
     "on_board": false,
     "gold": true
@@ -282,7 +283,7 @@
     },
     "sheet": "CONTACTS",
     "url": "",
-    "note": "Functional terminal numbers; identify physical terminals on the purchased part by continuity test. Gold-plated contacts for low-level duty (approx. 0.3 mA / 3.3 V per closed contact, docs/OBLICZENIA.md); MPN chosen in a separate purchase task. No illumination supply.",
+    "note": "Functional terminal numbers; identify physical terminals on the purchased part by continuity test. Gold-plated contacts for low-level duty (closed contact approx. 0.31-0.32 mA in LOGGER, 0.03-0.87 mA in the full variant, at 3.3 V; verification/QA.md, verify_electrical.py); MPN chosen in a separate purchase task. No illumination supply.",
     "qty": 1,
     "on_board": false,
     "gold": true
@@ -300,7 +301,7 @@
     },
     "sheet": "CONTACTS",
     "url": "",
-    "note": "Functional terminal numbers; identify physical terminals on the purchased part by continuity test. Gold-plated contacts for low-level duty (approx. 0.3 mA / 3.3 V per closed contact, docs/OBLICZENIA.md); MPN chosen in a separate purchase task. No illumination supply.",
+    "note": "Functional terminal numbers; identify physical terminals on the purchased part by continuity test. Gold-plated contacts for low-level duty (closed contact approx. 0.31-0.32 mA in LOGGER, 0.03-0.87 mA in the full variant, at 3.3 V; verification/QA.md, verify_electrical.py); MPN chosen in a separate purchase task. No illumination supply.",
     "qty": 1,
     "on_board": false,
     "gold": true
@@ -320,7 +321,7 @@
     },
     "sheet": "CONTACTS",
     "url": "",
-    "note": "Functional terminal numbers; identify physical terminals on the purchased part by continuity test. Gold-plated contacts for low-level duty (approx. 0.3 mA / 3.3 V per closed contact, docs/OBLICZENIA.md); MPN chosen in a separate purchase task. No illumination supply.",
+    "note": "Functional terminal numbers; identify physical terminals on the purchased part by continuity test. Gold-plated contacts for low-level duty (closed contact approx. 0.31-0.32 mA in LOGGER, 0.03-0.87 mA in the full variant, at 3.3 V; verification/QA.md, verify_electrical.py); MPN chosen in a separate purchase task. No illumination supply.",
     "qty": 1,
     "on_board": false,
     "gold": true
@@ -340,7 +341,7 @@
     },
     "sheet": "CONTACTS",
     "url": "",
-    "note": "Functional terminal numbers; identify physical terminals on the purchased part by continuity test. Gold-plated contacts for low-level duty (approx. 0.3 mA / 3.3 V per closed contact, docs/OBLICZENIA.md); MPN chosen in a separate purchase task. No illumination supply.",
+    "note": "Functional terminal numbers; identify physical terminals on the purchased part by continuity test. Gold-plated contacts for low-level duty (closed contact approx. 0.31-0.32 mA in LOGGER, 0.03-0.87 mA in the full variant, at 3.3 V; verification/QA.md, verify_electrical.py); MPN chosen in a separate purchase task. No illumination supply.",
     "qty": 1,
     "on_board": false,
     "gold": true
@@ -358,7 +359,7 @@
     },
     "sheet": "CONTACTS",
     "url": "",
-    "note": "Functional terminal numbers; identify physical terminals on the purchased part by continuity test. Gold-plated contacts for low-level duty (approx. 0.3 mA / 3.3 V per closed contact, docs/OBLICZENIA.md); MPN chosen in a separate purchase task. No illumination supply.",
+    "note": "Functional terminal numbers; identify physical terminals on the purchased part by continuity test. Gold-plated contacts for low-level duty (closed contact approx. 0.31-0.32 mA in LOGGER, 0.03-0.87 mA in the full variant, at 3.3 V; verification/QA.md, verify_electrical.py); MPN chosen in a separate purchase task. No illumination supply.",
     "qty": 1,
     "on_board": false,
     "gold": true

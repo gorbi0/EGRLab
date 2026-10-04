@@ -10,15 +10,15 @@ P11 jest odchudzona (P11-1): na płytce zostaje tylko logika styków z R1 i zł�
 
 | Ref | Funkcja |
 |---|---|
-| J_P12 | IDC 2×10 do P12 (PANELCORE + PANELSAFE), zastępuje J4 i J5 z R1 |
-| R1 | 100 Ω 1206, 3V3_IO → PANEL_3V3; **LOGGER: obsadzony, wariant z P04: DNP** (P11-3) |
+| J_P12 | IDC 2×10 **kątowe** do P12 (PANELCORE + PANELSAFE), na krawędzi P11 od strony ściany A; zastępuje J4 i J5 z R1 |
+| R1 | 100 Ω 1206, 3V3_IO → PANEL_3V3; **LOGGER: obsadzony, wariant z P04: DNP** (P11-3; widoczne pole „Wariant” przy symbolu) |
 | J11 | pole 18 przewodów do styków panelu (przypisanie jak R1 J11.1–18) |
 | J8 | 2 pola: komory 10/11 portu TEST (LOOP_OUT, MECH_OK) |
 | J6 / X6 | trigger SCOPE do izolowanego BNC (jak R1) |
-| X2 / X3 / X8 | porty AT04-12, klucze A / B / C (poza P11; tylko TEST 10/11 na P11) |
+| X2 / X3 / X8 | porty AT04-12: L1 klucz B, L2 klucz C, TEST klucz A — jak R1 (poza P11; tylko TEST 10/11 na P11) |
 | X11–X17 | ARM, detektory L1/L2 (2NC), MARK, kluczyk, STOP, detektor TEST — **styki złocone** (P11-7), bez MPN |
 
-Pinout J_P12 (`docs/J_P12.csv`): 1 GND, 2 PANEL_3V3, 3 GND, 4 MECH_OK, 5 GND, 6 STOP_NC_OUT, 7 GND, 8 ARM_CONTACT, 9 GND, 10 N_J_SCOPE_HOT, 11 GND, 12 GND (rezerwa), 13 MARK, 14 TEST_KEY, 15 LOGGER_CLEAR, 16 TEST_PRESENT, 17 GND, 18 GND (rezerwa), 19 GND, 20 3V3_IO. Piny 10/13–16 leżą jak w P03 R6 J_BP1, więc P12 prowadzi je prosto. 13 i 15 to ten sam wyjątek od GND na nieparzystych co w P03. 3V3_IO jest na 20, z dala od PANEL_3V3: zwarcie sąsiednich żył taśmy nie ominie R1 i nie da drugiego źródła przy P04.
+Pinout J_P12 (`docs/J_P12.csv`): 1 GND, 2 PANEL_3V3, 3 GND, 4 MECH_OK, 5 GND, 6 STOP_NC_OUT, 7 GND, 8 ARM_CONTACT, 9 GND, 10 N_J_SCOPE_HOT, 11 GND, 12 GND, 13 MARK, 14 TEST_KEY, 15 LOGGER_CLEAR, 16 TEST_PRESENT, 17 GND, 18 GND, 19 GND, 20 3V3_IO. Piny 10/13–16 leżą jak w P03 R6 J_BP1, więc P12 prowadzi je prosto. 13 i 15 to ten sam wyjątek od GND na nieparzystych co w P03. 3V3_IO jest na 20, z dala od PANEL_3V3: zwarcie sąsiednich żył taśmy nie ominie R1 i nie da drugiego źródła przy P04.
 
 Lista sieci R1 → R2 z uzasadnieniem: `docs/sieci-R1-R2.csv`. Skrót: logika styków (TEST_KEY, ILK_L1_L2, DIAG_L1_L2, LOOP_OUT, MECH_OK, LOGGER_CLEAR, STOP_NC_OUT, TEST_PRESENT, ARM_CONTACT, MARK, N_J_SCOPE_HOT, PANEL_3V3) bez zmian. ECU_P1/EGR_P1/T_EGR_P1/P3 wychodzą z P11 (P11-4: przewody z portów), TAP_P1–P6 też (P11-5: końcówki P05 J4), 5V_SENSOR/AGND_SENSOR wychodzą razem z J10 (P11-1). Nowa jest 3V3_IO (P11-3). Komory portów: `docs/PORTY.csv` — numeracja komór jak w R1, więc adaptery AL1/AL2/AT zostają bez zmian. Przewody: `docs/WIAZKI.md`.
 
@@ -38,11 +38,17 @@ Lista sieci R1 → R2 z uzasadnieniem: `docs/sieci-R1-R2.csv`. Skrót: logika st
 
 Ograniczenia: model pełnego wariantu używa zamrożonego P04-R2.1 (P04 w S1 jeszcze nie ma). Model jest statyczny: bez drgań styków i bez budżetu upływności. Footprinty pól przewodów (raster 3,5 mm, otwór 1,1 mm) to propozycja do layoutu.
 
+## Decyzje użytkownika 4.10 (wprowadzone)
+
+1. **Klucze portów jak w R1:** L1 = B, L2 = C, TEST = A (AT04-12PB / PC / PA). Adaptery AL1 / AL2 / AT zachowują wtyki. Poprawione w `parts.py`, BOM, `PORTY.csv`, schemacie i tu.
+2. **Prąd silnika** (L1.1/L1.2 → P06 J3, TEST.1/TEST.2 → P07): przewód **2,0 mm² (AWG14) na całej długości**, styki złocone **AT60-215-1631** (pin, port) / **AT62-209-1631** (gniazdo, adapter). P11 nie przenosi tego prądu. Zapisane w `WIAZKI.md`, `PORTY.csv`, BOM (X2, X8) i na arkuszu PORTY.
+3. **TAPy:** mostki przy portach (odpowiadające sobie TAPy trzech portów), jedna wiązka 5 par do P05 J4, masa z komory 12 do GND na J4 — przyjęte.
+4. **J_P12:** piny 12 i 18 zostają GND. Złącze IDC 2×10 **kątowe** (`IDC-Header_2x10_P2.54mm_Horizontal`) na krawędzi P11 od strony ściany A. P11 leży poziomo na dnie strefy panelu, maks. ok. 45 × 130 mm (`Plytki/P11-S1-przygotowanie/README.md`, P11-6).
+
+Poprawki z recenzji: notatka o stykach złoconych wskazuje `verification/QA.md` (prąd zamkniętego styku: LOGGER ok. 0,31–0,32 mA, wariant pełny 0,03–0,87 mA); tabelka rysunkowa bez „PCB”, komentarz skrócony do ramki; R1 ma widoczne pole „Wariant: LOGGER: obsadzony / z P04: DNP”; zwarcie PANEL_3V3–GND opisane jako 34 mA / 0,12 W (zgodnie z modelem: 118 mW).
+
 ## Pytania do użytkownika
 
-1. **Klucze portów:** w R1 było L1 = B, L2 = C, TEST = A (DT04-12PB/PC/PA), a decyzja P11-2 mówi L1 = A, L2 = B, TEST = C. Przyjąłem decyzję. Potwierdź, bo zmienia to wtyki adapterów.
-2. **Przekrój prądu silnika:** P06 R2 J3 ma 2 × 2,5 mm². Styki AT wielkości 16 przyjmują typowo maks. 1,0–2,0 mm², zależnie od styku. Do wyboru: przewód 1,5 mm² port → P06 albo przejście 2,5 → 1,5 mm² przy porcie.
-3. **Rezerwy J_P12.12 i .18:** dałem na nich GND. Możesz woleć zostawić je NC jako rezerwę sygnałową.
-4. **J_P12 proste czy kątowe:** przyjąłem proste, bo P11 stoi równolegle do panelu, a taśma idzie do tyłu. Rozstrzygnie makieta.
-5. **TAPy trzech portów:** proponuję łączyć je mostkami przy portach i jedną wiązką prowadzić do P05 J4. Masa L1/L2 (komora 12) ma iść do GND P05 J4. Czy tak?
+Pytania 1–5 zamknięte decyzjami 4.10 (wyżej).
+
 6. **Listwa serwisowa:** P11 nie ma listwy z krawędzi B, bo nie stoi w stosie, a wszystkie sieci są dostępne na polach przewodów. Czy wystarczy?

@@ -18,11 +18,11 @@ INFO = {2: ('pwr', 'P04 (pelny) / P11 R1 (LOGGER)', 'zasilanie stykow: LOGGER - 
         20: ('pwr', 'P02 R4 (J_BP 8/10)', '3V3_IO tylko do R1 (LOGGER); przy P04 R1 DNP - pin bez odbiorcy; z dala od PANEL_3V3')}
 rows = []
 for p in sorted(PARTS['J_P12']['pins'], key=int):
-    n = PARTS['J_P12']['pins'][p]; k, tgt, uw = INFO.get(int(p), ('gnd', 'P12 (wszystkie)', 'rezerwa GND' if int(p) in (12, 18) else ''))
+    n = PARTS['J_P12']['pins'][p]; k, tgt, uw = INFO.get(int(p), ('gnd', 'P12 (wszystkie)', 'GND (rezerwa sygnalowa odrzucona 4.10)' if int(p) in (12, 18) else ''))
     rows.append(['J_P12', p, n, k, tgt, uw])
 table('J_P12.csv', ['zlacze', 'pin', 'siec', 'kierunek', 'plytka_docelowa', 'uwagi'], rows)
 # --- BOM (one board + off-board panel parts)
-SEC = {'J_P12': 'tasma IDC 1,27 mm (AWG28), ok. 150-250 mm do P12 - dlugosc z makiety', 'J11': 'AWG24 (0,25 mm2), linka', 'J8': 'AWG24 (0,25 mm2), linka',
+SEC = {'J_P12': 'tasma IDC 1,27 mm (AWG28) z gniazda katowego w strone sciany A, dlugosc do P12 z makiety', 'J11': 'AWG24 (0,25 mm2), linka', 'J8': 'AWG24 (0,25 mm2), linka',
        'J6': 'RG174 ok. 100 mm', 'X6': 'RG174 (koniec od J6)'}
 table('BOM.csv', ['ref', 'source_ref', 'display', 'mpn', 'qty', 'footprint', 'on_board', 'wariant_LOGGER', 'wariant_pelny', 'przewod', 'note'],
       [[r, v['source_ref'], v['display'], v['mpn'], 1, v['footprint'], 'tak' if v['on_board'] else 'nie (panel)',
@@ -37,15 +37,16 @@ W += [['J8', '1', 'LOOP_OUT', 'port TEST (X8) komora 10', 'AWG24 0,25 mm2 (styk 
       ['J8', '2', 'MECH_OK', 'port TEST (X8) komora 11', 'AWG24 0,25 mm2 (jw.)'],
       ['J6', '1', 'N_J_SCOPE_HOT', 'BNC X6 srodek', 'RG174 zyla'], ['J6', '2', 'GND', 'BNC X6 obudowa', 'RG174 ekran']]
 table('lista-przewodow.csv', ['pole', 'pad', 'siec', 'drugi_koniec', 'przewod'], W)
-DEST = {'ECU_P1': ('P06 J3.1', '>= 1,0 mm2 (prad silnika do 6 A, 10 A w probie biernej)'), 'EGR_P1': ('P06 J3.2', '>= 1,0 mm2'),
-        'T_EGR_P1': ('P07 (HOLD)', '>= 1,0 mm2'), 'T_EGR_P3': ('P07 (HOLD)', '>= 1,0 mm2'), '5V_SENSOR': ('P08 (pelny)', 'AWG22'), 'AGND_SENSOR': ('P08 (pelny)', 'AWG22'),
+MOT = '2,0 mm2 (AWG14) na calej dlugosci; styki zlocone AT60-215-1631 (pin) / AT62-209-1631 (gniazdo)'
+DEST = {'ECU_P1': ('P06 J3.1', MOT + ' (prad silnika do 6 A, 10 A w probie biernej)'), 'EGR_P1': ('P06 J3.2', MOT),
+        'T_EGR_P1': ('P07 (HOLD)', MOT), 'T_EGR_P3': ('P07 (HOLD)', MOT), '5V_SENSOR': ('P08 (pelny)', 'AWG22'), 'AGND_SENSOR': ('P08 (pelny)', 'AWG22'),
         'GND': ('P05 J4 GND (para TAPS)', 'AWG22'), 'LOOP_OUT': ('P11 J8.1', 'AWG24'), 'MECH_OK': ('P11 J8.2', 'AWG24')}
 rows = []
 for r, (name, key, pp) in PORTS.items():
     for cav, lab in pp:
         net = lab.split(' -> ')[0]
         if net == '-': rows.append([name, key, cav, '-', 'pusta (zaslepka komory)', '-']); continue
-        d, wire = DEST.get(net, ('P05 J4 (TAPS)', 'AWG22')) if not net.startswith('TAP') else ('P05 J4 (TAPS)', 'AWG22; TAPy trzech portow polaczone przy portach')
+        d, wire = DEST.get(net, ('P05 J4 (TAPS)', 'AWG22')) if not net.startswith('TAP') else ('P05 J4 (TAPS)', 'AWG22; mostek z tym samym TAPem pozostalych portow przy portach, jedna wiazka 5 par do P05 J4')
         rows.append([name, key, cav, net, d, wire])
 table('PORTY.csv', ['port', 'klucz', 'komora', 'siec', 'drugi_koniec', 'przewod'], rows)
 table('netlist-pinowa.csv', ['ref', 'pin', 'net'], [[r, p, n] for r, v in PARTS.items() for p, n in v['pins'].items()])
