@@ -1,6 +1,6 @@
 # Uruchomienie i odbiór sprzętu S1 (LOGGER) — procedura stołowa
 
-*Wersja 1, 4.10.2026 (sesja w chmurze, zadanie `Plytki/Format-S1/zadania/ZADANIE-ODBIOR-S1.md`). Płytki z zamówienia S1: P02 R4, P03 R6, P05 R3, P06 R2, P09 R2, P10 R2; firmware `Rewizje/EGRLab-v6.2-s1`. Wszystkie wyniki: **NIE ZBADANO** — dokument powstał z plików, nie ze sprzętu. Wartości wpisuj do `FORMULARZ-ODBIORU.md` (identyfikatory kroków są te same). Narzędzia i kolejność lutowania: `NARZEDZIA-I-CZESCI.md`.*
+*Wersja 2, 4.10.2026 (wersja 1: sesja w chmurze; wersja 2: poprawki po recenzji — formularz, SW1 P05 na panelu, polecenia kalibracji 6.2-s1, O-05; zadanie `Plytki/Format-S1/zadania/ZADANIE-ODBIOR-S1.md`). Płytki z zamówienia S1: P02 R4, P03 R6, P05 R3, P06 R2, P09 R2, P10 R2; firmware `Rewizje/EGRLab-v6.2-s1`. Wszystkie wyniki: **NIE ZBADANO** — dokument powstał z plików, nie ze sprzętu. Wartości wpisuj do `FORMULARZ-ODBIORU.md` (identyfikatory kroków są te same). Narzędzia i kolejność lutowania: `NARZEDZIA-I-CZESCI.md`.*
 
 Dokument jest samowystarczalny przy stole. Szczegóły i uzasadnienia liczb są w formularzach ODBIOR wydań (`Plytki/P0x-Rx-review/docs/ODBIOR.md`) — tutaj jest kolejność, połączenia i kryteria. Gdzie kryterium jest moim szacunkiem, a nie liczbą z obliczeń wydania, jest oznaczone **(szac.)**.
 
@@ -36,7 +36,24 @@ python -m serial.tools.miniterm PORT 115200
 Uwagi do firmware (z kodu `app_main.c`):
 - Tryb stołowy (F-02) włącza się, gdy PFAIL_N = L przez ≥ 100 ms od startu, czyli **tylko gdy P02 jest podłączony, ale bez zasilania**, a CORE idzie z USB. Komunikat: `TRYB STOLOWY: PFAIL_N = L (P02 bez zasilania) - bez zapisu sesji i bez TEST`.
 - Gdy J_BP2 P03 nie jest podłączone, R43 trzyma PFAIL_N = H i firmware pracuje normalnie (komunikat `zasilanie z P02`, choć P02 nie ma) — **montuje kartę SD i bez karty się zatrzymuje**. Karta FAT32 w gnieździe przy każdym starcie poza trybem stołowym.
-- Polecenia konsoli: `status`, `profile`, `logger`, `stop`, `mark`, `zero`, `save`, kalibracja (`cal`, `iscal`, `currentcal`, `icalok`, `bank`, `bypass`) — opis w `Rewizje/EGRLab-v6.2-s1/docs/05-profile.md`.
+- Polecenia konsoli: `status`, `profile`, `logger`, `stop`, `mark`, `zero`, `save`, moduły i kalibracja — opis w `Rewizje/EGRLab-v6.2-s1/docs/05-profile.md`. Konsola odpowiada `OK: <polecenie>` albo `REJECTED: <polecenie>`. Składnia z kodu (`app_main.c`, `profile.c`); bank 0 = LOGGER, identyfikator 1–23 znaki `A–Z a–z 0–9 _ -`:
+
+  | Polecenie | Stan | Działanie / warunek |
+  |---|---|---|
+  | `daqmodule <ID>` | SAFE | egzemplarz DAQ (P05); domyślnie `UNBOUND` (`control.c:27`); zmiana ID kasuje akceptację napięć obu banków |
+  | `imodule 0 <ID>` | SAFE | egzemplarz modułu prądu LOGGER (P06); domyślnie `UNBOUND` (`control.c:37`); zmiana ID kasuje kalibrację i ważność prądu |
+  | `cal 0 <kanał 0–7> <gain> <offset>` | SAFE | tor napięcia (CH1 = kanał 0, CH7 VBAT = kanał 6; kanał 5 to rezerwa — nie kalibrować); **kasuje akceptację napięć banku** (`profile.c:61`) |
+  | `vcalok 0 0\|1` | SAFE | akceptacja napięć banku; odrzucone, gdy `daqmodule` = `UNBOUND`; zawsze po ostatnim `cal` |
+  | `iscal 0 <adc_gain> <adc_offset> <V/A>` | SAFE | skala lokalnego prądu P06; kasuje `icalok` |
+  | `currentcal 0 <zero V>` | SAFE | zero napięciowe wyjścia INA (1–4 V) |
+  | `icalok 0 0\|1` | SAFE | akceptacja toru prądu; odrzucone, gdy `imodule 0` = `UNBOUND` (`profile.c:47–48`); po `iscal` |
+  | `bypass 0\|1` | SAFE, LOGGER | 0 = prąd banku ważny — odrzucone bez `icalok` (`app_main.c:500`); 1 = prąd nieważny |
+  | `bank 0\|1`, `save` | SAFE | wybór banku; zapis profilu do NVS |
+  | `zero` | SAFE (READY) | seria 1 s przy 0 A; wymaga `bypass 0` i braku adaptera LOGGER (`app_main.c:210`) — w S1 bez P11 odrzucane, niżej |
+  | `aux 0\|1` | SAFE, LOGGER | pozycja SW1 P05 w profilu: 0 = HI (domyślnie, `control.c:41`), 1 = LO |
+
+  Po `logger` stan to LOGGER — polecenia z kolumną „SAFE” wymagają najpierw `stop`. Próbkowanie i zapis próbek (z `current_raw`) trwają także w SAFE.
+- **`zero` bez P11:** firmware wykonuje `zero` tylko, gdy wejście LOGGER_CLEAR (MCP23017 GPB4) jest w stanie H (`board.c:459`: L = obecny adapter LOGGER). Na P03 R6 J_BP1.15 LOGGER_CLEAR ma R6 10 kΩ do GND, a w S1 nie ma P11 (pętla NC z PANEL_3V3), więc `zero` zawsze daje `REJECTED`. Postępowanie: zero prądu wpisz `currentcal 0 <V>` z pomiaru I_L_OUT multimetrem przy 0 A (P06-07) — to wystarcza do kalibracji. Procedurę `zero` sprawdź opcjonalnie: przy wyłączonym stosie dołącz J_BP1.15 P03 przez 1 kΩ do 3V3_IO (ok. 3,0 V z R6 10 kΩ — stan pustej pętli NC P11, „brak adaptera LOGGER”), włącz, w SAFE przy 0 A wydaj `zero`, wyłącz i zdejmij podciągnięcie. Bez tego w formularzu P06-10 przy `zero` wpisz „— (bez P11)”. Podciągnięcie nie wpływa na stan LOGGER (LOGGER_CLEAR blokuje tylko TEST, Wi-Fi i `zero`).
 - Logi z karty: `python tools/egrlog.py inspect|export|report <katalog sesji>` (z katalogu wydania 6.2-s1).
 
 ### 1.2 DHO804 — ustawienia bazowe
@@ -74,7 +91,7 @@ Tabela połączeń (z `Plytki/P12-przygotowanie/wyniki/KONTRAKTY.md`, sieci w st
 | W5 CAN | CAN_TX | — | J_BP1.6 | — | — | — | 6 |
 | W5 | CAN_RX | — | J_BP1.8 | — | — | — | 8 |
 
-Niepodłączone w LOGGER (zostają wolne): P02 J_BP.12 PSU_OK, .15 P04_3V3, .16 SAFE_N, .17/.18 PG_SEND/PG_LINK; P03 wejścia z P11 (MARK, TEST_KEY, LOGGER_CLEAR, TEST_PRESENT), P08 (SENSOR_HEALTHY) i P04 (INTERLOCK, HW_ARMED) — stany ustalają rezystory domyślne (`P03-R6-review/docs/STANY-DOMYSLNE.csv`); P05 J_BP1.6 DAQ_OK (odbiorca tylko w P04). 5V_SYS do P03 prowadź trzema żyłami, do pozostałych dwiema; każda płytka ma co najmniej dwie żyły GND do złączki.
+Niepodłączone w LOGGER (zostają wolne): P02 J_BP.12 PSU_OK, .15 P04_3V3, .16 SAFE_N, .17/.18 PG_SEND/PG_LINK; P03 wejścia z P11 (MARK, TEST_KEY, LOGGER_CLEAR, TEST_PRESENT — LOGGER_CLEAR = L firmware czyta jako obecny adapter LOGGER, skutek dla `zero` w 1.1), P08 (SENSOR_HEALTHY) i P04 (INTERLOCK, HW_ARMED) — stany ustalają rezystory domyślne (`P03-R6-review/docs/STANY-DOMYSLNE.csv`); P05 J_BP1.6 DAQ_OK (odbiorca tylko w P04). 5V_SYS do P03 prowadź trzema żyłami, do pozostałych dwiema; każda płytka ma co najmniej dwie żyły GND do złączki.
 
 ## 2. Oględziny i zwarcia przed pierwszym zasileniem
 
@@ -112,8 +129,8 @@ Konfiguracja: przewody J1 do zasilacza (czerwony J1.1 BAT_IN, czarny J1.2 GND), 
 | P02-11 | PWR rozwarty, włóż **F3** (TSR 3,3 V), PWR zwarty | J_BP.8–.7 (3V3_IO); J_SV1.3 SUP5_N; J_SV1.4 PSU_OK; J_SV1.10 PFAIL_N | 3V3_IO 3,23–3,37 V; SUP5_N, PSU_OK, PFAIL_N ≥ 3,0 V | U6, U7/U8 (MCP120), U9 od spodu, U10 w podstawce |
 | P02-12 | jw. | prąd zasilacza przy 14,5 V bez obciążenia | zapisać (oczekiwane kilkadziesiąt mA **(szac.)**) | — |
 | P02-13 | Makieta komplet LOGGER: PWR rozwarty, na pigtailu J_BP między 5V_SYS (2, 4, 6 razem) a GND kondensator 470 µF / 16 V i 4,7 Ω / 10 W; PWR zwarty przy 14,5 V | DHO804 jak w 9.1 (CH1 5V_SYS na J_SV2.11, CH2 PSU_OK J_SV1.4) | jak kryterium 9.1: narastanie monotoniczne, bez restartów (foldback), 5V_SYS po starcie 4,90–5,10 V pod 1 A | TSR w foldbacku: za duża pojemność albo obciążenie — nie łącz płytek, zgłoś |
-| P02-14 | Podtrzymanie (O-05, wyłącznik): obciążenie 4,7 Ω (≈ 6 W z VLOG); zasilacz 14,5 V; rozewrzyj PWR | DHO804: CH1 J_SV1.10 PFAIL_N (wyzwalanie opadające 1,6 V, 5 ms/dz), CH2 5V_SYS (J_SV2.11), CH3 J_SV2.10 VLOG, CH4 J_SV1.2 ENABLE | od zbocza PFAIL_N do 5V_SYS < 4,75 V **≥ 10 ms** (Z-08 w najgorszym narożniku; nominalnie ok. 17 ms do VLOG = 7 V); PFAIL_N opada ≤ 100 µs po ENABLE (Z-09; oczekiwane ok. 5 µs) | C12, D1b, R40/D2; PFAIL_N późno: U2A |
-| P02-15 | jw. z 10 Ω (≈ 3 W) | jw. | ≥ 20 ms **(szac. z 22,3 ms w najgorszym narożniku)**; nominalnie ok. 33 ms | jw. |
+| P02-14 | Podtrzymanie (O-05, wyłącznik): obciążenie 4,7 Ω (≈ 6 W z VLOG); zasilacz 14,5 V; rozewrzyj PWR | DHO804: CH1 J_SV1.10 PFAIL_N (wyzwalanie opadające 1,6 V, 5 ms/dz), CH2 5V_SYS (J_SV2.11), CH3 J_SV2.10 VLOG, CH4 J_SV1.2 ENABLE | od zbocza PFAIL_N do 5V_SYS < 4,75 V **≥ 14 ms** (O-05 przy 6 W); oczekiwane ok. 25 ms, ok. 20 ms przy C12 −20 % **(szac. wzorem z `OBLICZENIA-R4.md`: t = C·(V0² − 7²)/(2P), V0 ≈ 13,8 V)**. Uwaga: ok. 17 ms z obliczeń to podtrzymanie po zadziałaniu UVLO przy 12,55 V (rozładowany pakiet; Z-08: ≥ 10 ms w najgorszym narożniku), nie rozwarcie PWR przy 14,5 V. PFAIL_N opada ≤ 100 µs po ENABLE (Z-09; oczekiwane ok. 5 µs) | C12, D1b, R40/D2; PFAIL_N późno: U2A |
+| P02-15 | jw. z 10 Ω (≈ 3 W) | jw. | **≥ 28 ms** (O-05 przy 3 W); oczekiwane ok. 50 ms, ok. 41 ms przy C12 −20 % **(szac., wzór jak P02-14)**; 33,5 ms z obliczeń dotyczy UVLO przy 12,55 V | jw. |
 | P02-16 | VBAT (O-08): drugi kanał zasilacza albo ten sam przez przewód: 12,00 V i 15,00 V na J15 (wspólna masa z J1.2) | J_BP.20 VBAT_SENSE (bez P05), J_SV2.3 | VBAT_SENSE = J15 z dokładnością ≤ 20 mV **(szac.: upływ P6KE24CA µA na 10 kΩ)**; nie przekraczać 20 V | D13 odwrotnie (jest dwukierunkowy — wtedy uszkodzony), R38 |
 | P02-17 | Odwrotna polaryzacja (O-01), opcjonalnie, przed łączeniem z innymi płytkami: F1–F3 wyjęte, −14 V na J1 (zamienione przewody), limit 100 mA, PWR zwarty, 10 s | prąd, temperatura Q9 | prąd ≤ 1 mA **(szac.: upływy)**, nic się nie grzeje; potem powtórzyć P02-02…P02-04 | Q9 (Q_REV) — nie przechodzić dalej |
 
@@ -121,9 +138,9 @@ Konfiguracja: przewody J1 do zasilacza (czerwony J1.1 BAT_IN, czarny J1.2 GND), 
 
 | ID | Podłącz / zrób | Punkt pomiaru | Oczekiwane | Jeśli źle |
 |---|---|---|---|---|
-| P02-18 | Pakiet bez P02: napięcie i polaryzacja na XT60, BMS, bezpiecznik 7,5 A przy koszyku | multimetr na XT60 | 13,0–16,8 V (≥ 3,25 V/ogniwo, inaczej P02 może nie wystartować — próg do 14,08 V), plus na przewodzie do J1.1 | ładowanie ogniw, BMS |
+| P02-18 | Pakiet bez P02: napięcie i polaryzacja na XT60, BMS, bezpiecznik 7,5 A przy koszyku | multimetr na XT60 | od **progu załączenia zmierzonego w P02-05 + 0,2 V** do 16,8 V (próg może wynosić do 14,08 V, więc np. 13,0 V nie gwarantuje startu — pakiet doładować); plus na przewodzie do J1.1 | ładowanie ogniw, BMS |
 | P02-19 | PWR rozwarty, XT60 do P02 (F2/F3 włożone, F1 wyjęty, makieta 470 µF + 4,7 Ω), PWR zwarty | LED, J_BP.2 5V_SYS, J_BP.8 3V3_IO, PSU_OK | start, wartości jak P02-10/P02-11 | — |
-| P02-20 | Podtrzymanie (O-05, wyjęcie pakietu): obciążenie 4,7 Ω, wyjęcie XT60 | jak P02-14 | ≥ 10 ms jak P02-14 | jak P02-14 |
+| P02-20 | Podtrzymanie (O-05, wyjęcie pakietu): obciążenie 4,7 Ω, wyjęcie XT60 | jak P02-14 | **≥ 14 ms** (O-05 przy 6 W), jak P02-14 | jak P02-14 |
 
 F1 (VMOTOR, 5 A) zostaje wyjęty przez cały odbiór LOGGER; O-06 (zwarcie VMOTOR) i O-09 (4 A przez 30 min) należą do wariantu pełnego z P07. Pakietu nie zostawiaj w nagrzanym aucie (ok. 60 °C limit ogniw).
 
@@ -177,10 +194,11 @@ Według `P05-R3-review/docs/ODBIOR.md`, kroki 0–7 i 10a–11. Zasilanie 5,00 V
 | P05-05 | Przekaźniki przed wlutowaniem (10a) | cewka z zasilacza, ok. 23 °C | zadziałanie ≤ 3,9 V każdej sztuki | sztukę wymienić |
 | P05-06 | Pomiar 5V_SYS przy ok. 23 °C (krok 3) | J_SV1.4 | 4,93–5,07 V — to kryterium dla szyny z P02 w 9.2 | — |
 | P05-07 | Kondensatory U1 przed skręceniem (krok 11) | TP2–TP5 (TP1 = GND) | Ceff C12/C13 ≥ 10 µF przy 2,5/4,4 V (karta DC-bias lub pomiar) | — |
+| P05-18 | **SW1 AUX na panelu** (decyzja 4.10; odpowiednik kroku 13 ODBIOR P05), bez zasilania, przed skręceniem stosu: przełącznik E-Switch 100DP1T1B1M1REH (panelowy, oczka lutownicze) połączony 5 przewodami AWG24 ok. 80 mm z otworami footprintu SW1 na P05 — oczko N do otworu N: 1 AUX_HI, 2 AUX_IN (wspólny A), 3 AUX_LO, 5 AUX_SHUNT (wspólny B), 4 GND; oczko 6 wolne | omomierz na otworach SW1 od strony P05 (przez przewody) w obu pozycjach; między sąsiednimi przewodami | pozycja **HI: 2–1 i 5–4 zwarte** (< 1 Ω), 2–3 rozwarte; pozycja **LO: 2–3 zwarte**, 2–1 i 5–4 rozwarte (5–6 zwarte w przełączniku, oczko 6 wolne); brak zwarć między przewodami i do tulei. Pozycje HI/LO opisać na panelu dopiero po tym pomiarze | zamienione przewody (oczka 1↔3 albo 4↔5) — przelutować; nie przełączać pod napięciem |
 
 ### 5.2 W stosie (P02 + P03 + P05), firmware `minimal`
 
-Wyłącz wszystko, dołącz W0 (5V_SYS dwie żyły, GND), W1 (VBAT_SENSE) i W2 do P05. Wgraj `minimal`. Karta SD w gnieździe. J4 TAPS i J6 AUX wolne.
+Wyłącz wszystko, dołącz W0 (5V_SYS dwie żyły, GND), W1 (VBAT_SENSE) i W2 do P05. Wgraj `minimal`. Karta SD w gnieździe. J4 TAPS i J6 AUX wolne, SW1 w pozycji HI (P05-18; zgodnie z domyślnym `aux 0`).
 
 | ID | Podłącz / zrób | Punkt pomiaru | Oczekiwane | Jeśli źle |
 |---|---|---|---|---|
@@ -189,7 +207,7 @@ Wyłącz wszystko, dołącz W0 (5V_SYS dwie żyły, GND), W1 (VBAT_SENSE) i W2 d
 | P05-10 | Takt próbkowania | CH4 ADC_CONVST, CH3 J_SV2.4 ADC_BUSY, 200 µs/dz | CONVST co 500 µs (2 kS/s); po każdym CONVST jeden impuls BUSY; zapisać szerokość BUSY | BUSY brak: U1 zasilanie/REGCAP |
 | P05-11 | Wejście testowe CH7: 12,00 V z zasilacza na P02 J15 (VBAT_IN, wspólna masa) | zapis 30 s (`logger`, potem `stop`), `egrlog.py export` → kolumna kanału CH7 (indeks 6) | przed kalibracją kod ok. **6351** (±1 %) przy zakresie ±10 V (12,00 V / 6,1918 / 10 V × 32768; przez R38 10 kΩ na P02) | kod ok. 6457: VBAT podany wprost na P05 J_BP1.10 (mnożnik 6,0898); inny: zamiana kanałów, R31/R32 |
 | P05-12 | jw. 15,00 V | jw. | kod ok. 7938 (±1 %); stosunek kodów 15/12 z dokładnością 0,2 % **(szac.)** | nieliniowość — U1, zakres |
-| P05-13 | Kanały CH1–CH5 przez docelowe adaptery (krok 12 ODBIOR) | jw. | znaki i kanały zgodne; kalibracja dwupunktowa `cal 0 kanał gain offset`, sprawdzenie w trzecim punkcie | — |
+| P05-13 | Kanały CH1–CH5 przez docelowe adaptery (krok 12 ODBIOR) i CH7 z P05-11/12; kalibracja w SAFE (`stop`): raz `daqmodule DAQ_<egz. P05>` (bez tego DAQ = `UNBOUND` i `vcalok` jest odrzucane), potem dla każdego kanału `cal 0 <kanał> <gain> <offset>` (CH1 = kanał 0 … CH5 = kanał 4, CH7 = kanał 6; wzór w `05-profile.md`), sprawdzenie w trzecim punkcie, **na końcu `vcalok 0 1`** i `save` (każde `cal` kasuje akceptację banku) | jw.; `profile` | znaki i kanały zgodne; reszta w trzecim punkcie zapisać; `profile`: `daqmodule` ≠ `UNBOUND`, `vcalok 0 1`; w eksporcie kolumny napięć fizycznych wypełnione (bez akceptacji są puste, zostaje raw — `04-firmware-logi.md`) | `REJECTED` przy `vcalok`: brak `daqmodule` albo stan ≠ SAFE |
 | P05-14 | **Drgania DAQ_OK** (MINOR-4 recenzji): `logger` przy 2 kS/s, zapis SD, 30 min | DHO804: CH1 P05 J_SV2.9 DAQ_OK — wyzwalanie **opadające 1,6 V, tryb Normal**; CH2 J_SV1.5 5VA_P05 sprzężenie AC 20 mV/dz; CH3 J_SV2.10 DAQ_RAIL_N; CH4 J_SV2.8 MEAS_PERMIT | **zero wyzwoleń w 30 min**, przekaźniki nie klikają; tętnienia i szpilki 5VA (p-p, zapisać) mniejsze niż połowa zapasu (5VA DC − dolny próg zmierzony w P05-03) | szpilki od SD/CONVST: C35/C1, droga masy C15/C24 (przyjęte 21–23 mm); zapisać oscylogram |
 | P05-15 | jw., pakiet częściowo rozładowany albo zasilacz 13,0 V | jw., 10 min | jak P05-14 | — |
 | P05-16 | `daq_stats` w `events_NNN.ndjson` po 30 min | `convst`, `samples`, `adc_errors`, `lost_ticks` | `convst` = `samples`, `adc_errors` = 0, `lost_ticks` = 0 (F-05) | SD za wolna, przewody SPI (dopiero P12) |
@@ -207,22 +225,22 @@ Według `P06-R2-review/docs/ODBIOR.md`, M01, E01–E09. Zasilanie 5,00 V na J_BP
 | P06-02 | E04: 5,00 V, limit **30 mA**, BYPASS | J_SV2.2 5V_SYS, .3 5VA_P06, .4 3V3_P06, J_SV1.5 REF_BUF; REF25 na C5/U10.2 albo miernikiem ≥ 1 GΩ | VREF 2,475–2,525 V | U10 MCP1525, C5 |
 | P06-03 | E05: MEASURE, limit 250 mA, 4,75 / 5,00 / 5,25 V | prąd; temperatura R21, R6 | < 180 mA; R21 ciepły (0,64–0,71 W) | — |
 | P06-04 | E06–E07 | J_SV2.10 LOGGER_CURRENT_OK, J_SV2.9 SHUNT_ENABLED, J_SV2.7/.8 SUP3_N/SUP5_N | MEASURE: READY = H; BYPASS: SHUNT_ENABLED = L i READY = L; wymuszone SUP3_N / SUP5_RAW → READY = L | U6, R21/J5 |
-| P06-05 | E09: start 5 V | CH1 J_SV2.2, CH2 J_SV2.3 (Math CH1 − CH2 = prąd R6 1 Ω), CH3 J_SV2.4, CH4 J_SV1.6 REF25 | **przy wpięciu do żywego 5 V** prąd przez R6 ≤ ok. 5 A, τ ≈ 0,22 ms; przy narastaniu zasilacza znacznie mniej | — |
+| P06-05 | E09: start i odłączenie 5 V **wyłącznie zasilaczem** — przewody podłączone przy wyłączonym wyjściu, potem włącz / wyłącz wyjście (nie wpinać do żywego 5 V, zasada 0.3) | CH1 J_SV2.2, CH2 J_SV2.3 (Math CH1 − CH2 = prąd R6 1 Ω), CH3 J_SV2.4, CH4 J_SV1.6 REF25 | szczyt prądu przez R6 zapisać — znacznie poniżej ok. 5 A (τ ≈ 0,22 ms), bo 5 A to granica obliczeniowa dla skoku 5 V; 5VA_P06, 3V3_P06, REF25 narastają i opadają bez przekroczeń (oscylogram) | prąd bliski 5 A: zasilacz włącza wyjście skokiem — zapisać, nie powtarzać wielokrotnie |
 
 ### 6.2 W stosie, firmware `logger`
 
-Wyłącz wszystko, dołącz W0 i W3 oraz ADC_SCLK / ADC_DOUTA (W2) do P06. Wgraj `logger`. P09 i P10 mogą jeszcze nie być podłączone — firmware zapisze wtedy błędy temperatur (NAN, fault) i brak ramek CAN; to oczekiwane. **Jeśli wariant `logger` nie przejdzie do stanu LOGGER bez P09/P10, zapisz to i odbierz P06 dopiero w komplecie (rozdz. 9)** — tego nie da się sprawdzić bez sprzętu.
+Wyłącz wszystko, dołącz W0 i W3 oraz ADC_SCLK / ADC_DOUTA (W2) do P06. Wgraj `logger`. P09 i P10 mogą jeszcze nie być podłączone — firmware zapisze wtedy błędy temperatur (NAN, fault) i brak ramek CAN; to oczekiwane (`logger` przechodzi do stanu LOGGER bez warunków, `control.c`).
 
-Źródło prądu do kalibracji: zasilacz w trybie CC przez J3 → bocznik → J4, wzorzec w szeregu (`NARZEDZIA-I-CZESCI.md`). P02 zasila wtedy pakiet. Minus źródła połącz z GND stosu (napięcie wspólne ok. 0 V; E17 dla 12–15 V osobno).
+Źródło prądu do kalibracji: kanał zasilacza w trybie CC przez J3 → bocznik → J4, wzorzec w szeregu; P06-11 wymaga drugiego, niezależnego kanału (`NARZEDZIA-I-CZESCI.md`). P02 zasila wtedy pakiet. Minus źródła połącz z GND stosu (napięcie wspólne ok. 0 V; E17 dla 12–15 V osobno).
 
 | ID | Podłącz / zrób | Punkt pomiaru | Oczekiwane | Jeśli źle |
 |---|---|---|---|---|
 | P06-06 | E10: prąd 0, MEASURE, `logger` | DHO804: J_SV2.11 CS_LOCAL_N, J_SV2.12 CLK_LOCAL; log `current_raw` | 16 taktów na CS, kod ok. 2048, stały; wspólna linia ADC_DOUTA bez konfliktu z P05 (brak zniekształconych bitów na CH obu ADC) | U5 (trójstanowy), W2 |
 | P06-07 | E11: zero po 1 s | J_SV1.2 I_L_OUT, J_SV1.5 REF_BUF, J_SV1.3 ADC_AIN (multimetr) | I_L_OUT ≈ REF_BUF (ok. 2,5 V), ADC_AIN ≈ 1,25 V; szum kodu zapisać (cel po kalibracji: offset < 20 mA, RMS < 10 mA) | — |
-| P06-08 | Kalibracja ADC lokalnego: w SAFE `bank 0`; dwa punkty prądu (np. 0 i +3 A), w każdym napięcie I_L_OUT multimetrem i `current_raw` z logu | — | `adc_gain = (V2 − V1)/(raw2 − raw1)` ≈ 0,00122 V/kod; `adc_offset = V1 − raw1·adc_gain` ≈ 0 | — |
+| P06-08 | Kalibracja ADC lokalnego: po P06-06/P06-07 **`stop`** (SAFE — `bank`, `imodule`, `iscal`, `save` są przyjmowane tylko w SAFE; próbki z `current_raw` dalej się zapisują), `bank 0`; dwa punkty prądu (np. 0 i +3 A), w każdym napięcie I_L_OUT multimetrem i `current_raw` z logu | — | `adc_gain = (V2 − V1)/(raw2 − raw1)` ≈ 0,00122 V/kod; `adc_offset = V1 − raw1·adc_gain` ≈ 0 | — |
 | P06-09 | Skala V/A: ±0,5 / 1 / 3 A (potem ±6 A), odwracanie przewodów źródła przy wyłączonym źródle | I_L_OUT względem REF_BUF; wzorzec prądu | ok. 0,25 V/A (5 mΩ × 50) w obu kierunkach | znak odwrotny: Kelvin K_PLUS/K_MINUS |
-| P06-10 | Wpisy: `iscal 0 adc_gain adc_offset V/A`, `currentcal 0 zero` (zmierzone I_L_OUT przy 0 A), `icalok 0 1`, `bypass 0`, `zero`, `save` | `profile` | wartości jak wpisane | — |
-| P06-11 | E13: kontrola w punktach ±0,5 / 1 / 3 / 6 A przy 5V_SYS z P02; potem przy 4,75 i 5,25 V: żyły 5V_SYS P06 odłączone od szyny i podane z zasilacza (GND wspólne), zasilacz włączany po P02, wyłączany przed P02 | prąd z logu vs wzorzec | reszta ≤ max(30 mA, 1 % wskazania) | — |
+| P06-10 | Wpisy w SAFE, w tej kolejności: `imodule 0 IL_<egz. P06>` (bez tego moduł = `UNBOUND`: `icalok` odrzucone, a potem `bypass 0` odrzucone bez `current_calibrated`), `iscal 0 adc_gain adc_offset V/A`, `currentcal 0 <V>` (I_L_OUT przy 0 A z P06-07), `icalok 0 1` (po `iscal`, które kasuje akceptację), `bypass 0`, `zero` (tylko z podciągnięciem LOGGER_CLEAR, 1.1; bez P11 `REJECTED` — wpisać „— (bez P11)”), `save` | konsola (`OK` / `REJECTED`), `profile` | każde polecenie `OK` (poza `zero` bez P11); `profile`: `imodule 0` ≠ `UNBOUND`, `iscal` / `currentcal` jak wpisane, `icalok 0 1`; `status` po `logger` pokazuje liczbowe `I=` (nie nan) | `REJECTED`: stan ≠ SAFE (najpierw `stop`), brak `imodule`, wartość poza zakresem `profile_valid` |
+| P06-11 | E13 (`logger`): kontrola w punktach ±0,5 / 1 / 3 / 6 A przy 5V_SYS z P02; potem przy 4,75 i 5,25 V — **dwa kanały zasilacza**: kanał 1 w CC jako źródło prądu przez tor, kanał 2 zasila P06: żyły 5V_SYS P06 odłączone od szyny i podane z zasilacza (GND wspólne), zasilacz włączany po P02, wyłączany przed P02 | prąd z logu vs wzorzec | reszta ≤ max(30 mA, 1 % wskazania) | — |
 | P06-12 | E14: BYPASS przy ustalonym prądzie 1 A | J_SV2.9, J_SV2.10; log | SHUNT_ENABLED = L, READY = L; w logu brak ważnych amperów (kolumna A pusta) | — |
 | P06-13 | E15: bierny tor 10 A, 30 s, potem 10 min (35 µm miedzi!) | temperatura pól J3/J4/RSH1 (termopara P09 albo termowizja); spadek na torze | przyrost < 30 °C, stały spadek, brak odbarwień | przerwać przy zapachu/odbarwieniu |
 
@@ -274,14 +292,14 @@ Magistrala: dwa aktywne węzły CAN z ACK (np. dwa adaptery USB-CAN) na końcach
 | P10-05 | Brak TX: firmware/zewnętrznie CAN_TX (J_BP1.6 P03) L/H/PWM | CAN_H/L na J3 (sonda na złączu, nie na kołkach 10 kΩ) | P10 nigdy nie dominuje magistrali | — |
 | P10-06 | Brak ACK: odłącz drugi węzeł | magistrala | brak ACK (P10 nie potwierdza), generator powtarza ramkę; po ponownym dołączeniu poprawne ramki | P10 potwierdza = S nie na VIO |
 | P10-07 | Ruch ciągły 10 min z licznikiem | log vs licznik generatora | liczba ramek identyczna w zakwalifikowanym obciążeniu; `can_stats` bez strat; zapisać obciążenie magistrali | `log_dropped` > 0: obciążenie powyżej limitu — zapisać limit |
-| P10-08 | RPM (F-08): z węzła `7E8#04410C1F40AAAAAA` co 100 ms | log | `rpm_obd` 2000 rpm, `ecu` 0x7E8 | — |
+| P10-08 | RPM (F-08): z węzła `7E8#04410C1F40AAAAAA` co 100 ms | log | `rpm_obd` 2000 rpm, `ecu` 2024 (pole dziesiętne = 0x7E8) | — |
 | P10-09 | Zatrzymaj nadawanie RPM | log | po 1 s `rpm_stale` (raz na przerwę); brak wartości 0 rpm | — |
 | P10-10 | Zła długość: `7E8#07410C1F40` (DLC 5) | log | `rpm_rejected`, licznik `rpm_bad_length` rośnie | — |
 | P10-11 | Wpływ kołków: powtórz P10-07 z sondą na J2.7/J2.8 | liczba błędów | bez dodatkowych błędów | — |
 
 ## 9. Komplet LOGGER (P02 + P03 + P05 + P06 + P09 + P10)
 
-Wyłącz wszystko, połącz W0–W5. Firmware `logger`, karta SD, termopary, BYPASS w MEASURE, J4/J6 P05 wolne, F1 wyjęty.
+Wyłącz wszystko, połącz W0–W5. Firmware `logger`, karta SD, termopary, BYPASS w MEASURE, **SW1 P05 w pozycji HI** (opis z P05-18; zgodnie z domyślnym `aux 0` = HI, `control.c:41`; jeśli zmieniano — `aux 0`), J4/J6 P05 wolne, F1 wyjęty.
 
 ### 9.1 Start 5V_SYS z całą pojemnością
 
@@ -292,7 +310,7 @@ Pojemność na 5 V z list części paczek: P02 22,1 µF, P03 11 µF, P05 232,7 �
 | LOG-01 | DHO804: CH1 P02 J_SV2.11 5V_SYS (1 V/dz), CH2 P02 J_SV1.4 PSU_OK (2 V/dz), CH3 P05 J_SV1.4, CH4 P05 J_SV1.5 (1 V/dz; Math CH3 − CH4 = prąd C1 przez R1 1 Ω); 2 ms/dz, Single, wyzwalanie CH1 narastające 2,5 V. Zasilacz 14,5 V / limit 2 A albo pakiet; PWR zwierany | przebiegi | 5V_SYS rośnie **monotonicznie** do ≥ 4,75 V, czas 10–90 % zapisać (oczekiwane rzędu 5 ms z karty TSR; **kryterium robocze ≤ 15 ms**); **brak restartów** (foldback = powtarzane narastania lub piła); po starcie brak spadku poniżej 4,75 V; PSU_OK = H po ustaleniu szyn | foldback: za duża pojemność albo obciążenie przy starcie — rozdzielić start (najpierw bez P06), zgłosić |
 | LOG-02 | jw. | Math CH3 − CH4 | szczyt prądu ładowania C1 ≤ 0,5 A **(szac.: 220 µF × 5 V / 5 ms ≈ 0,22 A)** | prąd ok. 5 A = szyna rośnie skokiem, nie rampą — TSR / pomiar |
 | LOG-03 | jw., zamiast P05 sondy na P06 J_SV2.2 / J_SV2.3 (prąd C3 przez R6) | Math | szczyt ≤ 0,5 A **(szac.)** | — |
-| LOG-04 | Powtórz LOG-01 pięć razy; potem przy 13,6 V (blisko progu UVLO) i 16,8 V | jw. | każdy start jak LOG-01; przy 13,6 V brak cyklicznego załączania (UVLO + prąd startu) | miganie przy 13,6 V: spadek na przewodach pakietu/zasilacza w czasie startu |
+| LOG-04 | Powtórz LOG-01 pięć razy; potem przy **progu załączenia zmierzonym w P02-05 + 0,2 V** (blisko UVLO) i przy 16,8 V | jw. | każdy start jak LOG-01; przy progu + 0,2 V brak cyklicznego załączania (UVLO + prąd startu) | miganie przy progu + 0,2 V: spadek na przewodach pakietu/zasilacza w czasie startu |
 | LOG-05 | P03 po starcie | konsola | jeden start, bez resetów brownout | zapad 5V_M1 / 3V3_CORE przy starcie |
 
 ### 9.2 Praca ciągła

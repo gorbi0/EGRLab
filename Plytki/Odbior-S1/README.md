@@ -14,4 +14,6 @@
 - Kolejność dołączania płytek jest narastająca (P05 przed P06), bo P06 dzieli z P05 linie ADC_SCLK/ADC_DOUTA i odbiór wspólnej magistrali wymaga obu.
 - Bez P12 płytki łączą pigtaile IDC rozcięte na żyły, nie taśmy płytka–płytka, bo pinouty J_BP są różne (prosta taśma P03–P05 zwiera 5V_SYS z GND).
 - P02 przy pierwszym załączeniu ma limit 1 A zamiast typowych 100 mA, bo przy niższym limicie ładowanie C12 przez R40 (0,76 A) zbija napięcie pod próg UVLO i płytka cyklicznie startuje.
+- SW1 P05 (AUX HI/LO) jest na panelu, nie na płytce (decyzja 4.10): 5 przewodów do otworów SW1, ciągłość w P05-18.
+- Bez P11 firmware odrzuca `zero` (LOGGER_CLEAR = L to „adapter LOGGER obecny”), więc zero prądu P06 wpisuje się `currentcal` z pomiaru multimetrem; `zero` tylko z tymczasowym podciągnięciem (URUCHOMIENIE 1.1).
 - Kryteria oznaczone „(szac.)” to moje szacunki, nie liczby z obliczeń wydań — po pierwszym egzemplarzu zastąpić zmierzonymi.

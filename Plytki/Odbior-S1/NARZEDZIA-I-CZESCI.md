@@ -6,7 +6,7 @@
 
 | Przyrząd | Do czego | Uwagi |
 |---|---|---|
-| Zasilacz laboratoryjny z ograniczeniem prądu | P02 R4: 0–17 V, do 2 A (rampa UVLO, start z C12); płytki 5 V: 5,00 V z limitem 20–800 mA | **Zakres posiadanego zasilacza nie jest zapisany w repozytorium** — pytanie w PR. Do próby odwrotnej polaryzacji P02 (O-01) wystarczy zamiana przewodów. Drugi kanał 3,3 V przydaje się dla P09/P10 (inaczej 3V3_IO z P02, rozdz. 4.4 procedury). |
+| Zasilacz laboratoryjny z ograniczeniem prądu | P02 R4: 0–17 V, do 2 A (rampa UVLO, start z C12); płytki 5 V: 5,00 V z limitem 20–800 mA | **Zakres posiadanego zasilacza nie jest zapisany w repozytorium** — pytanie w PR. Do próby odwrotnej polaryzacji P02 (O-01) wystarczy zamiana przewodów. Drugi kanał 3,3 V przydaje się dla P09/P10 (inaczej 3V3_IO z P02, rozdz. 8.1 procedury). **P06-11 wymaga dwóch niezależnych kanałów** (albo dwóch zasilaczy): CC jako źródło prądu do 6 A przez tor P06 i 4,75 / 5,25 V na zasilanie P06. |
 | Multimetr | napięcia na kołkach, rezystancje, zwarcia, VREF | Wejście 10 MΩ: przez rezystor 10 kΩ kołka zaniża o ok. 0,1 % — **REF_2V5 (P05) i REF25 (P06) mierzyć na węźle przed skręceniem stosu** albo miernikiem ≥ 1 GΩ. |
 | Wzorzec prądu dla P06 | kalibracja ±0,5…6 A, cel reszty ≤ max(30 mA, 1 %) | MS2115A (cęgowy) ma dokładność DC rzędu kilku procent — **nie wystarcza**. Wzorcem jest multimetr na zakresie 10 A DC albo bocznik 0,1 Ω 1 % (≥ 5 W) mierzony multimetrem na zakresie mV. Pytanie w PR: jaki multimetr jest na stole. |
 | DHO804 + 2 sondy ×10 (Hantek PP-150) | start 5V_SYS, PFAIL_N, DAQ_OK, CONVST/BUSY, SPI, CAN | Przewody RG174 1X zostają do auta; na stole sondy ×10 z krótką masą. Sonda to 15 pF — przez rezystor kołka 1 kΩ daje 15 ns, przez 10 kΩ 150 ns. |
@@ -14,7 +14,7 @@
 | Naczynie z lodem i wodą | P09: punkt 0 °C | Kruszony lód z wodą destylowaną, mieszać, końcówka termopary nie dotyka dna ani ścianek. |
 | Rezystory obciążeniowe | P02: 4,7 Ω / 10 W (ok. 1,06 A = budżet LOGGER), 10 Ω / 5 W (ok. 0,5 A), 1 kΩ / 0,25 W | 4,7 Ω ≈ 6 W z VLOG razem ze stratami, 10 Ω ≈ 3 W — do O-05. |
 | Kondensator 470 µF / 16 V | P02: makieta pojemności 5V_SYS przed wpięciem płytek | Razem z C22/C26 P02 daje ok. 492 µF, czyli tyle, ile ma komplet LOGGER. |
-| Stanowisko P00 (jeśli zmontowane) | poziomy H/L 3,3 V przez 1 kΩ na wejścia P05/P06 bez P03 | Zasilanie P00 9–12 V z osobnego kanału. Bez P00 wystarczy przewód z 3V3_IO przez 1 kΩ. |
+| Stanowisko P00 (jeśli zmontowane) | poziomy H/L 3,3 V przez 1 kΩ na wejścia P05/P06 bez P03 | Zasilanie P00 9–12 V z osobnego kanału. Bez P00 wystarczy przewód z 3V3_IO przez 1 kΩ — także do opcjonalnego podciągnięcia LOGGER_CLEAR (P03 J_BP1.15) przy poleceniu `zero` bez P11 (`URUCHOMIENIE.md` 1.1). |
 | Dwa węzły CAN z ACK + 2 × 120 Ω | P10: RX, brak ACK, ruch ciągły 10 min, dekoder RPM | **Brak na liście sprzętu.** Najprościej dwa tanie adaptery USB-CAN (candleLight/CANable, slcan lub gs_usb) albo jeden adapter + moduł MCP2515 z Arduino. vLinker MC+ jest testerem OBD, nie generatorem ramek. Pytanie w PR. |
 | Komputer z Pythonem | wgrywanie firmware, odczyt logów | `pip install esptool pyserial`; `Rewizje/EGRLab-v6.2-s1/tools/egrlog.py` do eksportu sesji z karty SD. |
 | Karta microSD FAT32 | P03: `core_probe.tmp`, sesje | **Bez karty wariant firmware zatrzymuje się na montowaniu SD** (poza trybem stołowym). |
@@ -44,7 +44,7 @@ Router odciął szprychy odciążeń termicznych, więc te pola łączą się z 
 |---|---|---|
 | P02 R4 | C8.2, **D3.2**, LED1.1, U10.4, U2.4 | D3.2 to wyprowadzenie transila P600 (gruby drut) — najtrudniejsze. U2/U10 są w podstawkach: lutuje się podstawkę. |
 | P03 R6 | J_BP2.5, J_BP2.7, J_BP2.9, J_BP2.11, J_BP3.15, J_BP3.19, U1.17 | piny złączy IDC na GND |
-| P05 R3 | C32.2, J_BP2.9, J_BP2.11, SW1.4, U4.3, U4.5, U4.6, U4.7 | dodatkowo **wszystkie piny GND U1** łączą się pełnym polem z wylewką wewnątrz pierścienia (decyzja 4 w README P05 R3) — przy U1 topnik i gorące powietrze; SW1.4 obejmuje nóżki mocujące (oprawa na masie) |
+| P05 R3 | C32.2, J_BP2.9, J_BP2.11, SW1.4, U4.3, U4.5, U4.6, U4.7 | dodatkowo **wszystkie piny GND U1** łączą się pełnym polem z wylewką wewnątrz pierścienia (decyzja 4 w README P05 R3) — przy U1 topnik i gorące powietrze; SW1.4 (GND) obejmuje też otwory nóżek mocujących — SW1 jest na panelu (rozdz. 5 pkt 10), więc w SW1.4 lutuje się tylko przewód GND, mocniejszą lutownicą; otwory nóżek zostają puste |
 | P06 R2 | J_BP.15 | dodatkowo **pola RSH1** (bocznik 2512) mają pełne połączenie z wylewkami mocy na obu warstwach — lutować gorącym powietrzem z podgrzewaniem od spodu, na gołej płytce, jako pierwszą część; pola J3/J4 mają 4 szprychy 2 mm |
 | P09 R2 | J1.5, J1.11, J4.3 | J4.3 to GND modułu TC2 |
 | P10 R2 | — | brak |
@@ -75,9 +75,9 @@ Zasada: najpierw części najtrudniejsze i najniższe na gołej płytce, potem s
 5. **THT niskie:** posiadane rezystory MF0207 na stojąco (P05 R13, R43; P06 R11; P10 R2, R8, R9), diody (polaryzacja), K15 (P10 C1–C3), podstawki DIP (P02 U2/U10, P03 DIP28/DIP16, P06 U2/U3).
 6. **Półprzewodniki mocy i TO-220 (P02):** Q9, Q1, Q2 (SUP53P06), D1/D2 STPS20100CT (wspólna katoda = blaszka; D1 na stojąco, nóżki 4 mm), D3 P600. Kierunek według nadruku i rysunku montażowego F.Fab.
 7. **Złącza:** IDC J_BP (pin 1 od mniejszego x, wycięcie klucza według nadruku), listwy kątowe J_SV (kołki ok. 6 mm za krawędź B), GMSTBA (P02 J2), oprawki bezpieczników.
-8. **Duże elementy:** elektrolity (P02 C12 2200 µF płasko + klej/opaska, C3, C20; P05 C1 220 µF; P06 C3 220 µF — polaryzacja), przekaźniki P05 K1–K3 (**po próbie 10a**: napięcie zadziałania ≤ 3,9 V przy ok. 23 °C), P05 SW1 (E-Switch M6), P06 R21 PR02 leżący 3–5 mm nad płytką, P06 R6 / P05 R1 KNP01U leżące.
+8. **Duże elementy** (**SW1 P05 nie jest montowany na płytce** — decyzja 4.10, przełącznik idzie na panel, pkt 10): elektrolity (P02 C12 2200 µF płasko + klej/opaska, C3, C20; P05 C1 220 µF; P06 C3 220 µF — polaryzacja), przekaźniki P05 K1–K3 (**po próbie 10a**: napięcie zadziałania ≤ 3,9 V przy ok. 23 °C), P06 R21 PR02 leżący 3–5 mm nad płytką, P06 R6 / P05 R1 KNP01U leżące.
 9. **Moduły:** P03 M1 (Waveshare N32R16V) na listwach żeńskich — wkładać dopiero po pierwszym zasileniu płytki bez modułu (`URUCHOMIENIE.md`, 4.2). P09 moduły MAX31856 lutowane wprost — **dopiero po krokach 1–4 `P09-R2-review/docs/MODUL-KWALIFIKACJA.md`** (po przylutowaniu nie ma regulacji). Na module M1 zdjąć diodę RGB z GPIO38 (BOM P03).
-10. **Przewody:** P02 J1 (2 × 1,5 mm²), J14 (PWR, 2 × AWG22), J15 (VBAT, AWG22) z kotwami opasek; P06 J3/J4 (2,5 mm²), J5; P10 J3 (skrętka W3, H → pole „H”). Lutować na końcu, żeby przewody nie przeszkadzały w pomiarach.
+10. **Przewody:** P02 J1 (2 × 1,5 mm²), J14 (PWR, 2 × AWG22), J15 (VBAT, AWG22) z kotwami opasek; P06 J3/J4 (2,5 mm²), J5; P10 J3 (skrętka W3, H → pole „H”); **P05 SW1 na panelu**: przełącznik E-Switch 100DP1T1B1M1REH (DPDT ON-ON, tuleja gwintowana 1/4-40 z nakrętką, oczka lutownicze, styki złocone) połączony 5 przewodami AWG24 ok. 80 mm z otworami footprintu SW1 na P05 — oczko N do otworu N: 1 AUX_HI, 2 AUX_IN, 3 AUX_LO (biegun A), 5 AUX_SHUNT i 4 GND (biegun B); oczko 6 wolne; po lutowaniu ciągłość według `URUCHOMIENIE.md` P05-18 (HI = 2–1 + 5–4, LO = 2–3 + 5–6). Lutować na końcu, żeby przewody nie przeszkadzały w pomiarach.
 
 ## 6. Rzeczy łatwe do pomylenia
 
