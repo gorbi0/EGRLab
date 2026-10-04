@@ -91,6 +91,9 @@ placed = []; placed_b = []
 # moves to the nearest free spot (0.2 mm grid, up to 3 mm); DRC reports these as silk_overlap inside one footprint. Listed per part.
 moved_by = {}
 ftexts = [(f.GetReference(), g) for f in b.GetFootprints() for g in f.GraphicalItems() if g.GetLayer() == p.F_SilkS and isinstance(g, p.PCB_TEXT)]
+for _, g in ftexts:   # 2.10: footprint user texts up to the legend minimum
+    if p.ToMM(g.GetTextHeight()) < 1.0 or p.ToMM(g.GetTextThickness()) < .15:
+        k = 1.0 / p.ToMM(g.GetTextHeight()); g.SetTextSize(p.VECTOR2I(mm(p.ToMM(g.GetTextWidth()) * k), mm(1.0))); g.SetTextThickness(mm(.15))
 for r0, g in ftexts:
     ob = bbox_of(g); others = [sb for r, sb in silk if sb != ob]
     if not any(hit(ob, sb, .2) for sb in others):
@@ -127,6 +130,7 @@ def text_box(t):
 
 
 # service labels, vertical, read from edge B
+MIN_H, MIN_T = 1.0, .15   # 2.10 (independent reviews of P05 R3 / P06 R2): JLCPCB legend minimum, character 1.0 mm, line 0.15 mm
 labels = {}
 for hdr in ('J_SV1', 'J_SV2'):
     for a in fps[hdr].Pads():
@@ -137,7 +141,7 @@ for hdr in ('J_SV1', 'J_SV2'):
             r = next(f for f in b.GetFootprints() if f.GetReference() != hdr for q in f.Pads() if q.GetNetname() == a.GetNetname())
             node = next(q.GetNetname().split('/')[-1] for q in r.Pads() if q.GetNetname() != a.GetNetname())
         t = LABEL[node]
-        tx = p.PCB_TEXT(b); tx.SetText(t); tx.SetTextSize(p.VECTOR2I(mm(.7), mm(.8))); tx.SetTextThickness(mm(.12)); tx.SetLayer(p.F_SilkS)
+        tx = p.PCB_TEXT(b); tx.SetText(t); tx.SetTextSize(p.VECTOR2I(mm(.9 * MIN_H), mm(MIN_H))); tx.SetTextThickness(mm(MIN_T)); tx.SetLayer(p.F_SilkS)
         tx.SetTextAngle(p.EDA_ANGLE(90, p.DEGREES_T)); tx.SetHorizJustify(p.GR_TEXT_H_ALIGN_LEFT); tx.SetPosition(p.VECTOR2I(mm(x), mm(93.9)))
         b.Add(tx); placed.append(text_box(tx)); labels[f'{hdr}.{a.GetNumber()}'] = t
 missing = []
@@ -148,14 +152,14 @@ for r in sorted(fps, key=lambda r: yards[r].BBox().GetArea()):
     cb = yards[r].BBox(); x0, y0, x1, y1 = p.ToMM(cb.GetLeft()), p.ToMM(cb.GetTop()), p.ToMM(cb.GetRight()), p.ToMM(cb.GetBottom())
     cx, cy_ = (x0 + x1) / 2, (y0 + y1) / 2
     ok = False
-    for size in (1.0, .8):
+    for size in (MIN_H,):   # 2.10: no 0.8 mm fallback (JLCPCB legend minimum); a reference without room is hidden (F.Fab)
         cands = [(cx, cy_, 0), (cx, cy_, 90), (cx, y0 - size * .8, 0), (cx, y1 + size * .8, 0), (x0 - size * .8, cy_, 90), (x1 + size * .8, cy_, 90)]
         for dx in (-3, 3, -6, 6):
             cands += [(cx + dx, y0 - size * .8, 0), (cx + dx, y1 + size * .8, 0)]
         for dy in (-3, 3):
             cands += [(x0 - size * .8, cy_ + dy, 90), (x1 + size * .8, cy_ + dy, 90)]
         for x, y, a in cands:
-            ref.SetTextSize(p.VECTOR2I(mm(size), mm(size))); ref.SetTextThickness(mm(.15 if size == 1.0 else .12))
+            ref.SetTextSize(p.VECTOR2I(mm(size), mm(size))); ref.SetTextThickness(mm(MIN_T))
             ref.SetTextAngle(p.EDA_ANGLE(a, p.DEGREES_T)); ref.SetPosition(p.VECTOR2I(mm(x), mm(y)))
             bx = text_box(ref)
             if free(bx, r, f.IsFlipped()):
@@ -179,9 +183,10 @@ def txt(t, x, y, size=1.0, angle=0, thick=.15, just=None):
 
 extra = []
 def place_text(t, spots, size=1.0, angle=0, just=None):
+    size = max(size, MIN_H)   # 2.10: edge markers / pin marks were 0.9 mm
     for x, y in spots:
         a = p.PCB_TEXT(b); a.SetText(t); a.SetPosition(p.VECTOR2I(mm(x), mm(y))); a.SetTextSize(p.VECTOR2I(mm(size * .9), mm(size)))
-        a.SetTextThickness(mm(.15 if size >= 1 else .12)); a.SetLayer(p.F_SilkS); a.SetTextAngle(p.EDA_ANGLE(angle, p.DEGREES_T))
+        a.SetTextThickness(mm(MIN_T)); a.SetLayer(p.F_SilkS); a.SetTextAngle(p.EDA_ANGLE(angle, p.DEGREES_T))
         if just == 'left': a.SetHorizJustify(p.GR_TEXT_H_ALIGN_LEFT)
         if just == 'right': a.SetHorizJustify(p.GR_TEXT_H_ALIGN_RIGHT)
         if free(text_box(a), None):

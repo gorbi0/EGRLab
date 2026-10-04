@@ -1,6 +1,6 @@
 {
-  "board": "C:\\Users\\tgorbacz\\Documents\\GORBI\\Priv\\Kia\\Sportage\\EGRLab\\Plytki\\P02-R4-review\\verification\\negative-controls\\mount_shift\\P02.kicad_pcb",
-  "board_sha256": "5ac71cbc7df7ce89543ca546ea4c3380ea9fce15be73b08fce3e9731955d1949",
+  "board": "/home/tgorbacz/AI/Claude/EGRLab/.worktrees/p02-r4-nadruk/Plytki/P02-R4-review/verification/negative-controls/mount_shift/P02.kicad_pcb",
+  "board_sha256": "67d6de944aa60f7ec113d54f16c2a378eb77aaa659a54b84e66a74c157391b10",
   "checks": [
     {
       "check": "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
@@ -124,11 +124,11 @@
     },
     "S1-2 section 4: parts on the bottom only SMD <= 1.5 mm (SOIC allowed on level 1), >= 1 mm from THT pads (standoff zones: check below)": {
       "bottom_parts": {
-        "C27": {
+        "C28": {
           "smd": true,
           "height_mm": 0.88,
           "soic": false,
-          "min_gap_to_THT_mm": 5.63
+          "min_gap_to_THT_mm": 4.08
         },
         "U9": {
           "smd": true,
@@ -136,11 +136,11 @@
           "soic": true,
           "min_gap_to_THT_mm": 3.83
         },
-        "C28": {
+        "C27": {
           "smd": true,
           "height_mm": 0.88,
           "soic": false,
-          "min_gap_to_THT_mm": 4.08
+          "min_gap_to_THT_mm": 5.63
         }
       }
     },
@@ -494,7 +494,7 @@
     },
     "Every part <= 21.5 mm above the board (level 1, S1 section 4; heights in parts.py)": {
       "max": [
-        "Q1",
+        "Q9",
         20.5
       ],
       "over": {}
@@ -551,16 +551,16 @@
         "tab_net": "P02_VLOG",
         "foreign": []
       },
-      "Q2": {
-        "tab_net": "P02_OFF_D",
+      "Q9": {
+        "tab_net": "P02_BAT_IN",
         "foreign": []
       },
       "D2": {
         "tab_net": "P02_HOLD_C",
         "foreign": []
       },
-      "Q9": {
-        "tab_net": "P02_BAT_IN",
+      "Q2": {
+        "tab_net": "P02_OFF_D",
         "foreign": []
       }
     },

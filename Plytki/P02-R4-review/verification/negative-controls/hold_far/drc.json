@@ -1,7 +1,7 @@
 {
     "$schema": "https://schemas.kicad.org/drc.v1.json",
     "coordinate_units": "mm",
-    "date": "2026-09-30T09:24:45",
+    "date": "2026-10-02T15:31:44",
     "ignored_checks": [
         {
             "description": "Footprint has no courtyard defined",
@@ -42,7 +42,7 @@
                         "x": 57.5,
                         "y": 55.3
                     },
-                    "uuid": "17213a69-a33f-42aa-90e9-f670553d1b10"
+                    "uuid": "ef22a3ea-d521-401a-8f54-57173a9cfbfe"
                 },
                 {
                     "description": "Ścieżka [P02_HOLD_C] na F.Cu, długość 2,1000 mm",
@@ -50,7 +50,7 @@
                         "x": 82.5,
                         "y": 53.2
                     },
-                    "uuid": "b6f60372-7733-49d3-9e82-ca0925aa3b99"
+                    "uuid": "22a45e9e-b8b9-45f1-90dd-9559dbdb3b4d"
                 }
             ],
             "severity": "error",
@@ -59,46 +59,23 @@
     ],
     "violations": [
         {
-            "description": "Naruszenie prześwitu ( prześwit 0,3000 mm; obecnie 0,2175 mm)",
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz P02_ENABLE)",
             "items": [
-                {
-                    "description": "Pole PTH 1 [P02_HOLD_C] na C12",
-                    "pos": {
-                        "x": 57.5,
-                        "y": 55.3
-                    },
-                    "uuid": "17213a69-a33f-42aa-90e9-f670553d1b10"
-                },
-                {
-                    "description": "Ścieżka [P02_AUX5] na B.Cu, długość 15,9774 mm",
-                    "pos": {
-                        "x": 64.6825,
-                        "y": 56.7675
-                    },
-                    "uuid": "bf2e3746-0b44-4331-ac2e-ff9983d16ef5"
-                }
-            ],
-            "severity": "error",
-            "type": "clearance"
-        },
-        {
-            "description": "Elementy łączą dwie różne sieci (sieci P02_ENABLE oraz GND)",
-            "items": [
-                {
-                    "description": "Ścieżka [P02_ENABLE] na B.Cu, długość 20,6190 mm",
-                    "pos": {
-                        "x": 52.9274,
-                        "y": 42.6115
-                    },
-                    "uuid": "825a836b-ed37-4125-a1c2-4112dd438490"
-                },
                 {
                     "description": "Pole PTH 2 [GND] na C12",
                     "pos": {
                         "x": 65.0,
                         "y": 55.3
                     },
-                    "uuid": "be52a7db-ce85-4238-a9dd-fb4bac1ca7c6"
+                    "uuid": "415d6f51-564b-4d4c-9b12-b0ff1cbb91ad"
+                },
+                {
+                    "description": "Ścieżka [P02_ENABLE] na B.Cu, długość 20,6190 mm",
+                    "pos": {
+                        "x": 52.9274,
+                        "y": 42.6115
+                    },
+                    "uuid": "8b96c835-1d13-4433-a787-0a272837bf31"
                 }
             ],
             "severity": "error",
@@ -113,7 +90,7 @@
                         "x": 52.9274,
                         "y": 42.6115
                     },
-                    "uuid": "825a836b-ed37-4125-a1c2-4112dd438490"
+                    "uuid": "8b96c835-1d13-4433-a787-0a272837bf31"
                 },
                 {
                     "description": "Pole PTH 2 [GND] na C12",
@@ -121,214 +98,53 @@
                         "x": 65.0,
                         "y": 55.3
                     },
-                    "uuid": "be52a7db-ce85-4238-a9dd-fb4bac1ca7c6"
+                    "uuid": "415d6f51-564b-4d4c-9b12-b0ff1cbb91ad"
                 }
             ],
             "severity": "error",
             "type": "hole_clearance"
         },
         {
-            "description": "Courtyards overlap",
+            "description": "Naruszenie prześwitu ( prześwit 0,3000 mm; obecnie 0,2175 mm)",
             "items": [
                 {
-                    "description": "Footprint Q6",
+                    "description": "Ścieżka [P02_AUX5] na B.Cu, długość 15,9774 mm",
                     "pos": {
-                        "x": 66.334999,
-                        "y": 63.5
+                        "x": 64.6825,
+                        "y": 56.7675
                     },
-                    "uuid": "3701aaf8-63e1-45d2-9386-8e4e91116142"
+                    "uuid": "585b836d-8d0f-4473-822c-faa987510a59"
                 },
                 {
-                    "description": "Footprint C12",
+                    "description": "Pole PTH 1 [P02_HOLD_C] na C12",
                     "pos": {
                         "x": 57.5,
                         "y": 55.3
                     },
-                    "uuid": "663dd59b-70d1-450b-a20e-a2c9b8c839a2"
+                    "uuid": "ef22a3ea-d521-401a-8f54-57173a9cfbfe"
                 }
             ],
             "severity": "error",
-            "type": "courtyards_overlap"
-        },
-        {
-            "description": "PTH inside courtyard",
-            "items": [
-                {
-                    "description": "Pole PTH 1 [P02_ENABLE] na Q6",
-                    "pos": {
-                        "x": 66.334999,
-                        "y": 63.5
-                    },
-                    "uuid": "10ccf57b-f00b-4f4c-a105-e7fca5a4d673"
-                },
-                {
-                    "description": "Footprint C12",
-                    "pos": {
-                        "x": 57.5,
-                        "y": 55.3
-                    },
-                    "uuid": "663dd59b-70d1-450b-a20e-a2c9b8c839a2"
-                }
-            ],
-            "severity": "error",
-            "type": "pth_inside_courtyard"
-        },
-        {
-            "description": "PTH inside courtyard",
-            "items": [
-                {
-                    "description": "Pole PTH 2 [/STER/P02_BUF_BASE] na Q6",
-                    "pos": {
-                        "x": 66.334999,
-                        "y": 60.96
-                    },
-                    "uuid": "29a2886c-8fef-440e-9d72-ba3f62672591"
-                },
-                {
-                    "description": "Footprint C12",
-                    "pos": {
-                        "x": 57.5,
-                        "y": 55.3
-                    },
-                    "uuid": "663dd59b-70d1-450b-a20e-a2c9b8c839a2"
-                }
-            ],
-            "severity": "error",
-            "type": "pth_inside_courtyard"
-        },
-        {
-            "description": "PTH inside courtyard",
-            "items": [
-                {
-                    "description": "Pole PTH 3 [P02_AUX5] na Q6",
-                    "pos": {
-                        "x": 66.334999,
-                        "y": 58.42
-                    },
-                    "uuid": "70db2303-f764-4606-be29-b0e79442f8cf"
-                },
-                {
-                    "description": "Footprint C12",
-                    "pos": {
-                        "x": 57.5,
-                        "y": 55.3
-                    },
-                    "uuid": "663dd59b-70d1-450b-a20e-a2c9b8c839a2"
-                }
-            ],
-            "severity": "error",
-            "type": "pth_inside_courtyard"
+            "type": "clearance"
         },
         {
             "description": "Courtyards overlap",
             "items": [
-                {
-                    "description": "Footprint R55",
-                    "pos": {
-                        "x": 66.2,
-                        "y": 79.5
-                    },
-                    "uuid": "532000b9-3cf2-43df-9798-34a19b75e553"
-                },
-                {
-                    "description": "Footprint C12",
-                    "pos": {
-                        "x": 57.5,
-                        "y": 55.3
-                    },
-                    "uuid": "663dd59b-70d1-450b-a20e-a2c9b8c839a2"
-                }
-            ],
-            "severity": "error",
-            "type": "courtyards_overlap"
-        },
-        {
-            "description": "Courtyards overlap",
-            "items": [
-                {
-                    "description": "Footprint C12",
-                    "pos": {
-                        "x": 57.5,
-                        "y": 55.3
-                    },
-                    "uuid": "663dd59b-70d1-450b-a20e-a2c9b8c839a2"
-                },
-                {
-                    "description": "Footprint D12",
-                    "pos": {
-                        "x": 58.718,
-                        "y": 81.0
-                    },
-                    "uuid": "6b348925-5135-431c-aedb-6d1cec31e9c4"
-                }
-            ],
-            "severity": "error",
-            "type": "courtyards_overlap"
-        },
-        {
-            "description": "PTH inside courtyard",
-            "items": [
-                {
-                    "description": "Pole PTH 1 [/STER/P02_V_CTRL] na D12",
-                    "pos": {
-                        "x": 58.718,
-                        "y": 81.0
-                    },
-                    "uuid": "8a594a4f-81d6-442c-a16a-545298e0cd94"
-                },
-                {
-                    "description": "Footprint C12",
-                    "pos": {
-                        "x": 57.5,
-                        "y": 55.3
-                    },
-                    "uuid": "663dd59b-70d1-450b-a20e-a2c9b8c839a2"
-                }
-            ],
-            "severity": "error",
-            "type": "pth_inside_courtyard"
-        },
-        {
-            "description": "PTH inside courtyard",
-            "items": [
-                {
-                    "description": "Pole PTH 2 [P02_VLOG] na D12",
-                    "pos": {
-                        "x": 63.798,
-                        "y": 81.0
-                    },
-                    "uuid": "69d96260-9c99-4078-9f05-47fb2645a485"
-                },
-                {
-                    "description": "Footprint C12",
-                    "pos": {
-                        "x": 57.5,
-                        "y": 55.3
-                    },
-                    "uuid": "663dd59b-70d1-450b-a20e-a2c9b8c839a2"
-                }
-            ],
-            "severity": "error",
-            "type": "pth_inside_courtyard"
-        },
-        {
-            "description": "Courtyards overlap",
-            "items": [
-                {
-                    "description": "Footprint C12",
-                    "pos": {
-                        "x": 57.5,
-                        "y": 55.3
-                    },
-                    "uuid": "663dd59b-70d1-450b-a20e-a2c9b8c839a2"
-                },
                 {
                     "description": "Footprint R15",
                     "pos": {
                         "x": 66.065,
                         "y": 66.9
                     },
-                    "uuid": "8e55edde-9904-4b36-b294-cc2c66417c95"
+                    "uuid": "110ecf8b-b5ee-4d04-b8d9-bdf359f03e7f"
+                },
+                {
+                    "description": "Footprint C12",
+                    "pos": {
+                        "x": 57.5,
+                        "y": 55.3
+                    },
+                    "uuid": "90f10adc-4db7-43fa-8b5d-710a002d16c3"
                 }
             ],
             "severity": "error",
@@ -343,7 +159,7 @@
                         "x": 66.065,
                         "y": 66.9
                     },
-                    "uuid": "b5f7438d-9f86-4cad-99ed-8f8d93bee057"
+                    "uuid": "20e46d3f-4ed7-4470-af54-7ee1670bdb80"
                 },
                 {
                     "description": "Footprint C12",
@@ -351,7 +167,7 @@
                         "x": 57.5,
                         "y": 55.3
                     },
-                    "uuid": "663dd59b-70d1-450b-a20e-a2c9b8c839a2"
+                    "uuid": "90f10adc-4db7-43fa-8b5d-710a002d16c3"
                 }
             ],
             "severity": "error",
@@ -366,7 +182,7 @@
                         "x": 66.065,
                         "y": 71.98
                     },
-                    "uuid": "5d2ae05c-4d47-436d-ae6e-02df4994a961"
+                    "uuid": "d678a1ce-7ffd-4537-aae2-0b10b15ea6dc"
                 },
                 {
                     "description": "Footprint C12",
@@ -374,7 +190,7 @@
                         "x": 57.5,
                         "y": 55.3
                     },
-                    "uuid": "663dd59b-70d1-450b-a20e-a2c9b8c839a2"
+                    "uuid": "90f10adc-4db7-43fa-8b5d-710a002d16c3"
                 }
             ],
             "severity": "error",
@@ -384,20 +200,135 @@
             "description": "Courtyards overlap",
             "items": [
                 {
+                    "description": "Footprint Q6",
+                    "pos": {
+                        "x": 66.334999,
+                        "y": 63.5
+                    },
+                    "uuid": "84f31ba6-23ee-44ca-a2e4-bc808243e2d4"
+                },
+                {
                     "description": "Footprint C12",
                     "pos": {
                         "x": 57.5,
                         "y": 55.3
                     },
-                    "uuid": "663dd59b-70d1-450b-a20e-a2c9b8c839a2"
+                    "uuid": "90f10adc-4db7-43fa-8b5d-710a002d16c3"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 1 [P02_ENABLE] na Q6",
+                    "pos": {
+                        "x": 66.334999,
+                        "y": 63.5
+                    },
+                    "uuid": "e7f15d77-6b1b-4d19-a54f-b7ba49754fa4"
                 },
+                {
+                    "description": "Footprint C12",
+                    "pos": {
+                        "x": 57.5,
+                        "y": 55.3
+                    },
+                    "uuid": "90f10adc-4db7-43fa-8b5d-710a002d16c3"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [/STER/P02_BUF_BASE] na Q6",
+                    "pos": {
+                        "x": 66.334999,
+                        "y": 60.96
+                    },
+                    "uuid": "7085b796-1184-44b4-82fc-84b946965b87"
+                },
+                {
+                    "description": "Footprint C12",
+                    "pos": {
+                        "x": 57.5,
+                        "y": 55.3
+                    },
+                    "uuid": "90f10adc-4db7-43fa-8b5d-710a002d16c3"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 3 [P02_AUX5] na Q6",
+                    "pos": {
+                        "x": 66.334999,
+                        "y": 58.42
+                    },
+                    "uuid": "39ce8d21-abf9-42dc-adca-af368431fa06"
+                },
+                {
+                    "description": "Footprint C12",
+                    "pos": {
+                        "x": 57.5,
+                        "y": 55.3
+                    },
+                    "uuid": "90f10adc-4db7-43fa-8b5d-710a002d16c3"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint R55",
+                    "pos": {
+                        "x": 66.2,
+                        "y": 79.5
+                    },
+                    "uuid": "89448689-0f57-44f0-9672-6b9d59ac1639"
+                },
+                {
+                    "description": "Footprint C12",
+                    "pos": {
+                        "x": 57.5,
+                        "y": 55.3
+                    },
+                    "uuid": "90f10adc-4db7-43fa-8b5d-710a002d16c3"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
                 {
                     "description": "Footprint D8",
                     "pos": {
                         "x": 70.925,
                         "y": 64.3
                     },
-                    "uuid": "a1eeae0a-9c83-4bdc-b6c6-e1599840b784"
+                    "uuid": "8e2a593c-b15b-42d2-af32-bdea0c9b0cea"
+                },
+                {
+                    "description": "Footprint C12",
+                    "pos": {
+                        "x": 57.5,
+                        "y": 55.3
+                    },
+                    "uuid": "90f10adc-4db7-43fa-8b5d-710a002d16c3"
                 }
             ],
             "severity": "error",
@@ -412,7 +343,7 @@
                         "x": 57.5,
                         "y": 55.3
                     },
-                    "uuid": "663dd59b-70d1-450b-a20e-a2c9b8c839a2"
+                    "uuid": "90f10adc-4db7-43fa-8b5d-710a002d16c3"
                 },
                 {
                     "description": "Footprint R16",
@@ -420,11 +351,80 @@
                         "x": 70.25,
                         "y": 75.0
                     },
-                    "uuid": "fbe5cb2a-fcbc-4893-8ec1-a9d92d6cdd4f"
+                    "uuid": "de55ee63-abff-4ecc-815a-0fa1f9161769"
                 }
             ],
             "severity": "error",
             "type": "courtyards_overlap"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint C12",
+                    "pos": {
+                        "x": 57.5,
+                        "y": 55.3
+                    },
+                    "uuid": "90f10adc-4db7-43fa-8b5d-710a002d16c3"
+                },
+                {
+                    "description": "Footprint D12",
+                    "pos": {
+                        "x": 58.718,
+                        "y": 81.0
+                    },
+                    "uuid": "ecb3834a-7f3f-4f23-b2b8-0088ce7a5e19"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 1 [/STER/P02_V_CTRL] na D12",
+                    "pos": {
+                        "x": 58.718,
+                        "y": 81.0
+                    },
+                    "uuid": "50a66ba3-f132-4141-9c3a-8e280069ebbd"
+                },
+                {
+                    "description": "Footprint C12",
+                    "pos": {
+                        "x": 57.5,
+                        "y": 55.3
+                    },
+                    "uuid": "90f10adc-4db7-43fa-8b5d-710a002d16c3"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [P02_VLOG] na D12",
+                    "pos": {
+                        "x": 63.798,
+                        "y": 81.0
+                    },
+                    "uuid": "edd544bf-7bc0-4efd-be5d-da1f770cae0a"
+                },
+                {
+                    "description": "Footprint C12",
+                    "pos": {
+                        "x": 57.5,
+                        "y": 55.3
+                    },
+                    "uuid": "90f10adc-4db7-43fa-8b5d-710a002d16c3"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
         },
         {
             "description": "Niekompletne łączenie termiczne ze strefą (warstwa B.Cu; strefa min. liczba łącz 2; obecnie 1)",
@@ -435,7 +435,7 @@
                         "x": 0.3,
                         "y": 0.3
                     },
-                    "uuid": "81243e30-c030-4017-8c36-fd2b61c57925"
+                    "uuid": "2b4af3fc-2b4c-474e-aac3-f2d4e19cde51"
                 },
                 {
                     "description": "Pole PTH 2 [GND] na C12",
@@ -443,7 +443,7 @@
                         "x": 65.0,
                         "y": 55.3
                     },
-                    "uuid": "be52a7db-ce85-4238-a9dd-fb4bac1ca7c6"
+                    "uuid": "415d6f51-564b-4d4c-9b12-b0ff1cbb91ad"
                 }
             ],
             "severity": "error",
@@ -458,7 +458,7 @@
                         "x": 52.9274,
                         "y": 42.6115
                     },
-                    "uuid": "825a836b-ed37-4125-a1c2-4112dd438490"
+                    "uuid": "8b96c835-1d13-4433-a787-0a272837bf31"
                 },
                 {
                     "description": "Pole PTH 2 [GND] na C12",
@@ -466,7 +466,7 @@
                         "x": 65.0,
                         "y": 55.3
                     },
-                    "uuid": "be52a7db-ce85-4238-a9dd-fb4bac1ca7c6"
+                    "uuid": "415d6f51-564b-4d4c-9b12-b0ff1cbb91ad"
                 }
             ],
             "severity": "error",
@@ -481,97 +481,22 @@
                         "x": 82.5,
                         "y": 53.2
                     },
-                    "uuid": "b6f60372-7733-49d3-9e82-ca0925aa3b99"
+                    "uuid": "22a45e9e-b8b9-45f1-90dd-9559dbdb3b4d"
                 }
             ],
             "severity": "warning",
             "type": "track_dangling"
         },
         {
-            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
-            "items": [
-                {
-                    "description": "Footprint J_BP",
-                    "pos": {
-                        "x": 122.07,
-                        "y": 13.32
-                    },
-                    "uuid": "2cbe1722-8be7-4d16-907d-70e380580263"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_mismatch"
-        },
-        {
-            "description": "Footprint 'CP_Radial_D5.0mm_P2.00mm' nie odpowiada jego kopii w bibliotece 'Capacitor_THT'",
-            "items": [
-                {
-                    "description": "Footprint C23",
-                    "pos": {
-                        "x": 39.312,
-                        "y": 28.5
-                    },
-                    "uuid": "402c18d5-6bbf-4df7-aec1-e2708f9e4efa"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_mismatch"
-        },
-        {
-            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
-            "items": [
-                {
-                    "description": "Footprint J_SV2",
-                    "pos": {
-                        "x": 148.74,
-                        "y": 95.96
-                    },
-                    "uuid": "5371c1f3-f927-4666-a546-c2047880c58f"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_mismatch"
-        },
-        {
-            "description": "Footprint 'CP_Radial_D6.3mm_P2.50mm' nie odpowiada jego kopii w bibliotece 'Capacitor_THT'",
-            "items": [
-                {
-                    "description": "Footprint C9",
-                    "pos": {
-                        "x": 11.34,
-                        "y": 72.0
-                    },
-                    "uuid": "65dc4f8d-2452-4685-85e9-7cdd546d976e"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_mismatch"
-        },
-        {
-            "description": "Footprint 'D_DO-15_P5.08mm_Vertical_CathodeUp' nie odpowiada jego kopii w bibliotece 'Diode_THT'",
-            "items": [
-                {
-                    "description": "Footprint D13",
-                    "pos": {
-                        "x": 157.8,
-                        "y": 8.6
-                    },
-                    "uuid": "6ae7a75c-d65f-48c2-9f27-a0a99dc649a3"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_mismatch"
-        },
-        {
             "description": "Footprint 'D_DO-35_SOD27_P5.08mm_Vertical_CathodeUp' nie odpowiada jego kopii w bibliotece 'Diode_THT'",
             "items": [
                 {
-                    "description": "Footprint D12",
+                    "description": "Footprint D10",
                     "pos": {
-                        "x": 58.718,
-                        "y": 81.0
+                        "x": 119.5,
+                        "y": 26.5
                     },
-                    "uuid": "6b348925-5135-431c-aedb-6d1cec31e9c4"
+                    "uuid": "013f2e90-f2ae-41bd-90c1-1c2df97b3925"
                 }
             ],
             "severity": "warning",
@@ -586,22 +511,7 @@
                         "x": 79.679,
                         "y": 11.5
                     },
-                    "uuid": "7b0e7c3e-d4b6-45ed-aaf2-b7b4a36e2758"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_mismatch"
-        },
-        {
-            "description": "Footprint 'PhoenixContact_GMSTBA_2,5_3-G-7,62_1x03_P7.62mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_Phoenix_GMSTB'",
-            "items": [
-                {
-                    "description": "Footprint J2",
-                    "pos": {
-                        "x": 150.0,
-                        "y": 76.0
-                    },
-                    "uuid": "99155cab-42c5-4dd0-8edb-4294ffbbcb16"
+                    "uuid": "173ea74f-006c-48dc-a72b-844179eaf02b"
                 }
             ],
             "severity": "warning",
@@ -611,12 +521,12 @@
             "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
             "items": [
                 {
-                    "description": "Footprint J_SV1",
+                    "description": "Footprint J_SV2",
                     "pos": {
-                        "x": 41.74,
+                        "x": 148.74,
                         "y": 95.96
                     },
-                    "uuid": "9d6db558-4710-425c-b102-7e2f73b35332"
+                    "uuid": "402ea1e1-c16b-4421-acb4-977720a78576"
                 }
             ],
             "severity": "warning",
@@ -631,22 +541,7 @@
                         "x": 100.5,
                         "y": 43.0
                     },
-                    "uuid": "ab85e94a-ae22-420e-8652-f0e5521b4595"
-                }
-            ],
-            "severity": "warning",
-            "type": "lib_footprint_mismatch"
-        },
-        {
-            "description": "Footprint 'D_DO-35_SOD27_P5.08mm_Vertical_CathodeUp' nie odpowiada jego kopii w bibliotece 'Diode_THT'",
-            "items": [
-                {
-                    "description": "Footprint D10",
-                    "pos": {
-                        "x": 119.5,
-                        "y": 26.5
-                    },
-                    "uuid": "c441f71b-c6ea-4f5f-8659-485739193899"
+                    "uuid": "69c14afc-5fa3-4a61-90a4-3452e1eb63f6"
                 }
             ],
             "severity": "warning",
@@ -661,7 +556,7 @@
                         "x": 44.893,
                         "y": 28.5
                     },
-                    "uuid": "c7541180-bf2e-4af7-b9e7-1caf88d2daa7"
+                    "uuid": "7f0985ec-2747-456b-989e-7912fd9f8d68"
                 }
             ],
             "severity": "warning",
@@ -676,7 +571,22 @@
                         "x": 95.5,
                         "y": 41.0
                     },
-                    "uuid": "d17237b8-8541-4696-8bea-41a68b303455"
+                    "uuid": "8ff9acf2-0928-4e43-af48-1a4af2ef105f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PhoenixContact_GMSTBA_2,5_3-G-7,62_1x03_P7.62mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_Phoenix_GMSTB'",
+            "items": [
+                {
+                    "description": "Footprint J2",
+                    "pos": {
+                        "x": 150.0,
+                        "y": 76.0
+                    },
+                    "uuid": "937c4294-e0fa-4c53-b97d-10d75ad95143"
                 }
             ],
             "severity": "warning",
@@ -691,7 +601,97 @@
                         "x": 68.099,
                         "y": 5.0
                     },
-                    "uuid": "f8ba36a3-7714-4a6f-8102-eaf6784ca61c"
+                    "uuid": "b2f22c62-d27d-45d7-8cae-1bef3d46bc21"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'D_DO-15_P5.08mm_Vertical_CathodeUp' nie odpowiada jego kopii w bibliotece 'Diode_THT'",
+            "items": [
+                {
+                    "description": "Footprint D13",
+                    "pos": {
+                        "x": 157.8,
+                        "y": 8.6
+                    },
+                    "uuid": "b36d694e-83ab-4f1f-a87a-a8f555f85e4c"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP",
+                    "pos": {
+                        "x": 122.07,
+                        "y": 13.32
+                    },
+                    "uuid": "bf462058-cf8b-4970-af12-c7c8c5b5655d"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'CP_Radial_D6.3mm_P2.50mm' nie odpowiada jego kopii w bibliotece 'Capacitor_THT'",
+            "items": [
+                {
+                    "description": "Footprint C9",
+                    "pos": {
+                        "x": 11.34,
+                        "y": 72.0
+                    },
+                    "uuid": "c56c6f62-f272-47d5-b2c9-ade0c002b61e"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'CP_Radial_D5.0mm_P2.00mm' nie odpowiada jego kopii w bibliotece 'Capacitor_THT'",
+            "items": [
+                {
+                    "description": "Footprint C23",
+                    "pos": {
+                        "x": 39.312,
+                        "y": 28.5
+                    },
+                    "uuid": "cf38daea-191f-4749-a667-b912580941b9"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV1",
+                    "pos": {
+                        "x": 41.74,
+                        "y": 95.96
+                    },
+                    "uuid": "dda3810f-739d-422e-a415-d855b53f0e09"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'D_DO-35_SOD27_P5.08mm_Vertical_CathodeUp' nie odpowiada jego kopii w bibliotece 'Diode_THT'",
+            "items": [
+                {
+                    "description": "Footprint D12",
+                    "pos": {
+                        "x": 58.718,
+                        "y": 81.0
+                    },
+                    "uuid": "ecb3834a-7f3f-4f23-b2b8-0088ce7a5e19"
                 }
             ],
             "severity": "warning",
@@ -706,7 +706,7 @@
                         "x": 65.974999,
                         "y": 56.565
                     },
-                    "uuid": "93c504b8-4a27-4085-87e2-728fd7e408e1"
+                    "uuid": "93763414-e6d2-41de-8970-1cdcc55c12e9"
                 }
             ],
             "severity": "warning",
@@ -721,7 +721,7 @@
                         "x": 55.6,
                         "y": 52.9
                     },
-                    "uuid": "a2142636-a554-4ca0-b6e2-47560c777b3d"
+                    "uuid": "b35c6670-3a57-42d9-aa7a-afffc28fb88f"
                 }
             ],
             "severity": "warning",
@@ -736,7 +736,7 @@
                         "x": 53.1,
                         "y": 56.65
                     },
-                    "uuid": "3efec5b7-4ac3-4657-90ee-c1143202176e"
+                    "uuid": "6a75177d-b6f0-42a3-a38e-3c9741360fd9"
                 }
             ],
             "severity": "warning",
@@ -746,43 +746,20 @@
             "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0691 mm)",
             "items": [
                 {
-                    "description": "Tekst footprintu D12 (K)",
-                    "pos": {
-                        "x": 60.418,
-                        "y": 82.2
-                    },
-                    "uuid": "240b7d8c-2813-4cf6-bc2e-eca86da92128"
-                },
-                {
                     "description": "Pole odnośnika do C12",
                     "pos": {
                         "x": 61.25,
                         "y": 83.145
                     },
-                    "uuid": "e62cf7d1-a45f-490d-8df8-d77bde0d1470"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_overlap"
-        },
-        {
-            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
-            "items": [
+                    "uuid": "0a2ca43e-e2dc-47e7-9924-7d57a4fc2691"
+                },
                 {
                     "description": "Tekst footprintu D12 (K)",
                     "pos": {
                         "x": 60.418,
                         "y": 82.2
                     },
-                    "uuid": "240b7d8c-2813-4cf6-bc2e-eca86da92128"
-                },
-                {
-                    "description": "Prostokąt z C12 na F.Silkscreen",
-                    "pos": {
-                        "x": 53.1,
-                        "y": 56.65
-                    },
-                    "uuid": "3efec5b7-4ac3-4657-90ee-c1143202176e"
+                    "uuid": "8572b513-796e-4771-aa1f-a61e18e0aa2c"
                 }
             ],
             "severity": "warning",
@@ -797,38 +774,38 @@
                         "x": 53.1,
                         "y": 56.65
                     },
-                    "uuid": "3efec5b7-4ac3-4657-90ee-c1143202176e"
+                    "uuid": "6a75177d-b6f0-42a3-a38e-3c9741360fd9"
                 },
                 {
-                    "description": "Pole odnośnika do Q6",
+                    "description": "Tekst footprintu D12 (K)",
                     "pos": {
-                        "x": 65.974999,
-                        "y": 56.565
+                        "x": 60.418,
+                        "y": 82.2
                     },
-                    "uuid": "93c504b8-4a27-4085-87e2-728fd7e408e1"
+                    "uuid": "8572b513-796e-4771-aa1f-a61e18e0aa2c"
                 }
             ],
             "severity": "warning",
             "type": "silk_overlap"
         },
         {
-            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0014 mm)",
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
             "items": [
-                {
-                    "description": "Pole odnośnika do R16",
-                    "pos": {
-                        "x": 70.25,
-                        "y": 68.185
-                    },
-                    "uuid": "0cc2b884-7eaa-4092-b1d1-97f5c8a39b73"
-                },
                 {
                     "description": "Prostokąt z C12 na F.Silkscreen",
                     "pos": {
                         "x": 53.1,
                         "y": 56.65
                     },
-                    "uuid": "3efec5b7-4ac3-4657-90ee-c1143202176e"
+                    "uuid": "6a75177d-b6f0-42a3-a38e-3c9741360fd9"
+                },
+                {
+                    "description": "Okrąg z R16 na F.Silkscreen",
+                    "pos": {
+                        "x": 70.25,
+                        "y": 75.0
+                    },
+                    "uuid": "c9c518c1-aad1-407f-9931-c10ee4000ad8"
                 }
             ],
             "severity": "warning",
@@ -843,7 +820,7 @@
                         "x": 70.925,
                         "y": 59.22
                     },
-                    "uuid": "1cf156fc-0eb9-4bdb-bbe0-a09fcf1001da"
+                    "uuid": "41f81ae2-69b5-46cb-9c6d-6635db90e42e"
                 },
                 {
                     "description": "Prostokąt z C12 na F.Silkscreen",
@@ -851,14 +828,14 @@
                         "x": 53.1,
                         "y": 56.65
                     },
-                    "uuid": "3efec5b7-4ac3-4657-90ee-c1143202176e"
+                    "uuid": "6a75177d-b6f0-42a3-a38e-3c9741360fd9"
                 }
             ],
             "severity": "warning",
             "type": "silk_overlap"
         },
         {
-            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0000 mm)",
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0443 mm)",
             "items": [
                 {
                     "description": "Prostokąt z C12 na F.Silkscreen",
@@ -866,15 +843,15 @@
                         "x": 53.1,
                         "y": 56.65
                     },
-                    "uuid": "3efec5b7-4ac3-4657-90ee-c1143202176e"
+                    "uuid": "6a75177d-b6f0-42a3-a38e-3c9741360fd9"
                 },
                 {
-                    "description": "Okrąg z R16 na F.Silkscreen",
+                    "description": "Pole odnośnika do Q6",
                     "pos": {
-                        "x": 70.25,
-                        "y": 75.0
+                        "x": 65.974999,
+                        "y": 56.565
                     },
-                    "uuid": "77c065ea-1432-4ba6-a56c-956d5a79af40"
+                    "uuid": "93763414-e6d2-41de-8970-1cdcc55c12e9"
                 }
             ],
             "severity": "warning",

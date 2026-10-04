@@ -1,6 +1,6 @@
 # P02 — pakiet do zamówienia PCB
 
-Wydanie **30.09.2026**, źródło **P02-R4-review**. Plik płytki jest bajtowo zgodny z wydaniem R4; nie zmieniano tras, rozmieszczenia, otworów ani opisu. Format S1, klasa L (cały poziom 1 stosu). Płytka zaakceptowana przez użytkownika 30.09.2026 po recenzji PR #4.
+Wydanie **02.10.2026**, źródło **P02-R4-review**. Plik płytki jest bajtowo zgodny z wydaniem R4 (stan 2.10: nowy nadruk; trasy, rozmieszczenie i otwory jak w wydaniu z 30.09). Format S1, klasa L (cały poziom 1 stosu). Płytka zaakceptowana przez użytkownika 30.09.2026 po recenzji PR #4; 2.10.2026 nowe wydanie: nadruk ≥ 1,0 mm z linią 0,15 mm (minimum JLCPCB, ustalenie niezależnych recenzji P05 / P06), miedź i otwory bez zmian.
 
 **Do producenta wgraj `DO-ZAMOWIENIA_P02-PCB-R4.zip`.** Zawiera wyłącznie 7 warstw Gerber X2 i 2 pliki wierceń Excellon. Parametry: `SPECYFIKACJA-DLA-PRODUCENTA.txt` (ustawienia dla JLCPCB i uwagi dla Satlandu).
 

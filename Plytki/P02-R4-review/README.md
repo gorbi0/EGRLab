@@ -1,5 +1,7 @@
 # P02 R4 — zasilanie z pakietu Li-ion 4S (etap 2: PCB w formacie S1, klasa L)
 
+**Nadruk 2.10.2026 (gałąź `p02-r4-nadruk`, przed zamówieniem):** wszystkie napisy ≥ 1,0 mm, linia ≥ 0,15 mm (minimum JLCPCB; ustalenie niezależnych recenzji P05 / P06), minimum w regułach DRC (`set_rules.py`). Miedź, otwory i rozmieszczenie bez zmian (wydanie odtworzone z zapisanego trasowania); paczka `P02-PCB-R4-zamowienie` zbudowana od nowa (DRC 0/0/0, CAM 20/20, próby CAM 8/8).
+
 29.09.2026 schemat (sesja w chmurze, etap 1), 29–30.09.2026 PCB (lokalnie, etap 2). **Status: PCB i kontrole do recenzji. Pliki produkcyjne (Gerber, wiercenia), przymiarka 1:1 i zakupy nie są zrobione.** R4 zastępuje P01 PROTECT i część HOLD płytki P02 R3 zgodnie ze specyfikacją `Plytki/P02-R4-specyfikacja/` (D-01…D-07 przyjęte, R23 = 22 kΩ / 0,5 W). Zamknięte pakiety P01 R3 i P02 R3 nie zostały zmienione, generatory skopiowano stamtąd.
 
 ## Co jest na płytce
