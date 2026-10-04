@@ -16,4 +16,6 @@ Ustawienia JLCPCB dla wszystkich: FR-4, 2 warstwy, 1,6 mm, 1 oz, HASL bezołowio
 Przed wysłaniem:
 1. P09 — porównać zmierzony moduł MAX31856 z footprintem (J3 / J4 P09); do tego czasu P09 nie zamawiać.
 2. Niezależna recenzja paczek (zadanie dla chmury `Plytki/Format-S1/zadania/ZADANIE-RECENZJA-ZAMOWIENIA-S1.md`) — zalecane przed wysłaniem plików.
-3. Wydruk 1:1 z PDF wydania (`projekt/output/pdf/`) i przymiarka dużych części: SW1 P05 (E-Switch, tuleja B3), C1 / C3 220 µF, złącza IDC.
+3. Wydruk 1:1 z PDF wydania (`projekt/output/pdf/`) i przymiarka dużych części: C1 / C3 220 µF, złącza IDC.
+
+**SW1 P05 (decyzja 4.10 po makiecie panelu):** przełącznik nie jest montowany na P05. Idzie na panel (E-Switch 100 z oczkami), a 5 przewodów wchodzi w otwory footprintu SW1 (1, 2, 3, 5, 4 = GND). Płytka bez zmian.

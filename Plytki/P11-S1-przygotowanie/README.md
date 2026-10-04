@@ -52,7 +52,7 @@ Tory silnika na P11 R1: 4 ścieżki 3 mm przy 70 µm, bez przelotek. Kontrola R1
 | P11-3 | **(a)** 3V3_IO z P12 (J_BP.14, P06) przez 100 Ω na P11; rezystor montowany tylko w wariancie bez P04, przy P04 nieobsadzony |
 | P11-4 | **(b)** przewody z portów wprost do P06 / P07; P11 bez prądu silnika |
 | P11-5 | **lutowane końcówki** TAPS (P05 J4) i ISERIES (P06 J3), bez J7 / J1 na P11 |
-| P11-6 | **rysunek makiety 1:1** (PDF) — oś SW1 z PCB P05 R3, wymiary otworów z kart |
+| P11-6 | **rysunek makiety 1:1** (PDF) — `Plytki/Panel-S1-makieta` (gałąź `panel-s1-makieta`): panel 50 mm przed stosem, P11 poziomo na dnie tej strefy (najwyżej ok. 45 × 130 mm); SW1 P05 przeniesiony na panel (5 przewodów do P05) |
 | P11-7 | **zwykłe przyciski ze stykami złoconymi** (do małych prądów); bez zmian rezystorów P03 |
 
 ## Pytania przed decyzją (zamknięte 4.10)
