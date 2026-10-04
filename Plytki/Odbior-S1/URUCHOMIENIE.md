@@ -122,7 +122,7 @@ Konfiguracja: przewody J1 do zasilacza (czerwony J1.1 BAT_IN, czarny J1.2 GND), 
 | ID | Podłącz / zrób | Punkt pomiaru | Oczekiwane | Jeśli źle |
 |---|---|---|---|---|
 | P02-18 | Pakiet bez P02: napięcie i polaryzacja na XT60, BMS, bezpiecznik 7,5 A przy koszyku | multimetr na XT60 | 13,0–16,8 V (≥ 3,25 V/ogniwo, inaczej P02 może nie wystartować — próg do 14,08 V), plus na przewodzie do J1.1 | ładowanie ogniw, BMS |
-| P02-19 | PWR rozwarty, XT60 do P02 (F2/F3 włożone, F1 wyjęty, makieta 470 µF + 4,7 Ω), PWR zwarty | LED, J_BP.2 5V_SYS, J_BP.8 3V3_IO, PSU_OK | start, wartości jak P02-10/P02-11; iskra przy wtyku bez znaczenia (wejście bez pojemności przed Q9) **(szac.)** | — |
+| P02-19 | PWR rozwarty, XT60 do P02 (F2/F3 włożone, F1 wyjęty, makieta 470 µF + 4,7 Ω), PWR zwarty | LED, J_BP.2 5V_SYS, J_BP.8 3V3_IO, PSU_OK | start, wartości jak P02-10/P02-11 | — |
 | P02-20 | Podtrzymanie (O-05, wyjęcie pakietu): obciążenie 4,7 Ω, wyjęcie XT60 | jak P02-14 | ≥ 10 ms jak P02-14 | jak P02-14 |
 
 F1 (VMOTOR, 5 A) zostaje wyjęty przez cały odbiór LOGGER; O-06 (zwarcie VMOTOR) i O-09 (4 A przez 30 min) należą do wariantu pełnego z P07. Pakietu nie zostawiaj w nagrzanym aucie (ok. 60 °C limit ogniw).
