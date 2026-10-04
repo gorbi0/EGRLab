@@ -1,0 +1,247 @@
+{
+ "checks": [
+  {
+   "id": "J_P12-20-PINS",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "id": "P03-POS-N_J_SCOPE_HOT",
+   "pass": true,
+   "note": "P03 R6 [('J_BP1', 10)] / P11 [10]"
+  },
+  {
+   "id": "DIR-N_J_SCOPE_HOT",
+   "pass": true,
+   "note": "P03 out, P11 in"
+  },
+  {
+   "id": "P03-POS-MARK",
+   "pass": true,
+   "note": "P03 R6 [('J_BP1', 13)] / P11 [13]"
+  },
+  {
+   "id": "DIR-MARK",
+   "pass": true,
+   "note": "P03 in, P11 out"
+  },
+  {
+   "id": "P03-POS-TEST_KEY",
+   "pass": true,
+   "note": "P03 R6 [('J_BP1', 14)] / P11 [14]"
+  },
+  {
+   "id": "DIR-TEST_KEY",
+   "pass": true,
+   "note": "P03 in, P11 out"
+  },
+  {
+   "id": "P03-POS-LOGGER_CLEAR",
+   "pass": true,
+   "note": "P03 R6 [('J_BP1', 15)] / P11 [15]"
+  },
+  {
+   "id": "DIR-LOGGER_CLEAR",
+   "pass": true,
+   "note": "P03 in, P11 out"
+  },
+  {
+   "id": "P03-POS-TEST_PRESENT",
+   "pass": true,
+   "note": "P03 R6 [('J_BP1', 16)] / P11 [16]"
+  },
+  {
+   "id": "DIR-TEST_PRESENT",
+   "pass": true,
+   "note": "P03 in, P11 out"
+  },
+  {
+   "id": "P12-WAITING-COVERED",
+   "pass": true,
+   "note": "['LOGGER_CLEAR', 'MARK', 'N_J_SCOPE_HOT', 'TEST_KEY', 'TEST_PRESENT']"
+  },
+  {
+   "id": "PANELSAFE-NETS",
+   "pass": true,
+   "note": "P04-R2.1 J8: ['ARM_CONTACT', 'MECH_OK', 'PANEL_3V3', 'STOP_NC_OUT', 'TEST_KEY']"
+  },
+  {
+   "id": "3V3_IO-ONE-PIN",
+   "pass": true,
+   "note": "3V3_IO exists on P12 (P02 R4 source, P06 R2 J_BP.14)"
+  },
+  {
+   "id": "NO-FOREIGN-NETS",
+   "pass": true,
+   "note": "[]"
+  },
+  {
+   "id": "ODD-GND",
+   "pass": true,
+   "note": "odd pins GND except 13 / 15"
+  },
+  {
+   "id": "GND-COUNT",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "id": "3V3_IO-NOT-NEXT-TO-PANEL_3V3",
+   "pass": true,
+   "note": "3V3_IO 20, PANEL_3V3 2"
+  },
+  {
+   "id": "SCOPE-BETWEEN-GND",
+   "pass": true,
+   "note": "edge signal shielded in the ribbon"
+  },
+  {
+   "id": "ALL-USED-ON-P11",
+   "pass": true,
+   "note": "[]"
+  },
+  {
+   "id": "CSV-EQUALS-NETLIST",
+   "pass": true,
+   "note": ""
+  },
+  {
+   "id": "CSV-KIND",
+   "pass": true,
+   "note": ""
+  }
+ ],
+ "negative_controls": [
+  {
+   "mutation": "MARK <-> TEST_KEY (13/14)",
+   "target": "P03-POS-MARK",
+   "detected": true,
+   "by": [
+    "P03-POS-MARK",
+    "P03-POS-TEST_KEY",
+    "CSV-EQUALS-NETLIST"
+   ]
+  },
+  {
+   "mutation": "N_J_SCOPE_HOT na 12",
+   "target": "P03-POS-N_J_SCOPE_HOT",
+   "detected": true,
+   "by": [
+    "P03-POS-N_J_SCOPE_HOT",
+    "SCOPE-BETWEEN-GND",
+    "CSV-EQUALS-NETLIST"
+   ]
+  },
+  {
+   "mutation": "TEST_PRESENT <-> LOGGER_CLEAR (16/15)",
+   "target": "P03-POS-TEST_PRESENT",
+   "detected": true,
+   "by": [
+    "P03-POS-LOGGER_CLEAR",
+    "P03-POS-TEST_PRESENT",
+    "CSV-EQUALS-NETLIST"
+   ]
+  },
+  {
+   "mutation": "3V3_IO na 4 (obok PANEL_3V3)",
+   "target": "3V3_IO-NOT-NEXT-TO-PANEL_3V3",
+   "detected": true,
+   "by": [
+    "3V3_IO-NOT-NEXT-TO-PANEL_3V3",
+    "CSV-EQUALS-NETLIST"
+   ]
+  },
+  {
+   "mutation": "pin 9 GND -> STOP_NC_OUT (dubel)",
+   "target": "ODD-GND",
+   "detected": true,
+   "by": [
+    "PANELSAFE-NETS",
+    "ODD-GND",
+    "SCOPE-BETWEEN-GND",
+    "CSV-EQUALS-NETLIST"
+   ]
+  },
+  {
+   "mutation": "brak PANEL_3V3 (pin 2 -> GND)",
+   "target": "PANELSAFE-NETS",
+   "detected": true,
+   "by": [
+    "PANELSAFE-NETS",
+    "3V3_IO-NOT-NEXT-TO-PANEL_3V3",
+    "CSV-EQUALS-NETLIST"
+   ]
+  },
+  {
+   "mutation": "brak ARM_CONTACT (pin 8 -> GND)",
+   "target": "PANELSAFE-NETS",
+   "detected": true,
+   "by": [
+    "PANELSAFE-NETS",
+    "CSV-EQUALS-NETLIST"
+   ]
+  },
+  {
+   "mutation": "brak 3V3_IO (pin 20 -> GND)",
+   "target": "3V3_IO-ONE-PIN",
+   "detected": true,
+   "by": [
+    "3V3_IO-ONE-PIN",
+    "3V3_IO-NOT-NEXT-TO-PANEL_3V3",
+    "CSV-EQUALS-NETLIST"
+   ]
+  },
+  {
+   "mutation": "obca siec 5V_SYS na 18",
+   "target": "NO-FOREIGN-NETS",
+   "detected": true,
+   "by": [
+    "NO-FOREIGN-NETS",
+    "ALL-USED-ON-P11",
+    "CSV-EQUALS-NETLIST"
+   ]
+  },
+  {
+   "mutation": "GND obok SCOPE zabrany (11 -> MECH_OK)",
+   "target": "SCOPE-BETWEEN-GND",
+   "detected": true,
+   "by": [
+    "PANELSAFE-NETS",
+    "ODD-GND",
+    "SCOPE-BETWEEN-GND",
+    "CSV-EQUALS-NETLIST"
+   ]
+  },
+  {
+   "mutation": "CSV: pin 14 opisany jako MARK",
+   "target": "CSV-EQUALS-NETLIST",
+   "detected": true,
+   "by": [
+    "DIR-TEST_KEY",
+    "CSV-EQUALS-NETLIST"
+   ]
+  },
+  {
+   "mutation": "CSV: kierunek TEST_KEY = in",
+   "target": "DIR-TEST_KEY",
+   "detected": true,
+   "by": [
+    "DIR-TEST_KEY"
+   ]
+  },
+  {
+   "mutation": "MARK nieuzywany na P11 (J11.16 i X14.2 -> NC)",
+   "target": "ALL-USED-ON-P11",
+   "detected": true,
+   "by": [
+    "ALL-USED-ON-P11"
+   ]
+  },
+  {
+   "mutation": "proba zerowa (bez zmian)",
+   "target": null,
+   "detected": false,
+   "by": []
+  }
+ ]
+}

@@ -1,0 +1,139 @@
+{
+ "J_BP1": {
+  "ref": "J_BP1",
+  "source_ref": "ADDED_R6_EDGE_A",
+  "footprint": "Connector_IDC:IDC-Header_2x10_P2.54mm_Horizontal",
+  "display": "J_BP1 / IDC 2x10 RA (S1)",
+  "value": "J_BP1 / IDC 2x10 RA (S1)",
+  "mpn": "IDC box header 2x10, 2.54 mm, right angle, Au (MPN to be selected)",
+  "pins": {
+   "1": "GND",
+   "2": "CS_ILOG_N",
+   "3": "GND",
+   "4": "CS_ITEST_N",
+   "5": "GND",
+   "6": "CAN_TX",
+   "7": "GND",
+   "8": "CAN_RX",
+   "9": "GND",
+   "10": "N_J_SCOPE_HOT",
+   "11": "LOGGER_CURRENT_OK",
+   "12": "SENSOR_HEALTHY",
+   "13": "MARK",
+   "14": "TEST_KEY",
+   "15": "LOGGER_CLEAR",
+   "16": "TEST_PRESENT",
+   "17": "ENA_DIAG",
+   "18": "ENB_DIAG",
+   "19": "MOTOR_INA",
+   "20": "MOTOR_INB"
+  },
+  "url": "",
+  "note": "Format S1 edge A, slot S1, centre x = 26.5 mm in the slot, pin 1 towards smaller x. Short ribbon to P12.",
+  "qty": 1,
+  "sheet": "LINKS",
+  "on_board": true
+ },
+ "R27": {
+  "ref": "R27",
+  "source_ref": "ADDED_R2_RECEIVER_DEFAULT",
+  "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+  "display": "10K / 1% 1206",
+  "value": "10K / 1% 1206",
+  "mpn": "RC1206FR-0710KL",
+  "pins": {
+   "1": "TEST_KEY",
+   "2": "GND"
+  },
+  "url": "",
+  "note": "Receiver-side default before buffer. Not a device-presence detector.",
+  "qty": 1,
+  "sheet": "IO",
+  "on_board": true
+ },
+ "R6": {
+  "ref": "R6",
+  "source_ref": "R_PD_LOGGER_CLEAR",
+  "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+  "display": "10K / 1% 1206",
+  "value": "10K / 1% 1206",
+  "mpn": "RC1206FR-0710KL",
+  "pins": {
+   "1": "LOGGER_CLEAR",
+   "2": "GND"
+  },
+  "url": "",
+  "note": "Receiver pull-down.",
+  "qty": 1,
+  "sheet": "IO",
+  "on_board": true
+ },
+ "R8": {
+  "ref": "R8",
+  "source_ref": "R_PD_TEST_PRESENT",
+  "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+  "display": "10K / 1% 1206",
+  "value": "10K / 1% 1206",
+  "mpn": "RC1206FR-0710KL",
+  "pins": {
+   "1": "TEST_PRESENT",
+   "2": "GND"
+  },
+  "url": "",
+  "note": "Receiver pull-down.",
+  "qty": 1,
+  "sheet": "IO",
+  "on_board": true
+ },
+ "R5": {
+  "ref": "R5",
+  "source_ref": "R_MARK",
+  "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+  "display": "10K / 1% 1206",
+  "value": "10K / 1% 1206",
+  "mpn": "RC1206FR-0710KL",
+  "pins": {
+   "1": "3V3_CORE",
+   "2": "MARK"
+  },
+  "url": "",
+  "note": "",
+  "qty": 1,
+  "sheet": "P03",
+  "on_board": true
+ },
+ "C4": {
+  "ref": "C4",
+  "source_ref": "C_MARK",
+  "footprint": "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
+  "display": "100nF / 50V X7R",
+  "value": "100nF / 50V X7R",
+  "mpn": "GRM31CR71H104KA01L",
+  "pins": {
+   "1": "MARK",
+   "2": "GND"
+  },
+  "url": "",
+  "note": "MARK button debounce.",
+  "qty": 1,
+  "sheet": "P03",
+  "on_board": true
+ },
+ "R12": {
+  "ref": "R12",
+  "source_ref": "R_SCOPE",
+  "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+  "display": "330R / 1% 1206",
+  "value": "330R / 1% 1206",
+  "mpn": "RC1206FR-07330RL",
+  "pins": {
+   "1": "SCOPE_TRIG",
+   "2": "N_J_SCOPE_HOT"
+  },
+  "url": "",
+  "note": "SCOPE_TRIG series resistor to PANELCORE pin 7.",
+  "qty": 1,
+  "sheet": "P03",
+  "on_board": true
+ }
+}
