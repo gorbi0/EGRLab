@@ -103,7 +103,7 @@ Zapas 5VA do narożników przy TSR 2-2450 (`electrical-checks.json`, `window.tsr
 
 ## Otwarte punkty
 
-- **SW1 (rozstrzygnięte 1.10):** E-Switch 100 w wersji kątowej M6 zamiast pionowego 100DP1T1B1M2REH (ok. 28 mm, ponad 16,5 mm poziomu 3; karta `reference/E-Switch-100-series.pdf`, s. 2, 6, 8, 11). Do potwierdzenia przy zakupie: dokładny kod (tuleja B4 bez gwintu — standard dla M6, albo B3 z gwintem i nakrętką na panel) i dostępność; footprint z rysunku M6-DP sprawdzić na wydruku 1:1 z próbką.
+- **SW1 (rozstrzygnięte 1.10):** E-Switch 100 w wersji kątowej M6 zamiast pionowego 100DP1T1B1M2REH (ok. 28 mm, ponad 16,5 mm poziomu 3; karta `reference/E-Switch-100-series.pdf`, s. 2, 6, 8, 11). Tuleja: **B3 z gwintem i nakrętką na panel** (decyzja 4.10); do potwierdzenia przy zakupie dokładny kod i dostępność; footprint z rysunku M6-DP sprawdzić na wydruku 1:1 z próbką.
 - **Pojemność 5V_SYS (rozstrzygnięte 1.10):** C1 = 220 µF (P06 C3 też 220 µF w rewizji S1) — razem ok. 486 µF wobec 600 µF dla TSR 2-2450; start kompletu i tak mierzyć na stole. MPN C1 (EEUFR1C221, D6,3 × 11,2 mm) do potwierdzenia. Budżet w `docs/INTEGRACJA.md` (ok. 538 µF) jest sprzed P02 R4 i decyzji.
 - **Zapas z rejestru:** bilans w `docs/ZAKUPY.md` (1.10: z P02 R4); 10 k i 100 k MF0207 oraz K104 zużywają P02 R4, P09 R2 i P10 R2, P05 bierze je jako nowe 1206. Budżet dzielników kanałów (0,1 %, 25 ppm/K): `electrical-checks.json`, `channels.*.divider_budget`.
 - R1 KNP01U-1R: odporność na impuls ok. 2,8 mJ (C1 220 µF) z karty.

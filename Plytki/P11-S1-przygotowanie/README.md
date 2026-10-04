@@ -1,6 +1,6 @@
 # P11 w formacie S1 — przygotowanie (1.10.2026)
 
-**Status:** zebrane fakty i lista decyzji przed zadaniem dla chmury. **Nic tu nie jest rozstrzygnięte** — decyzje należą do użytkownika. Schematu ani PCB nie ma. Źródła: `Plytki/P11-R1-review` (R1, interfejsy zamrożone na P03-R2, P04-R2.1, P05-R1, P06-R1, P08-R1), specyfikacja S1 (§7, §8, §10), decyzje z 29.09 (zamienniki) i 1.10, pakiety S1: P02 R4, P03 R6, P05 R3, P06 R2.
+**Status:** decyzje P11-1…P11-7 podjęte przez użytkownika 4.10.2026 (sekcja „Decyzje 4.10”). Schematu ani PCB nie ma. Źródła: `Plytki/P11-R1-review` (R1, interfejsy zamrożone na P03-R2, P04-R2.1, P05-R1, P06-R1, P08-R1), specyfikacja S1 (§7, §8, §10), decyzje z 29.09 (zamienniki) i 1.10, pakiety S1: P02 R4, P03 R6, P05 R3, P06 R2.
 
 ## Co robi P11 R1
 
@@ -43,7 +43,19 @@ Tory silnika na P11 R1: 4 ścieżki 3 mm przy 70 µm, bez przelotek. Kontrola R1
 4. **SW1 P05 i przełącznik BYPASS P06 są na panelu, ale nie na P11** — ich położenie wynika z PCB P05 R3 / z wiązek P06; układ panelu musi to uwzględnić.
 5. Harness W3 / J3 ISERIES P06 R2: drugi koniec opisany jako „MSTB 2,5/4-ST-5,08 do P11/J_ISERIESA (pozycje 3/4 puste) — do potwierdzenia z P11 w S1” (`Plytki/P06-R2-review/docs/WIAZKI.md`).
 
-## Do decyzji użytkownika (bez rekomendacji wiążącej)
+## Decyzje 4.10.2026
+
+| Nr | Decyzja |
+|---|---|
+| P11-1 | **(b) odchudzona:** P11 tylko logika styków (kluczyk, STOP, ARM, MARK, pętle NC, TEST_PRESENT) i złącze IDC do P12; porty łączone przewodami wprost |
+| P11-2 | **klon DT, Amphenol AT04-12** z kluczami A / B / C (L1 / L2 / TEST), styki 13 A |
+| P11-3 | **(a)** 3V3_IO z P12 (J_BP.14, P06) przez 100 Ω na P11; rezystor montowany tylko w wariancie bez P04, przy P04 nieobsadzony |
+| P11-4 | **(b)** przewody z portów wprost do P06 / P07; P11 bez prądu silnika |
+| P11-5 | **lutowane końcówki** TAPS (P05 J4) i ISERIES (P06 J3), bez J7 / J1 na P11 |
+| P11-6 | **rysunek makiety 1:1** (PDF) — oś SW1 z PCB P05 R3, wymiary otworów z kart |
+| P11-7 | **zwykłe przyciski ze stykami złoconymi** (do małych prądów); bez zmian rezystorów P03 |
+
+## Pytania przed decyzją (zamknięte 4.10)
 
 | Nr | Pytanie | Możliwości i skutki |
 |---|---|---|

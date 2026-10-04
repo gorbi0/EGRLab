@@ -2,12 +2,29 @@
 
 
 
-Aktualizacja: 2.10.2026. Scalone 2.10: P05 R3 PCB i P06 R2 PCB po niezależnych recenzjach, nadruk 1,0 mm na P03 / P09 / P10, firmware 6.2-s1, P12 przygotowanie, szkic zakupów 3, przygotowanie P11 S1. Scalone 1.10: P09 R2 i P10 R2 (PCB), P05 R3 (schemat S1, PR #7), przygotowanie P12, wymagania firmware S1, szkic listy zakupowej 3; P03 R6 PCB po recenzji (R70 10 kΩ, listwy według zasady szyn, nowe trasowanie). P02 R4: PCB w klasie L scalona (PR #4) i paczka produkcyjna gotowa (`Plytki/P02-PCB-R4-zamowienie`, ZIP aa7b526b…, pod JLCPCB; nie zamówiona). Format S1-3 (P10 na poziomie 4). P00 i P04 mają pakiety do zamówienia PCB (`Plytki/Zamowienie-Satland/`), P01 i stare P02 wstrzymane (zasilanie z pakietu 4S). Baza odniesienia: `Rewizje/EGRLab-v6.1-rc1`.
+Aktualizacja: 4.10.2026. Decyzje 4.10: P11-1…P11-7 (P11 odchudzona), wspólne zamówienie płytek, SW1 tuleja B3; scalone P02 R4 nadruk, P05 SW1 / C35, P06 szprychy / C17. Scalone 2.10: P05 R3 PCB i P06 R2 PCB po niezależnych recenzjach, nadruk 1,0 mm na P03 / P09 / P10, firmware 6.2-s1, P12 przygotowanie, szkic zakupów 3, przygotowanie P11 S1. Scalone 1.10: P09 R2 i P10 R2 (PCB), P05 R3 (schemat S1, PR #7), przygotowanie P12, wymagania firmware S1, szkic listy zakupowej 3; P03 R6 PCB po recenzji (R70 10 kΩ, listwy według zasady szyn, nowe trasowanie). P02 R4: PCB w klasie L scalona (PR #4) i paczka produkcyjna gotowa (`Plytki/P02-PCB-R4-zamowienie`, ZIP aa7b526b…, pod JLCPCB; nie zamówiona). Format S1-3 (P10 na poziomie 4). P00 i P04 mają pakiety do zamówienia PCB (`Plytki/Zamowienie-Satland/`), P01 i stare P02 wstrzymane (zasilanie z pakietu 4S). Baza odniesienia: `Rewizje/EGRLab-v6.1-rc1`.
 
 Pakiety płytek i ich recenzje znajdują się w `Plytki/`.
 
 
 
+
+## 4.10.2026 — DECYZJE UŻYTKOWNIKA (OKNO DECYZJI) I SCALENIA
+
+Scalone po decyzji „scal wszystkie” (merge na lokalnym `main`, push robi użytkownik): **P02 R4 nadruk** (1,0 / 0,15 mm, paczka produkcyjna zbudowana od nowa, ZIP 83585ce0…; stary ZIP aa7b526b… nieaktualny), **P05 R3** (nóżki SW1 jako pin 4 = GND, C35 10 µF na AVCC przy U1; PCB 36/36, próby 35/35), **P06 R2** (szprychy 4 × 2 mm na polach J3 / J4, C17 100 nF na 5VA przy J5; PCB 34/34, próby 37/37).
+
+Decyzje 4.10 (wszystkie zgodne z rekomendacją):
+- **P11-1** P11 odchudzona: logika styków i złącze do P12; porty łączone przewodami wprost do P05 / P06 / P07.
+- **P11-2** porty L1 / L2 / TEST: klon DT (Amphenol AT04-12) z różnymi kluczami A / B / C, styki 13 A.
+- **P11-3** zasilanie styków w LOGGER: 3V3_IO (J_BP.14) przez rezystor 100 Ω na P11, montowany tylko bez P04 (przy P04 DNP).
+- **P11-4** prąd silnika przewodami wprost z portu do P06 / P07 — P11 bez prądu silnika.
+- **P11-5** TAPS (P05 J4) i ISERIES (P06 J3) lutowanymi przewodami, bez gniazd na P11.
+- **P11-6** układ panelu: rysunek makiety 1:1 (PDF) z osią SW1 z PCB P05 R3.
+- **P11-7** zwykłe przyciski ze stykami złoconymi (do małych prądów).
+- **Zamówienie:** paczki produkcyjne dla P03 R6, P05 R3, P06 R2, P09 R2, P10 R2 i jedno wspólne zamówienie z P02 R4.
+- **P09:** użytkownik zmierzy moduł MAX31856 przed zamówieniem; porównanie z footprintem P09.
+- **SW1 P05:** tuleja B3 z gwintem i nakrętką na panel.
+- **Zakupy:** wiążąca lista z konkretnymi kodami i zamiennikami proponowana przez Claude, zatwierdza użytkownik.
 
 ## 2.10.2026 — RECENZJE PCB P05 / P06, SCALENIA I DECYZJE
 
