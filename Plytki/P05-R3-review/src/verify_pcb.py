@@ -395,12 +395,15 @@ for r in ('J4', 'J6'):
     solder = [pos(a.GetPosition()) for a in fmap[r].Pads() if a.GetAttribute() == p.PAD_ATTRIB_PTH]
     panel[r] = {'anchor_hole_edge_to_x0_mm': [round(a[0] - S1['otwory_M3']['srednica'] / 2, 2) for a in anchors], 'solder_x_max': round(max(q[0] for q in solder), 2),
                 'ok': len(anchors) == 2 and all(1.5 <= a[0] - 1.6 <= 6.0 for a in anchors) and max(q[0] for q in solder) <= 25.0}
-sw = fmap['SW1']; sw_cy = cbox('SW1'); legs = [pos(a.GetPosition()) for a in sw.Pads() if not a.GetNumber()]
-poles = [pos(a.GetPosition()) for a in sw.Pads() if a.GetNumber()]
+sw = fmap['SW1']; sw_cy = cbox('SW1'); p1 = pad('SW1', '1').GetPosition()
+legp = [a for a in sw.Pads() if a.GetNumber() == '4' and (a.GetPosition() - p1).EuclideanNorm() > p.FromMM(8)]   # 2.10: support legs = pin 4 (GND)
+legs = [pos(a.GetPosition()) for a in legp]
+poles = [pos(a.GetPosition()) for a in sw.Pads() if a.GetNumber() and a not in legp]
 panel['SW1'] = {'courtyard_x0': round(sw_cy[0], 2), 'legs': legs, 'poles_x': sorted({q[0] for q in poles}),
-                'ok': sw_cy[0] < -2.0 and len(legs) == 2 and all(q[0] >= 2.5 for q in legs + poles) and not sw.IsFlipped()}
+                'legs_net': sorted({net(a) for a in legp}), 'ok': sw_cy[0] < -2.0 and len(legs) == 2 and {net(a) for a in legp} == {'GND'} and len(poles) == 6
+                and all(q[0] >= 2.5 for q in legs + poles) and not sw.IsFlipped()}
 check('Panel side: TAPS J4 and AUX J6 anchor holes 1.5-6 mm from x = 0 (cables leave through the panel), solder rows <= 25 mm in; '
-      'SW1 (E-Switch M6) bushing and lever beyond x = 0, support legs and poles on the board', all(v['ok'] for v in panel.values()), panel)
+      'SW1 (E-Switch M6) bushing and lever beyond x = 0, support legs and poles on the board, legs on GND (frame for ESD, 2.10)', all(v['ok'] for v in panel.values()), panel)
 # ---------------- 8. placement requirements (decoupling, drivers, protection) ----------------
 DEC = {'C15': ('U3', '8'), 'C14': ('U2', '2'), 'C24': ('U2', '6'), 'C16': ('U5', '14'), 'C17': ('U6', '2'), 'C18': ('U7', '2'), 'C19': ('U8', '14'),
        'C20': ('U9', '14'), 'C21': ('U10', '14'), 'C22': ('U11', '14'), 'C2': ('U12', '2'), 'C3': ('U12', '3'), 'C1': ('R1', '2')}

@@ -39,6 +39,7 @@ put('ADC','U1',29,37,u=1,off=(-6,-12));put('ADC','U1',82,24,u=2,off=(-6,-8));put
 AT={4:'U1.1',5:'U1.37/38',6:'U1 (dodatkowy 100n na 5VA, miejsce w layoucie S1)',7:'U1.48',8:'U1.23',9:'U1.36',10:'U1.39',11:'U1.42',12:'U1.42',13:'U1.44/45'}
 for j,ref in enumerate(range(4,14)):
  x=119+23*(j%2);y=18+17*(j//2);put('ADC',f'C{ref}',x,y);S['ADC'].text(f'C{ref} przy {AT[ref]}',x-4,y+9,1.05)
+put('ADC','C35',165,18);S['ADC'].text('C35 10u przy zasilaniu 5VA U1 (2.10)',161,27,1.05)
 S['ADC'].text('OS[2:0]=111; SER=1; WR10=1. RESET11: pelny reset >=3us. BUSY14 przechodzi przez U11B.',8,100,1.2)
 S['ADC'].text('Referencja ADC wewnetrzna. C12/C13: 22uF/25V 1210 X7R, efektywnie >=10uF; 36/39 osobne 1uF.',8,105,1.2)
 S['ADC'].text('Nie zwierac pinow 36/39. Wyjscia DOUTB/C/D i FRSTDATA pozostaja NC. Serial DB0..6/12..15 = GND.',8,110,1.15)

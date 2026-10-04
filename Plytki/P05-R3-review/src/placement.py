@@ -217,6 +217,7 @@ DEC = {'C15': ('U3', '8'), 'R3': ('U3', '3'), 'R4': ('U3', '6'), 'R5': ('U3', '2
        'R26': ('U11', '3'), 'R27': ('U11', '6'),
        'R32': ('R31', '2'), 'R34': ('R33', '2'), 'R35': ('R33', '2'), 'TP1': ('U1', '2')}
 put('C6', 57.3, 38.7, 90)                       # 5VA_P05 100 nF between TP2 and TP4, above the ground vias of C12 / C10
+put('C35', 57.3, 35.0125, 0)                    # 2.10: AVCC bulk 10 uF just above C6 (spot free of the copper of the reviewed routing, which is replayed)
 # review 2.10 (MAJOR-2, return-path checks of verify_pcb.py): a decoupling / filter capacitor also needs its GND pad at the GND pin of its
 # part (C20 -> U9 GND >= 62 mm, C15 -> U3.4 51, C16 -> U5.7 41 before). These take the free position with the smallest
 # (supply pad -> pin) + (GND pad -> GND pin), supply side <= 5.5 mm (check: 6). The DAQ_OK window (C15, C25, C26 at

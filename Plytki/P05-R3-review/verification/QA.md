@@ -1,6 +1,6 @@
 # P05-R3 — QA schematu (plik generowany przez src/run_schematic.py)
 
-ERC: 0 naruszeń na 9 arkuszach. Netlista: 119 części, 466 pinów sprawdzonych pin po pinie względem `parts.py`, 0 błędów, 111 sieci.
+ERC: 0 naruszeń na 9 arkuszach. Netlista: 120 części, 468 pinów sprawdzonych pin po pinie względem `parts.py`, 0 błędów, 111 sieci.
 
 Kontrole elektryczne (`verify_electrical.py`): 21/21 PASS; mutacje 12/12 wykrytych.
 Okno DAQ_OK (10 ppm/K + 0,1 % na lutowanie/starzenie): dolny 4.7564–4.8445 V, górny 5.1414–5.2304 V.

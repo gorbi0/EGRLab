@@ -1,13 +1,13 @@
 {
-  "board": "/home/tgorbacz/AI/Claude/EGRLab/.worktrees/p05-r3-pcb/Plytki/P05-R3-review/verification/negative-controls/bottom_soic/P05.kicad_pcb",
-  "board_sha256": "b0bf05d65a74ba504b7b7b7ca593ca964dbc94ae74c540c3e261d69bc57244b6",
+  "board": "/home/tgorbacz/AI/Claude/EGRLab/.worktrees/p05-r3-sw1-avcc/Plytki/P05-R3-review/verification/negative-controls/bottom_soic/P05.kicad_pcb",
+  "board_sha256": "04f252f60597c27ebcab520dbc9dded288b78b96498ef4330d8be3519d694eed",
   "checks": [
     {
       "check": "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
       "pass": false
     },
     {
-      "check": "119 on-board parts + 8 mounting holes, nothing else",
+      "check": "120 on-board parts + 8 mounting holes, nothing else",
       "pass": true
     },
     {
@@ -87,7 +87,7 @@
       "pass": true
     },
     {
-      "check": "Panel side: TAPS J4 and AUX J6 anchor holes 1.5-6 mm from x = 0 (cables leave through the panel), solder rows <= 25 mm in; SW1 (E-Switch M6) bushing and lever beyond x = 0, support legs and poles on the board",
+      "check": "Panel side: TAPS J4 and AUX J6 anchor holes 1.5-6 mm from x = 0 (cables leave through the panel), solder rows <= 25 mm in; SW1 (E-Switch M6) bushing and lever beyond x = 0, support legs and poles on the board, legs on GND (frame for ESD, 2.10)",
       "pass": true
     },
     {
@@ -172,10 +172,28 @@
     },
     "Every value, footprint ID and pad net equals the exported schematic netlist": {
       "errors": [],
-      "pads": 466
+      "pads": 470
     },
     "S1-2 section 4: parts on the bottom only SMD <= 1.5 mm (heights.py, BOM thickness note for the capacitors), no SOIC, >= 1 mm from THT pads": {
       "bottom_parts": {
+        "C8": {
+          "smd": true,
+          "height_mm": 1.25,
+          "soic": false,
+          "min_gap_to_THT_mm": 6.48
+        },
+        "R49": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 10.41
+        },
+        "R39": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 6.0
+        },
         "R9": {
           "smd": true,
           "height_mm": 0.7,
@@ -188,29 +206,23 @@
           "soic": false,
           "min_gap_to_THT_mm": 5.15
         },
-        "R52": {
+        "R47": {
           "smd": true,
           "height_mm": 0.7,
           "soic": false,
-          "min_gap_to_THT_mm": 1.07
+          "min_gap_to_THT_mm": 1.23
         },
-        "R49": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 10.41
-        },
-        "R38": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 8.98
-        },
-        "C8": {
+        "C7": {
           "smd": true,
           "height_mm": 1.25,
           "soic": false,
-          "min_gap_to_THT_mm": 6.48
+          "min_gap_to_THT_mm": 7.16
+        },
+        "C26": {
+          "smd": true,
+          "height_mm": 1.25,
+          "soic": false,
+          "min_gap_to_THT_mm": 4.41
         },
         "R36": {
           "smd": true,
@@ -218,23 +230,83 @@
           "soic": false,
           "min_gap_to_THT_mm": 2.75
         },
-        "R37": {
+        "R21": {
           "smd": true,
           "height_mm": 0.7,
           "soic": false,
-          "min_gap_to_THT_mm": 5.39
+          "min_gap_to_THT_mm": 3.77
         },
-        "R39": {
+        "R40": {
           "smd": true,
           "height_mm": 0.7,
           "soic": false,
-          "min_gap_to_THT_mm": 6.0
+          "min_gap_to_THT_mm": 6.13
+        },
+        "C25": {
+          "smd": true,
+          "height_mm": 1.25,
+          "soic": false,
+          "min_gap_to_THT_mm": 6.82
+        },
+        "R55": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.12
+        },
+        "R38": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 8.98
+        },
+        "R48": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.23
+        },
+        "R45": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.73
+        },
+        "U9": {
+          "smd": true,
+          "height_mm": 1.75,
+          "soic": true,
+          "min_gap_to_THT_mm": 1.74
+        },
+        "R53": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 8.94
         },
         "R51": {
           "smd": true,
           "height_mm": 0.7,
           "soic": false,
           "min_gap_to_THT_mm": 1.07
+        },
+        "C11": {
+          "smd": true,
+          "height_mm": 1.25,
+          "soic": false,
+          "min_gap_to_THT_mm": 6.62
+        },
+        "R54": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.07
+        },
+        "R37": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 5.39
         },
         "R50": {
           "smd": true,
@@ -248,49 +320,7 @@
           "soic": false,
           "min_gap_to_THT_mm": 3.69
         },
-        "R55": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 1.12
-        },
-        "R21": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 3.77
-        },
-        "R46": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 4.33
-        },
-        "C26": {
-          "smd": true,
-          "height_mm": 1.25,
-          "soic": false,
-          "min_gap_to_THT_mm": 4.41
-        },
-        "R47": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 1.23
-        },
-        "R44": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 1.18
-        },
-        "R48": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 1.23
-        },
-        "R54": {
+        "R52": {
           "smd": true,
           "height_mm": 0.7,
           "soic": false,
@@ -302,47 +332,17 @@
           "soic": false,
           "min_gap_to_THT_mm": 2.41
         },
-        "U9": {
-          "smd": true,
-          "height_mm": 1.75,
-          "soic": true,
-          "min_gap_to_THT_mm": 1.74
-        },
-        "R40": {
+        "R44": {
           "smd": true,
           "height_mm": 0.7,
           "soic": false,
-          "min_gap_to_THT_mm": 6.13
+          "min_gap_to_THT_mm": 1.18
         },
-        "R53": {
+        "R46": {
           "smd": true,
           "height_mm": 0.7,
           "soic": false,
-          "min_gap_to_THT_mm": 8.94
-        },
-        "C11": {
-          "smd": true,
-          "height_mm": 1.25,
-          "soic": false,
-          "min_gap_to_THT_mm": 6.62
-        },
-        "C7": {
-          "smd": true,
-          "height_mm": 1.25,
-          "soic": false,
-          "min_gap_to_THT_mm": 7.16
-        },
-        "C25": {
-          "smd": true,
-          "height_mm": 1.25,
-          "soic": false,
-          "min_gap_to_THT_mm": 6.82
-        },
-        "R45": {
-          "smd": true,
-          "height_mm": 0.7,
-          "soic": false,
-          "min_gap_to_THT_mm": 1.73
+          "min_gap_to_THT_mm": 4.33
         }
       }
     },
@@ -841,57 +841,57 @@
       "pins_not_solid": [],
       "inner_vias": [
         [
-          53.7,
-          57.2
-        ],
-        [
-          55.9,
-          52.562
+          56.6,
+          56.8
         ],
         [
           60.6,
           52.562
         ],
         [
-          53.7,
-          51.4
-        ],
-        [
-          53.7,
-          53.4
-        ],
-        [
-          56.6,
-          56.8
-        ],
-        [
-          53.7,
-          55.4
-        ],
-        [
-          59.0,
-          56.8
-        ],
-        [
-          62.3,
+          58.4,
           49.66
-        ],
-        [
-          58.25,
-          52.562
         ],
         [
           55.35,
           49.66
         ],
         [
-          58.4,
+          55.9,
+          52.562
+        ],
+        [
+          59.0,
+          56.8
+        ],
+        [
+          53.7,
+          53.4
+        ],
+        [
+          53.7,
+          51.4
+        ],
+        [
+          58.25,
+          52.562
+        ],
+        [
+          53.7,
+          55.4
+        ],
+        [
+          53.7,
+          57.2
+        ],
+        [
+          62.3,
           49.66
         ]
       ]
     },
     "No copper of other nets in the U1 courtyard (only the nets of U1 pins: escapes, decoupling, inner pour vias; README)": [],
-    "Panel side: TAPS J4 and AUX J6 anchor holes 1.5-6 mm from x = 0 (cables leave through the panel), solder rows <= 25 mm in; SW1 (E-Switch M6) bushing and lever beyond x = 0, support legs and poles on the board": {
+    "Panel side: TAPS J4 and AUX J6 anchor holes 1.5-6 mm from x = 0 (cables leave through the panel), solder rows <= 25 mm in; SW1 (E-Switch M6) bushing and lever beyond x = 0, support legs and poles on the board, legs on GND (frame for ESD, 2.10)": {
       "J4": {
         "anchor_hole_edge_to_x0_mm": [
           1.9,
@@ -923,6 +923,9 @@
         "poles_x": [
           16.6,
           20.41
+        ],
+        "legs_net": [
+          "GND"
         ],
         "ok": true
       }
@@ -965,7 +968,7 @@
         "B.Cu": 70.6
       },
       "islands": {
-        "F.Cu": 32,
+        "F.Cu": 31,
         "B.Cu": 29
       }
     },
@@ -1185,11 +1188,11 @@
       "R21": [
         "U9"
       ],
-      "R46": [
-        "U9"
-      ],
       "U9": [
         "R46"
+      ],
+      "R46": [
+        "U9"
       ]
     },
     "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)": {

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <export version="E">
   <design>
-    <source>/home/tgorbacz/AI/Claude/EGRLab/.worktrees/p05-r3-pcb/Plytki/P05-R3-review/eda/P05.kicad_sch</source>
-    <date>2026-10-02T14:46:00</date>
+    <source>/home/tgorbacz/AI/Claude/EGRLab/.worktrees/p05-r3-sw1-avcc/Plytki/P05-R3-review/eda/P05.kicad_sch</source>
+    <date>2026-10-02T16:24:37</date>
     <tool>Eeschema 10.0.6</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
@@ -927,6 +927,32 @@
       <property name="Sheetfile" value="ADC.kicad_sch"/>
       <sheetpath names="/ADC/" tstamps="/22b45ce8-1eb6-541d-91b2-94aaedeea995/"/>
       <tstamps>70774cc6-01b5-5c30-841b-0047cb6800f9</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C35">
+      <value>10u</value>
+      <footprint>Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder</footprint>
+      <fields>
+        <field name="MPN">SMD 1206 X7R 25V 10% 10u</field>
+        <field name="BaselineRef">ADDED_AVCC_BULK</field>
+        <field name="Footprint">Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="P05" part="C" description=""/>
+      <property name="MPN" value="SMD 1206 X7R 25V 10% 10u"/>
+      <property name="BaselineRef" value="ADDED_AVCC_BULK"/>
+      <property name="Sheetname" value="ADC"/>
+      <property name="Sheetfile" value="ADC.kicad_sch"/>
+      <sheetpath names="/ADC/" tstamps="/22b45ce8-1eb6-541d-91b2-94aaedeea995/"/>
+      <tstamps>ab897a6f-5cb3-5ef2-ab3b-edf9771bff86</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -4207,6 +4233,7 @@
     <net code="30" name="5VA_P05" class="PWR">
       <node ref="C1" pin="1" pintype="passive"/>
       <node ref="C2" pin="1" pintype="passive"/>
+      <node ref="C35" pin="1" pintype="passive"/>
       <node ref="C4" pin="1" pintype="passive"/>
       <node ref="C5" pin="1" pintype="passive"/>
       <node ref="C6" pin="1" pintype="passive"/>
@@ -4407,6 +4434,7 @@
       <node ref="C32" pin="2" pintype="passive"/>
       <node ref="C33" pin="2" pintype="passive"/>
       <node ref="C34" pin="2" pintype="passive"/>
+      <node ref="C35" pin="2" pintype="passive"/>
       <node ref="C4" pin="2" pintype="passive"/>
       <node ref="C5" pin="2" pintype="passive"/>
       <node ref="C6" pin="2" pintype="passive"/>

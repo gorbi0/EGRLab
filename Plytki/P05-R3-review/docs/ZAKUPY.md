@@ -32,6 +32,7 @@
 | nowe | SMD 1206 C0G 50V 5% 220p | 220p | 7 | C27, C28, C29, C30, C31, C33, C34 / C_1206_3216Metric_Pad1.33x1.80mm_HandSolder |
 | nowe | SMD 1206 X7R 25V 10% 100n | 100n | 15 | C4, C5, C6, C7, C8, C11, C14, C15, C16, C17, C18, C19, C20, C21, C22 / C_1206_3216Metric_Pad1.33x1.80mm_HandSolder |
 | nowe | SMD 1206 X7R 25V 10% 10n | 10n | 2 | C25, C26 / C_1206_3216Metric_Pad1.33x1.80mm_HandSolder |
+| nowe | SMD 1206 X7R 25V 10% 10u | 10u | 1 | C35 / C_1206_3216Metric_Pad1.33x1.80mm_HandSolder |
 | nowe | SMD 1206 X7R 25V 10% 1u | 1u | 5 | C2, C9, C10, C23, C24 / C_1206_3216Metric_Pad1.33x1.80mm_HandSolder |
 | nowe | SMD 1206 X7R 25V 10% 2.2u | 2.2u | 1 | C3 / C_1206_3216Metric_Pad1.33x1.80mm_HandSolder |
 | nowe | TBD62083APG | TBD62083APG | 1 | U4 / DIP-18_W7.62mm |

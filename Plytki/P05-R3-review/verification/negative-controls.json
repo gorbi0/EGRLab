@@ -96,7 +96,9 @@
       "U1 decoupling on the copper (R2 table, review P5-01): AVCC 1, REGCAP 36 / 39 <= 3 mm, bottom 100 nF at 48 / 37 / 38 / 42 and VDRIVE 23 <= 4 mm (2.10), 22 uF on REFIN/OUT 42 and REFCAP 44 / 45 <= 6 mm (pad centre to pad centre)",
       "REGCAP_A, REGCAP_D and REFCAP without vias, their capacitors (and the 22 uF on ADC_REF) on top; ADC_REF has one via only (to C11 on the bottom, 100 nF <= 1.5 mm, README)",
       "U1 decoupling, ground side: capacitor GND pad -> its AGND / REFGND pin through GND copper <= 1.3 x straight + 3 mm (gndpath.py; C4 / C13 accepted at 10.5 / 11 mm; review 2.10 MAJOR-1: 15-23 mm behind the 5VA bar)",
-      "B.Cu under the input fan (x 45.4-51.3, y 46.4-64.5) and under the top capacitors (x 50.4-63.1, y 40.2-47.3): GND only, plus the locked 5VA stubs (review 2.10: the 5VA bar at y 45 and the spine at x 52.6 cut the returns)"
+      "B.Cu under the input fan (x 45.4-51.3, y 46.4-64.5) and under the top capacitors (x 50.4-63.1, y 40.2-47.3): GND only, plus the locked 5VA stubs (review 2.10: the 5VA bar at y 45 and the spine at x 52.6 cut the returns)",
+      "Every visible reference outside the courtyards of other parts",
+      "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)"
     ]
   },
   {
@@ -171,7 +173,7 @@
     "detected": true,
     "failed_checks": [
       "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
-      "Panel side: TAPS J4 and AUX J6 anchor holes 1.5-6 mm from x = 0 (cables leave through the panel), solder rows <= 25 mm in; SW1 (E-Switch M6) bushing and lever beyond x = 0, support legs and poles on the board",
+      "Panel side: TAPS J4 and AUX J6 anchor holes 1.5-6 mm from x = 0 (cables leave through the panel), solder rows <= 25 mm in; SW1 (E-Switch M6) bushing and lever beyond x = 0, support legs and poles on the board, legs on GND (frame for ESD, 2.10)",
       "Every visible reference outside the courtyards of other parts",
       "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)"
     ]
@@ -182,7 +184,7 @@
     "detected": true,
     "failed_checks": [
       "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
-      "Panel side: TAPS J4 and AUX J6 anchor holes 1.5-6 mm from x = 0 (cables leave through the panel), solder rows <= 25 mm in; SW1 (E-Switch M6) bushing and lever beyond x = 0, support legs and poles on the board",
+      "Panel side: TAPS J4 and AUX J6 anchor holes 1.5-6 mm from x = 0 (cables leave through the panel), solder rows <= 25 mm in; SW1 (E-Switch M6) bushing and lever beyond x = 0, support legs and poles on the board, legs on GND (frame for ESD, 2.10)",
       "Every visible reference outside the courtyards of other parts",
       "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)"
     ]

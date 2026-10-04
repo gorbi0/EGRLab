@@ -27,7 +27,7 @@ ISOLATE = {'VBAT_SENSE': .8}   # review 2.10 (MINOR-2): DSN class clearance in m
 # review 2.10 (MAJOR-2): a GND via at every SMD decoupling / filter capacitor outside U1 (stitch.py stage 4, after the completion planner;
 # U1's capacitors have theirs from route_critical.py); verify_pcb.py measures the return to the part's GND pin
 EXTRA_GND_VIAS = [('pad', c, '2', 2.0) for c in ('C2', 'C3', 'C6', 'C14', 'C15', 'C16', 'C17', 'C18', 'C19', 'C20', 'C21', 'C22', 'C23', 'C24',
-                                                 'C25', 'C26', 'C27', 'C28', 'C29', 'C30', 'C31', 'C33', 'C34')]
+                                                 'C25', 'C26', 'C27', 'C28', 'C29', 'C30', 'C31', 'C33', 'C34', 'C35')]
 PLANNER_KEEPOUT = [('F.Cu', 51.3, 47.3, 64.7, 60.7),   # completion planner (complete_routes.py) and placement: no new copper in U1 /
                    ('F.Cu', 38.3, 33.73, 44.7, 37.27),  # U3, none on B.Cu under U1 and the input fan / filter column; the planner starts
                    ('B.Cu', 44.0, 43.0, 65.0, 62.0),    # at the free end of a locked escape (U1 / U3 pins sit inside)
