@@ -11,6 +11,8 @@ Pakiety płytek i ich recenzje znajdują się w `Plytki/`.
 
 ## 4.10.2026 — DECYZJE UŻYTKOWNIKA (OKNO DECYZJI) I SCALENIA
 
+**4.10 po południu — scalone („scal”) przez `zamowienie-s1`:** paczki produkcyjne P03 R6 / P05 R3 / P06 R2 / P09 R2 / P10 R2 i indeks `Plytki/Zamowienie-S1` (P02–P06, P10 do zamówienia; P09 po pomiarze MAX31856), recenzja paczek z chmury (`Plytki/Recenzja-zamowienia-S1`, bez blokerów), schemat **P11 R2** (`Plytki/P11-R2-review`: ERC 0, 35/35, kontrakt P12 22/22), procedura **odbioru S1** (`Plytki/Odbior-S1`), **kandydaci zakupów 4** (`Plytki/Zakupy-4-kandydaci`, stany w TME do sprawdzenia), **makieta panelu** (`Plytki/Panel-S1-makieta`). Decyzje: SW1 P05 na panelu (100DP1T1B1M1REH, 5 przewodów), klucze portów jak w R1 (L1 = B, L2 = C, TEST = A), przewód silnika 2,0 mm², mostki TAP przy portach i jedna wiązka do P05 J4, J_P12 kątowe z GND na 12 / 18. Do zadania P12: z J_BP2 P03 / P05 łączyć tylko piny 2–14 i 18.
+
 Scalone po decyzji „scal wszystkie” (merge na lokalnym `main`, push robi użytkownik): **P02 R4 nadruk** (1,0 / 0,15 mm, paczka produkcyjna zbudowana od nowa, ZIP 83585ce0…; stary ZIP aa7b526b… nieaktualny), **P05 R3** (nóżki SW1 jako pin 4 = GND, C35 10 µF na AVCC przy U1; PCB 36/36, próby 35/35), **P06 R2** (szprychy 4 × 2 mm na polach J3 / J4, C17 100 nF na 5VA przy J5; PCB 34/34, próby 37/37).
 
 Decyzje 4.10 (wszystkie zgodne z rekomendacją):
