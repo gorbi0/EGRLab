@@ -30,9 +30,11 @@ def custom(name,units,half=12.7):
   s+=')'
  return parse(s+')')
 # Wire fields (PTH solder pads, as P11-R1 make_footprints.py): 3.5 mm pitch, drill 1.1 / pad 2.3 (AWG22-24 and RG174 core),
-# rows of `per_row`, two NPTH 3.2 holes for a cable tie 10.5 mm behind the first row. Layout (local session) may change pitch/rows.
-def field(name,n,per_row):
- pts=[(i+1,(i%per_row)*3.5,(i//per_row)*3.5) for i in range(n)];xmax=(min(n,per_row)-1)*3.5;ymax=((n-1)//per_row)*3.5
+# two NPTH 3.2 holes for a cable tie 10.5 mm behind the first row. PCB 4.10 (layout): pads numbered column by column, `rows` pads
+# per column (as P05 J4): J11 has one switch contact per column (pads 2k-1 / 2k = the two wires of one contact, R1 pairs), so
+# each column gets one silk label; J8 / J6 one pad per column.
+def field(name,n,rows):
+ pts=[(i+1,(i//rows)*3.5,(i%rows)*3.5) for i in range(n)];xmax=((n-1)//rows)*3.5;ymax=(min(n,rows)-1)*3.5
  s=f'(footprint {q(name)} (version 20240108) (generator "pcbnew") (layer "F.Cu") (attr through_hole)'
  for num,x,y in pts:s+=f'(pad "{num}" thru_hole {"rect" if num==1 else "circle"} (at {x} {y}) (size 2.3 2.3) (drill 1.1) (layers "*.Cu" "*.Mask"))'
  for x in (-3.5,xmax+3.5):s+=f'(pad "" np_thru_hole circle (at {x} -10.5) (size 3.2 3.2) (drill 3.2) (layers "*.Cu" "*.Mask"))'
@@ -42,7 +44,7 @@ def field(name,n,per_row):
 def offboard():
  s='(footprint "OFFBOARD" (version 20240108) (generator "pcbnew") (layer "F.Cu") (attr through_hole)(fp_rect (start -1 -1) (end 1 1) (stroke (width .05) (type default)) (fill none) (layer "F.CrtYd"))(fp_text reference "REF**" (at 0 2.5) (layer "F.SilkS") (effects (font (size 1 1) (thickness .15)))))'
  (FP/'OFFBOARD.kicad_mod').write_text(s);return 'P11:OFFBOARD'
-OFF=offboard();F18=field('FIELD_CONTACT18',18,9);F2=field('FIELD_PAIR2',2,2)
+OFF=offboard();F18=field('FIELD_CONTACT18',18,2);F2=field('FIELD_PAIR2',2,1)
 IDC=copyfp('Connector_IDC','IDC-Header_2x10_P2.54mm_Horizontal')
 R1206=copyfp('Resistor_SMD','R_1206_3216Metric_Pad1.30x1.75mm_HandSolder')
 def add(ref,src,sym,fp,value,mpn,pins,sheet,url='',note='',on_board=True,**extra):

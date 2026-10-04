@@ -119,6 +119,6 @@ Kontrakt P12 (`verify_p12.py`): 22/22 PASS; mutacje 13/13 wykrytych przez kontro
 | dodatkowa LED PANEL_3V3-GND | tak | PARTS-SET, PANEL_3V3-FEED, NODAL-256-FULL |
 | przycisk bez zlocenia (X14) | tak | BUTTONS-GOLD |
 
-Tylko schemat: PCB nie powstało (layout robi sesja lokalna). Kontrole plików nie zastępują odbioru na sprzęcie.
+PCB: osobny raport `verification/QA-PCB.md` (src/run_release.py, 4.10.2026). Kontrole plików nie zastępują odbioru na sprzęcie.
 Model pełnego wariantu używa zamrożonego P04-R2.1 (P04 w S1 jeszcze nie istnieje) — do powtórzenia przy P04 w S1.
 Ostrzeżenie kicad-cli „schemat posiada błędy numeracji” dotyczy oznaczenia `J_P12` bez numeru (jak `J_BP` w P02 R4 i P06 R2); ERC go nie zgłasza.

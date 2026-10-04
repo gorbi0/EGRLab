@@ -1,6 +1,6 @@
 """P11-R2 (format S1, schematic only): build -> tables -> ERC -> netlist -> pin-by-pin check -> electrical checks (256 contact states x
 two variants, negative controls) -> P12 contract (negative controls + null control) -> PDF/PNG -> verification/QA.md + manifest.
-No PCB here (layout: local session). Run with KiCad Python (cloud: scripts/egrlab-docker python3 src/run_schematic.py).
+PCB: src/run_release.py (runs this first). Run with KiCad Python (cloud: scripts/egrlab-docker python3 src/run_schematic.py).
 kicad-cli: KICAD_CLI or next to the Python."""
 from pathlib import Path
 import os, subprocess, sys, json, hashlib
@@ -44,7 +44,7 @@ qa = ['# P11-R2 — QA schematu (plik generowany przez src/run_schematic.py)', '
      [f"| {t['mutation']} | {t['target'] or '—'} | {'tak' if t['detected'] else 'nie'} | {', '.join(t['by']) or '—'} |" for t in n1] + \
      ['', '## Próby ujemne elektryczne', '', '| Mutacja | Wykryta | Zgłosiły |', '|---|---|---|'] + \
      [f"| {t['mutation']} | {'tak' if t['caught'] else 'nie'} | {', '.join(t['checks'])} |" for t in el['negative_controls']] + \
-     ['', 'Tylko schemat: PCB nie powstało (layout robi sesja lokalna). Kontrole plików nie zastępują odbioru na sprzęcie.',
+     ['', 'PCB: osobny raport `verification/QA-PCB.md` (src/run_release.py, 4.10.2026). Kontrole plików nie zastępują odbioru na sprzęcie.',
       'Model pełnego wariantu używa zamrożonego P04-R2.1 (P04 w S1 jeszcze nie istnieje) — do powtórzenia przy P04 w S1.',
       'Ostrzeżenie kicad-cli „schemat posiada błędy numeracji” dotyczy oznaczenia `J_P12` bez numeru (jak `J_BP` w P02 R4 i P06 R2); ERC go nie zgłasza.']
 (P / 'verification/QA.md').write_text('\n'.join(qa) + '\n', encoding='utf-8')
