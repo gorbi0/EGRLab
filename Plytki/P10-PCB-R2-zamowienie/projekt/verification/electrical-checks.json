@@ -1,0 +1,510 @@
+{
+  "checks": [
+    {
+      "id": "JBP-10-PINS",
+      "pass": true
+    },
+    {
+      "id": "JBP-ODD-GND",
+      "pass": true
+    },
+    {
+      "id": "JBP-EVEN-SIGNALS",
+      "pass": true
+    },
+    {
+      "id": "JBP-CONTINUITY-R1",
+      "pass": true
+    },
+    {
+      "id": "JBP-S1-SUPPLY-PINS",
+      "pass": true
+    },
+    {
+      "id": "JBP-SUPPLY-USED",
+      "pass": true
+    },
+    {
+      "id": "JBP-CSV",
+      "pass": true
+    },
+    {
+      "id": "SRV-MAX-13",
+      "pass": true
+    },
+    {
+      "id": "SRV-ENDS-GND",
+      "pass": true
+    },
+    {
+      "id": "SRV-GND-ONLY-ENDS",
+      "pass": true
+    },
+    {
+      "id": "SRV-SERIES-R-AT-NODE",
+      "pass": true
+    },
+    {
+      "id": "SRV-COVERS-ODBIOR",
+      "pass": true
+    },
+    {
+      "id": "SRV-CSV",
+      "pass": true
+    },
+    {
+      "id": "PARTS-SOURCES",
+      "pass": true
+    },
+    {
+      "id": "TCAN-PINOUT",
+      "pass": true
+    },
+    {
+      "id": "TCAN-V-SUFFIX",
+      "pass": true
+    },
+    {
+      "id": "RX-IOFF-BUFFER",
+      "pass": true
+    },
+    {
+      "id": "RX-IOFF-MPN",
+      "pass": true
+    },
+    {
+      "id": "TVS-PINOUT",
+      "pass": true
+    },
+    {
+      "id": "OBD-TWO-WIRES",
+      "pass": true
+    },
+    {
+      "id": "TX-ONLY-JBP-AND-SERVICE-PIN",
+      "pass": true
+    },
+    {
+      "id": "RX-NO-BUFFER-BYPASS",
+      "pass": true
+    },
+    {
+      "id": "NO-TERM-NO-EXTRA-CAN-LOAD",
+      "pass": true
+    },
+    {
+      "id": "RES-R1",
+      "pass": true
+    },
+    {
+      "id": "RES-R2",
+      "pass": true
+    },
+    {
+      "id": "CAP-1",
+      "pass": true
+    },
+    {
+      "id": "CAP-2",
+      "pass": true
+    },
+    {
+      "id": "CAP-3",
+      "pass": true
+    },
+    {
+      "id": "CAP-4",
+      "pass": true
+    },
+    {
+      "id": "CAP-5",
+      "pass": true
+    },
+    {
+      "id": "ACTUAL-NETS-SILENT",
+      "pass": true
+    },
+    {
+      "id": "ACTUAL-NETS-RX",
+      "pass": true
+    }
+  ],
+  "negative_controls": [
+    {
+      "mutation": "silent-low",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "TCAN-PINOUT",
+        "ACTUAL-NETS-SILENT"
+      ]
+    },
+    {
+      "mutation": "MCU-to-TXD",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "TCAN-PINOUT",
+        "TX-ONLY-JBP-AND-SERVICE-PIN",
+        "ACTUAL-NETS-SILENT"
+      ]
+    },
+    {
+      "mutation": "swap-CAN",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "TCAN-PINOUT",
+        "NO-TERM-NO-EXTRA-CAN-LOAD"
+      ]
+    },
+    {
+      "mutation": "TVS-common-wrong",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "TVS-PINOUT"
+      ]
+    },
+    {
+      "mutation": "RX-buffer-bypass",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "TCAN-PINOUT",
+        "RX-NO-BUFFER-BYPASS"
+      ]
+    },
+    {
+      "mutation": "RX-OE-wrong",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "RX-IOFF-BUFFER",
+        "ACTUAL-NETS-RX"
+      ]
+    },
+    {
+      "mutation": "unused-input-float",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "RX-IOFF-BUFFER"
+      ]
+    },
+    {
+      "mutation": "missing-RX-pullup",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "RES-R2"
+      ]
+    },
+    {
+      "mutation": "RX-R-bypass",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "RX-NO-BUFFER-BYPASS",
+        "RES-R1",
+        "ACTUAL-NETS-RX"
+      ]
+    },
+    {
+      "mutation": "extra-120R",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "PARTS-SOURCES",
+        "NO-TERM-NO-EXTRA-CAN-LOAD"
+      ]
+    },
+    {
+      "mutation": "jbp-odd-pin-signal",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "JBP-ODD-GND",
+        "JBP-CSV",
+        "RX-NO-BUFFER-BYPASS"
+      ]
+    },
+    {
+      "mutation": "jbp-odd-pin-NC",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "JBP-ODD-GND",
+        "JBP-CSV"
+      ]
+    },
+    {
+      "mutation": "jbp-even-pin-GND",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "JBP-EVEN-SIGNALS",
+        "JBP-CONTINUITY-R1",
+        "JBP-S1-SUPPLY-PINS",
+        "JBP-CSV",
+        "TX-ONLY-JBP-AND-SERVICE-PIN"
+      ]
+    },
+    {
+      "mutation": "jbp-second-5V-lost",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "JBP-EVEN-SIGNALS",
+        "JBP-CONTINUITY-R1",
+        "JBP-S1-SUPPLY-PINS",
+        "JBP-CSV"
+      ]
+    },
+    {
+      "mutation": "jbp-TX-RX-swapped",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "JBP-CSV",
+        "TX-ONLY-JBP-AND-SERVICE-PIN",
+        "RX-NO-BUFFER-BYPASS",
+        "ACTUAL-NETS-RX"
+      ]
+    },
+    {
+      "mutation": "jbp-unused-signal",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "JBP-CONTINUITY-R1",
+        "JBP-S1-SUPPLY-PINS",
+        "JBP-CSV",
+        "NO-TERM-NO-EXTRA-CAN-LOAD"
+      ]
+    },
+    {
+      "mutation": "jbp-CSV-mismatch",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "JBP-CONTINUITY-R1",
+        "JBP-S1-SUPPLY-PINS",
+        "JBP-SUPPLY-USED",
+        "JBP-CSV"
+      ]
+    },
+    {
+      "mutation": "srv-first-not-GND",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "SRV-ENDS-GND",
+        "SRV-GND-ONLY-ENDS",
+        "SRV-CSV"
+      ]
+    },
+    {
+      "mutation": "srv-last-not-GND",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "SRV-ENDS-GND",
+        "SRV-GND-ONLY-ENDS",
+        "SRV-CSV",
+        "NO-TERM-NO-EXTRA-CAN-LOAD"
+      ]
+    },
+    {
+      "mutation": "srv-extra-GND-inside",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "SRV-GND-ONLY-ENDS",
+        "SRV-SERIES-R-AT-NODE",
+        "SRV-COVERS-ODBIOR",
+        "SRV-CSV"
+      ]
+    },
+    {
+      "mutation": "srv-10th-pin",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "SRV-GND-ONLY-ENDS",
+        "SRV-SERIES-R-AT-NODE",
+        "SRV-CSV"
+      ]
+    },
+    {
+      "mutation": "srv-no-resistor",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "SRV-SERIES-R-AT-NODE",
+        "SRV-COVERS-ODBIOR",
+        "SRV-CSV"
+      ]
+    },
+    {
+      "mutation": "srv-resistor-shorted",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "SRV-SERIES-R-AT-NODE",
+        "SRV-COVERS-ODBIOR"
+      ]
+    },
+    {
+      "mutation": "srv-CAN-resistor-1k",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "SRV-SERIES-R-AT-NODE",
+        "PARTS-SOURCES"
+      ]
+    },
+    {
+      "mutation": "srv-resistor-0R",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "SRV-SERIES-R-AT-NODE"
+      ]
+    },
+    {
+      "mutation": "srv-CAN_TX-to-transceiver",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "SRV-SERIES-R-AT-NODE",
+        "SRV-COVERS-ODBIOR",
+        "TCAN-PINOUT",
+        "ACTUAL-NETS-SILENT"
+      ]
+    },
+    {
+      "mutation": "srv-duplicate-node",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "SRV-SERIES-R-AT-NODE",
+        "SRV-COVERS-ODBIOR"
+      ]
+    },
+    {
+      "mutation": "srv-node-GND",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "SRV-SERIES-R-AT-NODE",
+        "SRV-COVERS-ODBIOR",
+        "RX-NO-BUFFER-BYPASS"
+      ]
+    },
+    {
+      "mutation": "R1-fp-THT",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "PARTS-SOURCES"
+      ]
+    },
+    {
+      "mutation": "R2-fp-SMD",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "PARTS-SOURCES"
+      ]
+    },
+    {
+      "mutation": "C1-fp-SMD",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "PARTS-SOURCES"
+      ]
+    },
+    {
+      "mutation": "C4-fp-THT",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "PARTS-SOURCES"
+      ]
+    },
+    {
+      "mutation": "U1-mpn",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "TCAN-V-SUFFIX"
+      ]
+    },
+    {
+      "mutation": "U2-mpn",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "RX-IOFF-MPN"
+      ]
+    },
+    {
+      "mutation": "C2-value",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "PARTS-SOURCES",
+        "CAP-2"
+      ]
+    },
+    {
+      "mutation": "R1-value",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "PARTS-SOURCES",
+        "RES-R1"
+      ]
+    },
+    {
+      "mutation": "null-control (no change)",
+      "expected": "clean",
+      "detected": false,
+      "by": []
+    }
+  ],
+  "truth_table": [
+    {
+      "core_tx": 0,
+      "bus_rx": 0,
+      "core_rx": 0,
+      "silent": 1,
+      "txd": 1
+    },
+    {
+      "core_tx": 0,
+      "bus_rx": 1,
+      "core_rx": 1,
+      "silent": 1,
+      "txd": 1
+    },
+    {
+      "core_tx": 1,
+      "bus_rx": 0,
+      "core_rx": 0,
+      "silent": 1,
+      "txd": 1
+    },
+    {
+      "core_tx": 1,
+      "bus_rx": 1,
+      "core_rx": 1,
+      "silent": 1,
+      "txd": 1
+    }
+  ],
+  "scope": "Static pin topology and steady-state digital transfer only; no simulated transient protection or power sequencing.",
+  "hardware_tested": false
+}

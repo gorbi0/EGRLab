@@ -1,0 +1,100 @@
+> /usr/bin/python3 build_board.py
+Created P05 board: 120 footprints + 8 M3 holes; outline 106.5 x 100.0 ; rule areas: 
+> /usr/bin/python3 set_stackup.py
+2-layer stackup: Cu35/FR4 1.53/Cu35 (S1: 35 um); nominal 1.60 mm, mask separate.
+> /usr/bin/python3 set_rules.py
+Rules: clearance 0.25 / PWR 0.30 (fine pitch ['U1', 'U3']: 0.15 / track 0.2), track 0.30 (Default) / CORE3V3 0.30 / PWR 0.60, vias 0.9/0.4 (ring 0.25); no DRC exclusions.
+> /usr/bin/python3 route_critical.py
+P05: U1 decoupling, escapes and input fan locked (111 items); DSN exported.
+> /usr/bin/python3 fanout_gnd.py
+GND fan-out: 4 SOIC bars, 1 stubs, 13 vias; failed: none; longest stubs: [('U2.4', 1.27)]; DSN exported again.
+> /usr/bin/python3 prepare_routing.py
+Rules: clearance 0.25 / PWR 0.30 (fine pitch ['U1', 'U3']: 0.15 / track 0.2), track 0.30 (Default) / CORE3V3 0.30 / PWR 0.60, vias 0.9/0.4 (ring 0.25); no DRC exclusions.
+DSN: 43 keepouts (rule areas + edge strips); 1 nets with their own clearance; pre-routed board frozen.
+> /usr/bin/python3 import_routing.py
+SES imported; GND planes filled; saved native board.
+> /usr/bin/python3 set_rules.py
+Rules: clearance 0.25 / PWR 0.30 (fine pitch ['U1', 'U3']: 0.15 / track 0.2), track 0.30 (Default) / CORE3V3 0.30 / PWR 0.60, vias 0.9/0.4 (ring 0.25); no DRC exclusions.
+> /usr/bin/python3 cleanup.py --tidy
+tidy (unconnected 6 left for the planner):  removed 4 redundant free items ['ADC_CH8', 'DAQ_RAIL_N', 'RAIL_LOW', 'REGCAP_D'] ; dropped 4 tiny; joined 3 near-miss ends; 0 duplicate, 0 via-on-THT-pad and 8 dead-end items; solid zone connection: none
+> /usr/bin/python3 set_rules.py
+Rules: clearance 0.25 / PWR 0.30 (fine pitch ['U1', 'U3']: 0.15 / track 0.2), track 0.30 (Default) / CORE3V3 0.30 / PWR 0.60, vias 0.9/0.4 (ring 0.25); no DRC exclusions.
+> /usr/bin/python3 check_intrusion.py
+router copper inside the U1 courtyard: 0 []
+> /usr/bin/python3 stitch.py
+GND stitching: 15 grid vias, pour islands {'F.Cu': 25, 'B.Cu': 21} -> {'F.Cu': 25, 'B.Cu': 21} | rescue: 11 vias, pour mm2 {'F.Cu': 6212.8, 'B.Cu': 7521.9} -> {'F.Cu': 6627.9, 'B.Cu': 7599.2} islands {'F.Cu': 32, 'B.Cu': 25} | tied GND clusters: 2 | GND pads not joined to J_BP2.1: ['U4.6'] | targeted vias: 0 new, 0 without a legal spot
+> /usr/bin/python3 set_rules.py
+Rules: clearance 0.25 / PWR 0.30 (fine pitch ['U1', 'U3']: 0.15 / track 0.2), track 0.30 (Default) / CORE3V3 0.30 / PWR 0.60, vias 0.9/0.4 (ring 0.25); no DRC exclusions.
+> /usr/bin/python3 complete_routes.py
+> /usr/bin/python3 complete_routes.py --ties
+> /usr/bin/python3 set_rules.py
+Rules: clearance 0.25 / PWR 0.30 (fine pitch ['U1', 'U3']: 0.15 / track 0.2), track 0.30 (Default) / CORE3V3 0.30 / PWR 0.60, vias 0.9/0.4 (ring 0.25); no DRC exclusions.
+> /usr/bin/python3 stitch.py --targeted
+GND stitching: 0 grid vias, pour islands {'F.Cu': 36, 'B.Cu': 30} -> {'F.Cu': 36, 'B.Cu': 30} | rescue: 0 vias, pour mm2 {'F.Cu': 6559.7, 'B.Cu': 7495.0} -> {'F.Cu': 6559.7, 'B.Cu': 7495.0} islands {'F.Cu': 36, 'B.Cu': 30} | tied GND clusters: 0 | GND pads not joined to J_BP2.1: none | targeted vias: 4 new, 3 without a legal spot
+> /usr/bin/python3 set_rules.py
+Rules: clearance 0.25 / PWR 0.30 (fine pitch ['U1', 'U3']: 0.15 / track 0.2), track 0.30 (Default) / CORE3V3 0.30 / PWR 0.60, vias 0.9/0.4 (ring 0.25); no DRC exclusions.
+> /usr/bin/kicad-cli pcb drc --format json --severity-all --schematic-parity --all-track-errors --refill-zones -o routing/postroute-drc.json eda/P05.kicad_pcb
+routing/postroute-drc.json {'starved_thermal': 8, 'track_dangling': 5, 'silk_edge_clearance': 86, 'silk_over_copper': 52, 'silk_overlap': 49} unconnected 0 parity 0
+> /usr/bin/python3 cleanup.py C32.2 J_BP2.11 J_BP2.9 SW1.4 U4.3 U4.5 U4.6 U4.7
+ removed 0 redundant free items [] ; dropped 0 tiny; joined 0 near-miss ends; 0 duplicate, 0 via-on-THT-pad and 0 dead-end items; solid zone connection: ['C32.2', 'J_BP2.11', 'J_BP2.9', 'SW1.4', 'U4.3', 'U4.5', 'U4.6', 'U4.7']
+> /usr/bin/kicad-cli pcb drc --format json --severity-all --schematic-parity --all-track-errors --refill-zones -o routing/postroute-drc.json eda/P05.kicad_pcb
+routing/postroute-drc.json {'track_dangling': 5, 'silk_edge_clearance': 86, 'silk_over_copper': 52, 'silk_overlap': 49} unconnected 0 parity 0
+> /usr/bin/python3 set_rules.py
+Rules: clearance 0.25 / PWR 0.30 (fine pitch ['U1', 'U3']: 0.15 / track 0.2), track 0.30 (Default) / CORE3V3 0.30 / PWR 0.60, vias 0.9/0.4 (ring 0.25); no DRC exclusions.
+> /usr/bin/kicad-cli pcb drc --format json --severity-all --schematic-parity --all-track-errors --refill-zones -o routing/postclean-drc.json eda/P05.kicad_pcb
+routing/postclean-drc.json {'track_dangling': 5, 'silk_edge_clearance': 86, 'silk_over_copper': 52, 'silk_overlap': 49} unconnected 0 parity 0
+> /usr/bin/python3 trim_stubs.py
+trimmed: 4 unused track pieces removed, 1 shortened; unconnected 0 -> 0
+> /usr/bin/python3 set_rules.py
+Rules: clearance 0.25 / PWR 0.30 (fine pitch ['U1', 'U3']: 0.15 / track 0.2), track 0.30 (Default) / CORE3V3 0.30 / PWR 0.60, vias 0.9/0.4 (ring 0.25); no DRC exclusions.
+> /usr/bin/kicad-cli pcb drc --format json --severity-all --schematic-parity --all-track-errors --refill-zones -o routing/postclean-drc.json eda/P05.kicad_pcb
+routing/postclean-drc.json {'silk_edge_clearance': 86, 'silk_over_copper': 52, 'silk_overlap': 49} unconnected 0 parity 0
+
+16:24:51: Debug: Adding duplicate image handler for 'PNG file'
+16:24:51: Debug: Adding duplicate image handler for 'JPEG file'
+16:24:51: Debug: Adding duplicate image handler for 'TIFF file'
+16:24:51: Debug: Adding duplicate image handler for 'GIF file'
+16:24:51: Debug: Adding duplicate image handler for 'PNM file'
+16:24:51: Debug: Adding duplicate image handler for 'PCX file'
+16:24:51: Debug: Adding duplicate image handler for 'IFF file'
+16:24:51: Debug: Adding duplicate image handler for 'Windows icon file'
+16:24:51: Debug: Adding duplicate image handler for 'Windows cursor file'
+16:24:51: Debug: Adding duplicate image handler for 'Windows animated cursor file'
+16:24:51: Debug: Adding duplicate image handler for 'TGA file'
+16:24:51: Debug: Adding duplicate image handler for 'XPM file'
+16:25:42: Debug: Adding duplicate image handler for 'PNG file'
+16:25:42: Debug: Adding duplicate image handler for 'JPEG file'
+16:25:42: Debug: Adding duplicate image handler for 'TIFF file'
+16:25:42: Debug: Adding duplicate image handler for 'GIF file'
+16:25:42: Debug: Adding duplicate image handler for 'PNM file'
+16:25:42: Debug: Adding duplicate image handler for 'PCX file'
+16:25:42: Debug: Adding duplicate image handler for 'IFF file'
+16:25:42: Debug: Adding duplicate image handler for 'Windows icon file'
+16:25:42: Debug: Adding duplicate image handler for 'Windows cursor file'
+16:25:42: Debug: Adding duplicate image handler for 'Windows animated cursor file'
+16:25:42: Debug: Adding duplicate image handler for 'TGA file'
+16:25:42: Debug: Adding duplicate image handler for 'XPM file'
+16:25:57: Debug: Adding duplicate image handler for 'PNG file'
+16:25:57: Debug: Adding duplicate image handler for 'JPEG file'
+16:25:57: Debug: Adding duplicate image handler for 'TIFF file'
+16:25:57: Debug: Adding duplicate image handler for 'GIF file'
+16:25:57: Debug: Adding duplicate image handler for 'PNM file'
+16:25:57: Debug: Adding duplicate image handler for 'PCX file'
+16:25:57: Debug: Adding duplicate image handler for 'IFF file'
+16:25:57: Debug: Adding duplicate image handler for 'Windows icon file'
+16:25:57: Debug: Adding duplicate image handler for 'Windows cursor file'
+16:25:57: Debug: Adding duplicate image handler for 'Windows animated cursor file'
+16:25:57: Debug: Adding duplicate image handler for 'TGA file'
+16:25:57: Debug: Adding duplicate image handler for 'XPM file'
+16:26:00: Debug: Adding duplicate image handler for 'PNG file'
+16:26:00: Debug: Adding duplicate image handler for 'JPEG file'
+16:26:00: Debug: Adding duplicate image handler for 'TIFF file'
+16:26:00: Debug: Adding duplicate image handler for 'GIF file'
+16:26:00: Debug: Adding duplicate image handler for 'PNM file'
+16:26:00: Debug: Adding duplicate image handler for 'PCX file'
+16:26:00: Debug: Adding duplicate image handler for 'IFF file'
+16:26:00: Debug: Adding duplicate image handler for 'Windows icon file'
+16:26:00: Debug: Adding duplicate image handler for 'Windows cursor file'
+16:26:00: Debug: Adding duplicate image handler for 'Windows animated cursor file'
+16:26:00: Debug: Adding duplicate image handler for 'TGA file'
+16:26:00: Debug: Adding duplicate image handler for 'XPM file'

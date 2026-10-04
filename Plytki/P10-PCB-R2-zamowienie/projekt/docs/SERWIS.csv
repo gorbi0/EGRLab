@@ -1,0 +1,10 @@
+﻿pin;siec;rezystor;cel_pomiaru
+1;GND;—;masa sondy (pierwszy pin listwy)
+2;5V_SYS;R3 1 kΩ;VCC transceivera: obecność 5 V, pobór, spadek
+3;3V3_IO;R4 1 kΩ;VIO, S i TXD na stałe, U2: obecność 3,3 V
+4;RX_RAW;R5 1 kΩ;RXD transceivera przed buforem U2: przebieg RX, stan recesywny
+5;CAN_RX;R6 1 kΩ;RX do P03 za U2 i R1: zgodność z RX_RAW, zachowanie przy martwej P10
+6;CAN_TX;R7 1 kΩ;CAN_TX z P03: tylko kołek, brak wpływu na H/L (próba „brak TX”)
+7;CAN_H;R8 10 kΩ;"CANH: brak dominacji od P10, poziomy recesywne (obserwacja; przebiegi lepiej na J3)"
+8;CAN_L;R9 10 kΩ;CANL: jw.
+9;GND;—;masa sondy (ostatni pin listwy)

@@ -1,0 +1,2343 @@
+{
+  "M1": {
+    "ref": "M1",
+    "source_ref": "M1",
+    "footprint": "P03:Waveshare_ESP32-S3-DEV-KIT_2x22_W22.86",
+    "display": "Waveshare N32R16V",
+    "value": "Waveshare N32R16V",
+    "mpn": "owned (Waveshare ESP32-S3-DEV-KIT-N32R16V) on 2x 1x22 female headers",
+    "pins": {
+      "J1-1": "3V3_CORE",
+      "J1-2": "3V3_CORE",
+      "J1-3": "SUP_N",
+      "J1-4": "SPI3_SCLK_SRC",
+      "J1-5": "SPI3_MOSI_SRC",
+      "J1-6": "SPI3_MISO_CORE",
+      "J1-7": "SD_CS",
+      "J1-8": "I2C_SCL",
+      "J1-9": "TC2_CS_SRC",
+      "J1-10": "CAN_TX",
+      "J1-11": "CAN_RX_CORE",
+      "J1-12": "TC1_CS_SRC",
+      "J1-13": "PFAIL_N_CORE",
+      "J1-14": "NC",
+      "J1-15": "ADC_SCLK_SRC",
+      "J1-16": "I2C_SDA",
+      "J1-17": "ADC_DOUTA_CORE",
+      "J1-18": "ADC_CS_SRC",
+      "J1-19": "ADC_CONVST_SRC",
+      "J1-20": "ADC_BUSY_CORE",
+      "J1-21": "5V_M1",
+      "J1-22": "GND",
+      "J3-1": "GND",
+      "J3-2": "NC",
+      "J3-3": "NC",
+      "J3-4": "PWM",
+      "J3-5": "ADC_SDI_SRC",
+      "J3-6": "INTERLOCK_CORE",
+      "J3-7": "SCOPE_TRIG",
+      "J3-8": "HW_ARMED_CORE",
+      "J3-9": "MCU_ARM",
+      "J3-10": "CURRENT_CS_N",
+      "J3-11": "NC",
+      "J3-12": "NC",
+      "J3-13": "NC",
+      "J3-14": "NC",
+      "J3-15": "NC",
+      "J3-16": "NC",
+      "J3-17": "NC",
+      "J3-18": "HEARTBEAT",
+      "J3-19": "NC",
+      "J3-20": "NC",
+      "J3-21": "GND",
+      "J3-22": "GND"
+    },
+    "url": "https://docs.waveshare.com/ESP32-S3-DEV-KIT-N8R8",
+    "note": "Rows 22.86 mm (measured). GPIO numbers are the v6.1 contract; R6: GPIO3 = PFAIL_N_CORE (JTAG strap only with EFUSE_STRAP_JTAG_SEL=1, never burn). Remove the on-board RGB LED on GPIO38 (v6.1). GPIO47/48 1.8 V: unused. 3V3 = 3V3_CORE; never tie to 3V3_IO.",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "SD1": {
+    "ref": "SD1",
+    "source_ref": "SD1",
+    "footprint": "P03:Adafruit_4682_microSD_1x09",
+    "display": "Adafruit 4682",
+    "value": "Adafruit 4682",
+    "mpn": "Adafruit 4682 on a 1x9 female header + 2x M2.5 spacer",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "GND",
+      "3": "SPI3_SCLK",
+      "4": "SPI3_MISO",
+      "5": "SPI3_MOSI",
+      "6": "SD_CS",
+      "7": "NC",
+      "8": "NC",
+      "9": "NC"
+    },
+    "url": "https://www.adafruit.com/product/4682",
+    "note": "User decision 25.09: Adafruit 4682 (3 V only, no regulator/level shifter). SO = card out (MISO), SI = card in (MOSI). D1, DAT2, DET unused.",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "U1": {
+    "ref": "U1",
+    "source_ref": "U17",
+    "footprint": "Package_DIP:DIP-28_W7.62mm",
+    "display": "MCP23017-E/SP",
+    "value": "MCP23017-E/SP",
+    "mpn": "MCP23017-E/SP",
+    "pins": {
+      "1": "TEST_KEY_CORE",
+      "2": "SENSOR_HEALTHY_CORE",
+      "3": "ENA_DIAG_CORE",
+      "4": "ENB_DIAG_CORE",
+      "5": "LOGGER_CLEAR_CORE",
+      "6": "TEST_PRESENT_CORE",
+      "7": "MARK",
+      "8": "NC",
+      "9": "3V3_CORE",
+      "10": "GND",
+      "11": "NC",
+      "12": "I2C_SCL",
+      "13": "I2C_SDA",
+      "14": "NC",
+      "15": "GND",
+      "16": "GND",
+      "17": "GND",
+      "18": "SUP_N",
+      "19": "NC",
+      "20": "NC",
+      "21": "ADC_RESET_SRC",
+      "22": "MEAS_EN_SRC",
+      "23": "MEAS_BANK",
+      "24": "SENSOR_ENABLE",
+      "25": "LOGGER_CURRENT_OK_CORE",
+      "26": "MOTOR_INA",
+      "27": "MOTOR_INB",
+      "28": "STATUS_LED"
+    },
+    "url": "https://ww1.microchip.com/downloads/en/devicedoc/20001952c.pdf",
+    "note": "Address 0x20 (A2..A0 = GND). IODIRA 0x10, IODIRB 0x7F (v6.1). In 2x DIP14 precision sockets end to end (bought).",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "C2": {
+    "ref": "C2",
+    "source_ref": "C_DEC_U17_9",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
+    "display": "100nF / 50V X7R",
+    "value": "100nF / 50V X7R",
+    "mpn": "GRM31CR71H104KA01L",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "At U1 pin 9.",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "U2": {
+    "ref": "U2",
+    "source_ref": "U_CS",
+    "footprint": "Package_DIP:DIP-16_W7.62mm",
+    "display": "SN74HC139N",
+    "value": "SN74HC139N",
+    "mpn": "SN74HC139N",
+    "pins": {
+      "1": "CURRENT_CS_N",
+      "2": "MEAS_BANK",
+      "3": "GND",
+      "4": "CS_ILOG_N_SRC",
+      "5": "CS_ITEST_N_SRC",
+      "6": "NC",
+      "7": "NC",
+      "8": "GND",
+      "9": "NC",
+      "10": "NC",
+      "11": "NC",
+      "12": "NC",
+      "13": "GND",
+      "14": "GND",
+      "15": "3V3_CORE",
+      "16": "3V3_CORE"
+    },
+    "url": "https://www.ti.com/lit/ds/symlink/sn74hc139.pdf",
+    "note": "/G = GPIO38, A = MEAS_BANK, B = GND (v6.1). Second half disabled. DIP16 socket (bought).",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "C1": {
+    "ref": "C1",
+    "source_ref": "C_CS",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
+    "display": "100nF / 50V X7R",
+    "value": "100nF / 50V X7R",
+    "mpn": "GRM31CR71H104KA01L",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "At U2 pin 16.",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "R1": {
+    "ref": "R1",
+    "source_ref": "R_CS_IDLE",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "CURRENT_CS_N",
+      "2": "3V3_CORE"
+    },
+    "url": "",
+    "note": "Decoder disabled while GPIO38 floats.",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "U3": {
+    "ref": "U3",
+    "source_ref": "U5",
+    "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+    "display": "TPS3808G33",
+    "value": "TPS3808G33",
+    "mpn": "TPS3808G33DBVR",
+    "pins": {
+      "1": "SUP_RAW_N",
+      "2": "GND",
+      "3": "3V3_CORE",
+      "4": "NC",
+      "5": "3V3_CORE",
+      "6": "3V3_CORE"
+    },
+    "url": "https://www.ti.com/lit/ds/symlink/tps3808.pdf",
+    "note": "R6: SOT23-6 soldered directly on the fab board (PA0085 adapter not used). CT open = fixed delay.",
+    "qty": 1,
+    "sheet": "POWER",
+    "on_board": true
+  },
+  "C3": {
+    "ref": "C3",
+    "source_ref": "C_DEC_U5_6",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
+    "display": "100nF / 50V X7R",
+    "value": "100nF / 50V X7R",
+    "mpn": "GRM31CR71H104KA01L",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "At U3 pin 6.",
+    "qty": 1,
+    "sheet": "POWER",
+    "on_board": true
+  },
+  "R13": {
+    "ref": "R13",
+    "source_ref": "R_SUP_PU",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "SUP_RAW_N",
+      "2": "3V3_CORE"
+    },
+    "url": "",
+    "note": "Supervisor pull-up before U4; does not discharge Waveshare EN capacitor.",
+    "qty": 1,
+    "sheet": "POWER",
+    "on_board": true
+  },
+  "R9": {
+    "ref": "R9",
+    "source_ref": "R_PU_I2C_SCL",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "4K7 / 1% 1206",
+    "value": "4K7 / 1% 1206",
+    "mpn": "RC1206FR-074K7L",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "I2C_SCL"
+    },
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "R10": {
+    "ref": "R10",
+    "source_ref": "R_PU_I2C_SDA",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "4K7 / 1% 1206",
+    "value": "4K7 / 1% 1206",
+    "mpn": "RC1206FR-074K7L",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "I2C_SDA"
+    },
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "R11": {
+    "ref": "R11",
+    "source_ref": "R_PU_SD_CS",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "SD_CS"
+    },
+    "url": "",
+    "note": "Card deselected while GPIO7 floats.",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "R12": {
+    "ref": "R12",
+    "source_ref": "R_SCOPE",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "330R / 1% 1206",
+    "value": "330R / 1% 1206",
+    "mpn": "RC1206FR-07330RL",
+    "pins": {
+      "1": "SCOPE_TRIG",
+      "2": "N_J_SCOPE_HOT"
+    },
+    "url": "",
+    "note": "SCOPE_TRIG series resistor to PANELCORE pin 7.",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "R5": {
+    "ref": "R5",
+    "source_ref": "R_MARK",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "MARK"
+    },
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "C4": {
+    "ref": "C4",
+    "source_ref": "C_MARK",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
+    "display": "100nF / 50V X7R",
+    "value": "100nF / 50V X7R",
+    "mpn": "GRM31CR71H104KA01L",
+    "pins": {
+      "1": "MARK",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "MARK button debounce.",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "R4": {
+    "ref": "R4",
+    "source_ref": "R_LED",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K / 1% 1206",
+    "value": "1K / 1% 1206",
+    "mpn": "RC1206FR-071KL",
+    "pins": {
+      "1": "STATUS_LED",
+      "2": "LED_A"
+    },
+    "url": "",
+    "note": "",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "LED1": {
+    "ref": "LED1",
+    "source_ref": "LED1",
+    "footprint": "LED_THT:LED_D3.0mm",
+    "display": "GREEN 3mm / STATUS",
+    "value": "GREEN 3mm / STATUS",
+    "mpn": "L-934GD",
+    "pins": {
+      "1": "GND",
+      "2": "LED_A"
+    },
+    "url": "https://www.kingbrightusa.com/images/catalog/SPEC/L-934GD.pdf",
+    "note": "MCP23017 GPA7.",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "R14": {
+    "ref": "R14",
+    "source_ref": "W_LINK",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K / 1% 1206",
+    "value": "1K / 1% 1206",
+    "mpn": "RC1206FR-071KL",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "CORE_LINK"
+    },
+    "url": "",
+    "note": "CORE_LINK = presence of 3V3_CORE through 1 k (R3, review P3-02): a harness short to GND draws 3.3 mA; P04 R16 10 k sees >= 2.85 V (74LVC125A VIH 2.0 V). v6.1 had a wire link.",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "U11": {
+    "ref": "U11",
+    "source_ref": "U_IN1",
+    "footprint": "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm",
+    "display": "74LVC125A",
+    "value": "74LVC125A",
+    "mpn": "74LVC125AD,118 (Nexperia)",
+    "pins": {
+      "1": "GND",
+      "2": "ADC_DOUTA",
+      "3": "ADC_DOUTA_CORE",
+      "4": "GND",
+      "5": "ADC_BUSY",
+      "6": "ADC_BUSY_CORE",
+      "7": "GND",
+      "8": "SPI3_MISO_CORE",
+      "9": "SPI3_MISO",
+      "10": "GND",
+      "11": "CAN_RX_CORE",
+      "12": "CAN_RX",
+      "13": "GND",
+      "14": "3V3_CORE"
+    },
+    "url": "https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf",
+    "note": "Nexperia only (Ioff), v6.1.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "C5": {
+    "ref": "C5",
+    "source_ref": "C_U_IN1",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
+    "display": "100nF / 50V X7R",
+    "value": "100nF / 50V X7R",
+    "mpn": "GRM31CR71H104KA01L",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "At U11 pin 14.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "U12": {
+    "ref": "U12",
+    "source_ref": "U_IN2",
+    "footprint": "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm",
+    "display": "74LVC125A",
+    "value": "74LVC125A",
+    "mpn": "74LVC125AD,118 (Nexperia)",
+    "pins": {
+      "1": "GND",
+      "2": "HW_ARMED",
+      "3": "HW_ARMED_CORE",
+      "4": "GND",
+      "5": "INTERLOCK",
+      "6": "INTERLOCK_CORE",
+      "7": "GND",
+      "8": "NC",
+      "9": "GND",
+      "10": "GND",
+      "11": "NC",
+      "12": "GND",
+      "13": "GND",
+      "14": "3V3_CORE"
+    },
+    "url": "https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf",
+    "note": "Nexperia only (Ioff), v6.1.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "C6": {
+    "ref": "C6",
+    "source_ref": "C_U_IN2",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
+    "display": "100nF / 50V X7R",
+    "value": "100nF / 50V X7R",
+    "mpn": "GRM31CR71H104KA01L",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "At U12 pin 14.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "U13": {
+    "ref": "U13",
+    "source_ref": "U_IN3",
+    "footprint": "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm",
+    "display": "74LVC125A",
+    "value": "74LVC125A",
+    "mpn": "74LVC125AD,118 (Nexperia)",
+    "pins": {
+      "1": "GND",
+      "2": "ENA_DIAG",
+      "3": "ENA_DIAG_CORE",
+      "4": "GND",
+      "5": "ENB_DIAG",
+      "6": "ENB_DIAG_CORE",
+      "7": "GND",
+      "8": "LOGGER_CLEAR_CORE",
+      "9": "LOGGER_CLEAR",
+      "10": "GND",
+      "11": "TEST_PRESENT_CORE",
+      "12": "TEST_PRESENT",
+      "13": "GND",
+      "14": "3V3_CORE"
+    },
+    "url": "https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf",
+    "note": "Nexperia only (Ioff), v6.1.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "C7": {
+    "ref": "C7",
+    "source_ref": "C_U_IN3",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
+    "display": "100nF / 50V X7R",
+    "value": "100nF / 50V X7R",
+    "mpn": "GRM31CR71H104KA01L",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "At U13 pin 14.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "U14": {
+    "ref": "U14",
+    "source_ref": "U_IN4",
+    "footprint": "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm",
+    "display": "74LVC125A",
+    "value": "74LVC125A",
+    "mpn": "74LVC125AD,118 (Nexperia)",
+    "pins": {
+      "1": "GND",
+      "2": "TEST_KEY",
+      "3": "TEST_KEY_CORE",
+      "4": "GND",
+      "5": "LOGGER_CURRENT_OK",
+      "6": "LOGGER_CURRENT_OK_CORE",
+      "7": "GND",
+      "8": "SENSOR_HEALTHY_CORE",
+      "9": "SENSOR_HEALTHY",
+      "10": "GND",
+      "11": "NC",
+      "12": "GND",
+      "13": "3V3_IO",
+      "14": "3V3_CORE"
+    },
+    "url": "https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf",
+    "note": "Nexperia only (Ioff), v6.1. Unused OE# = 3V3_IO in U_IN4 as in v6.1.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "C8": {
+    "ref": "C8",
+    "source_ref": "C_U_IN4",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
+    "display": "100nF / 50V X7R",
+    "value": "100nF / 50V X7R",
+    "mpn": "GRM31CR71H104KA01L",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "At U14 pin 14.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "U21": {
+    "ref": "U21",
+    "source_ref": "U_OUT1",
+    "footprint": "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm",
+    "display": "74LVC125A",
+    "value": "74LVC125A",
+    "mpn": "74LVC125AD,118 (Nexperia)",
+    "pins": {
+      "1": "GND",
+      "2": "ADC_CS_SRC",
+      "3": "ADC_CS",
+      "4": "GND",
+      "5": "ADC_SCLK_SRC",
+      "6": "ADC_SCLK_DRV",
+      "7": "GND",
+      "8": "ADC_SDI_DRV",
+      "9": "ADC_SDI_SRC",
+      "10": "GND",
+      "11": "ADC_CONVST_DRV",
+      "12": "ADC_CONVST_SRC",
+      "13": "GND",
+      "14": "3V3_CORE"
+    },
+    "url": "https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf",
+    "note": "Nexperia only (Ioff), v6.1.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "C9": {
+    "ref": "C9",
+    "source_ref": "C_U_OUT1",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
+    "display": "100nF / 50V X7R",
+    "value": "100nF / 50V X7R",
+    "mpn": "GRM31CR71H104KA01L",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "At U21 pin 14.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "U22": {
+    "ref": "U22",
+    "source_ref": "U_OUT2",
+    "footprint": "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm",
+    "display": "74LVC125A",
+    "value": "74LVC125A",
+    "mpn": "74LVC125AD,118 (Nexperia)",
+    "pins": {
+      "1": "GND",
+      "2": "ADC_RESET_SRC",
+      "3": "ADC_RESET",
+      "4": "GND",
+      "5": "MEAS_EN_SRC",
+      "6": "MEAS_EN",
+      "7": "GND",
+      "8": "CS_ILOG_N",
+      "9": "CS_ILOG_N_SRC",
+      "10": "GND",
+      "11": "CS_ITEST_N",
+      "12": "CS_ITEST_N_SRC",
+      "13": "GND",
+      "14": "3V3_CORE"
+    },
+    "url": "https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf",
+    "note": "Nexperia only (Ioff), v6.1.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "C10": {
+    "ref": "C10",
+    "source_ref": "C_U_OUT2",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
+    "display": "100nF / 50V X7R",
+    "value": "100nF / 50V X7R",
+    "mpn": "GRM31CR71H104KA01L",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "At U22 pin 14.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "U23": {
+    "ref": "U23",
+    "source_ref": "U_OUT3",
+    "footprint": "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm",
+    "display": "74LVC125A",
+    "value": "74LVC125A",
+    "mpn": "74LVC125AD,118 (Nexperia)",
+    "pins": {
+      "1": "GND",
+      "2": "SPI3_SCLK_SRC",
+      "3": "SPI3_SCLK_DRV",
+      "4": "GND",
+      "5": "SPI3_MOSI_SRC",
+      "6": "SPI3_MOSI_DRV",
+      "7": "GND",
+      "8": "TC1_CS",
+      "9": "TC1_CS_SRC",
+      "10": "GND",
+      "11": "TC2_CS",
+      "12": "TC2_CS_SRC",
+      "13": "GND",
+      "14": "3V3_CORE"
+    },
+    "url": "https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf",
+    "note": "Nexperia only (Ioff), v6.1.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "C11": {
+    "ref": "C11",
+    "source_ref": "C_U_OUT3",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
+    "display": "100nF / 50V X7R",
+    "value": "100nF / 50V X7R",
+    "mpn": "GRM31CR71H104KA01L",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "At U23 pin 14.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "R2": {
+    "ref": "R2",
+    "source_ref": "R_CURRENT_OK",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "LOGGER_CURRENT_OK",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "Receiver pull-down: open cable = not OK.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "R3": {
+    "ref": "R3",
+    "source_ref": "R_HW_PD",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "HW_ARMED",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "Receiver pull-down.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "R6": {
+    "ref": "R6",
+    "source_ref": "R_PD_LOGGER_CLEAR",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "LOGGER_CLEAR",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "Receiver pull-down.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "R7": {
+    "ref": "R7",
+    "source_ref": "R_PD_SENSOR_HEALTHY",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "SENSOR_HEALTHY",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "Receiver pull-down: cable open or transmitter unpowered = fault (v6.1).",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "R8": {
+    "ref": "R8",
+    "source_ref": "R_PD_TEST_PRESENT",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "TEST_PRESENT",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "Receiver pull-down.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "J_BP1": {
+    "ref": "J_BP1",
+    "source_ref": "ADDED_R6_EDGE_A",
+    "footprint": "Connector_IDC:IDC-Header_2x10_P2.54mm_Horizontal",
+    "display": "J_BP1 / IDC 2x10 RA (S1)",
+    "value": "J_BP1 / IDC 2x10 RA (S1)",
+    "mpn": "IDC box header 2x10, 2.54 mm, right angle, Au (MPN to be selected)",
+    "pins": {
+      "1": "GND",
+      "2": "CS_ILOG_N",
+      "3": "GND",
+      "4": "CS_ITEST_N",
+      "5": "GND",
+      "6": "CAN_TX",
+      "7": "GND",
+      "8": "CAN_RX",
+      "9": "GND",
+      "10": "N_J_SCOPE_HOT",
+      "11": "LOGGER_CURRENT_OK",
+      "12": "SENSOR_HEALTHY",
+      "13": "MARK",
+      "14": "TEST_KEY",
+      "15": "LOGGER_CLEAR",
+      "16": "TEST_PRESENT",
+      "17": "ENA_DIAG",
+      "18": "ENB_DIAG",
+      "19": "MOTOR_INA",
+      "20": "MOTOR_INB"
+    },
+    "url": "",
+    "note": "Format S1 edge A, slot S1, centre x = 26.5 mm in the slot, pin 1 towards smaller x. Short ribbon to P12.",
+    "qty": 1,
+    "sheet": "LINKS",
+    "on_board": true
+  },
+  "J_BP2": {
+    "ref": "J_BP2",
+    "source_ref": "ADDED_R6_EDGE_A",
+    "footprint": "Connector_IDC:IDC-Header_2x10_P2.54mm_Horizontal",
+    "display": "J_BP2 / IDC 2x10 RA (S2)",
+    "value": "J_BP2 / IDC 2x10 RA (S2)",
+    "mpn": "IDC box header 2x10, 2.54 mm, right angle, Au (MPN to be selected)",
+    "pins": {
+      "1": "GND",
+      "2": "ADC_SCLK",
+      "3": "GND",
+      "4": "ADC_DOUTA",
+      "5": "GND",
+      "6": "ADC_SDI",
+      "7": "GND",
+      "8": "ADC_CS",
+      "9": "GND",
+      "10": "ADC_CONVST",
+      "11": "GND",
+      "12": "ADC_BUSY",
+      "13": "GND",
+      "14": "MEAS_EN",
+      "15": "GND",
+      "16": "PFAIL_N",
+      "17": "5V_SYS",
+      "18": "ADC_RESET",
+      "19": "5V_SYS",
+      "20": "5V_SYS"
+    },
+    "url": "",
+    "note": "Format S1 edge A, slot S2, centre x = 26.5 mm in the slot, pin 1 towards smaller x. Short ribbon to P12.",
+    "qty": 1,
+    "sheet": "LINKS",
+    "on_board": true
+  },
+  "J_BP3": {
+    "ref": "J_BP3",
+    "source_ref": "ADDED_R6_EDGE_A",
+    "footprint": "Connector_IDC:IDC-Header_2x10_P2.54mm_Horizontal",
+    "display": "J_BP3 / IDC 2x10 RA (S3)",
+    "value": "J_BP3 / IDC 2x10 RA (S3)",
+    "mpn": "IDC box header 2x10, 2.54 mm, right angle, Au (MPN to be selected)",
+    "pins": {
+      "1": "GND",
+      "2": "SPI3_SCLK",
+      "3": "GND",
+      "4": "SPI3_MOSI",
+      "5": "3V3_IO",
+      "6": "SPI3_MISO",
+      "7": "GND",
+      "8": "TC1_CS",
+      "9": "SENSOR_ENABLE",
+      "10": "TC2_CS",
+      "11": "GND",
+      "12": "SUP_N_OUT",
+      "13": "CORE_LINK",
+      "14": "PWM",
+      "15": "GND",
+      "16": "HEARTBEAT",
+      "17": "HW_ARMED",
+      "18": "MCU_ARM",
+      "19": "GND",
+      "20": "INTERLOCK"
+    },
+    "url": "",
+    "note": "Format S1 edge A, slot S3, centre x = 26.5 mm in the slot, pin 1 towards smaller x. Short ribbon to P12.",
+    "qty": 1,
+    "sheet": "LINKS",
+    "on_board": true
+  },
+  "TP1": {
+    "ref": "TP1",
+    "source_ref": "ADDED_TESTPAD",
+    "value": "5V_SYS",
+    "display": "5V_SYS",
+    "pins": {
+      "1": "5V_SYS"
+    },
+    "footprint": "P03:TestPad_1",
+    "mpn": "PCB test pad",
+    "qty": 1,
+    "url": "",
+    "sheet": "POWER",
+    "on_board": true,
+    "note": "Probe access; no circuit function."
+  },
+  "TP2": {
+    "ref": "TP2",
+    "source_ref": "ADDED_TESTPAD",
+    "value": "3V3_CORE",
+    "display": "3V3_CORE",
+    "pins": {
+      "1": "3V3_CORE"
+    },
+    "footprint": "P03:TestPad_1",
+    "mpn": "PCB test pad",
+    "qty": 1,
+    "url": "",
+    "sheet": "POWER",
+    "on_board": true,
+    "note": "Probe access; no circuit function."
+  },
+  "TP3": {
+    "ref": "TP3",
+    "source_ref": "ADDED_TESTPAD",
+    "value": "3V3_IO",
+    "display": "3V3_IO",
+    "pins": {
+      "1": "3V3_IO"
+    },
+    "footprint": "P03:TestPad_1",
+    "mpn": "PCB test pad",
+    "qty": 1,
+    "url": "",
+    "sheet": "POWER",
+    "on_board": true,
+    "note": "Probe access; no circuit function."
+  },
+  "TP4": {
+    "ref": "TP4",
+    "source_ref": "ADDED_TESTPAD",
+    "value": "GND",
+    "display": "GND",
+    "pins": {
+      "1": "GND"
+    },
+    "footprint": "P03:TestPad_1",
+    "mpn": "PCB test pad",
+    "qty": 1,
+    "url": "",
+    "sheet": "POWER",
+    "on_board": true,
+    "note": "Probe access; no circuit function."
+  },
+  "TP5": {
+    "ref": "TP5",
+    "source_ref": "ADDED_TESTPAD",
+    "value": "SUP_N",
+    "display": "SUP_N",
+    "pins": {
+      "1": "SUP_N"
+    },
+    "footprint": "P03:TestPad_1",
+    "mpn": "PCB test pad",
+    "qty": 1,
+    "url": "",
+    "sheet": "POWER",
+    "on_board": true,
+    "note": "Probe access; no circuit function."
+  },
+  "TP6": {
+    "ref": "TP6",
+    "source_ref": "ADDED_TESTPAD",
+    "value": "GND",
+    "display": "GND",
+    "pins": {
+      "1": "GND"
+    },
+    "footprint": "P03:TestPad_1",
+    "mpn": "PCB test pad",
+    "qty": 1,
+    "url": "",
+    "sheet": "LINKS",
+    "on_board": true,
+    "note": "Probe access; no circuit function."
+  },
+  "R15": {
+    "ref": "R15",
+    "source_ref": "ADDED_R2_SOURCE_DEFAULT",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "ADC_CS_SRC",
+      "2": "3V3_CORE"
+    },
+    "url": "",
+    "note": "Source-side reset/boot default. Required even when downstream has a pull resistor.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "R16": {
+    "ref": "R16",
+    "source_ref": "ADDED_R2_SOURCE_DEFAULT",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "ADC_SCLK_SRC",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "Source-side reset/boot default. Required even when downstream has a pull resistor.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "R17": {
+    "ref": "R17",
+    "source_ref": "ADDED_R2_SOURCE_DEFAULT",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "ADC_SDI_SRC",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "Source-side reset/boot default. Required even when downstream has a pull resistor.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "R18": {
+    "ref": "R18",
+    "source_ref": "ADDED_R2_SOURCE_DEFAULT",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "ADC_CONVST_SRC",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "Source-side reset/boot default. Required even when downstream has a pull resistor.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "R19": {
+    "ref": "R19",
+    "source_ref": "ADDED_R2_SOURCE_DEFAULT",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "ADC_RESET_SRC",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "Source-side reset/boot default. Required even when downstream has a pull resistor.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "R20": {
+    "ref": "R20",
+    "source_ref": "ADDED_R2_SOURCE_DEFAULT",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "MEAS_EN_SRC",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "Source-side reset/boot default. Required even when downstream has a pull resistor.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "R21": {
+    "ref": "R21",
+    "source_ref": "ADDED_R2_SOURCE_DEFAULT",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "SPI3_SCLK_SRC",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "Source-side reset/boot default. Required even when downstream has a pull resistor.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "R22": {
+    "ref": "R22",
+    "source_ref": "ADDED_R2_SOURCE_DEFAULT",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "SPI3_MOSI_SRC",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "Source-side reset/boot default. Required even when downstream has a pull resistor.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "R23": {
+    "ref": "R23",
+    "source_ref": "ADDED_R2_SOURCE_DEFAULT",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "TC1_CS_SRC",
+      "2": "3V3_CORE"
+    },
+    "url": "",
+    "note": "Source-side reset/boot default. Required even when downstream has a pull resistor.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "R24": {
+    "ref": "R24",
+    "source_ref": "ADDED_R2_SOURCE_DEFAULT",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "TC2_CS_SRC",
+      "2": "3V3_CORE"
+    },
+    "url": "",
+    "note": "Source-side reset/boot default. Required even when downstream has a pull resistor.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "R25": {
+    "ref": "R25",
+    "source_ref": "ADDED_R2_SOURCE_DEFAULT",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "MEAS_BANK",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "Source-side reset/boot default. Required even when downstream has a pull resistor.",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "R26": {
+    "ref": "R26",
+    "source_ref": "ADDED_R2_RECEIVER_DEFAULT",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "INTERLOCK",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "Receiver-side default before buffer. Not a device-presence detector.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "R27": {
+    "ref": "R27",
+    "source_ref": "ADDED_R2_RECEIVER_DEFAULT",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "TEST_KEY",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "Receiver-side default before buffer. Not a device-presence detector.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "R28": {
+    "ref": "R28",
+    "source_ref": "ADDED_R2_RECEIVER_DEFAULT",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "ENA_DIAG",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "Receiver-side default before buffer. Not a device-presence detector.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "R29": {
+    "ref": "R29",
+    "source_ref": "ADDED_R2_RECEIVER_DEFAULT",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "ENB_DIAG",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "Receiver-side default before buffer. Not a device-presence detector.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "R30": {
+    "ref": "R30",
+    "source_ref": "ADDED_R2_RECEIVER_DEFAULT",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "CAN_RX",
+      "2": "3V3_CORE"
+    },
+    "url": "",
+    "note": "Receiver-side default before buffer. Not a device-presence detector.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "R31": {
+    "ref": "R31",
+    "source_ref": "ADDED_R2_RECEIVER_DEFAULT",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "ADC_BUSY",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "Receiver-side default before buffer. Not a device-presence detector.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "R32": {
+    "ref": "R32",
+    "source_ref": "ADDED_R2_RECEIVER_DEFAULT",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "ADC_DOUTA",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "Receiver-side default before buffer. Not a device-presence detector.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "R33": {
+    "ref": "R33",
+    "source_ref": "ADDED_R2_RECEIVER_DEFAULT",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "SPI3_MISO",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "Receiver-side default before buffer. Not a device-presence detector.",
+    "qty": 1,
+    "sheet": "IO",
+    "on_board": true
+  },
+  "U4": {
+    "ref": "U4",
+    "source_ref": "ADDED_R2_RESET_BUFFER",
+    "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+    "display": "SN74LVC1G37DBVR",
+    "value": "SN74LVC1G37DBVR",
+    "mpn": "SN74LVC1G37DBVR",
+    "pins": {
+      "1": "NC",
+      "2": "SUP_RAW_N",
+      "3": "GND",
+      "4": "RESET_DRV_N",
+      "5": "3V3_CORE"
+    },
+    "url": "https://www.ti.com/lit/gpn/SN74LVC1G37",
+    "note": "DBV SOT23-5, 0.95 mm pitch; direct hand soldering. R5: non-inverting Schmitt input, open-drain output; replaces LVC1G07 without changing pads. Never substitute push-pull or a non-Schmitt input.",
+    "qty": 1,
+    "sheet": "POWER",
+    "on_board": true
+  },
+  "R34": {
+    "ref": "R34",
+    "source_ref": "ADDED_R2_RESET_LIMIT",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "220R / 1% 1206",
+    "value": "220R / 1% 1206",
+    "mpn": "RC1206FR-07220RL",
+    "pins": {
+      "1": "RESET_DRV_N",
+      "2": "SUP_N"
+    },
+    "url": "",
+    "note": "Limits discharge of the module EN capacitor to <16 mA at 3.465 V. Final SUP_N goes to MCU EN, MCP reset and P04.",
+    "qty": 1,
+    "sheet": "POWER",
+    "on_board": true
+  },
+  "R35": {
+    "ref": "R35",
+    "source_ref": "ADDED_R2_RESET_PULLUP",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "SUP_N",
+      "2": "3V3_CORE"
+    },
+    "url": "",
+    "note": "Final common reset pull-up, parallel to the module 10K. Module 1 uF EN capacitor retained.",
+    "qty": 1,
+    "sheet": "POWER",
+    "on_board": true
+  },
+  "C12": {
+    "ref": "C12",
+    "source_ref": "ADDED_R2_RESET_DECAP",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
+    "display": "100nF / 50V X7R",
+    "value": "100nF / 50V X7R",
+    "mpn": "GRM31CR71H104KA01L",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "1206, at U4 pin 5, local ground via.",
+    "qty": 1,
+    "sheet": "POWER",
+    "on_board": true
+  },
+  "U5": {
+    "ref": "U5",
+    "source_ref": "ADDED_R2_USB_BLOCK",
+    "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+    "display": "LTC4412IS6",
+    "value": "LTC4412IS6",
+    "mpn": "LTC4412IS6#TRPBF",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "GND",
+      "3": "GND",
+      "4": "NC",
+      "5": "PWR_GATE",
+      "6": "5V_M1"
+    },
+    "url": "https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4412.pdf",
+    "note": "TSOT23-6, direct hand soldering. CTL=0 always enabled. Reverse-current blocker, not a current limiter.",
+    "qty": 1,
+    "sheet": "POWER",
+    "on_board": true
+  },
+  "Q1": {
+    "ref": "Q1",
+    "source_ref": "ADDED_R2_USB_PMOS",
+    "footprint": "Package_TO_SOT_SMD:SOT-23",
+    "display": "AO3401A",
+    "value": "AO3401A",
+    "mpn": "AO3401A",
+    "pins": {
+      "1": "PWR_GATE",
+      "2": "5V_M1",
+      "3": "5V_SYS"
+    },
+    "url": "https://www.aosmd.com/pdfs/datasheet/AO3401A.pdf",
+    "note": "G=1, S=2 (M1), D=3 (SYS); body diode D to S. Do not reverse source/drain. Direct SOT23 hand soldering.",
+    "qty": 1,
+    "sheet": "POWER",
+    "on_board": true
+  },
+  "C13": {
+    "ref": "C13",
+    "source_ref": "ADDED_R2_PWR_DECAP",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
+    "display": "1uF / 25V X7R",
+    "value": "1uF / 25V X7R",
+    "mpn": "GRM31CR71E105KA12L",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "1206 local bypass. Module bulk capacitance remains.",
+    "qty": 1,
+    "sheet": "POWER",
+    "on_board": true
+  },
+  "C14": {
+    "ref": "C14",
+    "source_ref": "ADDED_R2_PWR_DECAP",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
+    "display": "10uF / 16V X7R",
+    "value": "10uF / 16V X7R",
+    "mpn": "GRM31CR71C106KA12L",
+    "pins": {
+      "1": "5V_M1",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "1206 local bypass. Module bulk capacitance remains.",
+    "qty": 1,
+    "sheet": "POWER",
+    "on_board": true
+  },
+  "R36": {
+    "ref": "R36",
+    "source_ref": "ADDED_R2_SOURCE_TERMINATION",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "33R / 1% 1206",
+    "value": "33R / 1% 1206",
+    "mpn": "RC1206FR-0733RL",
+    "pins": {
+      "1": "ADC_SCLK_DRV",
+      "2": "ADC_SCLK"
+    },
+    "url": "",
+    "note": "Source termination at buffer output. Initial 33R; tune 22..47R or 0R only after end-of-link waveform measurement.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "R37": {
+    "ref": "R37",
+    "source_ref": "ADDED_R2_SOURCE_TERMINATION",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "33R / 1% 1206",
+    "value": "33R / 1% 1206",
+    "mpn": "RC1206FR-0733RL",
+    "pins": {
+      "1": "ADC_CONVST_DRV",
+      "2": "ADC_CONVST"
+    },
+    "url": "",
+    "note": "Source termination at buffer output. Initial 33R; tune 22..47R or 0R only after end-of-link waveform measurement.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "R38": {
+    "ref": "R38",
+    "source_ref": "ADDED_R2_SOURCE_TERMINATION",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "33R / 1% 1206",
+    "value": "33R / 1% 1206",
+    "mpn": "RC1206FR-0733RL",
+    "pins": {
+      "1": "SPI3_SCLK_DRV",
+      "2": "SPI3_SCLK"
+    },
+    "url": "",
+    "note": "Source termination at buffer output. Initial 33R; tune 22..47R or 0R only after end-of-link waveform measurement.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "R39": {
+    "ref": "R39",
+    "source_ref": "ADDED_R2_SOURCE_TERMINATION",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "33R / 1% 1206",
+    "value": "33R / 1% 1206",
+    "mpn": "RC1206FR-0733RL",
+    "pins": {
+      "1": "ADC_SDI_DRV",
+      "2": "ADC_SDI"
+    },
+    "url": "",
+    "note": "Source termination at buffer output. Initial 33R; tune 22..47R or 0R only after end-of-link waveform measurement.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "R40": {
+    "ref": "R40",
+    "source_ref": "ADDED_R2_SOURCE_TERMINATION",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "33R / 1% 1206",
+    "value": "33R / 1% 1206",
+    "mpn": "RC1206FR-0733RL",
+    "pins": {
+      "1": "SPI3_MOSI_DRV",
+      "2": "SPI3_MOSI"
+    },
+    "url": "",
+    "note": "Source termination at buffer output. Initial 33R; tune 22..47R or 0R only after end-of-link waveform measurement.",
+    "qty": 1,
+    "sheet": "OUT",
+    "on_board": true
+  },
+  "U6": {
+    "ref": "U6",
+    "source_ref": "ADDED_R4_RESET_SCHMITT",
+    "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+    "display": "SN74LVC1G17DBVR",
+    "value": "SN74LVC1G17DBVR",
+    "mpn": "SN74LVC1G17DBVR",
+    "pins": {
+      "1": "NC",
+      "2": "SUP_N",
+      "3": "GND",
+      "4": "SUP_N_DRV",
+      "5": "3V3_CORE"
+    },
+    "url": "https://www.ti.com/lit/ds/symlink/sn74lvc1g17.pdf",
+    "note": "DBV SOT23-5, 0.95 mm pitch; direct hand soldering. Schmitt-trigger buffer, push-pull. Drives J_BP3.12 (P04 SUP_N) through R41.",
+    "qty": 1,
+    "sheet": "POWER",
+    "on_board": true
+  },
+  "R41": {
+    "ref": "R41",
+    "source_ref": "ADDED_R4_RESET_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "220R / 1% 1206",
+    "value": "220R / 1% 1206",
+    "mpn": "RC1206FR-07220RL",
+    "pins": {
+      "1": "SUP_N_DRV",
+      "2": "SUP_N_OUT"
+    },
+    "url": "",
+    "note": "Series resistor U6.4 -> J_BP3.12 (R6; R5: J4.15): short to GND <= 16 mA (3.465 V). Initial value; R6 path ribbon 30 mm + P12 + ribbon 30 mm to P04. Verify <=10 ns/V at P04 U9.5 with actual load/probe; ideal RC is not a guaranteed capacitance limit.",
+    "qty": 1,
+    "sheet": "POWER",
+    "on_board": true
+  },
+  "C15": {
+    "ref": "C15",
+    "source_ref": "ADDED_R4_RESET_DECAP",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
+    "display": "100nF / 50V X7R",
+    "value": "100nF / 50V X7R",
+    "mpn": "GRM31CR71H104KA01L",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "GND"
+    },
+    "url": "",
+    "note": "1206, at U6 pin 5, local ground via.",
+    "qty": 1,
+    "sheet": "POWER",
+    "on_board": true
+  },
+  "TP7": {
+    "ref": "TP7",
+    "source_ref": "ADDED_R2_TESTPAD",
+    "footprint": "P03:TestPad_1",
+    "display": "5V_M1",
+    "value": "5V_M1",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "5V_M1"
+    },
+    "url": "",
+    "note": "Probe access.",
+    "qty": 1,
+    "sheet": "POWER",
+    "on_board": true
+  },
+  "TP8": {
+    "ref": "TP8",
+    "source_ref": "ADDED_R2_TESTPAD",
+    "footprint": "P03:TestPad_1",
+    "display": "SUP_RAW_N",
+    "value": "SUP_RAW_N",
+    "mpn": "PCB test pad",
+    "pins": {
+      "1": "SUP_RAW_N"
+    },
+    "url": "",
+    "note": "Probe access.",
+    "qty": 1,
+    "sheet": "POWER",
+    "on_board": true
+  },
+  "R42": {
+    "ref": "R42",
+    "source_ref": "ADDED_R6_PFAIL_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K / 1% 1206",
+    "value": "1K / 1% 1206",
+    "mpn": "RC1206FR-071KL",
+    "pins": {
+      "1": "PFAIL_N",
+      "2": "PFAIL_N_CORE"
+    },
+    "url": "",
+    "note": "PFAIL_N series resistor at M1 GPIO3 (J1-13): limits clamp current when P02 is live and CORE is not.",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "R43": {
+    "ref": "R43",
+    "source_ref": "ADDED_R6_PFAIL_PULLUP",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "100K / 1% 1206",
+    "value": "100K / 1% 1206",
+    "mpn": "RC1206FR-07100KL",
+    "pins": {
+      "1": "PFAIL_N",
+      "2": "3V3_CORE"
+    },
+    "url": "",
+    "note": "PFAIL_N default HIGH (supply OK) with J_BP2 open; connector side of R42. 30.09: 100K (was 10K): with LM2903 VOL 0.7 V over temperature the GPIO low level is 0.73 V < VIL 0.825 V (10K gave 0.95 V).",
+    "qty": 1,
+    "sheet": "P03",
+    "on_board": true
+  },
+  "R44": {
+    "ref": "R44",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K / 1% 1206",
+    "value": "1K / 1% 1206",
+    "mpn": "RC1206FR-071KL",
+    "pins": {
+      "1": "MOTOR_INB",
+      "2": "SV_MOTOR_INB"
+    },
+    "url": "",
+    "note": "J_SV1.2 series resistor, placed at the MOTOR_INB node (S1 §6): MCP23017; brak ruchu przy starcie.",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "R45": {
+    "ref": "R45",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K / 1% 1206",
+    "value": "1K / 1% 1206",
+    "mpn": "RC1206FR-071KL",
+    "pins": {
+      "1": "MOTOR_INA",
+      "2": "SV_MOTOR_INA"
+    },
+    "url": "",
+    "note": "J_SV1.3 series resistor, placed at the MOTOR_INA node (S1 §6): MCP23017; brak ruchu przy starcie.",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "R46": {
+    "ref": "R46",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K / 1% 1206",
+    "value": "1K / 1% 1206",
+    "mpn": "RC1206FR-071KL",
+    "pins": {
+      "1": "MEAS_BANK",
+      "2": "SV_MEAS_BANK"
+    },
+    "url": "",
+    "note": "J_SV1.4 series resistor, placed at the MEAS_BANK node (S1 §6): wejscie A dekodera, start: 0.",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "R47": {
+    "ref": "R47",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K / 1% 1206",
+    "value": "1K / 1% 1206",
+    "mpn": "RC1206FR-071KL",
+    "pins": {
+      "1": "CS_ILOG_N",
+      "2": "SV_CS_ILOG_N"
+    },
+    "url": "",
+    "note": "J_SV1.5 series resistor, placed at the CS_ILOG_N node (S1 §6): start: 1.",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "R48": {
+    "ref": "R48",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K / 1% 1206",
+    "value": "1K / 1% 1206",
+    "mpn": "RC1206FR-071KL",
+    "pins": {
+      "1": "SCOPE_TRIG",
+      "2": "SV_SCOPE_TRIG"
+    },
+    "url": "",
+    "note": "J_SV1.6 series resistor, placed at the SCOPE_TRIG node (S1 §6): wyjscie GPIO41 przed R12.",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "R49": {
+    "ref": "R49",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K / 1% 1206",
+    "value": "1K / 1% 1206",
+    "mpn": "RC1206FR-071KL",
+    "pins": {
+      "1": "CS_ITEST_N",
+      "2": "SV_CS_ITEST_N"
+    },
+    "url": "",
+    "note": "J_SV1.7 series resistor, placed at the CS_ITEST_N node (S1 §6): start: 1.",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "R50": {
+    "ref": "R50",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "I2C_SCL",
+      "2": "SV_I2C_SCL"
+    },
+    "url": "",
+    "note": "J_SV1.8 series resistor, placed at the I2C_SCL node (S1 §6): I2C MCP23017 (OD, 4k7).",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "R51": {
+    "ref": "R51",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K / 1% 1206",
+    "value": "1K / 1% 1206",
+    "mpn": "RC1206FR-071KL",
+    "pins": {
+      "1": "3V3_IO",
+      "2": "SV_3V3_IO"
+    },
+    "url": "",
+    "note": "J_SV1.9 series resistor, placed at the 3V3_IO node (S1 §6): szyna z P02 R4 (OE U14).",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "R52": {
+    "ref": "R52",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K / 1% 1206",
+    "value": "1K / 1% 1206",
+    "mpn": "RC1206FR-071KL",
+    "pins": {
+      "1": "3V3_CORE",
+      "2": "SV_3V3_CORE"
+    },
+    "url": "",
+    "note": "J_SV1.10 series resistor, placed at the 3V3_CORE node (S1 §6): LDO modulu; zapad przez 3,07 V.",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "R53": {
+    "ref": "R53",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "I2C_SDA",
+      "2": "SV_I2C_SDA"
+    },
+    "url": "",
+    "note": "J_SV1.11 series resistor, placed at the I2C_SDA node (S1 §6): I2C MCP23017 (OD, 4k7).",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "R54": {
+    "ref": "R54",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K / 1% 1206",
+    "value": "1K / 1% 1206",
+    "mpn": "RC1206FR-071KL",
+    "pins": {
+      "1": "LOGGER_CURRENT_OK",
+      "2": "SV_LOGGER_CURRENT_OK"
+    },
+    "url": "",
+    "note": "J_SV1.12 series resistor, placed at the LOGGER_CURRENT_OK node (S1 §6): z P06 (10k R2 do GND).",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "J_SV1": {
+    "ref": "J_SV1",
+    "source_ref": "ADDED_R6_SERVICE",
+    "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x13_P2.54mm_Horizontal",
+    "display": "J_SV1 / goldpin 1x13 RA (S1)",
+    "value": "J_SV1 / goldpin 1x13 RA (S1)",
+    "mpn": "Pin header 1x13, 2.54 mm, right angle, Au",
+    "pins": {
+      "1": "GND",
+      "13": "GND",
+      "2": "SV_MOTOR_INB",
+      "3": "SV_MOTOR_INA",
+      "4": "SV_MEAS_BANK",
+      "5": "SV_CS_ILOG_N",
+      "6": "SV_SCOPE_TRIG",
+      "7": "SV_CS_ITEST_N",
+      "8": "SV_I2C_SCL",
+      "9": "SV_3V3_IO",
+      "10": "SV_3V3_CORE",
+      "11": "SV_I2C_SDA",
+      "12": "SV_LOGGER_CURRENT_OK"
+    },
+    "url": "",
+    "note": "Format S1 edge B, slot S1, x = 10..43 mm in the slot; pins protrude ~6 mm beyond the edge. GND on pins 1 and 13. Silkscreen: signal name at every pin, readable from edge B.",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "R55": {
+    "ref": "R55",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K / 1% 1206",
+    "value": "1K / 1% 1206",
+    "mpn": "RC1206FR-071KL",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "SV_5V_SYS"
+    },
+    "url": "",
+    "note": "J_SV2.2 series resistor, placed at the 5V_SYS node (S1 §6): szyna z P02 R4; tabela zasilania P02/USB.",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "R56": {
+    "ref": "R56",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "PFAIL_N",
+      "2": "SV_PFAIL_N"
+    },
+    "url": "",
+    "note": "J_SV2.3 series resistor, placed at the PFAIL_N node (S1 §6): wejscie z P02 R4 po stronie zlacza (100k R43).",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "R57": {
+    "ref": "R57",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K / 1% 1206",
+    "value": "1K / 1% 1206",
+    "mpn": "RC1206FR-071KL",
+    "pins": {
+      "1": "ADC_RESET",
+      "2": "SV_ADC_RESET"
+    },
+    "url": "",
+    "note": "J_SV2.4 series resistor, placed at the ADC_RESET node (S1 §6): start bez firmware: 0.",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "R58": {
+    "ref": "R58",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K / 1% 1206",
+    "value": "1K / 1% 1206",
+    "mpn": "RC1206FR-071KL",
+    "pins": {
+      "1": "MEAS_EN",
+      "2": "SV_MEAS_EN"
+    },
+    "url": "",
+    "note": "J_SV2.5 series resistor, placed at the MEAS_EN node (S1 §6): start bez firmware: 0.",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "R59": {
+    "ref": "R59",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K / 1% 1206",
+    "value": "1K / 1% 1206",
+    "mpn": "RC1206FR-071KL",
+    "pins": {
+      "1": "ADC_BUSY",
+      "2": "SV_ADC_BUSY"
+    },
+    "url": "",
+    "note": "J_SV2.6 series resistor, placed at the ADC_BUSY node (S1 §6): odpowiedz P05 na CONVST.",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "R60": {
+    "ref": "R60",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K / 1% 1206",
+    "value": "1K / 1% 1206",
+    "mpn": "RC1206FR-071KL",
+    "pins": {
+      "1": "ADC_CONVST",
+      "2": "SV_ADC_CONVST"
+    },
+    "url": "",
+    "note": "J_SV2.7 series resistor, placed at the ADC_CONVST node (S1 §6): start bez firmware: 0.",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "R61": {
+    "ref": "R61",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K / 1% 1206",
+    "value": "1K / 1% 1206",
+    "mpn": "RC1206FR-071KL",
+    "pins": {
+      "1": "ADC_CS",
+      "2": "SV_ADC_CS"
+    },
+    "url": "",
+    "note": "J_SV2.8 series resistor, placed at the ADC_CS node (S1 §6): start: 1 (nieaktywne).",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "R62": {
+    "ref": "R62",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K / 1% 1206",
+    "value": "1K / 1% 1206",
+    "mpn": "RC1206FR-071KL",
+    "pins": {
+      "1": "CURRENT_CS_N",
+      "2": "SV_CURRENT_CS_N"
+    },
+    "url": "",
+    "note": "J_SV2.9 series resistor, placed at the CURRENT_CS_N node (S1 §6): /G dekodera U2, start: 1.",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "R63": {
+    "ref": "R63",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K / 1% 1206",
+    "value": "1K / 1% 1206",
+    "mpn": "RC1206FR-071KL",
+    "pins": {
+      "1": "SD_CS",
+      "2": "SV_SD_CS"
+    },
+    "url": "",
+    "note": "J_SV2.10 series resistor, placed at the SD_CS node (S1 §6): karta SD, start: 1.",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "R64": {
+    "ref": "R64",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "SUP_RAW_N",
+      "2": "SV_SUP_RAW_N"
+    },
+    "url": "",
+    "note": "J_SV2.11 series resistor, placed at the SUP_RAW_N node (S1 §6): wyjscie TPS3808 (OD, 10k R13).",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "R65": {
+    "ref": "R65",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K / 1% 1206",
+    "value": "1K / 1% 1206",
+    "mpn": "RC1206FR-071KL",
+    "pins": {
+      "1": "5V_M1",
+      "2": "SV_5V_M1"
+    },
+    "url": "",
+    "note": "J_SV2.12 series resistor, placed at the 5V_M1 node (S1 §6): zasilanie modulu za blokada U5/Q1; USB-only, prad wsteczny.",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "J_SV2": {
+    "ref": "J_SV2",
+    "source_ref": "ADDED_R6_SERVICE",
+    "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x13_P2.54mm_Horizontal",
+    "display": "J_SV2 / goldpin 1x13 RA (S2)",
+    "value": "J_SV2 / goldpin 1x13 RA (S2)",
+    "mpn": "Pin header 1x13, 2.54 mm, right angle, Au",
+    "pins": {
+      "1": "GND",
+      "13": "GND",
+      "2": "SV_5V_SYS",
+      "3": "SV_PFAIL_N",
+      "4": "SV_ADC_RESET",
+      "5": "SV_MEAS_EN",
+      "6": "SV_ADC_BUSY",
+      "7": "SV_ADC_CONVST",
+      "8": "SV_ADC_CS",
+      "9": "SV_CURRENT_CS_N",
+      "10": "SV_SD_CS",
+      "11": "SV_SUP_RAW_N",
+      "12": "SV_5V_M1"
+    },
+    "url": "",
+    "note": "Format S1 edge B, slot S2, x = 10..43 mm in the slot; pins protrude ~6 mm beyond the edge. GND on pins 1 and 13. Silkscreen: signal name at every pin, readable from edge B.",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "R66": {
+    "ref": "R66",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K / 1% 1206",
+    "value": "1K / 1% 1206",
+    "mpn": "RC1206FR-071KL",
+    "pins": {
+      "1": "MCU_ARM",
+      "2": "SV_MCU_ARM"
+    },
+    "url": "",
+    "note": "J_SV3.2 series resistor, placed at the MCU_ARM node (S1 §6): GPIO39; bez ARM stale 0.",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "R67": {
+    "ref": "R67",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K / 1% 1206",
+    "value": "1K / 1% 1206",
+    "mpn": "RC1206FR-071KL",
+    "pins": {
+      "1": "HEARTBEAT",
+      "2": "SV_HEARTBEAT"
+    },
+    "url": "",
+    "note": "J_SV3.3 series resistor, placed at the HEARTBEAT node (S1 §6): GPIO21 do P04.",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "R68": {
+    "ref": "R68",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K / 1% 1206",
+    "value": "1K / 1% 1206",
+    "mpn": "RC1206FR-071KL",
+    "pins": {
+      "1": "PWM",
+      "2": "SV_PWM"
+    },
+    "url": "",
+    "note": "J_SV3.4 series resistor, placed at the PWM node (S1 §6): GPIO1 do P04.",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "R69": {
+    "ref": "R69",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "CORE_LINK",
+      "2": "SV_CORE_LINK"
+    },
+    "url": "",
+    "note": "J_SV3.5 series resistor, placed at the CORE_LINK node (S1 §6): R14 1k z 3V3_CORE; na P04 >= 2,7 V.",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "R70": {
+    "ref": "R70",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "SUP_N_OUT",
+      "2": "SV_SUP_N_OUT"
+    },
+    "url": "",
+    "note": "J_SV3.6 series resistor, placed at the SUP_N_OUT node (S1 §6): reset do P04 za U6/R41; 10K (1.10, wyjatek od S1 par. 6): galaz serwisowa nie spowalnia zbocza resetu.",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "R71": {
+    "ref": "R71",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K / 1% 1206",
+    "value": "1K / 1% 1206",
+    "mpn": "RC1206FR-071KL",
+    "pins": {
+      "1": "SENSOR_ENABLE",
+      "2": "SV_SENSOR_ENABLE"
+    },
+    "url": "",
+    "note": "J_SV3.7 series resistor, placed at the SENSOR_ENABLE node (S1 §6): MCP23017 GPA3 do P04.",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "R72": {
+    "ref": "R72",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K / 1% 1206",
+    "value": "1K / 1% 1206",
+    "mpn": "RC1206FR-071KL",
+    "pins": {
+      "1": "TC2_CS",
+      "2": "SV_TC2_CS"
+    },
+    "url": "",
+    "note": "J_SV3.8 series resistor, placed at the TC2_CS node (S1 §6): start: 1.",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "R73": {
+    "ref": "R73",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K / 1% 1206",
+    "value": "1K / 1% 1206",
+    "mpn": "RC1206FR-071KL",
+    "pins": {
+      "1": "TC1_CS",
+      "2": "SV_TC1_CS"
+    },
+    "url": "",
+    "note": "J_SV3.9 series resistor, placed at the TC1_CS node (S1 §6): start: 1.",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "R74": {
+    "ref": "R74",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K / 1% 1206",
+    "value": "1K / 1% 1206",
+    "mpn": "RC1206FR-071KL",
+    "pins": {
+      "1": "INTERLOCK",
+      "2": "SV_INTERLOCK"
+    },
+    "url": "",
+    "note": "J_SV3.10 series resistor, placed at the INTERLOCK node (S1 §6): z P04.",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "R75": {
+    "ref": "R75",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1K / 1% 1206",
+    "value": "1K / 1% 1206",
+    "mpn": "RC1206FR-071KL",
+    "pins": {
+      "1": "HW_ARMED",
+      "2": "SV_HW_ARMED"
+    },
+    "url": "",
+    "note": "J_SV3.11 series resistor, placed at the HW_ARMED node (S1 §6): z P04; stale L w probach resetu.",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "R76": {
+    "ref": "R76",
+    "source_ref": "ADDED_R6_SERVICE_SERIES",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "10K / 1% 1206",
+    "value": "10K / 1% 1206",
+    "mpn": "RC1206FR-0710KL",
+    "pins": {
+      "1": "SUP_N",
+      "2": "SV_SUP_N"
+    },
+    "url": "",
+    "note": "J_SV3.12 series resistor, placed at the SUP_N node (S1 §6): wspolny reset = EN modulu (J1-3) + RESET MCP23017.",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  },
+  "J_SV3": {
+    "ref": "J_SV3",
+    "source_ref": "ADDED_R6_SERVICE",
+    "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x13_P2.54mm_Horizontal",
+    "display": "J_SV3 / goldpin 1x13 RA (S3)",
+    "value": "J_SV3 / goldpin 1x13 RA (S3)",
+    "mpn": "Pin header 1x13, 2.54 mm, right angle, Au",
+    "pins": {
+      "1": "GND",
+      "13": "GND",
+      "2": "SV_MCU_ARM",
+      "3": "SV_HEARTBEAT",
+      "4": "SV_PWM",
+      "5": "SV_CORE_LINK",
+      "6": "SV_SUP_N_OUT",
+      "7": "SV_SENSOR_ENABLE",
+      "8": "SV_TC2_CS",
+      "9": "SV_TC1_CS",
+      "10": "SV_INTERLOCK",
+      "11": "SV_HW_ARMED",
+      "12": "SV_SUP_N"
+    },
+    "url": "",
+    "note": "Format S1 edge B, slot S3, x = 10..43 mm in the slot; pins protrude ~6 mm beyond the edge. GND on pins 1 and 13. Silkscreen: signal name at every pin, readable from edge B.",
+    "qty": 1,
+    "sheet": "SERWIS",
+    "on_board": true
+  }
+}
