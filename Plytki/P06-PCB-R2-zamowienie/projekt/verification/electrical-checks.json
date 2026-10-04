@@ -1,0 +1,483 @@
+{
+  "checks": [
+    {
+      "id": "IF-JBP",
+      "pass": true,
+      "note": "R2: J1 LV06 + J2 ILOG -> J_BP (task ZADANIE-P06-S1 2)."
+    },
+    {
+      "id": "JBP-FUNCTIONS",
+      "pass": true,
+      "note": "Each J_BP signal reaches the same element as R1 J1/J2."
+    },
+    {
+      "id": "IF-ISERIES",
+      "pass": true,
+      "note": "R2 local layout 1.10: 2 pads (R1 pads 3/4 were empty)."
+    },
+    {
+      "id": "INA-SOIC-PINS",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "INA-GAIN-MPN",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "KELVIN",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "SHUNT-VALUE",
+      "pass": true,
+      "note": "R2: Kelvin SMD 2512 (pads 1/4 force, 2/3 sense; geometry checked in verify_s1.py)."
+    },
+    {
+      "id": "INPUT-RESISTORS",
+      "pass": true,
+      "note": "Matched 0.1 % thin film (Yageo RT ...BR... = 0.1 %)."
+    },
+    {
+      "id": "OPAMP-FEEDBACK",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "REF-PINS",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "REF-COMPENSATION",
+      "pass": true,
+      "note": "MCP1525 CL 1..10 uF; C5 effective 2.52..5.95 uF."
+    },
+    {
+      "id": "LDO-OUTPUT-CAP",
+      "pass": true,
+      "note": "MCP1702 COUT >= 1 uF ceramic; C4 effective >= 2.52 uF."
+    },
+    {
+      "id": "ADC-PINS",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "DIVIDER",
+      "pass": true,
+      "note": "R2: 5.11K 0.1 % 25 ppm/K (list 2 replacement 1:1 for 5K1); ratio 1:2 unchanged."
+    },
+    {
+      "id": "INA-LOAD-GE10K",
+      "pass": true,
+      "note": "Swing specification uses 10k load to GND; divider 10.22k (10.21k at -0.1 %)."
+    },
+    {
+      "id": "LPF",
+      "pass": true,
+      "note": "Nominal tau 1.2008ms / 132.54Hz; not a brick-wall anti-alias filter."
+    },
+    {
+      "id": "ADC-DRIVE",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "LDO",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "NO-PARALLEL-LDO",
+      "pass": true,
+      "note": "3V3_IO only to J_BP.14 and its service resistor (R1: J1.3 and TP4)."
+    },
+    {
+      "id": "C3-220U",
+      "pass": true,
+      "note": "Decision 1.10: 220 uF (was 470 uF)."
+    },
+    {
+      "id": "R6-POWER",
+      "pass": true,
+      "note": "1 R / 1 W lying; C3 charge pulse ~3 mJ."
+    },
+    {
+      "id": "SUP3",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "SUP5",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "DIODE-DIRECTION",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "IOFF-MPN",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "SPI-TRISTATE",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "SPI-IDLE",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "READY-LEVEL-TRANSLATION",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "READY-PULLDOWNS",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "READY-SERIES",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "BYPASS-WIRING",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "WETTING",
+      "pass": true,
+      "note": ""
+    },
+    {
+      "id": "READY-TRUTH",
+      "pass": true,
+      "note": "Eight combinations from exported gate wiring."
+    }
+  ],
+  "negative_controls": [
+    {
+      "mutation": "wrong INA package pin",
+      "caught": true,
+      "checks": [
+        "INA-SOIC-PINS"
+      ]
+    },
+    {
+      "mutation": "wrong gain",
+      "caught": true,
+      "checks": [
+        "INA-GAIN-MPN"
+      ]
+    },
+    {
+      "mutation": "shunt 50m",
+      "caught": true,
+      "checks": [
+        "SHUNT-VALUE"
+      ]
+    },
+    {
+      "mutation": "Kelvin from force",
+      "caught": true,
+      "checks": [
+        "KELVIN"
+      ]
+    },
+    {
+      "mutation": "wrong divider",
+      "caught": true,
+      "checks": [
+        "DIVIDER",
+        "LPF"
+      ]
+    },
+    {
+      "mutation": "old 5K1 divider",
+      "caught": true,
+      "checks": [
+        "DIVIDER"
+      ]
+    },
+    {
+      "mutation": "divider 1 %",
+      "caught": true,
+      "checks": [
+        "DIVIDER"
+      ]
+    },
+    {
+      "mutation": "old filter cap",
+      "caught": true,
+      "checks": [
+        "LPF"
+      ]
+    },
+    {
+      "mutation": "REF reversed",
+      "caught": true,
+      "checks": [
+        "REF-PINS"
+      ]
+    },
+    {
+      "mutation": "REF cap missing compensation",
+      "caught": true,
+      "checks": [
+        "REF-COMPENSATION"
+      ]
+    },
+    {
+      "mutation": "REF cap too large",
+      "caught": true,
+      "checks": [
+        "REF-COMPENSATION"
+      ]
+    },
+    {
+      "mutation": "LDO cap too small",
+      "caught": true,
+      "checks": [
+        "LDO-OUTPUT-CAP"
+      ]
+    },
+    {
+      "mutation": "ADC CS/DOUT swapped",
+      "caught": true,
+      "checks": [
+        "ADC-PINS"
+      ]
+    },
+    {
+      "mutation": "MISO permanently enabled",
+      "caught": true,
+      "checks": [
+        "SPI-TRISTATE"
+      ]
+    },
+    {
+      "mutation": "HC in place of LVC",
+      "caught": true,
+      "checks": [
+        "IOFF-MPN"
+      ]
+    },
+    {
+      "mutation": "AND ready bypassed",
+      "caught": true,
+      "checks": [
+        "READY-TRUTH"
+      ]
+    },
+    {
+      "mutation": "wrong bypass common",
+      "caught": true,
+      "checks": [
+        "BYPASS-WIRING"
+      ]
+    },
+    {
+      "mutation": "wetting 39k",
+      "caught": true,
+      "checks": [
+        "WETTING"
+      ]
+    },
+    {
+      "mutation": "wetting resistor 1 W 2512",
+      "caught": true,
+      "checks": [
+        "WETTING"
+      ]
+    },
+    {
+      "mutation": "strong external CS pullup backpowers rail",
+      "caught": true,
+      "checks": [
+        "SPI-IDLE"
+      ]
+    },
+    {
+      "mutation": "missing ready default",
+      "caught": true,
+      "checks": [
+        "READY-PULLDOWNS"
+      ]
+    },
+    {
+      "mutation": "wrong 5V supervisor",
+      "caught": true,
+      "checks": [
+        "SUP5"
+      ]
+    },
+    {
+      "mutation": "wrong LDO pin",
+      "caught": true,
+      "checks": [
+        "LDO"
+      ]
+    },
+    {
+      "mutation": "discharge diode reversed",
+      "caught": true,
+      "checks": [
+        "DIODE-DIRECTION"
+      ]
+    },
+    {
+      "mutation": "C3 back to 470u",
+      "caught": true,
+      "checks": [
+        "C3-220U"
+      ]
+    },
+    {
+      "mutation": "3V3_IO tied to local 3V3",
+      "caught": true,
+      "checks": [
+        "NO-PARALLEL-LDO"
+      ]
+    },
+    {
+      "mutation": "J_BP CS on reserve pin",
+      "caught": true,
+      "checks": [
+        "IF-JBP"
+      ]
+    },
+    {
+      "mutation": "J_BP 5V_SYS lost",
+      "caught": true,
+      "checks": [
+        "IF-JBP"
+      ]
+    },
+    {
+      "mutation": "ISERIES pin swap",
+      "caught": true,
+      "checks": [
+        "IF-ISERIES"
+      ]
+    },
+    {
+      "mutation": "R6 0.6 W",
+      "caught": true,
+      "checks": [
+        "R6-POWER"
+      ]
+    }
+  ],
+  "analysis": {
+    "tau_band_us": [
+      917.7315997500002,
+      1388.3687317500003
+    ],
+    "divider_ratio_worst": [
+      0.498875,
+      0.5011249999999999
+    ],
+    "C3_charge_energy_mJ_at_5V25": 3.031875,
+    "C3_tau_R6_us": 219.99999999999997,
+    "R21_power_W": {
+      "5V00": 0.6410256410256411,
+      "5V25": 0.7067307692307693
+    },
+    "5V_SYS_capacitance_uF": {
+      "P06": 220.39999999999998,
+      "P05_R3": 265.7,
+      "limit_TSR_2_2450": 600,
+      "note": "P05 R3 from Plytki/P12-przygotowanie/wyniki/KONTRAKTY.md (486 uF total)"
+    },
+    "tau_us": 1200.8500000000001,
+    "cutoff_hz": 132.53524011483145,
+    "ideal_counts_per_amp": 204.8,
+    "input_resistor_gain_factor": 0.9966777408637874,
+    "truth_table": [
+      {
+        "rails": [
+          0,
+          0
+        ],
+        "measure": 0,
+        "observed": 0,
+        "expected": 0
+      },
+      {
+        "rails": [
+          0,
+          0
+        ],
+        "measure": 1,
+        "observed": 0,
+        "expected": 0
+      },
+      {
+        "rails": [
+          0,
+          1
+        ],
+        "measure": 0,
+        "observed": 0,
+        "expected": 0
+      },
+      {
+        "rails": [
+          0,
+          1
+        ],
+        "measure": 1,
+        "observed": 0,
+        "expected": 0
+      },
+      {
+        "rails": [
+          1,
+          0
+        ],
+        "measure": 0,
+        "observed": 0,
+        "expected": 0
+      },
+      {
+        "rails": [
+          1,
+          0
+        ],
+        "measure": 1,
+        "observed": 0,
+        "expected": 0
+      },
+      {
+        "rails": [
+          1,
+          1
+        ],
+        "measure": 0,
+        "observed": 0,
+        "expected": 0
+      },
+      {
+        "rails": [
+          1,
+          1
+        ],
+        "measure": 1,
+        "observed": 1,
+        "expected": 1
+      }
+    ]
+  },
+  "scope": "Static circuit/values only; no claim of measured analog/PWM/thermal performance."
+}

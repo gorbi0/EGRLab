@@ -25,6 +25,7 @@ Decyzje 4.10 (wszystkie zgodne z rekomendacją):
 - **P09:** użytkownik zmierzy moduł MAX31856 przed zamówieniem; porównanie z footprintem P09.
 - **SW1 P05:** tuleja B3 z gwintem i nakrętką na panel.
 - **Zakupy:** wiążąca lista z konkretnymi kodami i zamiennikami proponowana przez Claude, zatwierdza użytkownik.
+- **SW1 P05 na panelu** (po makiecie panelu, gałąź `panel-s1-makieta`): tuleja SW1 wystaje za krawędź P05 tylko ok. 3,7 mm, a panel stoi 50 mm przed stosem (strefa P11, przycisków i przewodów). SW1 = E-Switch 100 DPDT ON-ON w wersji panelowej z oczkami, 5 przewodów do otworów footprintu SW1 na P05 (1, 2, 3, 5, 4 = GND; 6 wolny). Płytka P05 i paczka zamówieniowa bez zmian; decyzja „tuleja B3” dotyczy teraz przełącznika na panelu.
 
 ## 2.10.2026 — RECENZJE PCB P05 / P06, SCALENIA I DECYZJE
 

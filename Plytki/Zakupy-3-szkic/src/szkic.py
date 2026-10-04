@@ -4,7 +4,7 @@ wobec rejestru `Zamowione/zamowione.csv`, z cenami TME z listy 2 (28.09) tam, gd
 To nie jest zamówienie ani lista wiążąca: BOM-y P03/P09/P10 czekają na recenzję PR, P05/P06/P11 na rewizje S1,
 a ceny i stany TME trzeba sprawdzić w przeglądarce (Cloudflare, `docs/pamiec-claude/tme-mouser-lookup.md`).
 Pozycje grupowane po numerze części, a rezystory i kondensatory 1206 oraz posiadane THT — po wartości.
-uruchomienie (z katalogu repozytorium, po `git fetch origin`): python3 Plytki/Zakupy-3-szkic/src/szkic.py
+uruchomienie (z katalogu repozytorium; od 4.10 BOM-y z lokalnej gałęzi main, wszystko scalone): python3 Plytki/Zakupy-3-szkic/src/szkic.py
 Wynik: Plytki/Zakupy-3-szkic/ZAKUPY-3-SZKIC.md i zakupy-3-szkic.csv.
 """
 import csv, io, re, subprocess, sys
@@ -13,12 +13,12 @@ from pathlib import Path
 
 P = Path(__file__).resolve().parents[1]; REPO = P.parents[1]
 ZRODLA = [  # płytka, gałąź, plik, format
-    ('P02 R4', 'origin/main', 'Plytki/P02-R4-review/docs/BOM.csv', 'bom'),
-    ('P03 R6', 'origin/p03-r6-pcb', 'Plytki/P03-R6-review/docs/zakupy.csv', 'zakupy'),
-    ('P09 R2', 'origin/p09-r2-pcb', 'Plytki/P09-R2-review/docs/BOM.csv', 'bom'),
-    ('P10 R2', 'origin/p10-r2-pcb', 'Plytki/P10-R2-review/docs/BOM.csv', 'bom'),
-    ('P05 R3', 'origin/p05-r3-pcb', 'Plytki/P05-R3-review/docs/BOM.csv', 'bom'),   # 1.10: schemat z PR #7 + PCB (uwagi grubości od spodu)
-    ('P06 R2', 'origin/p06-r2-pcb', 'Plytki/P06-R2-review/docs/BOM.csv', 'bom'),   # 1.10 wieczorem: schemat z PR #8 po przeglądzie + PCB
+    ('P02 R4', 'main', 'Plytki/P02-R4-review/docs/BOM.csv', 'bom'),
+    ('P03 R6', 'main', 'Plytki/P03-R6-review/docs/zakupy.csv', 'zakupy'),
+    ('P09 R2', 'main', 'Plytki/P09-R2-review/docs/BOM.csv', 'bom'),
+    ('P10 R2', 'main', 'Plytki/P10-R2-review/docs/BOM.csv', 'bom'),
+    ('P05 R3', 'main', 'Plytki/P05-R3-review/docs/BOM.csv', 'bom'),   # 4.10: scalone z C35 i nóżkami SW1 (gałąź p05-r3-sw1-avcc)
+    ('P06 R2', 'main', 'Plytki/P06-R2-review/docs/BOM.csv', 'bom'),   # 4.10: scalone z C17 i szprychami J3 / J4 (gałąź p06-r2-j5-szprychy)
 ]
 PLYTKI = [z[0] for z in ZRODLA]
 DO_WYBORU = {  # klucz -> co wybrać (S1: typ nieustalony w BOM)
@@ -27,7 +27,7 @@ DO_WYBORU = {  # klucz -> co wybrać (S1: typ nieustalony w BOM)
     'IDC 2X5 KĄTOWE': 'typ do wyboru: kątowe obudowane IDC 2×5, złocone',
     'GOLDPIN 1X13 KĄTOWY': 'typ do wyboru: kątowy goldpin 1×13 (posiadany 1×40 jest prosty); można ciąć z kątowego 1×40',
     'GOLDPIN 1X9 KĄTOWY': 'typ do wyboru: kątowy goldpin 1×9 (jak wyżej)',
-    '100DP1T1B4M6RE': 'SW1 P05: E-Switch 100 DPDT ON-ON, kątowy M6 (decyzja 1.10); kod tulei (B4 bez gwintu / B3 z gwintem + H) i dostępność do potwierdzenia (Mouser)',
+    '100DP1T1B4M6RE': 'SW1 P05 na PANELU (decyzja 4.10 po makiecie): E-Switch 100 DPDT ON-ON z tuleją gwintowaną i oczkami lutowniczymi, np. 100DP1T1B1M1QEH (kod zakończenia do potwierdzenia w karcie) + 5 przewodów AWG24 ok. 80 mm do otworów SW1 na P05; nie kupować wersji kątowej M6',
     'GOLDPIN 1X7 KĄTOWY': 'typ do wyboru: kątowy goldpin 1×7 (P06 J_SV1); można ciąć z kątowego 1×40',
     'BYPASS-DPDT-10A': 'SW1 P06 (panel, poza PCB): DPDT ON-ON >= 10 A DC 12-30 V, oczka lutownicze, tuleja z nakrętką; MPN do wyboru (P06 docs/ZAKUPY.md), NKK S6A nie kupować',
 }

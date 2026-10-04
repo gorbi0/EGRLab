@@ -1,0 +1,82 @@
+{
+  "time_utc": "2026-10-04T12:03:05.210041+00:00",
+  "kicad": "10.0.6",
+  "board_sha256": "d7ffbbfba8a86cc1ea40e3d436fecf325754e56af5fa9b69ff4f108dd512e05e",
+  "drc_sha256": "6e850eb1823b29c034735830166cad545dc2f81f143da9de8dab8bd29c0e5d15",
+  "drc": {
+    "violations": 0,
+    "unconnected_items": 0,
+    "schematic_parity": 0
+  },
+  "inputs_unchanged": true,
+  "removed_generated_local_settings": [],
+  "commands": [
+    [
+      "/usr/bin/kicad-cli.exe",
+      "pcb",
+      "drc",
+      "--refill-zones",
+      "--schematic-parity",
+      "--severity-all",
+      "--format",
+      "json",
+      "--units",
+      "mm",
+      "--output",
+      "/home/tgorbacz/AI/Claude/EGRLab/.worktrees/zamowienie-s1/Plytki/P05-PCB-R3-zamowienie/verification/drc.json",
+      "/home/tgorbacz/AI/Claude/EGRLab/.worktrees/zamowienie-s1/Plytki/P05-PCB-R3-zamowienie/projekt/eda/P05.kicad_pcb"
+    ],
+    [
+      "/usr/bin/kicad-cli.exe",
+      "pcb",
+      "export",
+      "gerbers",
+      "--layers",
+      "F.Cu,B.Cu,F.Mask,B.Mask,F.SilkS,B.SilkS,Edge.Cuts",
+      "--precision",
+      "6",
+      "--subtract-soldermask",
+      "--disable-aperture-macros",
+      "--check-zones",
+      "--output",
+      "/home/tgorbacz/AI/Claude/EGRLab/.worktrees/zamowienie-s1/Plytki/P05-PCB-R3-zamowienie/gerber/",
+      "/home/tgorbacz/AI/Claude/EGRLab/.worktrees/zamowienie-s1/Plytki/P05-PCB-R3-zamowienie/projekt/eda/P05.kicad_pcb"
+    ],
+    [
+      "/usr/bin/kicad-cli.exe",
+      "pcb",
+      "export",
+      "drill",
+      "--format",
+      "excellon",
+      "--drill-origin",
+      "absolute",
+      "--excellon-zeros-format",
+      "decimal",
+      "--excellon-units",
+      "mm",
+      "--excellon-separate-th",
+      "--generate-map",
+      "--map-format",
+      "svg",
+      "--generate-report",
+      "--report-path",
+      "/home/tgorbacz/AI/Claude/EGRLab/.worktrees/zamowienie-s1/Plytki/P05-PCB-R3-zamowienie/verification/drill-report.txt",
+      "--output",
+      "/home/tgorbacz/AI/Claude/EGRLab/.worktrees/zamowienie-s1/Plytki/P05-PCB-R3-zamowienie/gerber/",
+      "/home/tgorbacz/AI/Claude/EGRLab/.worktrees/zamowienie-s1/Plytki/P05-PCB-R3-zamowienie/projekt/eda/P05.kicad_pcb"
+    ]
+  ],
+  "files": {
+    "P05-B_Cu.gbl": "1ba07efcbea5ef281bbefd18b063500b36bbe1929de6961c10107db4bcfcb655",
+    "P05-B_Mask.gbs": "f9b11537cb02ef1983edc0d2ebb021c23b993e85a1d31185fca770ade591d6c3",
+    "P05-B_Silkscreen.gbo": "51080fca102222be26782f99f0b79d85370fe5ce74aec4b7ed8815c4a48e4ec6",
+    "P05-Edge_Cuts.gm1": "106ab47d1d2064b81d8f90beff1b2386f4a791faeb8c4e2db847899b83738562",
+    "P05-F_Cu.gtl": "0f1897531ad9c6be7a2b6b7f0b507f67c9f2b75a613b0cc343024cf1e80db8ca",
+    "P05-F_Mask.gts": "b33d3f014451e420084db1965a790f524962ebb1ca3e218f88499941aa1e5640",
+    "P05-F_Silkscreen.gto": "b4109825604e1f1cfc8a95ec47e026c78033f2dfd1d9e3ca334b38dd610d4c73",
+    "P05-NPTH.drl": "ef12b3b23df273c407bf1f5baf9f3c41a2493a55a75407e08ed5ddd42b83b669",
+    "P05-PTH.drl": "0a033b557a56fdfb2487fa9d0e7819b78b9444ff9c57152dcb4acf1da6dce259"
+  },
+  "native_job_sha256": "573a0a74b223429ed4e67c03228344bb2da325083b65c785d63d36c4bee3b156"
+}

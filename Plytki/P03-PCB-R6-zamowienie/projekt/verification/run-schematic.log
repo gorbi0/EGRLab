@@ -1,0 +1,125 @@
+> /usr/bin/python3 build_schematic.py
+Placed 122 components on 6 A3 sheets
+> /usr/bin/kicad-cli sch erc --severity-all --format json -o verification/erc.json eda/P03.kicad_sch
+> /usr/bin/kicad-cli sch export netlist --format kicadxml -o verification/P03.xml eda/P03.kicad_sch
+> /usr/bin/python3 verify_schematic.py
+{"components": 122, "parts": 122, "pin_checks": 511, "extra": [], "erc_sheets": 6, "erc_violations": 0, "nets": 152} errors 0
+> /usr/bin/python3 compare_v61.py
+v6.1 pins checked 310; differences 18; unexpected 0; added parts ['C12', 'C13', 'C14', 'C15', 'J_BP1', 'J_BP2', 'J_BP3', 'J_SV1', 'J_SV2', 'J_SV3', 'Q1', 'R15', 'R16', 'R17', 'R18', 'R19', 'R20', 'R21', 'R22', 'R23', 'R24', 'R25', 'R26', 'R27', 'R28', 'R29', 'R30', 'R31', 'R32', 'R33', 'R34', 'R35', 'R36', 'R37', 'R38', 'R39', 'R40', 'R41', 'R42', 'R43', 'R44', 'R45', 'R46', 'R47', 'R48', 'R49', 'R50', 'R51', 'R52', 'R53', 'R54', 'R55', 'R56', 'R57', 'R58', 'R59', 'R60', 'R61', 'R62', 'R63', 'R64', 'R65', 'R66', 'R67', 'R68', 'R69', 'R70', 'R71', 'R72', 'R73', 'R74', 'R75', 'R76', 'TP1', 'TP2', 'TP3', 'TP4', 'TP5', 'TP6', 'TP7', 'TP8', 'U4', 'U5', 'U6']
+> /usr/bin/python3 verify_function.py
+PASS default ADC_CS_SRC
+PASS default ADC_SCLK_SRC
+PASS default ADC_SDI_SRC
+PASS default ADC_CONVST_SRC
+PASS default ADC_RESET_SRC
+PASS default MEAS_EN_SRC
+PASS default SPI3_SCLK_SRC
+PASS default SPI3_MOSI_SRC
+PASS default TC1_CS_SRC
+PASS default TC2_CS_SRC
+PASS default MEAS_BANK
+PASS default CURRENT_CS_N
+PASS default SD_CS
+PASS default INTERLOCK
+PASS default TEST_KEY
+PASS default ENA_DIAG
+PASS default ENB_DIAG
+PASS default CAN_RX
+PASS default ADC_BUSY
+PASS default ADC_DOUTA
+PASS default SPI3_MISO
+PASS default HW_ARMED
+PASS default LOGGER_CURRENT_OK
+PASS default SENSOR_HEALTHY
+PASS default LOGGER_CLEAR
+PASS default TEST_PRESENT
+PASS common reset MCU MCP
+PASS reset to P04 through Schmitt buffer U6 and R41
+PASS U6 decoupling C15 100nF
+PASS supervisor isolated from EN capacitance
+PASS Schmitt-input non-inverting open-drain reset buffer
+PASS reset sink current limiter
+PASS common reset local pullup
+PASS TPS3808 DBV supply pins
+PASS SYS and USB local rail separated
+PASS LTC4412 pin map and enable
+PASS PMOS body diode SYS to M1
+PASS source termination R36
+PASS source termination R37
+PASS source termination R38
+PASS source termination R39
+PASS source termination R40
+PASS buffer powered from CORE U11
+PASS buffer powered from CORE U12
+PASS buffer powered from CORE U13
+PASS buffer powered from CORE U14
+PASS buffer powered from CORE U21
+PASS buffer powered from CORE U22
+PASS buffer powered from CORE U23
+PASS R1 pin contract plus exact R2/R4/R6 delta
+PASS no supply rail on a connector pin directly or through < 100 ohm (supply inputs J_BP2.17/19/20, J_BP3.5 excepted)
+PASS supply inputs from P02 R4 on J_BP2.17/19/20 and J_BP3.5
+PASS CORE_LINK from 3V3_CORE through 1K (R14)
+53 functional checks; 44/44 mutations detected
+> /usr/bin/python3 verify_reset.py
+PASS U4 Schmitt input and open drain, exact pinout 
+PASS TPS3808 pull-up nominal >=10k and connected correctly 
+PASS R34 discharge peak <=16mA 
+PASS SUP_N low at 3.0V below MCP VIL=0.6V 
+PASS P04 R17 default low from worst-case leakage below 0.8V 
+PASS P04 active input high above 2.0V 
+PASS U6 output and P04 receiver retain reviewed topology 
+PASS R6 path estimate within the 10 ns/V limit, with the service branch behind R70 (estimate, not a guarantee) 
+Reset budget: 8 checks; 5 mutations detected
+> /usr/bin/python3 verify_jbp.py
+PASS C1 every R5 connector signal (J1..J10) and PFAIL_N exactly once on J_BP1..3, no other signals
+PASS C2 5V_SYS three times on J_BP2, 3V3_IO once on J_BP3
+PASS C0 three 2x10 edge-A connectors, 20 connected pins each
+PASS C3 odd pins are GND except the justified exceptions (static signals or supplies only)
+PASS C4 ADC_SCLK, SPI3_SCLK and MEAS_EN have GND on both ribbon sides
+PASS C5 every edge signal has a GND ribbon neighbour; every J_BP net classified
+PASS C6 PFAIL_N: J_BP2.16 -> 1K series -> module GPIO; 100K pull-up to 3V3_CORE on the connector side (HIGH with J_BP2 open; 30.09: 10K gave 0.95 V > VIL at LM2903 VOL 0.7 V)
+PASS C7 PFAIL_N GPIO is GPIO3 (J1-13), not PSRAM, 1.8 V, boot strap, UART0 or USB
+PASS C8 at most 3 service headers, <= 13 pins, GND on first and last pin
+PASS C9 every service pin except GND reaches its node through one series resistor >= 1K
+PASS C10 service headers cover the ODBIOR minimum (rails, reset, EN = SUP_N, PFAIL_N, start states), no node twice
+PASS C11 series value class (S1 §6): rails 1K, high-impedance nodes 10K, SUP_N_OUT 10K (reset edge, exception 1.10)
+PASS C12 rails on the service headers only next to GND, another rail or a 10K high-impedance line
+PASS C13 docs/ODBIOR.md: every service pin reference J_SVn.p names the node of that pin
+OK     null control (no defect) -> []
+OK     J_BP3 pin 7 unconnected -> ['C1', 'C0', 'C3', 'C5']
+OK     CAN_RX lost from J_BP1.8 -> ['C1', 'C0', 'C5']
+OK     CAN_TX duplicated on J_BP1.9 -> ['C1', 'C3', 'C5']
+OK     foreign net I2C_SDA on J_BP1.20 -> ['C1', 'C5']
+OK     only one 5V_SYS pin -> ['C2']
+OK     CAN_TX on odd pin (swap 6/7) -> ['C3']
+OK     edge TC2_CS on exception pin (swap 9/10) -> ['C3', 'C5']
+OK     ADC_SCLK loses GND neighbour (swap 3/4) -> ['C3', 'C4']
+OK     MEAS_EN loses GND neighbour (swap 15/16) -> ['C3', 'C4', 'C6']
+OK     SPI3_SCLK at ribbon end (swap 2/1 -> pin 1) -> ['C3', 'C4']
+OK     HEARTBEAT without GND neighbour (swap 13/15) -> ['C3', 'C5']
+OK     PFAIL_N between the 5V_SYS pins (swap 16/18) -> ['C5', 'C6']
+OK     PFAIL_N pull-up back to 10K (29.09) -> ['C6']
+OK     pull-up on GPIO side -> ['C6']
+OK     series resistor 0R -> ['C6']
+OK     PFAIL_N wired straight to the GPIO -> ['C6', 'C7']
+OK     PFAIL_N on GPIO37 PSRAM -> ['C7']
+OK     PFAIL_N on GPIO46 strap -> ['C7']
+OK     service header without GND at the end -> ['C8', 'C9', 'C12']
+OK     service pin straight on 3V3_CORE -> ['C9', 'C13']
+OK     service resistor 100R -> ['C9', 'C10', 'C13']
+OK     SUP_N (EN) not on a service header -> ['C10', 'C13']
+OK     5V_SYS service resistor 10K -> ['C11']
+OK     SUP_RAW_N service resistor 1K -> ['C11', 'C12']
+OK     SUP_N_OUT service resistor back to 1K (R70) -> ['C11']
+OK     3V3_CORE between CS_ILOG_N and CS_ITEST_N (swap J_SV1 pins 10/6) -> ['C12', 'C13']
+OK     5V_SYS and 5V_M1 swapped on J_SV2 (ODBIOR names J_SV2.2 = 5V_SYS) -> ['C13']
+14 checks; 28/28 controls as expected (1 null); checks without control: []
+> /usr/bin/python3 write_tables.py
+tables: 60 J_BP rows, 39 service rows, 511 netlist rows
+> /usr/bin/python3 /home/tgorbacz/AI/Claude/EGRLab/.worktrees/nadruk-s1/Plytki/P03-R6-review/verification/check_tables.py
+{'pass': True, 'csv_rows': {'BOM.csv': 122, 'J_BP.csv': 60, 'SERWIS.csv': 39, 'STANY-DOMYSLNE.csv': 26, 'netlist-pinowa.csv': 511, 'zakupy.csv': 23}, 'sticker_pins': 39, 'cad_pins_checked': 511, 'purchase_parts_checked': 114}
+> /usr/bin/kicad-cli sch export pdf -o output/pdf/P03-R6-schemat.pdf eda/P03.kicad_sch
+> /opt/egrlab/env/bin/pdftoppm -png -r 60 output/pdf/P03-R6-schemat.pdf output/previews/sch
+P03-R6 schematic stage: generation and checks complete. PCB: local session (layout requirements in README).
+

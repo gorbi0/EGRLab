@@ -2,11 +2,11 @@
 
 *1.10.2026, plik generowany przez `src/szkic.py`. Nie zamawiać: P09 R2, P10 R2 i P03 R6 scalone lokalnie 1.10, P05 R3 i P06 R2 z PCB na gałęziach (czekają na scalenie), P11 czeka na rewizję S1; ceny i stany TME są z listy 2 (28.09) i trzeba je sprawdzić w przeglądarce.*
 
-Pozycji: 131; do wyboru typu: 8; do kupienia: 77; częściowo z rejestru: 4; z rejestru: 41. Cena z 28.09 jest tylko dla 18 pozycji do kupienia (razem 77.64 zł netto, bez minimów i wysyłki) — reszta to nowe części S1 bez ceny.
+Pozycji: 131; do wyboru typu: 8; do kupienia: 77; częściowo z rejestru: 4; z rejestru: 41. Cena z 28.09 jest tylko dla 18 pozycji do kupienia (razem 79.38 zł netto, bez minimów i wysyłki) — reszta to nowe części S1 bez ceny.
 
 | Pozycja | P02 R4 | P03 R6 | P09 R2 | P10 R2 | P05 R3 | P06 R2 | Razem | Wniosek | TME 28.09 | Oznaczenia |
 |---|---:|---:|---:|---:|---:|---:|---:|---|---|---|
-| 100DP1T1B4M6RE (E-Switch 100, DPDT ON-ON, M6 right angle, gold; code to confirm) |  |  |  |  | 1 |  | 1 | kupić 1 — SW1 P05: E-Switch 100 DPDT ON-ON, kątowy M6 (decyzja 1.10); kod tulei (B4 bez gwintu / B3 z gwintem + H) i dostępność do potwierdzenia (Mouser) |  | P05 R3: SW1 |
+| 100DP1T1B4M6RE (E-Switch 100, DPDT ON-ON, M6 right angle, gold; code to confirm) |  |  |  |  | 1 |  | 1 | kupić 1 — SW1 P05 na PANELU (decyzja 4.10 po makiecie): E-Switch 100 DPDT ON-ON z tuleją gwintowaną i oczkami lutowniczymi, np. 100DP1T1B1M1QEH (kod zakończenia do potwierdzenia w karcie) + 5 przewodów AWG24 ok. 80 mm do otworów SW1 na P05; nie kupować wersji kątowej M6 |  | P05 R3: SW1 |
 | BYPASS-DPDT-10A — przełącznik BYPASS na panelu (w BOM P06 poza płytką) |  |  |  |  |  | 1 | 1 | kupić 1 — SW1 P06 (panel, poza PCB): DPDT ON-ON >= 10 A DC 12-30 V, oczka lutownicze, tuleja z nakrętką; MPN do wyboru (P06 docs/ZAKUPY.md), NKK S6A nie kupować |  | P06 R2: SW1 |
 | listwa goldpin 1×13 kątowa (listwa serwisowa) | 2 | 3 | 1 |  | 2 | 1 | 9 | kupić 9 — typ do wyboru: kątowy goldpin 1×13 (posiadany 1×40 jest prosty); można ciąć z kątowego 1×40 |  | P02 R4: J_SV1, J_SV2; P03 R6: J_SV1, J_SV2, J_SV3; P09 R2: J2; P05 R3: J_SV1, J_SV2; P06 R2: J_SV2 |
 | listwa goldpin 1×7 kątowa (listwa serwisowa) |  |  |  |  |  | 1 | 1 | kupić 1 — typ do wyboru: kątowy goldpin 1×7 (P06 J_SV1); można ciąć z kątowego 1×40 |  | P06 R2: J_SV1 |
@@ -21,9 +21,9 @@ Pozycji: 131; do wyboru typu: 8; do kupienia: 77; częściowo z rejestru: 4; z r
 | Adafruit 4682 microSD (gniazdo 1×9 i dystanse — pozycje niżej) |  | 1 |  |  |  |  | 1 | kupić 1 | Mouser 485-4682: 13,24 zł (lista 2) | P03 R6: SD1 |
 | AO3401A |  | 1 |  |  |  |  | 1 | kupić 1 | AO3401A: 1.2860 zł (stan 39078) | P03 R6: Q1 |
 | BAT85,133 (Nexperia) |  |  |  |  |  | 1 | 1 | kupić 1 |  | P06 R2: D2 |
-| kondensator 1206 X7R 100n | 2 | 13 |  |  | 15 | 11 | 41 | kupić 41 | C1206C104K5RAC: 0.4073 zł (stan 146336) | P02 R4: C27, C28; P03 R6: C2, C1, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C15; P05 R3: C4, C5, C6, C7, C8, C11, C14, C15, C16, C17, C18, C19, C20, C21, C22; P06 R2: C16, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15 |
+| kondensator 1206 X7R 100n | 2 | 13 |  |  | 15 | 12 | 42 | kupić 42 | C1206C104K5RAC: 0.4073 zł (stan 146336) | P02 R4: C27, C28; P03 R6: C2, C1, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C15; P05 R3: C4, C5, C6, C7, C8, C11, C14, C15, C16, C17, C18, C19, C20, C21, C22; P06 R2: C16, C17, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15 |
 | kondensator 1206 X7R 10n | 1 |  |  |  | 2 |  | 3 | kupić 3 |  | P02 R4: C13; P05 R3: C25, C26 |
-| kondensator 1206 X7R 10u |  | 1 |  |  |  |  | 1 | kupić 1 | GRM31CR71C106KA12L: 1.3358 zł (stan 19711) | P03 R6: C14 |
+| kondensator 1206 X7R 10u |  | 1 |  |  | 1 |  | 2 | kupić 2 | GRM31CR71C106KA12L: 1.3358 zł (stan 19711) | P03 R6: C14; P05 R3: C35 |
 | kondensator 1206 X7R 1u |  | 1 | 2 |  | 5 |  | 8 | kupić 8 | C3216X7R1H105KAB: 0.4292 zł (stan 3220) | P03 R6: C13; P09 R2: C6, C7; P05 R3: C2, C9, C10, C23, C24 |
 | kondensator 1206 X7R 2u2 |  |  |  |  | 1 |  | 1 | kupić 1 |  | P05 R3: C3 |
 | kondensator 1206 X7R 470n |  |  |  |  |  | 1 | 1 | kupić 1 |  | P06 R2: C1 |

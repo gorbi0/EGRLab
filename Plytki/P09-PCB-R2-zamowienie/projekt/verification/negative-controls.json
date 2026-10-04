@@ -1,0 +1,207 @@
+[
+  {
+    "control": "null_control",
+    "expected_failing_check": "none (all PASS)",
+    "detected": true,
+    "failed_checks": []
+  },
+  {
+    "control": "mount_shift",
+    "expected_failing_check": "M3 holes",
+    "detected": true,
+    "failed_checks": [
+      "M3 holes: 4 NPTH 3.2 mm exactly at the S1 positions (x_w_slocie + 53.5 k, y 14 / 86)"
+    ]
+  },
+  {
+    "control": "jbp_shift",
+    "expected_failing_check": "J1 = J_BP",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "J1 = J_BP (edge A): IDC 2x8 angled, body front at y = 0, pin centre x = 26.5, pin 1 at the smaller x, pinout = docs/J_BP.csv (P12 contract)"
+    ]
+  },
+  {
+    "control": "sv_no_gnd_end",
+    "expected_failing_check": "Service header J2",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Every value, footprint ID and pad net equals the exported schematic netlist",
+      "Service header J2 (edge B, S1 section 6): <= 13 pins in x 10..43, pins out ~6 mm, GND on both ends, one series resistor per pin of the value in docs/SERWIS.csv, <= 10 mm from its node, one silk label per pin with the name of its node (LABEL in silkscreen.py), GND at the ends"
+    ]
+  },
+  {
+    "control": "sv_pin_without_resistor",
+    "expected_failing_check": "Service header J2",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Every value, footprint ID and pad net equals the exported schematic netlist",
+      "Service header J2 (edge B, S1 section 6): <= 13 pins in x 10..43, pins out ~6 mm, GND on both ends, one series resistor per pin of the value in docs/SERWIS.csv, <= 10 mm from its node, one silk label per pin with the name of its node (LABEL in silkscreen.py), GND at the ends"
+    ]
+  },
+  {
+    "control": "sv_resistor_far",
+    "expected_failing_check": "Service header J2",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Service header J2 (edge B, S1 section 6): <= 13 pins in x 10..43, pins out ~6 mm, GND on both ends, one series resistor per pin of the value in docs/SERWIS.csv, <= 10 mm from its node, one silk label per pin with the name of its node (LABEL in silkscreen.py), GND at the ends",
+      "Every visible reference outside the courtyards of other parts",
+      "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)"
+    ]
+  },
+  {
+    "control": "label_missing",
+    "expected_failing_check": "Service header J2",
+    "detected": true,
+    "failed_checks": [
+      "Service header J2 (edge B, S1 section 6): <= 13 pins in x 10..43, pins out ~6 mm, GND on both ends, one series resistor per pin of the value in docs/SERWIS.csv, <= 10 mm from its node, one silk label per pin with the name of its node (LABEL in silkscreen.py), GND at the ends"
+    ]
+  },
+  {
+    "control": "too_tall",
+    "expected_failing_check": "Every part <=",
+    "detected": true,
+    "failed_checks": [
+      "Every part <= 16.5 mm above the board (level 3, S1 section 4; src/heights.py; the module height is an upper estimate)"
+    ]
+  },
+  {
+    "control": "module_turned",
+    "expected_failing_check": "J3 / J4 MAX31856",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Reserved strip of edge A (S1 §5: y 0-10, x 10-43 of each J_BP slot): no other part on either side; the edge-B zone of the service headers is reported only (S1 §6 gives the header position, not a reserved strip)",
+      "J3 / J4 MAX31856 XU modules soldered directly (MODUL-KWALIFIKACJA.md; no socket, no support holes, decision 1.10): module outline on the board, thermocouple terminal towards the input wall (x = 53.0, S1 sections 2 and 7), pin 1 / VIN at the smaller y",
+      "Every visible reference outside the courtyards of other parts",
+      "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)"
+    ]
+  },
+  {
+    "control": "decap_far",
+    "expected_failing_check": "Decoupling",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Reserved strip of edge A (S1 §5: y 0-10, x 10-43 of each J_BP slot): no other part on either side; the edge-B zone of the service headers is reported only (S1 §6 gives the header position, not a reserved strip)",
+      "Decoupling at the IC pins: 100 nF pad <= 6 mm from its supply pin (C1 U1.14, C2 U2.14, C3 U3.16; limit as P03 R6)",
+      "Every visible reference outside the courtyards of other parts",
+      "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)"
+    ]
+  },
+  {
+    "control": "modcap_far",
+    "expected_failing_check": "Module supply capacitors",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Module supply capacitors: C6 / C7 pad <= 6 mm from the VIN pin of J3 / J4 (as the IC decoupling; review 1.10)",
+      "Every visible reference outside the courtyards of other parts",
+      "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)"
+    ]
+  },
+  {
+    "control": "driver_far",
+    "expected_failing_check": "Series resistors at their drivers",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Series resistors at their drivers: pad <= 6 mm from the driver pin (R14-R17 at U1, R11 / R12 at U2)"
+    ]
+  },
+  {
+    "control": "narrow_track",
+    "expected_failing_check": "Every track >=",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Every track >= 0.30 mm (S1 section 3)"
+    ]
+  },
+  {
+    "control": "bottom_tht",
+    "expected_failing_check": "S1-2 section 4",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "S1-2 section 4: parts on the bottom only SMD <= 1.5 mm, no SOIC (level 3), >= 1 mm from THT pads"
+    ]
+  },
+  {
+    "control": "gnd_pour_removed",
+    "expected_failing_check": "GND pours",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "GND pours on both layers: B.Cu >= 50 % of the board; island removal always (every island tied)"
+    ]
+  },
+  {
+    "control": "ref_on_part",
+    "expected_failing_check": "Every visible reference",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Every visible reference outside the courtyards of other parts",
+      "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)"
+    ]
+  },
+  {
+    "control": "ref_far",
+    "expected_failing_check": "Every visible reference nearer",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Every visible reference outside the courtyards of other parts",
+      "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)"
+    ]
+  },
+  {
+    "control": "label_swap",
+    "expected_failing_check": "Service header J2",
+    "detected": true,
+    "failed_checks": [
+      "Service header J2 (edge B, S1 section 6): <= 13 pins in x 10..43, pins out ~6 mm, GND on both ends, one series resistor per pin of the value in docs/SERWIS.csv, <= 10 mm from its node, one silk label per pin with the name of its node (LABEL in silkscreen.py), GND at the ends"
+    ]
+  },
+  {
+    "control": "strip_part",
+    "expected_failing_check": "Reserved strip of edge A",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Reserved strip of edge A (S1 §5: y 0-10, x 10-43 of each J_BP slot): no other part on either side; the edge-B zone of the service headers is reported only (S1 §6 gives the header position, not a reserved strip)",
+      "Every visible reference outside the courtyards of other parts",
+      "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)"
+    ]
+  },
+  {
+    "control": "mark_missing",
+    "expected_failing_check": "Pin 1 / polarity marks",
+    "detected": true,
+    "failed_checks": [
+      "Pin 1 / polarity marks of module and wire connectors on the silkscreen, <= 3 mm from their pads (S1 §9; review 1.10)"
+    ]
+  },
+  {
+    "control": "zone_copper",
+    "expected_failing_check": "Standoff zones D7",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Standoff zones D7: no courtyard and no copper (pads, tracks, vias, pours) within 3.5 mm of a hole centre; rule areas on both layers"
+    ]
+  },
+  {
+    "control": "title_wrong",
+    "expected_failing_check": "Silkscreen: board name",
+    "detected": true,
+    "failed_checks": [
+      "Silkscreen: board name \"P09 R2 S1-1/3 S3\", edge markers A and B"
+    ]
+  }
+]

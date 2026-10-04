@@ -1,0 +1,14 @@
+﻿pin;siec;rezystor;cel_pomiaru
+1;GND;—;masa sondy (pierwszy pin listwy)
+2;3V3_IO;R20 1 kΩ 1206;szyna logiki i VIN przy JP 1-2: pobór, brak zwarć, minimum przy zimnym i ciepłym modułem
+3;5V_SYS;R21 1 kΩ 1206;szyna 5 V (VIN przy JP 2-3), obecność i spadek pod obciążeniem
+4;TC1_VIN;R22 1 kΩ 1206;VIN modułu TC1: wybór JP1 (3,3 V albo 5 V), kwalifikacja modułu
+5;TC2_VIN;R23 1 kΩ 1206;VIN modułu TC2: wybór JP2
+6;TC1_3VO;R24 1 kΩ 1206;3Vo modułu TC1: VDD MAX31856 3,0-3,6 V (tylko pomiar, nie zasilać)
+7;TC2_3VO;R25 1 kΩ 1206;3Vo modułu TC2: VDD MAX31856 3,0-3,6 V (tylko pomiar)
+8;CS1_BUF;R26 1 kΩ 1206;CS1 za buforem U1: setup/hold, przerwa obu CS HIGH >= 1 us
+9;CS2_BUF;R27 1 kΩ 1206;CS2 za buforem U1
+10;OE1_N;R28 1 kΩ 1206;wybór MISO TC1 (Y2 U3, aktywny LOW): tablica prawdy CS
+11;OE2_N;R29 1 kΩ 1206;wybór MISO TC2 (Y1 U3, aktywny LOW)
+12;SPI3_MISO;R30 1 kΩ 1206;"wspólne MISO: TC1, TC2, oba CS HIGH i LOW; Hi-Z przy nieaktywnych buforach"
+13;GND;—;masa sondy (ostatni pin listwy)

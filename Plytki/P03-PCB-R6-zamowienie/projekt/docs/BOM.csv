@@ -1,0 +1,123 @@
+﻿ref;source_ref;display;mpn;qty;footprint;url;note
+M1;M1;Waveshare N32R16V;owned (Waveshare ESP32-S3-DEV-KIT-N32R16V) on 2x 1x22 female headers;1;P03:Waveshare_ESP32-S3-DEV-KIT_2x22_W22.86;https://docs.waveshare.com/ESP32-S3-DEV-KIT-N8R8;"Rows 22.86 mm (measured). GPIO numbers are the v6.1 contract; R6: GPIO3 = PFAIL_N_CORE (JTAG strap only with EFUSE_STRAP_JTAG_SEL=1, never burn). Remove the on-board RGB LED on GPIO38 (v6.1). GPIO47/48 1.8 V: unused. 3V3 = 3V3_CORE; never tie to 3V3_IO."
+SD1;SD1;Adafruit 4682;Adafruit 4682 on a 1x9 female header + 2x M2.5 spacer;1;P03:Adafruit_4682_microSD_1x09;https://www.adafruit.com/product/4682;User decision 25.09: Adafruit 4682 (3 V only, no regulator/level shifter). SO = card out (MISO), SI = card in (MOSI). D1, DAT2, DET unused.
+U1;U17;MCP23017-E/SP;MCP23017-E/SP;1;Package_DIP:DIP-28_W7.62mm;https://ww1.microchip.com/downloads/en/devicedoc/20001952c.pdf;Address 0x20 (A2..A0 = GND). IODIRA 0x10, IODIRB 0x7F (v6.1). In 2x DIP14 precision sockets end to end (bought).
+C2;C_DEC_U17_9;100nF / 50V X7R;GRM31CR71H104KA01L;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;;At U1 pin 9.
+U2;U_CS;SN74HC139N;SN74HC139N;1;Package_DIP:DIP-16_W7.62mm;https://www.ti.com/lit/ds/symlink/sn74hc139.pdf;/G = GPIO38, A = MEAS_BANK, B = GND (v6.1). Second half disabled. DIP16 socket (bought).
+C1;C_CS;100nF / 50V X7R;GRM31CR71H104KA01L;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;;At U2 pin 16.
+R1;R_CS_IDLE;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;Decoder disabled while GPIO38 floats.
+U3;U5;TPS3808G33;TPS3808G33DBVR;1;Package_TO_SOT_SMD:SOT-23-6;https://www.ti.com/lit/ds/symlink/tps3808.pdf;R6: SOT23-6 soldered directly on the fab board (PA0085 adapter not used). CT open = fixed delay.
+C3;C_DEC_U5_6;100nF / 50V X7R;GRM31CR71H104KA01L;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;;At U3 pin 6.
+R13;R_SUP_PU;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;"Supervisor pull-up before U4; does not discharge Waveshare EN capacitor."
+R9;R_PU_I2C_SCL;4K7 / 1% 1206;RC1206FR-074K7L;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;
+R10;R_PU_I2C_SDA;4K7 / 1% 1206;RC1206FR-074K7L;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;
+R11;R_PU_SD_CS;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;Card deselected while GPIO7 floats.
+R12;R_SCOPE;330R / 1% 1206;RC1206FR-07330RL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;SCOPE_TRIG series resistor to PANELCORE pin 7.
+R5;R_MARK;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;
+C4;C_MARK;100nF / 50V X7R;GRM31CR71H104KA01L;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;;MARK button debounce.
+R4;R_LED;1K / 1% 1206;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;
+LED1;LED1;GREEN 3mm / STATUS;L-934GD;1;LED_THT:LED_D3.0mm;https://www.kingbrightusa.com/images/catalog/SPEC/L-934GD.pdf;MCP23017 GPA7.
+R14;W_LINK;1K / 1% 1206;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;"CORE_LINK = presence of 3V3_CORE through 1 k (R3, review P3-02): a harness short to GND draws 3.3 mA; P04 R16 10 k sees >= 2.85 V (74LVC125A VIH 2.0 V). v6.1 had a wire link."
+U11;U_IN1;74LVC125A;74LVC125AD,118 (Nexperia);1;Package_SO:SOIC-14_3.9x8.7mm_P1.27mm;https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf;Nexperia only (Ioff), v6.1.
+C5;C_U_IN1;100nF / 50V X7R;GRM31CR71H104KA01L;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;;At U11 pin 14.
+U12;U_IN2;74LVC125A;74LVC125AD,118 (Nexperia);1;Package_SO:SOIC-14_3.9x8.7mm_P1.27mm;https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf;Nexperia only (Ioff), v6.1.
+C6;C_U_IN2;100nF / 50V X7R;GRM31CR71H104KA01L;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;;At U12 pin 14.
+U13;U_IN3;74LVC125A;74LVC125AD,118 (Nexperia);1;Package_SO:SOIC-14_3.9x8.7mm_P1.27mm;https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf;Nexperia only (Ioff), v6.1.
+C7;C_U_IN3;100nF / 50V X7R;GRM31CR71H104KA01L;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;;At U13 pin 14.
+U14;U_IN4;74LVC125A;74LVC125AD,118 (Nexperia);1;Package_SO:SOIC-14_3.9x8.7mm_P1.27mm;https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf;Nexperia only (Ioff), v6.1. Unused OE# = 3V3_IO in U_IN4 as in v6.1.
+C8;C_U_IN4;100nF / 50V X7R;GRM31CR71H104KA01L;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;;At U14 pin 14.
+U21;U_OUT1;74LVC125A;74LVC125AD,118 (Nexperia);1;Package_SO:SOIC-14_3.9x8.7mm_P1.27mm;https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf;Nexperia only (Ioff), v6.1.
+C9;C_U_OUT1;100nF / 50V X7R;GRM31CR71H104KA01L;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;;At U21 pin 14.
+U22;U_OUT2;74LVC125A;74LVC125AD,118 (Nexperia);1;Package_SO:SOIC-14_3.9x8.7mm_P1.27mm;https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf;Nexperia only (Ioff), v6.1.
+C10;C_U_OUT2;100nF / 50V X7R;GRM31CR71H104KA01L;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;;At U22 pin 14.
+U23;U_OUT3;74LVC125A;74LVC125AD,118 (Nexperia);1;Package_SO:SOIC-14_3.9x8.7mm_P1.27mm;https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf;Nexperia only (Ioff), v6.1.
+C11;C_U_OUT3;100nF / 50V X7R;GRM31CR71H104KA01L;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;;At U23 pin 14.
+R2;R_CURRENT_OK;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;Receiver pull-down: open cable = not OK.
+R3;R_HW_PD;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;Receiver pull-down.
+R6;R_PD_LOGGER_CLEAR;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;Receiver pull-down.
+R7;R_PD_SENSOR_HEALTHY;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;Receiver pull-down: cable open or transmitter unpowered = fault (v6.1).
+R8;R_PD_TEST_PRESENT;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;Receiver pull-down.
+J_BP1;ADDED_R6_EDGE_A;J_BP1 / IDC 2x10 RA (S1);IDC box header 2x10, 2.54 mm, right angle, Au (MPN to be selected);1;Connector_IDC:IDC-Header_2x10_P2.54mm_Horizontal;;Format S1 edge A, slot S1, centre x = 26.5 mm in the slot, pin 1 towards smaller x. Short ribbon to P12.
+J_BP2;ADDED_R6_EDGE_A;J_BP2 / IDC 2x10 RA (S2);IDC box header 2x10, 2.54 mm, right angle, Au (MPN to be selected);1;Connector_IDC:IDC-Header_2x10_P2.54mm_Horizontal;;Format S1 edge A, slot S2, centre x = 26.5 mm in the slot, pin 1 towards smaller x. Short ribbon to P12.
+J_BP3;ADDED_R6_EDGE_A;J_BP3 / IDC 2x10 RA (S3);IDC box header 2x10, 2.54 mm, right angle, Au (MPN to be selected);1;Connector_IDC:IDC-Header_2x10_P2.54mm_Horizontal;;Format S1 edge A, slot S3, centre x = 26.5 mm in the slot, pin 1 towards smaller x. Short ribbon to P12.
+TP1;ADDED_TESTPAD;5V_SYS;PCB test pad;1;P03:TestPad_1;;"Probe access; no circuit function."
+TP2;ADDED_TESTPAD;3V3_CORE;PCB test pad;1;P03:TestPad_1;;"Probe access; no circuit function."
+TP3;ADDED_TESTPAD;3V3_IO;PCB test pad;1;P03:TestPad_1;;"Probe access; no circuit function."
+TP4;ADDED_TESTPAD;GND;PCB test pad;1;P03:TestPad_1;;"Probe access; no circuit function."
+TP5;ADDED_TESTPAD;SUP_N;PCB test pad;1;P03:TestPad_1;;"Probe access; no circuit function."
+TP6;ADDED_TESTPAD;GND;PCB test pad;1;P03:TestPad_1;;"Probe access; no circuit function."
+R15;ADDED_R2_SOURCE_DEFAULT;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;Source-side reset/boot default. Required even when downstream has a pull resistor.
+R16;ADDED_R2_SOURCE_DEFAULT;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;Source-side reset/boot default. Required even when downstream has a pull resistor.
+R17;ADDED_R2_SOURCE_DEFAULT;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;Source-side reset/boot default. Required even when downstream has a pull resistor.
+R18;ADDED_R2_SOURCE_DEFAULT;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;Source-side reset/boot default. Required even when downstream has a pull resistor.
+R19;ADDED_R2_SOURCE_DEFAULT;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;Source-side reset/boot default. Required even when downstream has a pull resistor.
+R20;ADDED_R2_SOURCE_DEFAULT;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;Source-side reset/boot default. Required even when downstream has a pull resistor.
+R21;ADDED_R2_SOURCE_DEFAULT;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;Source-side reset/boot default. Required even when downstream has a pull resistor.
+R22;ADDED_R2_SOURCE_DEFAULT;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;Source-side reset/boot default. Required even when downstream has a pull resistor.
+R23;ADDED_R2_SOURCE_DEFAULT;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;Source-side reset/boot default. Required even when downstream has a pull resistor.
+R24;ADDED_R2_SOURCE_DEFAULT;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;Source-side reset/boot default. Required even when downstream has a pull resistor.
+R25;ADDED_R2_SOURCE_DEFAULT;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;Source-side reset/boot default. Required even when downstream has a pull resistor.
+R26;ADDED_R2_RECEIVER_DEFAULT;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;Receiver-side default before buffer. Not a device-presence detector.
+R27;ADDED_R2_RECEIVER_DEFAULT;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;Receiver-side default before buffer. Not a device-presence detector.
+R28;ADDED_R2_RECEIVER_DEFAULT;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;Receiver-side default before buffer. Not a device-presence detector.
+R29;ADDED_R2_RECEIVER_DEFAULT;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;Receiver-side default before buffer. Not a device-presence detector.
+R30;ADDED_R2_RECEIVER_DEFAULT;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;Receiver-side default before buffer. Not a device-presence detector.
+R31;ADDED_R2_RECEIVER_DEFAULT;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;Receiver-side default before buffer. Not a device-presence detector.
+R32;ADDED_R2_RECEIVER_DEFAULT;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;Receiver-side default before buffer. Not a device-presence detector.
+R33;ADDED_R2_RECEIVER_DEFAULT;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;Receiver-side default before buffer. Not a device-presence detector.
+U4;ADDED_R2_RESET_BUFFER;SN74LVC1G37DBVR;SN74LVC1G37DBVR;1;Package_TO_SOT_SMD:SOT-23-5;https://www.ti.com/lit/gpn/SN74LVC1G37;"DBV SOT23-5, 0.95 mm pitch; direct hand soldering. R5: non-inverting Schmitt input, open-drain output; replaces LVC1G07 without changing pads. Never substitute push-pull or a non-Schmitt input."
+R34;ADDED_R2_RESET_LIMIT;220R / 1% 1206;RC1206FR-07220RL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;Limits discharge of the module EN capacitor to <16 mA at 3.465 V. Final SUP_N goes to MCU EN, MCP reset and P04.
+R35;ADDED_R2_RESET_PULLUP;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;Final common reset pull-up, parallel to the module 10K. Module 1 uF EN capacitor retained.
+C12;ADDED_R2_RESET_DECAP;100nF / 50V X7R;GRM31CR71H104KA01L;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;;1206, at U4 pin 5, local ground via.
+U5;ADDED_R2_USB_BLOCK;LTC4412IS6;LTC4412IS6#TRPBF;1;Package_TO_SOT_SMD:SOT-23-6;https://www.analog.com/media/en/technical-documentation/data-sheets/ltc4412.pdf;TSOT23-6, direct hand soldering. CTL=0 always enabled. Reverse-current blocker, not a current limiter.
+Q1;ADDED_R2_USB_PMOS;AO3401A;AO3401A;1;Package_TO_SOT_SMD:SOT-23;https://www.aosmd.com/pdfs/datasheet/AO3401A.pdf;"G=1, S=2 (M1), D=3 (SYS); body diode D to S. Do not reverse source/drain. Direct SOT23 hand soldering."
+C13;ADDED_R2_PWR_DECAP;1uF / 25V X7R;GRM31CR71E105KA12L;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;;1206 local bypass. Module bulk capacitance remains.
+C14;ADDED_R2_PWR_DECAP;10uF / 16V X7R;GRM31CR71C106KA12L;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;;1206 local bypass. Module bulk capacitance remains.
+R36;ADDED_R2_SOURCE_TERMINATION;33R / 1% 1206;RC1206FR-0733RL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;"Source termination at buffer output. Initial 33R; tune 22..47R or 0R only after end-of-link waveform measurement."
+R37;ADDED_R2_SOURCE_TERMINATION;33R / 1% 1206;RC1206FR-0733RL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;"Source termination at buffer output. Initial 33R; tune 22..47R or 0R only after end-of-link waveform measurement."
+R38;ADDED_R2_SOURCE_TERMINATION;33R / 1% 1206;RC1206FR-0733RL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;"Source termination at buffer output. Initial 33R; tune 22..47R or 0R only after end-of-link waveform measurement."
+R39;ADDED_R2_SOURCE_TERMINATION;33R / 1% 1206;RC1206FR-0733RL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;"Source termination at buffer output. Initial 33R; tune 22..47R or 0R only after end-of-link waveform measurement."
+R40;ADDED_R2_SOURCE_TERMINATION;33R / 1% 1206;RC1206FR-0733RL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;"Source termination at buffer output. Initial 33R; tune 22..47R or 0R only after end-of-link waveform measurement."
+U6;ADDED_R4_RESET_SCHMITT;SN74LVC1G17DBVR;SN74LVC1G17DBVR;1;Package_TO_SOT_SMD:SOT-23-5;https://www.ti.com/lit/ds/symlink/sn74lvc1g17.pdf;"DBV SOT23-5, 0.95 mm pitch; direct hand soldering. Schmitt-trigger buffer, push-pull. Drives J_BP3.12 (P04 SUP_N) through R41."
+R41;ADDED_R4_RESET_SERIES;220R / 1% 1206;RC1206FR-07220RL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;"Series resistor U6.4 -> J_BP3.12 (R6; R5: J4.15): short to GND <= 16 mA (3.465 V). Initial value; R6 path ribbon 30 mm + P12 + ribbon 30 mm to P04. Verify <=10 ns/V at P04 U9.5 with actual load/probe; ideal RC is not a guaranteed capacitance limit."
+C15;ADDED_R4_RESET_DECAP;100nF / 50V X7R;GRM31CR71H104KA01L;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;;1206, at U6 pin 5, local ground via.
+TP7;ADDED_R2_TESTPAD;5V_M1;PCB test pad;1;P03:TestPad_1;;Probe access.
+TP8;ADDED_R2_TESTPAD;SUP_RAW_N;PCB test pad;1;P03:TestPad_1;;Probe access.
+R42;ADDED_R6_PFAIL_SERIES;1K / 1% 1206;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;PFAIL_N series resistor at M1 GPIO3 (J1-13): limits clamp current when P02 is live and CORE is not.
+R43;ADDED_R6_PFAIL_PULLUP;100K / 1% 1206;RC1206FR-07100KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;"PFAIL_N default HIGH (supply OK) with J_BP2 open; connector side of R42. 30.09: 100K (was 10K): with LM2903 VOL 0.7 V over temperature the GPIO low level is 0.73 V < VIL 0.825 V (10K gave 0.95 V)."
+R44;ADDED_R6_SERVICE_SERIES;1K / 1% 1206;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;"J_SV1.2 series resistor, placed at the MOTOR_INB node (S1 §6): MCP23017; brak ruchu przy starcie."
+R45;ADDED_R6_SERVICE_SERIES;1K / 1% 1206;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;"J_SV1.3 series resistor, placed at the MOTOR_INA node (S1 §6): MCP23017; brak ruchu przy starcie."
+R46;ADDED_R6_SERVICE_SERIES;1K / 1% 1206;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;J_SV1.4 series resistor, placed at the MEAS_BANK node (S1 §6): wejscie A dekodera, start: 0.
+R47;ADDED_R6_SERVICE_SERIES;1K / 1% 1206;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;J_SV1.5 series resistor, placed at the CS_ILOG_N node (S1 §6): start: 1.
+R48;ADDED_R6_SERVICE_SERIES;1K / 1% 1206;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;J_SV1.6 series resistor, placed at the SCOPE_TRIG node (S1 §6): wyjscie GPIO41 przed R12.
+R49;ADDED_R6_SERVICE_SERIES;1K / 1% 1206;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;J_SV1.7 series resistor, placed at the CS_ITEST_N node (S1 §6): start: 1.
+R50;ADDED_R6_SERVICE_SERIES;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;J_SV1.8 series resistor, placed at the I2C_SCL node (S1 §6): I2C MCP23017 (OD, 4k7).
+R51;ADDED_R6_SERVICE_SERIES;1K / 1% 1206;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;J_SV1.9 series resistor, placed at the 3V3_IO node (S1 §6): szyna z P02 R4 (OE U14).
+R52;ADDED_R6_SERVICE_SERIES;1K / 1% 1206;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;"J_SV1.10 series resistor, placed at the 3V3_CORE node (S1 §6): LDO modulu; zapad przez 3,07 V."
+R53;ADDED_R6_SERVICE_SERIES;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;J_SV1.11 series resistor, placed at the I2C_SDA node (S1 §6): I2C MCP23017 (OD, 4k7).
+R54;ADDED_R6_SERVICE_SERIES;1K / 1% 1206;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;J_SV1.12 series resistor, placed at the LOGGER_CURRENT_OK node (S1 §6): z P06 (10k R2 do GND).
+J_SV1;ADDED_R6_SERVICE;J_SV1 / goldpin 1x13 RA (S1);Pin header 1x13, 2.54 mm, right angle, Au;1;Connector_PinHeader_2.54mm:PinHeader_1x13_P2.54mm_Horizontal;;"Format S1 edge B, slot S1, x = 10..43 mm in the slot; pins protrude ~6 mm beyond the edge. GND on pins 1 and 13. Silkscreen: signal name at every pin, readable from edge B."
+R55;ADDED_R6_SERVICE_SERIES;1K / 1% 1206;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;"J_SV2.2 series resistor, placed at the 5V_SYS node (S1 §6): szyna z P02 R4; tabela zasilania P02/USB."
+R56;ADDED_R6_SERVICE_SERIES;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;J_SV2.3 series resistor, placed at the PFAIL_N node (S1 §6): wejscie z P02 R4 po stronie zlacza (100k R43).
+R57;ADDED_R6_SERVICE_SERIES;1K / 1% 1206;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;J_SV2.4 series resistor, placed at the ADC_RESET node (S1 §6): start bez firmware: 0.
+R58;ADDED_R6_SERVICE_SERIES;1K / 1% 1206;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;J_SV2.5 series resistor, placed at the MEAS_EN node (S1 §6): start bez firmware: 0.
+R59;ADDED_R6_SERVICE_SERIES;1K / 1% 1206;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;J_SV2.6 series resistor, placed at the ADC_BUSY node (S1 §6): odpowiedz P05 na CONVST.
+R60;ADDED_R6_SERVICE_SERIES;1K / 1% 1206;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;J_SV2.7 series resistor, placed at the ADC_CONVST node (S1 §6): start bez firmware: 0.
+R61;ADDED_R6_SERVICE_SERIES;1K / 1% 1206;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;J_SV2.8 series resistor, placed at the ADC_CS node (S1 §6): start: 1 (nieaktywne).
+R62;ADDED_R6_SERVICE_SERIES;1K / 1% 1206;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;J_SV2.9 series resistor, placed at the CURRENT_CS_N node (S1 §6): /G dekodera U2, start: 1.
+R63;ADDED_R6_SERVICE_SERIES;1K / 1% 1206;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;J_SV2.10 series resistor, placed at the SD_CS node (S1 §6): karta SD, start: 1.
+R64;ADDED_R6_SERVICE_SERIES;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;J_SV2.11 series resistor, placed at the SUP_RAW_N node (S1 §6): wyjscie TPS3808 (OD, 10k R13).
+R65;ADDED_R6_SERVICE_SERIES;1K / 1% 1206;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;"J_SV2.12 series resistor, placed at the 5V_M1 node (S1 §6): zasilanie modulu za blokada U5/Q1; USB-only, prad wsteczny."
+J_SV2;ADDED_R6_SERVICE;J_SV2 / goldpin 1x13 RA (S2);Pin header 1x13, 2.54 mm, right angle, Au;1;Connector_PinHeader_2.54mm:PinHeader_1x13_P2.54mm_Horizontal;;"Format S1 edge B, slot S2, x = 10..43 mm in the slot; pins protrude ~6 mm beyond the edge. GND on pins 1 and 13. Silkscreen: signal name at every pin, readable from edge B."
+R66;ADDED_R6_SERVICE_SERIES;1K / 1% 1206;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;"J_SV3.2 series resistor, placed at the MCU_ARM node (S1 §6): GPIO39; bez ARM stale 0."
+R67;ADDED_R6_SERVICE_SERIES;1K / 1% 1206;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;J_SV3.3 series resistor, placed at the HEARTBEAT node (S1 §6): GPIO21 do P04.
+R68;ADDED_R6_SERVICE_SERIES;1K / 1% 1206;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;J_SV3.4 series resistor, placed at the PWM node (S1 §6): GPIO1 do P04.
+R69;ADDED_R6_SERVICE_SERIES;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;"J_SV3.5 series resistor, placed at the CORE_LINK node (S1 §6): R14 1k z 3V3_CORE; na P04 >= 2,7 V."
+R70;ADDED_R6_SERVICE_SERIES;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;"J_SV3.6 series resistor, placed at the SUP_N_OUT node (S1 §6): reset do P04 za U6/R41; 10K (1.10, wyjatek od S1 par. 6): galaz serwisowa nie spowalnia zbocza resetu."
+R71;ADDED_R6_SERVICE_SERIES;1K / 1% 1206;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;J_SV3.7 series resistor, placed at the SENSOR_ENABLE node (S1 §6): MCP23017 GPA3 do P04.
+R72;ADDED_R6_SERVICE_SERIES;1K / 1% 1206;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;J_SV3.8 series resistor, placed at the TC2_CS node (S1 §6): start: 1.
+R73;ADDED_R6_SERVICE_SERIES;1K / 1% 1206;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;J_SV3.9 series resistor, placed at the TC1_CS node (S1 §6): start: 1.
+R74;ADDED_R6_SERVICE_SERIES;1K / 1% 1206;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;J_SV3.10 series resistor, placed at the INTERLOCK node (S1 §6): z P04.
+R75;ADDED_R6_SERVICE_SERIES;1K / 1% 1206;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;"J_SV3.11 series resistor, placed at the HW_ARMED node (S1 §6): z P04; stale L w probach resetu."
+R76;ADDED_R6_SERVICE_SERIES;10K / 1% 1206;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;;J_SV3.12 series resistor, placed at the SUP_N node (S1 §6): wspolny reset = EN modulu (J1-3) + RESET MCP23017.
+J_SV3;ADDED_R6_SERVICE;J_SV3 / goldpin 1x13 RA (S3);Pin header 1x13, 2.54 mm, right angle, Au;1;Connector_PinHeader_2.54mm:PinHeader_1x13_P2.54mm_Horizontal;;"Format S1 edge B, slot S3, x = 10..43 mm in the slot; pins protrude ~6 mm beyond the edge. GND on pins 1 and 13. Silkscreen: signal name at every pin, readable from edge B."
