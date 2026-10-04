@@ -123,6 +123,12 @@ for pl in plytki:
         continue
     dane[baza(pl['plytka'])] = pl
     pl['_wersja'] = wersja(pl['zrodlo']['ref'], pl['zrodlo']['plik']); pl['_zmierzone'] = zmierzone(pl)
+    if not pl.get('sloty'):    # 4.10: P11 (panel) — poza stosem, złącze bez slotu; położenie na P12 ustala projekt P12
+        for zl in pl['zlacza']:
+            n = sum(1 for q in piny if q['zlacze'] == zl)
+            zlacza.append({'poziom': pl['poziom'], 'slot': '—', 'x_stos_mm': None, 'z_spodu_plytki_mm': None, 'plytka': pl['plytka'], 'zlacze': zl,
+                           'typ': f'IDC 2×{n // 2}', 'x_lokalnie_mm': None, 'zmierzone_x_mm': None, 'stan': pl['stan'], 'nieparzyste_nie_GND': []})
+        continue
     pierwszy = SLOTY.index(pl['sloty'][0])
     for zl, slot in pl['zlacza'].items():
         p_ = sorted((q for q in piny if q['zlacze'] == zl), key=lambda q: q['pin'])

@@ -2,19 +2,19 @@
 
 *Plik generowany przez `src/kontrakty.py` z `zrodla.json`; nie edytować ręcznie.*
 
-**Wynik:** 0 błędów, 0 uwag; sieci: OK 19, czeka 27, UWAGA 0, BŁĄD 0.
+**Wynik:** 0 błędów, 0 uwag; sieci: OK 23, czeka 27, UWAGA 0, BŁĄD 0.
 
 ## Źródła
 
 | Płytka | Stan | Pinout |
 |---|---|---|
-| P02 R4 | PCB scalona (PR #4), paczka produkcyjna | origin/main @ 1d4ff38, blob c2cfb86198 |
-| P03 R6 | PCB scalona lokalnie 1.10 (gałąź p03-r6-pcb; main czeka na push) | origin/p03-r6-pcb @ 7afd1b9, blob 6993dda42a |
-| P05 R3 | PCB po recenzji niezależnej i poprawkach 2.10 (gałąź p05-r3-pcb: schemat z PR #7 + layout lokalny) | origin/p05-r3-pcb @ 88515c1, blob f064b12b9c |
-| P09 R2 | PCB scalona lokalnie 1.10 (gałąź p09-r2-pcb; main czeka na push) | origin/p09-r2-pcb @ 7ac6d99, blob e325a5ac53 |
-| P06 R2 | PCB po recenzji niezależnej i poprawkach 2.10 (gałąź p06-r2-pcb: schemat z PR #8 + przegląd i layout lokalny) | origin/p06-r2-pcb @ fcb65ad, blob 508a9de996 |
-| P10 R2 | PCB scalona lokalnie 1.10 (gałąź p10-r2-pcb; main czeka na push) | origin/p10-r2-pcb @ 6ab03fb, blob 22cf0803e6 |
-| P11 | czeka: nowy panel, taśma do P12 (S1 §8: 1 × 2×10) | — |
+| P02 R4 | PCB scalona (PR #4), paczka produkcyjna | main @ e77b317, blob ddb6f8c3d4 |
+| P03 R6 | PCB scalona lokalnie 1.10 (gałąź p03-r6-pcb; main czeka na push) | main @ e77b317, blob 6993dda42a |
+| P05 R3 | PCB po recenzji niezależnej i poprawkach 2.10 (gałąź p05-r3-pcb: schemat z PR #7 + layout lokalny) | main @ e77b317, blob f064b12b9c |
+| P09 R2 | PCB scalona lokalnie 1.10 (gałąź p09-r2-pcb; main czeka na push) | main @ e77b317, blob e325a5ac53 |
+| P06 R2 | PCB po recenzji niezależnej i poprawkach 2.10 (gałąź p06-r2-pcb: schemat z PR #8 + przegląd i layout lokalny) | main @ e77b317, blob 508a9de996 |
+| P10 R2 | PCB scalona lokalnie 1.10 (gałąź p10-r2-pcb; main czeka na push) | main @ e77b317, blob 22cf0803e6 |
+| P11 R2 | schemat R2 scalony 4.10 (PCB w toku) | main @ e77b317, blob 89005c5eb4 |
 | P04 | wariant pełny; S1 §7: na poziomie 4 zostaje tylko S2 | — |
 | P07 | wariant pełny | — |
 | P08 | wariant pełny | — |
@@ -36,6 +36,7 @@ x — środek złącza w układzie stosu (x = 0 od strony panelu); z — spód p
 | 4 | S3 | 133,5 | 77,8 | P10 R2 | J1 | IDC 2×5 | 26,5 | — |
 | 5 | S1 | — | 99,4 | P08 | ? | ? | — | — |
 | 5 | S2/S3 | — | 99,4 | P07 | ? | ? | — | — |
+| panel | — | — | — | P11 R2 | J_P12 | IDC 2×10 | — | — |
 
 ## Sieci (bez GND)
 
@@ -43,6 +44,7 @@ x — środek złącza w układzie stosu (x = 0 od strony panelu); z — spód p
 |---|---|---|---|---|
 | ADC_DOUTA | czeka | P03 R6 J_BP2.4 IN; P05 R3 J_BP2.4 OUT; P06 R2 J_BP.4 OUT | P07 | wspólna linia danych AD7606B / MCP3201 (P05, P06, P07), nadajnik wybierany przez CS |
 | ADC_SCLK | czeka | P03 R6 J_BP2.2 OUT; P05 R3 J_BP2.2 IN; P06 R2 J_BP.2 IN | P07 | — |
+| ARM_CONTACT | czeka | P11 R2 J_P12.8 OUT | P04 | — |
 | CORE_LINK | czeka | P03 R6 J_BP3.13 OUT | P04 | — |
 | CS_ITEST_N | czeka | P03 R6 J_BP1.4 OUT | P07 | — |
 | DAQ_OK | czeka | P05 R3 J_BP1.6 OUT | P04 | — |
@@ -51,13 +53,12 @@ x — środek złącza w układzie stosu (x = 0 od strony panelu); z — spód p
 | HEARTBEAT | czeka | P03 R6 J_BP3.16 OUT | P04 | — |
 | HW_ARMED | czeka | P03 R6 J_BP3.17 IN | P04 | — |
 | INTERLOCK | czeka | P03 R6 J_BP3.20 IN | P04 | — |
-| LOGGER_CLEAR | czeka | P03 R6 J_BP1.15 IN | P11 | — |
-| MARK | czeka | P03 R6 J_BP1.13 IN | P11 | — |
 | MCU_ARM | czeka | P03 R6 J_BP3.18 OUT | P04 | — |
+| MECH_OK | czeka | P11 R2 J_P12.4 OUT | P04 | — |
 | MOTOR_INA | czeka | P03 R6 J_BP1.19 OUT | P07 | — |
 | MOTOR_INB | czeka | P03 R6 J_BP1.20 OUT | P07 | — |
-| N_J_SCOPE_HOT | czeka | P03 R6 J_BP1.10 OUT | P11 | — |
 | P04_3V3 | czeka | P02 R4 J_BP.15 PWR | P04 | — |
+| PANEL_3V3 | czeka | P11 R2 J_P12.2 PWR | P04 | — |
 | PG_LINK | czeka | P02 R4 J_BP.18 PETLA | P04 | — |
 | PG_SEND | czeka | P02 R4 J_BP.17 PETLA | P04 | — |
 | PSU_OK | czeka | P02 R4 J_BP.12 OUT | P04 | — |
@@ -65,10 +66,10 @@ x — środek złącza w układzie stosu (x = 0 od strony panelu); z — spód p
 | SAFE_N | czeka | P02 R4 J_BP.16 OUT | P04 | — |
 | SENSOR_ENABLE | czeka | P03 R6 J_BP3.9 OUT | P04 | — |
 | SENSOR_HEALTHY | czeka | P03 R6 J_BP1.12 IN | P08 | — |
+| STOP_NC_OUT | czeka | P11 R2 J_P12.6 OUT | P04 | — |
 | SUP_N_OUT | czeka | P03 R6 J_BP3.12 OUT | P04 | — |
-| TEST_KEY | czeka | P03 R6 J_BP1.14 IN | P11 | — |
-| TEST_PRESENT | czeka | P03 R6 J_BP1.16 IN | P11 | — |
-| 3V3_IO | OK | P02 R4 J_BP.8 ZRODLO; P02 R4 J_BP.10 ZRODLO; P03 R6 J_BP3.5 PWR; P09 R2 J1.4 PWR; P06 R2 J_BP.14 PWR; P10 R2 J1.4 PWR | — | — |
+| TEST_KEY | czeka | P03 R6 J_BP1.14 IN; P11 R2 J_P12.14 OUT | P04 | — |
+| 3V3_IO | OK | P02 R4 J_BP.8 ZRODLO; P02 R4 J_BP.10 ZRODLO; P03 R6 J_BP3.5 PWR; P09 R2 J1.4 PWR; P06 R2 J_BP.14 PWR; P10 R2 J1.4 PWR; P11 R2 J_P12.20 PWR | — | — |
 | 5V_SYS | OK | P02 R4 J_BP.2 ZRODLO; P02 R4 J_BP.4 ZRODLO; P02 R4 J_BP.6 ZRODLO; P03 R6 J_BP2.17 PWR; P03 R6 J_BP2.19 PWR; P03 R6 J_BP2.20 PWR; P05 R3 J_BP1.2 PWR; P05 R3 J_BP1.4 PWR; P09 R2 J1.2 PWR; P09 R2 J1.16 PWR; P06 R2 J_BP.10 PWR; P06 R2 J_BP.12 PWR; P10 R2 J1.2 PWR; P10 R2 J1.10 PWR | — | — |
 | ADC_BUSY | OK | P03 R6 J_BP2.12 IN; P05 R3 J_BP2.12 OUT | — | — |
 | ADC_CONVST | OK | P03 R6 J_BP2.10 OUT; P05 R3 J_BP2.10 IN | — | — |
@@ -78,14 +79,18 @@ x — środek złącza w układzie stosu (x = 0 od strony panelu); z — spód p
 | CAN_RX | OK | P03 R6 J_BP1.8 IN; P10 R2 J1.8 OUT | — | — |
 | CAN_TX | OK | P03 R6 J_BP1.6 OUT; P10 R2 J1.6 IN | — | — |
 | CS_ILOG_N | OK | P03 R6 J_BP1.2 OUT; P06 R2 J_BP.6 IN | — | — |
+| LOGGER_CLEAR | OK | P03 R6 J_BP1.15 IN; P11 R2 J_P12.15 OUT | — | — |
 | LOGGER_CURRENT_OK | OK | P03 R6 J_BP1.11 IN; P06 R2 J_BP.8 OUT | — | — |
+| MARK | OK | P03 R6 J_BP1.13 IN; P11 R2 J_P12.13 OUT | — | — |
 | MEAS_EN | OK | P03 R6 J_BP2.14 OUT; P05 R3 J_BP2.14 IN | — | — |
+| N_J_SCOPE_HOT | OK | P03 R6 J_BP1.10 OUT; P11 R2 J_P12.10 IN | — | — |
 | PFAIL_N | OK | P02 R4 J_BP.14 OUT; P03 R6 J_BP2.16 IN | — | — |
 | SPI3_MISO | OK | P03 R6 J_BP3.6 IN; P09 R2 J1.10 OUT | — | MISO MAX31856 przez bufor Hi-Z na P09, wspólne z kartą SD na P03 |
 | SPI3_MOSI | OK | P03 R6 J_BP3.4 OUT; P09 R2 J1.8 IN | — | — |
 | SPI3_SCLK | OK | P03 R6 J_BP3.2 OUT; P09 R2 J1.6 IN | — | — |
 | TC1_CS | OK | P03 R6 J_BP3.8 OUT; P09 R2 J1.12 IN | — | — |
 | TC2_CS | OK | P03 R6 J_BP3.10 OUT; P09 R2 J1.14 IN | — | — |
+| TEST_PRESENT | OK | P03 R6 J_BP1.16 IN; P11 R2 J_P12.16 OUT | — | — |
 | VBAT_SENSE | OK | P02 R4 J_BP.20 OUT; P05 R3 J_BP1.10 IN | — | — |
 
 ## Zasilanie przez P12
@@ -93,7 +98,7 @@ x — środek złącza w układzie stosu (x = 0 od strony panelu); z — spód p
 Styki IDC: ok. 1 A na styk (S1 §5).
 
 - **5V_SYS:** P02 R4 3 piny (źródło), styki do 3 A; P03 R6 3 piny, styki do 3 A; P05 R3 2 piny, styki do 2 A; P09 R2 2 piny, styki do 2 A; P06 R2 2 piny, styki do 2 A; P10 R2 2 piny, styki do 2 A
-- **3V3_IO:** P02 R4 2 piny (źródło), styki do 2 A; P03 R6 1 pin, styki do 1 A; P09 R2 1 pin, styki do 1 A; P06 R2 1 pin, styki do 1 A; P10 R2 1 pin, styki do 1 A
+- **3V3_IO:** P02 R4 2 piny (źródło), styki do 2 A; P03 R6 1 pin, styki do 1 A; P09 R2 1 pin, styki do 1 A; P06 R2 1 pin, styki do 1 A; P10 R2 1 pin, styki do 1 A; P11 R2 1 pin, styki do 1 A
 
 Budżety 5V_SYS z dokumentów płytek (LOGGER): P03 R6 500 mA, P05 R3 140 mA, P09 R2 200 mA, P06 R2 180 mA, P10 R2 70 mA — **razem 1090 mA**. Źródło: TSR 2-2450, 2 A (F2 T1A po stronie wejścia); styki J_BP P02 R4: 3 A. Budżetów 3V3_IO płytki nie podają.
 
@@ -109,7 +114,7 @@ Sieci: 5V_SYS (wprost), 5V_M1 (P03: za kluczem Q1), 5VA_P05 (P05: za R1 1 Ω), 5
 
 | Płytka | µF | Największe | Źródło |
 |---|---|---|---|
-| P02 R4 | 22,1 | C22 22u / 16V (5V_SYS), C26 100nF / X7R (5V_SYS) | origin/main @ 1d4ff38, blob c2cfb86198 |
+| P02 R4 | 22,1 | C22 22u / 16V (5V_SYS), C26 100nF / X7R (5V_SYS) | origin/main @ e77b317, blob ddb6f8c3d4 |
 | P03 R6 | 11 | C14 10uF / 16V X7R (5V_M1), C13 1uF / 25V X7R (5V_SYS) | origin/p03-r6-pcb @ 7afd1b9, blob 8d637f6465 |
 | P05 R3 | 222,7 | C1 220u / 16V (5VA_P05), C2 1u (5VA_P05), C23 1u (5V_SYS) | origin/p05-r3-pcb @ 88515c1, blob 74a6903ebc |
 | P06 R2 | 220,3 | C3 220u / 16V (5VA_P06), C6 100n (5VA_P06), C9 100n (5VA_P06) | origin/p06-r2-pcb @ fcb65ad, blob 81dcb701df |
