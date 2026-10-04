@@ -25,7 +25,7 @@ OHM = {**{n: 1000 for n in ['5V_SYS', '5VA_P06', '3V3_P06', '3V3_IO', 'SHUNT_ENA
        **{n: 10000 for n in ['REF25', 'REF_BUF', 'ADC_AIN', 'I_L_OUT', 'SUP3_N', 'SUP5_N']}}
 GROUP = {'J_SV1': ANALOG, 'J_SV2': RAILS | {'SUP3_N', 'SUP5_N', 'SHUNT_ENABLED', 'LOGGER_CURRENT_OK', 'CS_LOCAL_N', 'CLK_LOCAL'}}
 SV_FP = 'Connector_PinHeader_2.54mm:PinHeader_1x{:02d}_P2.54mm_Horizontal'
-NEW_PARTS = {'J_BP', 'J_SV1', 'J_SV2', *[f'R{i}' for i in range(25, 39)]}
+NEW_PARTS = {'J_BP', 'J_SV1', 'J_SV2', *[f'R{i}' for i in range(25, 39)], 'C17'}   # C17: 100 nF on 5VA at J5 (2.10, review F7)
 R_SMD = 'Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder'; C_SMD = 'Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder'
 R_STAND = 'Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical'
 EXC_FP = {'R6': 'Resistor_THT:R_Axial_DIN0411_L9.9mm_D3.6mm_P15.24mm_Horizontal', 'R21': 'P06:R_PR02_P17.78',

@@ -1,7 +1,7 @@
 {
     "$schema": "https://schemas.kicad.org/drc.v1.json",
     "coordinate_units": "mm",
-    "date": "2026-10-02T12:54:43",
+    "date": "2026-10-02T16:21:45",
     "ignored_checks": [
         {
             "description": "Footprint has no courtyard defined",
@@ -42,15 +42,15 @@
                         "x": 19.75,
                         "y": 43.5
                     },
-                    "uuid": "6bb27ee8-fe8f-4b07-ac8a-9ebffed9c1ab"
+                    "uuid": "6795bba1-7ec8-4a46-9ce5-728c7b68af8b"
                 },
                 {
-                    "description": "Pole PTH 2 [SW_RAW] na J5",
+                    "description": "Ścieżka [SW_RAW] na F.Cu, długość 6,3640 mm",
                     "pos": {
                         "x": 15.0,
                         "y": 70.0
                     },
-                    "uuid": "be5a9834-df7d-4507-a578-9c36d2ba1180"
+                    "uuid": "6fed04eb-0337-4d3c-ad96-4faf40f7985a"
                 }
             ],
             "severity": "error",
@@ -67,7 +67,7 @@
                         "x": 38.28,
                         "y": 42.5
                     },
-                    "uuid": "0cd20b43-57c4-4cb4-ac91-f128fd70a13d"
+                    "uuid": "7058bf4f-ccef-4b36-b96c-d90433ec193d"
                 },
                 {
                     "description": "Ścieżka [/SERWIS/SRV_ADC_AIN] na B.Cu, długość 7,7487 mm",
@@ -75,7 +75,7 @@
                         "x": 38.6696,
                         "y": 37.3841
                     },
-                    "uuid": "df6218dc-ffad-4673-bec3-bfad6611fba0"
+                    "uuid": "f0388a74-79bb-4436-91b0-0741afe48f56"
                 }
             ],
             "severity": "error",
@@ -90,7 +90,7 @@
                         "x": 38.6696,
                         "y": 37.3841
                     },
-                    "uuid": "df6218dc-ffad-4673-bec3-bfad6611fba0"
+                    "uuid": "f0388a74-79bb-4436-91b0-0741afe48f56"
                 },
                 {
                     "description": "Pole PTH 2 [GND] na R21",
@@ -98,7 +98,53 @@
                         "x": 38.28,
                         "y": 42.5
                     },
-                    "uuid": "0cd20b43-57c4-4cb4-ac91-f128fd70a13d"
+                    "uuid": "7058bf4f-ccef-4b36-b96c-d90433ec193d"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci /SERWIS/SRV_I_L_OUT oraz GND)",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_I_L_OUT] na F.Cu, długość 6,2102 mm",
+                    "pos": {
+                        "x": 38.6296,
+                        "y": 44.9077
+                    },
+                    "uuid": "628bc320-9794-4fa9-ad93-b807be11de41"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na R21",
+                    "pos": {
+                        "x": 38.28,
+                        "y": 42.5
+                    },
+                    "uuid": "7058bf4f-ccef-4b36-b96c-d90433ec193d"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_I_L_OUT] na F.Cu, długość 6,2102 mm",
+                    "pos": {
+                        "x": 38.6296,
+                        "y": 44.9077
+                    },
+                    "uuid": "628bc320-9794-4fa9-ad93-b807be11de41"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na R21",
+                    "pos": {
+                        "x": 38.28,
+                        "y": 42.5
+                    },
+                    "uuid": "7058bf4f-ccef-4b36-b96c-d90433ec193d"
                 }
             ],
             "severity": "error",
@@ -113,7 +159,7 @@
                         "x": 38.28,
                         "y": 42.5
                     },
-                    "uuid": "0cd20b43-57c4-4cb4-ac91-f128fd70a13d"
+                    "uuid": "7058bf4f-ccef-4b36-b96c-d90433ec193d"
                 },
                 {
                     "description": "Ścieżka [REF_BUF] na B.Cu, długość 12,9342 mm",
@@ -121,76 +167,7 @@
                         "x": 36.84,
                         "y": 32.645
                     },
-                    "uuid": "275c312e-a61e-44e9-be55-8bef1a73bf1f"
-                }
-            ],
-            "severity": "error",
-            "type": "clearance"
-        },
-        {
-            "description": "Elementy łączą dwie różne sieci (sieci GND oraz /SERWIS/SRV_I_L_OUT)",
-            "items": [
-                {
-                    "description": "Pole PTH 2 [GND] na R21",
-                    "pos": {
-                        "x": 38.28,
-                        "y": 42.5
-                    },
-                    "uuid": "0cd20b43-57c4-4cb4-ac91-f128fd70a13d"
-                },
-                {
-                    "description": "Ścieżka [/SERWIS/SRV_I_L_OUT] na F.Cu, długość 6,2102 mm",
-                    "pos": {
-                        "x": 38.6296,
-                        "y": 44.9077
-                    },
-                    "uuid": "e0c0fe8a-cbd0-4821-be9e-7f658d899f25"
-                }
-            ],
-            "severity": "error",
-            "type": "shorting_items"
-        },
-        {
-            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
-            "items": [
-                {
-                    "description": "Ścieżka [/SERWIS/SRV_I_L_OUT] na F.Cu, długość 6,2102 mm",
-                    "pos": {
-                        "x": 38.6296,
-                        "y": 44.9077
-                    },
-                    "uuid": "e0c0fe8a-cbd0-4821-be9e-7f658d899f25"
-                },
-                {
-                    "description": "Pole PTH 2 [GND] na R21",
-                    "pos": {
-                        "x": 38.28,
-                        "y": 42.5
-                    },
-                    "uuid": "0cd20b43-57c4-4cb4-ac91-f128fd70a13d"
-                }
-            ],
-            "severity": "error",
-            "type": "hole_clearance"
-        },
-        {
-            "description": "Naruszenie prześwitu ( prześwit 0,2500 mm; obecnie 0,1071 mm)",
-            "items": [
-                {
-                    "description": "Pole PTH 1 [3V3_P06] na D2",
-                    "pos": {
-                        "x": 40.0,
-                        "y": 41.0
-                    },
-                    "uuid": "5c2cbe0d-0796-43ac-b76a-52e894abee6f"
-                },
-                {
-                    "description": "Pole PTH 2 [GND] na R21",
-                    "pos": {
-                        "x": 38.28,
-                        "y": 42.5
-                    },
-                    "uuid": "0cd20b43-57c4-4cb4-ac91-f128fd70a13d"
+                    "uuid": "c2b9bbda-c549-4801-8db9-9002fae66232"
                 }
             ],
             "severity": "error",
@@ -200,20 +177,43 @@
             "description": "Naruszenie prześwitu ( prześwit 0,2500 mm; obecnie 0,1071 mm)",
             "items": [
                 {
+                    "description": "Pole PTH 2 [GND] na R21",
+                    "pos": {
+                        "x": 38.28,
+                        "y": 42.5
+                    },
+                    "uuid": "7058bf4f-ccef-4b36-b96c-d90433ec193d"
+                },
+                {
                     "description": "Pole PTH 1 [3V3_P06] na D2",
                     "pos": {
                         "x": 40.0,
                         "y": 41.0
                     },
-                    "uuid": "5c2cbe0d-0796-43ac-b76a-52e894abee6f"
-                },
+                    "uuid": "ec1d0daa-0564-4ceb-abd5-10bc72d2acae"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu ( prześwit 0,2500 mm; obecnie 0,1071 mm)",
+            "items": [
                 {
                     "description": "Pole PTH 2 [GND] na R21",
                     "pos": {
                         "x": 38.28,
                         "y": 42.5
                     },
-                    "uuid": "0cd20b43-57c4-4cb4-ac91-f128fd70a13d"
+                    "uuid": "7058bf4f-ccef-4b36-b96c-d90433ec193d"
+                },
+                {
+                    "description": "Pole PTH 1 [3V3_P06] na D2",
+                    "pos": {
+                        "x": 40.0,
+                        "y": 41.0
+                    },
+                    "uuid": "ec1d0daa-0564-4ceb-abd5-10bc72d2acae"
                 }
             ],
             "severity": "error",
@@ -223,20 +223,20 @@
             "description": "Courtyards overlap",
             "items": [
                 {
-                    "description": "Footprint D2",
-                    "pos": {
-                        "x": 40.0,
-                        "y": 41.0
-                    },
-                    "uuid": "9880dd20-bdc1-4385-9e4b-82b14df57d77"
-                },
-                {
                     "description": "Footprint R21",
                     "pos": {
                         "x": 20.5,
                         "y": 42.5
                     },
-                    "uuid": "f5066c1d-0a21-4821-ae76-7909bd4e66a2"
+                    "uuid": "79ce4985-afdf-4740-93d9-8a97dccc29ea"
+                },
+                {
+                    "description": "Footprint D2",
+                    "pos": {
+                        "x": 40.0,
+                        "y": 41.0
+                    },
+                    "uuid": "cde57bd5-5602-4954-a73c-9c1bdfd0a092"
                 }
             ],
             "severity": "error",
@@ -251,7 +251,7 @@
                         "x": 40.0,
                         "y": 41.0
                     },
-                    "uuid": "5c2cbe0d-0796-43ac-b76a-52e894abee6f"
+                    "uuid": "ec1d0daa-0564-4ceb-abd5-10bc72d2acae"
                 },
                 {
                     "description": "Footprint R21",
@@ -259,7 +259,7 @@
                         "x": 20.5,
                         "y": 42.5
                     },
-                    "uuid": "f5066c1d-0a21-4821-ae76-7909bd4e66a2"
+                    "uuid": "79ce4985-afdf-4740-93d9-8a97dccc29ea"
                 }
             ],
             "severity": "error",
@@ -274,7 +274,7 @@
                         "x": 0.3,
                         "y": 0.3
                     },
-                    "uuid": "8a93ce85-1d18-4435-ac7b-00e42f4c415d"
+                    "uuid": "426cb5fb-9889-48cd-a65c-53e8392f3468"
                 },
                 {
                     "description": "Pole PTH 2 [GND] na R21",
@@ -282,34 +282,11 @@
                         "x": 38.28,
                         "y": 42.5
                     },
-                    "uuid": "0cd20b43-57c4-4cb4-ac91-f128fd70a13d"
+                    "uuid": "7058bf4f-ccef-4b36-b96c-d90433ec193d"
                 }
             ],
             "severity": "error",
             "type": "starved_thermal"
-        },
-        {
-            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
-            "items": [
-                {
-                    "description": "Ścieżka [/SERWIS/SRV_I_L_OUT] na F.Cu, długość 6,2102 mm",
-                    "pos": {
-                        "x": 38.6296,
-                        "y": 44.9077
-                    },
-                    "uuid": "e0c0fe8a-cbd0-4821-be9e-7f658d899f25"
-                },
-                {
-                    "description": "Pole PTH 2 [GND] na R21",
-                    "pos": {
-                        "x": 38.28,
-                        "y": 42.5
-                    },
-                    "uuid": "0cd20b43-57c4-4cb4-ac91-f128fd70a13d"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
         },
         {
             "description": "Tylna soldermaska łączy elementy o różnych sieciach",
@@ -320,7 +297,7 @@
                         "x": 38.6696,
                         "y": 37.3841
                     },
-                    "uuid": "df6218dc-ffad-4673-bec3-bfad6611fba0"
+                    "uuid": "f0388a74-79bb-4436-91b0-0741afe48f56"
                 },
                 {
                     "description": "Pole PTH 2 [GND] na R21",
@@ -328,7 +305,30 @@
                         "x": 38.28,
                         "y": 42.5
                     },
-                    "uuid": "0cd20b43-57c4-4cb4-ac91-f128fd70a13d"
+                    "uuid": "7058bf4f-ccef-4b36-b96c-d90433ec193d"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/SERWIS/SRV_I_L_OUT] na F.Cu, długość 6,2102 mm",
+                    "pos": {
+                        "x": 38.6296,
+                        "y": 44.9077
+                    },
+                    "uuid": "628bc320-9794-4fa9-ad93-b807be11de41"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na R21",
+                    "pos": {
+                        "x": 38.28,
+                        "y": 42.5
+                    },
+                    "uuid": "7058bf4f-ccef-4b36-b96c-d90433ec193d"
                 }
             ],
             "severity": "error",
@@ -343,7 +343,7 @@
                         "x": 19.75,
                         "y": 43.5
                     },
-                    "uuid": "6bb27ee8-fe8f-4b07-ac8a-9ebffed9c1ab"
+                    "uuid": "6795bba1-7ec8-4a46-9ce5-728c7b68af8b"
                 }
             ],
             "severity": "warning",
@@ -358,7 +358,7 @@
                         "x": 71.11,
                         "y": 13.33
                     },
-                    "uuid": "47275411-0d57-42a2-955b-88084ecbd773"
+                    "uuid": "10111de8-4c1b-4643-b5a1-d86699209a0f"
                 }
             ],
             "severity": "warning",
@@ -373,7 +373,7 @@
                         "x": 41.74,
                         "y": 95.96
                     },
-                    "uuid": "5f94362a-012f-4ec9-9323-fc0641cf012f"
+                    "uuid": "753f8ffb-2370-47ee-add1-3c9d18d6eecd"
                 }
             ],
             "severity": "warning",
@@ -388,7 +388,7 @@
                         "x": 95.24,
                         "y": 95.96
                     },
-                    "uuid": "b8a7bd47-9dac-4531-91cc-602b6503db7f"
+                    "uuid": "d7b993c4-20f0-42a8-a316-d8b1248c9476"
                 }
             ],
             "severity": "warning",

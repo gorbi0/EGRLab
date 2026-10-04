@@ -6,7 +6,7 @@ Kontrole PCB: 34/34. Próby ujemne: 37/37 (w tym próba zerowa).
 | Kontrola | Wynik |
 |---|---|
 | Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed) | PASS |
-| 73 on-board parts + 8 mounting holes, nothing else | PASS |
+| 74 on-board parts + 8 mounting holes, nothing else | PASS |
 | Every value, footprint ID and pad net equals the exported schematic netlist | PASS |
 | S1-2 section 4: parts on the bottom only SMD <= 1.5 mm (heights.py, BOM thickness note for the capacitors), no SOIC, >= 1 mm from THT pads | PASS |
 | 2 copper layers, 1.6 mm board (S1: FR4 1.6 mm) | PASS |
@@ -21,7 +21,7 @@ Kontrole PCB: 34/34. Próby ujemne: 37/37 (w tym próba zerowa).
 | Service headers J_SV1 / J_SV2 (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pin 1 at the larger x, pins out ~6 mm, GND on both ends, one series resistor per pin as docs/SERWIS.csv and of its S1 class (1K, 10K for the analog nodes and supervisor outputs) <= 10 mm from its node, one silk label per pin with the name of its node (LABEL in silkscreen.py), GND at both ends | PASS |
 | Reserved strip of edge A (S1 §5: y 0-10 along J_BP, x 63.5-96.5): no other part on either side | PASS |
 | Every part <= 16.5 mm above the board (level 4, S1 section 4; src/heights.py) | PASS |
-| Force pours ECU_P1 / EGR_P1: one zone per net on F.Cu and on B.Cu, priority above GND, solid connection (no thermals) on every force pad (J3, J4, RSH1 1/4), each pad inside the fill of every layer it is on | PASS |
+| Force pours ECU_P1 / EGR_P1: one zone per net on F.Cu and on B.Cu, priority above GND, RSH1 1/4 solid inside the fill, J3 / J4 wire pads on >= 4 spokes >= 2 mm on every layer (2.10, review F5) | PASS |
 | Force path >= 4 mm wide on both layers (fill shrunk by 2 mm stays one piece): J3.1-J4.1 (ECU_P1) and J3.2-J4.2 (EGR_P1); towards the shunt the 4 mm corridor reaches <= 3.5 mm from the force pad centre (the pad itself is 2.03 mm wide) | PASS |
 | Force pours stitched: >= 8 vias per net (plus the PTH pads of J3 / J4); no via in or within 0.3 mm of an RSH1 pad | PASS |
 | Nothing under the shunt: no copper of any net on B.Cu in the RSH1 courtyard (tracks, vias, pours) and on F.Cu only the RSH1 nets (ECU_P1, EGR_P1, K_PLUS, K_MINUS) | PASS |
@@ -58,7 +58,7 @@ Kontrole PCB: 34/34. Próby ujemne: 37/37 (w tym próba zerowa).
 | bottom_soic | S1-2 section 4 | tak | 5 |
 | dru_present | Rules as P02 | tak | 1 |
 | force_pour_missing | Force pours ECU_P1 | tak | 3 |
-| force_thermal | Force pours ECU_P1 | tak | 2 |
+| force_thermal | Force pours ECU_P1 | tak | 1 |
 | force_narrow | Force path >= 4 mm | tak | 1 |
 | via_in_shunt_pad | Force pours stitched | tak | 3 |
 | under_shunt | Nothing under the shunt | tak | 3 |
@@ -67,8 +67,8 @@ Kontrole PCB: 34/34. Próby ujemne: 37/37 (w tym próba zerowa).
 | anchor_track | Panel side | tak | 2 |
 | part_on_cable | Panel side | tak | 4 |
 | tail_turned | Panel side | tak | 5 |
-| column_swap | Panel side | tak | 5 |
-| r21_near | R21 | tak | 4 |
+| column_swap | Panel side | tak | 4 |
+| r21_near | R21 | tak | 3 |
 | c5_far | Decoupling and filter | tak | 2 |
 | decap_far | Decoupling and filter | tak | 5 |
 | gnd_pour_removed | GND pours | tak | 3 |

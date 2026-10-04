@@ -179,13 +179,14 @@ DEC = {'C6': ('U1', '6'), 'C1': ('U2', '3'), 'R4': ('U2', '3'), 'R3': ('U1', '5'
        'C4': ('U4', '3'), 'C9': ('U4', '2'), 'C10': ('U5', '14'), 'C11': ('U6', '14'), 'C12': ('U7', '14'), 'C13': ('U8', '2'),
        'C14': ('U9', '2'), 'R7': ('U3', '5'), 'R9': ('U3', '7'), 'R8': ('U5', '2'), 'R12': ('U5', '8'),
        'R13': ('U9', '1'), 'R14': ('U8', '1'), 'R15': ('U6', '3'), 'R16': ('U6', '6'), 'R17': ('U7', '3'), 'R18': ('U7', '6'),
-       'R19': ('U6', '8'), 'R20': ('J_BP', '8'), 'R22': ('R21', '1'), 'R23': ('U6', '5'), 'R24': ('U4', '3')}
+       'R19': ('U6', '8'), 'R20': ('J_BP', '8'), 'R22': ('R21', '1'), 'R23': ('U6', '5'), 'R24': ('U4', '3'),
+       'C17': ('J5', '1')}   # 2.10: 100 nF on 5VA at the J5 tail
 # review 2.10 (F2, return-path check of verify_pcb.py): a decoupling / filter capacitor also needs its GND pad at the GND pin of its part.
 # With the supply pad alone nearest, C9 / C4 / C10 / C12 had their GND pads on the far side and returns of 40-63 mm through GND copper.
 # These capacitors take the free position with the smallest (supply pad -> pin) + (GND pad -> GND pin), supply side <= SUP_MAX.
 GND_PIN = {'C6': ('U1', '2'), 'C1': ('U2', '4'), 'C2': ('U3', '3'), 'C5': ('U10', '1'), 'C16': ('U3', '4'), 'C7': ('U2', '4'), 'C8': ('U3', '4'),
            'C15': ('U10', '1'), 'C4': ('U4', '1'), 'C9': ('U4', '1'), 'C10': ('U5', '7'), 'C11': ('U6', '7'), 'C12': ('U7', '7'), 'C13': ('U8', '3'),
-           'C14': ('U9', '3')}
+           'C14': ('U9', '3'), 'C17': ('J5', '3')}
 SUP_MAX = {'C5': 4.5}   # MCP1525 load capacitor <= 5 mm (verify_pcb.py); others <= 5.5 (check: 6)
 
 

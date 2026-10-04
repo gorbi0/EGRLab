@@ -1,7 +1,7 @@
 {
     "$schema": "https://schemas.kicad.org/drc.v1.json",
     "coordinate_units": "mm",
-    "date": "2026-10-02T12:55:03",
+    "date": "2026-10-02T16:22:04",
     "ignored_checks": [
         {
             "description": "Footprint has no courtyard defined",
@@ -37,20 +37,20 @@
             "description": "Missing connection between items",
             "items": [
                 {
-                    "description": "Ścieżka [3V3_P06] na B.Cu, długość 2,6827 mm",
+                    "description": "Pole lutownicze 2 [GND] z C10 na F.Cu",
                     "pos": {
-                        "x": 80.878,
-                        "y": 40.0593
-                    },
-                    "uuid": "06e2861d-3937-41ef-885d-d4a3cc28f9c0"
-                },
-                {
-                    "description": "Pole lutownicze 1 [3V3_P06] z C10 na F.Cu",
-                    "pos": {
-                        "x": 81.987377,
+                        "x": 78.862377,
                         "y": 43.676044
                     },
-                    "uuid": "a3f8a84f-00a5-450c-9fe7-7b8bef279674"
+                    "uuid": "82199ad2-02c9-4c28-8144-d98d5a09a7ce"
+                },
+                {
+                    "description": "Strefa [GND] na F.Cu, priorytet 0",
+                    "pos": {
+                        "x": 0.3,
+                        "y": 0.3
+                    },
+                    "uuid": "f7848461-4b20-46bf-9815-a2acfc195e24"
                 }
             ],
             "severity": "error",
@@ -60,20 +60,20 @@
             "description": "Missing connection between items",
             "items": [
                 {
-                    "description": "Pole lutownicze 2 [GND] z C10 na F.Cu",
+                    "description": "Ścieżka [3V3_P06] na B.Cu, długość 2,6827 mm",
                     "pos": {
-                        "x": 78.862377,
-                        "y": 43.676044
+                        "x": 80.878,
+                        "y": 40.0593
                     },
-                    "uuid": "2679b55c-83b6-4d18-a612-b761eab1c85a"
+                    "uuid": "ca7274cd-d252-48c5-a587-e0a490b3ec24"
                 },
                 {
-                    "description": "Strefa [GND] na F.Cu, priorytet 0",
+                    "description": "Pole lutownicze 1 [3V3_P06] z C10 na F.Cu",
                     "pos": {
-                        "x": 0.3,
-                        "y": 0.3
+                        "x": 81.987377,
+                        "y": 43.676044
                     },
-                    "uuid": "def0f372-2a92-4bfe-b19e-a83a08ce6fe5"
+                    "uuid": "2c0779dd-09f0-4d1b-8d42-74bec1edb37e"
                 }
             ],
             "severity": "error",
@@ -82,23 +82,23 @@
     ],
     "violations": [
         {
-            "description": "Elementy łączą dwie różne sieci (sieci GND oraz /SERWIS/SRV_SUP3_N)",
+            "description": "Elementy łączą dwie różne sieci (sieci /SERWIS/SRV_SUP3_N oraz GND)",
             "items": [
-                {
-                    "description": "Pole lutownicze 2 [GND] z C10 na F.Cu",
-                    "pos": {
-                        "x": 78.862377,
-                        "y": 43.676044
-                    },
-                    "uuid": "2679b55c-83b6-4d18-a612-b761eab1c85a"
-                },
                 {
                     "description": "Ścieżka [/SERWIS/SRV_SUP3_N] na F.Cu, długość 13,6370 mm",
                     "pos": {
                         "x": 78.5546,
                         "y": 49.0777
                     },
-                    "uuid": "d13b37a8-c9be-4db8-81c0-90de491e129e"
+                    "uuid": "66021432-3e0c-4ac9-8d18-c44175ce5427"
+                },
+                {
+                    "description": "Pole lutownicze 2 [GND] z C10 na F.Cu",
+                    "pos": {
+                        "x": 78.862377,
+                        "y": 43.676044
+                    },
+                    "uuid": "82199ad2-02c9-4c28-8144-d98d5a09a7ce"
                 }
             ],
             "severity": "error",
@@ -113,7 +113,7 @@
                         "x": 81.987377,
                         "y": 43.676044
                     },
-                    "uuid": "a3f8a84f-00a5-450c-9fe7-7b8bef279674"
+                    "uuid": "2c0779dd-09f0-4d1b-8d42-74bec1edb37e"
                 },
                 {
                     "description": "Ścieżka [SHUNT_ENABLED] na F.Cu, długość 7,0528 mm",
@@ -121,7 +121,7 @@
                         "x": 81.7297,
                         "y": 47.107
                     },
-                    "uuid": "fd5c66e3-a2db-41ad-897b-c964dbd53479"
+                    "uuid": "d566ef65-c62b-4ded-ae14-214b8f2b35db"
                 }
             ],
             "severity": "error",
@@ -131,20 +131,20 @@
             "description": "Courtyards overlap",
             "items": [
                 {
-                    "description": "Footprint U7",
-                    "pos": {
-                        "x": 76.0,
-                        "y": 40.0
-                    },
-                    "uuid": "6b655d9e-3f1b-4081-a8c9-af8f62a30c31"
-                },
-                {
                     "description": "Footprint C10",
                     "pos": {
                         "x": 80.424877,
                         "y": 43.676044
                     },
-                    "uuid": "88f11e2a-bae9-4ca7-980a-8e39254932fd"
+                    "uuid": "9add548b-8d27-4191-b73d-c5168ed08e04"
+                },
+                {
+                    "description": "Footprint U7",
+                    "pos": {
+                        "x": 76.0,
+                        "y": 40.0
+                    },
+                    "uuid": "c9dfe010-4bcd-479d-b82d-cc967ce9c19a"
                 }
             ],
             "severity": "error",
@@ -159,7 +159,7 @@
                         "x": 0.3,
                         "y": 0.3
                     },
-                    "uuid": "def0f372-2a92-4bfe-b19e-a83a08ce6fe5"
+                    "uuid": "f7848461-4b20-46bf-9815-a2acfc195e24"
                 },
                 {
                     "description": "Pole lutownicze 2 [GND] z C10 na F.Cu",
@@ -167,7 +167,7 @@
                         "x": 78.862377,
                         "y": 43.676044
                     },
-                    "uuid": "2679b55c-83b6-4d18-a612-b761eab1c85a"
+                    "uuid": "82199ad2-02c9-4c28-8144-d98d5a09a7ce"
                 }
             ],
             "severity": "error",
@@ -182,7 +182,7 @@
                         "x": 81.7297,
                         "y": 47.107
                     },
-                    "uuid": "fd5c66e3-a2db-41ad-897b-c964dbd53479"
+                    "uuid": "d566ef65-c62b-4ded-ae14-214b8f2b35db"
                 },
                 {
                     "description": "Pole lutownicze 1 [3V3_P06] z C10 na F.Cu",
@@ -190,7 +190,7 @@
                         "x": 81.987377,
                         "y": 43.676044
                     },
-                    "uuid": "a3f8a84f-00a5-450c-9fe7-7b8bef279674"
+                    "uuid": "2c0779dd-09f0-4d1b-8d42-74bec1edb37e"
                 }
             ],
             "severity": "error",
@@ -205,7 +205,7 @@
                         "x": 78.5546,
                         "y": 49.0777
                     },
-                    "uuid": "d13b37a8-c9be-4db8-81c0-90de491e129e"
+                    "uuid": "66021432-3e0c-4ac9-8d18-c44175ce5427"
                 },
                 {
                     "description": "Pole lutownicze 2 [GND] z C10 na F.Cu",
@@ -213,7 +213,7 @@
                         "x": 78.862377,
                         "y": 43.676044
                     },
-                    "uuid": "2679b55c-83b6-4d18-a612-b761eab1c85a"
+                    "uuid": "82199ad2-02c9-4c28-8144-d98d5a09a7ce"
                 }
             ],
             "severity": "error",
@@ -228,7 +228,7 @@
                         "x": 71.11,
                         "y": 13.33
                     },
-                    "uuid": "47275411-0d57-42a2-955b-88084ecbd773"
+                    "uuid": "10111de8-4c1b-4643-b5a1-d86699209a0f"
                 }
             ],
             "severity": "warning",
@@ -243,7 +243,7 @@
                         "x": 41.74,
                         "y": 95.96
                     },
-                    "uuid": "5f94362a-012f-4ec9-9323-fc0641cf012f"
+                    "uuid": "753f8ffb-2370-47ee-add1-3c9d18d6eecd"
                 }
             ],
             "severity": "warning",
@@ -258,26 +258,11 @@
                         "x": 95.24,
                         "y": 95.96
                     },
-                    "uuid": "b8a7bd47-9dac-4531-91cc-602b6503db7f"
+                    "uuid": "d7b993c4-20f0-42a8-a316-d8b1248c9476"
                 }
             ],
             "severity": "warning",
             "type": "lib_footprint_mismatch"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Segment z U7 na F.Silkscreen",
-                    "pos": {
-                        "x": 82.46,
-                        "y": 56.57
-                    },
-                    "uuid": "63f299a0-bd1f-4c46-9a99-da396e2cabae"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
         },
         {
             "description": "Silkscreen clipped by solder mask",
@@ -288,7 +273,22 @@
                         "x": 77.099877,
                         "y": 43.676044
                     },
-                    "uuid": "6171844f-3a08-4b54-a425-ac731044052a"
+                    "uuid": "42d95534-4cac-42ca-b41d-b8e05055ee52"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment z U7 na F.Silkscreen",
+                    "pos": {
+                        "x": 82.46,
+                        "y": 56.57
+                    },
+                    "uuid": "95996c6a-710e-4c5e-a12e-2d3649400382"
                 }
             ],
             "severity": "warning",
@@ -303,7 +303,7 @@
                         "x": 77.099877,
                         "y": 43.676044
                     },
-                    "uuid": "6171844f-3a08-4b54-a425-ac731044052a"
+                    "uuid": "42d95534-4cac-42ca-b41d-b8e05055ee52"
                 },
                 {
                     "description": "Segment z U7 na F.Silkscreen",
@@ -311,7 +311,7 @@
                         "x": 77.16,
                         "y": 38.67
                     },
-                    "uuid": "ab1183d1-873c-4f3b-b4aa-0f4a829d85ff"
+                    "uuid": "ced52616-411d-4744-8e11-22918132c4c1"
                 }
             ],
             "severity": "warning",

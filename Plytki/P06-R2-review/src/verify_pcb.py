@@ -326,12 +326,29 @@ for n in FORCE:
         zs = pours[(n, L)]; ln = b.GetLayerName(L)
         good = len(zs) == 1 and zs[0].GetAssignedPriority() > gndprio and zs[0].GetPadConnection() == p.ZONE_CONNECTION_FULL
         fl = zs[0].GetFilledPolysList(L) if zs else p.SHAPE_POLY_SET()
-        cov = {f'{r}.{q}': bool(fl.Contains(pad(r, q).GetPosition())) for r, q in FORCE_PADS[n] if pad(r, q).IsOnLayer(L)}
-        solid = {f'{r}.{q}': pad(r, q).GetLocalZoneConnection() == p.ZONE_CONNECTION_FULL for r, q in FORCE_PADS[n]}
-        pinfo[f'{n} {ln}'] = {'zones': len(zs), 'area_mm2': round(fl.Area() / 1e12, 1), 'pads_in_fill': cov, 'pads_solid': solid}
-        pok &= good and all(cov.values()) and all(solid.values()) and fl.OutlineCount() >= 1
-check('Force pours ECU_P1 / EGR_P1: one zone per net on F.Cu and on B.Cu, priority above GND, solid connection (no thermals) on every force pad '
-      '(J3, J4, RSH1 1/4), each pad inside the fill of every layer it is on', pok, pinfo)
+        cov, conn = {}, {}
+        for r, q in FORCE_PADS[n]:
+            a_ = pad(r, q)
+            if not a_.IsOnLayer(L):
+                continue
+            if r == 'RSH1':   # shunt pads: solid, inside the fill
+                cov[f'{r}.{q}'] = bool(fl.Contains(a_.GetPosition())); conn[f'{r}.{q}'] = a_.GetLocalZoneConnection() == p.ZONE_CONNECTION_FULL
+            else:             # 2.10: J3 / J4 wire pads on >= 4 spokes >= 2 mm (pieces of the fill in a ring round the pad)
+                rp = max(p.ToMM(a_.GetSize(L).x), p.ToMM(a_.GetSize(L).y)) / 2; ring = p.SHAPE_POLY_SET(); ring.NewOutline()
+                c_ = a_.GetPosition()
+                for k in range(64):
+                    ring.Append(c_.x + p.FromMM((rp + .35) * math.cos(k * math.tau / 64)), c_.y + p.FromMM((rp + .35) * math.sin(k * math.tau / 64)))
+                inner = p.SHAPE_POLY_SET(); inner.NewOutline()
+                for k in range(64):
+                    inner.Append(c_.x + p.FromMM((rp + .15) * math.cos(k * math.tau / 64)), c_.y + p.FromMM((rp + .15) * math.sin(k * math.tau / 64)))
+                ring.BooleanSubtract(inner); x_ = p.SHAPE_POLY_SET(fl); x_.BooleanIntersection(ring)
+                widths = sorted(round(x_.Outline(i).Area() / 1e12 / .2, 2) for i in range(x_.OutlineCount()))   # spoke cut by a 0.2 mm ring: area / 0.2 = its width (any angle)
+                cov[f'{r}.{q}'] = x_.OutlineCount() >= 4 and all(w >= 1.8 for w in widths[-4:])   # 2.0 mm spokes; diagonal ones read ~1.87
+                conn[f'{r}.{q}'] = a_.GetLocalZoneConnection() == p.ZONE_CONNECTION_THERMAL and p.ToMM(zs[0].GetThermalReliefSpokeWidth()) >= 2.0 if zs else False
+        pinfo[f'{n} {ln}'] = {'zones': len(zs), 'area_mm2': round(fl.Area() / 1e12, 1), 'pads_joined': cov, 'connection_ok': conn}
+        pok &= good and all(cov.values()) and all(conn.values()) and fl.OutlineCount() >= 1
+check('Force pours ECU_P1 / EGR_P1: one zone per net on F.Cu and on B.Cu, priority above GND, RSH1 1/4 solid inside the fill, J3 / J4 wire '
+      'pads on >= 4 spokes >= 2 mm on every layer (2.10, review F5)', pok, pinfo)
 
 
 def eroded_piece(n, L, r_mm, at):
@@ -352,11 +369,22 @@ def eroded_piece(n, L, r_mm, at):
 wid = {}; wok = True
 for n, (a, c) in {'ECU_P1': (('J3', '1'), ('J4', '1')), 'EGR_P1': (('J3', '2'), ('J4', '2'))}.items():
     for L in (p.F_Cu, p.B_Cu):
-        pc = eroded_piece(n, L, 2.0, pxy(*a)); joined = pc is not None and pc.Contains(xy(*pxy(*c)))
+        # 2.10: the J3 / J4 pads sit on spokes (thermal gap), so the corridor is measured from the shrunk fill round each pad
+        # (within 7.5 mm of its centre: pad radius 2.25 + thermal gap 0.5 + the band beside the hole + 2 mm shrink); the spokes are checked above
+        zs_ = pours[(n, L)]; fl = p.SHAPE_POLY_SET(zs_[0].GetFilledPolysList(L)) if zs_ else p.SHAPE_POLY_SET()
+        fl.Deflate(p.FromMM(2.0), p.CORNER_STRATEGY_ROUND_ALL_CORNERS, p.FromMM(.02)); joined = False
+        for k in range(fl.OutlineCount()):
+            pc = p.SHAPE_POLY_SET(); pc.AddOutline(fl.Outline(k))
+            near = lambda q: pc.Contains(xy(*q)) or math.sqrt(pc.SquaredDistance(xy(*q))) / 1e6 <= 7.5
+            joined |= near(pxy(*a)) and near(pxy(*c))
         wid[f'{n} {b.GetLayerName(L)} {a[0]}.{a[1]}-{c[0]}.{c[1]}'] = joined; wok &= joined
 for n, (a, c) in {'ECU_P1': (('J3', '1'), ('RSH1', '1')), 'EGR_P1': (('J3', '2'), ('RSH1', '4'))}.items():
-    pc = eroded_piece(n, p.F_Cu, 2.0, pxy(*a)); sb = pad(*c).GetBoundingBox()
-    gap = None if pc is None else round(math.sqrt(pc.SquaredDistance(sb.GetCenter())) / 1e6, 2)
+    sb = pad(*c).GetBoundingBox(); fl = p.SHAPE_POLY_SET(pours[(n, p.F_Cu)][0].GetFilledPolysList(p.F_Cu)); gap = None
+    fl.Deflate(p.FromMM(2.0), p.CORNER_STRATEGY_ROUND_ALL_CORNERS, p.FromMM(.02))
+    for k in range(fl.OutlineCount()):   # 2.10: pieces of the shrunk fill near the J3 pad (on spokes), as above
+        pc = p.SHAPE_POLY_SET(); pc.AddOutline(fl.Outline(k))
+        if pc.Contains(xy(*pxy(*a))) or math.sqrt(pc.SquaredDistance(xy(*pxy(*a)))) / 1e6 <= 7.5:
+            g_ = round(math.sqrt(pc.SquaredDistance(sb.GetCenter())) / 1e6, 2); gap = g_ if gap is None else min(gap, g_)
     wid[f'{n} F.Cu {a[0]}.{a[1]} -> {c[0]}.{c[1]}: 4 mm corridor ends mm from the pad centre'] = gap; wok &= gap is not None and gap <= 3.5
 check('Force path >= 4 mm wide on both layers (fill shrunk by 2 mm stays one piece): J3.1-J4.1 (ECU_P1) and J3.2-J4.2 (EGR_P1); towards the shunt '
       'the 4 mm corridor reaches <= 3.5 mm from the force pad centre (the pad itself is 2.03 mm wide)', wok, wid)
@@ -456,7 +484,7 @@ check('R21 (PR02, 0.7 W) >= 20 mm (courtyard to courtyard) from RSH1, U1 (INA240
 # ---------------- 9. decoupling at the pins (README; MCP1525: load capacitor within 5 mm) ----------------
 DEC = {'C6': ('U1', '6', 6), 'C7': ('U2', '8', 6), 'C8': ('U3', '8', 6), 'C9': ('U4', '2', 6), 'C10': ('U5', '14', 6), 'C11': ('U6', '14', 6),
        'C12': ('U7', '14', 6), 'C13': ('U8', '2', 6), 'C14': ('U9', '2', 6), 'C15': ('U10', '3', 6), 'C5': ('U10', '2', 5), 'C4': ('U4', '3', 6),
-       'C16': ('U3', '1', 6), 'C2': ('U3', '2', 6), 'C1': ('U2', '3', 6), 'C3': ('R6', '2', 8)}
+       'C16': ('U3', '1', 6), 'C2': ('U3', '2', 6), 'C1': ('U2', '3', 6), 'C3': ('R6', '2', 8), 'C17': ('J5', '1', 6)}   # C17: 2.10
 dd = {}
 for c, (u, n, lim) in DEC.items():
     q = next(a for a in fmap[c].Pads() if a.GetNetname() == pad(u, n).GetNetname()); dd[f'{c}-{u}.{n}'] = (round(math.dist(pos(q.GetPosition()), pxy(u, n)), 2), lim)

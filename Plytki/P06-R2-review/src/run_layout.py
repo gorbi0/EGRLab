@@ -90,6 +90,10 @@ for attempt in range(1, 2 if reuse else NATT + 1):
             assert not reuse, f'bundled SES gives copper conflicts: {bad}'
             attempts.append({'attempt': attempt, 'completion_and_cleanup_ok': False, 'copper_conflicts': len(bad)})
             print(f'attempt {attempt}: {len(bad)} copper conflicts after the router -> new Freerouting run', flush=True); continue
+        # 2.10: decoupling returns (return_check.py; verify_pcb.py has the same limits) - the router reshuffles them run to run
+        if rc == 0 and not reuse and run(PY, 'return_check.py', check=False).returncode == 5:
+            attempts.append({'attempt': attempt, 'completion_and_cleanup_ok': False, 'decoupling_returns_too_long': True})
+            print(f'attempt {attempt}: decoupling return over its limit -> new Freerouting run', flush=True); continue
     attempts.append({'attempt': attempt, 'completion_and_cleanup_ok': rc == 0})
     assert rc == 0 or not reuse, 'bundled SES no longer gives a complete board'
     if rc == 0:
