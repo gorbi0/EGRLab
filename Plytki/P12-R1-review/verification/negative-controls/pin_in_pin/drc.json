@@ -1,0 +1,245 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-04T20:48:02",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P12.kicad_pcb",
+    "unconnected_items": [],
+    "violations": [
+        {
+            "description": "Naruszenie prześwitu ( prześwit 0,3000 mm; obecnie 0,1600 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [5V_SYS] na F.Cu, długość 21,6000 mm",
+                    "pos": {
+                        "x": 88.89,
+                        "y": 56.62
+                    },
+                    "uuid": "334859aa-af6a-4a9f-aa17-8d3aa6a70936"
+                },
+                {
+                    "description": "Przelotka [GND] na F.Cu - B.Cu",
+                    "pos": {
+                        "x": 90.0,
+                        "y": 40.0
+                    },
+                    "uuid": "e293340c-bff2-4a7d-9daf-0d0195e9d90c"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci 5V_SYS oraz GND)",
+            "items": [
+                {
+                    "description": "Ścieżka [5V_SYS] na F.Cu, długość 21,6000 mm",
+                    "pos": {
+                        "x": 88.89,
+                        "y": 56.62
+                    },
+                    "uuid": "334859aa-af6a-4a9f-aa17-8d3aa6a70936"
+                },
+                {
+                    "description": "Pole PTH 17 [GND] na J6",
+                    "pos": {
+                        "x": 88.89,
+                        "y": 35.02
+                    },
+                    "uuid": "5ad4af62-d349-49dc-9099-32d6e8f6d3e4"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [5V_SYS] na F.Cu, długość 21,6000 mm",
+                    "pos": {
+                        "x": 88.89,
+                        "y": 56.62
+                    },
+                    "uuid": "334859aa-af6a-4a9f-aa17-8d3aa6a70936"
+                },
+                {
+                    "description": "Pole PTH 17 [GND] na J6",
+                    "pos": {
+                        "x": 88.89,
+                        "y": 35.02
+                    },
+                    "uuid": "5ad4af62-d349-49dc-9099-32d6e8f6d3e4"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci 5V_SYS oraz ADC_RESET)",
+            "items": [
+                {
+                    "description": "Ścieżka [5V_SYS] na F.Cu, długość 21,6000 mm",
+                    "pos": {
+                        "x": 88.89,
+                        "y": 56.62
+                    },
+                    "uuid": "334859aa-af6a-4a9f-aa17-8d3aa6a70936"
+                },
+                {
+                    "description": "Pole PTH 18 [ADC_RESET] na J3",
+                    "pos": {
+                        "x": 88.89,
+                        "y": 54.08
+                    },
+                    "uuid": "d8fe117b-7360-4062-8dc6-e07e872297ad"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [5V_SYS] na F.Cu, długość 21,6000 mm",
+                    "pos": {
+                        "x": 88.89,
+                        "y": 56.62
+                    },
+                    "uuid": "334859aa-af6a-4a9f-aa17-8d3aa6a70936"
+                },
+                {
+                    "description": "Pole PTH 18 [ADC_RESET] na J3",
+                    "pos": {
+                        "x": 88.89,
+                        "y": 54.08
+                    },
+                    "uuid": "d8fe117b-7360-4062-8dc6-e07e872297ad"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Tracks crossing",
+            "items": [
+                {
+                    "description": "Ścieżka [ADC_RESET] na F.Cu, długość 1,7961 mm",
+                    "pos": {
+                        "x": 88.89,
+                        "y": 54.08
+                    },
+                    "uuid": "0f5a5bac-6ab4-4855-8406-440e1ddf7c48"
+                },
+                {
+                    "description": "Ścieżka [5V_SYS] na F.Cu, długość 21,6000 mm",
+                    "pos": {
+                        "x": 88.89,
+                        "y": 56.62
+                    },
+                    "uuid": "334859aa-af6a-4a9f-aa17-8d3aa6a70936"
+                }
+            ],
+            "severity": "error",
+            "type": "tracks_crossing"
+        },
+        {
+            "description": "Niekompletne łączenie termiczne ze strefą (warstwa F.Cu; strefa min. liczba łącz 2; obecnie 1)",
+            "items": [
+                {
+                    "description": "Strefa [GND] na F.Cu, priorytet 0",
+                    "pos": {
+                        "x": 0.3,
+                        "y": 0.3
+                    },
+                    "uuid": "8d6624cb-5a62-4168-853c-966e0d3a6e2a"
+                },
+                {
+                    "description": "Pole PTH 17 [GND] na J6",
+                    "pos": {
+                        "x": 88.89,
+                        "y": 35.02
+                    },
+                    "uuid": "5ad4af62-d349-49dc-9099-32d6e8f6d3e4"
+                }
+            ],
+            "severity": "error",
+            "type": "starved_thermal"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [5V_SYS] na F.Cu, długość 21,6000 mm",
+                    "pos": {
+                        "x": 88.89,
+                        "y": 56.62
+                    },
+                    "uuid": "334859aa-af6a-4a9f-aa17-8d3aa6a70936"
+                },
+                {
+                    "description": "Pole PTH 17 [GND] na J6",
+                    "pos": {
+                        "x": 88.89,
+                        "y": 35.02
+                    },
+                    "uuid": "5ad4af62-d349-49dc-9099-32d6e8f6d3e4"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [5V_SYS] na F.Cu, długość 21,6000 mm",
+                    "pos": {
+                        "x": 88.89,
+                        "y": 56.62
+                    },
+                    "uuid": "334859aa-af6a-4a9f-aa17-8d3aa6a70936"
+                },
+                {
+                    "description": "Pole PTH 18 [ADC_RESET] na J3",
+                    "pos": {
+                        "x": 88.89,
+                        "y": 54.08
+                    },
+                    "uuid": "d8fe117b-7360-4062-8dc6-e07e872297ad"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        }
+    ]
+}

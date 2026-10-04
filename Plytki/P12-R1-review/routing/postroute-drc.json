@@ -1,0 +1,130 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-04T20:46:30",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P12.kicad_pcb",
+    "unconnected_items": [],
+    "violations": [
+        {
+            "description": "Niekompletne łączenie termiczne ze strefą (warstwa B.Cu; 1 łącz połączonych z izolowanym polem)",
+            "items": [
+                {
+                    "description": "Strefa [GND] na B.Cu, priorytet 0",
+                    "pos": {
+                        "x": 0.3,
+                        "y": 0.3
+                    },
+                    "uuid": "5dd6fc29-87e2-46ac-ac80-72c09ce2b787"
+                },
+                {
+                    "description": "Pole PTH 1 [GND] na J6",
+                    "pos": {
+                        "x": 68.57,
+                        "y": 35.02
+                    },
+                    "uuid": "6e396b2b-de26-4e07-b85b-8151cddb1425"
+                }
+            ],
+            "severity": "error",
+            "type": "starved_thermal"
+        },
+        {
+            "description": "Niekompletne łączenie termiczne ze strefą (warstwa B.Cu; strefa min. liczba łącz 2; obecnie 1)",
+            "items": [
+                {
+                    "description": "Strefa [GND] na B.Cu, priorytet 0",
+                    "pos": {
+                        "x": 0.3,
+                        "y": 0.3
+                    },
+                    "uuid": "5dd6fc29-87e2-46ac-ac80-72c09ce2b787"
+                },
+                {
+                    "description": "Pole PTH 3 [GND] na J6",
+                    "pos": {
+                        "x": 71.11,
+                        "y": 35.02
+                    },
+                    "uuid": "bda269c8-d62e-4d89-a561-754bb46e93e0"
+                }
+            ],
+            "severity": "error",
+            "type": "starved_thermal"
+        },
+        {
+            "description": "Niekompletne łączenie termiczne ze strefą (warstwa B.Cu; strefa min. liczba łącz 2; obecnie 1)",
+            "items": [
+                {
+                    "description": "Strefa [GND] na B.Cu, priorytet 0",
+                    "pos": {
+                        "x": 0.3,
+                        "y": 0.3
+                    },
+                    "uuid": "5dd6fc29-87e2-46ac-ac80-72c09ce2b787"
+                },
+                {
+                    "description": "Pole PTH 3 [GND] na J8",
+                    "pos": {
+                        "x": 73.65,
+                        "y": 13.42
+                    },
+                    "uuid": "b76dd05b-63d3-418b-9de0-e2ede2421290"
+                }
+            ],
+            "severity": "error",
+            "type": "starved_thermal"
+        },
+        {
+            "description": "Niekompletne łączenie termiczne ze strefą (warstwa B.Cu; strefa min. liczba łącz 2; obecnie 1)",
+            "items": [
+                {
+                    "description": "Strefa [GND] na B.Cu, priorytet 0",
+                    "pos": {
+                        "x": 0.3,
+                        "y": 0.3
+                    },
+                    "uuid": "5dd6fc29-87e2-46ac-ac80-72c09ce2b787"
+                },
+                {
+                    "description": "Pole PTH 5 [GND] na J9",
+                    "pos": {
+                        "x": 133.499999,
+                        "y": 13.42
+                    },
+                    "uuid": "d932d80b-935d-418b-93c1-f67943c6defd"
+                }
+            ],
+            "severity": "error",
+            "type": "starved_thermal"
+        }
+    ]
+}

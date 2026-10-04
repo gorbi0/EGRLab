@@ -1,0 +1,26 @@
+PASS K1 Złącza J1..J10: footprint prostego IDC o typie z kontraktu (2x5 / 2x8 / 2x10, kontrakty.json) i wszystkie piny w netliście
+PASS K2 Każdy pin każdego złącza: sieć = kontrakt-P12.json (pinout płytki, GND jawnie; piny z docs/NIEPODLACZONE.csv bez połączenia)
+PASS K3 Grupy połączeń P12 = grupy z kontraktu (każda sieć dokładnie z pinami tej nazwy, bez sieci dodatkowych)
+PASS K4 Kontrola krzyżowa: końce każdej sieci poza GND = P12-przygotowanie/wyniki/kontrakty.json (23 OK + 27 czeka)
+PASS K5 GND, 5V_SYS i 3V3_IO to osobne sieci; P03 J_BP2 16/17/19/20 (PFAIL_N / 5V_SYS) nie łączą się z P05 J_BP2 16/17/19/20 (GND)
+PASS K6 Żadna sieć nie łączy pinów, którym kontrakt daje różne sieci (brak połączeń pin w pin)
+PASS K7 5V_SYS: 3 piny źródła P02 + 11 pinów odbiorników + TP2; 3V3_IO: 2 piny źródła + 5 odbiorników + TP3
+PASS K8 Piny bez połączenia = docs/NIEPODLACZONE.csv (24 sieci z drugim końcem na P04 / P07 / P08); każda sieć z ≥ 2 końcami LOGGER połączona
+PASS K9 Pola pomiarowe: TP1 / TP4 GND, TP2 5V_SYS, TP3 3V3_IO
+PASS K10 Na schemacie tylko J1..J10 i TP1..TP4 (bez elementów aktywnych i biernych)
+OK  proba_zerowa -> []
+OK  zamieniony_pin_ADC_SCLK_DOUTA -> ['K2', 'K3', 'K4', 'K6']
+OK  zamieniony_pin_P09_MISO_MOSI -> ['K2', 'K3', 'K4', 'K6']
+OK  brak_sieci_ADC_BUSY -> ['K2', 'K3', 'K4', 'K8']
+OK  brak_konca_CAN_RX_P10 -> ['K2', 'K3', 'K4', 'K8']
+OK  zwarcie_5V_SYS_GND -> ['K2', 'K3', 'K4', 'K5', 'K6', 'K7', 'K9']
+OK  pin_w_pin_J3_17_J6_17 -> ['K2', 'K3', 'K4', 'K5', 'K6', 'K7']
+OK  pin_w_pin_J3_16_J6_16 -> ['K2', 'K3', 'K4', 'K5', 'K6']
+OK  zly_typ_P05_J_BP1_2x8 -> ['K1']
+OK  zly_typ_katowy_P10 -> ['K1']
+OK  P04_3V3_do_3V3_IO -> ['K2', 'K3', 'K4', 'K6', 'K7', 'K8']
+OK  PG_SEND_PG_LINK_zmostkowane -> ['K2', 'K3', 'K4', 'K6', 'K8']
+OK  TP2_na_GND -> ['K3', 'K6', 'K7', 'K9']
+OK  dodatkowa_czesc_R1 -> ['K3', 'K8', 'K10']
+10/10 kontroli, próby ujemne 14/14 (z zerową)
+
