@@ -55,6 +55,8 @@ def small_text(b):                                                             #
     t = next(d for d in b.GetDrawings() if isinstance(d, p.PCB_TEXT) and d.GetText() == f'{REV} S1 LOGGER'); t.SetTextSize(xy(.8, .8))
 def label_on_body(b):                                                          # label of J3 moved onto the body of J3
     t = next(d for d in b.GetDrawings() if isinstance(d, p.PCB_TEXT) and d.GetText().startswith('J3  ')); a = pad(b, 'J3', '10').GetPosition(); t.SetPosition(a)
+def back_text_on_hole(b):                                                      # bottom note moved onto H5 (as the first 4.10 draft)
+    t = next(d for d in b.GetDrawings() if isinstance(d, p.PCB_TEXT) and d.GetLayer() == p.B_SilkS); x, y = kxy(80.0, 51.45); t.SetPosition(xy(x, y))
 def null_control(b): pass
 
 
@@ -62,7 +64,7 @@ CASES = [(null_control, None), (conn_shift, 'Connector centres'), (conn_low, 'Co
          (hole_shift, 'M3:'), (zone_copper, 'Standoff zones D7'), (v5_narrow, 'Track widths'), (v3_narrow, 'Track widths'),
          (pin_in_pin, '5V_SYS, 3V3_IO and GND separate'), (pad_net, 'Every connector: straight IDC'), (wrong_type, 'Every connector: straight IDC'),
          ('gnd_pour_removed', 'GND pours'), ('label_missing', 'Every connector: one label'), ('label_swap', 'Every connector: one label'),
-         ('pin1_missing', 'Every connector: one label'), (small_text, 'Every silkscreen text'), (label_on_body, 'No silkscreen text inside'),
+         ('pin1_missing', 'Every connector: one label'), (small_text, 'Every silkscreen text'), (label_on_body, 'No silkscreen text'), (back_text_on_hole, 'No silkscreen text'),
          ('title_wrong', 'Silkscreen: board name')]
 assert root.resolve().is_relative_to(P.resolve()) and root.name == 'negative-controls'
 shutil.rmtree(root, ignore_errors=True); root.mkdir(parents=True)

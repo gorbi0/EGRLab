@@ -72,8 +72,8 @@ Kontrole: `verify_pcb.py` „Orientation” (pin 2k dokładnie 2,54 mm nad 2k−
 | Netlista pin po pinie wobec `parts.py` | 14 części, 176 pinów, 0 błędów |
 | Netlista wobec kontraktów (`src/verify_kontrakt.py`, K1–K10) | 10/10; próby ujemne 14/14 z zerową: zamieniony pin (2), brak sieci, brak końca, zwarcie 5V_SYS–GND, pin w pin J3/J6 (2), zły typ złącza (2), P04_3V3→3V3_IO, mostek PG, TP, dodatkowa część |
 | DRC (świeży, wszystkie poziomy, parity) | 0 naruszeń / 0 niepołączonych / 0 niezgodności |
-| Kontrole PCB (`src/verify_pcb.py`) | 21/21: położenia ±0,5 mm (zmierzone 0,00), orientacja, piny = kontrakt, M3 i strefy, szerokości, rozdział zasilań, dojście zasilań do źródła, GND, nadruk ≥ 1,0/0,15 |
-| Próby ujemne PCB | 19/19 z zerową |
+| Kontrole PCB (`src/verify_pcb.py`) | 21/21: położenia ±0,5 mm (zmierzone 0,00), orientacja, piny = kontrakt, M3 i strefy, szerokości, rozdział zasilań, dojście zasilań do źródła, GND, nadruk ≥ 1,0/0,15, bez nadruku na korpusach złączy i w strefach M3 |
+| Próby ujemne PCB | 20/20 z zerową |
 | Trasowanie | Freerouting 2.1.0, 1. próba (3 przebiegi), bez tras planera |
 
 PDF przeglądowy `output/pdf/P12-R1-PCB.pdf` (5 stron: przegląd, montaż 1:1, F.Cu, B.Cu, geometria) obejrzany 4.10. Schemat: `output/pdf/P12-R1-schemat.pdf`.

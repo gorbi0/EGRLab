@@ -233,13 +233,15 @@ for r, z in ZL.items():
         bad[r + ' pin1'] = f'{len(one_)} marks "1" near pin 1'
 check('Every connector: one label "Jn  Pxx <connector> (poziom k, Sx)" centred above it and one "1" mark <= 7.5 mm from pin 1, nearer pin 1 than the last odd pin', not bad, bad)
 ins = {}
-for s, t in texts:
+alltexts = [(t.GetText(), t) for t in b.GetDrawings() if isinstance(t, p.PCB_TEXT) and t.GetLayer() in (p.F_SilkS, p.B_SilkS)]
+for s, t in alltexts:
     r_ = t.GetBoundingBox(); x0, y0, x1, y1 = p.ToMM(r_.GetLeft()), p.ToMM(r_.GetTop()), p.ToMM(r_.GetRight()), p.ToMM(r_.GetBottom())
     smp = [(x0 + (x1 - x0) * i / 6, y0 + (y1 - y0) * j / 2) for i in range(7) for j in range(3)]
-    hit = sorted({r for r, cy in cour.items() for q in smp if cy.Contains(xy(*q))})
+    hit = sorted({r for r, cy in cour.items() for q in smp if t.GetLayer() == p.F_SilkS and cy.Contains(xy(*q))})
+    hit += [f'M3 zone {h}' for h in want_h if max(x0 - h[0], 0, h[0] - x1) ** 2 + max(y0 - h[1], 0, h[1] - y1) ** 2 < RZ ** 2]
     if hit or x0 < .3 or y0 < .3 or x1 > W - .3 or y1 > H - .3:
         ins[s] = hit or 'outside the board'
-check('No silkscreen text inside a connector / pad courtyard (stays visible next to a mated socket) or off the board', not ins, ins)
+check('No silkscreen text (top or bottom) inside a connector / pad courtyard (stays visible next to a mated socket), in an M3 zone D7 or off the board', not ins, ins)
 title = [s for s, t in texts if s == f'{REV} S1 LOGGER']
 check(f'Silkscreen: board name "{REV} S1 LOGGER" and orientation marks (STRONA STOSU, x = 0 PANEL)', bool(title) and any('STRONA STOSU' in s for s, _ in texts)
       and any(s.startswith('x = 0') for s, _ in texts), title)

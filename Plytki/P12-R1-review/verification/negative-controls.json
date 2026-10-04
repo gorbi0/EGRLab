@@ -156,12 +156,20 @@
   },
   {
     "control": "label_on_body",
-    "expected_failing_check": "No silkscreen text inside",
+    "expected_failing_check": "No silkscreen text",
     "detected": true,
     "failed_checks": [
       "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities, zones refilled)",
       "Every connector: one label \"Jn  Pxx <connector> (poziom k, Sx)\" centred above it and one \"1\" mark <= 7.5 mm from pin 1, nearer pin 1 than the last odd pin",
-      "No silkscreen text inside a connector / pad courtyard (stays visible next to a mated socket) or off the board"
+      "No silkscreen text (top or bottom) inside a connector / pad courtyard (stays visible next to a mated socket), in an M3 zone D7 or off the board"
+    ]
+  },
+  {
+    "control": "back_text_on_hole",
+    "expected_failing_check": "No silkscreen text",
+    "detected": true,
+    "failed_checks": [
+      "No silkscreen text (top or bottom) inside a connector / pad courtyard (stays visible next to a mated socket), in an M3 zone D7 or off the board"
     ]
   },
   {

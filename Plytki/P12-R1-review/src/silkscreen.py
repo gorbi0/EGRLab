@@ -53,7 +53,7 @@ if __name__ == '__main__':
         text(b, s, tx, ty + k * 2.4, size); out['other'].append(s)
     for s, x, ang in [('x = 0  PANEL', 2.2, 90), ('x = 160  WEJSCIA', W - 2.2, 270)]:
         text(b, s, x, kxy(0, 40.0)[1] if x < 10 else kxy(0, 66.0)[1], 1.0, angle=ang); out['other'].append(s)
-    bx, by = kxy(80.0, 51.45)
+    bx, by = kxy(80.0, 27.0)   # between levels 1 and 2, clear of the M3 holes (4.10: at z 51.45 the text ran through H5 / H6)
     text(b, f'{REV} TYL - SCIANA A (zlacza po drugiej stronie)', bx, by, 1.5, p.B_SilkS, mirror=True); out['other'].append('TYL')
     out['title'] = TITLE
     p.SaveBoard(str(fn), b)

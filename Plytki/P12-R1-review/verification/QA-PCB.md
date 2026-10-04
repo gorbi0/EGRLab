@@ -1,7 +1,7 @@
 # P12-R1 — QA PCB (płytka połączeń krawędzi A, LOGGER; plik generowany przez src/run_release.py)
 
 DRC (świeży, wszystkie poziomy): naruszenia 0, niepołączone 0, niezgodności ze schematem 0 (szczegóły w pcb-checks.json).
-Kontrole PCB: 21/21. Próby ujemne: 19/19 (w tym próba zerowa).
+Kontrole PCB: 21/21. Próby ujemne: 20/20 (w tym próba zerowa).
 
 | Kontrola | Wynik |
 |---|---|
@@ -24,7 +24,7 @@ Kontrole PCB: 21/21. Próby ujemne: 19/19 (w tym próba zerowa).
 | Test pads TP1 / TP4 GND, TP2 5V_SYS, TP3 3V3_IO | PASS |
 | Every silkscreen text >= 1.0 mm high and >= 0.15 mm stroke (JLCPCB) | PASS |
 | Every connector: one label "Jn  Pxx <connector> (poziom k, Sx)" centred above it and one "1" mark <= 7.5 mm from pin 1, nearer pin 1 than the last odd pin | PASS |
-| No silkscreen text inside a connector / pad courtyard (stays visible next to a mated socket) or off the board | PASS |
+| No silkscreen text (top or bottom) inside a connector / pad courtyard (stays visible next to a mated socket), in an M3 zone D7 or off the board | PASS |
 | Silkscreen: board name "P12 R1 S1 LOGGER" and orientation marks (STRONA STOSU, x = 0 PANEL) | PASS |
 
 ## Próby ujemne
@@ -48,7 +48,8 @@ Kontrole PCB: 21/21. Próby ujemne: 19/19 (w tym próba zerowa).
 | label_swap | Every connector: one label | tak | 1 |
 | pin1_missing | Every connector: one label | tak | 1 |
 | small_text | Every silkscreen text | tak | 2 |
-| label_on_body | No silkscreen text inside | tak | 3 |
+| label_on_body | No silkscreen text | tak | 3 |
+| back_text_on_hole | No silkscreen text | tak | 1 |
 | title_wrong | Silkscreen: board name | tak | 1 |
 
 Nadruk: 10 opisów złączy, 10 znaczników pinu 1, 4 opisów pól pomiarowych; oznaczenia footprintów ukryte (opis złącza zawiera oznaczenie).
