@@ -1,0 +1,14 @@
+﻿pin;siec;rezystor;cel_pomiaru
+1;GND;—;masa sondy (pierwszy pin listwy)
+2;5V_SYS;R19 1 kΩ;E02/E15: szyna 5 V, pobór, granice 4,75/5,25 V
+3;3V3_IO;R20 1 kΩ;E02/E11/E12: szyna 3,3 V, rampy i zaniki
+4;SUP3_N;R21 1 kΩ;E11/E12: wyjście U6 (nadzorca 3,3 V), opóźnienie 150–700 ms
+5;SUP5_N;R22 1 kΩ;E11: nadzorca 5 V za buforem U4
+6;SENSOR_OK;R23 1 kΩ;E03/E13: SENSOR_OK do P04 (za R11), stan przy martwej P08
+7;SENSOR_HEALTHY;R24 1 kΩ;E03/E07/E13: SENSOR_HEALTHY do P03 (za R13)
+8;PERMIT_LOCAL;R25 1 kΩ;E10: PERMIT za buforem U5 (LOW przy odłączonym P04)
+9;SENSOR_LOCAL;R26 1 kΩ;E04/E09/E10: zezwolenie lokalne (U3), sterowanie U2 i dzielnika EN
+10;TPS_EN;R27 10 kΩ;"E02/E04/E12: EN TPS2553 (dzielnik R15/R16 i U8); ≤ 0,66 V wyłączony, ok. 1,95 V włączony"
+11;SENSOR_LIMITED;R28 1 kΩ;E04–E07/E09: wyjście U1 przed K1 (limit prądu, rozładowanie R17)
+12;SENSOR_FAULT_LOCAL_N;R29 1 kΩ;E07: FAULT_N TPS2553 (deglitch 5–10 ms)
+13;GND;—;masa sondy (ostatni pin listwy)
