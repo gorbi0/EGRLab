@@ -21,7 +21,7 @@ with (P/'docs/interfejsy.csv').open('w',newline='',encoding='utf-8-sig') as f:
 g=collections.defaultdict(list)
 for r,p in PARTS.items():g[p['zrodlo'],p['mpn'],p['footprint'].split(':')[-1]].append(r)
 L=['# Zakupy P08-R2 — ilości na jedną płytkę (S1)','',
-'Źródło: **rejestr** = pozycja z `Zamowione/zamowione.csv` (posiadane; przydział P08 z zamówień 24.09 albo zapas po P02 R4, P05 R3, P06 R2, P09 R2, P10 R2); **nowe** = do kupienia. Płytka z JLCPCB (klasa 1/3, 53 × 100 mm, slot S1 poziomu 5). Schemat bez PCB.','',
+'Źródło: **rejestr** = pozycja z `Zamowione/zamowione.csv` (posiadane; przydział P08 z zamówień 24.09 albo zapas po P02 R4, P05 R3, P06 R2, P09 R2, P10 R2); **nowe** = do kupienia. Płytka z JLCPCB (klasa 1/3, 53 × 100 mm, slot S1 poziomu 5; paczka `Plytki/P08-PCB-R2-zamowienie`).','',
 '| Źródło | Nazwa | Ilość | Referencje / obudowa |','|---|---|---:|---|']
 for (z,name,fp),refs in sorted(g.items()):L.append(f'| {z} | {name} | {len(refs)} | {", ".join(refs)} / {fp} |')
 L+=['','## Bilans części posiadanych, które bierze P08','',

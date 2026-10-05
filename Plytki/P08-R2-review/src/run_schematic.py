@@ -1,5 +1,5 @@
 """P08-R2 (format S1, schematic only): build -> docs -> ERC -> netlist -> pin-by-pin check -> electrical checks + negative controls -> PDF/PNG -> QA.md + manifest.
-Run with KiCad Python (cloud: scripts/egrlab-docker python3 src/run_schematic.py). kicad-cli: KICAD_CLI or next to the Python. No PCB is built or checked here."""
+Run with KiCad Python (cloud: scripts/egrlab-docker python3 src/run_schematic.py). kicad-cli: KICAD_CLI or next to the Python. The PCB is built and checked by src/run_release.py."""
 from pathlib import Path
 import os, subprocess, sys, json, hashlib
 P = Path(__file__).resolve().parents[1]; PY = sys.executable
@@ -25,7 +25,7 @@ qa = ['# P08-R2 — QA schematu (plik generowany przez src/run_schematic.py)', '
       f"ERC: {sc['erc_violations']} naruszeń na {sc['erc_sheets']} arkuszach. Netlista: {sc['components']} części, {sc['pin_checks']} pinów sprawdzonych pin po pinie względem `parts.py`, {len(sc['errors'])} błędów, {sc['nets']} sieci.", '',
       f"Kontrole elektryczne: {sum(c['pass'] for c in el['checks'])}/{len(el['checks'])} PASS. Próby ujemne: {sum(t['detected'] for t in neg if t['expected']=='detected')}/{sum(1 for t in neg if t['expected']=='detected')} mutacji wykrytych; próba zerowa (bez zmiany): {'czysta' if not neg[-1]['detected'] else 'NIECZYSTA'}.", '',
       '| Kontrola | Wynik |', '|---|---|'] + [f"| {c['id']} | {'PASS' if c['pass'] else 'FAIL'} |" for c in el['checks']] + ['', '## Próby ujemne', '', '| Mutacja | Oczekiwane | Wykryta | Zgłosiły kontrole |', '|---|---|---|---|'] + \
-     [f"| {t['mutation']} | {t['expected']} | {'tak' if t['detected'] else 'nie'} | {', '.join(t['by']) or '—'} |" for t in neg] + ['', f"Ocena powierzchni (bez rozmieszczenia, `src/powierzchnia.py`): suma prostokątów obrysów {ar['courtyard_bbox_sum_mm2']} mm² wobec {ar['usable_mm2']} mm² użytecznej powierzchni 53 × 100 mm ({ar['fill_percent']} %).", '', 'Tylko schemat, bez PCB (CHMURA.md, zasada 6). Kontrole nie zastępują odbioru na sprzęcie.']
+     [f"| {t['mutation']} | {t['expected']} | {'tak' if t['detected'] else 'nie'} | {', '.join(t['by']) or '—'} |" for t in neg] + ['', f"Ocena powierzchni (bez rozmieszczenia, `src/powierzchnia.py`): suma prostokątów obrysów {ar['courtyard_bbox_sum_mm2']} mm² wobec {ar['usable_mm2']} mm² użytecznej powierzchni 53 × 100 mm ({ar['fill_percent']} %).", '', 'QA schematu; PCB: `verification/QA-PCB.md` (src/run_release.py). Kontrole nie zastępują odbioru na sprzęcie.']
 (P / 'verification/QA.md').write_text('\n'.join(qa) + '\n', encoding='utf-8')
 files = sorted(p for d in ('eda', 'src', 'docs', 'output', 'reference') for p in (P / d).rglob('*') if p.is_file() and '__pycache__' not in p.parts)
 files += sorted(p for p in (P / 'verification').glob('*') if p.is_file() and p.name != 'manifest.json') + [P / 'README.md']

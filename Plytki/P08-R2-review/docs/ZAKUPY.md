@@ -1,6 +1,6 @@
 # Zakupy P08-R2 — ilości na jedną płytkę (S1)
 
-Źródło: **rejestr** = pozycja z `Zamowione/zamowione.csv` (posiadane; przydział P08 z zamówień 24.09 albo zapas po P02 R4, P05 R3, P06 R2, P09 R2, P10 R2); **nowe** = do kupienia. Płytka z JLCPCB (klasa 1/3, 53 × 100 mm, slot S1 poziomu 5). Schemat bez PCB.
+Źródło: **rejestr** = pozycja z `Zamowione/zamowione.csv` (posiadane; przydział P08 z zamówień 24.09 albo zapas po P02 R4, P05 R3, P06 R2, P09 R2, P10 R2); **nowe** = do kupienia. Płytka z JLCPCB (klasa 1/3, 53 × 100 mm, slot S1 poziomu 5; paczka `Plytki/P08-PCB-R2-zamowienie`).
 
 | Źródło | Nazwa | Ilość | Referencje / obudowa |
 |---|---|---:|---|

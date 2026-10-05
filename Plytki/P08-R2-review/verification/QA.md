@@ -113,4 +113,4 @@ Kontrole elektryczne: 49/49 PASS. Próby ujemne: 49/49 mutacji wykrytych; próba
 
 Ocena powierzchni (bez rozmieszczenia, `src/powierzchnia.py`): suma prostokątów obrysów 2356 mm² wobec 4486 mm² użytecznej powierzchni 53 × 100 mm (53 %).
 
-Tylko schemat, bez PCB (CHMURA.md, zasada 6). Kontrole nie zastępują odbioru na sprzęcie.
+QA schematu; PCB: `verification/QA-PCB.md` (src/run_release.py). Kontrole nie zastępują odbioru na sprzęcie.
