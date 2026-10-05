@@ -1,0 +1,115 @@
+{
+ "_source": "Plytki/P03-R6-review/docs/parts.json @ pelny-s1 1557f176 (P03 R6, PCB scalona 1.10)",
+ "U4": {
+  "ref": "U4",
+  "value": "SN74LVC1G37DBVR",
+  "mpn": "SN74LVC1G37DBVR",
+  "pins": {
+   "1": "NC",
+   "2": "SUP_RAW_N",
+   "3": "GND",
+   "4": "RESET_DRV_N",
+   "5": "3V3_CORE"
+  },
+  "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+  "note": "DBV SOT23-5, 0.95 mm pitch; direct hand soldering. R5: non-inverting Schmitt input, open-drain output; replaces LVC1G07 without changing pads. Never substitute push-pull or a non-Schmitt input."
+ },
+ "U6": {
+  "ref": "U6",
+  "value": "SN74LVC1G17DBVR",
+  "mpn": "SN74LVC1G17DBVR",
+  "pins": {
+   "1": "NC",
+   "2": "SUP_N",
+   "3": "GND",
+   "4": "SUP_N_DRV",
+   "5": "3V3_CORE"
+  },
+  "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+  "note": "DBV SOT23-5, 0.95 mm pitch; direct hand soldering. Schmitt-trigger buffer, push-pull. Drives J_BP3.12 (P04 SUP_N) through R41."
+ },
+ "R13": {
+  "ref": "R13",
+  "value": "10K / 1% 1206",
+  "mpn": "RC1206FR-0710KL",
+  "pins": {
+   "1": "SUP_RAW_N",
+   "2": "3V3_CORE"
+  },
+  "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+  "note": "Supervisor pull-up before U4; does not discharge Waveshare EN capacitor."
+ },
+ "R34": {
+  "ref": "R34",
+  "value": "220R / 1% 1206",
+  "mpn": "RC1206FR-07220RL",
+  "pins": {
+   "1": "RESET_DRV_N",
+   "2": "SUP_N"
+  },
+  "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+  "note": "Limits discharge of the module EN capacitor to <16 mA at 3.465 V. Final SUP_N goes to MCU EN, MCP reset and P04."
+ },
+ "R35": {
+  "ref": "R35",
+  "value": "10K / 1% 1206",
+  "mpn": "RC1206FR-0710KL",
+  "pins": {
+   "1": "SUP_N",
+   "2": "3V3_CORE"
+  },
+  "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+  "note": "Final common reset pull-up, parallel to the module 10K. Module 1 uF EN capacitor retained."
+ },
+ "R41": {
+  "ref": "R41",
+  "value": "220R / 1% 1206",
+  "mpn": "RC1206FR-07220RL",
+  "pins": {
+   "1": "SUP_N_DRV",
+   "2": "SUP_N_OUT"
+  },
+  "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+  "note": "Series resistor U6.4 -> J_BP3.12 (R6; R5: J4.15): short to GND <= 16 mA (3.465 V). Initial value; R6 path ribbon 30 mm + P12 + ribbon 30 mm to P04. Verify <=10 ns/V at P04 U9.5 with actual load/probe; ideal RC is not a guaranteed capacitance limit."
+ },
+ "R14": {
+  "ref": "R14",
+  "value": "1K / 1% 1206",
+  "mpn": "RC1206FR-071KL",
+  "pins": {
+   "1": "3V3_CORE",
+   "2": "CORE_LINK"
+  },
+  "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+  "note": "CORE_LINK = presence of 3V3_CORE through 1 k (R3, review P3-02): a harness short to GND draws 3.3 mA; P04 R16 10 k sees >= 2.85 V (74LVC125A VIH 2.0 V). v6.1 had a wire link."
+ },
+ "J_BP3": {
+  "ref": "J_BP3",
+  "value": "J_BP3 / IDC 2x10 RA (S3)",
+  "mpn": "IDC box header 2x10, 2.54 mm, right angle, Au (MPN to be selected)",
+  "pins": {
+   "1": "GND",
+   "2": "SPI3_SCLK",
+   "3": "GND",
+   "4": "SPI3_MOSI",
+   "5": "3V3_IO",
+   "6": "SPI3_MISO",
+   "7": "GND",
+   "8": "TC1_CS",
+   "9": "SENSOR_ENABLE",
+   "10": "TC2_CS",
+   "11": "GND",
+   "12": "SUP_N_OUT",
+   "13": "CORE_LINK",
+   "14": "PWM",
+   "15": "GND",
+   "16": "HEARTBEAT",
+   "17": "HW_ARMED",
+   "18": "MCU_ARM",
+   "19": "GND",
+   "20": "INTERLOCK"
+  },
+  "footprint": "Connector_IDC:IDC-Header_2x10_P2.54mm_Horizontal",
+  "note": "Format S1 edge A, slot S3, centre x = 26.5 mm in the slot, pin 1 towards smaller x. Short ribbon to P12."
+ }
+}
