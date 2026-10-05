@@ -48,7 +48,7 @@ Zużycie innych płytek policzone z ich `docs/parts.json` na gałęzi `pelny-s1`
 
 ## Uwagi do zakupów
 
-- **Rezystory:** wszystkie nowe Yageo RC1206FR-07…L (1 %, 1206), także 21 rezystorów listew serwisowych.
+- **Rezystory:** wszystkie nowe Yageo RC1206FR-07…L (1 %, 1206), także 19 rezystorów listew serwisowych (R43–R61).
 - **C2:** WIMA MKS2 1 µF / 63 V (MKS2C041001F00KSSD) jak w R2.2 — filtr ARM; foliowy THT, bo 1 µF X7R zmienia pojemność z napięciem i temperaturą, a S1 §9 mówi o nowych ceramicznych.
 - **C4–C17:** 100 nF X7R 1206 50 V; C15–C17 to druga para 100 nF przy U8–U10 (w R2.2 na adapterach) — do decyzji przy recenzji, czy zostają.
 - **U1 CD74HC123E, U2 SN74HC14N, U3 SN74HC74N, Q1–Q3 2N3904BU, U11 MCP100-300DI/TO:** nowe, obudowy jak w R2.2 (DIP, TO-92). Podstawki DIP14 pod U2/U3 opcjonalne (nowe).
