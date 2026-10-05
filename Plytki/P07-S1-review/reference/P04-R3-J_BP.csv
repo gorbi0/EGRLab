@@ -1,0 +1,57 @@
+﻿zlacze;pin;siec;kierunek;plytka_docelowa;uwagi
+J_BP1;1;GND;gnd;P12 (wszystkie);
+J_BP1;2;PANEL_3V3;zrodlo;P11 R2 (J_P12.2);"3V3_IO przez R40 100R do stykow panelu (STOP, KEY, MECH); przy obsadzonej P04 R1 na P11 = DNP"
+J_BP1;3;GND;gnd;P12 (wszystkie);
+J_BP1;4;MECH_OK;in;P11 R2 (J_P12.4);"petla MECH z panelu; R42 1k + R24 10k do GND po stronie bramki"
+J_BP1;5;GND;gnd;P12 (wszystkie);
+J_BP1;6;STOP_NC_OUT;in;P11 R2 (J_P12.6);STOP NC: podciaganie SAFE_N przez R4 10k
+J_BP1;7;GND;gnd;P12 (wszystkie);
+J_BP1;8;ARM_CONTACT;in;P11 R2 (J_P12.8);"ARM NO do GND; R3 1k, R2 10k do 3V3_IO, C2 1u"
+J_BP1;9;GND;gnd;P12 (wszystkie);
+J_BP1;10;SENSOR_PERMIT;out;"P08 (SENSOR; czeka na P08 R2)";"nazwa jak J4.1 R2.2 / W2 P08 R1; U5B push-pull"
+J_BP1;11;GND;gnd;P12 (wszystkie);
+J_BP1;12;SENSOR_OK;in;"P08 (SENSOR; czeka na P08 R2)";"nazwa jak J4.3 R2.2 / W2 P08 R1; U10B, 10k R21 do GND"
+J_BP1;13;GND;gnd;P12 (wszystkie);
+J_BP1;14;TEST_KEY;in;P11 R2 (J_P12.14);"ten sam pin co na P11 i P03 R6 (J_BP1.14); R41 1k + R23 10k do GND"
+J_BP1;15;GND;gnd;P12 (wszystkie);
+J_BP1;16;DAQ_OK;in;P05 R3 (J_BP1.6);"U9D, 10k R19 do GND; statyczny"
+J_BP2;1;GND;gnd;P12 (wszystkie);
+J_BP2;2;MOTOR_PERMIT;out;"P07 (DRIVE; czeka na P07)";"nazwa jak J3.1 R2.2; U5D push-pull"
+J_BP2;3;GND;gnd;P12 (wszystkie);
+J_BP2;4;PWM_OUT;out;"P07 (DRIVE; czeka na P07)";"nazwa jak J3.3 R2.2; U4C = PWM & MOTOR_PERMIT; GND po obu stronach"
+J_BP2;5;GND;gnd;P12 (wszystkie);
+J_BP2;6;ARM_CLK;out;"P07 (DRIVE; czeka na P07)";"nazwa jak J3.5 R2.2; U2B"
+J_BP2;7;GND;gnd;P12 (wszystkie);
+J_BP2;8;DRIVE_OK;in;"P07 (DRIVE; czeka na P07)";"nazwa jak J3.7 R2.2; U10A, 10k R20 do GND"
+J_BP2;9;GND;gnd;P12 (wszystkie);
+J_BP2;10;3V3_IO;pwr;P02 R4 (J_BP 8/10);"zasilanie P04 (rezerwa 30 mA); dwa piny: J_BP2.10 i J_BP3.10"
+J_BP2;11;GND;gnd;P12 (wszystkie);
+J_BP2;12;PSU_OK;in;P02 R4 (J_BP.12);"U9C, 10k R18 do GND; statyczny"
+J_BP2;13;GND;gnd;P12 (wszystkie);
+J_BP2;14;P04_3V3;zrodlo;P02 R4 (J_BP.15);3V3_IO przez R39 1k do Q7 P02 (w R2.2: PG_3V3 do P01 J5)
+J_BP2;15;GND;gnd;P12 (wszystkie);
+J_BP2;16;SAFE_N;in;P02 R4 (J_BP.16), P07 (czeka);"wspolny wezel OC: podciaganie R4 10k i kolektory Q1-Q3 na P04, Q7 na P02, P07 moze dolozyc OC; dla P12 nadajnik = P02"
+J_BP2;17;GND;gnd;P12 (wszystkie);
+J_BP2;18;PG_LINK;petla;P02 R4 (J_BP.18);"powrot petli PG (zwora 0R na P02); U10C, 10k R22 do GND"
+J_BP2;19;GND;gnd;P12 (wszystkie);
+J_BP2;20;PG_SEND;petla;P02 R4 (J_BP.17);3V3_IO przez R38 1k do petli PG
+J_BP3;1;GND;gnd;P12 (wszystkie);
+J_BP3;2;SENSOR_ENABLE;in;P03 R6 (J_BP3.9);"U8D, 10k R15 / 100k R28; statyczny"
+J_BP3;3;GND;gnd;P12 (wszystkie);
+J_BP3;4;CORE_LINK;in;P03 R6 (J_BP3.13);"3V3_CORE przez R14 1k na P03; U9A, 10k R16 do GND"
+J_BP3;5;GND;gnd;P12 (wszystkie);
+J_BP3;6;HW_ARMED;out;P03 R6 (J_BP3.17);zatrzask U3A push-pull, czyta CORE
+J_BP3;7;GND;gnd;P12 (wszystkie);
+J_BP3;8;5V_SYS;pwr;P02 R4 (J_BP 2/4/6);"bez odbiorcy na P04 (jak J1.1 -> TP13 w R2.2); tylko kolek J_SV3.2 przez 1k"
+J_BP3;9;GND;gnd;P12 (wszystkie);
+J_BP3;10;3V3_IO;pwr;P02 R4 (J_BP 8/10);"zasilanie P04 (rezerwa 30 mA); dwa piny: J_BP2.10 i J_BP3.10"
+J_BP3;11;GND;gnd;P12 (wszystkie);
+J_BP3;12;SUP_N_OUT;in;P03 R6 (J_BP3.12);"reset CORE przez U6 i R41 220R na P03; R17 10k do GND, U9B (KONTRAKT-RESET)"
+J_BP3;13;GND;gnd;P12 (wszystkie);
+J_BP3;14;PWM;in;P03 R6 (J_BP3.14);"GPIO1; U8A, 10k R12 do GND; GND po obu stronach"
+J_BP3;15;GND;gnd;P12 (wszystkie);
+J_BP3;16;HEARTBEAT;in;P03 R6 (J_BP3.16);"GPIO21; U8B, 10k R13 / 47k R26"
+J_BP3;17;GND;gnd;P12 (wszystkie);
+J_BP3;18;MCU_ARM;in;P03 R6 (J_BP3.18);"U8C, 10k R14 / 47k R27; statyczny"
+J_BP3;19;GND;gnd;P12 (wszystkie);
+J_BP3;20;INTERLOCK;out;P03 R6 (J_BP3.20);U7B push-pull, 10k R36 do GND
