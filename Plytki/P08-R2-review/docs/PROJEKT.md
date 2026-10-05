@@ -1,4 +1,6 @@
-# Działanie P08-R1
+# Działanie P08-R2 (obwód R1 bez zmian)
+
+*R2 (5.10.2026, format S1): obwód, wartości i obliczenia jak w R1 — kontrola `R1-CIRCUIT-PARITY` porównuje netlistę z `reference/P08-R1.xml` pin po pinie. Zmieniły się tylko złącza (J_BP na krawędzi A zamiast wiązek LV08 / SENSOR / SFAULT, J4 jako pole przewodów do portu TEST), punkty pomiarowe (listwa J2 z R19–R29) i obudowy części (S1). Opis poniżej pochodzi z R1; „P02”, „P04”, „P03” oznaczają teraz połączenia przez P12, a „J4” — parę przewodów do portu TEST. Sekcja „Interfejsy i montaż”: J4 nie jest już złączem Mini-Fit, U4/U5 lutowane wprost od góry, R1–R18 bez R15/R16 to SMD 1206.*
 
 ```text
 P02 5V_SYS ── TPS2553 ── SENSOR_LIMITED ── K1 COM3/NO4 ── 5V_SENSOR ── P11
