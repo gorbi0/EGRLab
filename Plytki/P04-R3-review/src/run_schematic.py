@@ -49,7 +49,7 @@ qa = ['# P04-R3 — QA schematu (plik generowany przez src/run_schematic.py)', '
      [f"| {t['mutation']} | {t['target'] or '—'} | {'tak' if t['detected'] else 'nie'} | {', '.join(t['by']) or '—'} |" for t in n1] + \
      ['', '## Próby ujemne elektryczne', '', '| Mutacja | Kontrola docelowa | Wykryta |', '|---|---|---|'] + \
      [f"| {t['mutation']} | {t['target_check']} | {'tak' if t['detected'] else 'nie'} |" for t in el['negative_controls']] + \
-     ['', 'Tylko schemat: PCB nie powstało (layout robi sesja lokalna). Kontrole plików nie zastępują odbioru na sprzęcie (`docs/ODBIOR.md`).',
+     ['', 'PCB: `verification/QA-PCB.md` (łańcuch `src/run_release.py`). Kontrole plików nie zastępują odbioru na sprzęcie (`docs/ODBIOR.md`).',
       'Ostrzeżenie kicad-cli „schemat posiada błędy numeracji” dotyczy oznaczeń `J_BP1…3` i `J_SV1…3` (nazwy z formatu S1, jak w P03 R6 / P06 R2); ERC go nie zgłasza.']
 (P / 'verification/QA.md').write_text('\n'.join(qa) + '\n', encoding='utf-8')
 files = sorted(p for d in ('eda', 'src', 'docs', 'output', 'reference', 'input') for p in (P / d).rglob('*') if p.is_file() and '__pycache__' not in p.parts)
