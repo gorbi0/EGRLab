@@ -1,0 +1,37 @@
+PASS LOGIC-TABLE {"rows": 2304, "bad": []}
+PASS LOGIC-BLOCK-ALL-L {"rule": "bez MOTOR_PERMIT / SAFE_N, przy OC lub zlych szynach -> RPWM, LPWM, R_EN, L_EN = L", "bad": []}
+PASS DEAD-DOMAINS-OPEN-TAPE {"3V3_IO off": {"RPWM": 0, "LPWM": 0, "R_EN": 0, "L_EN": 0, "KPWR_COIL_LOW": null}, "3V3A off": {"RPWM": 0, "LPWM": 0, "R_EN": 0, "L_EN": 0, "KPWR_COIL_LOW": nu
+PASS OPEN-TAPE-DEFINED {"PERMIT_P07": 0, "PWM_P07": 0, "SAFE_OK": 0, "ARM_CLK": 0}
+PASS OE-BLOCKS-STUCK-GATE {"RPWM_L": {"RPWM": 0, "LPWM": 0, "R_EN": 0, "L_EN": 0}, "LPWM_L": {"RPWM": 0, "LPWM": 0, "R_EN": 0, "L_EN": 0}}
+PASS LATCH-SEQUENCES []
+PASS SPI-DOUT-TRISTATE DOUT_TX nadaje tylko przy CS_ITEST_N = L; P03 bez zasilania -> CS nieaktywne (R17)
+PASS OC-WINDOW {"plus_A": [8.01, 8.11], "minus_A": [7.99, 8.03], "nominal": [8.06, 8.008]}
+PASS OC-BELOW-INA-SATURATION {"INA_out_at_trip_max_V": 4.579, "OC_HIGH_max_V": 4.578, "5VA_min_V": 4.8}
+PASS ITEST-SCALE {"ratio": 0.5, "tau_ms": 0.255, "range_A": 10.0}
+PASS SHUNT-POWER-10A {"P10A_W": 0.5}
+PASS PRECHARGE-R {"R_ohm": [1000.0], "fault_W": 0.282, "rating_W": 1.0, "Imotor_open_mA": 16.8, "MOD_BP_open_ratio": 0.909}
+PASS KPWR-DRIVE-CLAMP {"Ib_mA": 3.01, "Icoil_mA": 33.3, "clamp_V": 32.5, "coil_ratio": 1.4}
+PASS TVS-VMOTOR ["SMCJ18A"]
+PASS IS-DIAG {"R_IS": [1.64, 4.62], "L_IS": [1.64, 4.62]}
+PASS GND-PGND-SEPARATE {"both": [], "mod_gnd": [["R43", 10.0]]}
+caught SAFE_OK bypassed (U13.2 -> 3V3_IO) ['LOGIC-TABLE', 'LOGIC-BLOCK-ALL-L', 'LATCH-SEQUENCES']
+caught OC does not clear the latch (U12.5 -> 3V3_IO) ['LOGIC-TABLE', 'LATCH-SEQUENCES']
+caught no OE blocking on RPWM (U16.1 -> GND) ['OE-BLOCKS-STUCK-GATE']
+caught re-arm under PERMIT (U15.2 -> 3V3_IO) ['LATCH-SEQUENCES']
+caught NO_TRIP not preset at power-up (U15.10 -> 3V3_IO) ['LATCH-SEQUENCES']
+caught no pull-down on MOTOR_PERMIT (R28 open) ['OPEN-TAPE-DEFINED']
+caught Q2 collector off SAFE_N ['LOGIC-TABLE', 'LATCH-SEQUENCES']
+caught DOUT always driving (U7.10 -> GND) ['SPI-DOUT-TRISTATE']
+caught OC_HIGH too high (R11 12K) ['LOGIC-TABLE', 'LOGIC-BLOCK-ALL-L', 'LATCH-SEQUENCES', 'OC-WINDOW', 'OC-BELOW-INA-SATURATION']
+caught OC_HIGH saturates INA240 (R11 9.53K) ['LOGIC-TABLE', 'LOGIC-BLOCK-ALL-L', 'LATCH-SEQUENCES', 'OC-WINDOW', 'OC-BELOW-INA-SATURATION']
+caught ITEST divider unequal (R9 10K) ['ITEST-SCALE']
+caught precharge 100R ['PRECHARGE-R']
+caught Zener 27 V ['KPWR-DRIVE-CLAMP']
+caught TVS 15 V ['TVS-VMOTOR']
+caught IS divider 10K/10K ['IS-DIAG']
+caught B- tied to GND (R5.2 -> GND) ['PRECHARGE-R', 'GND-PGND-SEPARATE']
+caught shunt 10 mOhm ['OC-WINDOW', 'ITEST-SCALE', 'SHUNT-POWER-10A']
+caught LPWM gate without OE (U16.4 -> GND) ['OE-BLOCKS-STUCK-GATE']
+caught KPWR base resistor 4.7K ['KPWR-DRIVE-CLAMP']
+null control clean: True
+

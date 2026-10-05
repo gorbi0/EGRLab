@@ -1,0 +1,33 @@
+﻿zlacze;pin;siec;kierunek;plytka_docelowa;uwagi
+J_BP1;1;GND;gnd;P12 (wszystkie);
+J_BP1;2;ADC_SCLK;in;P03 R6 (J_BP2.2);"zegar SPI; P12 wielopunktowo (P05, P06, P07); U7B, 100k R20 do GND"
+J_BP1;3;GND;gnd;P12 (wszystkie);
+J_BP1;4;ADC_DOUTA;out;P03 R6 (J_BP2.4);"wspolne MISO: U7C trojstanowy (OE = CS_LOCAL_N) + R22 47R; P12 wielopunktowo (P05, P06, P07)"
+J_BP1;5;GND;gnd;P12 (wszystkie);
+J_BP1;6;CS_ITEST_N;in;P03 R6 (J_BP1.4);"CS z dekodera P03 (U22); U7A, 100k R17 do 3V3A_P07 (start: nieaktywne)"
+J_BP1;7;GND;gnd;P12 (wszystkie);
+J_BP1;8;MOTOR_INA;in;P03 R6 (J_BP1.19);"MCP23017 GPA; U10A (Ioff), 100k R26 do GND"
+J_BP1;9;GND;gnd;P12 (wszystkie);
+J_BP1;10;MOTOR_INB;in;P03 R6 (J_BP1.20);"MCP23017 GPA; U10B (Ioff), 100k R27 do GND"
+J_BP1;11;GND;gnd;P12 (wszystkie);
+J_BP1;12;ENA_DIAG;out;P03 R6 (J_BP1.17);"IS galezi R: U17 Schmitt + R48 100R; H = prad >~2-3 A albo blad IS; 10k R28 do GND na P03"
+J_BP1;13;GND;gnd;P12 (wszystkie);
+J_BP1;14;ENB_DIAG;out;P03 R6 (J_BP1.18);"IS galezi L: U17 Schmitt + R49 100R; jw.; 10k R29 do GND na P03"
+J_BP1;15;GND;gnd;P12 (wszystkie);
+J_BP1;16;GND;gnd;P12 (wszystkie);rezerwa GND
+J_BP2;1;GND;gnd;P12 (wszystkie);
+J_BP2;2;MOTOR_PERMIT;in;P04 R3 (J_BP2.2);"U5D push-pull na P04; U10C (Ioff), 100k R28 do GND"
+J_BP2;3;GND;gnd;P12 (wszystkie);
+J_BP2;4;PWM_OUT;in;P04 R3 (J_BP2.4);"PWM & MOTOR_PERMIT z P04; U10D (Ioff), 100k R29 do GND"
+J_BP2;5;GND;gnd;P12 (wszystkie);
+J_BP2;6;ARM_CLK;in;P04 R3 (J_BP2.6);"zbocze ARM (U2B HC14 na P04); zegar U15 (obie polowy), 100k R30 do GND"
+J_BP2;7;GND;gnd;P12 (wszystkie);
+J_BP2;8;DRIVE_OK;out;P04 R3 (J_BP2.8);"DRIVE_OK = RAILS_OK & NO_TRIP (U13B) + R32 100R; P04: U10A, 10k R20 do GND"
+J_BP2;9;GND;gnd;P12 (wszystkie);
+J_BP2;10;5V_SYS;pwr;P02 R4 (J_BP 2/4/6);5VA_P07 przez R50 10R, 5V_MOD przez F1 PTC (VCC modulu)
+J_BP2;11;GND;gnd;P12 (wszystkie);
+J_BP2;12;5V_SYS;pwr;P02 R4 (J_BP 2/4/6);drugi pin 5V_SYS (S1 5)
+J_BP2;13;GND;gnd;P12 (wszystkie);
+J_BP2;14;3V3_IO;pwr;P02 R4 (J_BP 8/10);zasilanie logiki P07 (U10-U15, U17), jak P04
+J_BP2;15;GND;gnd;P12 (wszystkie);
+J_BP2;16;SAFE_N;in;P02 R4 (J_BP.16), P04 R3 (J_BP2.16);"wspolny wezel OC (podciaganie R4 10k na P04); P07 czyta (R31 1k -> U11 Schmitt) i sciaga Q2 przy OC; dla P12 nadajnik = P02 (jak P04 R3)"
