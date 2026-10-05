@@ -2,6 +2,12 @@
 
 Decyzja użytkownika (EGRLab-AKTYWNE, „P07 DRIVE — WSTRZYMANE”): P07 projektujemy pod moduł z dwoma BTS7960B dopiero po sprawdzeniu jego rzeczywistego wykonania. Moduł jest u użytkownika (5.10). Wyniki wpisz w tabelach albo prześlij zdjęcia i liczby — Claude przeniesie je do tego pliku.
 
+## Ustalone ze zdjęć sprzedawcy (5.10.2026)
+- Moduł IBT-2 / HW-39: 2 × BTS7960B (U2, U3), bufor **74HC244D** (U1), złącze sterujące 2 × 4 kątowe: RPWM / LPWM, R_EN / L_EN, R_IS / L_IS, VCC / GND; zaciski B−, B+, M+, M−; elektrolit 330 µF na B+.
+- Płytka 49,6 × 49,3 mm, 4 otwory w narożnikach; **radiator pod płytką, 22,8 mm wysokości**, 31,9 mm szerokości.
+- **Wniosek:** moduł nie mieści się w stosie S1 (16,5 mm nad płytką; moduł ok. 40–45 mm z radiatorem, zaciskami i elektrolitem) i potrzebuje przepływu powietrza → **moduł poza stosem** (ścianka obudowy, radiator do wentylacji), **P07 S1** w stosie (poziom 5, S2–S3) z logiką, bocznikiem, INA240, MCP3201, OC z zatrzaskiem, KPWR i buforem 3,3 → 5 V (74HC244 przy VCC 5 V wymaga VIH ok. 3,5 V); P07 ↔ moduł: wiązka 8 żył sterowania + przewody mocy.
+- **Minimum do zmierzenia przed projektem P07:** C2 (OE 74HC244), C3 (rezystory R_IS / L_IS), C4 (podciągnięcia wejść), B2 (otwory montażowe). Pozostałe punkty — przy odbiorze.
+
 **Bezpieczeństwo:** kroki A–C bez zasilania. W kroku D tylko 5 V logiki z zasilacza z ograniczeniem prądu 50 mA, bez napięcia silnika. Krok E (napięcie silnika) dopiero po D i z ograniczeniem prądu 0,5 A, bez silnika albo z małym obciążeniem.
 
 ## A. Zdjęcia (ostre, z linijką w kadrze)

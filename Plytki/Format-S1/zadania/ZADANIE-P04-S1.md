@@ -17,7 +17,7 @@
   - z P02 R4 J_BP: PSU_OK (12), SAFE_N (16), P04_3V3 (15), PG_SEND (17), PG_LINK (18);
   - z P05 R3: DAQ_OK (J_BP1.6);
   - z P11 R2 J_P12: PANEL_3V3 (2), MECH_OK (4), STOP_NC_OUT (6), ARM_CONTACT (8), TEST_KEY (14).
-- Połączenia P04 ↔ P07 (DRIVE) i P04 ↔ P08 (SENSOR): nazwy sieci **dokładnie** jak w `P04-R2.2-review/docs/interfejsy.csv` i `P08-R1-review/docs/interfejsy.csv` (P12 łączy po nazwie; równolegle sesja robi P08 R2 z tymi samymi nazwami). P07 jeszcze nie istnieje (czeka na pomiary modułu BTS7960, `Plytki/P07-modul-BTS7960/POMIARY-MODULU.md`) — sieci do P07 wyprowadź na J_BP z nazwami z R2.2 i oznacz „czeka na P07”.
+- Połączenia P04 ↔ P07 (DRIVE) i P04 ↔ P08 (SENSOR): nazwy sieci **dokładnie** jak w `P04-R2.2-review/docs/interfejsy.csv` i `P08-R1-review/docs/interfejsy.csv` (P12 łączy po nazwie; równolegle sesja robi P08 R2 z tymi samymi nazwami). P07 jeszcze nie istnieje (moduł IBT-2 z 2 × BTS7960B stoi poza stosem, P07 S1 w stosie to logika, pomiar prądu i bufor 3,3 → 5 V; czeka na pomiary modułu, `Plytki/P07-modul-BTS7960/POMIARY-MODULU.md`) — sieci do P07 wyprowadź na J_BP z nazwami z R2.2 i oznacz „czeka na P07”.
 - Pamięć: `docs/pamiec-claude/MEMORY.md`, `format-s1.md`, `p04-r2-state.md`, `chmura-limity.md`, `kicad-pipeline-quirks.md`.
 
 ## Zasady
