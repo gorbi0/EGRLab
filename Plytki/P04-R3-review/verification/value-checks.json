@@ -1,0 +1,254 @@
+{
+  "checks": [
+    {
+      "name": "Watchdog RC and film dielectric",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "ARM RC and film dielectric",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "SAFE divider and C0G filter",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Sink base resistors",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Every receiver bias including SUP_N",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Panel/PG limiting resistors and LED",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Decoupling values and MPN",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Exact supervisor variant",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Exported values and MPN agree with the BOM",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "Resistor-corner sizing of panel and SAFE (unloaded by other modules)",
+      "pass": true,
+      "detail": {
+        "voltage_V": {
+          "panel": {
+            "min": 3.1192477098927234,
+            "max": 3.401350957333074
+          },
+          "key": {
+            "min": 2.8305286283880755,
+            "max": 3.0976648107155036
+          },
+          "mech": {
+            "min": 2.8305286283880755,
+            "max": 3.0976648107155036
+          },
+          "safe": {
+            "min": 2.8304861437160915,
+            "max": 3.0977087895826645
+          }
+        },
+        "R40_short_W": 0.121275,
+        "limitation": "3.18..3.465 V, 1% resistors; no cable resistance/leakage, no HC14 threshold guarantee. Verify E05/I01 on hardware."
+      }
+    }
+  ],
+  "negative_controls": [
+    {
+      "mutation": "R1 value -> 22K",
+      "detected": true,
+      "failed_checks": [
+        "Watchdog RC and film dielectric"
+      ]
+    },
+    {
+      "mutation": "C1 value -> 100n",
+      "detected": true,
+      "failed_checks": [
+        "Watchdog RC and film dielectric"
+      ]
+    },
+    {
+      "mutation": "R2 value -> 100K",
+      "detected": true,
+      "failed_checks": [
+        "ARM RC and film dielectric"
+      ]
+    },
+    {
+      "mutation": "R3 value -> 100R",
+      "detected": true,
+      "failed_checks": [
+        "ARM RC and film dielectric"
+      ]
+    },
+    {
+      "mutation": "C2 value -> 100n",
+      "detected": true,
+      "failed_checks": [
+        "ARM RC and film dielectric"
+      ]
+    },
+    {
+      "mutation": "R4 value -> 100K",
+      "detected": true,
+      "failed_checks": [
+        "SAFE divider and C0G filter"
+      ]
+    },
+    {
+      "mutation": "R5 value -> 10K",
+      "detected": true,
+      "failed_checks": [
+        "SAFE divider and C0G filter"
+      ]
+    },
+    {
+      "mutation": "C18 value -> 100n",
+      "detected": true,
+      "failed_checks": [
+        "SAFE divider and C0G filter"
+      ]
+    },
+    {
+      "mutation": "R6 value -> 100K",
+      "detected": true,
+      "failed_checks": [
+        "Sink base resistors"
+      ]
+    },
+    {
+      "mutation": "R9 value -> 1K",
+      "detected": true,
+      "failed_checks": [
+        "Sink base resistors"
+      ]
+    },
+    {
+      "mutation": "R17 value -> 100K",
+      "detected": true,
+      "failed_checks": [
+        "Every receiver bias including SUP_N"
+      ]
+    },
+    {
+      "mutation": "R25 value -> 100K",
+      "detected": true,
+      "failed_checks": [
+        "Every receiver bias including SUP_N"
+      ]
+    },
+    {
+      "mutation": "R26 value -> 470K",
+      "detected": true,
+      "failed_checks": [
+        "Every receiver bias including SUP_N"
+      ]
+    },
+    {
+      "mutation": "R28 value -> 10K",
+      "detected": true,
+      "failed_checks": [
+        "Every receiver bias including SUP_N"
+      ]
+    },
+    {
+      "mutation": "R30 value -> 10K",
+      "detected": true,
+      "failed_checks": [
+        "Every receiver bias including SUP_N"
+      ]
+    },
+    {
+      "mutation": "R38 value -> 0R",
+      "detected": true,
+      "failed_checks": [
+        "Panel/PG limiting resistors and LED"
+      ]
+    },
+    {
+      "mutation": "R39 value -> 0R",
+      "detected": true,
+      "failed_checks": [
+        "Panel/PG limiting resistors and LED"
+      ]
+    },
+    {
+      "mutation": "R40 value -> 1K",
+      "detected": true,
+      "failed_checks": [
+        "Panel/PG limiting resistors and LED"
+      ]
+    },
+    {
+      "mutation": "R41 value -> 10K",
+      "detected": true,
+      "failed_checks": [
+        "Panel/PG limiting resistors and LED"
+      ]
+    },
+    {
+      "mutation": "R42 value -> 10K",
+      "detected": true,
+      "failed_checks": [
+        "Panel/PG limiting resistors and LED"
+      ]
+    },
+    {
+      "mutation": "C4 value -> 1n",
+      "detected": true,
+      "failed_checks": [
+        "Decoupling values and MPN"
+      ]
+    },
+    {
+      "mutation": "C15 value -> 1n",
+      "detected": true,
+      "failed_checks": [
+        "Decoupling values and MPN"
+      ]
+    },
+    {
+      "mutation": "U11 value -> MCP100-315DI/TO",
+      "detected": true,
+      "failed_checks": [
+        "Exact supervisor variant"
+      ]
+    },
+    {
+      "mutation": "C1 dielectric/MPN changed with same 1u value",
+      "detected": true
+    }
+  ],
+  "timing_estimates": {
+    "watchdog_5V_formula_ms": [
+      88.20899999999999,
+      109.989
+    ],
+    "watchdog_3V3": "NOT QUALIFIED: accept by E11 50..150 ms",
+    "MCP100_release_margin": "At 3.16 V ripple trough and 50 mV TYP hysteresis: 110 mV estimate; no guaranteed max hysteresis in DS11187F."
+  },
+  "inputs": {
+    "verification/P04.xml": "14920b84d028d146a0d04a5042622f774549d84e7f2a436e8ad94363bf481b31",
+    "docs/BOM.csv": "c913476badd2822d2ea1c80fccf4225f1aaf39426657de114ea38bab1fdb1535"
+  }
+}
