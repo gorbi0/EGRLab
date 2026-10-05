@@ -70,17 +70,18 @@ cap('C9','ADD_COIL_DECOUPLING','1u',1e-6,A5,G,'P08')
 cp=copyfp('Capacitor_THT','CP_Radial_D5.0mm_P2.00mm')
 add('C10','ADD_LV_BULK',symbol('Device','C_Polarized'),cp,'22u / 25V','EEUFR1E220',{1:A5,2:G},'P08',farads=22e-6,note='D5 pitch 2 mm, ca. 11 mm high (level limit 16.5 mm). The two owned EEUFR1H220 are used by P02 R4; new purchase.')
 # J_BP (edge A, slot S1, centre x = 26.5 mm): odd pins GND, even pins signals/supplies. 3 signals + 5V_SYS x2 (S1 sec. 5) + 3V3_IO = 6 even pins -> 2x8 (2x5 has 5).
+# The two spare even pins 12/14 are extra GND in the ribbon (decision 5.10: no single-ended 'NC' net that the P12 contracts would see). Directions as P06 R2: gnd/pwr/in/out.
 # Net names exactly as P08-R1 / P04-R2.2 interfejsy (SENSOR) and P03 R6 J_BP1.12 (SFAULT); P12 joins by name.
-JBP=[(2,'5V_SYS','zasilanie do P08','P02 R4 (przez P12)','U1 (TPS2553) i K1/U2 (cewka), U7, R4; S1 §5: co najmniej 2 piny; budżet 200 mA'),
-     (4,'3V3_IO','zasilanie do P08','P02 R4 (przez P12)','logika U3–U5, nadzorcy U6/U8, podciąganie R2/R3; budżet 15 mA'),
-     (6,'SENSOR_PERMIT','wejście','P04 (przez P12)','zezwolenie z P04 (R1: P04/J4.1); bufor U5 z Ioff, R7 10 kΩ do GND'),
-     (8,'SENSOR_OK','wyjście','P04 (przez P12)','obie szyny poprawne (R1: P04/J4.3); U4 + R11 100 Ω, R12 10 kΩ do GND'),
-     (10,'SENSOR_HEALTHY','wyjście','P03 (przez P12)','szyny poprawne i brak FAULT TPS (R1: P03/J6.1; P03 R6 J_BP1.12 wejście); U5 + R13 100 Ω, R14 10 kΩ do GND'),
-     (12,'NC','—','—','wolny (2×8 ma 8 pinów parzystych, P08 używa 6)'),
-     (14,'NC','—','—','wolny'),
-     (16,'5V_SYS','zasilanie do P08','P02 R4 (przez P12)','drugi pin 5V_SYS (S1 §5)')]
+JBP=[(2,'5V_SYS','pwr','P02 R4 (przez P12)','U1 (TPS2553) i K1/U2 (cewka), U7, R4; S1 §5: co najmniej 2 piny; budżet 200 mA'),
+     (4,'3V3_IO','pwr','P02 R4 (przez P12)','logika U3–U5, nadzorcy U6/U8, podciąganie R2/R3; budżet 15 mA'),
+     (6,'SENSOR_PERMIT','in','P04 (przez P12)','zezwolenie z P04 (R1: P04/J4.1); bufor U5 z Ioff, R7 10 kΩ do GND'),
+     (8,'SENSOR_OK','out','P04 (przez P12)','obie szyny poprawne (R1: P04/J4.3); U4 + R11 100 Ω, R12 10 kΩ do GND'),
+     (10,'SENSOR_HEALTHY','out','P03 (przez P12)','szyny poprawne i brak FAULT TPS (R1: P03/J6.1; P03 R6 J_BP1.12 wejście); U5 + R13 100 Ω, R14 10 kΩ do GND'),
+     (12,'GND','gnd','P12 (wszystkie)','dodatkowa masa w taśmie (2×8 ma 8 pinów parzystych, P08 używa 6 na sygnały i zasilanie)'),
+     (14,'GND','gnd','P12 (wszystkie)','dodatkowa masa w taśmie'),
+     (16,'5V_SYS','pwr','P02 R4 (przez P12)','drugi pin 5V_SYS (S1 §5)')]
 jbp_pins={i:G for i in range(1,17,2)};jbp_pins.update({p:n for p,n,*_ in JBP})
-add('J1','J_BP',symbol('Connector_Generic','Conn_02x08_Odd_Even'),IDC16,'J_BP / IDC 2x8','IDC header 2x8 2.54mm angled shrouded, Au (type as P09 R2 J1 in the purchase list)',jbp_pins,'CONNECT',note='Edge A, slot S1, centre x=26.5 mm. Odd pins GND, even pins signals/supplies, 12/14 free. Pin 1 towards smaller x. Replaces LV08 (P02-R3/J8), SENSOR (P04-R2.1/J4) and SFAULT (P03-R2/J6).')
+add('J1','J_BP',symbol('Connector_Generic','Conn_02x08_Odd_Even'),IDC16,'J_BP / IDC 2x8','IDC header 2x8 2.54mm angled shrouded, Au (type as P09 R2 J1 in the purchase list)',jbp_pins,'CONNECT',note='Edge A, slot S1, centre x=26.5 mm. Odd pins GND, even pins signals/supplies, spare 12/14 GND. Pin 1 towards smaller x. Replaces LV08 (P02-R3/J8), SENSOR (P04-R2.1/J4) and SFAULT (P03-R2/J6).')
 # J4 TSENSOR: wire field to the TEST port on the panel (not P12; the switched sensor supply and its isolated return leave the board as a pair).
 add('J4','J_TSENSORA',symbol('Connector_Generic','Conn_01x02'),'P08:PTH_TSENSOR_2','TSENSOR / PTH','2 x AWG22 soldered, tie anchor 12 mm',{1:'5V_SENSOR',2:'AGND_SENSOR'},'CONNECT',note='Wire field at the panel edge x=0 (as J4/J6 of P05 R3): pair to the TEST port on the panel; numbering kept from R1 (contract W4 to P11). AGND_SENSOR never to GND outside K1.')
 # Service strip (edge B, x = 10..43 mm of the slot): ODBIOR R1 points. 1 k for rails and logic, 10 k for the high-impedance divider node TPS_EN (S1 sec. 6).

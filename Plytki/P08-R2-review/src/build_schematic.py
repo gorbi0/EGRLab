@@ -43,7 +43,7 @@ S['IO'].text('U4/U5: Nexperia 74LVC125AD z Ioff, bez zamiany na HC125. Zasilanie
 S['IO'].text('Wyjscia SENSOR_OK i SENSOR_HEALTHY: 100R szeregowo, 10k do GND. Brak zasilania -> LOW u odbiorcy.',8,114,1.2)
 S['IO'].text('HEALTHY=1 nie dowodzi zamkniecia K1, poprawnego mapowania pinow EGR ani obecnosci 5 V na czujniku.',8,119,1.2)
 put('CONNECT','J1',30,34);put('CONNECT','J4',95,30);put('CONNECT','J2',150,70)
-S['CONNECT'].text('J_BP (krawedz A, slot S1 poziomu 5, srodek x=26,5): nieparzyste GND; 2/16 5V_SYS, 4 3V3_IO, 6 SENSOR_PERMIT (z P04), 8 SENSOR_OK (do P04), 10 SENSOR_HEALTHY (do P03), 12/14 wolne.',8,11,1.15)
+S['CONNECT'].text('J_BP (krawedz A, slot S1 poziomu 5, srodek x=26,5): nieparzyste GND; 2/16 5V_SYS, 4 3V3_IO, 6 SENSOR_PERMIT (z P04), 8 SENSOR_OK (do P04), 10 SENSOR_HEALTHY (do P03), 12/14 GND (zapas masy).',8,11,1.15)
 S['CONNECT'].text('Zastepuje wiazki R1: LV08 (P02-R3/J8), SENSOR (P04-R2.1/J4), SFAULT (P03-R2/J6). Nazwy sieci jak w R1 i P04-R2.2: P12 laczy po nazwie.',8,16,1.15)
 S['CONNECT'].text('J4 TSENSOR: pole przewodow 2 x AWG22 z kotwa przy krawedzi x=0 (strona panelu), para do portu TEST na panelu. AGND_SENSOR nie laczyc z GND poza K1.',8,53,1.15)
 for i in range(11):put('CONNECT','R'+str(19+i),18+(i%4)*26,70+(i//4)*16)

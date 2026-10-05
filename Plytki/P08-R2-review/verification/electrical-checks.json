@@ -13,7 +13,7 @@
     {
       "id": "JBP-EVEN-NO-GND",
       "pass": true,
-      "note": ""
+      "note": "Even pins carry signals/supplies; only the spare pins 12/14 are GND."
     },
     {
       "id": "JBP-CONTINUITY-R1",
@@ -26,14 +26,14 @@
       "note": ""
     },
     {
-      "id": "JBP-NC-ONLY-SPARE",
+      "id": "JBP-NO-NC",
       "pass": true,
-      "note": ""
+      "note": "No single-ended NC net on J_BP (P12 contracts); spare pins 12/14 GND."
     },
     {
       "id": "JBP-CSV",
       "pass": true,
-      "note": ""
+      "note": "Format of P06 R2 / P12 kontrakty: zlacze;pin;siec;kierunek;plytka_docelowa;uwagi, directions gnd/pwr/in/out."
     },
     {
       "id": "JBP-DIRECTIONS",
@@ -384,6 +384,7 @@
       "detected": true,
       "by": [
         "JBP-ODD-GND",
+        "JBP-NO-NC",
         "JBP-CSV"
       ]
     },
@@ -394,6 +395,7 @@
       "by": [
         "JBP-EVEN-NO-GND",
         "JBP-CONTINUITY-R1",
+        "JBP-NO-NC",
         "JBP-CSV",
         "CONTRACT-P04-R2.2-SENSOR"
       ]
@@ -404,7 +406,7 @@
       "detected": true,
       "by": [
         "JBP-S1-SUPPLY-PINS",
-        "JBP-NC-ONLY-SPARE",
+        "JBP-NO-NC",
         "JBP-CSV"
       ]
     },
@@ -414,7 +416,7 @@
       "detected": true,
       "by": [
         "JBP-CONTINUITY-R1",
-        "JBP-NC-ONLY-SPARE",
+        "JBP-NO-NC",
         "JBP-CSV",
         "CONTRACT-P04-R2.2-SENSOR"
       ]
@@ -434,8 +436,29 @@
       "expected": "detected",
       "detected": true,
       "by": [
+        "JBP-EVEN-NO-GND",
         "JBP-CONTINUITY-R1",
-        "JBP-NC-ONLY-SPARE",
+        "JBP-NO-NC",
+        "JBP-CSV"
+      ]
+    },
+    {
+      "mutation": "jbp-spare-back-to-NC",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "JBP-EVEN-NO-GND",
+        "JBP-NO-NC",
+        "JBP-CSV"
+      ]
+    },
+    {
+      "mutation": "jbp-spare14-NC",
+      "expected": "detected",
+      "detected": true,
+      "by": [
+        "JBP-EVEN-NO-GND",
+        "JBP-NO-NC",
         "JBP-CSV"
       ]
     },
@@ -444,7 +467,8 @@
       "expected": "detected",
       "detected": true,
       "by": [
-        "JBP-NC-ONLY-SPARE",
+        "JBP-EVEN-NO-GND",
+        "JBP-NO-NC",
         "JBP-CSV"
       ]
     },

@@ -1,8 +1,8 @@
 # P08-R2 — QA schematu (plik generowany przez src/run_schematic.py)
 
-ERC: 0 naruszeń na 4 arkuszach. Netlista: 52 części, 194 pinów sprawdzonych pin po pinie względem `parts.py`, 0 błędów, 49 sieci.
+ERC: 0 naruszeń na 4 arkuszach. Netlista: 52 części, 194 pinów sprawdzonych pin po pinie względem `parts.py`, 0 błędów, 47 sieci.
 
-Kontrole elektryczne: 49/49 PASS. Próby ujemne: 47/47 mutacji wykrytych; próba zerowa (bez zmiany): czysta.
+Kontrole elektryczne: 49/49 PASS. Próby ujemne: 49/49 mutacji wykrytych; próba zerowa (bez zmiany): czysta.
 
 | Kontrola | Wynik |
 |---|---|
@@ -11,7 +11,7 @@ Kontrole elektryczne: 49/49 PASS. Próby ujemne: 47/47 mutacji wykrytych; próba
 | JBP-EVEN-NO-GND | PASS |
 | JBP-CONTINUITY-R1 | PASS |
 | JBP-S1-SUPPLY-PINS | PASS |
-| JBP-NC-ONLY-SPARE | PASS |
+| JBP-NO-NC | PASS |
 | JBP-CSV | PASS |
 | JBP-DIRECTIONS | PASS |
 | CONTRACT-P04-R2.2-SENSOR | PASS |
@@ -74,13 +74,15 @@ Kontrole elektryczne: 49/49 PASS. Próby ujemne: 47/47 mutacji wykrytych; próba
 | no-pulldown | detected | tak | R1-CIRCUIT-PARITY, DEFAULT-R14 |
 | coil-common | detected | tak | R1-CIRCUIT-PARITY, DRIVER |
 | jbp-odd-pin-signal | detected | tak | JBP-ODD-GND, JBP-CSV |
-| jbp-odd-pin-NC | detected | tak | JBP-ODD-GND, JBP-CSV |
-| jbp-even-pin-GND | detected | tak | JBP-EVEN-NO-GND, JBP-CONTINUITY-R1, JBP-CSV, CONTRACT-P04-R2.2-SENSOR |
-| jbp-second-5V-lost | detected | tak | JBP-S1-SUPPLY-PINS, JBP-NC-ONLY-SPARE, JBP-CSV |
-| jbp-PERMIT-missing | detected | tak | JBP-CONTINUITY-R1, JBP-NC-ONLY-SPARE, JBP-CSV, CONTRACT-P04-R2.2-SENSOR |
+| jbp-odd-pin-NC | detected | tak | JBP-ODD-GND, JBP-NO-NC, JBP-CSV |
+| jbp-even-pin-GND | detected | tak | JBP-EVEN-NO-GND, JBP-CONTINUITY-R1, JBP-NO-NC, JBP-CSV, CONTRACT-P04-R2.2-SENSOR |
+| jbp-second-5V-lost | detected | tak | JBP-S1-SUPPLY-PINS, JBP-NO-NC, JBP-CSV |
+| jbp-PERMIT-missing | detected | tak | JBP-CONTINUITY-R1, JBP-NO-NC, JBP-CSV, CONTRACT-P04-R2.2-SENSOR |
 | jbp-HEALTHY-renamed | detected | tak | JBP-CONTINUITY-R1, JBP-CSV, CONTRACT-P03-R6-SFAULT |
-| jbp-spare-used | detected | tak | JBP-CONTINUITY-R1, JBP-NC-ONLY-SPARE, JBP-CSV |
-| jbp-extra-3V3 | detected | tak | JBP-NC-ONLY-SPARE, JBP-CSV |
+| jbp-spare-used | detected | tak | JBP-EVEN-NO-GND, JBP-CONTINUITY-R1, JBP-NO-NC, JBP-CSV |
+| jbp-spare-back-to-NC | detected | tak | JBP-EVEN-NO-GND, JBP-NO-NC, JBP-CSV |
+| jbp-spare14-NC | detected | tak | JBP-EVEN-NO-GND, JBP-NO-NC, JBP-CSV |
+| jbp-extra-3V3 | detected | tak | JBP-EVEN-NO-GND, JBP-NO-NC, JBP-CSV |
 | jbp-OK-driven-raw | detected | tak | JBP-DIRECTIONS, R1-CIRCUIT-PARITY, OUTPUT-SERIES, ACTUAL-NETLIST-TRUTH |
 | tsensor-return-to-GND | detected | tak | IF-TSENSOR, NO-GROUND-BYPASS |
 | tsensor-swapped | detected | tak | IF-TSENSOR, SRV-NOT-ON-SENSOR-OUTPUT |

@@ -19,7 +19,7 @@ Egzemplarz / data / osoba: ____________________. Wszystkie poniższe próby: **N
 | ID | Próba i kryterium | Pomiar / wynik |
 |---|---|---|
 | M01 | Wydruk PCB 1:1 (53 × 100 mm, po layoucie). Przymierzyć U1, U4/U5, TO92, K1, podstawki DIP, J1 (IDC 2×8 kątowe) i J2 (goldpin kątowy 1×13, kołki ok. 6 mm za krawędzią B). K1: 3,2/2,2/2,2 mm. Strefy M3 Ø7 mm wolne. | NIE ZBADANO |
-| M02 | Taśma J_BP ↔ P12: ciągłość pin po pinie według `docs/J_BP.csv` (piny 12/14 bez połączenia). Para J4 → port TEST: ciągłość, brak zwarcia AGND_SENSOR do GND i obudowy, test pociągnięcia za izolację po zamocowaniu opaską. | NIE ZBADANO |
+| M02 | Taśma J_BP ↔ P12: ciągłość pin po pinie według `docs/J_BP.csv` (piny 12 i 14 to dodatkowe GND, jak wszystkie nieparzyste). Para J4 → port TEST: ciągłość, brak zwarcia AGND_SENSOR do GND i obudowy, test pociągnięcia za izolację po zamocowaniu opaską. | NIE ZBADANO |
 | E01 | Bez zasilania: brak zwarć 5V–GND / 3V3–GND; odłączony J4.1 i J4.2 od torów wejściowych K1. R18 ≈10k między J4.1/J4.2. | NIE ZBADANO |
 | E02 | Najpierw 5 V z limitem 50 mA, 3,3 V z limitem 15 mA, PERMIT=0. K1 wyłączony; TPS_EN ≤0,66 V; wyjście między J4.1/J4.2 ≤0,2 V po ustaleniu. Zanotować pobór każdej szyny. | NIE ZBADANO |
 | E03 | Obie szyny poprawne, czekać ≥1,5 s. SENSOR_OK i HEALTHY HIGH, PERMIT=0: wyjście nadal wyłączone. Sprawdzić HIGH/LOW na rzeczywistych odbiornikach P04/P03. | NIE ZBADANO |

@@ -25,23 +25,26 @@ def check(c):
  def members(net):return {(r,p) for r,x in c.items() for p,n in x['pins'].items() if n==net}
  j=c.get('J1',{'pins':{},'fp':''});jp=j['pins'];even={p:n for p,n in jp.items() if p%2==0}
  sig={n for n in even.values() if n not in ('GND','NC')}
+ SPARE=(12,14)  # spare even pins: extra GND in the ribbon (decision 5.10), never an NC net
  ok('JBP-2x8',sorted(jp)==list(range(1,17)) and j['fp'].endswith('IDC-Header_2x08_P2.54mm_Horizontal'))
  ok('JBP-ODD-GND',all(jp.get(p)=='GND' for p in range(1,17,2)))
- ok('JBP-EVEN-NO-GND',all(n!='GND' and not n.startswith('SRV_') for n in even.values()))
+ ok('JBP-EVEN-NO-GND',all((n=='GND')==(p in SPARE) and not n.startswith('SRV_') for p,n in even.items()),'Even pins carry signals/supplies; only the spare pins 12/14 are GND.')
  old=set()
  for board,br in [('P02-R3-review','J8'),('P04-R2.1-review','J4'),('P03-R2-review','J6')]:
   old|={n for n in json.loads((P/f'reference/{board}-parts.json').read_text())[br]['pins'].values() if n not in ('GND','NC')}
  ok('JBP-CONTINUITY-R1',sig==old,'Every signal/supply of the three R1 harnesses (mating pinouts of P02-R3/J8, P04-R2.1/J4, P03-R2/J6) is on J_BP, nothing else.')
  vals=list(even.values())
  ok('JBP-S1-SUPPLY-PINS',vals.count('5V_SYS')>=2 and vals.count('3V3_IO')>=1 and all(vals.count(n)==1 for n in sig-{'5V_SYS','3V3_IO'}))
- ok('JBP-NC-ONLY-SPARE',[p for p,n in sorted(even.items()) if n=='NC']==[12,14] and all(len(members(n))>1 for n in sig))
+ ok('JBP-NO-NC',all(n!='NC' for n in jp.values()) and [p for p,n in sorted(even.items()) if n=='GND']==list(SPARE) and all(len(members(n))>1 for n in sig),'No single-ended NC net on J_BP (P12 contracts); spare pins 12/14 GND.')
  rows=list(csv.DictReader((P/'docs/J_BP.csv').open(encoding='utf-8-sig',newline=''),delimiter=';'))
- ok('JBP-CSV',{int(r['pin']):r['siec'] for r in rows}==jp)
+ ok('JBP-CSV',{int(r['pin']):r['siec'] for r in rows}==jp and list(rows[0])==['zlacze','pin','siec','kierunek','plytka_docelowa','uwagi'] and all(r['zlacze']=='J_BP' for r in rows)
+    and all(r['kierunek']==('gnd' if r['siec']=='GND' else 'pwr' if r['siec'] in ('5V_SYS','3V3_IO') else r['kierunek']) for r in rows) and {r['kierunek'] for r in rows}<={'gnd','pwr','in','out'},
+    'Format of P06 R2 / P12 kontrakty: zlacze;pin;siec;kierunek;plytka_docelowa;uwagi, directions gnd/pwr/in/out.')
  kier={r['siec']:r['kierunek'] for r in rows}
  # direction: who drives each J_BP signal on P08 (actual pins), and what the CSV promises P12
  drv=lambda net,ref,pin:(ref,pin) in members(net)
- ok('JBP-DIRECTIONS',kier.get('SENSOR_PERMIT')=='wejście' and drv('SENSOR_PERMIT','U5',2) and kier.get('SENSOR_OK')=='wyjście' and drv('SENSOR_OK','R11',2)
-    and kier.get('SENSOR_HEALTHY')=='wyjście' and drv('SENSOR_HEALTHY','R13',2))
+ ok('JBP-DIRECTIONS',kier.get('SENSOR_PERMIT')=='in' and drv('SENSOR_PERMIT','U5',2) and kier.get('SENSOR_OK')=='out' and drv('SENSOR_OK','R11',2)
+    and kier.get('SENSOR_HEALTHY')=='out' and drv('SENSOR_HEALTHY','R13',2))
  # contracts: exact net names as in the neighbours (P12 joins by name)
  p04=json.loads((P/'reference/P04-R2.2-review-parts.json').read_text())['J4']['pins']
  ok('CONTRACT-P04-R2.2-SENSOR',{n for n in p04.values() if n not in ('GND','NC')}=={'SENSOR_PERMIT','SENSOR_OK'}<=sig)
@@ -136,7 +139,7 @@ if __name__=='__main__':
  muts=[('NC-NO-swap','K1',2,'5V_SENSOR'),('ground-bypass','R18',2,'GND'),('reversed-flyback','D1',1,'SENSOR_COIL_LOW'),('bad-TPS-pin','U1',3,'SENSOR_LOCAL'),('missing-guard','U8',1,'NC'),('wrong-guard-power','U8',2,'5V_SYS'),('5V-to-HC','U3',2,'SUP5_RAW'),('ready-permit-loop','U3',1,'SENSOR_PERMIT'),('fault-retry-loop','U3',5,'SENSOR_FAULT_LOCAL_N'),('health-wrong-gate','U3',10,'PERMIT_LOCAL'),('no-IOff','U5',14,'5V_SYS'),('no-pulldown','R14',2,'NC'),('coil-common','U2',10,'GND'),
   # S1 connectors
   ('jbp-odd-pin-signal','J1',3,'SENSOR_OK'),('jbp-odd-pin-NC','J1',5,'NC'),('jbp-even-pin-GND','J1',8,'GND'),('jbp-second-5V-lost','J1',16,'NC'),('jbp-PERMIT-missing','J1',6,'NC'),
-  ('jbp-HEALTHY-renamed','J1',10,'SENSOR_HEALTH_TX'),('jbp-spare-used','J1',12,'SENSOR_LOCAL'),('jbp-extra-3V3','J1',14,'3V3_IO'),('jbp-OK-driven-raw','R11',2,'SENSOR_OK_TX'),
+  ('jbp-HEALTHY-renamed','J1',10,'SENSOR_HEALTH_TX'),('jbp-spare-used','J1',12,'SENSOR_LOCAL'),('jbp-spare-back-to-NC','J1',12,'NC'),('jbp-spare14-NC','J1',14,'NC'),('jbp-extra-3V3','J1',14,'3V3_IO'),('jbp-OK-driven-raw','R11',2,'SENSOR_OK_TX'),
   ('tsensor-return-to-GND','J4',2,'GND'),('tsensor-swapped','J4',1,'AGND_SENSOR'),
   ('srv-first-not-GND','J2',1,'3V3_IO'),('srv-last-not-GND','J2',13,'SRV_TPS_EN'),('srv-extra-GND-inside','J2',7,'GND'),('srv-14th-pin','J2',14,'GND'),('srv-no-resistor','J2',2,'5V_SYS'),
   ('srv-resistor-shorted','R19',2,'5V_SYS'),('srv-duplicate-node','R20',1,'5V_SYS'),('srv-node-GND','R21',1,'GND'),('srv-on-AGND_SENSOR','R29',1,'AGND_SENSOR'),('srv-on-5V_SENSOR','R28',1,'5V_SENSOR')]

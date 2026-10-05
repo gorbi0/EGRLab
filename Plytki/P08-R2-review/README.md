@@ -27,8 +27,8 @@
 | 5 | GND | 6 | SENSOR_PERMIT (wejście, z P04) |
 | 7 | GND | 8 | SENSOR_OK (wyjście, do P04) |
 | 9 | GND | 10 | SENSOR_HEALTHY (wyjście, do P03 R6 J_BP1.12) |
-| 11 | GND | 12 | wolny |
-| 13 | GND | 14 | wolny |
+| 11 | GND | 12 | GND (zapas masy) |
+| 13 | GND | 14 | GND (zapas masy) |
 | 15 | GND | 16 | 5V_SYS |
 
 Nazwy sieci dokładnie jak w `P08-R1-review/docs/interfejsy.csv` i `P04-R2.2-review` J4 (SENSOR_PERMIT, SENSOR_OK) oraz w P03 R6 J_BP1.12 (SENSOR_HEALTHY, wejście P03; w kontraktach P12 „czeka na P08”). P12 łączy po nazwie.
@@ -43,14 +43,14 @@ Nazwy sieci dokładnie jak w `P08-R1-review/docs/interfejsy.csv` i `P04-R2.2-rev
 |---|---|
 | ERC (4 arkusze A3) | 0 naruszeń |
 | Netlista pin po pinie względem `parts.py` | 52 części, 194 piny, 49 sieci, 0 błędów |
-| Kontrole elektryczne | 49/49 PASS — obwód R1 (TPS, K1, U8, bramki, tabela prawdy 16 przypadków na rzeczywistych pinach, marginesy dzielnika EN) oraz nowe: J_BP (2×8, nieparzyste GND, ciągłość z trzema wiązkami R1, 5V_SYS ×2, kierunki, zgodność z CSV), kontrakty nazw z P04 R2.2 / P03 R6 / P02 R4 / P12, J4, listwa (≤ 13, GND na końcach, rezystor przy węźle, wartości, pokrycie ODBIOR, brak kołka na wyjściu czujnika), źródła części, zgodność obwodu z R1 |
-| Próby ujemne | 47/47 mutacji wykrytych, próba zerowa czysta |
+| Kontrole elektryczne | 49/49 PASS — obwód R1 (TPS, K1, U8, bramki, tabela prawdy 16 przypadków na rzeczywistych pinach, marginesy dzielnika EN) oraz nowe: J_BP (2×8, nieparzyste GND, zapasowe 12/14 GND bez sieci NC, format CSV jak P06 R2, ciągłość z trzema wiązkami R1, 5V_SYS ×2, kierunki, zgodność z CSV), kontrakty nazw z P04 R2.2 / P03 R6 / P02 R4 / P12, J4, listwa (≤ 13, GND na końcach, rezystor przy węźle, wartości, pokrycie ODBIOR, brak kołka na wyjściu czujnika), źródła części, zgodność obwodu z R1 |
+| Próby ujemne | 49/49 mutacji wykrytych, próba zerowa czysta |
 | Ocena powierzchni (`src/powierzchnia.py`, bez rozmieszczenia) | suma prostokątów obrysów 2356 mm² wobec 4486 mm² użytecznych (53 %); bez J1 i J2, które leżą w odjętych już pasach krawędzi A/B, ok. 1490 mm² (33 %) |
 
 ## Decyzje (sporne oznaczone)
 
-1. **Sporne: J_BP 2×8, nie 2×5 z budżetu S1 §8.** Trzy sygnały + 5V_SYS ×2 (S1 §5) + 3V3_IO to 6 pinów parzystych, a 2×5 ma 5; piny 12 i 14 zostają wolne. Alternatywy w pytaniach.
-2. **Sporne: 5V_SENSOR i AGND_SENSOR nie są na listwie** (w R1 były TP12/TP13). Listwa mieści 11 węzłów, a kołek AGND_SENSOR obok GND pozwoliłby zsuniętą sondą ominąć styk powrotu K1. Wyjście mierzy się różnicowo na porcie TEST (para J4), tak jak R1 i tak wymagał (WIAZKI R1). Zwolnione miejsce bierze PERMIT_LOCAL (próba E10).
+1. **Sporne: J_BP 2×8, nie 2×5 z budżetu S1 §8.** Trzy sygnały + 5V_SYS ×2 (S1 §5) + 3V3_IO to 6 pinów parzystych, a 2×5 ma 5. Przyjęte przez użytkownika 5.10 (2×8 zostaje); wolne piny 12 i 14 są dodatkową masą w taśmie, a nie siecią „NC” (kontrakty P12 widziałyby ją jako sieć z jednym końcem).
+2. **5V_SENSOR i AGND_SENSOR nie są na listwie** (przyjęte 5.10) (w R1 były TP12/TP13). Listwa mieści 11 węzłów, a kołek AGND_SENSOR obok GND pozwoliłby zsuniętą sondą ominąć styk powrotu K1. Wyjście mierzy się różnicowo na porcie TEST (para J4), tak jak R1 i tak wymagał (WIAZKI R1). Zwolnione miejsce bierze PERMIT_LOCAL (próba E10).
 3. TPS_EN przez 10 kΩ (węzeł dzielnika R15/R16, S1 §6); pozostałe kołki przez 1 kΩ, także węzły z podciąganiem 10 kΩ (SUP3_N, SUP5_N, FAULT_N) — zwarcie kołka do GND tylko wymusza stan „niegotowe”, nic nie uszkadza.
 4. J4 zachowuje numer i piny R1 (kontrakt W4 do P11); pole przewodów zamiast Mini-Fit, kotwa przy krawędzi x = 0 jak J4/J6 w P05 R3.
 5. Posiadane THT według bilansu rejestru (`docs/ZAKUPY.md`): R15 MF0207 4,7 k i R16 MF0204 6,8 k (ostatnia sztuka), U3/U4/U5/U6/U7/D1 z przydziału P08. **U8 (drugi MCP120-300) trzeba dokupić** — zamówienie z 24.09 miało jedną sztukę dla P08.

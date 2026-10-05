@@ -7,10 +7,11 @@ def w(name,head,rows):
   x=csv.writer(f,delimiter=';');x.writerow(head);x.writerows(rows)
 rows=[]
 for p in range(1,17):
- if p%2:rows.append([p,'GND','masa','wszystkie (P12)','powrót sygnału; piny nieparzyste zawsze GND'])
+ if p%2:rows.append(['J_BP',p,'GND','gnd','P12 (wszystkie)','powrót sygnału; piny nieparzyste zawsze GND'])
  else:
-  n,kier,cel,uw=next((n,k,c,u) for pp,n,k,c,u in JBP if pp==p);rows.append([p,n,kier,cel,uw])
-w('J_BP.csv',['pin','siec','kierunek','plytka_docelowa','uwagi'],rows)
+  n,kier,cel,uw=next((n,k,c,u) for pp,n,k,c,u in JBP if pp==p);rows.append(['J_BP',p,n,kier,cel,uw])
+# Same format as the other S1 boards (P06 R2): directions gnd/pwr/in/out, read by P12 kontrakty.kier()
+w('J_BP.csv',['zlacze','pin','siec','kierunek','plytka_docelowa','uwagi'],rows)
 last=len(SRV)+2
 w('SERWIS.csv',['pin','siec','rezystor','cel_pomiaru'],
   [[1,'GND','—','masa sondy (pierwszy pin listwy)']]+[[k,net,f"{srv_r[net]} {'1' if o==1000 else '10'} kΩ",cel] for k,(net,o,cel) in enumerate(SRV,2)]+[[last,'GND','—','masa sondy (ostatni pin listwy)']])
