@@ -1,11 +1,12 @@
 {
  "zrodla": {
-  "P02 R4": "origin/main @ 1d4ff38, blob c2cfb86198",
-  "P03 R6": "origin/p03-r6-pcb @ 7afd1b9, blob 6993dda42a",
-  "P05 R3": "origin/p05-r3-pcb @ 88515c1, blob f064b12b9c",
-  "P09 R2": "origin/p09-r2-pcb @ 7ac6d99, blob e325a5ac53",
-  "P06 R2": "origin/p06-r2-pcb @ fcb65ad, blob 508a9de996",
-  "P10 R2": "origin/p10-r2-pcb @ 6ab03fb, blob 22cf0803e6"
+  "P02 R4": "main @ e77b317, blob ddb6f8c3d4",
+  "P03 R6": "main @ e77b317, blob 6993dda42a",
+  "P05 R3": "main @ e77b317, blob f064b12b9c",
+  "P09 R2": "main @ e77b317, blob e325a5ac53",
+  "P06 R2": "main @ e77b317, blob 508a9de996",
+  "P10 R2": "main @ e77b317, blob 22cf0803e6",
+  "P11 R2": "main @ e77b317, blob 89005c5eb4"
  },
  "zlacza": [
   {
@@ -143,6 +144,19 @@
    "nieparzyste_nie_GND": []
   },
   {
+   "poziom": "panel",
+   "slot": "—",
+   "x_stos_mm": null,
+   "z_spodu_plytki_mm": null,
+   "plytka": "P11 R2",
+   "zlacze": "J_P12",
+   "typ": "IDC 2×10",
+   "x_lokalnie_mm": null,
+   "zmierzone_x_mm": null,
+   "stan": "schemat R2 scalony 4.10 (PCB w toku)",
+   "nieparzyste_nie_GND": []
+  },
+  {
    "poziom": 5,
    "slot": "S2/S3",
    "x_stos_mm": null,
@@ -178,7 +192,8 @@
     "P03 R6 J_BP3.5 PWR",
     "P09 R2 J1.4 PWR",
     "P06 R2 J_BP.14 PWR",
-    "P10 R2 J1.4 PWR"
+    "P10 R2 J1.4 PWR",
+    "P11 R2 J_P12.20 PWR"
    ],
    "czeka_na": [],
    "problemy": [],
@@ -279,6 +294,17 @@
     "P05 R3 J_BP2.6 IN"
    ],
    "czeka_na": [],
+   "problemy": [],
+   "magistrala": null
+  },
+  "ARM_CONTACT": {
+   "stan": "czeka",
+   "konce": [
+    "P11 R2 J_P12.8 OUT"
+   ],
+   "czeka_na": [
+    "P04"
+   ],
    "problemy": [],
    "magistrala": null
   },
@@ -401,13 +427,12 @@
    "magistrala": null
   },
   "LOGGER_CLEAR": {
-   "stan": "czeka",
+   "stan": "OK",
    "konce": [
-    "P03 R6 J_BP1.15 IN"
+    "P03 R6 J_BP1.15 IN",
+    "P11 R2 J_P12.15 OUT"
    ],
-   "czeka_na": [
-    "P11"
-   ],
+   "czeka_na": [],
    "problemy": [],
    "magistrala": null
   },
@@ -422,13 +447,12 @@
    "magistrala": null
   },
   "MARK": {
-   "stan": "czeka",
+   "stan": "OK",
    "konce": [
-    "P03 R6 J_BP1.13 IN"
+    "P03 R6 J_BP1.13 IN",
+    "P11 R2 J_P12.13 OUT"
    ],
-   "czeka_na": [
-    "P11"
-   ],
+   "czeka_na": [],
    "problemy": [],
    "magistrala": null
   },
@@ -450,6 +474,17 @@
     "P05 R3 J_BP2.14 IN"
    ],
    "czeka_na": [],
+   "problemy": [],
+   "magistrala": null
+  },
+  "MECH_OK": {
+   "stan": "czeka",
+   "konce": [
+    "P11 R2 J_P12.4 OUT"
+   ],
+   "czeka_na": [
+    "P04"
+   ],
    "problemy": [],
    "magistrala": null
   },
@@ -476,13 +511,12 @@
    "magistrala": null
   },
   "N_J_SCOPE_HOT": {
-   "stan": "czeka",
+   "stan": "OK",
    "konce": [
-    "P03 R6 J_BP1.10 OUT"
+    "P03 R6 J_BP1.10 OUT",
+    "P11 R2 J_P12.10 IN"
    ],
-   "czeka_na": [
-    "P11"
-   ],
+   "czeka_na": [],
    "problemy": [],
    "magistrala": null
   },
@@ -490,6 +524,17 @@
    "stan": "czeka",
    "konce": [
     "P02 R4 J_BP.15 PWR"
+   ],
+   "czeka_na": [
+    "P04"
+   ],
+   "problemy": [],
+   "magistrala": null
+  },
+  "PANEL_3V3": {
+   "stan": "czeka",
+   "konce": [
+    "P11 R2 J_P12.2 PWR"
    ],
    "czeka_na": [
     "P04"
@@ -614,6 +659,17 @@
    "problemy": [],
    "magistrala": null
   },
+  "STOP_NC_OUT": {
+   "stan": "czeka",
+   "konce": [
+    "P11 R2 J_P12.6 OUT"
+   ],
+   "czeka_na": [
+    "P04"
+   ],
+   "problemy": [],
+   "magistrala": null
+  },
   "SUP_N_OUT": {
    "stan": "czeka",
    "konce": [
@@ -648,22 +704,22 @@
   "TEST_KEY": {
    "stan": "czeka",
    "konce": [
-    "P03 R6 J_BP1.14 IN"
+    "P03 R6 J_BP1.14 IN",
+    "P11 R2 J_P12.14 OUT"
    ],
    "czeka_na": [
-    "P11"
+    "P04"
    ],
    "problemy": [],
    "magistrala": null
   },
   "TEST_PRESENT": {
-   "stan": "czeka",
+   "stan": "OK",
    "konce": [
-    "P03 R6 J_BP1.16 IN"
+    "P03 R6 J_BP1.16 IN",
+    "P11 R2 J_P12.16 OUT"
    ],
-   "czeka_na": [
-    "P11"
-   ],
+   "czeka_na": [],
    "problemy": [],
    "magistrala": null
   },
@@ -747,6 +803,12 @@
     "piny": 1,
     "zrodlo": false,
     "max_A": 1.0
+   },
+   {
+    "plytka": "P11 R2",
+    "piny": 1,
+    "zrodlo": false,
+    "max_A": 1.0
    }
   ]
  },
@@ -761,7 +823,7 @@
  "pojemnosc_5V": [
   {
    "plytka": "P02 R4",
-   "wersja": "origin/main @ 1d4ff38, blob c2cfb86198",
+   "wersja": "origin/main @ e77b317, blob ddb6f8c3d4",
    "uF": 22.1,
    "najwieksze": [
     {

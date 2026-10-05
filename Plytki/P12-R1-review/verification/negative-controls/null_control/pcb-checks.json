@@ -1,0 +1,339 @@
+{
+  "board": "/home/tgorbacz/AI/Claude/EGRLab/.worktrees/p12-r1/Plytki/P12-R1-review/verification/negative-controls/null_control/P12.kicad_pcb",
+  "board_sha256": "f99d5d6498a1fae70c7814bfe543dbd182ad5b07578280e413e0dc749fc724fc",
+  "checks": [
+    {
+      "check": "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities, zones refilled)",
+      "pass": true
+    },
+    {
+      "check": "14 parts of the netlist + 6 mounting holes, nothing else; every footprint ID and pad net equals the netlist",
+      "pass": true
+    },
+    {
+      "check": "Every connector: straight IDC of the contract type on the top side; every pad net = docs/kontrakt-P12.json (NC pins of P04/P07/P08 unconnected)",
+      "pass": true
+    },
+    {
+      "check": "Connector centres (x of the stack, z above the floor) = zlacza-P12.csv x and z_bottom + 1.6 + 4.45 mm, within 0.5 mm (J10: x 26.5, z 14.05)",
+      "pass": true
+    },
+    {
+      "check": "Orientation of every connector: pin 1 at the smaller x, odd pins in one row along +x, pin 2k directly 2.54 mm ABOVE pin 2k-1 (odd row lower: mirror of the angled IDC on the boards, untwisted ribbon)",
+      "pass": true
+    },
+    {
+      "check": "2 copper layers, 1.6 mm",
+      "pass": true
+    },
+    {
+      "check": "Both copper layers 35 um",
+      "pass": true
+    },
+    {
+      "check": "Outline 160 x 92 mm (x 0..160, z 4..96), 4 corner arcs R 1",
+      "pass": true
+    },
+    {
+      "check": "M3: 6 NPTH 3.2 mm at the README positions",
+      "pass": true
+    },
+    {
+      "check": "Standoff zones D7: no copper within 3.5 mm of a hole centre; courtyards >= 1 mm outside the zone (screw head, ribbon sockets); rule areas on both layers",
+      "pass": true
+    },
+    {
+      "check": "Rules: clearance >= 0.25, edge 0.5, ring 0.25, silk text >= 1.0 / 0.15 mm, no DRC exclusions; class PWR (5V_SYS) 1.0 mm, P3V3 (3V3_IO) 0.5 mm",
+      "pass": true
+    },
+    {
+      "check": "Track widths: 5V_SYS >= 1.0 mm, 3V3_IO >= 0.5 mm, every other track >= 0.25 mm",
+      "pass": true
+    },
+    {
+      "check": "Every PTH pad and via has an annular ring >= 0.25 mm",
+      "pass": true
+    },
+    {
+      "check": "5V_SYS, 3V3_IO and GND separate (no DRC short); P03 J_BP2 16/17/19/20 (PFAIL_N, 5V_SYS) and P05 J_BP2 16/17/19/20 (GND) without a copper path",
+      "pass": true
+    },
+    {
+      "check": "Every 5V_SYS / 3V3_IO pad joined over copper to the source P02 J_BP (J1.2 / J1.8)",
+      "pass": true
+    },
+    {
+      "check": "GND pours on both layers (each >= 50 % of the board, island removal always) and >= 20 GND stitching vias",
+      "pass": true
+    },
+    {
+      "check": "Test pads TP1 / TP4 GND, TP2 5V_SYS, TP3 3V3_IO",
+      "pass": true
+    },
+    {
+      "check": "Every silkscreen text >= 1.0 mm high and >= 0.15 mm stroke (JLCPCB)",
+      "pass": true
+    },
+    {
+      "check": "Every connector: one label \"Jn  Pxx <connector> (poziom k, Sx)\" centred above it and one \"1\" mark <= 7.5 mm from pin 1, nearer pin 1 than the last odd pin",
+      "pass": true
+    },
+    {
+      "check": "No silkscreen text (top or bottom) inside a connector / pad courtyard (stays visible next to a mated socket), in an M3 zone D7 or off the board",
+      "pass": true
+    },
+    {
+      "check": "Silkscreen: board name \"P12 R1 S1 LOGGER\" and orientation marks (STRONA STOSU, x = 0 PANEL)",
+      "pass": true
+    }
+  ],
+  "details": {
+    "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities, zones refilled)": {
+      "violations": 0,
+      "unconnected_items": 0,
+      "schematic_parity": 0,
+      "types": []
+    },
+    "14 parts of the netlist + 6 mounting holes, nothing else; every footprint ID and pad net equals the netlist": [],
+    "Every connector: straight IDC of the contract type on the top side; every pad net = docs/kontrakt-P12.json (NC pins of P04/P07/P08 unconnected)": [],
+    "Connector centres (x of the stack, z above the floor) = zlacza-P12.csv x and z_bottom + 1.6 + 4.45 mm, within 0.5 mm (J10: x 26.5, z 14.05)": {
+      "J1": {
+        "centre_xz": [
+          133.5,
+          14.05
+        ],
+        "want_xz": [
+          133.5,
+          14.05
+        ],
+        "error_mm": 0.0
+      },
+      "J2": {
+        "centre_xz": [
+          26.5,
+          40.65
+        ],
+        "want_xz": [
+          26.5,
+          40.65
+        ],
+        "error_mm": 0.0
+      },
+      "J3": {
+        "centre_xz": [
+          80.0,
+          40.65
+        ],
+        "want_xz": [
+          80.0,
+          40.65
+        ],
+        "error_mm": 0.0
+      },
+      "J4": {
+        "centre_xz": [
+          133.5,
+          40.65
+        ],
+        "want_xz": [
+          133.5,
+          40.65
+        ],
+        "error_mm": 0.0
+      },
+      "J5": {
+        "centre_xz": [
+          26.5,
+          62.25
+        ],
+        "want_xz": [
+          26.5,
+          62.25
+        ],
+        "error_mm": 0.0
+      },
+      "J6": {
+        "centre_xz": [
+          80.0,
+          62.25
+        ],
+        "want_xz": [
+          80.0,
+          62.25
+        ],
+        "error_mm": 0.0
+      },
+      "J7": {
+        "centre_xz": [
+          133.5,
+          62.25
+        ],
+        "want_xz": [
+          133.5,
+          62.25
+        ],
+        "error_mm": 0.0
+      },
+      "J8": {
+        "centre_xz": [
+          80.0,
+          83.85
+        ],
+        "want_xz": [
+          80.0,
+          83.85
+        ],
+        "error_mm": 0.0
+      },
+      "J9": {
+        "centre_xz": [
+          133.5,
+          83.85
+        ],
+        "want_xz": [
+          133.5,
+          83.85
+        ],
+        "error_mm": 0.0
+      },
+      "J10": {
+        "centre_xz": [
+          26.5,
+          14.05
+        ],
+        "want_xz": [
+          26.5,
+          14.05
+        ],
+        "error_mm": 0.0
+      }
+    },
+    "Orientation of every connector: pin 1 at the smaller x, odd pins in one row along +x, pin 2k directly 2.54 mm ABOVE pin 2k-1 (odd row lower: mirror of the angled IDC on the boards, untwisted ribbon)": {},
+    "Both copper layers 35 um": {
+      "F.Cu": 0.035,
+      "B.Cu": 0.035
+    },
+    "Outline 160 x 92 mm (x 0..160, z 4..96), 4 corner arcs R 1": [
+      0.0,
+      0.0,
+      160.0,
+      92.0
+    ],
+    "M3: 6 NPTH 3.2 mm at the README positions": {
+      "want": [
+        [
+          4.5,
+          4.5
+        ],
+        [
+          4.5,
+          87.5
+        ],
+        [
+          53.25,
+          44.55
+        ],
+        [
+          106.75,
+          44.55
+        ],
+        [
+          155.5,
+          4.5
+        ],
+        [
+          155.5,
+          87.5
+        ]
+      ],
+      "got": [
+        [
+          4.5,
+          4.5
+        ],
+        [
+          4.5,
+          87.5
+        ],
+        [
+          53.25,
+          44.55
+        ],
+        [
+          106.75,
+          44.55
+        ],
+        [
+          155.5,
+          4.5
+        ],
+        [
+          155.5,
+          87.5
+        ]
+      ]
+    },
+    "Standoff zones D7: no copper within 3.5 mm of a hole centre; courtyards >= 1 mm outside the zone (screw head, ribbon sockets); rule areas on both layers": {
+      "courtyards": [],
+      "copper": [],
+      "rule_areas": 6
+    },
+    "Track widths: 5V_SYS >= 1.0 mm, 3V3_IO >= 0.5 mm, every other track >= 0.25 mm": {
+      "too_narrow": {},
+      "5V_SYS": [
+        1.0
+      ],
+      "3V3_IO": [
+        0.5
+      ]
+    },
+    "Every PTH pad and via has an annular ring >= 0.25 mm": [],
+    "5V_SYS, 3V3_IO and GND separate (no DRC short); P03 J_BP2 16/17/19/20 (PFAIL_N, 5V_SYS) and P05 J_BP2 16/17/19/20 (GND) without a copper path": {
+      "pairs": {
+        "16": {
+          "J3": "PFAIL_N",
+          "J6": "GND",
+          "copper_path": false
+        },
+        "17": {
+          "J3": "5V_SYS",
+          "J6": "GND",
+          "copper_path": false
+        },
+        "19": {
+          "J3": "5V_SYS",
+          "J6": "GND",
+          "copper_path": false
+        },
+        "20": {
+          "J3": "5V_SYS",
+          "J6": "GND",
+          "copper_path": false
+        }
+      },
+      "short_violations": 0
+    },
+    "Every 5V_SYS / 3V3_IO pad joined over copper to the source P02 J_BP (J1.2 / J1.8)": [],
+    "GND pours on both layers (each >= 50 % of the board, island removal always) and >= 20 GND stitching vias": {
+      "cover_percent": {
+        "F.Cu": 84.9,
+        "B.Cu": 85.8
+      },
+      "gnd_vias": 55
+    },
+    "Test pads TP1 / TP4 GND, TP2 5V_SYS, TP3 3V3_IO": {
+      "TP1": "GND",
+      "TP2": "5V_SYS",
+      "TP3": "3V3_IO",
+      "TP4": "GND"
+    },
+    "Every silkscreen text >= 1.0 mm high and >= 0.15 mm stroke (JLCPCB)": [],
+    "Every connector: one label \"Jn  Pxx <connector> (poziom k, Sx)\" centred above it and one \"1\" mark <= 7.5 mm from pin 1, nearer pin 1 than the last odd pin": {},
+    "No silkscreen text (top or bottom) inside a connector / pad courtyard (stays visible next to a mated socket), in an M3 zone D7 or off the board": {},
+    "Silkscreen: board name \"P12 R1 S1 LOGGER\" and orientation marks (STRONA STOSU, x = 0 PANEL)": [
+      "P12 R1 S1 LOGGER"
+    ]
+  },
+  "passed": 21,
+  "total": 21
+}
