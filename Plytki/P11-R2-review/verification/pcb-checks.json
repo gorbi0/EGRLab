@@ -1,0 +1,475 @@
+{
+  "board": "/home/tgorbacz/AI/Claude/EGRLab/.worktrees/p11-r2-pcb/Plytki/P11-R2-review/eda/P11.kicad_pcb",
+  "board_sha256": "9c6bbba751ef61586f42347b7e726b2aa1a659d75cde4b59aa9da485dfde15f1",
+  "checks": [
+    {
+      "check": "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "pass": true
+    },
+    {
+      "check": "Parts: the 5 on-board parts of the schematic + 4 mounting holes, nothing else",
+      "pass": true
+    },
+    {
+      "check": "Netlist: every value, footprint ID and pad net equals the exported schematic netlist",
+      "pass": true
+    },
+    {
+      "check": "Board stack: 2 copper layers of 35 um, FR4 1.6 mm",
+      "pass": true
+    },
+    {
+      "check": "All parts on the top side (wire fields and the header are soldered from the top; nothing under the board lying on the panel-zone floor)",
+      "pass": true
+    },
+    {
+      "check": "Outline: 36 x 100 mm within the limit 45 x 130 mm (user 4.10), long side along y (the panel wall), 4 corner arcs R 1",
+      "pass": true
+    },
+    {
+      "check": "M3 holes: 4 NPTH 3.2 mm, one per corner, 4 mm from the long edges; bottom pair <= 4.5 mm from the short edge, top pair directly behind J_P12 (D7 zone edge 0-6 mm beyond its courtyard: the header fills the short edge)",
+      "pass": true
+    },
+    {
+      "check": "Standoff zones D7: no courtyard and no copper (pads, tracks, vias, pours) within 3.5 mm of a hole centre; rule areas on both layers",
+      "pass": true
+    },
+    {
+      "check": "Rules: clearance >= 0.25, track >= 0.3, copper to edge 0.5, ring >= 0.25, DRC legend minimum 1.0 / 0.15 mm (JLCPCB), class P3V3 0.4 mm for PANEL_3V3 / 3V3_IO; no DRC exclusions",
+      "pass": true
+    },
+    {
+      "check": "Track widths: every track >= 0.3 mm; PANEL_3V3 and 3V3_IO >= 0.4 mm (user 4.10)",
+      "pass": true
+    },
+    {
+      "check": "Every PTH pad and via has an annular ring >= 0.25 mm (measured on the copper)",
+      "pass": true
+    },
+    {
+      "check": "J_P12: IDC 2x10 right-angle box header on the short edge y = 0 (wall A, ribbon to P12): mating face within 0.3 mm of the edge, pins centred on the width, pin 1 at the smaller x with one silk \"1\" next to it, pinout = docs/J_P12.csv",
+      "pass": true
+    },
+    {
+      "check": "Wire fields J11 / J8 / J6 at the panel edge x = 0: holes 1.0-1.1 mm, pads >= 2.0 mm (AWG24); 2 cable-tie anchors Ø3.2 NPTH between the pads and the panel edge (hole edge 2-6 mm from it, spanning the pad rows), no copper within 3 mm of the anchors, no other part in the strip where the wires lie",
+      "pass": true
+    },
+    {
+      "check": "Field labels: every column of J11 / J8 / J6 has exactly one silk label beside it naming the panel contact; the label resolves (parts.json X11-X17 / X6 pins, docs/PORTY.csv TEST cavities) to exactly the nets of the column pads",
+      "pass": true
+    },
+    {
+      "check": "R1 variant note on the silkscreen next to R1 (<= 12 mm): \"LOGGER: LUTOWAC\" and \"Z P04: DNP\", matching the variant in parts.json",
+      "pass": true
+    },
+    {
+      "check": "Legend size: every visible silk text >= 1.0 mm high with a line >= 0.15 mm (JLCPCB minimum)",
+      "pass": true
+    },
+    {
+      "check": "GND pours on both layers (each >= 50 % of the board), island removal always, >= 20 GND stitching vias",
+      "pass": true
+    },
+    {
+      "check": "Every visible reference outside the courtyards of other parts; every part has a visible reference",
+      "pass": true
+    },
+    {
+      "check": "Every visible reference nearer its own part than any other and <= 3 mm from its courtyard (text centre)",
+      "pass": true
+    },
+    {
+      "check": "Silkscreen: board name \"P11 R2 PANEL\" and the marker \"STRONA PANELU\" along the panel edge x = 0",
+      "pass": true
+    }
+  ],
+  "details": {
+    "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)": {
+      "violations": 1,
+      "unconnected_items": 0,
+      "schematic_parity": 0,
+      "other_violations": 0,
+      "other_types": [],
+      "accepted_lib_mismatch": [
+        "J_P12"
+      ]
+    },
+    "Parts: the 5 on-board parts of the schematic + 4 mounting holes, nothing else": {
+      "board": [
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "J11",
+        "J6",
+        "J8",
+        "J_P12",
+        "R1"
+      ]
+    },
+    "Netlist: every value, footprint ID and pad net equals the exported schematic netlist": {
+      "errors": [],
+      "pads": 44
+    },
+    "Board stack: 2 copper layers of 35 um, FR4 1.6 mm": {
+      "F.Cu": 0.035,
+      "B.Cu": 0.035
+    },
+    "All parts on the top side (wire fields and the header are soldered from the top; nothing under the board lying on the panel-zone floor)": [],
+    "Outline: 36 x 100 mm within the limit 45 x 130 mm (user 4.10), long side along y (the panel wall), 4 corner arcs R 1": {
+      "outline_mm": [
+        36.0,
+        100.0
+      ],
+      "arcs": 4,
+      "segments": 4
+    },
+    "M3 holes: 4 NPTH 3.2 mm, one per corner, 4 mm from the long edges; bottom pair <= 4.5 mm from the short edge, top pair directly behind J_P12 (D7 zone edge 0-6 mm beyond its courtyard: the header fills the short edge)": {
+      "holes": [
+        [
+          4.0,
+          19.0
+        ],
+        [
+          4.0,
+          96.0
+        ],
+        [
+          32.0,
+          19.0
+        ],
+        [
+          32.0,
+          96.0
+        ]
+      ],
+      "J_P12_courtyard_bottom": 14.725
+    },
+    "Standoff zones D7: no courtyard and no copper (pads, tracks, vias, pours) within 3.5 mm of a hole centre; rule areas on both layers": {
+      "courtyards": [],
+      "copper": [],
+      "rule_areas": 4
+    },
+    "Rules: clearance >= 0.25, track >= 0.3, copper to edge 0.5, ring >= 0.25, DRC legend minimum 1.0 / 0.15 mm (JLCPCB), class P3V3 0.4 mm for PANEL_3V3 / 3V3_IO; no DRC exclusions": {
+      "min_clearance": 0.25,
+      "min_track_width": 0.3,
+      "min_text_height": 1.0,
+      "min_text_thickness": 0.15
+    },
+    "Track widths: every track >= 0.3 mm; PANEL_3V3 and 3V3_IO >= 0.4 mm (user 4.10)": {
+      "too_narrow": [],
+      "widths": {
+        "3V3_IO": [
+          0.4
+        ],
+        "ARM_CONTACT": [
+          0.3
+        ],
+        "DIAG_L1_L2": [
+          0.3
+        ],
+        "ILK_L1_L2": [
+          0.3
+        ],
+        "LOGGER_CLEAR": [
+          0.3
+        ],
+        "LOOP_OUT": [
+          0.3
+        ],
+        "MARK": [
+          0.3
+        ],
+        "MECH_OK": [
+          0.3
+        ],
+        "N_J_SCOPE_HOT": [
+          0.3
+        ],
+        "PANEL_3V3": [
+          0.4
+        ],
+        "STOP_NC_OUT": [
+          0.3
+        ],
+        "TEST_KEY": [
+          0.3
+        ],
+        "TEST_PRESENT": [
+          0.3
+        ]
+      }
+    },
+    "Every PTH pad and via has an annular ring >= 0.25 mm (measured on the copper)": [],
+    "J_P12: IDC 2x10 right-angle box header on the short edge y = 0 (wall A, ribbon to P12): mating face within 0.3 mm of the edge, pins centred on the width, pin 1 at the smaller x with one silk \"1\" next to it, pinout = docs/J_P12.csv": {
+      "body_front_y": 0.0,
+      "pin1": [
+        6.57,
+        13.33
+      ],
+      "pins_centre_x": 18.0,
+      "pinout_equals_J_P12.csv": true,
+      "pin1_marks": [
+        [
+          4.82,
+          13.33
+        ]
+      ]
+    },
+    "Wire fields J11 / J8 / J6 at the panel edge x = 0: holes 1.0-1.1 mm, pads >= 2.0 mm (AWG24); 2 cable-tie anchors Ø3.2 NPTH between the pads and the panel edge (hole edge 2-6 mm from it, spanning the pad rows), no copper within 3 mm of the anchors, no other part in the strip where the wires lie": {
+      "J11": {
+        "drill_mm": [
+          1.1
+        ],
+        "pad_mm": [
+          2.3
+        ],
+        "anchors": [
+          [
+            4.5,
+            25.0
+          ],
+          [
+            4.5,
+            60.0
+          ]
+        ],
+        "anchor_hole_edge_to_panel_edge_mm": [
+          2.9,
+          2.9
+        ],
+        "pads_x": [
+          15.0,
+          18.5
+        ],
+        "copper_in_anchor_keepouts": [],
+        "parts_in_wire_strip": [],
+        "ok": true
+      },
+      "J8": {
+        "drill_mm": [
+          1.1
+        ],
+        "pad_mm": [
+          2.3
+        ],
+        "anchors": [
+          [
+            4.5,
+            64.5
+          ],
+          [
+            4.5,
+            75.0
+          ]
+        ],
+        "anchor_hole_edge_to_panel_edge_mm": [
+          2.9,
+          2.9
+        ],
+        "pads_x": [
+          15.0
+        ],
+        "copper_in_anchor_keepouts": [],
+        "parts_in_wire_strip": [],
+        "ok": true
+      },
+      "J6": {
+        "drill_mm": [
+          1.1
+        ],
+        "pad_mm": [
+          2.3
+        ],
+        "anchors": [
+          [
+            4.5,
+            79.5
+          ],
+          [
+            4.5,
+            90.0
+          ]
+        ],
+        "anchor_hole_edge_to_panel_edge_mm": [
+          2.9,
+          2.9
+        ],
+        "pads_x": [
+          15.0
+        ],
+        "copper_in_anchor_keepouts": [],
+        "parts_in_wire_strip": [],
+        "ok": true
+      }
+    },
+    "Field labels: every column of J11 / J8 / J6 has exactly one silk label beside it naming the panel contact; the label resolves (parts.json X11-X17 / X6 pins, docs/PORTY.csv TEST cavities) to exactly the nets of the column pads": {
+      "J11 17/18": {
+        "label": [
+          "X17.1-2 TEST"
+        ],
+        "nets": [
+          "PANEL_3V3",
+          "TEST_PRESENT"
+        ],
+        "ok": true
+      },
+      "J11 15/16": {
+        "label": [
+          "X14.1-2 MARK"
+        ],
+        "nets": [
+          "GND",
+          "MARK"
+        ],
+        "ok": true
+      },
+      "J11 13/14": {
+        "label": [
+          "X11.1-2 ARM"
+        ],
+        "nets": [
+          "ARM_CONTACT",
+          "GND"
+        ],
+        "ok": true
+      },
+      "J11 11/12": {
+        "label": [
+          "X16.1-2 STOP"
+        ],
+        "nets": [
+          "PANEL_3V3",
+          "STOP_NC_OUT"
+        ],
+        "ok": true
+      },
+      "J11 9/10": {
+        "label": [
+          "X13.3-4 L2 NC"
+        ],
+        "nets": [
+          "DIAG_L1_L2",
+          "LOGGER_CLEAR"
+        ],
+        "ok": true
+      },
+      "J11 7/8": {
+        "label": [
+          "X13.1-2 L2 NC"
+        ],
+        "nets": [
+          "ILK_L1_L2",
+          "LOOP_OUT"
+        ],
+        "ok": true
+      },
+      "J11 5/6": {
+        "label": [
+          "X12.3-4 L1 NC"
+        ],
+        "nets": [
+          "DIAG_L1_L2",
+          "PANEL_3V3"
+        ],
+        "ok": true
+      },
+      "J11 3/4": {
+        "label": [
+          "X12.1-2 L1 NC"
+        ],
+        "nets": [
+          "ILK_L1_L2",
+          "TEST_KEY"
+        ],
+        "ok": true
+      },
+      "J11 1/2": {
+        "label": [
+          "X15.1-2 KLUCZ"
+        ],
+        "nets": [
+          "PANEL_3V3",
+          "TEST_KEY"
+        ],
+        "ok": true
+      },
+      "J8 2": {
+        "label": [
+          "TEST kom.11"
+        ],
+        "nets": [
+          "MECH_OK"
+        ],
+        "ok": true
+      },
+      "J8 1": {
+        "label": [
+          "TEST kom.10"
+        ],
+        "nets": [
+          "LOOP_OUT"
+        ],
+        "ok": true
+      },
+      "J6 2": {
+        "label": [
+          "SCOPE ekran"
+        ],
+        "nets": [
+          "GND"
+        ],
+        "ok": true
+      },
+      "J6 1": {
+        "label": [
+          "SCOPE srodek"
+        ],
+        "nets": [
+          "N_J_SCOPE_HOT"
+        ],
+        "ok": true
+      }
+    },
+    "R1 variant note on the silkscreen next to R1 (<= 12 mm): \"LOGGER: LUTOWAC\" and \"Z P04: DNP\", matching the variant in parts.json": {
+      "variant_in_parts.json": {
+        "LOGGER": "fitted",
+        "FULL": "DNP"
+      },
+      "notes_mm_from_R1": {
+        "LOGGER: LUTOWAC": [
+          9.2
+        ],
+        "Z P04: DNP": [
+          7.4
+        ]
+      }
+    },
+    "Legend size: every visible silk text >= 1.0 mm high with a line >= 0.15 mm (JLCPCB minimum)": [],
+    "GND pours on both layers (each >= 50 % of the board), island removal always, >= 20 GND stitching vias": {
+      "cover_percent": {
+        "F.Cu": 71.9,
+        "B.Cu": 79.9
+      },
+      "gnd_vias": 62
+    },
+    "Every visible reference outside the courtyards of other parts; every part has a visible reference": {
+      "inside_other": {},
+      "hidden": []
+    },
+    "Every visible reference nearer its own part than any other and <= 3 mm from its courtyard (text centre)": {},
+    "Silkscreen: board name \"P11 R2 PANEL\" and the marker \"STRONA PANELU\" along the panel edge x = 0": {
+      "title": [
+        "P11 R2 PANEL"
+      ],
+      "panel_marker": [
+        [
+          1.5,
+          69.5
+        ]
+      ]
+    }
+  },
+  "passed": 20,
+  "total": 20
+}

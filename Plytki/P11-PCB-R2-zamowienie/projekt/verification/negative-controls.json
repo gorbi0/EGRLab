@@ -1,0 +1,258 @@
+[
+  {
+    "control": "null_control",
+    "expected_failing_check": "none (all PASS)",
+    "detected": true,
+    "failed_checks": []
+  },
+  {
+    "control": "drc_short",
+    "expected_failing_check": "Fresh native DRC",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)"
+    ]
+  },
+  {
+    "control": "ref_renamed",
+    "expected_failing_check": "Parts",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Parts: the 5 on-board parts of the schematic + 4 mounting holes, nothing else",
+      "R1 variant note on the silkscreen next to R1 (<= 12 mm): \"LOGGER: LUTOWAC\" and \"Z P04: DNP\", matching the variant in parts.json"
+    ]
+  },
+  {
+    "control": "value_changed",
+    "expected_failing_check": "Netlist",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Netlist: every value, footprint ID and pad net equals the exported schematic netlist"
+    ]
+  },
+  {
+    "control": "copper_18um",
+    "expected_failing_check": "Board stack",
+    "detected": true,
+    "failed_checks": [
+      "Board stack: 2 copper layers of 35 um, FR4 1.6 mm"
+    ]
+  },
+  {
+    "control": "small_ring",
+    "expected_failing_check": "Every PTH pad and via",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Every PTH pad and via has an annular ring >= 0.25 mm (measured on the copper)"
+    ]
+  },
+  {
+    "control": "rules_relaxed",
+    "expected_failing_check": "Rules",
+    "detected": true,
+    "failed_checks": [
+      "Rules: clearance >= 0.25, track >= 0.3, copper to edge 0.5, ring >= 0.25, DRC legend minimum 1.0 / 0.15 mm (JLCPCB), class P3V3 0.4 mm for PANEL_3V3 / 3V3_IO; no DRC exclusions"
+    ]
+  },
+  {
+    "control": "outline_arc_missing",
+    "expected_failing_check": "Outline",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Outline: 36 x 100 mm within the limit 45 x 130 mm (user 4.10), long side along y (the panel wall), 4 corner arcs R 1"
+    ]
+  },
+  {
+    "control": "mount_shift",
+    "expected_failing_check": "M3 holes",
+    "detected": true,
+    "failed_checks": [
+      "M3 holes: 4 NPTH 3.2 mm, one per corner, 4 mm from the long edges; bottom pair <= 4.5 mm from the short edge, top pair directly behind J_P12 (D7 zone edge 0-6 mm beyond its courtyard: the header fills the short edge)",
+      "Standoff zones D7: no courtyard and no copper (pads, tracks, vias, pours) within 3.5 mm of a hole centre; rule areas on both layers"
+    ]
+  },
+  {
+    "control": "zone_copper",
+    "expected_failing_check": "Standoff zones D7",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Standoff zones D7: no courtyard and no copper (pads, tracks, vias, pours) within 3.5 mm of a hole centre; rule areas on both layers"
+    ]
+  },
+  {
+    "control": "jp12_off_edge",
+    "expected_failing_check": "J_P12",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "M3 holes: 4 NPTH 3.2 mm, one per corner, 4 mm from the long edges; bottom pair <= 4.5 mm from the short edge, top pair directly behind J_P12 (D7 zone edge 0-6 mm beyond its courtyard: the header fills the short edge)",
+      "Standoff zones D7: no courtyard and no copper (pads, tracks, vias, pours) within 3.5 mm of a hole centre; rule areas on both layers",
+      "J_P12: IDC 2x10 right-angle box header on the short edge y = 0 (wall A, ribbon to P12): mating face within 0.3 mm of the edge, pins centred on the width, pin 1 at the smaller x with one silk \"1\" next to it, pinout = docs/J_P12.csv"
+    ]
+  },
+  {
+    "control": "jp12_pinout",
+    "expected_failing_check": "J_P12",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Netlist: every value, footprint ID and pad net equals the exported schematic netlist",
+      "J_P12: IDC 2x10 right-angle box header on the short edge y = 0 (wall A, ribbon to P12): mating face within 0.3 mm of the edge, pins centred on the width, pin 1 at the smaller x with one silk \"1\" next to it, pinout = docs/J_P12.csv"
+    ]
+  },
+  {
+    "control": "pin1_mark_missing",
+    "expected_failing_check": "J_P12",
+    "detected": true,
+    "failed_checks": [
+      "J_P12: IDC 2x10 right-angle box header on the short edge y = 0 (wall A, ribbon to P12): mating face within 0.3 mm of the edge, pins centred on the width, pin 1 at the smaller x with one silk \"1\" next to it, pinout = docs/J_P12.csv"
+    ]
+  },
+  {
+    "control": "narrow_track",
+    "expected_failing_check": "Track widths",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Track widths: every track >= 0.3 mm; PANEL_3V3 and 3V3_IO >= 0.4 mm (user 4.10)"
+    ]
+  },
+  {
+    "control": "supply_03",
+    "expected_failing_check": "Track widths",
+    "detected": true,
+    "failed_checks": [
+      "Track widths: every track >= 0.3 mm; PANEL_3V3 and 3V3_IO >= 0.4 mm (user 4.10)"
+    ]
+  },
+  {
+    "control": "field_turned",
+    "expected_failing_check": "Wire fields",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Wire fields J11 / J8 / J6 at the panel edge x = 0: holes 1.0-1.1 mm, pads >= 2.0 mm (AWG24); 2 cable-tie anchors Ø3.2 NPTH between the pads and the panel edge (hole edge 2-6 mm from it, spanning the pad rows), no copper within 3 mm of the anchors, no other part in the strip where the wires lie",
+      "Field labels: every column of J11 / J8 / J6 has exactly one silk label beside it naming the panel contact; the label resolves (parts.json X11-X17 / X6 pins, docs/PORTY.csv TEST cavities) to exactly the nets of the column pads"
+    ]
+  },
+  {
+    "control": "field_drill",
+    "expected_failing_check": "Wire fields",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Wire fields J11 / J8 / J6 at the panel edge x = 0: holes 1.0-1.1 mm, pads >= 2.0 mm (AWG24); 2 cable-tie anchors Ø3.2 NPTH between the pads and the panel edge (hole edge 2-6 mm from it, spanning the pad rows), no copper within 3 mm of the anchors, no other part in the strip where the wires lie"
+    ]
+  },
+  {
+    "control": "anchor_track",
+    "expected_failing_check": "Wire fields",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Wire fields J11 / J8 / J6 at the panel edge x = 0: holes 1.0-1.1 mm, pads >= 2.0 mm (AWG24); 2 cable-tie anchors Ø3.2 NPTH between the pads and the panel edge (hole edge 2-6 mm from it, spanning the pad rows), no copper within 3 mm of the anchors, no other part in the strip where the wires lie"
+    ]
+  },
+  {
+    "control": "strip_blocked",
+    "expected_failing_check": "Wire fields",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Wire fields J11 / J8 / J6 at the panel edge x = 0: holes 1.0-1.1 mm, pads >= 2.0 mm (AWG24); 2 cable-tie anchors Ø3.2 NPTH between the pads and the panel edge (hole edge 2-6 mm from it, spanning the pad rows), no copper within 3 mm of the anchors, no other part in the strip where the wires lie",
+      "R1 variant note on the silkscreen next to R1 (<= 12 mm): \"LOGGER: LUTOWAC\" and \"Z P04: DNP\", matching the variant in parts.json",
+      "Every visible reference outside the courtyards of other parts; every part has a visible reference",
+      "Every visible reference nearer its own part than any other and <= 3 mm from its courtyard (text centre)"
+    ]
+  },
+  {
+    "control": "label_missing",
+    "expected_failing_check": "Field labels",
+    "detected": true,
+    "failed_checks": [
+      "Field labels: every column of J11 / J8 / J6 has exactly one silk label beside it naming the panel contact; the label resolves (parts.json X11-X17 / X6 pins, docs/PORTY.csv TEST cavities) to exactly the nets of the column pads"
+    ]
+  },
+  {
+    "control": "label_swap",
+    "expected_failing_check": "Field labels",
+    "detected": true,
+    "failed_checks": [
+      "Field labels: every column of J11 / J8 / J6 has exactly one silk label beside it naming the panel contact; the label resolves (parts.json X11-X17 / X6 pins, docs/PORTY.csv TEST cavities) to exactly the nets of the column pads"
+    ]
+  },
+  {
+    "control": "label_swap_test",
+    "expected_failing_check": "Field labels",
+    "detected": true,
+    "failed_checks": [
+      "Field labels: every column of J11 / J8 / J6 has exactly one silk label beside it naming the panel contact; the label resolves (parts.json X11-X17 / X6 pins, docs/PORTY.csv TEST cavities) to exactly the nets of the column pads"
+    ]
+  },
+  {
+    "control": "variant_missing",
+    "expected_failing_check": "R1 variant note",
+    "detected": true,
+    "failed_checks": [
+      "R1 variant note on the silkscreen next to R1 (<= 12 mm): \"LOGGER: LUTOWAC\" and \"Z P04: DNP\", matching the variant in parts.json"
+    ]
+  },
+  {
+    "control": "small_text",
+    "expected_failing_check": "Legend size",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Legend size: every visible silk text >= 1.0 mm high with a line >= 0.15 mm (JLCPCB minimum)"
+    ]
+  },
+  {
+    "control": "gnd_pour_removed",
+    "expected_failing_check": "GND pours",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "GND pours on both layers (each >= 50 % of the board), island removal always, >= 20 GND stitching vias"
+    ]
+  },
+  {
+    "control": "bottom_part",
+    "expected_failing_check": "All parts on the top side",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "All parts on the top side (wire fields and the header are soldered from the top; nothing under the board lying on the panel-zone floor)"
+    ]
+  },
+  {
+    "control": "ref_on_part",
+    "expected_failing_check": "Every visible reference outside",
+    "detected": true,
+    "failed_checks": [
+      "Every visible reference outside the courtyards of other parts; every part has a visible reference",
+      "Every visible reference nearer its own part than any other and <= 3 mm from its courtyard (text centre)"
+    ]
+  },
+  {
+    "control": "ref_far",
+    "expected_failing_check": "Every visible reference nearer",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "Every visible reference nearer its own part than any other and <= 3 mm from its courtyard (text centre)"
+    ]
+  },
+  {
+    "control": "title_wrong",
+    "expected_failing_check": "Silkscreen: board name",
+    "detected": true,
+    "failed_checks": [
+      "Silkscreen: board name \"P11 R2 PANEL\" and the marker \"STRONA PANELU\" along the panel edge x = 0"
+    ]
+  }
+]

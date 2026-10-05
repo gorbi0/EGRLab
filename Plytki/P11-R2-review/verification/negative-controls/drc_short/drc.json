@@ -1,0 +1,145 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-04T20:47:44",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P11.kicad_pcb",
+    "unconnected_items": [],
+    "violations": [
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci MECH_OK oraz /CONTACTS/LOOP_OUT)",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [MECH_OK] na J8",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 68.0
+                    },
+                    "uuid": "72c10f73-2306-406f-b46f-a2c203778b31"
+                },
+                {
+                    "description": "Ścieżka [/CONTACTS/LOOP_OUT] na F.Cu, długość 3,5000 mm",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 71.5
+                    },
+                    "uuid": "c37ff585-2ec7-410a-8cb3-f4754e04cb93"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [/CONTACTS/LOOP_OUT] na F.Cu, długość 3,5000 mm",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 71.5
+                    },
+                    "uuid": "c37ff585-2ec7-410a-8cb3-f4754e04cb93"
+                },
+                {
+                    "description": "Pole PTH 2 [MECH_OK] na J8",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 68.0
+                    },
+                    "uuid": "72c10f73-2306-406f-b46f-a2c203778b31"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Tracks crossing",
+            "items": [
+                {
+                    "description": "Ścieżka [/CONTACTS/LOOP_OUT] na F.Cu, długość 3,5000 mm",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 71.5
+                    },
+                    "uuid": "c37ff585-2ec7-410a-8cb3-f4754e04cb93"
+                },
+                {
+                    "description": "Ścieżka [MECH_OK] na F.Cu, długość 6,5314 mm",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 68.0
+                    },
+                    "uuid": "ec8a7248-e20f-4e0c-84da-c51a4780c49c"
+                }
+            ],
+            "severity": "error",
+            "type": "tracks_crossing"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/CONTACTS/LOOP_OUT] na F.Cu, długość 3,5000 mm",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 71.5
+                    },
+                    "uuid": "c37ff585-2ec7-410a-8cb3-f4754e04cb93"
+                },
+                {
+                    "description": "Pole PTH 2 [MECH_OK] na J8",
+                    "pos": {
+                        "x": 15.0,
+                        "y": 68.0
+                    },
+                    "uuid": "72c10f73-2306-406f-b46f-a2c203778b31"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_P12",
+                    "pos": {
+                        "x": 6.57,
+                        "y": 13.33
+                    },
+                    "uuid": "58a9fdbb-d240-455c-a5e8-591501433286"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        }
+    ]
+}

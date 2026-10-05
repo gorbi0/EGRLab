@@ -1,0 +1,269 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-04T20:48:52",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [
+        {
+            "description": "Sieć pola (/3V3_IO) nie pasuje do sieci nadanej na schemacie (PANEL_3V3)",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [/3V3_IO] na J_P12",
+                    "pos": {
+                        "x": 6.57,
+                        "y": 10.79
+                    },
+                    "uuid": "82d8401e-dd53-48ec-be41-fb8f73dcbaf9"
+                }
+            ],
+            "severity": "warning",
+            "type": "net_conflict"
+        },
+        {
+            "description": "Sieć pola (PANEL_3V3) nie pasuje do sieci nadanej na schemacie (/3V3_IO)",
+            "items": [
+                {
+                    "description": "Pole PTH 20 [PANEL_3V3] na J_P12",
+                    "pos": {
+                        "x": 29.43,
+                        "y": 10.79
+                    },
+                    "uuid": "7afa2e3a-761a-46b8-8583-4f6ab9ca4aa2"
+                }
+            ],
+            "severity": "warning",
+            "type": "net_conflict"
+        }
+    ],
+    "source": "P11.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [/3V3_IO] na J_P12",
+                    "pos": {
+                        "x": 6.57,
+                        "y": 10.79
+                    },
+                    "uuid": "82d8401e-dd53-48ec-be41-fb8f73dcbaf9"
+                },
+                {
+                    "description": "Ścieżka [/3V3_IO] na F.Cu, długość 5,2869 mm",
+                    "pos": {
+                        "x": 27.05,
+                        "y": 17.6
+                    },
+                    "uuid": "69b8b3c6-616a-4a49-9ce1-ab4c12ed502b"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole PTH 20 [PANEL_3V3] na J_P12",
+                    "pos": {
+                        "x": 29.43,
+                        "y": 10.79
+                    },
+                    "uuid": "7afa2e3a-761a-46b8-8583-4f6ab9ca4aa2"
+                },
+                {
+                    "description": "Ścieżka [PANEL_3V3] na F.Cu, długość 14,7561 mm",
+                    "pos": {
+                        "x": 23.95,
+                        "y": 17.6
+                    },
+                    "uuid": "13d98b2b-42c6-4c49-b75a-ff216123118f"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci PANEL_3V3 oraz /3V3_IO)",
+            "items": [
+                {
+                    "description": "Pole PTH 20 [PANEL_3V3] na J_P12",
+                    "pos": {
+                        "x": 29.43,
+                        "y": 10.79
+                    },
+                    "uuid": "7afa2e3a-761a-46b8-8583-4f6ab9ca4aa2"
+                },
+                {
+                    "description": "Ścieżka [/3V3_IO] na F.Cu, długość 1,9211 mm",
+                    "pos": {
+                        "x": 30.7884,
+                        "y": 12.1484
+                    },
+                    "uuid": "91c23378-fad5-4f43-be76-bfee5692a7c2"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [/3V3_IO] na F.Cu, długość 1,9211 mm",
+                    "pos": {
+                        "x": 30.7884,
+                        "y": 12.1484
+                    },
+                    "uuid": "91c23378-fad5-4f43-be76-bfee5692a7c2"
+                },
+                {
+                    "description": "Pole PTH 20 [PANEL_3V3] na J_P12",
+                    "pos": {
+                        "x": 29.43,
+                        "y": 10.79
+                    },
+                    "uuid": "7afa2e3a-761a-46b8-8583-4f6ab9ca4aa2"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci /3V3_IO oraz PANEL_3V3)",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [/3V3_IO] na J_P12",
+                    "pos": {
+                        "x": 6.57,
+                        "y": 10.79
+                    },
+                    "uuid": "82d8401e-dd53-48ec-be41-fb8f73dcbaf9"
+                },
+                {
+                    "description": "Ścieżka [PANEL_3V3] na B.Cu, długość 1,9123 mm",
+                    "pos": {
+                        "x": 6.57,
+                        "y": 10.79
+                    },
+                    "uuid": "a832db9d-50be-4cfe-8776-caa4a9940e44"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [PANEL_3V3] na B.Cu, długość 1,9123 mm",
+                    "pos": {
+                        "x": 6.57,
+                        "y": 10.79
+                    },
+                    "uuid": "a832db9d-50be-4cfe-8776-caa4a9940e44"
+                },
+                {
+                    "description": "Pole PTH 2 [/3V3_IO] na J_P12",
+                    "pos": {
+                        "x": 6.57,
+                        "y": 10.79
+                    },
+                    "uuid": "82d8401e-dd53-48ec-be41-fb8f73dcbaf9"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/3V3_IO] na F.Cu, długość 1,9211 mm",
+                    "pos": {
+                        "x": 30.7884,
+                        "y": 12.1484
+                    },
+                    "uuid": "91c23378-fad5-4f43-be76-bfee5692a7c2"
+                },
+                {
+                    "description": "Pole PTH 20 [PANEL_3V3] na J_P12",
+                    "pos": {
+                        "x": 29.43,
+                        "y": 10.79
+                    },
+                    "uuid": "7afa2e3a-761a-46b8-8583-4f6ab9ca4aa2"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [PANEL_3V3] na B.Cu, długość 1,9123 mm",
+                    "pos": {
+                        "x": 6.57,
+                        "y": 10.79
+                    },
+                    "uuid": "a832db9d-50be-4cfe-8776-caa4a9940e44"
+                },
+                {
+                    "description": "Pole PTH 2 [/3V3_IO] na J_P12",
+                    "pos": {
+                        "x": 6.57,
+                        "y": 10.79
+                    },
+                    "uuid": "82d8401e-dd53-48ec-be41-fb8f73dcbaf9"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_P12",
+                    "pos": {
+                        "x": 6.57,
+                        "y": 13.33
+                    },
+                    "uuid": "58a9fdbb-d240-455c-a5e8-591501433286"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        }
+    ]
+}
