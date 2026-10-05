@@ -2,6 +2,8 @@
 
 *R3 (5.10.2026): obrys R2.2 160 × 120 mm z Mini-Fit, pigtailami i kotwami znika. Obowiązuje `Plytki/Format-S1/SPECYFIKACJA-FORMATU-S1.md` (S1-3, §7: P04 na poziomie 6, klasa L — decyzja użytkownika 5.10.2026). Layout robi sesja lokalna; ten pakiet zawiera tylko schemat.*
 
+*5.10.2026: layout zrobiony (README, sekcja „PCB”); wymagania niżej sprawdza `src/verify_pcb.py`. Limit 16,5 mm nad poziomem 6 potwierdzony decyzją użytkownika 5.10; wszystkie części od góry.*
+
 ## Płytka
 
 Klasa L: 160,0 × 100,0 mm, sloty S1–S3 poziomu 6, narożniki R 1 mm, FR-4 1,6 mm, 2 warstwy, miedź 35 µm, JLCPCB. Dwanaście otworów M3 Ø 3,2 mm w x = 4,0 / 49,0 / 57,5 / 102,5 / 111,0 / 156,0 i y = 14,0 / 86,0, strefa Ø 7 mm bez miedzi innych sieci i bez elementów. Reguły jak w P02-R3 (pierścień PTH i przelotek ≥ 0,25 mm).

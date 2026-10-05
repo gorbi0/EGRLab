@@ -83,9 +83,10 @@ for t in [f'<b>Płytka:</b> 160 × 100 mm (klasa L), narożniki R1, FR4 1,6 mm, 
           '<b>Krawędź B:</b> J_SV1 (1×13), J_SV2 i J_SV3 (1×7), GND na końcach, każdy kołek przez rezystor przy węźle (1 kΩ; SAFE_N i ARM_BUTTON_N 10 kΩ); docs/SERWIS.csv.',
           f'<b>Zasilanie (≥ 0,4 mm):</b> 3V3_IO, P04_3V3, PANEL_3V3, 5V_SYS — najwęższa ścieżka {pl(min(v["min_width_mm"] for v in pw.values()))} mm. Piny zasilania '
           'w parzystym rzędzie J_BP2 / J_BP3 wychodzą po B.Cu w stronę krawędzi A (między pinami GND mieści się tylko 0,3 mm) i obchodzą koniec złącza.',
-          f'<b>SUP_N_OUT</b> (reset z P03): J_BP3.12 → U9.5 {pl(supn["copper_mm"])} mm miedzi, {supn["vias"]} przelotka, między pinami GND 11 / 13, masa pod '
+          f'<b>SUP_N_OUT</b> (reset z P03): J_BP3.12 → U9.5 {pl(round(supn["copper_mm"], 1))} mm miedzi, {supn["vias"]} przelotka; obok GND J_BP3.11 / .13, wyjście po B.Cu między pinami GND 9 / 11, masa pod '
           f'{pl(supn["gnd_reference_percent"])} % długości. <b>Watchdog:</b> WD_RC {pl(wd["WD_RC"]["length_mm"])} mm, WD_C {pl(wd["WD_C"]["length_mm"])} mm, F.Cu bez przelotek. '
-          f'<b>Odsprzęganie:</b> 100 nF przy każdym układzie, najdalej {worst[0]} {pl(worst[1]["supply_path_mm"])} mm miedzi od pinu VCC.',
+          f'<b>Odsprzęganie:</b> 100 nF przy każdym układzie, najdalej {worst[0]} {pl(round(worst[1]["supply_path_mm"], 1))} mm miedzi od pinu VCC; masa DIP grzbietem GND '
+          'pod korpusem (B.Cu) do pinu 7 / 8, SOIC przelotką do belki GND pod układem.',
           f'<b>Kontrole:</b> DRC: {len(drc["unconnected_items"])} niepołączonych, {len(drc["schematic_parity"])} niezgodności ze schematem, '
           f'{len(drc["violations"]) - nlib} innych naruszeń'
           + (f'; {liczba(nlib, "zgłoszenie", "zgłoszenia", "zgłoszeń")} lib_footprint_mismatch u części z przyciętym nadrukiem (przyjęte po porównaniu pól z biblioteką)' if nlib else '')

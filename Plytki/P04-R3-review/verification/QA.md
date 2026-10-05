@@ -139,5 +139,5 @@ Kontrakt S1 i P12 (`verify_s1.py`): 34/34 PASS; mutacje 42/42 wykrytych przez ko
 | panel line straight to a gate | Panel contacts reach the gates only through R41/R42 1 k; pulldowns on the gate side | tak |
 | 3V3 straight to the panel | 3V3 leaves the board only through current-limiting resistors (R38/R39 1 k, R40 100 R) | tak |
 
-Tylko schemat: PCB nie powstało (layout robi sesja lokalna). Kontrole plików nie zastępują odbioru na sprzęcie (`docs/ODBIOR.md`).
+PCB: `verification/QA-PCB.md` (łańcuch `src/run_release.py`). Kontrole plików nie zastępują odbioru na sprzęcie (`docs/ODBIOR.md`).
 Ostrzeżenie kicad-cli „schemat posiada błędy numeracji” dotyczy oznaczeń `J_BP1…3` i `J_SV1…3` (nazwy z formatu S1, jak w P03 R6 / P06 R2); ERC go nie zgłasza.
