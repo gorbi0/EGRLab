@@ -77,7 +77,7 @@ relay=custom('G2RL_1_E_DC12',[([('A1','COIL+','passive'),('A2','COIL-','passive'
 add('K1','KPWR',relay,RELAY,'G2RL-1-E DC12','G2RL-1-E DC12 (Omron, SPDT 16 A, coil 12 V 400 mW, h 15.7 mm; data to confirm)',{'A1':VM,'A2':'KPWR_COIL_LOW','11':VM,'14':'MOD_BP','12':'NC'},'MOC',
     note='KPWR: COM on VMOTOR, NO to module B+. Coil from VMOTOR (12.0-16.8 V = 100-140 % of 12 V); confirm maximum coil voltage >= 17 V at 50 C in the data sheet. Contacts switch without load: EN drops first (ns), relay opens later (ms); closes onto a precharged module capacitor (R4).',coil_ohm=360,coil_v=12)
 add('Q1','ADD_KPWR_DRV',symbol('Transistor_BJT','MMBT3904'),SOT23,'MMBT3904','MMBT3904 (Nexperia/onsemi, SOT-23, 40 V 200 mA)',{1:'KPWR_B',2:PG,3:'KPWR_COIL_LOW'},'MOC',note='Low-side coil switch (v6.1: TBD62083 channel). Emitter on PGND: the coil current does not return through P12.',vceo=40,ic_max=0.2)
-res('R2','ADD_KPWR_RB','1K',1000,'LOCAL_PERMIT','KPWR_B','MOC')
+res('R2','ADD_KPWR_RB','680R',680,'LOCAL_PERMIT','KPWR_B','MOC',note='Ib ~3 mA at VOH 2.8 V: forced beta ~11 for the 33 mA coil.')
 res('R3','ADD_KPWR_PD','100K',100000,'KPWR_B',PG,'MOC')
 add('D2','D11',SD,SOD123,'1N4148W','1N4148W (SOD-123, 100 V)',{1:'KPWR_CLAMP',2:'KPWR_COIL_LOW'},'MOC',note='Coil clamp diode (anode at coil low end) in series with Zener D3 to VMOTOR: fast release (v6.1 D11/D12).')
 add('D3','D12',SZ,SOD123,'BZT52C15','BZT52C15 (Zener 15 V 0.5 W, SOD-123)',{1:'KPWR_CLAMP',2:VM},'MOC',note='Clamp = VMOTOR + 15 V + 0.7 V <= 32.5 V < 40 V VCEO of Q1 (v6.1: 18 V Zener with 60 V transistor array).',vz=15.0)
@@ -154,7 +154,8 @@ ff=custom('74HC74_SO14',[([(2,'1D','input'),(3,'1CLK','input'),(4,'1PRE_N','inpu
                          [(5,'1Q','output'),(6,'1Q_N','output'),(9,'2Q','output'),(8,'2Q_N','output'),(7,'GND','power_in')])])
 add('U15','U_OC_LATCH',ff,SO14,'SN74HC74D','SN74HC74DR (TI, SOIC-14)',{1:'LOCAL_CLEAR_N',2:'PERMIT_N',3:'ARM_CLK',4:IO,5:'OC_GOOD',6:'NC',7:G,8:'NC',9:'NO_TRIP',10:'RAILS_OK',11:'ARM_CLK',12:IO,13:'OC_LOCAL_N',14:IO},'LOGIKA','https://www.ti.com/lit/ds/symlink/sn74hc74.pdf',
     'FF1 (v6.1): OC_GOOD cleared by OC or rails, set only by ARM_CLK while MOTOR_PERMIT = L. FF2 (new): NO_TRIP preset while rails are not OK (power-up = no trip), cleared by OC, set again by ARM_CLK -> DRIVE_OK.')
-res('R31','ADD_SAFE_SER','1K',1000,'SAFE_N','SAFE_SENSE','LOGIKA',note='Series into the Schmitt input; no pull on SAFE_N (P04 R4 is the only pull-up).')
+res('R31','ADD_SAFE_SER','1K',1000,'SAFE_N','SAFE_SENSE','LOGIKA',note='Series into the Schmitt input; no pull-up on SAFE_N (P04 R4 is the only pull-up).')
+res('R51','ADD_SAFE_PD','1M',1e6,'SAFE_SENSE',G,'LOGIKA',note='Open tape J_BP2 -> SAFE_OK = L. Loads SAFE_N by 1 MOhm (P04: 10k up / 100k down, high level 3.00 -> 2.97 V).')
 add('Q2','Q_OC',symbol('Transistor_BJT','MMBT3904'),SOT23,'MMBT3904','MMBT3904 (SOT-23)',{1:'OC_B',2:G,3:'SAFE_N'},'LOGIKA',note='Open collector on the common SAFE_N node during OC (v6.1 Q_OC 2N5551).')
 res('R33','R_QOC_B','10K',10000,'OC_FAULT','OC_B','LOGIKA')
 res('R34','R_QOC_PD','100K',100000,'OC_B',G,'LOGIKA')

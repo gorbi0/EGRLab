@@ -1,0 +1,269 @@
+{
+ "checks": [
+  {
+   "id": "LOGIC-TABLE",
+   "pass": true,
+   "note": "{\"rows\": 2304, \"bad\": []}"
+  },
+  {
+   "id": "LOGIC-BLOCK-ALL-L",
+   "pass": true,
+   "note": "{\"rule\": \"bez MOTOR_PERMIT / SAFE_N, przy OC lub zlych szynach -> RPWM, LPWM, R_EN, L_EN = L\", \"bad\": []}"
+  },
+  {
+   "id": "DEAD-DOMAINS-OPEN-TAPE",
+   "pass": true,
+   "note": "{\"3V3_IO off\": {\"RPWM\": 0, \"LPWM\": 0, \"R_EN\": 0, \"L_EN\": 0, \"KPWR_COIL_LOW\": null}, \"3V3A off\": {\"RPWM\": 0, \"LPWM\": 0, \"R_EN\": 0, \"L_EN\": 0, \"KPWR_COIL_LOW\": null}, \"5VA off\": {\"RPWM\": 0, \"LPWM\": 0, \"R_EN\": 0, \"L_EN\": 0, \"KPWR_COIL_LOW\": null}, \"J_BP2 tape open\": {\"RPWM\": 0, \"LPWM\": 0, \"R_EN\": 0, \"L"
+  },
+  {
+   "id": "OPEN-TAPE-DEFINED",
+   "pass": true,
+   "note": "{\"PERMIT_P07\": 0, \"PWM_P07\": 0, \"SAFE_OK\": 0, \"ARM_CLK\": 0}"
+  },
+  {
+   "id": "OE-BLOCKS-STUCK-GATE",
+   "pass": true,
+   "note": "{\"RPWM_L\": {\"RPWM\": 0, \"LPWM\": 0, \"R_EN\": 0, \"L_EN\": 0}, \"LPWM_L\": {\"RPWM\": 0, \"LPWM\": 0, \"R_EN\": 0, \"L_EN\": 0}}"
+  },
+  {
+   "id": "LATCH-SEQUENCES",
+   "pass": true,
+   "note": "[]"
+  },
+  {
+   "id": "SPI-DOUT-TRISTATE",
+   "pass": true,
+   "note": "DOUT_TX nadaje tylko przy CS_ITEST_N = L; P03 bez zasilania -> CS nieaktywne (R17)"
+  },
+  {
+   "id": "OC-WINDOW",
+   "pass": true,
+   "note": "{\"plus_A\": [8.01, 8.11], \"minus_A\": [7.99, 8.03], \"nominal\": [8.06, 8.008]}"
+  },
+  {
+   "id": "OC-BELOW-INA-SATURATION",
+   "pass": true,
+   "note": "{\"INA_out_at_trip_max_V\": 4.579, \"OC_HIGH_max_V\": 4.578, \"5VA_min_V\": 4.8}"
+  },
+  {
+   "id": "ITEST-SCALE",
+   "pass": true,
+   "note": "{\"ratio\": 0.5, \"tau_ms\": 0.255, \"range_A\": 10.0}"
+  },
+  {
+   "id": "SHUNT-POWER-10A",
+   "pass": true,
+   "note": "{\"P10A_W\": 0.5}"
+  },
+  {
+   "id": "PRECHARGE-R",
+   "pass": true,
+   "note": "{\"R_ohm\": [1000.0], \"fault_W\": 0.282, \"rating_W\": 1.0, \"Imotor_open_mA\": 16.8, \"MOD_BP_open_ratio\": 0.909}"
+  },
+  {
+   "id": "KPWR-DRIVE-CLAMP",
+   "pass": true,
+   "note": "{\"Ib_mA\": 3.01, \"Icoil_mA\": 33.3, \"clamp_V\": 32.5, \"coil_ratio\": 1.4}"
+  },
+  {
+   "id": "TVS-VMOTOR",
+   "pass": true,
+   "note": "[\"SMCJ18A\"]"
+  },
+  {
+   "id": "IS-DIAG",
+   "pass": true,
+   "note": "{\"R_IS\": [1.64, 4.62], \"L_IS\": [1.64, 4.62]}"
+  },
+  {
+   "id": "GND-PGND-SEPARATE",
+   "pass": true,
+   "note": "{\"both\": [], \"mod_gnd\": [[\"R43\", 10.0]]}"
+  }
+ ],
+ "negative_controls": [
+  {
+   "mutation": "SAFE_OK bypassed (U13.2 -> 3V3_IO)",
+   "target": "LOGIC-TABLE",
+   "caught": true,
+   "checks": [
+    "LOGIC-TABLE",
+    "LOGIC-BLOCK-ALL-L",
+    "LATCH-SEQUENCES"
+   ]
+  },
+  {
+   "mutation": "OC does not clear the latch (U12.5 -> 3V3_IO)",
+   "target": "LOGIC-TABLE",
+   "caught": true,
+   "checks": [
+    "LOGIC-TABLE",
+    "LATCH-SEQUENCES"
+   ]
+  },
+  {
+   "mutation": "no OE blocking on RPWM (U16.1 -> GND)",
+   "target": "OE-BLOCKS-STUCK-GATE",
+   "caught": true,
+   "checks": [
+    "OE-BLOCKS-STUCK-GATE"
+   ]
+  },
+  {
+   "mutation": "re-arm under PERMIT (U15.2 -> 3V3_IO)",
+   "target": "LATCH-SEQUENCES",
+   "caught": true,
+   "checks": [
+    "LATCH-SEQUENCES"
+   ]
+  },
+  {
+   "mutation": "NO_TRIP not preset at power-up (U15.10 -> 3V3_IO)",
+   "target": "LATCH-SEQUENCES",
+   "caught": true,
+   "checks": [
+    "LATCH-SEQUENCES"
+   ]
+  },
+  {
+   "mutation": "no pull-down on MOTOR_PERMIT (R28 open)",
+   "target": "OPEN-TAPE-DEFINED",
+   "caught": true,
+   "checks": [
+    "OPEN-TAPE-DEFINED"
+   ]
+  },
+  {
+   "mutation": "Q2 collector off SAFE_N",
+   "target": "LOGIC-TABLE",
+   "caught": true,
+   "checks": [
+    "LOGIC-TABLE",
+    "LATCH-SEQUENCES"
+   ]
+  },
+  {
+   "mutation": "DOUT always driving (U7.10 -> GND)",
+   "target": "SPI-DOUT-TRISTATE",
+   "caught": true,
+   "checks": [
+    "SPI-DOUT-TRISTATE"
+   ]
+  },
+  {
+   "mutation": "OC_HIGH too high (R11 12K)",
+   "target": "OC-WINDOW",
+   "caught": true,
+   "checks": [
+    "LOGIC-TABLE",
+    "LOGIC-BLOCK-ALL-L",
+    "LATCH-SEQUENCES",
+    "OC-WINDOW",
+    "OC-BELOW-INA-SATURATION"
+   ]
+  },
+  {
+   "mutation": "OC_HIGH saturates INA240 (R11 9.53K)",
+   "target": "OC-BELOW-INA-SATURATION",
+   "caught": true,
+   "checks": [
+    "LOGIC-TABLE",
+    "LOGIC-BLOCK-ALL-L",
+    "LATCH-SEQUENCES",
+    "OC-WINDOW",
+    "OC-BELOW-INA-SATURATION"
+   ]
+  },
+  {
+   "mutation": "ITEST divider unequal (R9 10K)",
+   "target": "ITEST-SCALE",
+   "caught": true,
+   "checks": [
+    "ITEST-SCALE"
+   ]
+  },
+  {
+   "mutation": "precharge 100R",
+   "target": "PRECHARGE-R",
+   "caught": true,
+   "checks": [
+    "PRECHARGE-R"
+   ]
+  },
+  {
+   "mutation": "Zener 27 V",
+   "target": "KPWR-DRIVE-CLAMP",
+   "caught": true,
+   "checks": [
+    "KPWR-DRIVE-CLAMP"
+   ]
+  },
+  {
+   "mutation": "TVS 15 V",
+   "target": "TVS-VMOTOR",
+   "caught": true,
+   "checks": [
+    "TVS-VMOTOR"
+   ]
+  },
+  {
+   "mutation": "IS divider 10K/10K",
+   "target": "IS-DIAG",
+   "caught": true,
+   "checks": [
+    "IS-DIAG"
+   ]
+  },
+  {
+   "mutation": "B- tied to GND (R5.2 -> GND)",
+   "target": "GND-PGND-SEPARATE",
+   "caught": true,
+   "checks": [
+    "PRECHARGE-R",
+    "GND-PGND-SEPARATE"
+   ]
+  },
+  {
+   "mutation": "shunt 10 mOhm",
+   "target": "SHUNT-POWER-10A",
+   "caught": true,
+   "checks": [
+    "OC-WINDOW",
+    "ITEST-SCALE",
+    "SHUNT-POWER-10A"
+   ]
+  },
+  {
+   "mutation": "LPWM gate without OE (U16.4 -> GND)",
+   "target": "OE-BLOCKS-STUCK-GATE",
+   "caught": true,
+   "checks": [
+    "OE-BLOCKS-STUCK-GATE"
+   ]
+  },
+  {
+   "mutation": "KPWR base resistor 4.7K",
+   "target": "KPWR-DRIVE-CLAMP",
+   "caught": true,
+   "checks": [
+    "KPWR-DRIVE-CLAMP"
+   ]
+  }
+ ],
+ "null_control_clean": true,
+ "analysis": {
+  "oc": {
+   "trip_nom": [
+    8.060000000000002,
+    8.00796812749004
+   ],
+   "rf": 8060.000000000001,
+   "rg": 10000.0,
+   "rt": 40200.0,
+   "rb": 10000.0,
+   "sh": 0.005,
+   "gain": 50
+  },
+  "rows": 2304
+ }
+}

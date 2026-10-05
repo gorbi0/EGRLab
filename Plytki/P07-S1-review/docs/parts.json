@@ -164,20 +164,20 @@
     "ref": "R2",
     "source_ref": "ADD_KPWR_RB",
     "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
-    "display": "1K",
-    "value": "1K",
-    "mpn": "RC1206FR-071KL",
+    "display": "680R",
+    "value": "680R",
+    "mpn": "RC1206FR-07680RL",
     "pins": {
       "1": "LOCAL_PERMIT",
       "2": "KPWR_B"
     },
     "sheet": "MOC",
     "url": "",
-    "note": "",
+    "note": "Ib ~3 mA at VOH 2.8 V: forced beta ~11 for the 33 mA coil.",
     "qty": 1,
     "on_board": true,
     "zrodlo": "nowe",
-    "ohms": 1000,
+    "ohms": 680,
     "tolerance": 0.01
   },
   "R3": {
@@ -1413,11 +1413,31 @@
     },
     "sheet": "LOGIKA",
     "url": "",
-    "note": "Series into the Schmitt input; no pull on SAFE_N (P04 R4 is the only pull-up).",
+    "note": "Series into the Schmitt input; no pull-up on SAFE_N (P04 R4 is the only pull-up).",
     "qty": 1,
     "on_board": true,
     "zrodlo": "nowe",
     "ohms": 1000,
+    "tolerance": 0.01
+  },
+  "R51": {
+    "ref": "R51",
+    "source_ref": "ADD_SAFE_PD",
+    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
+    "display": "1M",
+    "value": "1M",
+    "mpn": "RC1206FR-071ML",
+    "pins": {
+      "1": "SAFE_SENSE",
+      "2": "GND"
+    },
+    "sheet": "LOGIKA",
+    "url": "",
+    "note": "Open tape J_BP2 -> SAFE_OK = L. Loads SAFE_N by 1 MOhm (P04: 10k up / 100k down, high level 3.00 -> 2.97 V).",
+    "qty": 1,
+    "on_board": true,
+    "zrodlo": "nowe",
+    "ohms": 1000000.0,
     "tolerance": 0.01
   },
   "Q2": {

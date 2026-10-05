@@ -57,7 +57,7 @@ K1;KPWR;G2RL-1-E DC12;"G2RL-1-E DC12 (Omron, SPDT 16 A, coil 12 V 400 mW, h 15.7
 Q1;ADD_KPWR_DRV;MMBT3904;MMBT3904 (Nexperia/onsemi, SOT-23, 40 V 200 mA);1;Package_TO_SOT_SMD:SOT-23;nowe;;Low-side coil switch (v6.1: TBD62083 channel). Emitter on PGND: the coil current does not return through P12.
 Q2;Q_OC;MMBT3904;MMBT3904 (SOT-23);1;Package_TO_SOT_SMD:SOT-23;nowe;;Open collector on the common SAFE_N node during OC (v6.1 Q_OC 2N5551).
 R1;R_BLEED;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;"Bleed of C1 (v6.1 2.2k 0.5W): 28 mW at 16.8 V; tau 2.2 s."
-R2;ADD_KPWR_RB;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;
+R2;ADD_KPWR_RB;680R;RC1206FR-07680RL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Ib ~3 mA at VOH 2.8 V: forced beta ~11 for the 33 mA coil.
 R3;ADD_KPWR_PD;100K;RC1206FR-07100KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;
 R4;ADD_PRECHARGE;1K / 1W;RC2512FK-071KL (Yageo 2512 1 W, MPN to confirm);1;Resistor_SMD:R_2512_6332Metric_Pad1.40x3.35mm_HandSolder;nowe;;"Disputed: precharge of the module 330 uF across the KPWR contacts (no inrush weld). Fault with module shorted: 0.28 W; motor current with KPWR open <= 17 mA."
 R5;ADD_MODBP_BLEED;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;"Bleed of the module side; with R4: MOD_BP = 91 % of VMOTOR while KPWR is open (visible on J_SV1.10)."
@@ -86,7 +86,7 @@ R27;R_PD_MOTOR_INB;100K;RC1206FR-07100KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.3
 R28;R_PD_MOTOR_PERMIT;100K;RC1206FR-07100KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Input pull-down at J_BP: open tape = L.
 R29;R_PD_PWM_OUT;100K;RC1206FR-07100KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Input pull-down at J_BP: open tape = L.
 R30;R_PD_ARM_CLK;100K;RC1206FR-07100KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Input pull-down at J_BP: open tape = L.
-R31;ADD_SAFE_SER;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;"Series into the Schmitt input; no pull on SAFE_N (P04 R4 is the only pull-up)."
+R31;ADD_SAFE_SER;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;"Series into the Schmitt input; no pull-up on SAFE_N (P04 R4 is the only pull-up)."
 R32;ADD_DRIVE_OK_SER;100R;RC1206FR-07100RL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;P04 R3: DRIVE_OK -> U10A (LVC125), 10k R20 to GND.
 R33;R_QOC_B;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;
 R34;R_QOC_PD;100K;RC1206FR-07100KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;
@@ -106,6 +106,7 @@ R47;ADD_L_IS_BOT;100K;RC1206FR-07100KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x
 R48;ADD_ENA_SER;100R;RC1206FR-07100RL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;
 R49;ADD_ENB_SER;100R;RC1206FR-07100RL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;
 R50;R_AF;10R;RC1206FR-0710RL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;"5VA filter (v6.1 R_AF 1R 0.5W; load here ~6 mA -> 60 mV)."
+R51;ADD_SAFE_PD;1M;RC1206FR-071ML;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Open tape J_BP2 -> SAFE_OK = L. Loads SAFE_N by 1 MOhm (P04: 10k up / 100k down, high level 3.00 -> 2.97 V).
 R52;ADDED_SERVICE_S2;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.
 R53;ADDED_SERVICE_S2;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.
 R54;ADDED_SERVICE_S2;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.
