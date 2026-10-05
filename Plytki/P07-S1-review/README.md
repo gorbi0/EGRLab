@@ -2,7 +2,7 @@
 
 *5.10.2026, sesja w chmurze według `Plytki/Format-S1/zadania/ZADANIE-P07-S1.md`. Baza: `origin/pelny-s1`. Pinout P04 R3 z `origin/p04-r3-pcb` (702732a7, `reference/P04-R3-J_BP.csv`).*
 
-**Status: tylko schemat, kontrole i dokumenty. PCB nie powstało** (layout robi sesja lokalna, `docs/CHMURA.md` zasada 6). Sprzętu nie zmontowano ani nie zmierzono. Moduł IBT-2 zmierzono tylko bez zasilania (POMIARY A–C); kroki D i E nie są zrobione.
+**Status (5.10 wieczorem): schemat z decyzjami użytkownika 5.10 gotowy (ERC 0, kontrole 16/16 i 30/30). PCB NIEDOMKNIĘTE — trasowanie nie zamknęło się po dwóch podejściach (sekcja „PCB — stan”); paczki produkcyjnej nie ma.** Sprzętu nie zmontowano ani nie zmierzono. Moduł IBT-2 zmierzono tylko bez zasilania (POMIARY A–C); kroki D i E nie są zrobione.
 
 ## Co to jest
 
@@ -86,6 +86,29 @@ J_SV1 (S2, x 10–43): GND, I_T_OUT, ADC_AIN, REF_BUF, REF25, OC_HIGH, OC_LOW (1
 8. **Pomiary modułu (pytanie 6):** B4 = pinout jak wyżej (zamknięte); C5: GND złącza ↔ B− w trybie diody 508 mV (COM na B−) — nie są zwarte wprost, zgodnie z decyzją 7 o masach (R43 10 Ω, PGND osobno); D1 (prąd VCC), E2 (RPWM → M+), E3 (kILIS) — przy odbiorze.
 
 Informacyjnie (pytania 8–9 bez zmian w tym pakiecie): P12 R2 z J_BP1/J_BP2 P07 i J_BP1–3 P04 R3 dla poziomów 5–6; numery pinów P04 wzięte z `origin/p04-r3-pcb` (702732a7) — po scaleniu P04 odświeżyć `reference/P04-R3-J_BP.csv` i puścić kontrole.
+
+## PCB — stan (5.10.2026 wieczorem, sesja lokalna; NIEDOMKNIĘTE)
+
+Łańcuch layoutu przeniesiony z P06 R2 (tor mocy, Kelvin, kontrole) i P04 R3 (generyczne skrypty, belki GND pod SOIC): `src/board.py`, `placement.py`, `route_critical.py`, `run_layout.py` i reszta jak w P06 R2; `verify_pcb.py`, `negative_controls.py`, `make_pdf.py`, `heights.py`, `silkscreen.py` przystosowane do P07, ale **nieuruchomione na gotowej płytce** (płytki nie ma).
+
+**Co działa (sprawdzone po imporcie trasowania):**
+- Kolumna J1–J4 przy x = 0 (decyzja 6), rząd pól x = 21,7, kotwy opasek x = 9,7. Kotwy przy x = 3 jak w P06 się nie mieszczą: 4 końcówki × 14,6 mm + 3 × 3,5 mm = 69 mm, a między strefami Ø7 otworów M3 (y 14 / 86) jest 60,8 mm. Kolejność od góry: J2.2 PGND, J2.1 B+, J1.1 VMOTOR, J1.2 PGND, J3.1 M+, J3.2 M−, J4.2 M−, J4.1 TEST P1 (J1 i J3 numerowane od drugiego końca — zmiana footprintów `PTH_VMOTOR` / `PTH_MODOUT`, sieci bez zmian).
+- K1 obrócony o 180°: styki NO (MOD_BP) na wysokości J2.1, COM (VMOTOR) nad J1.1, cewka (domena GND) na dole przekaźnika. Wylewki VMOTOR, MOD_BP, PGND, MOD_MP, T_EGR_P1, T_EGR_P3 na obu warstwach (`route_critical.py`), PGND jako osobna wylewka łącząca J2.2 i J1.2 pasem między kotwami a polami, RSH1 obrócony 270° z parą Kelvina do R6 / R7 / U1 jak w P06 R2. Po imporcie DRC nie zgłasza żadnej przerwy w sieciach mocy.
+
+**Co się nie zamknęło — trasowanie sygnałów (Freerouting 2.1.0 + planer `complete_routes.py`):**
+
+| Podejście | Rozmieszczenie | Wynik |
+|---|---|---|
+| 1 | ICs ciasno (odstęp obrysów 0,5 mm), ADC przy U1 na dole | Freerouting stoi na 157–172 „unrouted” od 6. do 10. przejścia (P06 R2: 30, P04 R3: 3); przerwane |
+| 2 | ADC (U6 / U7 / U3) przy J_BP1, raster układów 11–12 mm, odstęp obrysów 1,4 mm (0,6 tylko awaryjnie) | 30 przejść: 96 „unrouted” wg routera, w DRC 70 niepołączonych (65 sygnałowych); planer 30 min: **44 niepołączone** (`routing/postplan-drc.json`, obraz `output/previews/layout-wip-unconnected.png`) |
+
+Przyczyna (liczby z plików DSN): P07 ma 237 połączeń sygnałowych na 106,5 × 100 mm, z czego lewe 25–55 mm szerokości zajmują wylewki toru 10 A (dwie warstwy); P04 R3 ma 187 połączeń na 160 × 100 mm, P06 R2 113 na 106,5 × 100. Najdłuższe sieci przecinają całą płytkę (ENA_DIAG / ENB_DIAG z U17 przy J5 do J_BP1, SPI z J_BP1, 20 linii serwisowych do J_SV1 / J_SV2). Zgodnie z zadaniem klasy płytki nie zmieniałem.
+
+**Do decyzji użytkownika (propozycje):** (a) klasa L (160 × 100, S1–S3 poziomu 5 — wtedy P08 na inny poziom), (b) PCB 4-warstwowe (GND + zasilania w środku, tor mocy na zewnątrz), (c) zostać przy 2/3 i dalej trasować z ręcznie prowadzonymi magistralami (SPI i ENA/ENB wzdłuż krawędzi A, linie serwisowe pasem nad J_SV) — kolejna sesja, bez gwarancji domknięcia, (d) uprościć schemat (np. U17 i dzielniki IS przy J_BP1 zamiast przy J5, mniej kołków serwisowych).
+
+Znane drobiazgi do poprawy przy dokończeniu: dwa piny NC przekaźnika (2 × „12”) w jednej sieci — DRC chce je połączyć (krótki tor w `route_critical.py`); nadruk (silk_*) jeszcze nie przycięty (`silkscreen.py` nie był uruchomiony).
+
+Pliki stanu: `src/placement.json` (rozmieszczenie podejścia 2), `routing/attempt-q30.ses` (wynik 30 przejść), `routing/wip-postplan.kicad_pcb` i `eda/P07.kicad_pcb` (płytka po planerze, 44 przerwy — NIE do produkcji), `output/previews/layout-wip-F.png` / `-B.png`.
 
 ## Pliki
 

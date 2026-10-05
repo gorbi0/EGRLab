@@ -28,8 +28,9 @@ def custom(name,units):
   s+=')'
  return parse(s+')')
 # Wire pigtails (P06 R2 tail(): PTH solder joints, two anchor holes 12 mm from the row). 2.0 mm2 motor wires (decision 4.10): 2.4 / 4.5 mm.
-def tail(name,n,pitch,drill,pad):
- pts=[(i+1,i*pitch,0,drill,pad) for i in range(n)]+[('',-3.5,-12,3.2,3.2),('',(n-1)*pitch+3.5,-12,3.2,3.2)]
+def tail(name,n,pitch,drill,pad,rev=False):
+ # rev (as P06 R2 J3): pads numbered from the far end, so after the 90 deg turn at x = 0 pin 1 is the upper pad (layout column order)
+ pts=[(i+1,((n-1-i) if rev else i)*pitch,0,drill,pad) for i in range(n)]+[('',-3.5,-12,3.2,3.2),('',(n-1)*pitch+3.5,-12,3.2,3.2)]
  xmax=(n-1)*pitch
  s=f'(footprint {q(name)} (version 20240108) (generator "pcbnew") (layer "F.Cu") (attr through_hole)'
  for num,x,y,d,w in pts:
@@ -67,7 +68,7 @@ def res(r,src,val,ohms,a,b,sh,tol=.01,note=''):
 def cap(r,src,val,farad,a,b,sh,mpn=None,note='',volts=50):
  add(r,src,SC,C1206,val,mpn or ('SMD 1206 C0G 50V 5% ' if farad<1.1e-8 else 'SMD 1206 X7R 50V 10% ')+val,{1:a,2:b},sh,farads=farad,volts=volts,note=note)
 # ---------------- sheet MOC: VMOTOR in, KPWR, module power, shunt, TEST port -------------------------------------------------------
-add('J1','J_VMOTORB',symbol('Connector_Generic','Conn_01x02'),tail('PTH_VMOTOR',2,7.62,2.4,4.5),'VMOTOR / PTH','2 x 2.0 mm2 from P02 R4 J2 (GMSTB plug)',{1:VM,2:PG},'MOC',note='PTH solder joints + tie anchor 12 mm; 2.0 mm2 (decision 4.10). P02 R4 J2.1 VMOTOR (behind F1, MINI 7.5 A insert - user decision 5.10 (7)), J2.2 GND. See docs/WIAZKA-MODUL.md.')
+add('J1','J_VMOTORB',symbol('Connector_Generic','Conn_01x02'),tail('PTH_VMOTOR',2,7.62,2.4,4.5,rev=True),'VMOTOR / PTH','2 x 2.0 mm2 from P02 R4 J2 (GMSTB plug)',{1:VM,2:PG},'MOC',note='PTH solder joints + tie anchor 12 mm; 2.0 mm2 (decision 4.10). P02 R4 J2.1 VMOTOR (behind F1, MINI 7.5 A insert - user decision 5.10 (7)), J2.2 GND. See docs/WIAZKA-MODUL.md.')
 add('D1','D2',SZ,SMC,'SMCJ18A','SMCJ18A (Littelfuse, 1.5 kW, VRWM 18 V)',{1:VM,2:PG},'MOC',note='TVS at VMOTOR as v6.1 D2: VRWM 18 V >= 16.8 V (4S full), VC ~29 V << 40 V BTS7960 and relay contacts.',vrwm=18.0)
 add('C1','C_BULK',SCP,CP8,'220u / 35V','EEU-FR1V221 (Panasonic FR, D8 x 11.5 mm, low ESR; MPN to confirm)',{1:VM,2:PG},'MOC',farads=220e-6,volts=35,note='Local bulk at the input (v6.1: 1000u/50V). Standing, 11.5 mm + 2 mm <= 16.5 mm.')
 cap('C2','C_MOTOR_MF','1u',1e-6,VM,PG,'MOC')
@@ -90,7 +91,7 @@ add('R4','ADD_PRECHARGE',SR,R2512,'1K / 1W','RC2512FK-071KL (Yageo 2512 1 W, MPN
 res('R5','ADD_MODBP_BLEED','10K',10000,'MOD_BP',PG,'MOC',note='Bleed of the module side; with R4: MOD_BP = 91 % of VMOTOR while KPWR is open (visible on J_SV1.10).')
 cap('C4','ADD_MODBP_HF','100n',1e-7,'MOD_BP',PG,'MOC')
 add('J2','ADD_MOD_PWR',symbol('Connector_Generic','Conn_01x02'),tail('PTH_MODPWR',2,7.62,2.4,4.5),'MOD B+/B- / PTH','2 x 2.0 mm2 to module B+ / B-',{1:'MOD_BP',2:PG},'MOC',note='To the IBT-2 screw terminals B+ / B-. PTH + anchor.')
-add('J3','ADD_MOD_OUT',symbol('Connector_Generic','Conn_01x02'),tail('PTH_MODOUT',2,7.62,2.4,4.5),'MOD M+/M- / PTH','2 x 2.0 mm2 from module M+ / M-',{1:'MOD_MP',2:'T_EGR_P3'},'MOC',note='From the IBT-2 terminals M+ / M-. M- passes through to J4.2.')
+add('J3','ADD_MOD_OUT',symbol('Connector_Generic','Conn_01x02'),tail('PTH_MODOUT',2,7.62,2.4,4.5,rev=True),'MOD M+/M- / PTH','2 x 2.0 mm2 from module M+ / M-',{1:'MOD_MP',2:'T_EGR_P3'},'MOC',note='From the IBT-2 terminals M+ / M-. M- passes through to J4.2.')
 add('RSH1','RSH_T',symbol('Device','R_Shunt','R_Shunt_2512_Kelvin'),SHUNT_FP,'5m / 1% / 2512 Kelvin','WSK25125L000FEA (Vishay WSK2512, 5 mOhm 1 %, 1 W at 70 C) - as P06 R2',{1:'MOD_MP',2:'K_PLUS',3:'K_MINUS',4:'T_EGR_P1'},'MOC',
     note='In the motor line M+ -> T_EGR_P1 (task). Pads 1/4 force, 2/3 sense. 6 A: 0.18 W; 10 A: 0.5 W.',ohms=.005,tolerance=.01,power_w=1.0)
 add('J4','J_TMOTORA',symbol('Connector_Generic','Conn_01x02'),tail('PTH_TEST',2,7.62,2.4,4.5),'TEST / PTH','2 x 2.0 mm2 to P11 port TEST (valve pins 1 / 3)',{1:'T_EGR_P1',2:'T_EGR_P3'},'MOC',note='At the x = 0 edge (task). Port TEST on the panel (P11-4: motor current by wires straight to the port).')
