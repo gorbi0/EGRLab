@@ -41,12 +41,13 @@ W = [('W_VMOTOR', 'J1', 'P02 R4 J2 (GMSTBA 2,5/3-G-7,62; 1 VMOTOR, 2 GND)', 'P07
      ('W_MODPWR', 'J2', 'modul IBT-2: zaciski B+ / B-', 'P07', '300', '2 x 2,0 mm2 (czerwony / czarny)', 'tulejki 2,0 mm2 w zaciskach modulu', '12', '1=MOD_BP->B+;2=PGND->B-'),
      ('W_MODOUT', 'J3', 'modul IBT-2: zaciski M+ / M-', 'P07', '300', '2 x 2,0 mm2 (np. zolty / niebieski)', 'tulejki 2,0 mm2 w zaciskach modulu', '12', '1=M+->MOD_MP;2=M-->T_EGR_P3'),
      ('W_TEST', 'J4', 'P11 port TEST (piny zaworu 1 / 3)', 'P07', '200', '2 x 2,0 mm2', 'wg P11 R2 (port TEST)', '12', '1=T_EGR_P1;2=T_EGR_P3'),
-     ('W_MOD_CTRL', 'J5', 'modul IBT-2: zlacze 2x4 (RPWM/LPWM, R_EN/L_EN, R_IS/L_IS, VCC/GND)', 'oba (IDC)', '300', 'tasma 8 zyl 1,27 mm AWG28', 'gniazdo IDC 2x4 zenskie na obu koncach, kluczowane', '-', '1..8 = 1..8 (pinout modulu do potwierdzenia, B4)')]
+     ('W_MOD_CTRL', 'J5', 'modul IBT-2: listwa 2x4 (1 RPWM, 3 R_EN, 5 R_IS, 7 VCC / 2 LPWM, 4 L_EN, 6 L_IS, 8 GND)', 'oba (IDC)', '300', 'tasma 8 zyl 1,27 mm AWG28', 'gniazdo IDC 2x4 zenskie na obu koncach (J5: obudowane IDC 2x4 katowe, kluczowane)', '-', '1..8 = 1..8 (numeracja jak listwa modulu, decyzja 5.10)')]
 table('interfejsy.csv', ['ID', 'P07', 'drugi_koniec', 'ktory_koniec_lutowany', 'dlugosc_mm', 'przewod', 'wtyk_drugi_koniec', 'kotwa_mm', 'piny'], W)
 table('netlist-pinowa.csv', ['ref', 'pin', 'net'], [[r, p, n] for r, v in PARTS.items() for p, n in v['pins'].items()])
 g = collections.defaultdict(list)
 for r, v in PARTS.items(): g[(v['zrodlo'], v['mpn'], v['display'], v['footprint'].split(':')[-1])].append(r)
-table('zakupy.csv', ['zrodlo', 'nazwa', 'wartosc', 'ilosc_szt', 'referencje', 'obudowa'], [[z, m, d, len(rr), ', '.join(sorted(rr, key=lambda s: (re.sub(r'\d', '', s), int(re.sub(r'\D', '', s) or 0)))), f] for (z, m, d, f), rr in sorted(g.items())])
+table('zakupy.csv', ['zrodlo', 'nazwa', 'wartosc', 'ilosc_szt', 'referencje', 'obudowa'], [[z, m, d, len(rr), ', '.join(sorted(rr, key=lambda s: (re.sub(r'\d', '', s), int(re.sub(r'\D', '', s) or 0)))), f] for (z, m, d, f), rr in sorted(g.items())]
+      + [[o['zrodlo'], o['mpn'], o['display'], o['qty'], o['ref'], 'wiazka (poza plytka)'] for o in OFFBOARD])
 files = {f.relative_to(P / 'reference').as_posix(): hashlib.sha256(f.read_bytes()).hexdigest() for f in sorted((P / 'reference').rglob('*')) if f.is_file() and f.name != 'snapshot-sha256.json'}
 (P / 'reference/snapshot-sha256.json').write_text(json.dumps(files, indent=2))
 print('J_BP.csv, SERWIS.csv, interfejsy.csv, zakupy.csv written.')

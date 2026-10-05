@@ -63,7 +63,7 @@
   {
    "id": "KPWR-DRIVE-CLAMP",
    "pass": true,
-   "note": "{\"Ib_mA\": 3.01, \"Icoil_mA\": 33.3, \"clamp_V\": 32.5, \"coil_ratio\": 1.4}"
+   "note": "{\"Icoil_mA\": 81.6, \"coil_V\": 5, \"coil_ratio\": [0.98, 1.02], \"clamp_V\": 20.8, \"Vds_on_mV\": 3.9, \"Rg_ohm\": [100.0], \"Rpd_ohm\": [100000.0], \"Vgs_min_V\": 2.9}"
   },
   {
    "id": "TVS-VMOTOR",
@@ -242,11 +242,36 @@
    ]
   },
   {
-   "mutation": "KPWR base resistor 4.7K",
+   "mutation": "KPWR gate resistor 4.7K",
    "target": "KPWR-DRIVE-CLAMP",
    "caught": true,
    "checks": [
     "KPWR-DRIVE-CLAMP"
+   ]
+  },
+  {
+   "mutation": "KPWR coil from VMOTOR (K1.A1 -> VMOTOR)",
+   "target": "KPWR-DRIVE-CLAMP",
+   "caught": true,
+   "checks": [
+    "KPWR-DRIVE-CLAMP"
+   ]
+  },
+  {
+   "mutation": "KPWR coil 12 V on 5V_SYS",
+   "target": "KPWR-DRIVE-CLAMP",
+   "caught": true,
+   "checks": [
+    "KPWR-DRIVE-CLAMP"
+   ]
+  },
+  {
+   "mutation": "Q1 source on PGND",
+   "target": "GND-PGND-SEPARATE",
+   "caught": true,
+   "checks": [
+    "KPWR-DRIVE-CLAMP",
+    "GND-PGND-SEPARATE"
    ]
   }
  ],

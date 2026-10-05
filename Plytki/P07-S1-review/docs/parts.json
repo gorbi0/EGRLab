@@ -12,7 +12,7 @@
     },
     "sheet": "MOC",
     "url": "",
-    "note": "PTH solder joints + tie anchor 12 mm; 2.0 mm2 (decision 4.10). P02 R4 J2.1 VMOTOR (behind F1 5 A), J2.2 GND. See docs/WIAZKA-MODUL.md.",
+    "note": "PTH solder joints + tie anchor 12 mm; 2.0 mm2 (decision 4.10). P02 R4 J2.1 VMOTOR (behind F1, MINI 7.5 A insert - user decision 5.10 (7)), J2.2 GND. See docs/WIAZKA-MODUL.md.",
     "qty": 1,
     "on_board": true,
     "zrodlo": "nowe"
@@ -120,11 +120,11 @@
     "ref": "K1",
     "source_ref": "KPWR",
     "footprint": "Relay_THT:Relay_SPDT_Omron_G2RL-1-E",
-    "display": "G2RL-1-E DC12",
-    "value": "G2RL-1-E DC12",
-    "mpn": "G2RL-1-E DC12 (Omron, SPDT 16 A, coil 12 V 400 mW, h 15.7 mm; data to confirm)",
+    "display": "G2RL-1-E DC5",
+    "value": "G2RL-1-E DC5",
+    "mpn": "G2RL-1-E DC5 (Omron, SPDT 16 A, coil 5 V 62.5 ohm 80 mA / 400 mW, h 15.7 mm)",
     "pins": {
-      "A1": "VMOTOR",
+      "A1": "5V_SYS",
       "A2": "KPWR_COIL_LOW",
       "11": "VMOTOR",
       "14": "MOD_BP",
@@ -132,52 +132,52 @@
     },
     "sheet": "MOC",
     "url": "",
-    "note": "KPWR: COM on VMOTOR, NO to module B+. Coil from VMOTOR (12.0-16.8 V = 100-140 % of 12 V); confirm maximum coil voltage >= 17 V at 50 C in the data sheet. Contacts switch without load: EN drops first (ns), relay opens later (ms); closes onto a precharged module capacitor (R4).",
+    "note": "KPWR (user decision 5.10): coil from 5V_SYS (4.90-5.10 V = 98-102 % of 5 V; must operate 70 %), 80 mA on 5V_SYS. COM on VMOTOR, NO to module B+. Contacts switch without load: EN drops first (ns), relay opens later (ms); closes onto a precharged module capacitor (R4). Same footprint as DC12.",
     "qty": 1,
     "on_board": true,
     "zrodlo": "nowe",
-    "coil_ohm": 360,
-    "coil_v": 12
+    "coil_ohm": 62.5,
+    "coil_v": 5
   },
   "Q1": {
     "ref": "Q1",
     "source_ref": "ADD_KPWR_DRV",
     "footprint": "Package_TO_SOT_SMD:SOT-23",
-    "display": "MMBT3904",
-    "value": "MMBT3904",
-    "mpn": "MMBT3904 (Nexperia/onsemi, SOT-23, 40 V 200 mA)",
+    "display": "AO3400A",
+    "value": "AO3400A",
+    "mpn": "AO3400A (Alpha & Omega, SOT-23, 30 V 5.7 A, RDS(on) <= 48 mOhm at VGS 2.5 V)",
     "pins": {
       "1": "KPWR_B",
-      "2": "PGND",
+      "2": "GND",
       "3": "KPWR_COIL_LOW"
     },
     "sheet": "MOC",
     "url": "",
-    "note": "Low-side coil switch (v6.1: TBD62083 channel). Emitter on PGND: the coil current does not return through P12.",
+    "note": "Low-side coil switch (v6.1: TBD62083 channel). Source on GND: the 5 V coil current returns to the 5V_SYS supply over GND, never over PGND. VGS = 74HC08 VOH (>= 2.9 V, no load).",
     "qty": 1,
     "on_board": true,
     "zrodlo": "nowe",
-    "vceo": 40,
-    "ic_max": 0.2
+    "vds": 30,
+    "id_max": 5.7
   },
   "R2": {
     "ref": "R2",
-    "source_ref": "ADD_KPWR_RB",
+    "source_ref": "ADD_KPWR_RG",
     "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
-    "display": "680R",
-    "value": "680R",
-    "mpn": "RC1206FR-07680RL",
+    "display": "100R",
+    "value": "100R",
+    "mpn": "RC1206FR-07100RL",
     "pins": {
       "1": "LOCAL_PERMIT",
       "2": "KPWR_B"
     },
     "sheet": "MOC",
     "url": "",
-    "note": "Ib ~3 mA at VOH 2.8 V: forced beta ~11 for the 33 mA coil.",
+    "note": "Gate series resistor (edge rate, ESD on the gate).",
     "qty": 1,
     "on_board": true,
     "zrodlo": "nowe",
-    "ohms": 680,
+    "ohms": 100,
     "tolerance": 0.01
   },
   "R3": {
@@ -189,16 +189,36 @@
     "mpn": "RC1206FR-07100KL",
     "pins": {
       "1": "KPWR_B",
-      "2": "PGND"
+      "2": "GND"
     },
     "sheet": "MOC",
     "url": "",
-    "note": "",
+    "note": "Gate pull-down: Q1 off while 3V3_IO is absent (U12 unpowered).",
     "qty": 1,
     "on_board": true,
     "zrodlo": "nowe",
     "ohms": 100000,
     "tolerance": 0.01
+  },
+  "C9": {
+    "ref": "C9",
+    "source_ref": "ADD_KPWR_COIL_C",
+    "footprint": "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
+    "display": "10u",
+    "value": "10u",
+    "mpn": "SMD 1206 X7R 16V 10% 10u",
+    "pins": {
+      "1": "5V_SYS",
+      "2": "GND"
+    },
+    "sheet": "MOC",
+    "url": "",
+    "note": "At K1.A1: local charge for the 80 mA coil step on 5V_SYS (user decision 5.10 (1)).",
+    "qty": 1,
+    "on_board": true,
+    "zrodlo": "nowe",
+    "farads": 1e-05,
+    "volts": 16
   },
   "D2": {
     "ref": "D2",
@@ -213,7 +233,7 @@
     },
     "sheet": "MOC",
     "url": "",
-    "note": "Coil clamp diode (anode at coil low end) in series with Zener D3 to VMOTOR: fast release (v6.1 D11/D12).",
+    "note": "Coil clamp diode (anode at coil low end) in series with Zener D3 to 5V_SYS: fast release (v6.1 D11/D12).",
     "qty": 1,
     "on_board": true,
     "zrodlo": "nowe"
@@ -227,11 +247,11 @@
     "mpn": "BZT52C15 (Zener 15 V 0.5 W, SOD-123)",
     "pins": {
       "1": "KPWR_CLAMP",
-      "2": "VMOTOR"
+      "2": "5V_SYS"
     },
     "sheet": "MOC",
     "url": "",
-    "note": "Clamp = VMOTOR + 15 V + 0.7 V <= 32.5 V < 40 V VCEO of Q1 (v6.1: 18 V Zener with 60 V transistor array).",
+    "note": "Clamp = 5V_SYS + 15 V + 0.7 V <= 20.8 V < 85 % of 30 V VDS of Q1 (v6.1: 18 V Zener with 60 V transistor array).",
     "qty": 1,
     "on_board": true,
     "zrodlo": "nowe",
@@ -1734,7 +1754,7 @@
     "footprint": "Connector_IDC:IDC-Header_2x04_P2.54mm_Horizontal",
     "display": "J_MOD / IDC 2x4",
     "value": "J_MOD / IDC 2x4",
-    "mpn": "IDC header 2x4 2.54 mm angled shrouded, Au",
+    "mpn": "IDC box header 2x4 2.54 mm angled shrouded, Au",
     "pins": {
       "1": "RPWM",
       "2": "LPWM",
@@ -1747,7 +1767,7 @@
     },
     "sheet": "MODUL",
     "url": "",
-    "note": "8-wire control harness to the IBT-2 2x4 header (ribbon 1:1). Pin order of the module header to confirm (POMIARY B4) - docs/WIAZKA-MODUL.md.",
+    "note": "User decision 5.10 (3): numbering 1:1 as the module header (odd row 1 RPWM / 3 R_EN / 5 R_IS / 7 VCC, even row 2 LPWM / 4 L_EN / 6 L_IS / 8 GND). Angled box header at the board edge; 8-wire ribbon with IDC 2x4 sockets on both ends - docs/WIAZKA-MODUL.md.",
     "qty": 1,
     "on_board": true,
     "zrodlo": "nowe"

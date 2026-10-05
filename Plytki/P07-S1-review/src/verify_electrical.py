@@ -20,7 +20,10 @@ INA_GAIN_ERR = 0.002; INA_VOS = 25e-6; OPA_VOS = 4.5e-3; CMP_VOS = 2.5e-3   # IN
 INA_SWING = 0.1                # INA240 output within VS - 0.1 V (conservative)
 I_RUN, I_OC_LIMIT_MIN = 6.0, 6.9  # task: 6 A work; trip >= 115 % of it
 VM_MAX = 16.8; KILIS = (6000, 11000); VT_SCHMITT = (1.3, 2.0)   # BTS7960 kILIS spread (assumed +-30 %), 74LVC2G17 VT+ at 3.0-3.6 V
-COIL_MAX_RATIO = 1.5           # G2RL-1-E: maximum coil voltage assumed >= 150 % (to confirm in the data sheet)
+COIL = {5: 62.5, 12: 360.0}    # G2RL-1-E coil resistance by rated voltage (Omron: DC5 62.5 ohm / 80 mA, DC12 360 ohm / 33.3 mA)
+COIL_RANGE = (0.75, 1.10)      # user decision 5.10: 5 V coil on 5V_SYS; must operate 70 % (margin 75 %), stay near nominal (<= 110 %)
+Q_VGS_MIN, Q_RDS, Q_VDS = 2.5, 0.048, 30.0   # AO3400A: RDS(on) <= 48 mOhm at VGS 2.5 V, VDS 30 V
+VIO_MIN = 3.0                  # 3V3_IO minimum; 74HC08 VOH at no load >= VCC - 0.1 V
 
 
 def read(path):
@@ -112,7 +115,7 @@ class Sim:
                     if rail not in powered: put(self.pin(r, 1), 0)
                 elif x['value'].startswith('TLV1702'):
                     if self.pin(r, 8) in powered and oc: put(self.pin(r, 1), 0)
-                elif x['value'] == 'MMBT3904':
+                elif x['value'] in ('MMBT3904', 'AO3400A'):           # NPN / logic-level NMOS: 1 base/gate, 2 emitter/source, 3 collector/drain
                     if val.get(self.pin(r, 1)) == 1: put(self.pin(r, 3), 0)
             new = {}
             for n, vs in drv.items(): new[n] = vs[0] if len(set(vs)) == 1 else None
@@ -285,15 +288,20 @@ def checks(c):
     rating = 1.0 if pw and '2512' in pw[0]['fp'] else 0.25
     ok('PRECHARGE-R', bool(rp) and pfault <= 0.5 * rating and VM_MAX / rp[0] <= 0.02 and rbl and 0.85 <= rbl[0] / (rbl[0] + rp[0]) <= 0.95,
        {'R_ohm': rp, 'fault_W': round(pfault, 3), 'rating_W': rating, 'Imotor_open_mA': rp and round(1e3 * VM_MAX / rp[0], 1), 'MOD_BP_open_ratio': rp and rbl and round(rbl[0] / (rbl[0] + rp[0]), 3)})
-    # KPWR: base drive, clamp vs VCEO, coil voltage ratio
-    k1 = c.get('K1', {}); q1 = next((r for r, x in c.items() if x['value'] == 'MMBT3904' and x['pins'].get('3') == 'KPWR_COIL_LOW'), None)
+    # KPWR (user decision 5.10): 5 V coil on 5V_SYS, logic-level NMOS with the source on GND, clamp to the coil supply, gate drive and
+    # pull-down, coil voltage window, VDS of the clamp
+    k1 = c.get('K1', {}); q1 = next((r for r, x in c.items() if x['value'] == 'AO3400A' and x['pins'].get('3') == 'KPWR_COIL_LOW'), None)
     z = next((x for r, x in c.items() if x['value'].startswith('BZT52C') and 'KPWR_CLAMP' in x['pins'].values()), None)
     vz = float(z['value'][6:].replace('V', '.')) if z else 99
-    rb_ = rbetween('LOCAL_PERMIT', 'KPWR_B'); ib = (2.8 - 0.75) / rb_[0] if rb_ else 0          # HC08 VOH ~2.8 V at 3 mA, 3.3 V supply
-    icoil = 12 / 360
-    clamp = VM_MAX + vz + 0.7
-    ok('KPWR-DRIVE-CLAMP', q1 is not None and c[q1]['pins'].get('2') == PG and k1.get('pins', {}).get('A1') == 'VMOTOR' and ib >= icoil / 15 and clamp <= 0.85 * 40 and VM_MAX / 12 <= COIL_MAX_RATIO,
-       {'Ib_mA': round(ib * 1e3, 2), 'Icoil_mA': round(icoil * 1e3, 1), 'clamp_V': clamp, 'coil_ratio': round(VM_MAX / 12, 2)})
+    m_ = re.search(r'DC(\d+)', k1.get('value', '')); cv = int(m_[1]) if m_ else 0; rc = COIL.get(cv)
+    icoil = VSYS[1] / rc if rc else 1.0
+    rg = rbetween('LOCAL_PERMIT', 'KPWR_B'); rpd = rbetween('KPWR_B', G)
+    clamp = VSYS[1] + vz + 0.7; ratio = (VSYS[0] / cv, VSYS[1] / cv) if cv else (0, 99)
+    good = (q1 is not None and c[q1]['pins'].get('2') == G and k1.get('pins', {}).get('A1') == '5V_SYS' and k1.get('pins', {}).get('A2') == 'KPWR_COIL_LOW'
+            and z is not None and z['pins'].get('2') == '5V_SYS' and clamp <= 0.85 * Q_VDS and COIL_RANGE[0] <= ratio[0] and ratio[1] <= COIL_RANGE[1]
+            and bool(rg) and rg[0] <= 1000 and bool(rpd) and rpd[0] >= 10000 and VIO_MIN - 0.1 >= Q_VGS_MIN and icoil * Q_RDS <= 0.1)
+    ok('KPWR-DRIVE-CLAMP', good, {'Icoil_mA': round(icoil * 1e3, 1), 'coil_V': cv, 'coil_ratio': [round(x, 3) for x in ratio], 'clamp_V': round(clamp, 2),
+                                  'Vds_on_mV': round(icoil * Q_RDS * 1e3, 1), 'Rg_ohm': rg, 'Rpd_ohm': rpd, 'Vgs_min_V': VIO_MIN - 0.1})
     tvs = [x for r, x in c.items() if x['value'].startswith('SMCJ') and set(x['pins'].values()) == {'VMOTOR', PG}]
     ok('TVS-VMOTOR', bool(tvs) and float(re.sub(r'[^\d.]', '', tvs[0]['value'][4:])) >= VM_MAX and tvs[0]['pins'].get('1') == 'VMOTOR', [t['value'] for t in tvs])
     # IS diagnostics: divider loading, threshold band, clamp
@@ -308,8 +316,10 @@ def checks(c):
         band[isn] = [round(lo_, 2), round(hi_, 2)]; good &= 1.0 <= lo_ and hi_ <= I_RUN and 10000 / rl - 1 <= 0.06 and iclamp <= 1e-3
     ok('IS-DIAG', good, band)
     # ground separation: no part with pins on both GND and PGND; MOD_GND only through >= 4.7 R to GND
-    POWER_SIDE = {'VMOTOR', 'MOD_BP', 'MOD_MP', 'T_EGR_P1', 'T_EGR_P3', 'KPWR_COIL_LOW', 'KPWR_CLAMP', 'KPWR_B'}
-    both = [r for r, x in c.items() if {G, PG} <= set(x['pins'].values()) or (G in x['pins'].values() and POWER_SIDE & set(x['pins'].values()))]
+    POWER_SIDE = {'VMOTOR', 'MOD_BP', 'MOD_MP', 'T_EGR_P1', 'T_EGR_P3'}
+    COIL_SIDE = {'KPWR_COIL_LOW', 'KPWR_CLAMP', 'KPWR_B'}             # 5.10: the 5 V coil circuit is in the GND domain (K1 isolates it)
+    both = [r for r, x in c.items() if {G, PG} <= set(x['pins'].values()) or (G in x['pins'].values() and POWER_SIDE & set(x['pins'].values()))
+            or (PG in x['pins'].values() and COIL_SIDE & set(x['pins'].values()))]
     mg = [(r, ohms(x['value'])) for r, x in c.items() if 'MOD_GND' in x['pins'].values() and r.startswith('R')]
     direct = [r for r, x in c.items() if 'MOD_GND' in x['pins'].values() and not r.startswith(('R', 'J'))]
     ok('GND-PGND-SEPARATE', not both and len(mg) == 1 and mg[0][1] is not None and 4.7 <= mg[0][1] <= 22 and not direct, {'both': both, 'mod_gnd': mg})
@@ -343,7 +353,10 @@ MUT = [('SAFE_OK bypassed (U13.2 -> 3V3_IO)', ('U13', 2, '3V3_IO'), 'LOGIC-TABLE
        ('B- tied to GND (R5.2 -> GND)', ('R5', 2, 'GND'), 'GND-PGND-SEPARATE'),
        ('shunt 10 mOhm', ('RSH1', None, None, '10m'), 'SHUNT-POWER-10A'),
        ('LPWM gate without OE (U16.4 -> GND)', ('U16', 4, 'GND'), 'OE-BLOCKS-STUCK-GATE'),
-       ('KPWR base resistor 4.7K', ('R2', None, None, '4K7'), 'KPWR-DRIVE-CLAMP')]
+       ('KPWR gate resistor 4.7K', ('R2', None, None, '4K7'), 'KPWR-DRIVE-CLAMP'),
+       ('KPWR coil from VMOTOR (K1.A1 -> VMOTOR)', ('K1', 'A1', 'VMOTOR'), 'KPWR-DRIVE-CLAMP'),
+       ('KPWR coil 12 V on 5V_SYS', ('K1', None, None, 'G2RL-1-E DC12'), 'KPWR-DRIVE-CLAMP'),
+       ('Q1 source on PGND', ('Q1', 2, 'PGND'), 'GND-PGND-SEPARATE')]
 neg = []
 for name, mt, target in MUT:
     ref = mt[0]; m = mutate(c, ref, *mt[1:3]) if mt[1] is not None else mutate(c, ref, value=mt[3])

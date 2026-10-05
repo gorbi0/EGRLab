@@ -43,7 +43,7 @@ def layout(sh,items,width=W,y0=Y0):
  return y+rowh
 SHEETS={
  'P07':[('R50',),('C16',),('C17',),('C18',),('U18',),('C19',),('D7',),('C21',),('C20',),('C12',),('C13',)]+[(f'C{i}',) for i in range(22,39)],
- 'MOC':[('J1',),('D1',),('C1',),('C2',),('C3',),('R1',),('K1',),('Q1',),('R2',),('R3',),('D2',),('D3',),('R4',),('R5',),('C4',),('J2',),('J3',),('RSH1',),('J4',)],
+ 'MOC':[('J1',),('D1',),('C1',),('C2',),('C3',),('R1',),('K1',),('Q1',),('R2',),('R3',),('C9',),('D2',),('D3',),('R4',),('R5',),('C4',),('J2',),('J3',),('RSH1',),('J4',)],
  'ANA':[('R6',),('R7',),('U1',),('U2',),('C5',),('C6',),('D4',),('U3',),('R8',),('R9',),('C7',),('R10',),('C8',),('U4',),('R11',),('R12',),('R13',),('R14',),('C10',),('U5',),('R15',)],
  'DIG':[('U6',),('R16',),('C11',),('U7',),('R17',),('R18',),('R19',),('R20',),('R21',),('R22',),('R23',)],
  'LOGIKA':[('U8',),('R24',),('U9',),('R25',),('U10',)]+[(f'R{i}',) for i in range(26,31)]+[('U11',),('R31',),('R51',),('U12',),('U13',),('U14',),('U15',),('Q2',),('R33',),('R34',),('R32',)],
@@ -53,9 +53,9 @@ SHEETS={
 NOTES={
  'P07':['J_BP2: 5V_SYS (piny 10/12) i 3V3_IO (pin 14) z P02 R4 przez P12. Logika (U10-U15, U17) na 3V3_IO - ta sama szyna co P04 R3. Analog na lokalnych 5VA_P07 (R50 10R) i 3V3A_P07 (U18).',
         '5V_MOD = 5V_SYS za PTC F1: VCC modulu IBT-2 (74HC244) i bufora U16. GND (logika, analog) i PGND (prad silnika) NIE sa polaczone na P07: wspolny punkt mas = P02 R4 J2 (VMOTOR).'],
- 'MOC':['VMOTOR (P02 R4 J2, za F1) -> J1 -> KPWR K1 (NO) -> MOD_BP -> J2 -> modul B+. R4 1k laduje 330 uF modulu przy otwartym KPWR; KPWR zalacza LOCAL_PERMIT przez Q1 (emiter na PGND).',
+ 'MOC':['VMOTOR (P02 R4 J2, za F1 MINI 7,5 A) -> J1 -> KPWR K1 (NO) -> MOD_BP -> J2 -> modul B+. R4 1k laduje 330 uF modulu przy otwartym KPWR; KPWR: cewka 5 V z 5V_SYS (decyzja 5.10), Q1 AO3400A (zrodlo na GND) z LOCAL_PERMIT; clamp D2 + D3 15 V do 5V_SYS.',
         'Modul M+ -> J3.1 -> RSH1 5 mOhm (Kelvin K_PLUS/K_MINUS) -> T_EGR_P1 -> J4.1 -> port TEST (P11). M- -> J3.2 = T_EGR_P3 -> J4.2. Prad dodatni: kierunek A (RPWM, M+ wyzej).',
-        'PGND: powrot przez J1.2 do P02, B- modulu przez J2.2, TVS D1, C1-C4, R1/R5, emiter Q1. Tor 10 A: pola >= 4 mm na obu warstwach (S1 3, jak P06 R2).'],
+        'PGND: powrot przez J1.2 do P02, B- modulu przez J2.2, TVS D1, C1-C4, R1/R5 (obwod cewki KPWR w domenie GND). Tor 10 A: pola >= 4 mm na obu warstwach (S1 3, jak P06 R2).'],
  'ANA':['I_T_OUT = REF_BUF + 50 x 5 mOhm x I = 2,5 V + 0,25 V/A. ITEST: R8/R9 1:2 + C7 100n (tau 0,26 ms) -> U3A -> MCP3201: 1,25 V + 0,125 V/A, +-10 A w 0..2,5 V.',
         'Okno OC: I_FILT (R10 1k / C8 1n) vs OC_HIGH = REF_BUF x 1,806 (4,515 V, +8,06 A) i OC_LOW = REF_BUF x 0,1992 (0,498 V, -8,01 A). U5 open collector -> OC_LOCAL_N (R15 10k do 3V3_IO).'],
  'DIG':['SPI mode 0, 16 zegarow, raw = (word >> 1) & 0x0FFF (jak P06 R2). DOUT_TX trojstanowy (OE = CS_LOCAL_N) + R22 47R na wspolnej ADC_DOUTA. U7 gate 4: SUP5_RAW (5 V) -> SUP5_N (3,3 V).'],
@@ -63,7 +63,7 @@ NOTES={
            'LOCAL_PERMIT = MOTOR_PERMIT & OC_GOOD & RAILS_OK (-> KPWR). DRIVE_EN = LOCAL_PERMIT & SAFE_OK. RPWM = PWM_OUT & DRIVE_EN & MOTOR_INA; LPWM = PWM_OUT & DRIVE_EN & MOTOR_INB.',
            'NO_TRIP (FF2): PRE = RAILS_OK (start = brak zadzialania), CLR = OC_LOCAL_N, D = 1 przy ARM_CLK. DRIVE_OK = RAILS_OK & NO_TRIP. Q2 sciaga SAFE_N podczas OC.'],
  'MODUL':['U16 74AHCT125 (5V_MOD): 3,3 -> 5 V dla 74HC244 modulu (VIH 3,5 V przy 5 V). OE_N = DRV_OFF: wyjscia Z bez DRIVE_EN; modul ma 30k do GND na wejsciach -> L. R_EN = L_EN = DRIVE_EN.',
-          'IS: modul 10k do GND (ok. 1,2 V/A). R44/R45 1:2 + C 10n, clamp BAT54S do 3V3_IO, U17 Schmitt -> ENA_DIAG / ENB_DIAG (H = prad galezi >~2-3 A albo poziom bledu IS). Tylko diagnostyka.',
+          'IS: modul 10k do GND (ok. 1,2 V/A). R44/R45 1:2 + C 10n, clamp BAT54S do 3V3_IO, U17 Schmitt -> ENA_DIAG / ENB_DIAG (H = prad galezi powyzej progu albo blad IS; decyzja 5.10). Tylko diagnostyka.',
           'MOD_GND przez R43 10R: dziala przy GND modulu polaczonym z B- i przy rozdzielonym (pomiar 5.10: 508 mV w trybie diody).'],
  'ZLACZA':['J_BP1 (S2, x plytki 26,5 / stosu 80,0): ADC_SCLK 2 / ADC_DOUTA 4 jak J_BP2 P03 R6, P05 R3 i J_BP P06 R2; CS_ITEST_N, MOTOR_INA/INB, ENA/ENB_DIAG do P03 R6.',
            'J_BP2 (S3, x plytki 80,0 / stosu 133,5): MOTOR_PERMIT 2, PWM_OUT 4, ARM_CLK 6, DRIVE_OK 8, SAFE_N 16 na tych samych pinach co J_BP2 P04 R3; 5V_SYS 10/12, 3V3_IO 14. Nieparzyste GND.'],

@@ -11,7 +11,7 @@ Płytka nośna testera w stosie S1: **poziom 5, sloty S2–S3, klasa 2/3 (106,5 
 | Arkusz | Zawartość |
 |---|---|
 | P07 | 5VA_P07 (R50 10 Ω), 3V3A_P07 (MCP1702), odsprzęganie, arkusze |
-| MOC | J1 VMOTOR, TVS SMCJ18A, C1 220 µF, KPWR K1 (G2RL-1-E 12 V) z Q1 i clampem 15 V, R4 1 k (wstępne ładowanie), J2 B+/B−, J3 M+/M−, RSH1, J4 TEST |
+| MOC | J1 VMOTOR, TVS SMCJ18A, C1 220 µF, KPWR K1 (G2RL-1-E **DC5, cewka z 5V_SYS**) z Q1 AO3400A, C9 10 µF i clampem 15 V do 5V_SYS, R4 1 k (wstępne ładowanie), J2 B+/B−, J3 M+/M−, RSH1, J4 TEST |
 | ANA | R6/R7 Kelvin, INA240A2, MCP1525, U3 (bufor ADC + REF_BUF), dzielnik ITEST, U4 (OC_HIGH), TLV1702 |
 | DIG | MCP3201 (posiadany DIP8), 74LVC125 SPI (DOUT trójstanowy), przejście SUP5 5 V → 3,3 V |
 | LOGIKA | MCP120 ×2, odbiorniki Ioff 74LVC125, 74LVC14 (Schmitt), 3 × 74HC08, 74HC74 (OC_GOOD, NO_TRIP), Q2 na SAFE_N |
@@ -19,7 +19,7 @@ Płytka nośna testera w stosie S1: **poziom 5, sloty S2–S3, klasa 2/3 (106,5 
 | ZLACZA | J_BP1, J_BP2 |
 | SERWIS | J_SV1, J_SV2 z 20 rezystorami przy węzłach |
 
-Obliczenia: `docs/PROJEKT.md`. Wiązki: `docs/WIAZKA-MODUL.md`. BOM S1: `docs/BOM.csv`, `docs/zakupy.csv` (147 części; z rejestru INA240A2, MCP3201-BI/P i 2 × 74LVC125AD, reszta nowa).
+Obliczenia: `docs/PROJEKT.md`. Wiązki: `docs/WIAZKA-MODUL.md`. BOM S1: `docs/BOM.csv`, `docs/zakupy.csv` (148 części + wiązka W5; z rejestru INA240A2, MCP3201-BI/P i 2 × 74LVC125AD, reszta nowa).
 
 ## Krawędź A (kontrakt dla P12)
 
@@ -45,12 +45,12 @@ J_SV1 (S2, x 10–43): GND, I_T_OUT, ADC_AIN, REF_BUF, REF25, OC_HIGH, OC_LOW (1
 | Kontrola | Wynik |
 |---|---|
 | ERC | **0** na 8 arkuszach |
-| Netlista pin po pinie względem `parts.py` | **494/494**, 147 części, 116 sieci |
-| `verify_electrical.py` | **16/16**, mutacje **19/19**, próba zerowa czysta |
+| Netlista pin po pinie względem `parts.py` | **496/496**, 148 części, 116 sieci |
+| `verify_electrical.py` | **16/16**, mutacje **22/22**, próba zerowa czysta |
 | `verify_s1.py` (S1 i kontrakty P12 / P03 R6 / P04 R3) | **30/30**, mutacje **24/24**, próba zerowa czysta |
 | Powierzchnia (`powierzchnia.py`) | 69 % metodą P06 R2 (tam 41 %); wnętrze bez złączy krawędzi 50 %, z 1206 od spodu 37 % |
 
-`verify_electrical.py` symuluje logikę na wyeksportowanej netliście: modele bramek według wartości części, podciąganie przez najmniejszą rezystancję, komparator i nadzorcy jako otwarte kolektory, 74HC74 z PRE/CLR i zboczem. Tabela 2304 wierszy pokazuje, że **bez MOTOR_PERMIT, bez SAFE_N, przy OC albo złych szynach wszystkie wejścia modułu (RPWM, LPWM, R_EN, L_EN) są L**, a KPWR wyłączony. Do tego martwe szyny, otwarte taśmy, zawieszona bramka AND (blokuje ją OE bufora), 11 kroków sekwencji zatrzasku (brak samoczynnego uzbrojenia, ARM przy PERMIT = H nie uzbraja, ARM w trakcie OC nie kasuje), progi OC w narożnikach (+8,01…+8,11 A / −7,99…−8,03 A), skala ITEST, moce bocznika i R4, wysterowanie i clamp KPWR, TVS, próg IS i rozdział mas. Raporty: `verification/QA.md`, `electrical-checks.json`, `s1-checks.json`, `powierzchnia.json`; PDF `output/pdf/P07-S1-schemat.pdf`.
+`verify_electrical.py` symuluje logikę na wyeksportowanej netliście: modele bramek według wartości części, podciąganie przez najmniejszą rezystancję, komparator i nadzorcy jako otwarte kolektory, 74HC74 z PRE/CLR i zboczem. Tabela 2304 wierszy pokazuje, że **bez MOTOR_PERMIT, bez SAFE_N, przy OC albo złych szynach wszystkie wejścia modułu (RPWM, LPWM, R_EN, L_EN) są L**, a KPWR wyłączony. Do tego martwe szyny, otwarte taśmy, zawieszona bramka AND (blokuje ją OE bufora), 11 kroków sekwencji zatrzasku (brak samoczynnego uzbrojenia, ARM przy PERMIT = H nie uzbraja, ARM w trakcie OC nie kasuje), progi OC w narożnikach (+8,01…+8,11 A / −7,99…−8,03 A), skala ITEST, moce bocznika i R4, cewka 5 V z 5V_SYS, bramka Q1 i clamp KPWR, TVS, próg IS i rozdział mas. Raporty: `verification/QA.md`, `electrical-checks.json`, `s1-checks.json`, `powierzchnia.json`; PDF `output/pdf/P07-S1-schemat.pdf`.
 
 ## Decyzje (sporne oznaczone)
 
@@ -58,12 +58,12 @@ J_SV1 (S2, x 10–43): GND, I_T_OUT, ADC_AIN, REF_BUF, REF25, OC_HIGH, OC_LOW (1
 2. **Blokada w trzech warstwach:** bramki AND (MOTOR_PERMIT · SAFE_N · OC_GOOD · RAILS_OK), OE bufora 74AHCT125 i KPWR. 74HC244 modułu jest stale aktywny (OE na GND), więc moduł sam niczego nie blokuje.
 3. **DRIVE_OK = RAILS_OK & NO_TRIP** (nowy drugi przerzutnik). Przy starcie bez ARM DRIVE_OK = 1, więc INTERLOCK na P04 nie blokuje LOGGERA ani SENSOR. Po OC DRIVE_OK = 0 aż do ARM. v6.1 miało DRIVE_OK = RAILS_OK.
 4. **Logika na 3V3_IO** (jak P04), analog na lokalnych 5VA / 3V3A (jak P06 R2). Odbiorniki z Ioff tylko tam, gdzie drugi koniec może mieć inne zasilanie (P03: MOTOR_INA/INB, CS, SCLK) oraz dla MOTOR_PERMIT / PWM_OUT. SAFE_N wchodzi przez 1 k na Schmitt 74LVC14 (zbocze RC ok. 10 µs na P04), bez podciągania na P07, z 1 M do GND (otwarta taśma = SAFE_OK L).
-5. **Sporne — R4 1 kΩ równolegle do styków KPWR:** ładuje 330 µF modułu, żeby styk nie zamykał się na pusty kondensator (spawanie). Cena: przy otwartym KPWR B+ modułu jest na 91 % VMOTOR przez 1 k; prąd silnika ≤ 17 mA, przy zwarciu 0,28 W.
-6. **Sporne — KPWR to przekaźnik G2RL-1-E 12 V zasilany z VMOTOR**, nie tranzystor: galwaniczne odłączenie i brak strat przy 10 A (MOSFET z P02 dałby ok. 2 W bez radiatora). Cewka dostaje do 140 % napięcia znamionowego (pakiet 16,8 V).
+5. **R4 1 kΩ równolegle do styków KPWR (zostaje — decyzja użytkownika 5.10):** ładuje 330 µF modułu, żeby styk nie zamykał się na pusty kondensator (spawanie). Cena: przy otwartym KPWR B+ modułu jest na 91 % VMOTOR przez 1 k; prąd silnika ≤ 17 mA, przy zwarciu 0,28 W.
+6. **KPWR to przekaźnik G2RL-1-E DC5 z cewką na 5V_SYS** (decyzja użytkownika 5.10; było DC12 z VMOTOR), nie tranzystor: galwaniczne odłączenie i brak strat przy 10 A (MOSFET z P02 dałby ok. 2 W bez radiatora). Cewka 80 mA przy 98–102 % napięcia znamionowego, Q1 AO3400A (źródło na GND, bramka wprost z 74HC08 przez 100 Ω — NPN potrzebowałby ok. 6 mA bazy z HC przy 3,3 V), clamp 1N4148W + 15 V do 5V_SYS (VDS ≤ 20,8 V), C9 10 µF przy cewce. Obwód cewki w domenie GND, styki w domenie PGND. Footprint bez zmian.
 7. **Masy:** GND i PGND rozdzielone na P07, wspólny punkt na P02 R4. MOD_GND przez 10 Ω. Działa przy masie modułu połączonej z B− i przy rozdzielonej (`docs/PROJEKT.md`).
 8. **Sporne — filtr ITEST τ 0,26 ms** (C7 100 nF C0G): antyaliasing przy 2 kS/s.
-9. **OC ±8 A:** ≥ 115 % prądu pracy 6 A, poniżej nasycenia INA240A2 przy najniższym 5VA. Próba 10 A nie przejdzie przez aktywny mostek (pytanie 2).
-10. **ENA_DIAG / ENB_DIAG:** H = prąd gałęzi powyżej ok. 1,6–4,6 A albo poziom błędu IS. Znaczenie inne niż w VNH5019 (tam L = błąd).
+9. **OC ±8 A:** ≥ 115 % prądu pracy 6 A, poniżej nasycenia INA240A2 przy najniższym 5VA. „10 A w próbie” = bierna kwalifikacja toru jak w P06 (E15) — decyzja użytkownika 5.10; aktywny mostek nie podaje 10 A.
+10. **ENA_DIAG / ENB_DIAG:** H = prąd gałęzi powyżej ok. 1,6–4,6 A albo poziom błędu IS (przyjęte 5.10; firmware dostosuje się później). Znaczenie inne niż w VNH5019 (tam L = błąd).
 11. Wyjątki od „nowe = SMD 1206”: R4 2512 (moc), C1 elektrolit, RSH1 2512 Kelvin (jak P06 R2), K1, MCP3201 w posiadanym DIP8, TO-92 jak w P06 R2.
 
 ## Wymagania dla layoutu (sesja lokalna)
@@ -74,17 +74,18 @@ J_SV1 (S2, x 10–43): GND, I_T_OUT, ADC_AIN, REF_BUF, REF25, OC_HIGH, OC_LOW (1
 - J5 kątowy przy krawędzi, w stronę modułu. J_BP1 x = 26,5, J_BP2 x = 80,0 (układ płytki). Listwy J_SV1 x = 10–43, J_SV2 x = 63,5–96,5. Osiem otworów M3 (x = 4 / 49 / 57,5 / 102,5; y = 14 / 86).
 - Powierzchnia jest ciasna (50 % wnętrza wobec 29 % w P06 R2): rezystory i małe kondensatory 1206 od spodu, przy węzłach.
 
-## Otwarte pytania (także w opisie PR)
+## Decyzje użytkownika 5.10 (wprowadzone w schemacie, pytania 1–7 zamknięte)
 
-1. **Bezpiecznik F1 5 A na P02 R4 a praca 6 A / OC 8 A.** MINI 5 A przy 6 A ciągłych (120 %) może się po czasie przepalić. Zmienić na 7,5 A albo 10 A (sama wkładka) i zrobić próbę nagrzewania toru VMOTOR P02 (miedź 35 µm, 5,7 mm)? Opis P02 („VMOTOR ≤ 3,5 A, OC 4 A”) pochodzi z v6.1.
-2. **Co znaczy „10 A w próbie”?** Jeśli to bierna kwalifikacja toru (jak P06), zostaje OC ±8 A i INA240A2 (posiadany). Jeśli mostek ma aktywnie podać 10 A, potrzebne jest INA240A1 (0,1 V/A) i nowe progi — zmiana tylko wartości.
-3. **Przekaźnik KPWR:** czy G2RL-1-E DC12 (cewka do 140 %, wysokość 15,7 mm) jest akceptowalny? Dopuszczalne napięcie cewki trzeba potwierdzić w karcie. Alternatywa: cewka 5 V z 5V_SYS (80 mA na wspólnej szynie z analogiem).
-4. **R4 równolegle do styków KPWR (decyzja 5)** — zostaje?
-5. **Znaczenie ENA_DIAG / ENB_DIAG** (decyzja 10) — akceptujesz H = prąd albo błąd? Firmware dziś tych bitów nie interpretuje.
-6. **Pomiary modułu przed PCB:** B4 (kolejność pinów listwy 2 × 4), C5 (GND ↔ B− omomierzem), D1 (prąd VCC, czy jest dioda LED), E2 (RPWM → M+), E3 (kILIS — próg IS).
-7. **Położenie J1–J3:** wszystkie przy x = 0 obok J4, czy wejście VMOTOR od strony P02 / ściany wejść?
-8. **P12:** P12 R1 jest tylko dla wariantu LOGGER — dla poziomów 5 i 6 potrzebna będzie P12 R2 z J_BP1/J_BP2 P07 i J_BP1–3 P04 R3.
-9. **P04 R3 nie jest jeszcze na `pelny-s1`/`main`.** Numery pinów wzięte z gałęzi `p04-r3-pcb` (702732a7); po zmianie P04 trzeba odświeżyć `reference/P04-R3-J_BP.csv` i puścić kontrole.
+1. **KPWR K1 z cewką 5 V z 5V_SYS** (G2RL-1-E DC5, ten sam footprint): cewka ok. 80 mA na 5V_SYS (bilans w `docs/PROJEKT.md`), Q1 AO3400A ze źródłem na GND, clamp 15 V do 5V_SYS, C9 10 µF przy cewce. Kontrola `KPWR-DRIVE-CLAMP` (okno napięcia cewki, VGS, VDS clampu, rezystor bramki i ściągający) i trzy nowe mutacje. — pytanie 3
+2. **R4 1 kΩ równolegle do styków KPWR zostaje.** — pytanie 4
+3. **J5 = obudowane IDC 2 × 4 kątowe, raster 2,54, numeracja 1:1 jak listwa modułu** (1 RPWM, 3 R_EN, 5 R_IS, 7 VCC / 2 LPWM, 4 L_EN, 6 L_IS, 8 GND); taśma 8 żył z gniazdami IDC 2 × 4 na obu końcach (`docs/WIAZKA-MODUL.md`, W5 w `BOM.csv` i `zakupy.csv`). Pinout był już taki — kontrola `JMOD-PINOUT` bez zmian. — pytanie 6 (B4)
+4. **„10 A w próbie” = bierna kwalifikacja toru** (jak P06, E15): zostaje INA240A2 i OC ±8 A. — pytanie 2
+5. **ENA_DIAG / ENB_DIAG: H = prąd gałęzi powyżej progu albo błąd IS** — przyjęte; firmware dostosuje się później. — pytanie 5
+6. **J1–J3 przy krawędzi x = 0 obok J4** (krótka pętla 10 A) — w layoucie. — pytanie 7
+7. **Bezpiecznik F1 na P02 R4: wkładka MINI 7,5 A** (płytka P02 bez zmian) i **próba nagrzewania toru VMOTOR przy odbiorze** (P02 → przewody → P07 J1 → K1 → J2, prąd 6 A ciągle, potem 10 A krótko; temperatura toru P02 5,7 mm / 35 µm, F1 i lutów). P02 R4 nie jest ruszane przez ten pakiet. — pytanie 1
+8. **Pomiary modułu (pytanie 6):** B4 = pinout jak wyżej (zamknięte); C5: GND złącza ↔ B− w trybie diody 508 mV (COM na B−) — nie są zwarte wprost, zgodnie z decyzją 7 o masach (R43 10 Ω, PGND osobno); D1 (prąd VCC), E2 (RPWM → M+), E3 (kILIS) — przy odbiorze.
+
+Informacyjnie (pytania 8–9 bez zmian w tym pakiecie): P12 R2 z J_BP1/J_BP2 P07 i J_BP1–3 P04 R3 dla poziomów 5–6; numery pinów P04 wzięte z `origin/p04-r3-pcb` (702732a7) — po scaleniu P04 odświeżyć `reference/P04-R3-J_BP.csv` i puścić kontrole.
 
 ## Pliki
 

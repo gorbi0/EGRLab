@@ -67,20 +67,24 @@ def res(r,src,val,ohms,a,b,sh,tol=.01,note=''):
 def cap(r,src,val,farad,a,b,sh,mpn=None,note='',volts=50):
  add(r,src,SC,C1206,val,mpn or ('SMD 1206 C0G 50V 5% ' if farad<1.1e-8 else 'SMD 1206 X7R 50V 10% ')+val,{1:a,2:b},sh,farads=farad,volts=volts,note=note)
 # ---------------- sheet MOC: VMOTOR in, KPWR, module power, shunt, TEST port -------------------------------------------------------
-add('J1','J_VMOTORB',symbol('Connector_Generic','Conn_01x02'),tail('PTH_VMOTOR',2,7.62,2.4,4.5),'VMOTOR / PTH','2 x 2.0 mm2 from P02 R4 J2 (GMSTB plug)',{1:VM,2:PG},'MOC',note='PTH solder joints + tie anchor 12 mm; 2.0 mm2 (decision 4.10). P02 R4 J2.1 VMOTOR (behind F1 5 A), J2.2 GND. See docs/WIAZKA-MODUL.md.')
+add('J1','J_VMOTORB',symbol('Connector_Generic','Conn_01x02'),tail('PTH_VMOTOR',2,7.62,2.4,4.5),'VMOTOR / PTH','2 x 2.0 mm2 from P02 R4 J2 (GMSTB plug)',{1:VM,2:PG},'MOC',note='PTH solder joints + tie anchor 12 mm; 2.0 mm2 (decision 4.10). P02 R4 J2.1 VMOTOR (behind F1, MINI 7.5 A insert - user decision 5.10 (7)), J2.2 GND. See docs/WIAZKA-MODUL.md.')
 add('D1','D2',SZ,SMC,'SMCJ18A','SMCJ18A (Littelfuse, 1.5 kW, VRWM 18 V)',{1:VM,2:PG},'MOC',note='TVS at VMOTOR as v6.1 D2: VRWM 18 V >= 16.8 V (4S full), VC ~29 V << 40 V BTS7960 and relay contacts.',vrwm=18.0)
 add('C1','C_BULK',SCP,CP8,'220u / 35V','EEU-FR1V221 (Panasonic FR, D8 x 11.5 mm, low ESR; MPN to confirm)',{1:VM,2:PG},'MOC',farads=220e-6,volts=35,note='Local bulk at the input (v6.1: 1000u/50V). Standing, 11.5 mm + 2 mm <= 16.5 mm.')
 cap('C2','C_MOTOR_MF','1u',1e-6,VM,PG,'MOC')
 cap('C3','C_MOTOR_HF','100n',1e-7,VM,PG,'MOC')
 res('R1','R_BLEED','10K',10000,VM,PG,'MOC',note='Bleed of C1 (v6.1 2.2k 0.5W): 28 mW at 16.8 V; tau 2.2 s.')
-relay=custom('G2RL_1_E_DC12',[([('A1','COIL+','passive'),('A2','COIL-','passive')],[('11','COM','passive'),('14','NO','passive'),('12','NC','passive')])])
-add('K1','KPWR',relay,RELAY,'G2RL-1-E DC12','G2RL-1-E DC12 (Omron, SPDT 16 A, coil 12 V 400 mW, h 15.7 mm; data to confirm)',{'A1':VM,'A2':'KPWR_COIL_LOW','11':VM,'14':'MOD_BP','12':'NC'},'MOC',
-    note='KPWR: COM on VMOTOR, NO to module B+. Coil from VMOTOR (12.0-16.8 V = 100-140 % of 12 V); confirm maximum coil voltage >= 17 V at 50 C in the data sheet. Contacts switch without load: EN drops first (ns), relay opens later (ms); closes onto a precharged module capacitor (R4).',coil_ohm=360,coil_v=12)
-add('Q1','ADD_KPWR_DRV',symbol('Transistor_BJT','MMBT3904'),SOT23,'MMBT3904','MMBT3904 (Nexperia/onsemi, SOT-23, 40 V 200 mA)',{1:'KPWR_B',2:PG,3:'KPWR_COIL_LOW'},'MOC',note='Low-side coil switch (v6.1: TBD62083 channel). Emitter on PGND: the coil current does not return through P12.',vceo=40,ic_max=0.2)
-res('R2','ADD_KPWR_RB','680R',680,'LOCAL_PERMIT','KPWR_B','MOC',note='Ib ~3 mA at VOH 2.8 V: forced beta ~11 for the 33 mA coil.')
-res('R3','ADD_KPWR_PD','100K',100000,'KPWR_B',PG,'MOC')
-add('D2','D11',SD,SOD123,'1N4148W','1N4148W (SOD-123, 100 V)',{1:'KPWR_CLAMP',2:'KPWR_COIL_LOW'},'MOC',note='Coil clamp diode (anode at coil low end) in series with Zener D3 to VMOTOR: fast release (v6.1 D11/D12).')
-add('D3','D12',SZ,SOD123,'BZT52C15','BZT52C15 (Zener 15 V 0.5 W, SOD-123)',{1:'KPWR_CLAMP',2:VM},'MOC',note='Clamp = VMOTOR + 15 V + 0.7 V <= 32.5 V < 40 V VCEO of Q1 (v6.1: 18 V Zener with 60 V transistor array).',vz=15.0)
+# User decision 5.10 (1): KPWR coil 5 V from 5V_SYS (G2RL-1-E DC5, 62.5 ohm, 80 mA), not 12 V from VMOTOR. The coil circuit is in the GND
+# domain now (5V_SYS -> coil -> Q1 -> GND); the contacts stay in the VMOTOR / PGND domain (relay isolation). Q1 is a logic-level MOSFET:
+# 80 mA through an NPN would need Ib ~6 mA from a 74HC08 at 3.3 V (out of the HC data sheet); AO3400A takes no gate current.
+relay=custom('G2RL_1_E_DC5',[([('A1','COIL+','passive'),('A2','COIL-','passive')],[('11','COM','passive'),('14','NO','passive'),('12','NC','passive')])])
+add('K1','KPWR',relay,RELAY,'G2RL-1-E DC5','G2RL-1-E DC5 (Omron, SPDT 16 A, coil 5 V 62.5 ohm 80 mA / 400 mW, h 15.7 mm)',{'A1':'5V_SYS','A2':'KPWR_COIL_LOW','11':VM,'14':'MOD_BP','12':'NC'},'MOC',
+    note='KPWR (user decision 5.10): coil from 5V_SYS (4.90-5.10 V = 98-102 % of 5 V; must operate 70 %), 80 mA on 5V_SYS. COM on VMOTOR, NO to module B+. Contacts switch without load: EN drops first (ns), relay opens later (ms); closes onto a precharged module capacitor (R4). Same footprint as DC12.',coil_ohm=62.5,coil_v=5)
+add('Q1','ADD_KPWR_DRV',symbol('Transistor_FET','AO3400A'),SOT23,'AO3400A','AO3400A (Alpha & Omega, SOT-23, 30 V 5.7 A, RDS(on) <= 48 mOhm at VGS 2.5 V)',{1:'KPWR_B',2:G,3:'KPWR_COIL_LOW'},'MOC',note='Low-side coil switch (v6.1: TBD62083 channel). Source on GND: the 5 V coil current returns to the 5V_SYS supply over GND, never over PGND. VGS = 74HC08 VOH (>= 2.9 V, no load).',vds=30,id_max=5.7)
+res('R2','ADD_KPWR_RG','100R',100,'LOCAL_PERMIT','KPWR_B','MOC',note='Gate series resistor (edge rate, ESD on the gate).')
+res('R3','ADD_KPWR_PD','100K',100000,'KPWR_B',G,'MOC',note='Gate pull-down: Q1 off while 3V3_IO is absent (U12 unpowered).')
+cap('C9','ADD_KPWR_COIL_C','10u',1e-5,'5V_SYS',G,'MOC',mpn='SMD 1206 X7R 16V 10% 10u',volts=16,note='At K1.A1: local charge for the 80 mA coil step on 5V_SYS (user decision 5.10 (1)).')
+add('D2','D11',SD,SOD123,'1N4148W','1N4148W (SOD-123, 100 V)',{1:'KPWR_CLAMP',2:'KPWR_COIL_LOW'},'MOC',note='Coil clamp diode (anode at coil low end) in series with Zener D3 to 5V_SYS: fast release (v6.1 D11/D12).')
+add('D3','D12',SZ,SOD123,'BZT52C15','BZT52C15 (Zener 15 V 0.5 W, SOD-123)',{1:'KPWR_CLAMP',2:'5V_SYS'},'MOC',note='Clamp = 5V_SYS + 15 V + 0.7 V <= 20.8 V < 85 % of 30 V VDS of Q1 (v6.1: 18 V Zener with 60 V transistor array).',vz=15.0)
 add('R4','ADD_PRECHARGE',SR,R2512,'1K / 1W','RC2512FK-071KL (Yageo 2512 1 W, MPN to confirm)',{1:VM,2:'MOD_BP'},'MOC',ohms=1000,tolerance=.01,power_w=1.0,
     note='Disputed: precharge of the module 330 uF across the KPWR contacts (no inrush weld). Fault with module shorted: 0.28 W; motor current with KPWR open <= 17 mA.')
 res('R5','ADD_MODBP_BLEED','10K',10000,'MOD_BP',PG,'MOC',note='Bleed of the module side; with R4: MOD_BP = 91 % of VMOTOR while KPWR is open (visible on J_SV1.10).')
@@ -169,8 +173,8 @@ add('U16','ADD_LEVEL',ahct,SO14,'74AHCT125D','74AHCT125D,118 (Nexperia, SOIC-14;
 res('R35','ADD_OE_PU','100K',100000,M5,'DRV_OFF','MODUL',note='3V3_IO domain dead -> U11 Ioff -> DRV_OFF high -> U16 outputs Z.')
 for i,n in enumerate(['RPWM_L','LPWM_L','DRIVE_EN'],36):res(f'R{i}','ADD_PD_'+n,'100K',100000,n,G,'MODUL')
 for i,(a,b) in enumerate([('RPWM_D','RPWM'),('LPWM_D','LPWM'),('REN_D','R_EN'),('LEN_D','L_EN')],39):res(f'R{i}','ADD_SER_'+b,'100R',100,a,b,'MODUL',note='Series at the source: ringing on the 8-wire harness, ESD.')
-add('J5','ADD_J_MOD',symbol('Connector_Generic','Conn_02x04_Odd_Even'),IDC8,'J_MOD / IDC 2x4','IDC header 2x4 2.54 mm angled shrouded, Au',{1:'RPWM',2:'LPWM',3:'R_EN',4:'L_EN',5:'R_IS',6:'L_IS',7:M5,8:'MOD_GND'},'MODUL',
-    note='8-wire control harness to the IBT-2 2x4 header (ribbon 1:1). Pin order of the module header to confirm (POMIARY B4) - docs/WIAZKA-MODUL.md.')
+add('J5','ADD_J_MOD',symbol('Connector_Generic','Conn_02x04_Odd_Even'),IDC8,'J_MOD / IDC 2x4','IDC box header 2x4 2.54 mm angled shrouded, Au',{1:'RPWM',2:'LPWM',3:'R_EN',4:'L_EN',5:'R_IS',6:'L_IS',7:M5,8:'MOD_GND'},'MODUL',
+    note='User decision 5.10 (3): numbering 1:1 as the module header (odd row 1 RPWM / 3 R_EN / 5 R_IS / 7 VCC, even row 2 LPWM / 4 L_EN / 6 L_IS / 8 GND). Angled box header at the board edge; 8-wire ribbon with IDC 2x4 sockets on both ends - docs/WIAZKA-MODUL.md.')
 res('R43','ADD_MOD_GND','10R',10,G,'MOD_GND','MODUL',note='Module logic ground: if the module ties GND to B- internally, the loop current through the harness is limited (dV on the VMOTOR return / 10 ohm); acts as a fuse if B- opens.')
 for i,(isn,div,rr) in enumerate([('R_IS','ISR_DIV',44),('L_IS','ISL_DIV',46)]):
  res(f'R{rr}','ADD_'+isn+'_TOP','100K',100000,isn,div,'MODUL',note='IS divider: loads the module 10k by 4.8 %.')
@@ -208,7 +212,7 @@ add('J_BP2','J_DRIVEB+J_LV07B',symbol('Connector_Generic','Conn_02x08_Odd_Even')
 # ---------------- sheet SERWIS: edge B ---------------------------------------------------------------------------------------------
 SV1=[(None,),('I_T_OUT',10000,'wyjscie INA240: 2,500 V przy 0 A, 0,25 V/A'),('ADC_AIN',10000,'wejscie MCP3201: 1,250 V przy 0 A, 0,125 V/A'),('REF_BUF',10000,'bufor U3B: REF INA240 i progi OC'),
  ('REF25',10000,'MCP1525: 2,475-2,525 V'),('OC_HIGH',10000,'prog OC dodatni: ok. 4,51 V (+8 A)'),('OC_LOW',10000,'prog OC ujemny: ok. 0,50 V (-8 A)'),(None,),
- (VM,4700,'VMOTOR z P02 (12,0-16,8 V)'),('MOD_BP',4700,'B+ modulu: = VMOTOR przy zamknietym KPWR, ok. 91 % przy otwartym (R4/R5)'),('KPWR_COIL_LOW',4700,'dol cewki KPWR: ok. 0,1 V = zalaczony, = VMOTOR = wylaczony'),('T_EGR_P1',4700,'zacisk zaworu pin 1 (za bocznikiem)'),(None,)]
+ (VM,4700,'VMOTOR z P02 (12,0-16,8 V)'),('MOD_BP',4700,'B+ modulu: = VMOTOR przy zamknietym KPWR, ok. 91 % przy otwartym (R4/R5)'),('KPWR_COIL_LOW',4700,'dol cewki KPWR (5 V): ok. 0 V = zalaczony, = 5V_SYS = wylaczony'),('T_EGR_P1',4700,'zacisk zaworu pin 1 (za bocznikiem)'),(None,)]
 SV2=[(None,),('5V_SYS',1000,'5V_SYS z J_BP2'),(A5,1000,'5VA_P07 za R50'),(A3,1000,'3V3A_P07 z U18'),(IO,1000,'3V3_IO z J_BP2 (logika)'),(M5,1000,'5V_MOD za F1 (VCC modulu)'),(None,),
  ('RAILS_OK',1000,'SUP3_N & SUP5_N'),('OC_LOCAL_N',1000,'wyjscie OC (L = przetezenie); zwarcie kolka do GND = wymuszone OC'),('OC_GOOD',1000,'zatrzask OC (H = uzbrojony)'),('NO_TRIP',1000,'pamiec zadzialania OC (L = bylo OC od ostatniego ARM)'),('DRIVE_EN',1000,'zezwolenie mostka (R_EN / L_EN)'),(None,)]
 SERVICE={};nr=52
@@ -220,11 +224,14 @@ for jref,rows,src in [('J_SV1',SV1,'SERVICE_S2'),('J_SV2',SV2,'SERVICE_S3')]:
   res(r,'ADDED_'+src,{1000:'1K',4700:'4K7',10000:'10K'}[ohm],ohm,net,'SRV_'+net,'SERWIS',note='Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.')
  add(jref,src,symbol('Connector_Generic',f'Conn_01x{n:02d}'),copyfp('Connector_PinHeader_2.54mm',f'PinHeader_1x{n:02d}_P2.54mm_Horizontal'),f'{jref} SERWIS 1x{n}',f'Pin header 1x{n}, 2.54 mm, right angle, Au',pp,'SERWIS',
      note='Edge B, '+('slot S2 (board x = 10..43 mm)' if jref=='J_SV1' else 'slot S3 (board x = 63.5..96.5 mm)')+'; pins ~6 mm beyond the edge. Angled strip seen from the top: pin 1 at the LARGER x (P09 R2 note).')
+# Off-board harness parts (user decision 5.10 (3)): listed in docs/BOM.csv after the board parts and in docs/zakupy.csv; not in the netlist.
+OFFBOARD=[dict(ref='W5',source_ref='W_MOD_CTRL',display='tasma 8 zyl 1,27 mm, ok. 300 mm',mpn='Flat ribbon cable 8 wires 1.27 mm AWG28 (e.g. 3M 3302/08), ~300 mm',qty=1,footprint='-',zrodlo=NEW,url='',note='J5 <-> IBT-2 2x4 header, 1:1 (docs/WIAZKA-MODUL.md).'),
+          dict(ref='W5-X1, W5-X2',source_ref='W_MOD_CTRL',display='gniazdo IDC 2x4 2,54',mpn='IDC socket 2x4 2.54 mm for 1.27 mm ribbon, with strain relief (e.g. Amphenol T812108A101CEU)',qty=2,footprint='-',zrodlo=NEW,url='',note='One per ribbon end: on the J5 box header (keyed) and on the module 2x4 header.')]
 def write_tables():
  clean={r:{k:v for k,v in p.items() if k!='symbol'} for r,p in PARTS.items()}
  (P/'docs/parts.json').write_text(json.dumps(clean,indent=2,ensure_ascii=False),encoding='utf-8')
  with (P/'docs/BOM.csv').open('w',newline='',encoding='utf-8-sig') as f:
-  w=csv.DictWriter(f,['ref','source_ref','display','mpn','qty','footprint','zrodlo','url','note'],delimiter=';',extrasaction='ignore');w.writeheader();w.writerows(sorted(PARTS.values(),key=lambda p:(re.sub(r'\d','',p['ref']),int(re.sub(r'\D','',p['ref']) or 0))))
+  w=csv.DictWriter(f,['ref','source_ref','display','mpn','qty','footprint','zrodlo','url','note'],delimiter=';',extrasaction='ignore');w.writeheader();w.writerows(sorted(PARTS.values(),key=lambda p:(re.sub(r'\d','',p['ref']),int(re.sub(r'\D','',p['ref']) or 0))));w.writerows(OFFBOARD)
  libs={p['symbol'][1]:p['symbol'] for p in PARTS.values()};libs[PRJ+':PWR_FLAG']=symbol('power','PWR_FLAG')
  (P/'eda/libraries/P07.kicad_sym').write_text('(kicad_symbol_lib (version 20231120) (generator "kicad_symbol_editor")'+''.join(dump([s[0],s[1].split(':')[1]]+s[2:]) for s in libs.values())+')',encoding='utf-8')
  (P/'eda/sym-lib-table').write_text('(sym_lib_table (lib (name "P07") (type "KiCad") (uri "${KIPRJMOD}/libraries/P07.kicad_sym") (options "") (descr "P07 symbols")))')

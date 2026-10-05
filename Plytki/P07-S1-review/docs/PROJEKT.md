@@ -4,16 +4,16 @@
 
 ## Tor mocy
 
-Droga zasilania mostka: **P02 R4** (pakiet 4S 12,0–16,8 V → Q9/Q1 → VSW → **F1 5 A MINI** → J2 GMSTBA 7,62 3p: 1 VMOTOR, 2 GND) → przewody 2 × 2,0 mm² → **P07 J1** (VMOTOR / PGND) → TVS D1 SMCJ18A, C1 220 µF/35 V, C2 1 µF, C3 100 nF, R1 10 k (bleed) → **KPWR K1** (COM = VMOTOR, NO = MOD_BP) → **J2** → moduł B+ / B−. Moduł M+ → **J3.1** → **RSH1** 5 mΩ (Kelvin) → T_EGR_P1 → **J4.1** → port TEST (P11). M− → J3.2 = T_EGR_P3 → J4.2.
+Droga zasilania mostka: **P02 R4** (pakiet 4S 12,0–16,8 V → Q9/Q1 → VSW → **F1 MINI 7,5 A** (wkładka, decyzja użytkownika 5.10; płytka P02 bez zmian) → J2 GMSTBA 7,62 3p: 1 VMOTOR, 2 GND) → przewody 2 × 2,0 mm² → **P07 J1** (VMOTOR / PGND) → TVS D1 SMCJ18A, C1 220 µF/35 V, C2 1 µF, C3 100 nF, R1 10 k (bleed) → **KPWR K1** (COM = VMOTOR, NO = MOD_BP) → **J2** → moduł B+ / B−. Moduł M+ → **J3.1** → **RSH1** 5 mΩ (Kelvin) → T_EGR_P1 → **J4.1** → port TEST (P11). M− → J3.2 = T_EGR_P3 → J4.2.
 
 | Wielkość | Wartość | Uwagi |
 |---|---|---|
 | Strata bocznika 5 mΩ | 0,18 W przy 6 A, 0,50 W przy 10 A | WSK2512 1 W przy 70 °C — 50 % przy 10 A |
 | TVS D1 SMCJ18A | VRWM 18 V ≥ 16,8 V; VC ok. 29 V | < 40 V BTS7960, < 40 V VCEO Q1 |
 | Wstępne ładowanie R4 1 kΩ 2512 | τ = 1 k × 330 µF = 0,33 s; przy otwartym KPWR MOD_BP = 91 % VMOTOR (R4 z R5 10 k) | zwarcie po stronie modułu: 0,28 W (28 % mocy); prąd silnika przy otwartym KPWR ≤ 16,8 mA |
-| Cewka KPWR (G2RL-1-E DC12, 360 Ω) | 33 mA przy 12 V; 47 mA / 0,78 W przy 16,8 V (140 %) | **do potwierdzenia:** dopuszczalne napięcie cewki ≥ 140 % w 50 °C |
-| Q1 MMBT3904 | IB = (2,8 − 0,75) V / 680 Ω ≈ 3,0 mA → wymuszone β ≈ 11 | emiter na PGND |
-| Clamp cewki D2 + D3 (15 V) | VCE max = 16,8 + 15 + 0,7 = 32,5 V | ≤ 85 % VCEO 40 V |
+| Cewka KPWR (G2RL-1-E **DC5**, 62,5 Ω; decyzja użytkownika 5.10) | 78–82 mA przy 5V_SYS 4,90–5,10 V (98–102 % napięcia znamionowego; zadziałanie ≤ 70 %), ok. 0,4 W | zasilana z **5V_SYS**, nie z VMOTOR; C9 10 µF przy K1.A1 |
+| Q1 AO3400A (NMOS logiczny, SOT-23) | VGS = VOH 74HC08 bez obciążenia ≥ 2,9 V (3V3_IO ≥ 3,0 V) ≥ 2,5 V (punkt RDS(on) ≤ 48 mΩ) → VDS ok. 4 mV przy 82 mA; R2 100 Ω w bramce, R3 100 k do GND | źródło na **GND** (obwód cewki w domenie GND); MMBT3904 potrzebowałby IB ok. 6 mA z HC08 przy 3,3 V — poza kartą |
+| Clamp cewki D2 + D3 (15 V) do 5V_SYS | VDS max = 5,1 + 15 + 0,7 = 20,8 V | ≤ 85 % VDS 30 V |
 | Bleed R1 / R5 | 28 mW przy 16,8 V | |
 
 Kolejność łączenia: DRIVE_EN gaśnie w nanosekundach, KPWR odpada po kilku ms, więc styk otwiera się bez prądu. Przy załączeniu kondensator modułu jest już naładowany przez R4, a mostek przy PWM = 0 hamuje dolnymi kluczami (bez poboru z B+). **Wymaganie dla firmware:** PWM dopiero ≥ 20 ms po MOTOR_PERMIT (czas zadziałania przekaźnika ok. 10 ms).
@@ -64,7 +64,7 @@ Wyścig przy ARM: P04 ustawia HW_ARMED tym samym zboczem ARM_CLK, a MOTOR_PERMIT
 
 ## Diagnostyka IS
 
-Moduł: R_IS / L_IS 10 kΩ do GND, I_IS = I_L / kILIS (8500 typ.). Na P07: 100 k / 100 k (obciąża IS o 4,8 %), C 10 nF (τ 0,5 ms uśrednia PWM), BAT54S do GND / 3V3_IO (prąd clampu ≤ 0,1 mA przy 16,8 V), Schmitt 74LVC2G17 → R 100 Ω → ENA_DIAG / ENB_DIAG (P03: LVC125, 10 k do GND). Próg (VT+ 1,3–2,0 V, kILIS 6000–11000 — **założony rozrzut ±30 %, do potwierdzenia E3**): **1,6–4,6 A** prądu gałęzi. Przy 6 A pracy flaga H. Poziom błędu IS (ok. VS) też daje H. Znaczenie zmienia się względem VNH5019 (tam L = błąd); firmware v6.2-s1 czyta bity B_ENA_DIAG/B_ENB_DIAG, ale ich nie interpretuje.
+Moduł: R_IS / L_IS 10 kΩ do GND, I_IS = I_L / kILIS (8500 typ.). Na P07: 100 k / 100 k (obciąża IS o 4,8 %), C 10 nF (τ 0,5 ms uśrednia PWM), BAT54S do GND / 3V3_IO (prąd clampu ≤ 0,1 mA przy 16,8 V), Schmitt 74LVC2G17 → R 100 Ω → ENA_DIAG / ENB_DIAG (P03: LVC125, 10 k do GND). Próg (VT+ 1,3–2,0 V, kILIS 6000–11000 — **założony rozrzut ±30 %, do potwierdzenia E3**): **1,6–4,6 A** prądu gałęzi. Przy 6 A pracy flaga H. Poziom błędu IS (ok. VS) też daje H. Znaczenie zmienia się względem VNH5019 (tam L = błąd) — **przyjęte przez użytkownika 5.10: H = prąd gałęzi powyżej progu albo błąd IS**; firmware v6.2-s1 czyta bity B_ENA_DIAG/B_ENB_DIAG, ale ich nie interpretuje (dostosuje się później).
 
 ## Zasilanie lokalne i budżet
 
@@ -73,10 +73,11 @@ Moduł: R_IS / L_IS 10 kΩ do GND, I_IS = I_L / kILIS (8500 typ.). Na P07: 100 k
 | 5VA_P07 | 5V_SYS przez R50 10 Ω, C16 10 µF | INA240, U4, TLV1702, MCP120-450, LDO U18 | ok. 6 mA (spadek 60 mV) |
 | 3V3A_P07 | MCP1702-3302 (U18) | MCP1525, U3, MCP3201, U7, MCP120-300 | ok. 3 mA |
 | 5V_MOD | 5V_SYS przez PTC F1 (0,12 A hold) | U16, VCC modułu (74HC244, ewentualna dioda LED) | ≤ 20 mA (moduł do zmierzenia, D1) |
+| 5V_SYS (wprost) | J_BP2.10/12 | cewka KPWR K1 (decyzja 5.10), C9 10 µF | **ok. 80 mA** przy załączonym KPWR |
 | 3V3_IO | P02 R4 przez J_BP2.14 | U10–U15, U17, podciąganie OC | ≤ 5 mA |
-| VMOTOR | P02 R4 F1 | cewka KPWR 33–47 mA, mostek | silnik ≤ 6 A (próba 10 A) |
+| VMOTOR | P02 R4 F1 (MINI 7,5 A) | mostek | silnik ≤ 6 A (próba 10 A — bierna kwalifikacja toru) |
 
-Razem z 5V_SYS ok. 30 mA (budżet P12: suma LOGGER 1090 mA). Pojemność za 5V_SYS ok. 27 µF (za R50 i PTC), wobec 600 µF dla TSR 2-2450 (P02 R4).
+Razem z 5V_SYS ok. 30 mA bez KPWR i **ok. 110 mA z załączonym KPWR** (+80 mA cewki) (budżet P12: suma LOGGER 1090 mA). Pojemność na 5V_SYS ok. 37 µF (C9 wprost, reszta za R50 i PTC), wobec 600 µF dla TSR 2-2450 (P02 R4).
 
 ## Masy
 
@@ -85,4 +86,4 @@ GND (logika, analog, J_BP) i PGND (prąd silnika) **nie są połączone na P07**
 - **moduł z GND logiki połączonym z B−:** pętla P07 GND → wiązka → moduł → B− → przewód PGND → P02 przenosi najwyżej spadek na przewodzie powrotnym / 10 Ω (ok. 50 mV / 10 Ω = 5 mA przy 10 A); po przerwaniu przewodu B− R43 działa jak bezpiecznik;
 - **moduł z rozdzielonymi masami** (pomiar 5.10: 508 mV w trybie diody): R43 przenosi tylko prąd VCC modułu (spadek ≤ 0,2 V przy 20 mA).
 
-Kontrola `GND-PGND-SEPARATE`: żadna część nie ma wyprowadzeń na GND i PGND jednocześnie ani na GND i sieci mocy.
+Obwód cewki KPWR (5V_SYS → K1 → Q1 → GND, clamp do 5V_SYS) jest od 5.10 w domenie GND; styki K1 (VMOTOR / MOD_BP) zostają w domenie PGND — izolację daje przekaźnik. Kontrola `GND-PGND-SEPARATE`: żadna część nie ma wyprowadzeń na GND i PGND jednocześnie, na GND i sieci mocy ani na PGND i sieci cewki.

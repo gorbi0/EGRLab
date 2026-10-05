@@ -1,10 +1,10 @@
 # P07-S1 — QA schematu (plik generowany przez src/make_qa.py)
 
-ERC: 0 naruszeń na 8 arkuszach. Netlista: 147 części, 494 pinów sprawdzonych pin po pinie względem `parts.py`, 0 błędów, 116 sieci.
+ERC: 0 naruszeń na 8 arkuszach. Netlista: 148 części, 496 pinów sprawdzonych pin po pinie względem `parts.py`, 0 błędów, 116 sieci.
 
-Kontrole elektryczne (`verify_electrical.py`): 16/16 PASS; mutacje 19/19 wykrytych; próba zerowa: czysta. Tabela logiki: 2304 wierszy.
+Kontrole elektryczne (`verify_electrical.py`): 16/16 PASS; mutacje 22/22 wykrytych; próba zerowa: czysta. Tabela logiki: 2304 wierszy.
 Kontrakt S1 / P12 (`verify_s1.py`): 30/30 PASS; mutacje 24/24 wykrytych przez kontrolę docelową; próba zerowa: czysta.
-Powierzchnia (klasa 2/3, `powierzchnia.py`): suma courtyardów 6219 mm² wobec 9022 mm² użytecznych — 69 % (metoda P06 R2: tam 41 %); wnętrze bez złączy krawędzi 50 %, z rezystorami i małymi kondensatorami 1206 od spodu 37 %.
+Powierzchnia (klasa 2/3, `powierzchnia.py`): suma courtyardów 6231 mm² wobec 9022 mm² użytecznych — 69 % (metoda P06 R2: tam 41 %); wnętrze bez złączy krawędzi 50 %, z rezystorami i małymi kondensatorami 1206 od spodu 37 %.
 
 | Kontrola elektryczna | Wynik | Uwagi |
 |---|---|---|
@@ -20,7 +20,7 @@ Powierzchnia (klasa 2/3, `powierzchnia.py`): suma courtyardów 6219 mm² wobec 9
 | ITEST-SCALE | PASS | {"ratio": 0.5, "tau_ms": 0.255, "range_A": 10.0} |
 | SHUNT-POWER-10A | PASS | {"P10A_W": 0.5} |
 | PRECHARGE-R | PASS | {"R_ohm": [1000.0], "fault_W": 0.282, "rating_W": 1.0, "Imotor_open_mA": 16.8, "MOD_BP_open_ratio": 0.909} |
-| KPWR-DRIVE-CLAMP | PASS | {"Ib_mA": 3.01, "Icoil_mA": 33.3, "clamp_V": 32.5, "coil_ratio": 1.4} |
+| KPWR-DRIVE-CLAMP | PASS | {"Icoil_mA": 81.6, "coil_V": 5, "coil_ratio": [0.98, 1.02], "clamp_V": 20.8, "Vds_on_mV": 3.9, "Rg_ohm": [100.0], "Rpd_ohm": [100000.0], "Vgs_min_V": 2.9} |
 | TVS-VMOTOR | PASS | ["SMCJ18A"] |
 | IS-DIAG | PASS | {"R_IS": [1.64, 4.62], "L_IS": [1.64, 4.62]} |
 | GND-PGND-SEPARATE | PASS | {"both": [], "mod_gnd": [["R43", 10.0]]} |
@@ -80,7 +80,10 @@ Powierzchnia (klasa 2/3, `powierzchnia.py`): suma courtyardów 6219 mm² wobec 9
 | B- tied to GND (R5.2 -> GND) | GND-PGND-SEPARATE | tak | PRECHARGE-R, GND-PGND-SEPARATE |
 | shunt 10 mOhm | SHUNT-POWER-10A | tak | OC-WINDOW, ITEST-SCALE, SHUNT-POWER-10A |
 | LPWM gate without OE (U16.4 -> GND) | OE-BLOCKS-STUCK-GATE | tak | OE-BLOCKS-STUCK-GATE |
-| KPWR base resistor 4.7K | KPWR-DRIVE-CLAMP | tak | KPWR-DRIVE-CLAMP |
+| KPWR gate resistor 4.7K | KPWR-DRIVE-CLAMP | tak | KPWR-DRIVE-CLAMP |
+| KPWR coil from VMOTOR (K1.A1 -> VMOTOR) | KPWR-DRIVE-CLAMP | tak | KPWR-DRIVE-CLAMP |
+| KPWR coil 12 V on 5V_SYS | KPWR-DRIVE-CLAMP | tak | KPWR-DRIVE-CLAMP |
+| Q1 source on PGND | GND-PGND-SEPARATE | tak | KPWR-DRIVE-CLAMP, GND-PGND-SEPARATE |
 
 ## Próby ujemne S1 / P12
 
