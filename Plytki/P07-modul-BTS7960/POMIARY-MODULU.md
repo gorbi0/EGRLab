@@ -8,6 +8,19 @@ Decyzja użytkownika (EGRLab-AKTYWNE, „P07 DRIVE — WSTRZYMANE”): P07 proje
 - **Wniosek:** moduł nie mieści się w stosie S1 (16,5 mm nad płytką; moduł ok. 40–45 mm z radiatorem, zaciskami i elektrolitem) i potrzebuje przepływu powietrza → **moduł poza stosem** (ścianka obudowy, radiator do wentylacji), **P07 S1** w stosie (poziom 5, S2–S3) z logiką, bocznikiem, INA240, MCP3201, OC z zatrzaskiem, KPWR i buforem 3,3 → 5 V (74HC244 przy VCC 5 V wymaga VIH ok. 3,5 V); P07 ↔ moduł: wiązka 8 żył sterowania + przewody mocy.
 - **Minimum do zmierzenia przed projektem P07:** C2 (OE 74HC244), C3 (rezystory R_IS / L_IS), C4 (podciągnięcia wejść), B2 (otwory montażowe). Pozostałe punkty — przy odbiorze.
 
+## Wyniki pomiarów użytkownika (5.10.2026, moduł bez zasilania)
+| Pomiar | Wynik | Wniosek dla P07 |
+|---|---|---|
+| 74HC244 pin 1 (1OE) i pin 19 (2OE) ↔ GND | 0 Ω | bufor zawsze aktywny — brak blokady na module; blokada RPWM/LPWM/EN po stronie P07 (SAFE_N, MOTOR_PERMIT z P04) |
+| 74HC244 pin 20 ↔ VCC złącza | 0 Ω | bufor zasilany z VCC złącza (5 V z P07) |
+| R_IS / L_IS ↔ GND | 10 kΩ / 10 kΩ | V_IS ≈ I_L / 8500 × 10 kΩ ≈ 1,2 V/A (6 A → ok. 7 V) — na P07 dzielnik + ogranicznik, tylko diagnostyka; pomiar prądu: własny bocznik + INA240 |
+| RPWM, LPWM, R_EN, L_EN ↔ GND | ok. 30 kΩ każde | wejścia ściągnięte w dół — wolne wejście = mostek wyłączony |
+| te same ↔ VCC (COM na VCC, tryb diody) | 0,67 V każde | tylko dioda ESD bufora, bez podciągania do VCC; sterowanie 5 V (74HC244 przy 5 V: VIH ≥ 3,5 V) |
+| GND złącza ↔ B− (COM na B−) | 508 mV | **do sprawdzenia ciągłością / Ω** — odczyt wygląda na tryb diody |
+| Otwory montażowe | Ø3, rozstaw 40 × 40 mm | montaż na ściance, 4 × M3 |
+| R_EN ↔ L_EN | niepołączone | każda połowa mostka wyłączana osobno |
+| RPWM → 74HC244 | pin 2 (1A1) | — |
+
 **Bezpieczeństwo:** kroki A–C bez zasilania. W kroku D tylko 5 V logiki z zasilacza z ograniczeniem prądu 50 mA, bez napięcia silnika. Krok E (napięcie silnika) dopiero po D i z ograniczeniem prądu 0,5 A, bez silnika albo z małym obciążeniem.
 
 ## A. Zdjęcia (ostre, z linijką w kadrze)
