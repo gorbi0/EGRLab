@@ -150,13 +150,19 @@ def parse_drill(path):
     return text, tools, hits, slots
 
 
-ALL = {'F.Cu': ('F_Cu', 'gtl'), 'B.Cu': ('B_Cu', 'gbl'), 'F.Mask': ('F_Mask', 'gts'), 'B.Mask': ('B_Mask', 'gbs'),
+ALL = {'F.Cu': ('F_Cu', 'gtl'), 'B.Cu': ('B_Cu', 'gbl'), 'In1.Cu': ('In1_Cu', 'g2'), 'In2.Cu': ('In2_Cu', 'g3'),   # P07 S1: 4 layers (KiCad extensions g2 / g3)
+       'F.Mask': ('F_Mask', 'gts'), 'B.Mask': ('B_Mask', 'gbs'),
        'F.SilkS': ('F_Silkscreen', 'gto'), 'B.SilkS': ('B_Silkscreen', 'gbo'), 'Edge.Cuts': ('Edge_Cuts', 'gm1')}
 names = dict(ALL[l] for l in CFG['layers'])
+for _k in [k for k in names if k.startswith('In')]:   # inner copper: the extension KiCad gave the file (g2 / g3 / ...)
+    _m = sorted(G.glob(f'{NAME}-{_k}.*'))
+    if len(_m) == 1:
+        names[_k] = _m[0].suffix[1:]
 expected = {f'{NAME}-{k}.{v}' for k, v in names.items()} | {f'{NAME}-PTH.drl', f'{NAME}-NPTH.drl'}
 check(f'Dokładnie {len(names)} warstw Gerber i 2 pliki Excellon', {f.name for f in G.iterdir()} == expected, sorted(f.name for f in G.iterdir()))
 L = {k: Gerber(G/f'{NAME}-{k}.{v}') for k, v in names.items()}
-functions = {'F_Cu': 'Copper,L1,Top', 'B_Cu': 'Copper,L2,Bot', 'F_Mask': 'Soldermask,Top', 'B_Mask': 'Soldermask,Bot',
+NCU = sum(1 for l in CFG['layers'] if l.endswith('.Cu'))
+functions = {'F_Cu': 'Copper,L1,Top', 'B_Cu': f'Copper,L{NCU},Bot', 'In1_Cu': 'Copper,L2,Inr', 'In2_Cu': 'Copper,L3,Inr', 'F_Mask': 'Soldermask,Top', 'B_Mask': 'Soldermask,Bot',
              'F_Silkscreen': 'Legend,Top', 'B_Silkscreen': 'Legend,Bot', 'Edge_Cuts': 'Profile,NP'}
 check('Funkcje warstw w atrybutach X2', all(L[k].file_attrs.get('FileFunction') == v for k, v in functions.items() if k in L),
       {k: L[k].file_attrs.get('FileFunction') for k in L})
@@ -214,8 +220,8 @@ for label, plated in (('PTH', True), ('NPTH', False)):
     check(f'{label}: mm, dziesiętnie, współrzędne absolutne, bez szczelin', all(s in text for s in ('METRIC', 'G90', 'absolute / metric / decimal')) and slots == 0)
     check(f'{label}: jawny atrybut metalizacji', ('TF.FileFunction,Plated' if plated else 'TF.FileFunction,NonPlated') in text)
 
-for side, cu, mk in (('góra', 'F_Cu', 'F_Mask'), ('dół', 'B_Cu', 'B_Mask')):
-    layer_name = 'F.Cu' if cu == 'F_Cu' else 'B.Cu'
+for side, cu, mk in (('góra', 'F_Cu', 'F_Mask'), ('dół', 'B_Cu', 'B_Mask')) + ((('In1', 'In1_Cu', None), ('In2', 'In2_Cu', None)) if 'In1_Cu' in L else ()):
+    layer_name = cu.replace('_', '.')
     mask_name = 'F.Mask' if mk == 'F_Mask' else 'B.Mask'
     g = L[cu]
     npth = {(p['ref'], p['pin']) for p in D['pads'] if p['attr'] == 3}
@@ -234,6 +240,8 @@ for side, cu, mk in (('góra', 'F_Cu', 'F_Mask'), ('dół', 'B_Cu', 'B_Mask')):
     zone_regions = [r for r in g.regions if 'P' not in r[1] and r[2] == 'D']
     check(f'Miedź {side}: liczba regionów wylewek = liczba konturów wypełnienia w PCB',
           len(zone_regions) == D['zone_outlines'][layer_name], {'gerber': len(zone_regions), 'pcb': D['zone_outlines'][layer_name]})
+    if mk is None:   # inner layers: no mask
+        continue
     m = L[mk]
     missing = []
     for p in D['pads']:
@@ -302,9 +310,9 @@ for side, cu, mk, sk in (('top', 'F_Cu', 'F_Mask', 'F_Silkscreen'), ('bottom', '
         board = ImageOps.mirror(board)
     board.save(PV/f'CAM-{side}.png')
 font = ImageFont.truetype('C:/Windows/Fonts/arial.ttf', 26)
-tiles = [t for t in ['CAM-top', 'CAM-bottom', 'CAM-F_Cu', 'CAM-B_Cu', 'CAM-F_Mask', 'CAM-B_Mask', 'CAM-F_Silkscreen', 'CAM-B_Silkscreen'] if t[4:] in L or t in ('CAM-top', 'CAM-bottom')]
+tiles = [t for t in ['CAM-top', 'CAM-bottom', 'CAM-F_Cu', 'CAM-B_Cu', 'CAM-In1_Cu', 'CAM-In2_Cu', 'CAM-F_Mask', 'CAM-B_Mask', 'CAM-F_Silkscreen', 'CAM-B_Silkscreen'] if t[4:] in L or t in ('CAM-top', 'CAM-bottom')]
 tw = 790; th = int(tw * H / W)
-sheet = Image.new('RGB', (1640, 10 + 4 * (th + 60)), '#eceef0'); dr = ImageDraw.Draw(sheet)
+sheet = Image.new('RGB', (1640, 10 + ((len(tiles) + 1) // 2) * (th + 60)), '#eceef0'); dr = ImageDraw.Draw(sheet)
 for i, n in enumerate(tiles):
     im = Image.open(PV/f'{n}.png').convert('RGB'); im.thumbnail((tw, th))
     x = 10 + (i % 2) * 820; y = 10 + (i // 2) * (th + 60)

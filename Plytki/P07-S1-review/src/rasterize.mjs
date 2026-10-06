@@ -4,7 +4,7 @@ import path from 'node:path';
 const require=createRequire(import.meta.url);
 const sharp=require(process.argv[3] || 'sharp');
 const root=process.argv[2];
-for (const name of ['assembly','copper-front','copper-back','fit']) {
+for (const name of ['assembly','copper-front','copper-back','copper-in1','copper-in2','fit']) {
  if(name.startsWith('copper-')) {
   // Style only: filled copper light grey, track strokes black. Native paths,
   // clearances and coordinates are untouched; easier to inspect and print.

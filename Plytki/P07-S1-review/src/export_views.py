@@ -33,6 +33,8 @@ for name, layers, mirror, pcb in [
         ('assembly', 'F.Fab,F.Silkscreen,Edge.Cuts', False, source),
         ('copper-front', 'F.Cu,Edge.Cuts', False, P / f'eda/{NAME}.kicad_pcb'),
         ('copper-back', 'B.Cu,Edge.Cuts', True, P / f'eda/{NAME}.kicad_pcb'),
+        ('copper-in1', 'In1.Cu,Edge.Cuts', False, P / f'eda/{NAME}.kicad_pcb'),   # P07 S1 (6.10): 4 layers
+        ('copper-in2', 'In2.Cu,Edge.Cuts', False, P / f'eda/{NAME}.kicad_pcb'),
         ('fit', 'Edge.Cuts,F.Courtyard,F.Fab', False, source)]:
     args = ['pcb', 'export', 'svg', '--layers', layers, '--mode-single', '--page-size-mode', '2', '--exclude-drawing-sheet', '--black-and-white',
             '--sketch-pads-on-fab-layers', '-o', str(out / 'svg' / (name + '.svg'))]

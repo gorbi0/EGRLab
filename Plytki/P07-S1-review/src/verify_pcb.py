@@ -133,10 +133,14 @@ for f in b.GetFootprints():
     bottom[r] = {'smd': smd, 'height_mm': hgt, 'soic': 'SOIC' in f.GetFPIDAsString(), 'min_gap_to_THT_mm': round(gap, 2)}
 check('S1-2 section 4: parts on the bottom only SMD <= 1.5 mm (heights.py, BOM thickness note for the capacitors), no SOIC, >= 1 mm from THT pads',
       all(v['smd'] and v['height_mm'] <= HMAX_BOTTOM and not v['soic'] and v['min_gap_to_THT_mm'] >= 1.0 for v in bottom.values()), {'bottom_parts': bottom})
-check('2 copper layers, 1.6 mm board (S1: FR4 1.6 mm)', b.GetCopperLayerCount() == S1['obrys']['warstwy'] and abs(p.ToMM(b.GetDesignSettings().GetBoardThickness()) - S1['obrys']['grubosc_pcb']) < 1e-6)
+check('4 copper layers, 1.6 mm board (user decision 6.10: 4 layers instead of the S1 default 2)', b.GetCopperLayerCount() == 4 and abs(p.ToMM(b.GetDesignSettings().GetBoardThickness()) - S1['obrys']['grubosc_pcb']) < 1e-6)
 stack = one(one(parse(path.read_text(encoding='utf-8')), 'setup'), 'stackup')
-cu = {x[1]: float(one(x, 'thickness')[1]) for x in sub(stack, 'layer') if x[1] in ['F.Cu', 'B.Cu']}
-check('Both copper layers 35 um (S1)', cu == {'F.Cu': S1['obrys']['miedz_um'] / 1000, 'B.Cu': S1['obrys']['miedz_um'] / 1000}, cu)
+cu = {x[1]: float(one(x, 'thickness')[1]) for x in sub(stack, 'layer') if x[1] in ['F.Cu', 'In1.Cu', 'In2.Cu', 'B.Cu']}
+diel = [(one(x, 'type')[1], float(one(x, 'thickness')[1])) for x in sub(stack, 'layer') if str(x[1]).startswith('dielectric')]
+total = sum(cu.values()) + sum(d for _, d in diel)
+check('Stack JLC04161H-7628 (6.10): outer copper 35 um, inner 15.2 um (0.5 oz), prepreg 7628 0.2104 / core 1.065 / prepreg 0.2104, copper + dielectric 1.55-1.65 mm',
+      cu == {'F.Cu': .035, 'In1.Cu': .0152, 'In2.Cu': .0152, 'B.Cu': .035} and diel == [('prepreg', .2104), ('core', 1.065), ('prepreg', .2104)] and 1.55 <= total <= 1.65,
+      {'copper_mm': cu, 'dielectric': diel, 'total_mm': round(total, 4)})
 edge = [g for g in b.GetDrawings() if g.GetLayer() == p.Edge_Cuts]
 arcs = [g for g in edge if g.GetShape() == p.SHAPE_T_ARC]; segs = [g for g in edge if g.GetShape() == p.SHAPE_T_SEGMENT]
 bb = b.GetBoardEdgesBoundingBox(); R = S1['obrys']['promien_naroza']
@@ -475,7 +479,7 @@ def box_gap(a, c):
 pg_pads = sorted(f'{f.GetReference()}.{a.GetNumber()}' for f in b.GetFootprints() for a in f.Pads() if net(a) == 'PGND')
 gnd_on_pg = sorted({f.GetReference() for f in b.GetFootprints() for a in f.Pads() if net(a) == 'GND'} & {x.split('.')[0] for x in pg_pads})
 gap_pg = None
-for L in (p.F_Cu, p.B_Cu):
+for L in (p.F_Cu, p.In1_Cu, p.In2_Cu, p.B_Cu):
     g_ = p.SHAPE_POLY_SET(); pg_ = p.SHAPE_POLY_SET()
     for z in b.Zones():
         if not z.GetIsRuleArea() and z.IsOnLayer(L):
@@ -485,6 +489,7 @@ for L in (p.F_Cu, p.B_Cu):
                 pg_.BooleanAdd(z.GetFilledPolysList(L))
     x_ = p.SHAPE_POLY_SET(g_); x_.Inflate(p.FromMM(.29), p.CORNER_STRATEGY_ROUND_ALL_CORNERS, p.FromMM(.005)); x_.BooleanIntersection(pg_)
     gap_pg = (gap_pg or []) + [{'layer': b.GetLayerName(L), 'overlap_within_0.29_mm2': round(x_.Area() / 1e12, 3), 'pgnd_pieces': pg_.OutlineCount()}]
+inner_force = sorted({f'{net(t)} {b.GetLayerName(t.GetLayer())}' for t in b.GetTracks() if not isinstance(t, p.PCB_VIA) and net(t) in FORCE and t.GetLayer() in (p.In1_Cu, p.In2_Cu)})
 ANALOG = ('U2', 'U3', 'U4', 'U5', 'U6', 'U7')
 far_ = {}
 for u in ANALOG:
@@ -501,10 +506,10 @@ for u in ANALOG:
                             best = min(best, 0.0 if pc.Contains(o.CPoint(j)) else math.sqrt(pc.SquaredDistance(o.CPoint(j))) / 1e6)
     far_[u] = round(best, 2)
 coil = {k: [n_ for n_ in ('PGND', 'VMOTOR', 'MOD_BP') for L in (p.F_Cu, p.B_Cu) for z in pours[(n_, L)] if z.GetFilledPolysList(L).Contains(pad('K1', k).GetPosition())] for k in ('A1', 'A2')}
-check('Ground separation (README): GND and PGND not joined on P07 (no part on both; GND fill keeps >= 0.3 mm from the PGND fill on both layers; '
-      'PGND one piece per layer); analog ICs U2-U7 >= 3 mm from every force pour; the 5 V KPWR coil pins (GND domain) outside the power pours',
-      not gnd_on_pg and all(g['overlap_within_0.29_mm2'] == 0 and g['pgnd_pieces'] == 1 for g in gap_pg) and all(v >= 3.0 for v in far_.values())
-      and not any(coil.values()), {'parts_on_GND_and_PGND': gnd_on_pg, 'gnd_pgnd': gap_pg, 'analog_to_force_pours_mm': far_, 'coil_pins_in_power_pours': coil})
+check('Ground separation (README): GND and PGND not joined on P07 (no part on both; GND fill keeps >= 0.3 mm from the PGND fill on all four layers; '
+      'PGND at most one piece per layer; no 10 A copper on the 0.5 oz inner layers); analog ICs U2-U7 >= 3 mm from every force pour; the 5 V KPWR coil pins (GND domain) outside the power pours',
+      not gnd_on_pg and all(g['overlap_within_0.29_mm2'] == 0 and g['pgnd_pieces'] <= 1 for g in gap_pg) and next(g['pgnd_pieces'] for g in gap_pg if g['layer'] == 'In1.Cu') == 1 and all(v >= 3.0 for v in far_.values())
+      and not any(coil.values()) and not inner_force, {'parts_on_GND_and_PGND': gnd_on_pg, 'gnd_pgnd': gap_pg, 'force_tracks_on_inner_layers': inner_force, 'analog_to_force_pours_mm': far_, 'coil_pins_in_power_pours': coil})
 # ---------------- 9. decoupling at the pins (README; MCP1525: load capacitor within 5 mm) ----------------
 from board import DEC_CAPS, RETURN_PAIRS
 try:
@@ -518,15 +523,40 @@ for c, (u, n, lim) in DEC.items():
     q = next(a for a in fmap[c].Pads() if a.GetNetname() == pad(u, n).GetNetname()); dd[f'{c}-{u}.{n}'] = (round(math.dist(pos(q.GetPosition()), pxy(u, n)), 2), lim)
 check('Decoupling at the pins: 100 nF pad <= 6 mm from the supply pin of every IC, C5 4.7 uF <= 5 mm from U2.2 (MCP1525 data sheet), LDO in / out '
       'capacitors <= 6 mm, C9 10 uF <= 8 mm from the KPWR coil (decision 5.10), C16 at R50, C13 at J5.7, C21 at J_BP2.14', all(v <= lim for v, lim in dd.values()), dd)
-# ---------------- 10. GND ----------------
-isl = {b.GetLayerName(L): sum(z.GetFilledPolysList(L).OutlineCount() for z in b.Zones() if not z.GetIsRuleArea() and z.GetNetname() == 'GND' and z.IsOnLayer(L)) for L in (p.F_Cu, p.B_Cu)}
-cov = {b.GetLayerName(L): round(sum(z.GetFilledPolysList(L).Area() for z in b.Zones() if not z.GetIsRuleArea() and z.GetNetname() == 'GND' and z.IsOnLayer(L)) / 1e12 / (W * H) * 100, 1)
-       for L in (p.F_Cu, p.B_Cu)}
-pw_area = round(sum(z.GetFilledPolysList(p.B_Cu).Area() for z in b.Zones() if not z.GetIsRuleArea() and net(z) in FORCE and z.IsOnLayer(p.B_Cu)) / 1e12, 0)
-check('GND pours on both layers: B.Cu GND >= 45 % of the board (the power pours take the rest of the left part on both layers); island removal always',
-      cov['B.Cu'] >= 45 and all(z.GetIslandRemovalMode() == p.ISLAND_REMOVAL_MODE_ALWAYS
-      for z in b.Zones() if not z.GetIsRuleArea() and z.GetNetname() == 'GND') and len([z for z in b.Zones() if not z.GetIsRuleArea() and z.GetNetname() == 'GND']) == 2,
-      {'cover_percent': cov, 'islands': isl, 'force_pours_b_cu_mm2': pw_area})
+# ---------------- 10. GND (4 layers, 6.10: In1.Cu GND plane, In2.Cu signals + supply zones) ----------------
+GL = (p.F_Cu, p.In1_Cu, p.B_Cu)
+gz = [z for z in b.Zones() if not z.GetIsRuleArea() and z.GetNetname() == 'GND']
+isl = {b.GetLayerName(L): sum(z.GetFilledPolysList(L).OutlineCount() for z in gz if z.IsOnLayer(L)) for L in GL}
+cov = {b.GetLayerName(L): round(sum(z.GetFilledPolysList(L).Area() for z in gz if z.IsOnLayer(L)) / 1e12 / (W * H) * 100, 1) for L in GL}
+check('GND pours on F.Cu, B.Cu and the In1.Cu plane (In1 GND >= 60 % of the board, the rest is the separate PGND area under the power block); island removal always',
+      cov['In1.Cu'] >= 60 and all(z.GetIslandRemovalMode() == p.ISLAND_REMOVAL_MODE_ALWAYS for z in gz) and sorted(b.GetLayerName(z.GetLayer()) for z in gz) == ['B.Cu', 'F.Cu', 'In1.Cu'],
+      {'cover_percent': cov, 'islands': isl})
+in1 = p.SHAPE_POLY_SET()
+for z in gz:
+    if z.IsOnLayer(p.In1_Cu):
+        in1.BooleanAdd(z.GetFilledPolysList(p.In1_Cu))
+big = max(range(in1.OutlineCount()), key=lambda k: in1.Outline(k).Area()) if in1.OutlineCount() else None
+piece = p.SHAPE_POLY_SET()
+if big is not None:
+    piece.AddOutline(in1.Outline(big))
+    for h in range(in1.HoleCount(big)):
+        piece.AddHole(in1.Hole(big, h))
+under = {}
+kb = json.loads((P / 'routing/kelvin-box.json').read_text())['f_box']
+areas = {u: courtyard(u) for u in ('U1', 'U2', 'U3', 'U4', 'U5', 'U6', 'U7', 'U8', 'U9', 'U10', 'U11', 'U12', 'U13', 'U14', 'U15', 'U16', 'U18')}
+kpoly = p.SHAPE_POLY_SET(); kpoly.NewOutline()
+for x_, y_ in [(kb[0], kb[1]), (kb[2], kb[1]), (kb[2], kb[3]), (kb[0], kb[3])]:
+    kpoly.Append(p.FromMM(x_), p.FromMM(y_))
+areas['Kelvin R6/R7 -> U1'] = kpoly
+for k_, a_ in areas.items():
+    x_ = p.SHAPE_POLY_SET(a_); x_.BooleanIntersection(piece); under[k_] = round(x_.Area() / max(a_.Area(), 1), 3)
+in1_tracks = sorted({net(t) for t in b.GetTracks() if not isinstance(t, p.PCB_VIA) and t.GetLayer() == p.In1_Cu})
+check('In1.Cu GND plane continuous under the logic, the analog chain and the Kelvin pair: every IC courtyard and the Kelvin corridor R6 / R7 -> U1 >= 80 % '
+      'covered by ONE piece of In1 GND (holes only round vias / THT pins); no track on In1 (plane layer)', all(v >= .8 for v in under.values()) and not in1_tracks,
+      {'covered_fraction': under, 'tracks_on_In1': in1_tracks, 'in1_gnd_pieces': in1.OutlineCount()})
+sup = {z.GetNetname(): round(z.GetFilledPolysList(p.In2_Cu).Area() / 1e12, 1) for z in b.Zones() if not z.GetIsRuleArea() and z.IsOnLayer(p.In2_Cu)}
+check('In2.Cu supply zones (6.10): 3V3A_P07, 5VA_P07 and 3V3_IO filled (> 100 mm2 each) round the In2 signals; nothing on In2 under the power block (rule area)',
+      all(sup.get(n, 0) > 100 for n in ('3V3A_P07', '5VA_P07', '3V3_IO')) and any(z.GetIsRuleArea() and z.IsOnLayer(p.In2_Cu) and z.GetDoNotAllowTracks() and z.GetDoNotAllowZoneFills() for z in b.Zones()), sup)
 # ---------------- 10b. return paths ----------------
 import gndpath
 # Return path: GND copper (pours, tracks, pads, vias, both layers) from each decoupling capacitor's GND pad to the GND pin of its IC

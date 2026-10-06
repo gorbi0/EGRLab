@@ -90,6 +90,10 @@ def free(b, m=.5, own=None, side='F'):
     for zs, z in RESERVED:   # copper reserved for route_critical.py (force pours, Kelvin pair) and the cables of the tails
         if zs == side and b[0] < z[2] and z[0] < b[2] and b[1] < z[3] and z[1] < b[3]:
             return False
+    if side == 'B':   # P07 S1 (6.10): no bottom part under a top IC / connector (a via to its pad would land in the IC pad: planner gaps)
+        for r, o in BOX.items():
+            if SIDE[r] == 'F' and r.startswith(('U', 'J', 'K', 'Q', 'D')) and b[0] < o[2] and o[0] < b[2] and b[1] < o[3] and o[1] < b[3]:
+                return False
     if side == 'B':   # S1-2: >= 1 mm from THT pads (copper to courtyard, conservative)
         for tx, ty, tr in tht_pads():
             dx = max(b[0] - tx, 0, tx - b[2]); dy = max(b[1] - ty, 0, ty - b[3])

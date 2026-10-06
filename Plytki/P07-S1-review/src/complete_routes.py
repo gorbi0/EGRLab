@@ -16,6 +16,8 @@ P=Path(__file__).resolve().parents[1]
 from board import NAME, SIGNAL_W, CORE, PWR as BOARD_PWR, PLANNER_KEEPOUT, TOP_ONLY, PWR_W, PWR_CLR
 from build_board import W as BW,Hh as BH
 fn=P/f'eda/{NAME}.kicad_pcb';b=p.LoadBoard(str(fn));mm=p.FromMM
+LAYERS=[p.F_Cu,p.B_Cu]+([p.In2_Cu] if b.GetCopperLayerCount()>=4 else []);NL=len(LAYERS);ALL_L=tuple(range(NL))   # P07 S1 (6.10): In2.Cu is a planner layer too
+def kl_on(kl,L):return (kl=='F.Cu' and L in (p.F_Cu,p.In2_Cu)) or (kl=='B.Cu' and L==p.B_Cu)   # the F.Cu router keepouts apply to In2 as well
 # 30.09 evening: 0.05 mm raster (was 0.1) and exact obstacle growth. The old 0.5 mm dilation of every obstacle kept a 0.2 mm
 # track 0.4 mm from other copper (0.25 needed) and hid the last paths in the dense areas once signals went to 0.2 mm.
 R=int(os.environ.get('EGRLAB_PLAN_RES','20'));W=int(BW*R)+1;H=int(BH*R)+1
@@ -38,7 +40,7 @@ def drawpoly(d,ps,holes=False):
 def fillmask(net):
  """Largest filled polygon of the net on each layer, 0.6 mm inside its edge: where a completion track may end."""
  masks=[]
- for layer in [p.F_Cu,p.B_Cu]:
+ for layer in LAYERS:
   im=Image.new('L',(W,H));d=ImageDraw.Draw(im);best=None
   for z in b.Zones():
    if z.GetIsRuleArea() or z.GetNetCode()!=net or not z.IsOnLayer(layer):continue
@@ -50,14 +52,15 @@ def fillmask(net):
   if best is not None:drawpoly(d,grown(best,-.6),holes=True)   # 0.6 mm inside the fill edge
   masks.append(np.array(im)!=0)
  return masks
-def plan(net,sxy,gxy,goalmask=None,slay=(0,1),glay=(0,1)):
+def plan(net,sxy,gxy,goalmask=None,slay=None,glay=None):
  """gxy None: the goal is the net's main pour (a pad cut off from the fill, reported by DRC against the zone).
  goalmask (P02 R4): per-layer boolean masks of the copper the path may end on.
  slay / glay (P02 R4): copper layers (0 F.Cu, 1 B.Cu) of the start and end items; the path starts and ends only there."""
+ slay=ALL_L if slay is None else slay;glay=ALL_L if glay is None else glay
  goal=goalmask if goalmask is not None else (fillmask(net) if gxy is None else None)
  if goalmask is not None:gxy=None
  name=b.GetNetsByNetcode()[net].GetNetname();w=width_of(name);cn=clr(name);obs=[];vmask=[]
- for layer in [p.F_Cu,p.B_Cu]:
+ for layer in LAYERS:
   it=Image.new('L',(W,H));dt=ImageDraw.Draw(it);iv=Image.new('L',(W,H));dv=ImageDraw.Draw(iv)  # forbidden for a track centre / a via centre
   def block(o):
    c=max(cn,clr(o.GetNetname()))
@@ -80,13 +83,24 @@ def plan(net,sxy,gxy,goalmask=None,slay=(0,1),glay=(0,1)):
    elif not zone.GetIsRuleArea() and zone.GetNetCode()!=net and zone.GetNetname()!='GND' and zone.IsOnLayer(layer):  # P02 R4: never cut a power pour
     c=max(cn,clr(zone.GetNetname()));fl=zone.GetFilledPolysList(layer);drawpoly(dt,grown(fl,c+w/2+MARGIN));drawpoly(dv,grown(fl,c+VIA_R+MARGIN))
   for kl,x0,y0,x1,y1 in PLANNER_KEEPOUT:   # P05 R3: the router-only keepouts of board.py (U1 interior, analog B.Cu) bind the planner too
-   if (kl=='F.Cu')==(layer==p.F_Cu):
+   if kl_on(kl,layer):
     gt=w/2+MARGIN;gv=VIA_R+MARGIN;dt.rectangle([(x0-gt)*R,(y0-gt)*R,(x1+gt)*R,(y1+gt)*R],fill=255);dv.rectangle([(x0-gv)*R,(y0-gv)*R,(x1+gv)*R,(y1+gv)*R],fill=255)
   dt.rectangle([0,0,W-1,H-1],outline=255,width=int(math.ceil((.5+w/2+MARGIN)*R)))   # copper 0.5 mm from the board edge
   dv.rectangle([0,0,W-1,H-1],outline=255,width=int(math.ceil((.5+VIA_R+MARGIN)*R)))
   obs.append(np.array(it)!=0);vmask.append(np.array(iv)!=0)
- via=vmask[0]|vmask[1]
- if name.split('/')[-1] in TOP_ONLY:obs[1][:]=True;via[:]=True   # review 2.10: board.TOP_ONLY nets stay on F.Cu (no B.Cu, no via)
+ via=np.logical_or.reduce(vmask)
+ if b.GetCopperLayerCount()>=4:   # P07 S1 (6.10): a through via also crosses In1 / In2 - keep it clear of their copper of other nets
+  iv=Image.new('L',(W,H));dv=ImageDraw.Draw(iv)
+  for L2 in (p.In1_Cu,):
+   for t in b.GetTracks():
+    if t.GetNetCode()!=net and not isinstance(t,p.PCB_VIA) and t.GetLayer()==L2:
+     ps=p.SHAPE_POLY_SET();t.TransformShapeToPolygon(ps,L2,mm(max(cn,clr(t.GetNetname()))+VIA_R+MARGIN),mm(.005),p.ERROR_OUTSIDE);drawpoly(dv,ps)
+   for zone in b.Zones():
+    if zone.GetIsRuleArea() or zone.GetNetCode()==net or not zone.IsOnLayer(L2) or zone.GetNetname()=='GND':continue   # GND planes clear round a via
+    if zone.GetNetname()=='PGND':drawpoly(dv,grown(zone.GetFilledPolysList(L2),.3+VIA_R+MARGIN));continue   # no signal via through the PGND area
+    fl=zone.GetFilledPolysList(L2);drawpoly(dv,grown(fl,max(cn,clr(zone.GetNetname()))+VIA_R+MARGIN))
+  via|=np.array(iv)!=0
+ if name.split('/')[-1] in TOP_ONLY:[o.fill(True) for o in obs[1:]];via[:]=True   # review 2.10: board.TOP_ONLY nets stay on F.Cu (no B.Cu, no via)
  s=tuple(round(v*R) for v in sxy);g=tuple(round(v*R) for v in gxy) if goal is None else None
  def h(x,y):
   if g is None:return 0
@@ -102,7 +116,7 @@ def plan(net,sxy,gxy,goalmask=None,slay=(0,1),glay=(0,1)):
   for dx,dy in [(1,0),(-1,0),(0,1),(0,-1),(1,1),(1,-1),(-1,1),(-1,-1)]:
    nx,ny=x+dx,y+dy
    if 0<=nx<W and 0<=ny<H and not obs[l][ny,nx] and not obs[l][y,nx] and not obs[l][ny,x]:nxt.append((nx,ny,l,1.41421356237 if dx and dy else 1))
-  if not via[y,x]:nxt.append((x,y,1-l,8*R))   # a via costs 8 mm of track
+  if not via[y,x]:nxt.extend((x,y,nl,8*R) for nl in range(NL) if nl!=l)   # a via costs 8 mm of track
   for nx,ny,nl,dc in nxt:
    nk=key(nx,ny,nl);nd=dist+dc
    if nd<cost.get(nk,1e99):cost[nk]=nd;prev[nk]=q;heapq.heappush(todo,(nd+h(nx,ny),nd,nk))
@@ -128,7 +142,7 @@ def add(net,points):
   if a[2]!=c[2]:
    assert a[:2]==c[:2];t=p.PCB_VIA(b);t.SetPosition(p.VECTOR2I(mm(a[0]),mm(a[1])));t.SetWidth(mm(.9));t.SetDrill(mm(.4));t.SetViaType(p.VIATYPE_THROUGH);t.SetLayerPair(p.F_Cu,p.B_Cu)
   else:
-   t=p.PCB_TRACK(b);t.SetStart(p.VECTOR2I(mm(a[0]),mm(a[1])));t.SetEnd(p.VECTOR2I(mm(c[0]),mm(c[1])));t.SetWidth(mm(width_of(net.GetNetname())));t.SetLayer(p.F_Cu if a[2]==0 else p.B_Cu)  # width from board.py (P03 R6 30.09: signals 0.2 mm, obstacles still kept for 0.3)
+   t=p.PCB_TRACK(b);t.SetStart(p.VECTOR2I(mm(a[0]),mm(a[1])));t.SetEnd(p.VECTOR2I(mm(c[0]),mm(c[1])));t.SetWidth(mm(width_of(net.GetNetname())));t.SetLayer(LAYERS[a[2]])  # width from board.py (P03 R6 30.09: signals 0.2 mm, obstacles still kept for 0.3)
   t.SetNet(net);t.SetLocked(True);b.Add(t)
 target=P/'routing/completion-routes.json';records=[];gnd_islands=[]
 def cluster_mask(code,uuid):
@@ -142,7 +156,7 @@ def cluster_mask(code,uuid):
  if start is None:return None
  b.BuildConnectivity();con={x.m_Uuid.AsString() for x in b.GetConnectivity().GetConnectedItems(start)}|{uuid}
  masks=[];anything=False
- for layer in [p.F_Cu,p.B_Cu]:
+ for layer in LAYERS:
   im=Image.new('L',(W,H));d=ImageDraw.Draw(im)
   items=[q for fp in b.GetFootprints() for q in fp.Pads()]+list(b.GetTracks())
   for it in items:
@@ -165,7 +179,7 @@ def main_mask(code):
   if best is None or n>best[0]:best=(n,ids)
  if best is None:return None
  ids=best[1];masks=[]
- for layer in [p.F_Cu,p.B_Cu]:
+ for layer in LAYERS:
   im=Image.new('L',(W,H));d=ImageDraw.Draw(im)
   for it in pads+[t for t in b.GetTracks() if t.GetNetCode()==code]:
    if it.m_Uuid.AsString() not in ids:continue
@@ -199,7 +213,7 @@ def has_pour(code):
 def orphan_pads(code):
  """Pads of a net that lie on neither the largest F.Cu nor the largest B.Cu fill polygon of that net."""
  big={}
- for layer in [p.F_Cu,p.B_Cu]:
+ for layer in LAYERS:
   best=None
   for z in b.Zones():
    if z.GetIsRuleArea() or z.GetNetCode()!=code or not z.IsOnLayer(layer):continue
@@ -217,7 +231,7 @@ def orphan_pads(code):
    if not on:out.append((q,(f'{fp.GetReference()}.{q.GetNumber()}',xy(q.GetPosition()),pad_layers(q))))
  return out
 def pad_layers(q):
- return tuple(i for i,L in enumerate([p.F_Cu,p.B_Cu]) if q.IsOnLayer(L))
+ return tuple(i for i,L in enumerate(LAYERS) if q.IsOnLayer(L))
 def endpoint(uuid,pos):
  """Pad centre for a pad, the DRC marker position for a track/via end; (item label, xy, net code, copper layers)."""
  for fp in b.GetFootprints():
@@ -226,14 +240,14 @@ def endpoint(uuid,pos):
  for t in b.GetTracks():
   if t.m_Uuid.AsString()==uuid:
    ends=[xy(t.GetPosition())] if isinstance(t,p.PCB_VIA) else [xy(t.GetStart()),xy(t.GetEnd())]
-   lay=(0,1) if isinstance(t,p.PCB_VIA) else ((0,) if t.GetLayer()==p.F_Cu else (1,))
+   lay=ALL_L if isinstance(t,p.PCB_VIA) else (LAYERS.index(t.GetLayer()),)
    return ('via' if isinstance(t,p.PCB_VIA) else 'track')+'@'+t.GetNetname(),min(ends,key=lambda e:math.dist(e,pos)),t.GetNetCode(),lay
  for z in b.Zones():
-  if z.m_Uuid.AsString()==uuid:return 'pour@'+z.GetNetname(),None,z.GetNetCode(),(0,1)
+  if z.m_Uuid.AsString()==uuid:return 'pour@'+z.GetNetname(),None,z.GetNetCode(),ALL_L
  sys.exit(f'unconnected item {uuid} is neither a pad, a track nor a zone: plan by hand')
 def blocked(pt,lay):
  """P05 R3: a point inside a router-only keepout (board.PLANNER_KEEPOUT) on every one of its copper layers."""
- return all(any(x0<=pt[0]<=x1 and y0<=pt[1]<=y1 for kl,x0,y0,x1,y1 in PLANNER_KEEPOUT if (kl=='F.Cu')==(L==0)) for L in lay)
+ return all(any(x0<=pt[0]<=x1 and y0<=pt[1]<=y1 for kl,x0,y0,x1,y1 in PLANNER_KEEPOUT if kl_on(kl,LAYERS[L])) for L in lay)
 def escape(uid,sxy,lay,toward):
  """P05 R3: an end inside the keepouts (a U1 pin) starts from the free end of its own locked escape instead: the copper end of its
  cluster outside the keepouts nearest to the other end (the planner may not draw inside them)."""
@@ -243,9 +257,9 @@ def escape(uid,sxy,lay,toward):
  b.BuildConnectivity();cands=[]
  for x in b.GetConnectivity().GetConnectedItems(item):
   if isinstance(x,p.PCB_VIA):
-   if not blocked(xy(x.GetPosition()),(0,1)):cands.append((xy(x.GetPosition()),(0,1)))
+   if not blocked(xy(x.GetPosition()),ALL_L):cands.append((xy(x.GetPosition()),ALL_L))
   elif isinstance(x,p.PCB_TRACK):
-   L=(0,) if x.GetLayer()==p.F_Cu else (1,)
+   L=(LAYERS.index(x.GetLayer()),)
    for e in (x.GetStart(),x.GetEnd()):
     if not blocked(xy(e),L):cands.append((xy(e),L))
  if not cands:return sxy,lay
@@ -263,7 +277,7 @@ if '--ties' in sys.argv:
    u,n_=spec[:2]
    p.ZONE_FILLER(b).Fill(b.Zones());cu,via=gndpath.copper(b,'GND',BW,BH)
    g=next(q for q in f[cap].Pads() if q.GetNetname()=='GND');(sxy,sl),(gxy,gl)=(xy(g.GetPosition()),pad_layers(g)),pp(u,n_)
-   if len(spec)>2:gxy,gl=list(spec[2]),(0,1)   # goal: a GND via tied to the pin (pin in the planner keepouts)
+   if len(spec)>2:gxy,gl=list(spec[2]),ALL_L   # goal: a GND via tied to the pin (pin in the planner keepouts)
    lim=1.3*math.dist(sxy,gxy)+3;now=gndpath.distances(cu,via,gndpath.pad_point(b,cap,g.GetNumber()),{'d':gndpath.pad_point(b,u,n_)},limit_mm=150)['d']
    if now is not None and now<=lim:continue
    pts=plan(g.GetNetCode(),sxy,gxy,slay=sl,glay=gl)
@@ -289,7 +303,7 @@ elif '--plan' in sys.argv:
   for q in orphans:
    lab=f'{q.GetParentFootprint().GetReference()}.{q.GetNumber()}';m=main_mask(q.GetNetCode());done.add(lab);points=None
    b.BuildConnectivity();own=[x for x in b.GetConnectivity().GetConnectedItems(q) if isinstance(x,p.PCB_VIA)]
-   for sxy,sl in [(xy(q.GetPosition()),pad_layers(q))]+sorted((xy(v.GetPosition()),(0,1)) for v in own):   # the pad first, then the vias of its cluster
+   for sxy,sl in [(xy(q.GetPosition()),pad_layers(q))]+sorted((xy(v.GetPosition()),ALL_L) for v in own):   # the pad first, then the vias of its cluster
     points=plan(q.GetNetCode(),sxy,None,m,slay=sl) if m is not None else None
     if points is not None:break
    if points is None:fail.append(lab);print('skipped (no path this round): GND island',lab,flush=True);continue

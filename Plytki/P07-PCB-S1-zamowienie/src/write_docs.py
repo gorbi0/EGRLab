@@ -23,10 +23,11 @@ npth = [h for h in D['holes'] if not h['plated']]
 vias = sum(1 for h in D['holes'] if h['ref'] == 'VIA')
 dmin = min(h['diameter'] for h in D['holes']); dmax = max(h['diameter'] for h in D['holes'])
 zip_name = f'DO-ZAMOWIENIA_{N}-PCB-{REV}.zip'
-layers = {'F.Cu': 'miedź górna (.gtl)', 'B.Cu': 'miedź dolna (.gbl)', 'F.Mask': 'maska górna (.gts)', 'B.Mask': 'maska dolna (.gbs)',
+layers = {'F.Cu': 'miedź górna (.gtl)', 'In1.Cu': 'miedź wewnętrzna 1 (.g2)', 'In2.Cu': 'miedź wewnętrzna 2 (.g3)', 'B.Cu': 'miedź dolna (.gbl)', 'F.Mask': 'maska górna (.gts)', 'B.Mask': 'maska dolna (.gbs)',
           'F.SilkS': 'opis górny (.gto)', 'B.SilkS': 'opis dolny (.gbo)', 'Edge.Cuts': 'obrys (.gm1)'}
 n_neg = sum(1 for x in neg if x['plik'])
 silk_top_only = 'B.SilkS' not in CFG['layers']
+NCU = sum(1 for l in CFG['layers'] if l.endswith('.Cu'))
 dec = lambda x: f'{x:.2f}'.rstrip('0').rstrip('.').replace('.', ',')
 num = lambda x: str(x).replace('.', ',')
 RCM = CFG.get('corner_radius_mm')
@@ -91,8 +92,8 @@ Wydanie **{DATE}**, źródło **{CFG['source']}**. Plik płytki jest bajtowo zgo
 spec = f"""EGRLab {N} — płytka prototypowa, wyłącznie PCB (bez montażu i szablonu)
 Plik: {zip_name} (suma SHA-256 w pliku .zip.sha256)
 
-Laminat: FR4, 2 warstwy, grubość {'1,5 mm (projekt nominalnie 1,6 mm — 1,5 mm jest akceptowalne)' if FAB == 'Satland' else '1,6 mm (w Satlandzie 1,5 mm jest akceptowalne)'}
-Miedź: {CU} µm na każdej stronie{' (zmiana z 70 µm 28.09.2026; pliki CAM bez zmian)' if CFG.get('copper_note') else ''}
+Laminat: FR4, {NCU} warstwy, grubość {'1,5 mm (projekt nominalnie 1,6 mm — 1,5 mm jest akceptowalne)' if FAB == 'Satland' else '1,6 mm (w Satlandzie 1,5 mm jest akceptowalne)'}
+{('Stos: ' + CFG['stackup'] + chr(10) + 'Kolejność warstw: L1 F_Cu (.gtl, góra), L2 In1_Cu (.g2), L3 In2_Cu (.g3), L4 B_Cu (.gbl, dół).' + chr(10)) if NCU == 4 else ''}Miedź: {CU} µm na warstwach zewnętrznych{(', ' + str(CFG['inner_copper_um']).replace('.', ',') + ' µm (0,5 oz) na wewnętrznych') if NCU == 4 else ''}{' (zmiana z 70 µm 28.09.2026; pliki CAM bez zmian)' if CFG.get('copper_note') else ''}
 Wymiar: {dec(W)} × {dec(H)} mm, prostokąt{rc_spec}. Obrys po osi linii w pliku .gm1; niektóre przeglądarki
   pokazują {dec(W + 0.05)} × {dec(H + 0.05)} mm, doliczając grubość linii 0,05 mm. Nie skalować.
 Wykończenie: HAL (jeśli możliwe bezołowiowy)
@@ -107,7 +108,7 @@ Format: Gerber X2 (RS-274X z atrybutami), mm, 4.6; Excellon mm dziesiętnie, wsp
   wszystkich warstw. Nie odbijać, nie skalować, nie panelizować.
 Pliki w ZIP: {', '.join(sorted(cam['files']))}.
 Dostawa: pojedyncze płytki, bez V-cut. Test elektryczny: proszę o informację, czy jest wykonywany.
-{('JLCPCB: Base Material FR-4, Layers 2, Dimensions ' + str(W) + ' x ' + str(H) + ' mm, PCB Thickness 1.6 mm, PCB Color Green, Silkscreen White, ' 'Surface Finish HASL (lead free), Outer Copper Weight 1 oz, Via Covering Tented, Board Outline Tolerance +/-0.2 mm, Remove Order Number: ' 'Specify a location lub No (wybrać przy zamówieniu), Confirm Production file: Yes. Bez montażu (PCBA) i bez szablonu.') if FAB == 'JLCPCB' else ''}
+{('JLCPCB: Base Material FR-4, Layers ' + str(NCU) + ', Dimensions ' + str(W) + ' x ' + str(H) + ' mm, PCB Thickness 1.6 mm, PCB Color Green, Silkscreen White, ' 'Surface Finish HASL (lead free), Outer Copper Weight 1 oz, ' + ('Inner Copper Weight 0.5 oz, Impedance Control No, Layer Stackup JLC04161H-7628, ' if NCU == 4 else '') + 'Via Covering Tented, Board Outline Tolerance +/-0.2 mm, Remove Order Number: ' 'Specify a location lub No (wybrać przy zamówieniu), Confirm Production file: Yes. Bez montażu (PCBA) i bez szablonu.') if FAB == 'JLCPCB' else ''}
 """
 (R/'SPECYFIKACJA-DLA-PRODUCENTA.txt').write_text(spec, encoding='utf-8')
 
@@ -119,7 +120,7 @@ qa = f"""# Kontrola wydania do wykonania {N} — {DATE}
 
 - DRC KiCad 10.0.6 z `--refill-zones --schematic-parity --severity-all`: {cnt['violations']} naruszeń, {cnt['unconnected_items']} niepołączonych, {cnt['schematic_parity']} rozbieżności (`drc.json`, `drc-counts.json`){f"; poza tym {len(ACC)} przyjętych zgłoszeń lib_footprint_mismatch (`drc-accepted.json`, wyjaśnienie niżej)" if ACC else ''}.
 - Eksport `kicad-cli` z opcjami jak dla P01 (Gerber X2 4.6 mm, `--subtract-soldermask`, `--disable-aperture-macros`, `--check-zones`; Excellon mm, PTH/NPTH osobno); hashe plików projektu identyczne przed i po (`export-receipt.json`, logi).
-- Kontrola CAM własnym parserem (`src/check_cam.py`, bez KiCada): {sum(c['pass'] for c in cam['checks'])}/{len(cam['checks'])} (`cam-checks.json`). Porównanie położenia i średnicy każdego z {len(D['holes'])} otworów, położenia i sieci każdego pola na obu warstwach miedzi, otwarcia maski nad każdym polem, obrysu {dec(W)} × {dec(H)} mm, liczby konturów wylewek ({D['zone_outlines']['F.Cu']} góra, {D['zone_outlines']['B.Cu']} dół) oraz atrybutów X2 i formatu.
+- Kontrola CAM własnym parserem (`src/check_cam.py`, bez KiCada): {sum(c['pass'] for c in cam['checks'])}/{len(cam['checks'])} (`cam-checks.json`). Porównanie położenia i średnicy każdego z {len(D['holes'])} otworów, położenia i sieci każdego pola na wszystkich warstwach miedzi ({NCU}), otwarcia maski nad każdym polem, obrysu {dec(W)} × {dec(H)} mm, liczby konturów wylewek ({', '.join(f'{v} {k}' for k, v in D['zone_outlines'].items())}) oraz atrybutów X2 i formatu.
 - Próby ujemne kontroli CAM (`src/cam_negative_controls.py`, `cam-negative-controls.json`): {n_neg} celowych usterek w kopiach plików (usunięte pole, otwór przesunięty o 0,1 mm i o 5 µm, zmienione wiertło, brak otwarcia maski, zmieniony obrys, zła sieć, usunięta wylewka) — wszystkie wykryte właściwą kontrolą; próba zerowa przechodzi. Sumy w kopii pokwitowania są przeliczane, więc wykrycie nie wynika z porównania bajtów.
 - Oględziny podglądów z plików CAM (`visual-review.json`).
 {paired_txt}{EXTRA.get('qa', '')}

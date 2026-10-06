@@ -40,18 +40,19 @@ def fix(m):
 
 
 d = re.sub(r'(\(net ("[^"]+"|\S+)\s*\n\s*)\(pins ([^)]*)\)', fix, d)
-d, k = re.subn(r'\(plane ', '(keepout ', d); assert k == 2 * len(FORCE), k   # each force pour on F.Cu and B.Cu
+d, k = re.subn(r'\(plane ', '(keepout ', d); assert k >= 2 * len(FORCE), k   # each force pour on F.Cu and B.Cu (+ PGND on In1.Cu, P07 S1 4 layers)
+d, kp = re.subn(r'\(layer In1\.Cu\s*\n\s*\(type signal\)', '(layer In1.Cu\n      (type power)', d); assert kp == 1, kp   # 6.10: In1 = GND plane, no routing
 if GND_MODE == 'out':
     d, ng = re.subn(r'(\(net GND\s*\n\s*)\(pins [^)]*\)', r'\1(pins)', d); assert ng == 1, ng
 S1 = json.loads((P.parents[0] / 'Format-S1/format-s1.json').read_text(encoding='utf-8')); W, H = S1['klasy'][CLASS]['W'], S1['klasy'][CLASS]['H']
 e = .4; strips = [(0, 0, W, e), (0, H - e, W, H), (0, 0, e, H), (W - e, 0, W, H)]
 add = ''.join(f'    (keepout "EDGE_STRIP" (polygon {L} 0  {x0 * 1000:.0f} {-y0 * 1000:.0f}  {x1 * 1000:.0f} {-y0 * 1000:.0f}  {x1 * 1000:.0f} {-y1 * 1000:.0f}  {x0 * 1000:.0f} {-y1 * 1000:.0f}))\n'
-              for L in ('F.Cu', 'B.Cu') for x0, y0, x1, y1 in strips)
+              for L in ('F.Cu', 'In2.Cu', 'B.Cu') for x0, y0, x1, y1 in strips)
 add += ''.join(f'    (keepout "SHUNT_KELVIN" (polygon {L} 0  {x0 * 1000:.0f} {-y0 * 1000:.0f}  {x1 * 1000:.0f} {-y0 * 1000:.0f}  {x1 * 1000:.0f} {-y1 * 1000:.0f}  {x0 * 1000:.0f} {-y1 * 1000:.0f}))\n'
-               for L, x0, y0, x1, y1 in ROUTER_KEEPOUT)
+               for L, x0, y0, x1, y1 in ROUTER_KEEPOUT + [('In2.Cu', *r[1:]) for r in ROUTER_KEEPOUT if r[0] == 'F.Cu'])
 i = d.index('(keepout'); d = d[:i] + add.lstrip() + '    ' + d[i:]
 if GND_MODE == 'plane':   # the router joins every GND pin to this B.Cu plane (SMD pins: short stub + via where it finds room)
-    m = .5; pl = f'    (plane GND (polygon B.Cu 0  {m * 1000:.0f} {-m * 1000:.0f}  {(W - m) * 1000:.0f} {-m * 1000:.0f}  {(W - m) * 1000:.0f} {-(H - m) * 1000:.0f}  {m * 1000:.0f} {-(H - m) * 1000:.0f}))\n'
+    m = .5; pl = f'    (plane GND (polygon In1.Cu 0  {m * 1000:.0f} {-m * 1000:.0f}  {(W - m) * 1000:.0f} {-m * 1000:.0f}  {(W - m) * 1000:.0f} {-(H - m) * 1000:.0f}  {m * 1000:.0f} {-(H - m) * 1000:.0f}))\n'
     i = d.index('(keepout'); d = d[:i] + pl.lstrip() + '    ' + d[i:]
 
 

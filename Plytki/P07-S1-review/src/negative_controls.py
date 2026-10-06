@@ -161,6 +161,10 @@ def return_cut(b):                                                              
             b.Remove(t)
 
 
+def signal_on_in1(b):                                                              # 6.10: a CLK_LOCAL track on the In1 GND plane under U6
+    c = fp(b, 'U6').GetBoundingBox().GetCenter(); x, y = p.ToMM(c.x), p.ToMM(c.y); track(b, p.In1_Cu, x - 3, y, x + 3, y, netname(b, 'CLK_LOCAL'))
+
+
 def null_control(b): pass
 
 
@@ -174,7 +178,9 @@ CASES = [(null_control, None), (mount_shift, 'M3 holes'), (jbp_shift, 'J_BP (edg
          (analog_near_power, 'Ground separation'), (c5_far, 'Decoupling at the pins'), (decap_far, 'Decoupling at the pins'), ('gnd_pour_removed', 'GND pours'),
          (ref_on_part, 'Every visible reference outside'), (ref_far, 'Every visible reference nearer'), (strip_part, 'Reserved strip of edge A'),
          ('mark_missing', 'Net marks of the tails'), (zone_copper, 'Standoff zones D7'), ('title_wrong', 'Silkscreen: board name'),
-         (silk_small, 'Silkscreen legible'), (return_cut, 'Decoupling return')]
+         (silk_small, 'Silkscreen legible'), (return_cut, 'Decoupling return'),
+         ('stack_inner_1oz', 'Stack JLC04161H-7628'), ('in1_gnd_removed', 'In1.Cu GND plane'), ('pgnd_in1_to_gnd', 'Ground separation'),
+         (signal_on_in1, 'In1.Cu GND plane'), ('in2_zone_missing', 'In2.Cu supply zones')]
 assert root.resolve().is_relative_to(P.resolve()) and root.name == 'negative-controls'
 shutil.rmtree(root, ignore_errors=True); root.mkdir(parents=True)
 labels = json.loads((P / 'routing/silkscreen.json').read_text(encoding='utf-8'))['service_labels']
@@ -220,6 +226,22 @@ for fn, expected in CASES:
             at = next((x for x in g if isinstance(x, list) and x and x[0] == 'at'), None)
             return at and math.dist((float(at[1]), float(at[2])), j1) <= 6.0
         drop(copy, lambda g: isinstance(g, list) and g and g[0] == 'gr_text' and g[1] == 'VM' and at_j3(g))
+    if name == 'stack_inner_1oz':                                          # 6.10: In1.Cu 35 um instead of 15.2 um in the stack
+        txt = copy.read_text(encoding='utf-8'); k = txt.count('(layer "In1.Cu" (type "copper") (thickness 0.0152))')
+        assert k == 1, k; copy.write_text(txt.replace('(layer "In1.Cu" (type "copper") (thickness 0.0152))', '(layer "In1.Cu" (type "copper") (thickness 0.035))'), encoding='utf-8')
+    if name == 'in1_gnd_removed':                                          # the In1.Cu GND plane deleted at file level
+        drop(copy, lambda g: zone_of(g, 'GND', 'In1.Cu'))
+    if name == 'in2_zone_missing':                                         # the 3V3_IO supply zone on In2.Cu deleted
+        drop(copy, lambda g: zone_of(g, '3V3_IO', 'In2.Cu'))
+    if name == 'pgnd_in1_to_gnd':                                          # the PGND area of In1.Cu turned into GND (masses joined)
+        t = parse(copy.read_text(encoding='utf-8')); k = 0
+        for g in t:
+            if zone_of(g, 'PGND', 'In1.Cu'):
+                for x in g:
+                    if isinstance(x, list) and x[:1] in (['net'], ['net_name']):
+                        x[1] = 'GND'; k += x[0] == 'net'
+        assert k == 1, k
+        copy.write_text(dump(t) + '\n', encoding='utf-8')
     if name == 'title_wrong':                                              # board name without the slots (as R2 up to 30.09)
         t = parse(copy.read_text(encoding='utf-8')); k = 0
         for g in t:

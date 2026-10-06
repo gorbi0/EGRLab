@@ -100,6 +100,18 @@ CL = .35       # pour outline to a sense pad / Kelvin track edge
 XL = 11.0      # pour edge towards the wall (anchor rule areas, x <= 12.7 at the anchors, cut the fill there)
 
 
+def copy_poly(src, dst):
+    """Point-by-point copy of a SHAPE_POLY_SET with holes into a zone outline (SetOutline() with a temporary crashed KiCad 10)."""
+    for k in range(src.OutlineCount()):
+        dst.NewOutline(); o = src.Outline(k); oi = dst.OutlineCount() - 1
+        for i in range(o.PointCount()):
+            dst.Append(o.CPoint(i).x, o.CPoint(i).y, oi)
+        for h in range(src.HoleCount(k)):
+            dst.NewHole(oi); hh = src.Hole(k, h)
+            for i in range(hh.PointCount()):
+                dst.Append(hh.CPoint(i).x, hh.CPoint(i).y, oi, h)
+
+
 def power(B):
     T = {k: B.pp(*k) for k in [('J2', 2), ('J2', 1), ('J1', 1), ('J1', 2), ('J3', 1), ('J3', 2), ('J4', 2), ('J4', 1)]}
     ys = [T[k][1] for k in T]; tx = T[('J2', 2)][0]
@@ -159,9 +171,27 @@ def power(B):
     B.track(ncp[0].GetNetname().split('/')[-1], nc, .3)
     B.pour('PGND', pg); B.pour('MOD_BP', bp); B.pour('VMOTOR', vm)
     B.pour('MOD_MP', mp); B.pour('T_EGR_P3', p3); B.pour('T_EGR_P1', p1)
+    # ---- 4 layers (user decision 6.10): In1.Cu under the power block (pours + the cable area at x = 0) is a separate PGND area, never GND;
+    # In2.Cu there has no tracks and no zone fills (vias of the force nets pass); the GND plane of In1 elsewhere comes from import_routing.py ----
+    ys = [r[1] for r in pg + mp + p1] + [r[3] for r in pg + mp + p1]
+    blk = p.SHAPE_POLY_SET()
+    for x0, y0, x1, y1 in pg + bp + vm + mp + p3 + p1 + [(.6, min(ys), XL + .2, max(ys))]:
+        one = p.SHAPE_POLY_SET(); one.NewOutline()
+        for x, y in [(x0, y0), (x1, y0), (x1, y1), (x0, y1)]:
+            one.Append(mm(x), mm(y))
+        blk.BooleanAdd(one)
+    blk.Inflate(mm(.4), p.CORNER_STRATEGY_CHAMFER_ALL_CORNERS, mm(.01)); blk.Deflate(mm(.4), p.CORNER_STRATEGY_CHAMFER_ALL_CORNERS, mm(.01))   # close the 0.6 mm gaps
+    blk.Simplify()
+    z = p.ZONE(B.b); z.SetLayer(p.In1_Cu); z.SetNet(B.net('PGND')); z.SetAssignedPriority(10); z.SetZoneName('PGND In1.Cu (pod torem mocy)')
+    z.SetLocalClearance(mm(.3)); z.SetMinThickness(mm(.25)); z.SetPadConnection(p.ZONE_CONNECTION_FULL); z.SetIslandRemovalMode(p.ISLAND_REMOVAL_MODE_ALWAYS)
+    z.SetThermalReliefSpokeWidth(mm(2.0)); z.SetThermalReliefGap(mm(.5)); copy_poly(blk, z.Outline()); z.SetLocked(True); B.b.Add(z)
+    r2 = p.ZONE(B.b); r2.SetIsRuleArea(True); ls = p.LSET(); ls.AddLayer(p.In2_Cu); r2.SetLayerSet(ls); r2.SetDoNotAllowTracks(True); r2.SetDoNotAllowVias(False)
+    r2.SetDoNotAllowZoneFills(True); r2.SetDoNotAllowPads(False); r2.SetDoNotAllowFootprints(False); r2.SetZoneName('In2: nic pod torem mocy')
+    copy_poly(blk, r2.Outline()); B.b.Add(r2)
+    REPORT.append({'in1_pgnd_and_in2_keepout_mm2': round(blk.Area() / 1e12, 1), 'outlines': blk.OutlineCount()})
     # ---- stitching vias: a grid inside each pour, clear of every pad (any layer), hole, rule area and of each other ----
     pads = [(a, f.GetReference()) for f in B.b.GetFootprints() for a in f.Pads()]
-    rules = [z for z in B.b.Zones() if z.GetIsRuleArea()]
+    rules = [z for z in B.b.Zones() if z.GetIsRuleArea() and z.GetDoNotAllowVias()]   # 6.10: the In2 area under the power block allows vias
     placed = []
     sh = B.f['RSH1']; sh.BuildCourtyardCaches(); shc = sh.GetCourtyard(p.F_CrtYd)
 

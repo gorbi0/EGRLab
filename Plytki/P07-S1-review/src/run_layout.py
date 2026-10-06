@@ -112,6 +112,7 @@ for k in range(4):  # a pad can become starved only after the clean-up or the st
 else:
     sys.exit('starved thermals remain after 4 rounds')
 run(PY, 'trim_stubs.py'); run(PY, 'set_rules.py')   # P05 R3: unused ends of the locked escapes (DRC track_dangling)
+run(PY, 'inner_zones.py'); run(PY, 'set_rules.py')   # P07 S1 (6.10): supply zones on In2.Cu round the router tracks
 d = drc('routing/postclean-drc.json')
 assert not d['unconnected_items'] and not [v for v in d['violations'] if v['type'] in ('track_dangling', 'via_dangling', 'starved_thermal')], 'trim left a gap'
 (P / 'routing/solid-pads.json').write_text(json.dumps(sorted(solid)) + chr(10))

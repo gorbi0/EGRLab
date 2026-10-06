@@ -90,6 +90,9 @@ drop_new_local_settings(before)
 assert eda_hashes() == before, 'Eksport zmienił pliki projektu'
 
 b = pcb.LoadBoard(str(board))
+CU = (('F.Cu', pcb.F_Cu), ('In1.Cu', pcb.In1_Cu), ('In2.Cu', pcb.In2_Cu), ('B.Cu', pcb.B_Cu))[:b.GetCopperLayerCount()] if b.GetCopperLayerCount() == 2 else (('F.Cu', pcb.F_Cu), ('In1.Cu', pcb.In1_Cu), ('In2.Cu', pcb.In2_Cu), ('B.Cu', pcb.B_Cu))   # P07 S1: 4 layers
+if b.GetCopperLayerCount() == 2:
+    CU = (('F.Cu', pcb.F_Cu), ('B.Cu', pcb.B_Cu))
 
 
 def mm(v):
@@ -100,7 +103,7 @@ pads, holes = [], []
 for fp in b.GetFootprints():
     for p in fp.Pads():
         pos = p.GetPosition(); d = p.GetDrillSize()
-        on = [l for l, i in (('F.Cu', pcb.F_Cu), ('B.Cu', pcb.B_Cu)) if p.IsOnLayer(i)]
+        on = [l for l, i in CU if p.IsOnLayer(i)]
         mask = [l for l, i in (('F.Mask', pcb.F_Mask), ('B.Mask', pcb.B_Mask)) if p.IsOnLayer(i)]
         pads.append({'ref': fp.GetReference(), 'pin': p.GetNumber(), 'x': mm(pos.x), 'y': -mm(pos.y),
                      'attr': int(p.GetAttribute()), 'net': p.GetNetname(), 'copper': on, 'mask': mask})
@@ -118,17 +121,17 @@ ring_pads = [mm((min(p.GetSize(i).x, p.GetSize(i).y) - max(p.GetDrillSize().x, p
              if p.GetDrillSize().x and p.GetAttribute() != pcb.PAD_ATTRIB_NPTH
              for i in (pcb.F_Cu, pcb.B_Cu) if p.IsOnLayer(i)]
 ring_vias = [mm((t.GetWidth(pcb.F_Cu) - t.GetDrill()) // 2) for t in vias]
-zones = {'F.Cu': 0, 'B.Cu': 0}
-zone_outlines = {'F.Cu': 0, 'B.Cu': 0}
+zones = {l: 0 for l, _ in CU}
+zone_outlines = {l: 0 for l, _ in CU}
 filler = pcb.ZONE_FILLER(b)
 filler.Fill(b.Zones())  # jak --check-zones przy eksporcie; tylko w pamięci, pliku nie zapisujemy
 for z in b.Zones():
-    for l, i in (('F.Cu', pcb.F_Cu), ('B.Cu', pcb.B_Cu)):
+    for l, i in CU:
         if z.IsOnLayer(i) and not z.GetIsRuleArea():
             zones[l] += 1
             zone_outlines[l] += z.GetFilledPolysList(i).OutlineCount()
 data = {'name': NAME, 'board_sha256': sha(board), 'board_mm': CFG['board_mm'], 'thickness_mm': CFG['thickness_mm'],
-        'copper_um_each': CFG['copper_um'], 'min_track_mm': min(widths) if widths else None, 'tracks': len(widths),
+        'copper_um_each': CFG['copper_um'], 'copper_layers': b.GetCopperLayerCount(), 'inner_copper_um': CFG.get('inner_copper_um'), 'min_track_mm': min(widths) if widths else None, 'tracks': len(widths),
         'vias': len(vias), 'footprints': len(list(b.GetFootprints())), 'zones': zones, 'zone_outlines': zone_outlines,
         'min_annular_ring_mm': {'pads': min(ring_pads) if ring_pads else None, 'vias': min(ring_vias) if ring_vias else None},
         'holes': holes, 'pads': pads,

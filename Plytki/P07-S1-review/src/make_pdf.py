@@ -34,7 +34,7 @@ pdfmetrics.registerFontFamily('Arial', normal='Arial', bold='Bold', italic='Aria
 PDF = O / f"pdf/{REV.replace(' ', '-')}-PCB.pdf"
 c = Canvas(str(PDF), pagesize=(297 * mm, 210 * mm)); c.setTitle(f'EGRLab {REV}: PCB DRIVE w formacie S1')
 style = ParagraphStyle('body', fontName='Arial', fontSize=9.5, leading=13, textColor=HexColor('#172833'))
-NPAGES = 5
+NPAGES = 7
 
 
 def para(t, x, y, w):
@@ -76,7 +76,7 @@ start(1, f'{REV} — DRIVE pod moduł IBT-2 (KPWR, bocznik 5 mΩ, INA240), PCB w
       'Klasa 2/3 (106,5 × 100 mm), sloty S2–S3 poziomu 5 (dystanse 20 mm). Schemat: osobny PDF (P07-S1-schemat.pdf, 8 arkuszy A3).')
 y = 172
 fx = lambda v: str(v).replace('.', ',')
-for t in [f'<b>Płytka:</b> 106,5 × 100 mm (klasa 2/3), narożniki R1, FR4 1,6 mm, 2 × 35 µm; 8 otworów M3 (NPTH 3,2) według format-s1.json, strefy dystansów Ø7 '
+for t in [f'<b>Płytka:</b> 106,5 × 100 mm (klasa 2/3), narożniki R1, 4 warstwy JLC04161H-7628 1,6 mm (zewnętrzne 35 µm, wewnętrzne 15 µm; In1 masa, In2 sygnały + zasilania); 8 otworów M3 (NPTH 3,2) według format-s1.json, strefy dystansów Ø7 '
           f'bez miedzi i części. {len(onboard)} części; od spodu {len(bottom)} SMD ≤ 1,5 mm; najwyższa {", ".join(tall)} {fx(hmax)} mm (limit 16,5 mm).',
           '<b>Krawędź A:</b> J_BP1 (S2, x = 26,5) i J_BP2 (S3, x = 80,0), IDC 2×8, pinout docs/J_BP.csv, pin 1 od mniejszego x. '
           '<b>Krawędź B:</b> jedna listwa J_SV2 (slot S3, 12 kołków: szyny, KPWR, SAFE_OK, łańcuch OC, DRIVE_OK, ITEST — uproszczenie 6.10), GND na końcach, rezystory przy węzłach (docs/SERWIS.csv). '
@@ -111,7 +111,11 @@ pages = [(2, 'Montaż od góry — 1:1', 'assembly', [
     'Wydruk kontrolny, nie plik produkcyjny.']),
     (4, 'Miedź B.Cu — 1:1, widok od spodu', 'copper-back', [
     'Widok od spodu (lustrzany względem strony 3). B.Cu to głównie masa GND; przy x = 0 druga warstwa wylewek toru 10 A i PGND, pod bocznikiem pusto.']),
-    (5, 'Przymiarka 1:1 — obrys, obrysy części, otwory', 'fit', [
+    (5, 'Miedź In1.Cu — 1:1 (płaszczyzna masy)', 'copper-in1', [
+    'Warstwa wewnętrzna 1 (0,5 oz): ciągła masa GND pod logiką, łańcuchem analogowym i parą Kelvina; pod blokiem mocy osobny obszar PGND (masy łączą się tylko na P02 R4).']),
+    (6, 'Miedź In2.Cu — 1:1 (sygnały i zasilania)', 'copper-in2', [
+    'Warstwa wewnętrzna 2 (0,5 oz): część ścieżek sygnałowych i strefy zasilań 3V3A_P07 (ADC), 5VA_P07 (INA240 / okno OC) i 3V3_IO (logika); pod blokiem mocy nic. Tor 10 A tylko na warstwach zewnętrznych.']),
+    (7, 'Przymiarka 1:1 — obrys, obrysy części, otwory', 'fit', [
     'Wydrukować w skali 100 % i położyć na części / w obudowie. Kółka Ø7 wokół otworów M3 to strefy dystansów.',
     f'<b>Wysokości (limit 16,5 mm, poziom 5):</b> K1 {fx(h_of("K1"))} mm, C1 ok. {fx(h_of("C1"))} mm, IDC ok. 9,2 mm, '
     'DIP w podstawce ok. 8 mm, TO-92 ok. 7 mm (szacunek).',

@@ -24,32 +24,33 @@ def _draw(d, ps, res):
 def copper(b, net, W, H, res=RES):
     """Boolean rasters (F.Cu, B.Cu) of the net's copper and the mask where the layers join (vias, PTH pads of the net)."""
     w, h = int(W / res) + 2, int(H / res) + 2
-    ims = [Image.new('1', (w, h), 0) for _ in range(3)]; dr = [ImageDraw.Draw(i) for i in ims]
+    LS = (p.F_Cu, p.B_Cu) + ((p.In1_Cu, p.In2_Cu) if b.GetCopperLayerCount() >= 4 else ())   # P07 S1 (6.10): 4 layers, In1 GND plane
+    ims = [Image.new('1', (w, h), 0) for _ in range(len(LS) + 1)]; dr = [ImageDraw.Draw(i) for i in ims]; VI = len(LS)
     for z in b.Zones():
         if z.GetIsRuleArea() or z.GetNetname() != net:
             continue
-        for k, L in enumerate((p.F_Cu, p.B_Cu)):
+        for k, L in enumerate(LS):
             if z.IsOnLayer(L):
                 _draw(dr[k], z.GetFilledPolysList(L), res)
     for t in b.GetTracks():
         if t.GetNetname() != net:
             continue
-        for k, L in enumerate((p.F_Cu, p.B_Cu)):
+        for k, L in enumerate(LS):
             if t.IsOnLayer(L):
                 ps = p.SHAPE_POLY_SET(); t.TransformShapeToPolygon(ps, L, 0, p.FromMM(.005), p.ERROR_OUTSIDE); _draw(dr[k], ps, res)
         if isinstance(t, p.PCB_VIA):
-            ps = p.SHAPE_POLY_SET(); t.TransformShapeToPolygon(ps, p.F_Cu, 0, p.FromMM(.005), p.ERROR_OUTSIDE); _draw(dr[2], ps, res)
+            ps = p.SHAPE_POLY_SET(); t.TransformShapeToPolygon(ps, p.F_Cu, 0, p.FromMM(.005), p.ERROR_OUTSIDE); _draw(dr[VI], ps, res)
     for f in b.GetFootprints():
         for a in f.Pads():
             if a.GetNetname() != net:
                 continue
-            for k, L in enumerate((p.F_Cu, p.B_Cu)):
+            for k, L in enumerate(LS):
                 if a.IsOnLayer(L):
                     ps = p.SHAPE_POLY_SET(); a.TransformShapeToPolygon(ps, L, 0, p.FromMM(.005), p.ERROR_OUTSIDE); _draw(dr[k], ps, res)
             if a.GetDrillSize().x > 0 and a.IsOnLayer(p.F_Cu) and a.IsOnLayer(p.B_Cu):
-                ps = p.SHAPE_POLY_SET(); a.TransformShapeToPolygon(ps, p.F_Cu, 0, p.FromMM(.005), p.ERROR_OUTSIDE); _draw(dr[2], ps, res)
+                ps = p.SHAPE_POLY_SET(); a.TransformShapeToPolygon(ps, p.F_Cu, 0, p.FromMM(.005), p.ERROR_OUTSIDE); _draw(dr[VI], ps, res)
     m = [np.array(i, dtype=bool) for i in ims]
-    return np.stack([m[0], m[1]]), m[2] & m[0] & m[1]
+    return np.stack(m[:VI]), m[VI] & m[0] & m[1]
 
 
 def _grow(a, diag):
@@ -86,7 +87,7 @@ def distances(cu, via, src, targets, res=RES, limit_mm=250.0):
     while todo and front.any() and k < kmax:
         k += 1
         nb = _grow(front, k % 2 == 1)
-        nb[0] |= front[1] & via; nb[1] |= front[0] & via    # a via / PTH pad joins the layers
+        nb |= (front.any(axis=0) & via)[None]    # a via / PTH pad joins all copper layers
         nb &= cu & ~seen; seen |= nb; front = nb
         for n, g in list(todo.items()):
             if nb[g]:

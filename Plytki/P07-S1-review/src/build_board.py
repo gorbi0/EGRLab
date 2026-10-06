@@ -48,7 +48,7 @@ def fab_circle(b, x, y, r):
     g = p.PCB_SHAPE(b); g.SetShape(p.SHAPE_T_CIRCLE); g.SetCenter(xy(x, y)); g.SetEnd(xy(x + r, y)); g.SetLayer(p.F_Fab); g.SetWidth(mm(.1)); b.Add(g)
 
 
-def rule_area(b, name, pts, footprints=False, warstwy=(p.F_Cu, p.B_Cu)):
+def rule_area(b, name, pts, footprints=False, warstwy=(p.F_Cu, p.In1_Cu, p.In2_Cu, p.B_Cu)):   # P07 S1 (6.10): all four copper layers
     z = p.ZONE(b); z.SetIsRuleArea(True); z.SetLayerSet(layers(*warstwy)); z.SetDoNotAllowTracks(True)
     z.SetDoNotAllowVias(True); z.SetDoNotAllowZoneFills(True); z.SetDoNotAllowPads(False); z.SetDoNotAllowFootprints(footprints)
     z.SetZoneName(name)
@@ -65,7 +65,7 @@ def circle(x, y, r, n=48):
 if __name__ == '__main__':
     parts = json.loads((P / 'docs/parts.json').read_text(encoding='utf-8'))
     root = ET.parse(P / f'verification/{NAME}.xml').getroot()
-    b = p.BOARD(); b.SetFileName(str(E / f'{NAME}.kicad_pcb')); b.SetCopperLayerCount(2)
+    b = p.BOARD(); b.SetFileName(str(E / f'{NAME}.kicad_pcb')); b.SetCopperLayerCount(4)   # P07 S1: 4 layers (user decision 6.10)
     s = b.GetDesignSettings(); s.SetBoardThickness(mm(S1['obrys']['grubosc_pcb'])); s.m_MinClearance = mm(.25); s.m_TrackMinWidth = mm(.2)
     s.m_CopperEdgeClearance = mm(S1['obrys']['odstep_miedzi_od_krawedzi']); s.m_HoleToHoleMin = mm(.3); s.m_HoleClearance = mm(.25)
     s.m_ViasMinSize = mm(.9); s.m_MinThroughDrill = mm(.4); s.m_ViasMinAnnularWidth = mm(.25)

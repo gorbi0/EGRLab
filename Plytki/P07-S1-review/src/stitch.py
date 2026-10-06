@@ -41,10 +41,23 @@ def islands():
 
 
 # 30.09: one release run found no GND pours here (204 unconnected, cause not reproduced); stop loudly instead of stitching nothing
-assert sum(1 for z in b.Zones() if not z.GetIsRuleArea() and z.GetNetname() == 'GND') == 2, 'GND pours missing (import_routing.py makes them)'
+assert sum(1 for z in b.Zones() if not z.GetIsRuleArea() and z.GetNetname() == 'GND') >= 2, 'GND pours missing (import_routing.py makes them)'
+# P07 S1 (6.10, 4 layers): a new GND via must also keep clear of the In2.Cu copper of other nets (router tracks / vias / THT pads)
+_inner = p.SHAPE_POLY_SET()
+for _t in b.GetTracks():
+    if _t.GetNetname() != 'GND' and _t.IsOnLayer(p.In2_Cu):
+        _s = p.SHAPE_POLY_SET(); _t.TransformShapeToPolygon(_s, p.In2_Cu, mm(.25 + .45 + .05), mm(.01), p.ERROR_OUTSIDE); _inner.BooleanAdd(_s)
+for _f in b.GetFootprints():
+    for _a in _f.Pads():
+        if _a.GetNetname() != 'GND' and _a.IsOnLayer(p.In2_Cu):
+            _s = p.SHAPE_POLY_SET(); _a.TransformShapeToPolygon(_s, p.In2_Cu, mm(.25 + .45 + .05), mm(.01), p.ERROR_OUTSIDE); _inner.BooleanAdd(_s)
+
+
+def blocked_inner(q):
+    return _inner.OutlineCount() > 0 and _inner.Contains(p.VECTOR2I(mm(q[0]), mm(q[1])))
 gnd = b.FindNet('GND'); p.ZONE_FILLER(b).Fill(b.Zones()); before = islands()
 fills = {L: [z.GetFilledPolysList(L) for z in b.Zones() if not z.GetIsRuleArea() and z.GetNetname() == 'GND' and z.IsOnLayer(L)] for L in (p.F_Cu, p.B_Cu)}
-rules = [z for z in b.Zones() if z.GetIsRuleArea()]
+rules = [z for z in b.Zones() if z.GetIsRuleArea() and z.GetDoNotAllowVias()]   # P07 S1: the In2 area under the power block allows vias
 yards = []
 for f in b.GetFootprints():
     f.BuildCourtyardCaches(); yards.append(f.GetCourtyard(p.F_CrtYd)); yards.append(f.GetCourtyard(p.B_CrtYd))
@@ -64,7 +77,7 @@ for j in range(int(BH / GRID) + 1):
         q = (i * GRID + (GRID / 2 if j % 2 else 0), j * GRID)
         if not (2 < q[0] < BW - 2 and 2 < q[1] < BH - 2):
             continue
-        if any(z.Outline().Contains(xy(*q)) for z in rules) or any(math.dist(q, o) < PAD_MIN for o in obst) or any(c.Contains(xy(*q)) for c in yards):
+        if (any(z.Outline().Contains(xy(*q)) for z in rules) or blocked_inner(q)) or any(math.dist(q, o) < PAD_MIN for o in obst) or any(c.Contains(xy(*q)) for c in yards):
             continue
         if inside(p.F_Cu, q) and inside(p.B_Cu, q):
             v = p.PCB_VIA(b); v.SetPosition(xy(*q)); v.SetWidth(mm(.9)); v.SetDrill(mm(.4)); v.SetViaType(p.VIATYPE_THROUGH)
@@ -119,7 +132,7 @@ for L, O in ((p.F_Cu, p.B_Cu), (p.B_Cu, p.F_Cu)):
             d = disc(q)
             if not all(piece.Contains(v) for v in d) or not any(all(k.Contains(v) for v in d) for k in kept[O]):
                 continue
-            if any(z.Outline().Contains(xy(*q)) for z in rules) or any(cy.Contains(xy(*q)) for cy in yards) or any(math.dist(q, o) < RESCUE_PAD for o in obst):
+            if (any(z.Outline().Contains(xy(*q)) for z in rules) or blocked_inner(q)) or any(cy.Contains(xy(*q)) for cy in yards) or any(math.dist(q, o) < RESCUE_PAD for o in obst):
                 continue
             v = p.PCB_VIA(b); v.SetPosition(xy(*q)); v.SetWidth(mm(.9)); v.SetDrill(mm(.4)); v.SetViaType(p.VIATYPE_THROUGH)
             v.SetLayerPair(p.F_Cu, p.B_Cu); v.SetNet(gnd); v.SetLocked(True); b.Add(v); obst.append(q)
@@ -165,7 +178,7 @@ for _ in range(3):
                     d = disc(q)
                     if not all(piece.Contains(v) for v in d) or not any(all(k.Contains(v) for v in d) for k in joined[O]):
                         continue
-                    if any(z.Outline().Contains(xy(*q)) for z in rules) or any(cy.Contains(xy(*q)) for cy in yards) or any(math.dist(q, o) < RESCUE_PAD for o in obst):
+                    if (any(z.Outline().Contains(xy(*q)) for z in rules) or blocked_inner(q)) or any(cy.Contains(xy(*q)) for cy in yards) or any(math.dist(q, o) < RESCUE_PAD for o in obst):
                         continue
                     v = p.PCB_VIA(b); v.SetPosition(xy(*q)); v.SetWidth(mm(.9)); v.SetDrill(mm(.4)); v.SetViaType(p.VIATYPE_THROUGH)
                     v.SetLayerPair(p.F_Cu, p.B_Cu); v.SetNet(gnd); v.SetLocked(True); b.Add(v); obst.append(q)
@@ -220,7 +233,7 @@ if EXTRA_GND_VIAS and '--targeted' in __import__('sys').argv:   # run_layout.py:
             dd = disc_r(q, EM)
             if not any(all(k.Contains(v) for v in dd) for k in own) or not any(all(k.Contains(v) for v in dd) for k in pcs[O]):
                 continue
-            if any(z.Outline().Contains(xy(*q)) for z in rules) or any(sh.Contains(xy(*q)) for sh in padpolys):
+            if (any(z.Outline().Contains(xy(*q)) for z in rules) or blocked_inner(q)) or any(sh.Contains(xy(*q)) for sh in padpolys):
                 continue
             if any(math.dist(q, (hx, hy)) < .2 + hr + .3 for hx, hy, hr in holes):
                 continue

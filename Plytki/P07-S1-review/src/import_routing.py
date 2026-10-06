@@ -36,23 +36,23 @@ for nn in sub(one(route,'network_out'),'net'):
  for item in nn[2:]:
   if item[0]=='wire':
    assert all(i[0] in ['path','type'] for i in item[1:]),item
-   path=one(item,'path');assert path[1] in ['F.Cu','B.Cu'] and (len(path)-3)%2==0
-   layer=p.F_Cu if path[1]=='F.Cu' else p.B_Cu
+   path=one(item,'path');assert path[1] in ['F.Cu','B.Cu','In2.Cu'] and (len(path)-3)%2==0   # P07 S1 (6.10): In2.Cu routed, In1.Cu plane
+   layer={'F.Cu':p.F_Cu,'B.Cu':p.B_Cu,'In2.Cu':p.In2_Cu}[path[1]]
    for k in range(3,len(path)-2,2):
     t=p.PCB_TRACK(b);t.SetNet(n);t.SetLayer(layer);t.SetWidth(p.FromMM(float(path[2])/10000))
     t.SetStart(point(*path[k:k+2]));t.SetEnd(point(*path[k+2:k+4]));b.Add(t);counts['segments_added']+=1
   elif item[0]=='via':
    assert len(item)==4,item
-   ps=seen[item[1]];shapes=sub(ps,'shape');assert len(shapes)==2
+   ps=seen[item[1]];shapes=sub(ps,'shape');assert len(shapes) in (2,4)
    circles=[one(sh,'circle') for sh in shapes]
-   assert {c[1] for c in circles}=={'F.Cu','B.Cu'} and circles[0][2:]==circles[1][2:]
+   assert {'F.Cu','B.Cu'}<={c[1] for c in circles} and all(c[2:]==circles[0][2:] for c in circles)
    drill=float(re.search(r':([0-9.]+)_um',item[1])[1])/1000
    v=p.PCB_VIA(b);v.SetPosition(point(*item[2:4]));v.SetWidth(p.FromMM(float(circles[0][2])/10000));v.SetDrill(p.FromMM(drill))
    v.SetViaType(p.VIATYPE_THROUGH);v.SetLayerPair(p.F_Cu,p.B_Cu);v.SetNet(n);b.Add(v);counts['vias_added']+=1
   else:raise ValueError(item)
 net=b.FindNet('GND')
 assert net is not None
-for layer in [p.F_Cu,p.B_Cu]:
+for layer in [p.F_Cu,p.B_Cu,p.In1_Cu]:   # P07 S1 (6.10): In1.Cu = GND plane (the PGND area of route_critical.py has priority there)
  z=p.ZONE(b);z.SetLayer(layer);z.SetNet(net)
  z.SetLocalClearance(p.FromMM(.3));z.SetMinThickness(p.FromMM(.25))
  z.SetPadConnection(p.ZONE_CONNECTION_THERMAL)

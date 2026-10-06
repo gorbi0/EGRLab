@@ -84,6 +84,9 @@ CASES = [
     ('zła sieć na polu', f'{N}-B_Cu.gbl', swap_net, 'Miedź dół'),
     ('usunięta wylewka', f'{N}-B_Cu.gbl', drop_zone, 'wylewek'),
 ]
+_in1 = sorted((R/'gerber').glob(f'{N}-In1_Cu.*'))   # P07 S1: 4 layers - a pour region of the In1 GND plane removed
+if _in1:
+    CASES.append(('usunięta wylewka In1 (płaszczyzna GND)', _in1[0].name, drop_zone, 'Miedź In1'))
 results = []
 for label, fname, mutate, expect in CASES:
     with tempfile.TemporaryDirectory() as td:
