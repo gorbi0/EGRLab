@@ -10,7 +10,7 @@ DATE = '2026-10-05'
 CLASS = '2/3'                # Plytki/Format-S1/format-s1.json 'klasy'
 SLOTS = ['S2', 'S3']         # S1 section 7: P07 on level 5, slots S2-S3 (P08 in S1)
 JBP = ['J_BP1', 'J_BP2']     # edge-A IDC (odd pins GND): GND comb in fanout_gnd.py
-JSV = ['J_SV1', 'J_SV2']     # edge-B service headers
+JSV = ['J_SV2']              # edge-B service header (one strip in slot S3, simplification 1 of 6.10)
 GND_REF = ('J_BP1', '1')     # reference pad of the main GND cluster (stitch.py)
 # Supply nets in class PWR: 5V_SYS (~110 mA with the KPWR coil, decision 5.10), the local rails and the logic supply. 0.4 mm with the
 # S1 clearance 0.25 passes between DIP / SOIC-to-DIP pads (P04 R3).
@@ -43,7 +43,7 @@ PLANNER_KEEPOUT = list(ROUTER_KEEPOUT)
 DEC_CAPS = {'C22': ('U1', '6', '2'), 'C23': ('U3', '8', '4'), 'C24': ('U4', '8', '4'), 'C25': ('U5', '8', '4'), 'C26': ('U6', '8', '4'),
             'C27': ('U7', '14', '7'), 'C28': ('U8', '2', '3'), 'C29': ('U9', '2', '3'), 'C30': ('U10', '14', '7'), 'C31': ('U11', '14', '7'),
             'C32': ('U12', '14', '7'), 'C33': ('U13', '14', '7'), 'C34': ('U14', '14', '7'), 'C35': ('U15', '14', '7'), 'C36': ('U16', '14', '7'),
-            'C37': ('U17', '5', '2'), 'C38': ('U2', '3', '1')}
+            'C37': ('U2', '3', '1')}
 EXTRA_GND_VIAS = [('pad', c, '2', 2.0) for c in DEC_CAPS]
 FANOUT_REFS = []
 SOIC_TIES = {}

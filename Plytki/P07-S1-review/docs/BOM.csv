@@ -12,8 +12,8 @@ C10;C_OC_LOW;10n;SMD 1206 C0G 50V 5% 10n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.
 C11;C_ADC_IN;470p;SMD 1206 C0G 50V 5% 470p;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;nowe;;
 C12;ADD_5VMOD_BULK;10u;SMD 1206 X7R 16V 10% 10u;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;nowe;;
 C13;ADD_5VMOD_HF;100n;SMD 1206 X7R 50V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;nowe;;At J5.7 (module VCC).
-C14;ADD_R_IS_C;10n;SMD 1206 C0G 50V 5% 10n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;nowe;;tau = 50k x 10n = 0.5 ms: averages PWM.
-C15;ADD_L_IS_C;10n;SMD 1206 C0G 50V 5% 10n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;nowe;;tau = 50k x 10n = 0.5 ms: averages PWM.
+C14;ADD_R_IS_C;100n;SMD 1206 X7R 50V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;nowe;;tau = (14.7k || 9.1k) x 100n = 0.56 ms: averages PWM.
+C15;ADD_L_IS_C;100n;SMD 1206 X7R 50V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;nowe;;tau = (14.7k || 9.1k) x 100n = 0.56 ms: averages PWM.
 C16;C_AF;10u;SMD 1206 X7R 16V 10% 10u;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;nowe;;
 C17;ADD_5VA_HF;100n;SMD 1206 X7R 50V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;nowe;;
 C18;C_LDO_IN;1u;SMD 1206 X7R 50V 10% 1u;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;nowe;;
@@ -35,14 +35,13 @@ C33;DEC_U13;100n;SMD 1206 X7R 50V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad
 C34;DEC_U14;100n;SMD 1206 X7R 50V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;nowe;;Decoupling at U14.
 C35;DEC_U15;100n;SMD 1206 X7R 50V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;nowe;;Decoupling at U15.
 C36;DEC_U16;100n;SMD 1206 X7R 50V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;nowe;;Decoupling at U16.
-C37;DEC_U17;100n;SMD 1206 X7R 50V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;nowe;;Decoupling at U17.
-C38;DEC_U2;100n;SMD 1206 X7R 50V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;nowe;;Decoupling at U2.
+C37;DEC_U2;100n;SMD 1206 X7R 50V 10% 100n;1;Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder;nowe;;Decoupling at U2.
 D1;D2;SMCJ18A;SMCJ18A (Littelfuse, 1.5 kW, VRWM 18 V);1;Diode_SMD:D_SMC;nowe;;TVS at VMOTOR as v6.1 D2: VRWM 18 V >= 16.8 V (4S full), VC ~29 V << 40 V BTS7960 and relay contacts.
 D2;D11;1N4148W;1N4148W (SOD-123, 100 V);1;Diode_SMD:D_SOD-123;nowe;;Coil clamp diode (anode at coil low end) in series with Zener D3 to 5V_SYS: fast release (v6.1 D11/D12).
 D3;D12;BZT52C15;BZT52C15 (Zener 15 V 0.5 W, SOD-123);1;Diode_SMD:D_SOD-123;nowe;;Clamp = 5V_SYS + 15 V + 0.7 V <= 20.8 V < 85 % of 30 V VDS of Q1 (v6.1: 18 V Zener with 60 V transistor array).
 D4;ADD_REF_DISCHARGE;BAT54;BAT54 (SOT-23, single);1;Package_TO_SOT_SMD:SOT-23;nowe;;Discharge of C5 into 3V3A on power removal (P06 R2 D2).
-D5;ADD_R_IS_CLAMP;BAT54S;BAT54S (SOT-23, series pair);1;Package_TO_SOT_SMD:SOT-23;nowe;;Clamp of the divided IS to GND-0.3 / 3V3_IO+0.3 V (IS up to VS = 16.8 V).
-D6;ADD_L_IS_CLAMP;BAT54S;BAT54S (SOT-23, series pair);1;Package_TO_SOT_SMD:SOT-23;nowe;;Clamp of the divided IS to GND-0.3 / 3V3_IO+0.3 V (IS up to VS = 16.8 V).
+D5;ADD_R_IS_CLAMP;BAT54S;BAT54S (SOT-23, series pair);1;Package_TO_SOT_SMD:SOT-23;nowe;;"Clamp of the divided IS to GND-0.3 / 3V3_IO+0.3 V (IS up to VS = 16.8 V); protects the P03 input."
+D6;ADD_L_IS_CLAMP;BAT54S;BAT54S (SOT-23, series pair);1;Package_TO_SOT_SMD:SOT-23;nowe;;"Clamp of the divided IS to GND-0.3 / 3V3_IO+0.3 V (IS up to VS = 16.8 V); protects the P03 input."
 D7;ADD_LDO_DISCHARGE;B5819W;B5819W (Schottky 1 A 40 V, SOD-123);1;Diode_SMD:D_SOD-123;nowe;;Anode 3V3A, cathode 5VA: output capacitor discharge on supply removal (P06 R2 D1).
 F1;ADD_MOD_VCC_PTC;PTC 0.12A;"MF-NSMF012-2 (Bourns 1206, Ihold 0.12 A, Itrip 0.29 A; MPN to confirm)";1;Fuse:Fuse_1206_3216Metric_Pad1.42x1.75mm_HandSolder;nowe;;Module VCC (74HC244 on the module) and U16: a shorted harness does not pull 5V_SYS down.
 J1;J_VMOTORB;VMOTOR / PTH;2 x 2.0 mm2 from P02 R4 J2 (GMSTB plug);1;P07:PTH_VMOTOR;nowe;;"PTH solder joints + tie anchor 12 mm; 2.0 mm2 (decision 4.10). P02 R4 J2.1 VMOTOR (behind F1, MINI 7.5 A insert - user decision 5.10 (7)), J2.2 GND. See docs/WIAZKA-MODUL.md."
@@ -52,8 +51,7 @@ J4;J_TMOTORA;TEST / PTH;2 x 2.0 mm2 to P11 port TEST (valve pins 1 / 3);1;P07:PT
 J5;ADD_J_MOD;J_MOD / IDC 2x4;IDC box header 2x4 2.54 mm angled shrouded, Au;1;Connector_IDC:IDC-Header_2x04_P2.54mm_Horizontal;nowe;;"User decision 5.10 (3): numbering 1:1 as the module header (odd row 1 RPWM / 3 R_EN / 5 R_IS / 7 VCC, even row 2 LPWM / 4 L_EN / 6 L_IS / 8 GND). Angled box header at the board edge; 8-wire ribbon with IDC 2x4 sockets on both ends - docs/WIAZKA-MODUL.md."
 J_BP1;J_ITESTB+J_DIRB;J_BP1 / IDC 2x8;IDC header 2x8 2.54mm angled shrouded, Au;1;Connector_IDC:IDC-Header_2x08_P2.54mm_Horizontal;nowe;;Edge A, slot S2 (board x = 26.5 mm, stack x = 80.0 mm), pin 1 towards smaller x. Odd pins GND, 16 GND reserve. Partner: P03 R6 (J_BP1 / J_BP2) through P12.
 J_BP2;J_DRIVEB+J_LV07B;J_BP2 / IDC 2x8;IDC header 2x8 2.54mm angled shrouded, Au;1;Connector_IDC:IDC-Header_2x08_P2.54mm_Horizontal;nowe;;"Edge A, slot S3 (board x = 80.0 mm, stack x = 133.5 mm). 2/4/6/8/16 = P04 R3 J_BP2 pins; 5V_SYS x2, 3V3_IO x1 (S1 5)."
-J_SV1;SERVICE_S2;J_SV1 SERWIS 1x13;Pin header 1x13, 2.54 mm, right angle, Au;1;Connector_PinHeader_2.54mm:PinHeader_1x13_P2.54mm_Horizontal;nowe;;"Edge B, slot S2 (board x = 10..43 mm); pins ~6 mm beyond the edge. Angled strip seen from the top: pin 1 at the LARGER x (P09 R2 note)."
-J_SV2;SERVICE_S3;J_SV2 SERWIS 1x13;Pin header 1x13, 2.54 mm, right angle, Au;1;Connector_PinHeader_2.54mm:PinHeader_1x13_P2.54mm_Horizontal;nowe;;"Edge B, slot S3 (board x = 63.5..96.5 mm); pins ~6 mm beyond the edge. Angled strip seen from the top: pin 1 at the LARGER x (P09 R2 note)."
+J_SV2;SERVICE_S3;J_SV2 SERWIS 1x12;Pin header 1x12, 2.54 mm, right angle, Au;1;Connector_PinHeader_2.54mm:PinHeader_1x12_P2.54mm_Horizontal;nowe;;"Edge B, slot S3 (board x = 63.5..96.5 mm); pins ~6 mm beyond the edge. Angled strip seen from the top: pin 1 at the LARGER x (P09 R2 note)."
 K1;KPWR;G2RL-1-E DC5;G2RL-1-E DC5 (Omron, SPDT 16 A, coil 5 V 62.5 ohm 80 mA / 400 mW, h 15.7 mm);1;Relay_THT:Relay_SPDT_Omron_G2RL-1-E;nowe;;"KPWR (user decision 5.10): coil from 5V_SYS (4.90-5.10 V = 98-102 % of 5 V; must operate 70 %), 80 mA on 5V_SYS. COM on VMOTOR, NO to module B+. Contacts switch without load: EN drops first (ns), relay opens later (ms); closes onto a precharged module capacitor (R4). Same footprint as DC12."
 Q1;ADD_KPWR_DRV;AO3400A;AO3400A (Alpha & Omega, SOT-23, 30 V 5.7 A, RDS(on) <= 48 mOhm at VGS 2.5 V);1;Package_TO_SOT_SMD:SOT-23;nowe;;Low-side coil switch (v6.1: TBD62083 channel). Source on GND: the 5 V coil current returns to the 5V_SYS supply over GND, never over PGND. VGS = 74HC08 VOH (>= 2.9 V, no load).
 Q2;Q_OC;MMBT3904;MMBT3904 (SOT-23);1;Package_TO_SOT_SMD:SOT-23;nowe;;Open collector on the common SAFE_N node during OC (v6.1 Q_OC 2N5551).
@@ -61,7 +59,7 @@ R1;R_BLEED;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_H
 R2;ADD_KPWR_RG;100R;RC1206FR-07100RL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Gate series resistor (edge rate, ESD on the gate).
 R3;ADD_KPWR_PD;100K;RC1206FR-07100KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Gate pull-down: Q1 off while 3V3_IO is absent (U12 unpowered).
 R4;ADD_PRECHARGE;1K / 1W;RC2512FK-071KL (Yageo 2512 1 W, MPN to confirm);1;Resistor_SMD:R_2512_6332Metric_Pad1.40x3.35mm_HandSolder;nowe;;"Disputed: precharge of the module 330 uF across the KPWR contacts (no inrush weld). Fault with module shorted: 0.28 W; motor current with KPWR open <= 17 mA."
-R5;ADD_MODBP_BLEED;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;"Bleed of the module side; with R4: MOD_BP = 91 % of VMOTOR while KPWR is open (visible on J_SV1.10)."
+R5;ADD_MODBP_BLEED;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;"Bleed of the module side; with R4: MOD_BP = 91 % of VMOTOR while KPWR is open (measure at R5)."
 R6;RC1;10R;RT1206BRD0710RL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Thin film 1206 0.1 % 25 ppm/K (Yageo RT, MPN to confirm).
 R7;RC2;10R;RT1206BRD0710RL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Thin film 1206 0.1 % 25 ppm/K (Yageo RT, MPN to confirm).
 R8;R_DIV_H;5.11K;RT1206BRD075K11L;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Thin film 1206 0.1 % 25 ppm/K (Yageo RT, MPN to confirm).
@@ -100,34 +98,21 @@ R40;ADD_SER_LPWM;100R;RC1206FR-07100RL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x
 R41;ADD_SER_R_EN;100R;RC1206FR-07100RL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Series at the source: ringing on the 8-wire harness, ESD.
 R42;ADD_SER_L_EN;100R;RC1206FR-07100RL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Series at the source: ringing on the 8-wire harness, ESD.
 R43;ADD_MOD_GND;10R;RC1206FR-0710RL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;"Module logic ground: if the module ties GND to B- internally, the loop current through the harness is limited (dV on the VMOTOR return / 10 ohm); acts as a fuse if B- opens."
-R44;ADD_R_IS_TOP;100K;RC1206FR-07100KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;IS divider: loads the module 10k by 4.8 %.
-R45;ADD_R_IS_BOT;100K;RC1206FR-07100KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;
-R46;ADD_L_IS_TOP;100K;RC1206FR-07100KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;IS divider: loads the module 10k by 4.8 %.
-R47;ADD_L_IS_BOT;100K;RC1206FR-07100KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;
-R48;ADD_ENA_SER;100R;RC1206FR-07100RL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;
-R49;ADD_ENB_SER;100R;RC1206FR-07100RL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;
+R44;ADD_R_IS_TOP;4K7;RC1206FR-074K7L;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;IS divider with the 10k of the P03 receiver: 0.38 of the open IS voltage (verify_electrical.py IS-DIAG).
+R45;ADD_R_IS_BOT;100K;RC1206FR-07100KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Defined L without P03 (tape open).
+R46;ADD_L_IS_TOP;4K7;RC1206FR-074K7L;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;IS divider with the 10k of the P03 receiver: 0.38 of the open IS voltage (verify_electrical.py IS-DIAG).
+R47;ADD_L_IS_BOT;100K;RC1206FR-07100KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Defined L without P03 (tape open).
 R50;R_AF;10R;RC1206FR-0710RL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;"5VA filter (v6.1 R_AF 1R 0.5W; load here ~6 mA -> 60 mV)."
 R51;ADD_SAFE_PD;1M;RC1206FR-071ML;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Open tape J_BP2 -> SAFE_OK = L. Loads SAFE_N by 1 MOhm (P04: 10k up / 100k down, high level 3.00 -> 2.97 V).
-R52;ADDED_SERVICE_S2;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.
-R53;ADDED_SERVICE_S2;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.
-R54;ADDED_SERVICE_S2;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.
-R55;ADDED_SERVICE_S2;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.
-R56;ADDED_SERVICE_S2;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.
-R57;ADDED_SERVICE_S2;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.
-R58;ADDED_SERVICE_S2;4K7;RC1206FR-074K7L;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.
-R59;ADDED_SERVICE_S2;4K7;RC1206FR-074K7L;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.
-R60;ADDED_SERVICE_S2;4K7;RC1206FR-074K7L;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.
-R61;ADDED_SERVICE_S2;4K7;RC1206FR-074K7L;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.
-R62;ADDED_SERVICE_S3;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.
-R63;ADDED_SERVICE_S3;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.
-R64;ADDED_SERVICE_S3;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.
-R65;ADDED_SERVICE_S3;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.
-R66;ADDED_SERVICE_S3;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.
-R67;ADDED_SERVICE_S3;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.
-R68;ADDED_SERVICE_S3;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.
-R69;ADDED_SERVICE_S3;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.
-R70;ADDED_SERVICE_S3;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.
-R71;ADDED_SERVICE_S3;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.
+R52;ADDED_SERVICE_S3;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.
+R53;ADDED_SERVICE_S3;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.
+R54;ADDED_SERVICE_S3;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.
+R55;ADDED_SERVICE_S3;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.
+R56;ADDED_SERVICE_S3;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.
+R57;ADDED_SERVICE_S3;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.
+R58;ADDED_SERVICE_S3;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.
+R59;ADDED_SERVICE_S3;1K;RC1206FR-071KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.
+R60;ADDED_SERVICE_S3;10K;RC1206FR-0710KL;1;Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder;nowe;;Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.
 RSH1;RSH_T;5m / 1% / 2512 Kelvin;WSK25125L000FEA (Vishay WSK2512, 5 mOhm 1 %, 1 W at 70 C) - as P06 R2;1;P07:R_Shunt_Vishay_WSK2512_T1.19mm_SenseE1.70;nowe;;"In the motor line M+ -> T_EGR_P1 (task). Pads 1/4 force, 2/3 sense. 6 A: 0.18 W; 10 A: 0.5 W."
 U1;U2;INA240A2;INA240A2EDRQ1;1;Package_SO:SOIC-8_3.9x4.9mm_P1.27mm;rejestr;https://www.ti.com/lit/ds/symlink/ina240.pdf;"Owned (register: P07 U2). 50 V/V, CM -4..80 V, PWM rejection; REF1 = REF2 = 2.5 V -> 2.5 V + 0.25 V/A."
 U2;U_REF;MCP1525-I/TO;MCP1525-I/TO;1;Package_TO_SOT_THT:TO-92_Inline_Wide;nowe;https://ww1.microchip.com/downloads/en/DeviceDoc/21653c.pdf;2.5 V +-1 %. TO92: 1 GND, 2 OUT, 3 IN.
@@ -138,14 +123,13 @@ U6;U_ADC;MCP3201-BI/P;MCP3201-BI/P;1;Package_DIP:DIP-8_W7.62mm;rejestr;https://w
 U7;U_SPI;74LVC125AD;74LVC125AD,118 (Nexperia, Ioff);1;Package_SO:SOIC-14_3.9x8.7mm_P1.27mm;rejestr;https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf;"Owned (register zapas). 1: CS, 2: SCLK, 3: DOUT tri-state (OE = CS_LOCAL_N), 4: SUP5 open drain (5 V pull-up) -> 3.3 V; 3V3A off -> Ioff, R23 holds SUP5_N low."
 U8;U_SUP3;MCP120-300DI/TO;MCP120-300DI/TO;1;Package_TO_SOT_THT:TO-92_Inline_Wide;nowe;https://ww1.microchip.com/downloads/en/DeviceDoc/11184d.pdf;D bondout: RESET = 1, VDD = 2, GND = 3. Open drain. Watches 3V3A (REF, OC thresholds).
 U9;U_SUP5;MCP120-450DI/TO;MCP120-450DI/TO;1;Package_TO_SOT_THT:TO-92_Inline_Wide;nowe;https://ww1.microchip.com/downloads/en/DeviceDoc/11184d.pdf;Watches 5VA (INA240, OC comparator).
-U10;U_RX1;74LVC125AD;74LVC125AD,118 (Nexperia, Ioff);1;Package_SO:SOIC-14_3.9x8.7mm_P1.27mm;rejestr;https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf;Owned (register zapas). Ioff receivers: MOTOR_INA/INB come from the P03 domain (P03 may run from USB alone).
+U10;U_RX1;74LVC125AD;74LVC125AD,118 (Nexperia, Ioff);1;Package_SO:SOIC-14_3.9x8.7mm_P1.27mm;rejestr;https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf;Owned (register zapas). Ioff receivers: MOTOR_INA/INB come from the P03 domain (P03 may run from USB alone). Simplification 3 (6.10): channels 3-4 unused (inputs and OE on GND) - MOTOR_PERMIT / PWM_OUT come from P04 on the same 3V3_IO rail and go straight to U11 / U12 / U13.
 U11;U_INV;74LVC14AD;74LVC14AD,118 (Nexperia, Schmitt, Ioff);1;Package_SO:SOIC-14_3.9x8.7mm_P1.27mm;nowe;https://assets.nexperia.com/documents/data-sheet/74LVC14A.pdf;Schmitt inputs for SAFE_N (RC edge ~10 us on P04) and OC_LOCAL_N (pull-up edge). v6.1 SN74HC14N -> LVC14A (Ioff, 5 V tolerant).
 U12;U_GATE;SN74HC08D;SN74HC08DR (TI, SOIC-14);1;Package_SO:SOIC-14_3.9x8.7mm_P1.27mm;nowe;https://www.ti.com/lit/ds/symlink/sn74hc08.pdf;RAILS_OK, LOCAL_CLEAR_N, PERMIT_ARMED, LOCAL_PERMIT (v6.1 U_GATE / U_READY).
 U13;U_PWM;SN74HC08D;SN74HC08DR (TI, SOIC-14);1;Package_SO:SOIC-14_3.9x8.7mm_P1.27mm;nowe;https://www.ti.com/lit/ds/symlink/sn74hc08.pdf;DRIVE_EN, DRIVE_OK, PWM_EN, RPWM = PWM_EN & INA.
 U14;ADD_U_DIR;SN74HC08D;SN74HC08DR (TI, SOIC-14);1;Package_SO:SOIC-14_3.9x8.7mm_P1.27mm;nowe;https://www.ti.com/lit/ds/symlink/sn74hc08.pdf;"LPWM = PWM_EN & INB; gates 2-4 unused, inputs on GND."
 U15;U_OC_LATCH;SN74HC74D;SN74HC74DR (TI, SOIC-14);1;Package_SO:SOIC-14_3.9x8.7mm_P1.27mm;nowe;https://www.ti.com/lit/ds/symlink/sn74hc74.pdf;FF1 (v6.1): OC_GOOD cleared by OC or rails, set only by ARM_CLK while MOTOR_PERMIT = L. FF2 (new): NO_TRIP preset while rails are not OK (power-up = no trip), cleared by OC, set again by ARM_CLK -> DRIVE_OK.
 U16;ADD_LEVEL;74AHCT125D;"74AHCT125D,118 (Nexperia, SOIC-14; TTL inputs, VCC 5 V)";1;Package_SO:SOIC-14_3.9x8.7mm_P1.27mm;nowe;https://assets.nexperia.com/documents/data-sheet/74AHCT125.pdf;"3.3 -> 5 V: module 74HC244 at 5 V needs VIH >= 3.5 V. OE_N = DRV_OFF: outputs Z unless DRIVE_EN (second block after the AND gates; module 30k pull-downs give L)."
-U17;ADD_IS_SCHMITT;74LVC2G17;"74LVC2G17GV,125 (Nexperia SC-74 / SOT-23-6; DBV pinout to confirm)";1;Package_TO_SOT_SMD:SOT-23-6;nowe;https://assets.nexperia.com/documents/data-sheet/74LVC2G17.pdf;Schmitt buffers of the divided IS -> ENA_DIAG / ENB_DIAG (H = half-bridge current >~2-3 A or IS fault level).
 U18;U_LDO;MCP1702-3302E/TO;MCP1702-3302E/TO;1;Package_TO_SOT_THT:TO-92_Inline_Wide;nowe;https://ww1.microchip.com/downloads/en/DeviceDoc/22008E.pdf;3V3A_P07: REF, MCP6022 (U3), MCP3201, SPI buffer, SUP3.
 W5;W_MOD_CTRL;tasma 8 zyl 1,27 mm, ok. 300 mm;Flat ribbon cable 8 wires 1.27 mm AWG28 (e.g. 3M 3302/08), ~300 mm;1;-;nowe;;J5 <-> IBT-2 2x4 header, 1:1 (docs/WIAZKA-MODUL.md).
 W5-X1, W5-X2;W_MOD_CTRL;gniazdo IDC 2x4 2,54;IDC socket 2x4 2.54 mm for 1.27 mm ribbon, with strain relief (e.g. Amphenol T812108A101CEU);2;-;nowe;;One per ribbon end: on the J5 box header (keyed) and on the module 2x4 header.

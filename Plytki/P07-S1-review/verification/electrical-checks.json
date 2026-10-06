@@ -18,7 +18,7 @@
   {
    "id": "OPEN-TAPE-DEFINED",
    "pass": true,
-   "note": "{\"PERMIT_P07\": 0, \"PWM_P07\": 0, \"SAFE_OK\": 0, \"ARM_CLK\": 0}"
+   "note": "{\"MOTOR_PERMIT\": 0, \"PWM_OUT\": 0, \"SAFE_OK\": 0, \"ARM_CLK\": 0}"
   },
   {
    "id": "OE-BLOCKS-STUCK-GATE",
@@ -73,7 +73,7 @@
   {
    "id": "IS-DIAG",
    "pass": true,
-   "note": "{\"R_IS\": [1.64, 4.62], \"L_IS\": [1.64, 4.62]}"
+   "note": "{\"R_IS\": {\"band_A\": [1.26, 5.76], \"tau_ms\": 0.56, \"iclamp_mA\": 0.5}, \"L_IS\": {\"band_A\": [1.26, 5.76], \"tau_ms\": 0.56, \"iclamp_mA\": 0.5}}"
   },
   {
    "id": "GND-PGND-SEPARATE",
@@ -207,7 +207,15 @@
    ]
   },
   {
-   "mutation": "IS divider 10K/10K",
+   "mutation": "IS divider top R44 10K (threshold above 6 A)",
+   "target": "IS-DIAG",
+   "caught": true,
+   "checks": [
+    "IS-DIAG"
+   ]
+  },
+  {
+   "mutation": "IS filter C14 10n (no PWM averaging)",
    "target": "IS-DIAG",
    "caught": true,
    "checks": [

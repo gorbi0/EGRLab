@@ -19,7 +19,8 @@ VREF = (2.475, 2.525)          # MCP1525 +-1 %
 INA_GAIN_ERR = 0.002; INA_VOS = 25e-6; OPA_VOS = 4.5e-3; CMP_VOS = 2.5e-3   # INA240 0.2 % / 25 uV, MCP6022 +-4.5 mV?, TLV1702 +-2.5 mV (conservative)
 INA_SWING = 0.1                # INA240 output within VS - 0.1 V (conservative)
 I_RUN, I_OC_LIMIT_MIN = 6.0, 6.9  # task: 6 A work; trip >= 115 % of it
-VM_MAX = 16.8; KILIS = (6000, 11000); VT_SCHMITT = (1.3, 2.0)   # BTS7960 kILIS spread (assumed +-30 %), 74LVC2G17 VT+ at 3.0-3.6 V
+VM_MAX = 16.8; KILIS = (6000, 11000)   # BTS7960 kILIS spread (assumed +-30 %)
+MOD_RIS, P03_PD, VTH_P03 = 10000, 10000, (0.8, 2.0)   # module IS resistor (POMIARY), P03 R6 pull-down, 74LVC125 VIL / VIH
 COIL = {5: 62.5, 12: 360.0}    # G2RL-1-E coil resistance by rated voltage (Omron: DC5 62.5 ohm / 80 mA, DC12 360 ohm / 33.3 mA)
 COIL_RANGE = (0.75, 1.10)      # user decision 5.10: 5 V coil on 5V_SYS; must operate 70 % (margin 75 %), stay near nominal (<= 110 %)
 Q_VGS_MIN, Q_RDS, Q_VDS = 2.5, 0.048, 30.0   # AO3400A: RDS(on) <= 48 mOhm at VGS 2.5 V, VDS 30 V
@@ -224,8 +225,8 @@ def checks(c):
     good &= res['3V3_IO off'] is not None and all(res['3V3_IO off'][n] == 0 for n in MOD_IN)
     ok('DEAD-DOMAINS-OPEN-TAPE', good, res)
     v, f = state(sim, dict(hot, MOTOR_PERMIT=None, PWM_OUT=None, ARM_CLK=None), safe=None)
-    ok('OPEN-TAPE-DEFINED', v is not None and all(v.get(n) in (0, 1) for n in ['PERMIT_P07', 'PWM_P07', 'SAFE_OK', 'ARM_CLK']) and v.get('SAFE_OK') == 0,
-       None if v is None else {n: v.get(n) for n in ['PERMIT_P07', 'PWM_P07', 'SAFE_OK', 'ARM_CLK']})
+    ok('OPEN-TAPE-DEFINED', v is not None and all(v.get(n) in (0, 1) for n in ['MOTOR_PERMIT', 'PWM_OUT', 'SAFE_OK', 'ARM_CLK']) and v.get('SAFE_OK') == 0,
+       None if v is None else {n: v.get(n) for n in ['MOTOR_PERMIT', 'PWM_OUT', 'SAFE_OK', 'ARM_CLK']})
     # ---- single fault: AND gate output stuck H while drive is not permitted -> U16 OE keeps RPWM / LPWM low ----
     st = {}
     for net in ('RPWM_L', 'LPWM_L'):
@@ -304,16 +305,21 @@ def checks(c):
                                   'Vds_on_mV': round(icoil * Q_RDS * 1e3, 1), 'Rg_ohm': rg, 'Rpd_ohm': rpd, 'Vgs_min_V': VIO_MIN - 0.1})
     tvs = [x for r, x in c.items() if x['value'].startswith('SMCJ') and set(x['pins'].values()) == {'VMOTOR', PG}]
     ok('TVS-VMOTOR', bool(tvs) and float(re.sub(r'[^\d.]', '', tvs[0]['value'][4:])) >= VM_MAX and tvs[0]['pins'].get('1') == 'VMOTOR', [t['value'] for t in tvs])
-    # IS diagnostics: divider loading, threshold band, clamp
+    # IS diagnostics (simplification 4, 6.10): divider from the module IS (current source into 10k on the module) straight onto J_BP1;
+    # the threshold is the P03 receiver input (74LVC125 VIL 0.8 / VIH 2.0 V at 3.0-3.6 V) with its 10k pull-down (P03 R6, J_BP.csv)
     good = True; band = {}
-    for isn, div in (('R_IS', 'ISR_DIV'), ('L_IS', 'ISL_DIV')):
+    for isn, div in (('R_IS', 'ENA_DIAG'), ('L_IS', 'ENB_DIAG')):
         rt_, rb2 = rbetween(isn, div), rbetween(div, G)
         clampd = [x for r, x in c.items() if x['value'] == 'BAT54S' and x['pins'].get('3') == div and x['pins'].get('1') == G and x['pins'].get('2') == '3V3_IO']
-        if not (rt_ and rb2 and clampd): good = False; continue
-        rl = 1 / (1 / 10000 + 1 / (rt_[0] + rb2[0])); k = rb2[0] / (rt_[0] + rb2[0])
-        lo_ = VT_SCHMITT[0] / k * KILIS[0] / rl; hi_ = VT_SCHMITT[1] / k * KILIS[1] / rl
-        iclamp = (VM_MAX * k - 3.6) / (rt_[0] * rb2[0] / (rt_[0] + rb2[0]))
-        band[isn] = [round(lo_, 2), round(hi_, 2)]; good &= 1.0 <= lo_ and hi_ <= I_RUN and 10000 / rl - 1 <= 0.06 and iclamp <= 1e-3
+        cf = [x for r, x in c.items() if r.startswith('C') and set(x['pins'].values()) == {div, G}]
+        if not (rt_ and rb2 and clampd and cf): good = False; continue
+        rb = 1 / (1 / rb2[0] + 1 / P03_PD); rs = MOD_RIS + rt_[0]; k = rb / (rs + rb)        # open IS voltage = I_IS x 10k (Thevenin 10k)
+        lo_ = VTH_P03[0] / k * KILIS[0] / MOD_RIS; hi_ = VTH_P03[1] / k * KILIS[1] / MOD_RIS
+        iclamp = (VM_MAX * k - 3.6) / (rs * rb / (rs + rb))
+        cv = {'100n': 1e-7, '10n': 1e-8, '1u': 1e-6}.get(cf[0]['value'], 0)
+        tau = rs * rb / (rs + rb) * cv
+        band[isn] = {'band_A': [round(lo_, 2), round(hi_, 2)], 'tau_ms': round(tau * 1e3, 2), 'iclamp_mA': round(iclamp * 1e3, 2)}
+        good &= 1.0 <= lo_ and hi_ <= I_RUN and iclamp <= 1e-3 and 0.3e-3 <= tau <= 2e-3
     ok('IS-DIAG', good, band)
     # ground separation: no part with pins on both GND and PGND; MOD_GND only through >= 4.7 R to GND
     POWER_SIDE = {'VMOTOR', 'MOD_BP', 'MOD_MP', 'T_EGR_P1', 'T_EGR_P3'}
@@ -349,7 +355,8 @@ MUT = [('SAFE_OK bypassed (U13.2 -> 3V3_IO)', ('U13', 2, '3V3_IO'), 'LOGIC-TABLE
        ('precharge 100R', ('R4', None, None, '100R'), 'PRECHARGE-R'),
        ('Zener 27 V', ('D3', None, None, 'BZT52C27'), 'KPWR-DRIVE-CLAMP'),
        ('TVS 15 V', ('D1', None, None, 'SMCJ15A'), 'TVS-VMOTOR'),
-       ('IS divider 10K/10K', ('R44', None, None, '10K'), 'IS-DIAG'),
+       ('IS divider top R44 10K (threshold above 6 A)', ('R44', None, None, '10K'), 'IS-DIAG'),
+       ('IS filter C14 10n (no PWM averaging)', ('C14', None, None, '10n'), 'IS-DIAG'),
        ('B- tied to GND (R5.2 -> GND)', ('R5', 2, 'GND'), 'GND-PGND-SEPARATE'),
        ('shunt 10 mOhm', ('RSH1', None, None, '10m'), 'SHUNT-POWER-10A'),
        ('LPWM gate without OE (U16.4 -> GND)', ('U16', 4, 'GND'), 'OE-BLOCKS-STUCK-GATE'),

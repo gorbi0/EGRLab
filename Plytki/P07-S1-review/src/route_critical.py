@@ -112,7 +112,7 @@ def power(B):
     assert abs(no[1] - j21) < 1.5 and abs(com[1] - no[1] - 5.0) < .01, ('K1 contacts level with J2.1 / J1.1', no, com)
     xs = tx - hp - 2.05                      # 17.4: PGND strip edge (left of the MOD_BP / VMOTOR pad rings)
     xb = xs + GAP                            # MOD_BP / VMOTOR bands start
-    kr = max(B.pbox('K1', '14')[2], B.pbox('R59', '1')[2]) + .3   # right of the K1 contact pins and the MOD_BP service pad
+    kr = B.pbox('K1', '14')[2] + 1.0   # right of the K1 contact pins
     y_bp = (j22 + hp + 1.1, (no[1] + com[1]) / 2 - GAP / 2)        # MOD_BP band
     y_vm = (y_bp[1] + GAP, j11 + hp + .83)                         # VMOTOR band (to 43.0)
     xr = max(B.pbox('C3', '1')[2], B.pbox('C1', '1')[2]) + .4     # right end of the VMOTOR band / PGND under D1 .. C3
@@ -148,10 +148,15 @@ def power(B):
     p3 = [(XL, j31 + hp + 1.2 + GAP, p3r, j42 + hp + .8)]
     e_top = yk + w / 2 + CL + .7                                    # below the K_PLUS row
     k_bot = s3[3] + CL                                              # below the K_MINUS pad (and its track)
-    y41b = max(j41 + hp + 2.6, B.pbox('R61', 1)[3] + .5)
+    y41b = j41 + hp + 2.6
     p1 = [(p3r + GAP, e_top, s3[0] - CL, k_bot),                    # beside the T_EGR_P1 force pad (left of the K_MINUS pad)
           (p3r + GAP, k_bot, xe, y41b),                             # below the shunt down to the band
-          (XL, j42 + hp + .8 + GAP, xe, y41b)]                      # band over J4.1 (with the service pad of R61)
+          (XL, j42 + hp + .8 + GAP, xe, y41b)]                      # band over J4.1
+    # the two NC pins of K1 (both numbered 12, one schematic pin): KiCad joins them in one net and DRC wants them connected -> short F.Cu tie
+    ncp = [a for a in B.f['K1'].Pads() if a.GetNumber() == '12']
+    nc = sorted((round(p.ToMM(a.GetPosition().x), 4), round(p.ToMM(a.GetPosition().y), 4)) for a in ncp)
+    assert len(nc) == 2, nc
+    B.track(ncp[0].GetNetname().split('/')[-1], nc, .3)
     B.pour('PGND', pg); B.pour('MOD_BP', bp); B.pour('VMOTOR', vm)
     B.pour('MOD_MP', mp); B.pour('T_EGR_P3', p3); B.pour('T_EGR_P1', p1)
     # ---- stitching vias: a grid inside each pour, clear of every pad (any layer), hole, rule area and of each other ----

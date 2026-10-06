@@ -10,16 +10,16 @@ INFO = {('J_BP1', 2): ('in', 'P03 R6 (J_BP2.2)', 'zegar SPI; P12 wielopunktowo (
         ('J_BP1', 6): ('in', 'P03 R6 (J_BP1.4)', 'CS z dekodera P03 (U22); U7A, 100k R17 do 3V3A_P07 (start: nieaktywne)'),
         ('J_BP1', 8): ('in', 'P03 R6 (J_BP1.19)', 'MCP23017 GPA; U10A (Ioff), 100k R26 do GND'),
         ('J_BP1', 10): ('in', 'P03 R6 (J_BP1.20)', 'MCP23017 GPA; U10B (Ioff), 100k R27 do GND'),
-        ('J_BP1', 12): ('out', 'P03 R6 (J_BP1.17)', 'IS galezi R: U17 Schmitt + R48 100R; H = prad >~2-3 A albo blad IS; 10k R28 do GND na P03'),
-        ('J_BP1', 14): ('out', 'P03 R6 (J_BP1.18)', 'IS galezi L: U17 Schmitt + R49 100R; jw.; 10k R29 do GND na P03'),
+        ('J_BP1', 12): ('out', 'P03 R6 (J_BP1.17)', 'IS galezi R: dzielnik R44 4,7k / R45 100k + 10k R28 na P03, C14 100n, BAT54S; prog = wejscie LVC125 na P03: H = prad ok. 1,3-5,8 A albo blad IS (uproszczenie 4, 6.10)'),
+        ('J_BP1', 14): ('out', 'P03 R6 (J_BP1.18)', 'IS galezi L: R46 / R47, C15, D6; jw.; 10k R29 do GND na P03'),
         ('J_BP1', 16): ('gnd', 'P12 (wszystkie)', 'rezerwa GND'),
-        ('J_BP2', 2): ('in', 'P04 R3 (J_BP2.2)', 'U5D push-pull na P04; U10C (Ioff), 100k R28 do GND'),
-        ('J_BP2', 4): ('in', 'P04 R3 (J_BP2.4)', 'PWM & MOTOR_PERMIT z P04; U10D (Ioff), 100k R29 do GND'),
+        ('J_BP2', 2): ('in', 'P04 R3 (J_BP2.2)', 'U5D push-pull na P04 (ta sama szyna 3V3_IO); wprost na U11 / U12 (uproszczenie 3), 100k R28 do GND'),
+        ('J_BP2', 4): ('in', 'P04 R3 (J_BP2.4)', 'PWM & MOTOR_PERMIT z P04 (3V3_IO); wprost na U13, 100k R29 do GND'),
         ('J_BP2', 6): ('in', 'P04 R3 (J_BP2.6)', 'zbocze ARM (U2B HC14 na P04); zegar U15 (obie polowy), 100k R30 do GND'),
         ('J_BP2', 8): ('out', 'P04 R3 (J_BP2.8)', 'DRIVE_OK = RAILS_OK & NO_TRIP (U13B) + R32 100R; P04: U10A, 10k R20 do GND'),
         ('J_BP2', 10): ('pwr', 'P02 R4 (J_BP 2/4/6)', '5VA_P07 przez R50 10R, 5V_MOD przez F1 PTC (VCC modulu)'),
         ('J_BP2', 12): ('pwr', 'P02 R4 (J_BP 2/4/6)', 'drugi pin 5V_SYS (S1 5)'),
-        ('J_BP2', 14): ('pwr', 'P02 R4 (J_BP 8/10)', 'zasilanie logiki P07 (U10-U15, U17), jak P04'),
+        ('J_BP2', 14): ('pwr', 'P02 R4 (J_BP 8/10)', 'zasilanie logiki P07 (U10-U15, clamp IS), jak P04'),
         ('J_BP2', 16): ('in', 'P02 R4 (J_BP.16), P04 R3 (J_BP2.16)', 'wspolny wezel OC (podciaganie R4 10k na P04); P07 czyta (R31 1k -> U11 Schmitt) i sciaga Q2 przy OC; dla P12 nadajnik = P02 (jak P04 R3)')}
 rows = []
 for j in ('J_BP1', 'J_BP2'):
@@ -28,7 +28,7 @@ for j in ('J_BP1', 'J_BP2'):
         rows.append([j, p, n, k, tgt, uw])
 table('J_BP.csv', ['zlacze', 'pin', 'siec', 'kierunek', 'plytka_docelowa', 'uwagi'], rows)
 rows = []
-for j in ('J_SV1', 'J_SV2'):
+for j in ('J_SV2',):
     pins = PARTS[j]['pins']
     for p in range(1, max(map(int, pins)) + 1):
         n = pins[str(p)]

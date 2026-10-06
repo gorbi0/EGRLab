@@ -34,7 +34,7 @@ with open(P / 'docs/SERWIS.csv', encoding='utf-8-sig') as fh:
     for r in csv.DictReader(fh, delimiter=';'):
         SERW[r['zlacze']][int(r['pin'])] = (r['siec'], r['rezystor'])
 # S1 section 6 resistor class (format-s1.json krawedz_B): 1K logic and rails to 5 V, 4K7 pack rails (to 16.8 V), 10K the analog nodes (verify_s1.py OHM)
-HIGHZ = {'I_T_OUT', 'ADC_AIN', 'REF_BUF', 'REF25', 'OC_HIGH', 'OC_LOW'}; CLASS_VAL = {n: '4K7' for n in ('VMOTOR', 'MOD_BP', 'KPWR_COIL_LOW', 'T_EGR_P1')}
+HIGHZ = {'I_T_OUT'}; CLASS_VAL = {}
 
 
 def check(name, ok, detail=None):
@@ -231,7 +231,8 @@ LABEL = next(_ast.literal_eval(n.value) for n in _ast.parse((P / 'src/silkscreen
 texts = [(t.GetText(), t) for t in b.GetDrawings() if isinstance(t, p.PCB_TEXT) and t.GetLayer() == p.F_SilkS]
 svd = {}; sv_ok = True
 for k, hdr in enumerate(JSV_ZL):
-    f = fmap.get(hdr); x0 = STEP * k; problems = []
+    f = fmap.get(hdr); problems = []
+    x0 = STEP * int(min(p.ToMM(a.GetPosition().x) for a in f.Pads()) // STEP) if f else 0   # slot of the strip (P07: one strip, slot S3)
     if not f:
         sv_ok = False; svd[hdr] = 'missing'; continue
     pd = sorted(((int(a.GetNumber()), a) for a in f.Pads()), key=lambda q: q[0]); fab = layer_bbox(f, p.F_Fab)
@@ -265,8 +266,8 @@ for k, hdr in enumerate(JSV_ZL):
         if len(tx) != 1: problems.append(f'pin {n}: {len(tx)} silk labels')
         rows.append({'pin': n, 'node': node, 'resistor': r, 'value': val, 'node_dist_mm': round(dist, 1), 'label': lab, 'side': 'B' if fmap[r].IsFlipped() else 'F'})
     svd[hdr] = {'problems': problems, 'pins': rows}; sv_ok &= not problems
-check('Service headers J_SV1 / J_SV2 (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pin 1 at the larger x, pins out ~6 mm, GND on both '
-      'ends, one series resistor per pin as docs/SERWIS.csv and of its S1 class (1K rails / logic, 4K7 pack rails, 10K analog nodes) '
+check('Service header J_SV2 (edge B, S1 section 6; one strip, simplification 6.10): <= 13 pins in x 10..43 of the slot, pin 1 at the larger x, pins out ~6 mm, GND on both '
+      'ends, one series resistor per pin as docs/SERWIS.csv and of its S1 class (1K rails / logic, 10K analog node) '
       '<= 10 mm from its node, one silk label per pin with the name of its node (LABEL in silkscreen.py), GND at both ends', sv_ok, svd)
 # ---------------- 4b. reserved strip of edge A (S1 §5, README: only along J_BP) ----------------
 pasy = {}

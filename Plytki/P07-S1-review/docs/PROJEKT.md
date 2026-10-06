@@ -62,9 +62,11 @@ Druga blokada: OE_N bufora U16 = DRV_OFF (negacja DRIVE_EN, R35 100 k do 5V_MOD)
 
 Wyścig przy ARM: P04 ustawia HW_ARMED tym samym zboczem ARM_CLK, a MOTOR_PERMIT rośnie po co najmniej 3 bramkach (> 50 ns), podczas gdy czas podtrzymania 74HC74 to 0–3 ns. FF1 widzi więc jeszcze PERMIT_N = 1.
 
-## Diagnostyka IS
+## Diagnostyka IS (uproszczenie 4, 6.10)
 
-Moduł: R_IS / L_IS 10 kΩ do GND, I_IS = I_L / kILIS (8500 typ.). Na P07: 100 k / 100 k (obciąża IS o 4,8 %), C 10 nF (τ 0,5 ms uśrednia PWM), BAT54S do GND / 3V3_IO (prąd clampu ≤ 0,1 mA przy 16,8 V), Schmitt 74LVC2G17 → R 100 Ω → ENA_DIAG / ENB_DIAG (P03: LVC125, 10 k do GND). Próg (VT+ 1,3–2,0 V, kILIS 6000–11000 — **założony rozrzut ±30 %, do potwierdzenia E3**): **1,6–4,6 A** prądu gałęzi. Przy 6 A pracy flaga H. Poziom błędu IS (ok. VS) też daje H. Znaczenie zmienia się względem VNH5019 (tam L = błąd) — **przyjęte przez użytkownika 5.10: H = prąd gałęzi powyżej progu albo błąd IS**; firmware v6.2-s1 czyta bity B_ENA_DIAG/B_ENB_DIAG, ale ich nie interpretuje (dostosuje się później).
+Moduł: R_IS / L_IS 10 kΩ do GND, I_IS = I_L / kILIS (8500 typ.), czyli źródło prądowe z rezystancją Thevenina 10 kΩ. Od 6.10 bez przerzutnika Schmitta (U17) i bez R48 / R49: R44 / R46 4,7 kΩ prowadzą IS wprost na J_BP1.12 / .14 (ENA_DIAG / ENB_DIAG); na P07 R45 / R47 100 kΩ do GND (poziom L bez P03), C14 / C15 100 nF, BAT54S do GND / 3V3_IO. Dzielnik zamyka 10 kΩ do GND na wejściu P03 R6 (74LVC125): napięcie na wejściu P03 = 0,38 × I_IS × 10 kΩ, τ = (14,7 k ∥ 9,1 k) × 100 nF = 0,56 ms (uśrednia PWM), prąd clampu przy poziomie błędu IS ≤ 0,5 mA.
+
+Próg = wejście LVC125 na P03 (VIL 0,8 V / VIH 2,0 V przy 3,0–3,6 V) przy kILIS 6000–11000 (**założony rozrzut ±30 %, do potwierdzenia E3**): flaga H od **ok. 1,3–5,8 A** prądu gałęzi (kontrola `IS-DIAG`); przy 6 A pracy flaga H, poziom błędu IS też daje H (decyzja 5.10). **Co traci diagnostyka względem wersji z U17:** brak histerezy — przy prądzie blisko progu bit może migać (firmware czyta bity, nie przerwania; uśrednianie C zostaje); szersze pasmo progu (1,3–5,8 zamiast 1,6–4,6 A), bo zależy od progu wejścia CMOS zamiast progu Schmitta; próg zależy też od 10 kΩ na P03 (zmiana tego rezystora przesuwa próg). Bez P03 (taśma otwarta) linia ma 0,91 IS — nieistotne, bo nie ma odbiornika.
 
 ## Zasilanie lokalne i budżet
 
@@ -74,7 +76,7 @@ Moduł: R_IS / L_IS 10 kΩ do GND, I_IS = I_L / kILIS (8500 typ.). Na P07: 100 k
 | 3V3A_P07 | MCP1702-3302 (U18) | MCP1525, U3, MCP3201, U7, MCP120-300 | ok. 3 mA |
 | 5V_MOD | 5V_SYS przez PTC F1 (0,12 A hold) | U16, VCC modułu (74HC244, ewentualna dioda LED) | ≤ 20 mA (moduł do zmierzenia, D1) |
 | 5V_SYS (wprost) | J_BP2.10/12 | cewka KPWR K1 (decyzja 5.10), C9 10 µF | **ok. 80 mA** przy załączonym KPWR |
-| 3V3_IO | P02 R4 przez J_BP2.14 | U10–U15, U17, podciąganie OC | ≤ 5 mA |
+| 3V3_IO | P02 R4 przez J_BP2.14 | U10–U15, clamp IS, podciąganie OC | ≤ 5 mA |
 | VMOTOR | P02 R4 F1 (MINI 7,5 A) | mostek | silnik ≤ 6 A (próba 10 A — bierna kwalifikacja toru) |
 
 Razem z 5V_SYS ok. 30 mA bez KPWR i **ok. 110 mA z załączonym KPWR** (+80 mA cewki) (budżet P12: suma LOGGER 1090 mA). Pojemność na 5V_SYS ok. 37 µF (C9 wprost, reszta za R50 i PTC), wobec 600 µF dla TSR 2-2450 (P02 R4).

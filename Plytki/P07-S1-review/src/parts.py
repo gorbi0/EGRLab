@@ -3,7 +3,7 @@ Task: Plytki/Format-S1/zadania/ZADANIE-P07-S1.md (5.10.2026). Module facts: Plyt
 Kept from v6.1 P07 (Rewizje/EGRLab-v6.1-rc1, hardware/netlist.csv): own Kelvin shunt + INA240A2 + MCP3201 (ITEST), window comparator
 OC with latch (74HC74 cleared by OC, re-armed only by ARM_CLK while MOTOR_PERMIT is low), KPWR relay with diode + Zener clamp, Ioff
 receivers, SAFE_N open collector on OC. New: 3.3 -> 5 V buffer 74AHCT125 with OE blocking (module buffer is always enabled), mapping
-VNH5019 INA/INB/PWM -> RPWM/LPWM/R_EN/L_EN, IS diagnostics (divider + clamp + Schmitt) -> ENA_DIAG/ENB_DIAG, second flip-flop
+VNH5019 INA/INB/PWM -> RPWM/LPWM/R_EN/L_EN, IS diagnostics (divider + clamp, threshold on P03; 6.10) -> ENA_DIAG/ENB_DIAG, second flip-flop
 NO_TRIP -> DRIVE_OK, separate PGND for the motor current (no motor current through P12), 10 R in the module logic ground.
 Logic on 3V3_IO (same rail as P04), analog on local 3V3A_P07 / 5VA_P07 (as P06 R2), module VCC = 5V_MOD behind a PTC."""
 from cadlib import *
@@ -88,7 +88,7 @@ add('D2','D11',SD,SOD123,'1N4148W','1N4148W (SOD-123, 100 V)',{1:'KPWR_CLAMP',2:
 add('D3','D12',SZ,SOD123,'BZT52C15','BZT52C15 (Zener 15 V 0.5 W, SOD-123)',{1:'KPWR_CLAMP',2:'5V_SYS'},'MOC',note='Clamp = 5V_SYS + 15 V + 0.7 V <= 20.8 V < 85 % of 30 V VDS of Q1 (v6.1: 18 V Zener with 60 V transistor array).',vz=15.0)
 add('R4','ADD_PRECHARGE',SR,R2512,'1K / 1W','RC2512FK-071KL (Yageo 2512 1 W, MPN to confirm)',{1:VM,2:'MOD_BP'},'MOC',ohms=1000,tolerance=.01,power_w=1.0,
     note='Disputed: precharge of the module 330 uF across the KPWR contacts (no inrush weld). Fault with module shorted: 0.28 W; motor current with KPWR open <= 17 mA.')
-res('R5','ADD_MODBP_BLEED','10K',10000,'MOD_BP',PG,'MOC',note='Bleed of the module side; with R4: MOD_BP = 91 % of VMOTOR while KPWR is open (visible on J_SV1.10).')
+res('R5','ADD_MODBP_BLEED','10K',10000,'MOD_BP',PG,'MOC',note='Bleed of the module side; with R4: MOD_BP = 91 % of VMOTOR while KPWR is open (measure at R5).')
 cap('C4','ADD_MODBP_HF','100n',1e-7,'MOD_BP',PG,'MOC')
 add('J2','ADD_MOD_PWR',symbol('Connector_Generic','Conn_01x02'),tail('PTH_MODPWR',2,7.62,2.4,4.5),'MOD B+/B- / PTH','2 x 2.0 mm2 to module B+ / B-',{1:'MOD_BP',2:PG},'MOC',note='To the IBT-2 screw terminals B+ / B-. PTH + anchor.')
 add('J3','ADD_MOD_OUT',symbol('Connector_Generic','Conn_01x02'),tail('PTH_MODOUT',2,7.62,2.4,4.5,rev=True),'MOD M+/M- / PTH','2 x 2.0 mm2 from module M+ / M-',{1:'MOD_MP',2:'T_EGR_P3'},'MOC',note='From the IBT-2 terminals M+ / M-. M- passes through to J4.2.')
@@ -142,18 +142,18 @@ add('U8','U_SUP3',sup,TO92,'MCP120-300DI/TO','MCP120-300DI/TO',{1:'SUP3_N',2:A3,
 res('R24','R_U_SUP3','10K',10000,A3,'SUP3_N','LOGIKA')
 add('U9','U_SUP5',sup,TO92,'MCP120-450DI/TO','MCP120-450DI/TO',{1:'SUP5_RAW',2:A5,3:G},'LOGIKA','https://ww1.microchip.com/downloads/en/DeviceDoc/11184d.pdf','Watches 5VA (INA240, OC comparator).',vth=(4.25,4.5))
 res('R25','R_SUP5','10K',10000,A5,'SUP5_RAW','LOGIKA')
-add('U10','U_RX1',lvc,SO14,'74LVC125AD','74LVC125AD,118 (Nexperia, Ioff)',{1:G,2:'MOTOR_INA',3:'INA_P07',4:G,5:'MOTOR_INB',6:'INB_P07',7:G,8:'PERMIT_P07',9:'MOTOR_PERMIT',10:G,11:'PWM_P07',12:'PWM_OUT',13:G,14:IO},'LOGIKA','https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf',
-    'Owned (register zapas). Ioff receivers: MOTOR_INA/INB come from the P03 domain (P03 may run from USB alone).',zrodlo=REG)
+add('U10','U_RX1',lvc,SO14,'74LVC125AD','74LVC125AD,118 (Nexperia, Ioff)',{1:G,2:'MOTOR_INA',3:'INA_P07',4:G,5:'MOTOR_INB',6:'INB_P07',7:G,8:'NC',9:G,10:G,11:'NC',12:G,13:G,14:IO},'LOGIKA','https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf',
+    'Owned (register zapas). Ioff receivers: MOTOR_INA/INB come from the P03 domain (P03 may run from USB alone). Simplification 3 (6.10): channels 3-4 unused (inputs and OE on GND) - MOTOR_PERMIT / PWM_OUT come from P04 on the same 3V3_IO rail and go straight to U11 / U12 / U13.',zrodlo=REG)
 for i,n in enumerate(['MOTOR_INA','MOTOR_INB','MOTOR_PERMIT','PWM_OUT','ARM_CLK'],26):res(f'R{i}','R_PD_'+n,'100K',100000,n,G,'LOGIKA',note='Input pull-down at J_BP: open tape = L.')
 inv=custom('74LVC14A_SO14',[([(1,'1A','input'),(3,'2A','input'),(5,'3A','input'),(9,'4A','input'),(11,'5A','input'),(13,'6A','input'),(14,'VCC','power_in')],
                             [(2,'1Y','output'),(4,'2Y','output'),(6,'3Y','output'),(8,'4Y','output'),(10,'5Y','output'),(12,'6Y','output'),(7,'GND','power_in')])])
-add('U11','U_INV',inv,SO14,'74LVC14AD','74LVC14AD,118 (Nexperia, Schmitt, Ioff)',{1:'OC_LOCAL_N',2:'OC_FAULT',3:'PERMIT_P07',4:'PERMIT_N',5:'SAFE_SENSE',6:'SAFE_BAD',7:G,8:'SAFE_OK',9:'SAFE_BAD',10:'DRV_OFF',11:'DRIVE_EN',12:'NC',13:G,14:IO},'LOGIKA','https://assets.nexperia.com/documents/data-sheet/74LVC14A.pdf',
+add('U11','U_INV',inv,SO14,'74LVC14AD','74LVC14AD,118 (Nexperia, Schmitt, Ioff)',{1:'OC_LOCAL_N',2:'OC_FAULT',3:'MOTOR_PERMIT',4:'PERMIT_N',5:'SAFE_SENSE',6:'SAFE_BAD',7:G,8:'SAFE_OK',9:'SAFE_BAD',10:'DRV_OFF',11:'DRIVE_EN',12:'NC',13:G,14:IO},'LOGIKA','https://assets.nexperia.com/documents/data-sheet/74LVC14A.pdf',
     'Schmitt inputs for SAFE_N (RC edge ~10 us on P04) and OC_LOCAL_N (pull-up edge). v6.1 SN74HC14N -> LVC14A (Ioff, 5 V tolerant).')
 and_=custom('74HC08_SO14',[([(1,'1A','input'),(2,'1B','input'),(4,'2A','input'),(5,'2B','input'),(9,'3A','input'),(10,'3B','input'),(12,'4A','input'),(13,'4B','input'),(14,'VCC','power_in')],
                            [(3,'1Y','output'),(6,'2Y','output'),(8,'3Y','output'),(11,'4Y','output'),(7,'GND','power_in')])])
 HC08='SN74HC08DR (TI, SOIC-14)'
-add('U12','U_GATE',and_,SO14,'SN74HC08D',HC08,{1:'SUP3_N',2:'SUP5_N',3:'RAILS_OK',4:'RAILS_OK',5:'OC_LOCAL_N',6:'LOCAL_CLEAR_N',7:G,8:'PERMIT_ARMED',9:'PERMIT_P07',10:'OC_GOOD',11:'LOCAL_PERMIT',12:'PERMIT_ARMED',13:'RAILS_OK',14:IO},'LOGIKA','https://www.ti.com/lit/ds/symlink/sn74hc08.pdf','RAILS_OK, LOCAL_CLEAR_N, PERMIT_ARMED, LOCAL_PERMIT (v6.1 U_GATE / U_READY).')
-add('U13','U_PWM',and_,SO14,'SN74HC08D',HC08,{1:'LOCAL_PERMIT',2:'SAFE_OK',3:'DRIVE_EN',4:'RAILS_OK',5:'NO_TRIP',6:'DRIVE_OK_L',7:G,8:'PWM_EN',9:'PWM_P07',10:'DRIVE_EN',11:'RPWM_L',12:'PWM_EN',13:'INA_P07',14:IO},'LOGIKA','https://www.ti.com/lit/ds/symlink/sn74hc08.pdf','DRIVE_EN, DRIVE_OK, PWM_EN, RPWM = PWM_EN & INA.')
+add('U12','U_GATE',and_,SO14,'SN74HC08D',HC08,{1:'SUP3_N',2:'SUP5_N',3:'RAILS_OK',4:'RAILS_OK',5:'OC_LOCAL_N',6:'LOCAL_CLEAR_N',7:G,8:'PERMIT_ARMED',9:'MOTOR_PERMIT',10:'OC_GOOD',11:'LOCAL_PERMIT',12:'PERMIT_ARMED',13:'RAILS_OK',14:IO},'LOGIKA','https://www.ti.com/lit/ds/symlink/sn74hc08.pdf','RAILS_OK, LOCAL_CLEAR_N, PERMIT_ARMED, LOCAL_PERMIT (v6.1 U_GATE / U_READY).')
+add('U13','U_PWM',and_,SO14,'SN74HC08D',HC08,{1:'LOCAL_PERMIT',2:'SAFE_OK',3:'DRIVE_EN',4:'RAILS_OK',5:'NO_TRIP',6:'DRIVE_OK_L',7:G,8:'PWM_EN',9:'PWM_OUT',10:'DRIVE_EN',11:'RPWM_L',12:'PWM_EN',13:'INA_P07',14:IO},'LOGIKA','https://www.ti.com/lit/ds/symlink/sn74hc08.pdf','DRIVE_EN, DRIVE_OK, PWM_EN, RPWM = PWM_EN & INA.')
 add('U14','ADD_U_DIR',and_,SO14,'SN74HC08D',HC08,{1:'PWM_EN',2:'INB_P07',3:'LPWM_L',4:G,5:G,6:'NC',7:G,8:'NC',9:G,10:G,11:'NC',12:G,13:G,14:IO},'LOGIKA','https://www.ti.com/lit/ds/symlink/sn74hc08.pdf','LPWM = PWM_EN & INB; gates 2-4 unused, inputs on GND.')
 ff=custom('74HC74_SO14',[([(2,'1D','input'),(3,'1CLK','input'),(4,'1PRE_N','input'),(1,'1CLR_N','input'),(12,'2D','input'),(11,'2CLK','input'),(10,'2PRE_N','input'),(13,'2CLR_N','input'),(14,'VCC','power_in')],
                          [(5,'1Q','output'),(6,'1Q_N','output'),(9,'2Q','output'),(8,'2Q_N','output'),(7,'GND','power_in')])])
@@ -177,15 +177,14 @@ for i,(a,b) in enumerate([('RPWM_D','RPWM'),('LPWM_D','LPWM'),('REN_D','R_EN'),(
 add('J5','ADD_J_MOD',symbol('Connector_Generic','Conn_02x04_Odd_Even'),IDC8,'J_MOD / IDC 2x4','IDC box header 2x4 2.54 mm angled shrouded, Au',{1:'RPWM',2:'LPWM',3:'R_EN',4:'L_EN',5:'R_IS',6:'L_IS',7:M5,8:'MOD_GND'},'MODUL',
     note='User decision 5.10 (3): numbering 1:1 as the module header (odd row 1 RPWM / 3 R_EN / 5 R_IS / 7 VCC, even row 2 LPWM / 4 L_EN / 6 L_IS / 8 GND). Angled box header at the board edge; 8-wire ribbon with IDC 2x4 sockets on both ends - docs/WIAZKA-MODUL.md.')
 res('R43','ADD_MOD_GND','10R',10,G,'MOD_GND','MODUL',note='Module logic ground: if the module ties GND to B- internally, the loop current through the harness is limited (dV on the VMOTOR return / 10 ohm); acts as a fuse if B- opens.')
-for i,(isn,div,rr) in enumerate([('R_IS','ISR_DIV',44),('L_IS','ISL_DIV',46)]):
- res(f'R{rr}','ADD_'+isn+'_TOP','100K',100000,isn,div,'MODUL',note='IS divider: loads the module 10k by 4.8 %.')
- res(f'R{rr+1}','ADD_'+isn+'_BOT','100K',100000,div,G,'MODUL')
- cap(f'C{14+i}','ADD_'+isn+'_C','10n',1e-8,div,G,'MODUL',note='tau = 50k x 10n = 0.5 ms: averages PWM.')
- add(f'D{5+i}','ADD_'+isn+'_CLAMP',custom('BAT54S_SOT23',[([(1,'A1','passive')],[(3,'K1A2','passive'),(2,'K2','passive')])]),SOT23,'BAT54S','BAT54S (SOT-23, series pair)',{1:G,3:div,2:IO},'MODUL',note='Clamp of the divided IS to GND-0.3 / 3V3_IO+0.3 V (IS up to VS = 16.8 V).')
-sch=custom('74LVC2G17_SOT23_6',[([(1,'1A','input'),(3,'2A','input'),(5,'VCC','power_in')],[(6,'1Y','output'),(4,'2Y','output'),(2,'GND','power_in')])])
-add('U17','ADD_IS_SCHMITT',sch,SOT236,'74LVC2G17','74LVC2G17GV,125 (Nexperia SC-74 / SOT-23-6; DBV pinout to confirm)',{1:'ISR_DIV',2:G,3:'ISL_DIV',4:'ENB_L',5:IO,6:'ENA_L'},'MODUL','https://assets.nexperia.com/documents/data-sheet/74LVC2G17.pdf','Schmitt buffers of the divided IS -> ENA_DIAG / ENB_DIAG (H = half-bridge current >~2-3 A or IS fault level).')
-res('R48','ADD_ENA_SER','100R',100,'ENA_L','ENA_DIAG','MODUL')
-res('R49','ADD_ENB_SER','100R',100,'ENB_L','ENB_DIAG','MODUL')
+# Simplification 4 (user decision 6.10): no Schmitt U17 and no series R48 / R49. The IS line of each half-bridge goes through a divider
+# straight onto J_BP1 (ENA_DIAG / ENB_DIAG); the threshold is the input of the P03 receiver (74LVC125, 10k to GND on P03 R6): R44 / R46 4.7k
+# from the module IS (10k to GND on the module), R45 / R47 100k on P07 (defined level without P03), C 100n averages PWM, BAT54S clamps.
+for i,(isn,div,rr) in enumerate([('R_IS','ENA_DIAG',44),('L_IS','ENB_DIAG',46)]):
+ res(f'R{rr}','ADD_'+isn+'_TOP','4K7',4700,isn,div,'MODUL',note='IS divider with the 10k of the P03 receiver: 0.38 of the open IS voltage (verify_electrical.py IS-DIAG).')
+ res(f'R{rr+1}','ADD_'+isn+'_BOT','100K',100000,div,G,'MODUL',note='Defined L without P03 (tape open).')
+ cap(f'C{14+i}','ADD_'+isn+'_C','100n',1e-7,div,G,'MODUL',note='tau = (14.7k || 9.1k) x 100n = 0.56 ms: averages PWM.')
+ add(f'D{5+i}','ADD_'+isn+'_CLAMP',custom('BAT54S_SOT23',[([(1,'A1','passive')],[(3,'K1A2','passive'),(2,'K2','passive')])]),SOT23,'BAT54S','BAT54S (SOT-23, series pair)',{1:G,3:div,2:IO},'MODUL',note='Clamp of the divided IS to GND-0.3 / 3V3_IO+0.3 V (IS up to VS = 16.8 V); protects the P03 input.')
 # ---------------- root sheet P07: local supplies ---------------------------------------------------------------------------------
 res('R50','R_AF','10R',10,'5V_SYS',A5,'P07',note='5VA filter (v6.1 R_AF 1R 0.5W; load here ~6 mA -> 60 mV).')
 cap('C16','C_AF','10u',1e-5,A5,G,'P07',mpn='SMD 1206 X7R 16V 10% 10u',volts=16)
@@ -196,7 +195,7 @@ cap('C19','C_LDO_OUT','4.7u',4.7e-6,A3,G,'P07',mpn='SMD 1206 X7R 25V 10% 4.7u',v
 add('D7','ADD_LDO_DISCHARGE',SD,SOD123,'B5819W','B5819W (Schottky 1 A 40 V, SOD-123)',{1:A5,2:A3},'P07',note='Anode 3V3A, cathode 5VA: output capacitor discharge on supply removal (P06 R2 D1).')
 cap('C12','ADD_5VMOD_BULK','10u',1e-5,M5,G,'P07',mpn='SMD 1206 X7R 16V 10% 10u',volts=16)
 cap('C21','ADD_3V3IO_BULK','10u',1e-5,IO,G,'P07',mpn='SMD 1206 X7R 16V 10% 10u',volts=16)
-DEC=[('U1',A5),('U3',A3),('U4',A5),('U5',A5),('U6',A3),('U7',A3),('U8',A3),('U9',A5),('U10',IO),('U11',IO),('U12',IO),('U13',IO),('U14',IO),('U15',IO),('U16',M5),('U17',IO),('U2',A3)]
+DEC=[('U1',A5),('U3',A3),('U4',A5),('U5',A5),('U6',A3),('U7',A3),('U8',A3),('U9',A5),('U10',IO),('U11',IO),('U12',IO),('U13',IO),('U14',IO),('U15',IO),('U16',M5),('U2',A3)]
 for i,(u,rail) in enumerate(DEC,22):cap(f'C{i}','DEC_'+u,'100n',1e-7,rail,G,'P07',note='Decoupling at '+u+'.')
 cap('C6','C_REF_HF','100n',1e-7,'REF25',G,'ANA',note='At VREF of U6 (MCP3201).')
 cap('C13','ADD_5VMOD_HF','100n',1e-7,M5,G,'P07',note='At J5.7 (module VCC).')
@@ -211,18 +210,21 @@ for j in (JBP1,JBP2):j.update({i:G for i in range(1,16,2)})
 add('J_BP1','J_ITESTB+J_DIRB',symbol('Connector_Generic','Conn_02x08_Odd_Even'),IDC16,'J_BP1 / IDC 2x8','IDC header 2x8 2.54mm angled shrouded, Au',JBP1,'ZLACZA',note='Edge A, slot S2 (board x = 26.5 mm, stack x = 80.0 mm), pin 1 towards smaller x. Odd pins GND, 16 GND reserve. Partner: P03 R6 (J_BP1 / J_BP2) through P12.')
 add('J_BP2','J_DRIVEB+J_LV07B',symbol('Connector_Generic','Conn_02x08_Odd_Even'),IDC16,'J_BP2 / IDC 2x8','IDC header 2x8 2.54mm angled shrouded, Au',JBP2,'ZLACZA',note='Edge A, slot S3 (board x = 80.0 mm, stack x = 133.5 mm). 2/4/6/8/16 = P04 R3 J_BP2 pins; 5V_SYS x2, 3V3_IO x1 (S1 5).')
 # ---------------- sheet SERWIS: edge B ---------------------------------------------------------------------------------------------
-SV1=[(None,),('I_T_OUT',10000,'wyjscie INA240: 2,500 V przy 0 A, 0,25 V/A'),('ADC_AIN',10000,'wejscie MCP3201: 1,250 V przy 0 A, 0,125 V/A'),('REF_BUF',10000,'bufor U3B: REF INA240 i progi OC'),
- ('REF25',10000,'MCP1525: 2,475-2,525 V'),('OC_HIGH',10000,'prog OC dodatni: ok. 4,51 V (+8 A)'),('OC_LOW',10000,'prog OC ujemny: ok. 0,50 V (-8 A)'),(None,),
- (VM,4700,'VMOTOR z P02 (12,0-16,8 V)'),('MOD_BP',4700,'B+ modulu: = VMOTOR przy zamknietym KPWR, ok. 91 % przy otwartym (R4/R5)'),('KPWR_COIL_LOW',4700,'dol cewki KPWR (5 V): ok. 0 V = zalaczony, = 5V_SYS = wylaczony'),('T_EGR_P1',4700,'zacisk zaworu pin 1 (za bocznikiem)'),(None,)]
-SV2=[(None,),('5V_SYS',1000,'5V_SYS z J_BP2'),(A5,1000,'5VA_P07 za R50'),(A3,1000,'3V3A_P07 z U18'),(IO,1000,'3V3_IO z J_BP2 (logika)'),(M5,1000,'5V_MOD za F1 (VCC modulu)'),(None,),
- ('RAILS_OK',1000,'SUP3_N & SUP5_N'),('OC_LOCAL_N',1000,'wyjscie OC (L = przetezenie); zwarcie kolka do GND = wymuszone OC'),('OC_GOOD',1000,'zatrzask OC (H = uzbrojony)'),('NO_TRIP',1000,'pamiec zadzialania OC (L = bylo OC od ostatniego ARM)'),('DRIVE_EN',1000,'zezwolenie mostka (R_EN / L_EN)'),(None,)]
+# Simplification 1 (user decision 6.10): one service strip (slot S3) with the nodes of the critical acceptance only - supplies 5V_SYS /
+# 5VA / 3V3A, KPWR coil, SAFE_OK, the OC chain (forced OC on OC_LOCAL_N, latch OC_GOOD, DRIVE_OK to P04) and ITEST (I_T_OUT). The other
+# 11 pins of R1 S1 (ADC_AIN, REF_BUF, REF25, OC_HIGH / OC_LOW, VMOTOR, MOD_BP, T_EGR_P1, 3V3_IO, 5V_MOD, RAILS_OK, NO_TRIP, DRIVE_EN) are
+# measured with a probe on the parts (ODBIOR). KPWR_COIL_LOW is a 0..5 V node since the 5 V coil (decision 5.10): class 1K like logic.
+SV2=[(None,),('5V_SYS',1000,'5V_SYS z J_BP2'),(A5,1000,'5VA_P07 za R50'),(A3,1000,'3V3A_P07 z U18'),('KPWR_COIL_LOW',1000,'dol cewki KPWR (5 V): ok. 0 V = zalaczony, 5V_SYS = wylaczony'),
+ ('SAFE_OK',1000,'SAFE_N po Schmitcie U11 (H = SAFE w porzadku)'),('OC_LOCAL_N',1000,'wyjscie OC (L = przetezenie); zwarcie kolka do GND = wymuszone OC'),
+ ('OC_GOOD',1000,'zatrzask OC (H = uzbrojony)'),('DRIVE_OK',1000,'DRIVE_OK do P04 (RAILS_OK & NO_TRIP)'),(None,),
+ ('I_T_OUT',10000,'ITEST: wyjscie INA240, 2,500 V przy 0 A, 0,25 V/A'),(None,)]
 SERVICE={};nr=52
-for jref,rows,src in [('J_SV1',SV1,'SERVICE_S2'),('J_SV2',SV2,'SERVICE_S3')]:
+for jref,rows,src in [('J_SV2',SV2,'SERVICE_S3')]:
  n=len(rows);pp={}
  for k,row in enumerate(rows,1):
   if row[0] is None:pp[k]=G;continue
   net,ohm,why=row;r='R'+str(nr);nr+=1;pp[k]='SRV_'+net;SERVICE[net]=(jref,k,r,ohm,why)
-  res(r,'ADDED_'+src,{1000:'1K',4700:'4K7',10000:'10K'}[ohm],ohm,net,'SRV_'+net,'SERWIS',note='Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.')
+  res(r,'ADDED_'+src,{1000:'1K',10000:'10K'}[ohm],ohm,net,'SRV_'+net,'SERWIS',note='Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.')
  add(jref,src,symbol('Connector_Generic',f'Conn_01x{n:02d}'),copyfp('Connector_PinHeader_2.54mm',f'PinHeader_1x{n:02d}_P2.54mm_Horizontal'),f'{jref} SERWIS 1x{n}',f'Pin header 1x{n}, 2.54 mm, right angle, Au',pp,'SERWIS',
      note='Edge B, '+('slot S2 (board x = 10..43 mm)' if jref=='J_SV1' else 'slot S3 (board x = 63.5..96.5 mm)')+'; pins ~6 mm beyond the edge. Angled strip seen from the top: pin 1 at the LARGER x (P09 R2 note).')
 # Off-board harness parts (user decision 5.10 (3)): listed in docs/BOM.csv after the board parts and in docs/zakupy.csv; not in the netlist.

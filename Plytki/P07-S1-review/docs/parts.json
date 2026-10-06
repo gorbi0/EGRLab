@@ -291,7 +291,7 @@
     },
     "sheet": "MOC",
     "url": "",
-    "note": "Bleed of the module side; with R4: MOD_BP = 91 % of VMOTOR while KPWR is open (visible on J_SV1.10).",
+    "note": "Bleed of the module side; with R4: MOD_BP = 91 % of VMOTOR while KPWR is open (measure at R5).",
     "qty": 1,
     "on_board": true,
     "zrodlo": "nowe",
@@ -1155,17 +1155,17 @@
       "5": "MOTOR_INB",
       "6": "INB_P07",
       "7": "GND",
-      "8": "PERMIT_P07",
-      "9": "MOTOR_PERMIT",
+      "8": "NC",
+      "9": "GND",
       "10": "GND",
-      "11": "PWM_P07",
-      "12": "PWM_OUT",
+      "11": "NC",
+      "12": "GND",
       "13": "GND",
       "14": "3V3_IO"
     },
     "sheet": "LOGIKA",
     "url": "https://assets.nexperia.com/documents/data-sheet/74LVC125A.pdf",
-    "note": "Owned (register zapas). Ioff receivers: MOTOR_INA/INB come from the P03 domain (P03 may run from USB alone).",
+    "note": "Owned (register zapas). Ioff receivers: MOTOR_INA/INB come from the P03 domain (P03 may run from USB alone). Simplification 3 (6.10): channels 3-4 unused (inputs and OE on GND) - MOTOR_PERMIT / PWM_OUT come from P04 on the same 3V3_IO rail and go straight to U11 / U12 / U13.",
     "qty": 1,
     "on_board": true,
     "zrodlo": "rejestr"
@@ -1280,7 +1280,7 @@
     "pins": {
       "1": "OC_LOCAL_N",
       "2": "OC_FAULT",
-      "3": "PERMIT_P07",
+      "3": "MOTOR_PERMIT",
       "4": "PERMIT_N",
       "5": "SAFE_SENSE",
       "6": "SAFE_BAD",
@@ -1316,7 +1316,7 @@
       "6": "LOCAL_CLEAR_N",
       "7": "GND",
       "8": "PERMIT_ARMED",
-      "9": "PERMIT_P07",
+      "9": "MOTOR_PERMIT",
       "10": "OC_GOOD",
       "11": "LOCAL_PERMIT",
       "12": "PERMIT_ARMED",
@@ -1346,7 +1346,7 @@
       "6": "DRIVE_OK_L",
       "7": "GND",
       "8": "PWM_EN",
-      "9": "PWM_P07",
+      "9": "PWM_OUT",
       "10": "DRIVE_EN",
       "11": "RPWM_L",
       "12": "PWM_EN",
@@ -1796,20 +1796,20 @@
     "ref": "R44",
     "source_ref": "ADD_R_IS_TOP",
     "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
-    "display": "100K",
-    "value": "100K",
-    "mpn": "RC1206FR-07100KL",
+    "display": "4K7",
+    "value": "4K7",
+    "mpn": "RC1206FR-074K7L",
     "pins": {
       "1": "R_IS",
-      "2": "ISR_DIV"
+      "2": "ENA_DIAG"
     },
     "sheet": "MODUL",
     "url": "",
-    "note": "IS divider: loads the module 10k by 4.8 %.",
+    "note": "IS divider with the 10k of the P03 receiver: 0.38 of the open IS voltage (verify_electrical.py IS-DIAG).",
     "qty": 1,
     "on_board": true,
     "zrodlo": "nowe",
-    "ohms": 100000,
+    "ohms": 4700,
     "tolerance": 0.01
   },
   "R45": {
@@ -1820,12 +1820,12 @@
     "value": "100K",
     "mpn": "RC1206FR-07100KL",
     "pins": {
-      "1": "ISR_DIV",
+      "1": "ENA_DIAG",
       "2": "GND"
     },
     "sheet": "MODUL",
     "url": "",
-    "note": "",
+    "note": "Defined L without P03 (tape open).",
     "qty": 1,
     "on_board": true,
     "zrodlo": "nowe",
@@ -1836,20 +1836,20 @@
     "ref": "C14",
     "source_ref": "ADD_R_IS_C",
     "footprint": "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
-    "display": "10n",
-    "value": "10n",
-    "mpn": "SMD 1206 C0G 50V 5% 10n",
+    "display": "100n",
+    "value": "100n",
+    "mpn": "SMD 1206 X7R 50V 10% 100n",
     "pins": {
-      "1": "ISR_DIV",
+      "1": "ENA_DIAG",
       "2": "GND"
     },
     "sheet": "MODUL",
     "url": "",
-    "note": "tau = 50k x 10n = 0.5 ms: averages PWM.",
+    "note": "tau = (14.7k || 9.1k) x 100n = 0.56 ms: averages PWM.",
     "qty": 1,
     "on_board": true,
     "zrodlo": "nowe",
-    "farads": 1e-08,
+    "farads": 1e-07,
     "volts": 50
   },
   "D5": {
@@ -1861,12 +1861,12 @@
     "mpn": "BAT54S (SOT-23, series pair)",
     "pins": {
       "1": "GND",
-      "3": "ISR_DIV",
+      "3": "ENA_DIAG",
       "2": "3V3_IO"
     },
     "sheet": "MODUL",
     "url": "",
-    "note": "Clamp of the divided IS to GND-0.3 / 3V3_IO+0.3 V (IS up to VS = 16.8 V).",
+    "note": "Clamp of the divided IS to GND-0.3 / 3V3_IO+0.3 V (IS up to VS = 16.8 V); protects the P03 input.",
     "qty": 1,
     "on_board": true,
     "zrodlo": "nowe"
@@ -1875,20 +1875,20 @@
     "ref": "R46",
     "source_ref": "ADD_L_IS_TOP",
     "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
-    "display": "100K",
-    "value": "100K",
-    "mpn": "RC1206FR-07100KL",
+    "display": "4K7",
+    "value": "4K7",
+    "mpn": "RC1206FR-074K7L",
     "pins": {
       "1": "L_IS",
-      "2": "ISL_DIV"
+      "2": "ENB_DIAG"
     },
     "sheet": "MODUL",
     "url": "",
-    "note": "IS divider: loads the module 10k by 4.8 %.",
+    "note": "IS divider with the 10k of the P03 receiver: 0.38 of the open IS voltage (verify_electrical.py IS-DIAG).",
     "qty": 1,
     "on_board": true,
     "zrodlo": "nowe",
-    "ohms": 100000,
+    "ohms": 4700,
     "tolerance": 0.01
   },
   "R47": {
@@ -1899,12 +1899,12 @@
     "value": "100K",
     "mpn": "RC1206FR-07100KL",
     "pins": {
-      "1": "ISL_DIV",
+      "1": "ENB_DIAG",
       "2": "GND"
     },
     "sheet": "MODUL",
     "url": "",
-    "note": "",
+    "note": "Defined L without P03 (tape open).",
     "qty": 1,
     "on_board": true,
     "zrodlo": "nowe",
@@ -1915,20 +1915,20 @@
     "ref": "C15",
     "source_ref": "ADD_L_IS_C",
     "footprint": "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
-    "display": "10n",
-    "value": "10n",
-    "mpn": "SMD 1206 C0G 50V 5% 10n",
+    "display": "100n",
+    "value": "100n",
+    "mpn": "SMD 1206 X7R 50V 10% 100n",
     "pins": {
-      "1": "ISL_DIV",
+      "1": "ENB_DIAG",
       "2": "GND"
     },
     "sheet": "MODUL",
     "url": "",
-    "note": "tau = 50k x 10n = 0.5 ms: averages PWM.",
+    "note": "tau = (14.7k || 9.1k) x 100n = 0.56 ms: averages PWM.",
     "qty": 1,
     "on_board": true,
     "zrodlo": "nowe",
-    "farads": 1e-08,
+    "farads": 1e-07,
     "volts": 50
   },
   "D6": {
@@ -1940,77 +1940,15 @@
     "mpn": "BAT54S (SOT-23, series pair)",
     "pins": {
       "1": "GND",
-      "3": "ISL_DIV",
+      "3": "ENB_DIAG",
       "2": "3V3_IO"
     },
     "sheet": "MODUL",
     "url": "",
-    "note": "Clamp of the divided IS to GND-0.3 / 3V3_IO+0.3 V (IS up to VS = 16.8 V).",
+    "note": "Clamp of the divided IS to GND-0.3 / 3V3_IO+0.3 V (IS up to VS = 16.8 V); protects the P03 input.",
     "qty": 1,
     "on_board": true,
     "zrodlo": "nowe"
-  },
-  "U17": {
-    "ref": "U17",
-    "source_ref": "ADD_IS_SCHMITT",
-    "footprint": "Package_TO_SOT_SMD:SOT-23-6",
-    "display": "74LVC2G17",
-    "value": "74LVC2G17",
-    "mpn": "74LVC2G17GV,125 (Nexperia SC-74 / SOT-23-6; DBV pinout to confirm)",
-    "pins": {
-      "1": "ISR_DIV",
-      "2": "GND",
-      "3": "ISL_DIV",
-      "4": "ENB_L",
-      "5": "3V3_IO",
-      "6": "ENA_L"
-    },
-    "sheet": "MODUL",
-    "url": "https://assets.nexperia.com/documents/data-sheet/74LVC2G17.pdf",
-    "note": "Schmitt buffers of the divided IS -> ENA_DIAG / ENB_DIAG (H = half-bridge current >~2-3 A or IS fault level).",
-    "qty": 1,
-    "on_board": true,
-    "zrodlo": "nowe"
-  },
-  "R48": {
-    "ref": "R48",
-    "source_ref": "ADD_ENA_SER",
-    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
-    "display": "100R",
-    "value": "100R",
-    "mpn": "RC1206FR-07100RL",
-    "pins": {
-      "1": "ENA_L",
-      "2": "ENA_DIAG"
-    },
-    "sheet": "MODUL",
-    "url": "",
-    "note": "",
-    "qty": 1,
-    "on_board": true,
-    "zrodlo": "nowe",
-    "ohms": 100,
-    "tolerance": 0.01
-  },
-  "R49": {
-    "ref": "R49",
-    "source_ref": "ADD_ENB_SER",
-    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
-    "display": "100R",
-    "value": "100R",
-    "mpn": "RC1206FR-07100RL",
-    "pins": {
-      "1": "ENB_L",
-      "2": "ENB_DIAG"
-    },
-    "sheet": "MODUL",
-    "url": "",
-    "note": "",
-    "qty": 1,
-    "on_board": true,
-    "zrodlo": "nowe",
-    "ohms": 100,
-    "tolerance": 0.01
   },
   "R50": {
     "ref": "R50",
@@ -2471,26 +2409,6 @@
   },
   "C37": {
     "ref": "C37",
-    "source_ref": "DEC_U17",
-    "footprint": "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
-    "display": "100n",
-    "value": "100n",
-    "mpn": "SMD 1206 X7R 50V 10% 100n",
-    "pins": {
-      "1": "3V3_IO",
-      "2": "GND"
-    },
-    "sheet": "P07",
-    "url": "",
-    "note": "Decoupling at U17.",
-    "qty": 1,
-    "on_board": true,
-    "zrodlo": "nowe",
-    "farads": 1e-07,
-    "volts": 50
-  },
-  "C38": {
-    "ref": "C38",
     "source_ref": "DEC_U2",
     "footprint": "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
     "display": "100n",
@@ -2655,235 +2573,6 @@
   },
   "R52": {
     "ref": "R52",
-    "source_ref": "ADDED_SERVICE_S2",
-    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
-    "display": "10K",
-    "value": "10K",
-    "mpn": "RC1206FR-0710KL",
-    "pins": {
-      "1": "I_T_OUT",
-      "2": "SRV_I_T_OUT"
-    },
-    "sheet": "SERWIS",
-    "url": "",
-    "note": "Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.",
-    "qty": 1,
-    "on_board": true,
-    "zrodlo": "nowe",
-    "ohms": 10000,
-    "tolerance": 0.01
-  },
-  "R53": {
-    "ref": "R53",
-    "source_ref": "ADDED_SERVICE_S2",
-    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
-    "display": "10K",
-    "value": "10K",
-    "mpn": "RC1206FR-0710KL",
-    "pins": {
-      "1": "ADC_AIN",
-      "2": "SRV_ADC_AIN"
-    },
-    "sheet": "SERWIS",
-    "url": "",
-    "note": "Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.",
-    "qty": 1,
-    "on_board": true,
-    "zrodlo": "nowe",
-    "ohms": 10000,
-    "tolerance": 0.01
-  },
-  "R54": {
-    "ref": "R54",
-    "source_ref": "ADDED_SERVICE_S2",
-    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
-    "display": "10K",
-    "value": "10K",
-    "mpn": "RC1206FR-0710KL",
-    "pins": {
-      "1": "REF_BUF",
-      "2": "SRV_REF_BUF"
-    },
-    "sheet": "SERWIS",
-    "url": "",
-    "note": "Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.",
-    "qty": 1,
-    "on_board": true,
-    "zrodlo": "nowe",
-    "ohms": 10000,
-    "tolerance": 0.01
-  },
-  "R55": {
-    "ref": "R55",
-    "source_ref": "ADDED_SERVICE_S2",
-    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
-    "display": "10K",
-    "value": "10K",
-    "mpn": "RC1206FR-0710KL",
-    "pins": {
-      "1": "REF25",
-      "2": "SRV_REF25"
-    },
-    "sheet": "SERWIS",
-    "url": "",
-    "note": "Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.",
-    "qty": 1,
-    "on_board": true,
-    "zrodlo": "nowe",
-    "ohms": 10000,
-    "tolerance": 0.01
-  },
-  "R56": {
-    "ref": "R56",
-    "source_ref": "ADDED_SERVICE_S2",
-    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
-    "display": "10K",
-    "value": "10K",
-    "mpn": "RC1206FR-0710KL",
-    "pins": {
-      "1": "OC_HIGH",
-      "2": "SRV_OC_HIGH"
-    },
-    "sheet": "SERWIS",
-    "url": "",
-    "note": "Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.",
-    "qty": 1,
-    "on_board": true,
-    "zrodlo": "nowe",
-    "ohms": 10000,
-    "tolerance": 0.01
-  },
-  "R57": {
-    "ref": "R57",
-    "source_ref": "ADDED_SERVICE_S2",
-    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
-    "display": "10K",
-    "value": "10K",
-    "mpn": "RC1206FR-0710KL",
-    "pins": {
-      "1": "OC_LOW",
-      "2": "SRV_OC_LOW"
-    },
-    "sheet": "SERWIS",
-    "url": "",
-    "note": "Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.",
-    "qty": 1,
-    "on_board": true,
-    "zrodlo": "nowe",
-    "ohms": 10000,
-    "tolerance": 0.01
-  },
-  "R58": {
-    "ref": "R58",
-    "source_ref": "ADDED_SERVICE_S2",
-    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
-    "display": "4K7",
-    "value": "4K7",
-    "mpn": "RC1206FR-074K7L",
-    "pins": {
-      "1": "VMOTOR",
-      "2": "SRV_VMOTOR"
-    },
-    "sheet": "SERWIS",
-    "url": "",
-    "note": "Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.",
-    "qty": 1,
-    "on_board": true,
-    "zrodlo": "nowe",
-    "ohms": 4700,
-    "tolerance": 0.01
-  },
-  "R59": {
-    "ref": "R59",
-    "source_ref": "ADDED_SERVICE_S2",
-    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
-    "display": "4K7",
-    "value": "4K7",
-    "mpn": "RC1206FR-074K7L",
-    "pins": {
-      "1": "MOD_BP",
-      "2": "SRV_MOD_BP"
-    },
-    "sheet": "SERWIS",
-    "url": "",
-    "note": "Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.",
-    "qty": 1,
-    "on_board": true,
-    "zrodlo": "nowe",
-    "ohms": 4700,
-    "tolerance": 0.01
-  },
-  "R60": {
-    "ref": "R60",
-    "source_ref": "ADDED_SERVICE_S2",
-    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
-    "display": "4K7",
-    "value": "4K7",
-    "mpn": "RC1206FR-074K7L",
-    "pins": {
-      "1": "KPWR_COIL_LOW",
-      "2": "SRV_KPWR_COIL_LOW"
-    },
-    "sheet": "SERWIS",
-    "url": "",
-    "note": "Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.",
-    "qty": 1,
-    "on_board": true,
-    "zrodlo": "nowe",
-    "ohms": 4700,
-    "tolerance": 0.01
-  },
-  "R61": {
-    "ref": "R61",
-    "source_ref": "ADDED_SERVICE_S2",
-    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
-    "display": "4K7",
-    "value": "4K7",
-    "mpn": "RC1206FR-074K7L",
-    "pins": {
-      "1": "T_EGR_P1",
-      "2": "SRV_T_EGR_P1"
-    },
-    "sheet": "SERWIS",
-    "url": "",
-    "note": "Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.",
-    "qty": 1,
-    "on_board": true,
-    "zrodlo": "nowe",
-    "ohms": 4700,
-    "tolerance": 0.01
-  },
-  "J_SV1": {
-    "ref": "J_SV1",
-    "source_ref": "SERVICE_S2",
-    "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x13_P2.54mm_Horizontal",
-    "display": "J_SV1 SERWIS 1x13",
-    "value": "J_SV1 SERWIS 1x13",
-    "mpn": "Pin header 1x13, 2.54 mm, right angle, Au",
-    "pins": {
-      "1": "GND",
-      "2": "SRV_I_T_OUT",
-      "3": "SRV_ADC_AIN",
-      "4": "SRV_REF_BUF",
-      "5": "SRV_REF25",
-      "6": "SRV_OC_HIGH",
-      "7": "SRV_OC_LOW",
-      "8": "GND",
-      "9": "SRV_VMOTOR",
-      "10": "SRV_MOD_BP",
-      "11": "SRV_KPWR_COIL_LOW",
-      "12": "SRV_T_EGR_P1",
-      "13": "GND"
-    },
-    "sheet": "SERWIS",
-    "url": "",
-    "note": "Edge B, slot S2 (board x = 10..43 mm); pins ~6 mm beyond the edge. Angled strip seen from the top: pin 1 at the LARGER x (P09 R2 note).",
-    "qty": 1,
-    "on_board": true,
-    "zrodlo": "nowe"
-  },
-  "R62": {
-    "ref": "R62",
     "source_ref": "ADDED_SERVICE_S3",
     "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
     "display": "1K",
@@ -2902,8 +2591,8 @@
     "ohms": 1000,
     "tolerance": 0.01
   },
-  "R63": {
-    "ref": "R63",
+  "R53": {
+    "ref": "R53",
     "source_ref": "ADDED_SERVICE_S3",
     "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
     "display": "1K",
@@ -2922,8 +2611,8 @@
     "ohms": 1000,
     "tolerance": 0.01
   },
-  "R64": {
-    "ref": "R64",
+  "R54": {
+    "ref": "R54",
     "source_ref": "ADDED_SERVICE_S3",
     "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
     "display": "1K",
@@ -2942,16 +2631,16 @@
     "ohms": 1000,
     "tolerance": 0.01
   },
-  "R65": {
-    "ref": "R65",
+  "R55": {
+    "ref": "R55",
     "source_ref": "ADDED_SERVICE_S3",
     "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
     "display": "1K",
     "value": "1K",
     "mpn": "RC1206FR-071KL",
     "pins": {
-      "1": "3V3_IO",
-      "2": "SRV_3V3_IO"
+      "1": "KPWR_COIL_LOW",
+      "2": "SRV_KPWR_COIL_LOW"
     },
     "sheet": "SERWIS",
     "url": "",
@@ -2962,16 +2651,16 @@
     "ohms": 1000,
     "tolerance": 0.01
   },
-  "R66": {
-    "ref": "R66",
+  "R56": {
+    "ref": "R56",
     "source_ref": "ADDED_SERVICE_S3",
     "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
     "display": "1K",
     "value": "1K",
     "mpn": "RC1206FR-071KL",
     "pins": {
-      "1": "5V_MOD",
-      "2": "SRV_5V_MOD"
+      "1": "SAFE_OK",
+      "2": "SRV_SAFE_OK"
     },
     "sheet": "SERWIS",
     "url": "",
@@ -2982,28 +2671,8 @@
     "ohms": 1000,
     "tolerance": 0.01
   },
-  "R67": {
-    "ref": "R67",
-    "source_ref": "ADDED_SERVICE_S3",
-    "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
-    "display": "1K",
-    "value": "1K",
-    "mpn": "RC1206FR-071KL",
-    "pins": {
-      "1": "RAILS_OK",
-      "2": "SRV_RAILS_OK"
-    },
-    "sheet": "SERWIS",
-    "url": "",
-    "note": "Service pin series resistor at the node (S1 6). SMD, may sit on the bottom side.",
-    "qty": 1,
-    "on_board": true,
-    "zrodlo": "nowe",
-    "ohms": 1000,
-    "tolerance": 0.01
-  },
-  "R68": {
-    "ref": "R68",
+  "R57": {
+    "ref": "R57",
     "source_ref": "ADDED_SERVICE_S3",
     "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
     "display": "1K",
@@ -3022,8 +2691,8 @@
     "ohms": 1000,
     "tolerance": 0.01
   },
-  "R69": {
-    "ref": "R69",
+  "R58": {
+    "ref": "R58",
     "source_ref": "ADDED_SERVICE_S3",
     "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
     "display": "1K",
@@ -3042,16 +2711,16 @@
     "ohms": 1000,
     "tolerance": 0.01
   },
-  "R70": {
-    "ref": "R70",
+  "R59": {
+    "ref": "R59",
     "source_ref": "ADDED_SERVICE_S3",
     "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
     "display": "1K",
     "value": "1K",
     "mpn": "RC1206FR-071KL",
     "pins": {
-      "1": "NO_TRIP",
-      "2": "SRV_NO_TRIP"
+      "1": "DRIVE_OK",
+      "2": "SRV_DRIVE_OK"
     },
     "sheet": "SERWIS",
     "url": "",
@@ -3062,16 +2731,16 @@
     "ohms": 1000,
     "tolerance": 0.01
   },
-  "R71": {
-    "ref": "R71",
+  "R60": {
+    "ref": "R60",
     "source_ref": "ADDED_SERVICE_S3",
     "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
-    "display": "1K",
-    "value": "1K",
-    "mpn": "RC1206FR-071KL",
+    "display": "10K",
+    "value": "10K",
+    "mpn": "RC1206FR-0710KL",
     "pins": {
-      "1": "DRIVE_EN",
-      "2": "SRV_DRIVE_EN"
+      "1": "I_T_OUT",
+      "2": "SRV_I_T_OUT"
     },
     "sheet": "SERWIS",
     "url": "",
@@ -3079,30 +2748,29 @@
     "qty": 1,
     "on_board": true,
     "zrodlo": "nowe",
-    "ohms": 1000,
+    "ohms": 10000,
     "tolerance": 0.01
   },
   "J_SV2": {
     "ref": "J_SV2",
     "source_ref": "SERVICE_S3",
-    "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x13_P2.54mm_Horizontal",
-    "display": "J_SV2 SERWIS 1x13",
-    "value": "J_SV2 SERWIS 1x13",
-    "mpn": "Pin header 1x13, 2.54 mm, right angle, Au",
+    "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x12_P2.54mm_Horizontal",
+    "display": "J_SV2 SERWIS 1x12",
+    "value": "J_SV2 SERWIS 1x12",
+    "mpn": "Pin header 1x12, 2.54 mm, right angle, Au",
     "pins": {
       "1": "GND",
       "2": "SRV_5V_SYS",
       "3": "SRV_5VA_P07",
       "4": "SRV_3V3A_P07",
-      "5": "SRV_3V3_IO",
-      "6": "SRV_5V_MOD",
-      "7": "GND",
-      "8": "SRV_RAILS_OK",
-      "9": "SRV_OC_LOCAL_N",
-      "10": "SRV_OC_GOOD",
-      "11": "SRV_NO_TRIP",
-      "12": "SRV_DRIVE_EN",
-      "13": "GND"
+      "5": "SRV_KPWR_COIL_LOW",
+      "6": "SRV_SAFE_OK",
+      "7": "SRV_OC_LOCAL_N",
+      "8": "SRV_OC_GOOD",
+      "9": "SRV_DRIVE_OK",
+      "10": "GND",
+      "11": "SRV_I_T_OUT",
+      "12": "GND"
     },
     "sheet": "SERWIS",
     "url": "",

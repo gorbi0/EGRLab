@@ -12,8 +12,8 @@ Numeracja 1:1 jak listwa 2 × 4 modułu: rząd nieparzysty 1 RPWM, 3 R_EN, 5 R_I
 | 2 | LPWM | P07 → moduł | U16B + R40 100 Ω | 74HC244, 30 k do GND |
 | 3 | R_EN | P07 → moduł | U16C + R41 100 Ω (= DRIVE_EN) | 30 k do GND, rozdzielone z L_EN |
 | 4 | L_EN | P07 → moduł | U16D + R42 100 Ω (= DRIVE_EN) | 30 k do GND |
-| 5 | R_IS | moduł → P07 | R44/R45 100 k/100 k, C14, D5, U17 | 10 k do GND |
-| 6 | L_IS | moduł → P07 | R46/R47, C15, D6, U17 | 10 k do GND |
+| 5 | R_IS | moduł → P07 | R44 4,7 k → ENA_DIAG (R45 100 k, C14 100 n, D5; próg na P03 — uproszczenie 6.10) | 10 k do GND |
+| 6 | L_IS | moduł → P07 | R46 4,7 k → ENB_DIAG (R47, C15, D6) | 10 k do GND |
 | 7 | 5V_MOD | P07 → moduł | 5V_SYS przez PTC F1 | VCC 74HC244 |
 | 8 | MOD_GND | — | R43 10 Ω do GND | GND logiki; z B− 508 mV w trybie diody, COM na B− (C5: nie zwarte wprost) |
 

@@ -38,7 +38,7 @@ LABEL = {  # J_SV1: full names, vertical
     # P07 S1 J_SV1 / J_SV2 (docs/SERWIS.csv): at most 7 characters as P05 R3 / P06 R2
     'I_T_OUT': 'I_T_OUT', 'OC_HIGH': 'OC_HIGH', 'OC_LOW': 'OC_LOW', 'VMOTOR': 'VMOTOR', 'MOD_BP': 'MOD_BP', 'KPWR_COIL_LOW': 'COIL_LO',
     'T_EGR_P1': 'TEGR_P1', '5VA_P07': '5VA', '3V3A_P07': '3V3A', '5V_MOD': '5V_MOD', 'RAILS_OK': 'RAIL_OK', 'OC_LOCAL_N': 'OC_LOC',
-    'OC_GOOD': 'OC_GOOD', 'NO_TRIP': 'NO_TRIP', 'DRIVE_EN': 'DRV_EN'}
+    'OC_GOOD': 'OC_GOOD', 'NO_TRIP': 'NO_TRIP', 'DRIVE_EN': 'DRV_EN', 'SAFE_OK': 'SAFE_OK', 'DRIVE_OK': 'DRV_OK'}
 ABBR = {  # J_SV2 / J_SV3: three letters, horizontal, with a legend
     'MEAS_EN': 'MEN', 'ADC_RESET': 'RST', 'ADC_CONVST': 'CNV', 'ADC_CS': 'ACS', 'ADC_BUSY': 'BSY', 'CS_ILOG_N': 'ILG', 'CS_ITEST_N': 'ITS',
     'CURRENT_CS_N': 'CCS', 'MEAS_BANK': 'MBK', 'SD_CS': 'SDC', 'TC1_CS': 'TC1', 'TC2_CS': 'TC2', 'PWM': 'PWM', 'HEARTBEAT': 'HBT',

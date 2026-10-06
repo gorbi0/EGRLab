@@ -1,7 +1,7 @@
 PASS LOGIC-TABLE {"rows": 2304, "bad": []}
 PASS LOGIC-BLOCK-ALL-L {"rule": "bez MOTOR_PERMIT / SAFE_N, przy OC lub zlych szynach -> RPWM, LPWM, R_EN, L_EN = L", "bad": []}
 PASS DEAD-DOMAINS-OPEN-TAPE {"3V3_IO off": {"RPWM": 0, "LPWM": 0, "R_EN": 0, "L_EN": 0, "KPWR_COIL_LOW": null}, "3V3A off": {"RPWM": 0, "LPWM": 0, "R_EN": 0, "L_EN": 0, "KPWR_COIL_LOW": nu
-PASS OPEN-TAPE-DEFINED {"PERMIT_P07": 0, "PWM_P07": 0, "SAFE_OK": 0, "ARM_CLK": 0}
+PASS OPEN-TAPE-DEFINED {"MOTOR_PERMIT": 0, "PWM_OUT": 0, "SAFE_OK": 0, "ARM_CLK": 0}
 PASS OE-BLOCKS-STUCK-GATE {"RPWM_L": {"RPWM": 0, "LPWM": 0, "R_EN": 0, "L_EN": 0}, "LPWM_L": {"RPWM": 0, "LPWM": 0, "R_EN": 0, "L_EN": 0}}
 PASS LATCH-SEQUENCES []
 PASS SPI-DOUT-TRISTATE DOUT_TX nadaje tylko przy CS_ITEST_N = L; P03 bez zasilania -> CS nieaktywne (R17)
@@ -12,7 +12,7 @@ PASS SHUNT-POWER-10A {"P10A_W": 0.5}
 PASS PRECHARGE-R {"R_ohm": [1000.0], "fault_W": 0.282, "rating_W": 1.0, "Imotor_open_mA": 16.8, "MOD_BP_open_ratio": 0.909}
 PASS KPWR-DRIVE-CLAMP {"Icoil_mA": 81.6, "coil_V": 5, "coil_ratio": [0.98, 1.02], "clamp_V": 20.8, "Vds_on_mV": 3.9, "Rg_ohm": [100.0], "Rpd_ohm": [100000.0], "Vgs_min_V": 2.9}
 PASS TVS-VMOTOR ["SMCJ18A"]
-PASS IS-DIAG {"R_IS": [1.64, 4.62], "L_IS": [1.64, 4.62]}
+PASS IS-DIAG {"R_IS": {"band_A": [1.26, 5.76], "tau_ms": 0.56, "iclamp_mA": 0.5}, "L_IS": {"band_A": [1.26, 5.76], "tau_ms": 0.56, "iclamp_mA": 0.5}}
 PASS GND-PGND-SEPARATE {"both": [], "mod_gnd": [["R43", 10.0]]}
 caught SAFE_OK bypassed (U13.2 -> 3V3_IO) ['LOGIC-TABLE', 'LOGIC-BLOCK-ALL-L', 'LATCH-SEQUENCES']
 caught OC does not clear the latch (U12.5 -> 3V3_IO) ['LOGIC-TABLE', 'LATCH-SEQUENCES']
@@ -28,7 +28,8 @@ caught ITEST divider unequal (R9 10K) ['ITEST-SCALE']
 caught precharge 100R ['PRECHARGE-R']
 caught Zener 27 V ['KPWR-DRIVE-CLAMP']
 caught TVS 15 V ['TVS-VMOTOR']
-caught IS divider 10K/10K ['IS-DIAG']
+caught IS divider top R44 10K (threshold above 6 A) ['IS-DIAG']
+caught IS filter C14 10n (no PWM averaging) ['IS-DIAG']
 caught B- tied to GND (R5.2 -> GND) ['PRECHARGE-R', 'GND-PGND-SEPARATE']
 caught shunt 10 mOhm ['OC-WINDOW', 'ITEST-SCALE', 'SHUNT-POWER-10A']
 caught LPWM gate without OE (U16.4 -> GND) ['OE-BLOCKS-STUCK-GATE']

@@ -79,7 +79,7 @@ fx = lambda v: str(v).replace('.', ',')
 for t in [f'<b>Płytka:</b> 106,5 × 100 mm (klasa 2/3), narożniki R1, FR4 1,6 mm, 2 × 35 µm; 8 otworów M3 (NPTH 3,2) według format-s1.json, strefy dystansów Ø7 '
           f'bez miedzi i części. {len(onboard)} części; od spodu {len(bottom)} SMD ≤ 1,5 mm; najwyższa {", ".join(tall)} {fx(hmax)} mm (limit 16,5 mm).',
           '<b>Krawędź A:</b> J_BP1 (S2, x = 26,5) i J_BP2 (S3, x = 80,0), IDC 2×8, pinout docs/J_BP.csv, pin 1 od mniejszego x. '
-          '<b>Krawędź B:</b> J_SV1 (analog 10 kΩ, szyny pakietu 4,7 kΩ) i J_SV2 (szyny i logika 1 kΩ), GND na końcach, rezystory przy węzłach (docs/SERWIS.csv). '
+          '<b>Krawędź B:</b> jedna listwa J_SV2 (slot S3, 12 kołków: szyny, KPWR, SAFE_OK, łańcuch OC, DRIVE_OK, ITEST — uproszczenie 6.10), GND na końcach, rezystory przy węzłach (docs/SERWIS.csv). '
           '<b>Strona panelu (x = 0):</b> J1 VMOTOR, J2 B+/B−, J3 M+/M−, J4 TEST (2 × 2,0 mm² każde), przewody lutowane, kotwy opasek 12 mm za polami. '
           '<b>J5</b> (obudowane IDC 2×4 kątowe) przy krawędzi x = 106,5 — taśma 8 żył do modułu.',
           '<b>Tor 10 A:</b> VMOTOR, MOD_BP, MOD_MP, T_EGR_P1 / P3 i PGND jako wylewki na obu warstwach (≥ 4 mm, zszyte przelotkami); styki K1 (COM / NO) '

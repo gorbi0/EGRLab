@@ -162,8 +162,8 @@
      "2": "T_EGR_P3"
     },
     "J4": {
-     "2": "T_EGR_P3",
-     "1": "T_EGR_P1"
+     "1": "T_EGR_P1",
+     "2": "T_EGR_P3"
     }
    }
   },
@@ -182,29 +182,11 @@
    }
   },
   {
-   "id": "J_SV1-MAX-13-PINS",
+   "id": "SV-ONLY-J_SV2",
    "pass": true,
-   "detail": null
-  },
-  {
-   "id": "J_SV1-GND-ENDS",
-   "pass": true,
-   "detail": null
-  },
-  {
-   "id": "J_SV1-SERIES-R-AT-NODE-CLASS",
-   "pass": true,
-   "detail": null
-  },
-  {
-   "id": "J_SV1-GROUP",
-   "pass": true,
-   "detail": []
-  },
-  {
-   "id": "J_SV1-NEIGHBOURS",
-   "pass": true,
-   "detail": []
+   "detail": [
+    "J_SV2"
+   ]
   },
   {
    "id": "J_SV2-MAX-13-PINS",
@@ -235,6 +217,14 @@
    "id": "SRV-EACH-NODE-ONCE",
    "pass": true,
    "detail": {}
+  },
+  {
+   "id": "SRV-REQUIRED-NODES",
+   "pass": true,
+   "detail": {
+    "missing": [],
+    "extra": []
+   }
   },
   {
    "id": "CSV-SERWIS",
@@ -387,15 +377,15 @@
    ]
   },
   {
-   "mutation": "J_SV1 14 pins",
-   "target": "J_SV1-MAX-13-PINS",
+   "mutation": "J_SV2 14 pins",
+   "target": "J_SV2-MAX-13-PINS",
    "detected": true,
    "by": [
-    "J_SV1-MAX-13-PINS"
+    "J_SV2-MAX-13-PINS"
    ]
   },
   {
-   "mutation": "J_SV2.13 not GND",
+   "mutation": "J_SV2 last pin not GND",
    "target": "J_SV2-GND-ENDS",
    "detected": true,
    "by": [
@@ -404,56 +394,74 @@
    ]
   },
   {
-   "mutation": "service R of REF25 1K",
-   "target": "J_SV1-SERIES-R-AT-NODE-CLASS",
+   "mutation": "service R of I_T_OUT 1K",
+   "target": "J_SV2-SERIES-R-AT-NODE-CLASS",
    "detected": true,
    "by": [
-    "J_SV1-SERIES-R-AT-NODE-CLASS"
+    "J_SV2-SERIES-R-AT-NODE-CLASS"
    ]
   },
   {
-   "mutation": "pack rail R 1K",
-   "target": "J_SV1-SERIES-R-AT-NODE-CLASS",
+   "mutation": "rail service R 10K",
+   "target": "J_SV2-SERIES-R-AT-NODE-CLASS",
    "detected": true,
    "by": [
-    "J_SV1-SERIES-R-AT-NODE-CLASS"
+    "J_SV2-SERIES-R-AT-NODE-CLASS"
    ]
   },
   {
-   "mutation": "analog node on J_SV2 (SRV_RAILS_OK -> REF25 via R67)",
+   "mutation": "node outside the group (SRV_OC_GOOD -> REF25, 10K)",
    "target": "J_SV2-GROUP",
    "detected": true,
    "by": [
     "J_SV2-SERIES-R-AT-NODE-CLASS",
     "J_SV2-GROUP",
-    "J_SV2-NEIGHBOURS",
-    "SRV-EACH-NODE-ONCE"
+    "SRV-REQUIRED-NODES"
    ]
   },
   {
-   "mutation": "J_SV1 pin 8 GND -> pin 7 net (analog next to pack)",
-   "target": "J_SV1-NEIGHBOURS",
+   "mutation": "J_SV2 pin 10 GND -> DRIVE_OK (analog next to logic)",
+   "target": "J_SV2-NEIGHBOURS",
    "detected": true,
    "by": [
-    "J_SV1-NEIGHBOURS",
+    "J_SV2-NEIGHBOURS",
     "CSV-SERWIS"
    ]
   },
   {
-   "mutation": "node probed twice (R71 -> RAILS_OK)",
+   "mutation": "node probed twice (DRIVE_OK resistor -> OC_GOOD)",
    "target": "SRV-EACH-NODE-ONCE",
    "detected": true,
    "by": [
     "J_SV2-SERIES-R-AT-NODE-CLASS",
-    "SRV-EACH-NODE-ONCE"
+    "SRV-EACH-NODE-ONCE",
+    "SRV-REQUIRED-NODES"
    ]
   },
   {
-   "mutation": "SERWIS.csv stale (J_SV2.12 -> RAILS_OK)",
+   "mutation": "required node missing (SAFE_OK pin -> GND)",
+   "target": "SRV-REQUIRED-NODES",
+   "detected": true,
+   "by": [
+    "SRV-REQUIRED-NODES",
+    "CSV-SERWIS"
+   ]
+  },
+  {
+   "mutation": "second strip J_SV1 appears",
+   "target": "SV-ONLY-J_SV2",
+   "detected": true,
+   "by": [
+    "SV-ONLY-J_SV2"
+   ]
+  },
+  {
+   "mutation": "SERWIS.csv stale (J_SV2.8 -> SRV_DRIVE_OK)",
    "target": "CSV-SERWIS",
    "detected": true,
    "by": [
     "J_SV2-SERIES-R-AT-NODE-CLASS",
+    "SRV-REQUIRED-NODES",
     "CSV-SERWIS"
    ]
   },

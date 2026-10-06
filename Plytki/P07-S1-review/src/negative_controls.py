@@ -67,9 +67,13 @@ def flip(f):
 
 def mount_shift(b): move(b, 'H1', .5, 0)                                            # hole 0.5 mm off the S1 grid
 def jbp_shift(b): move(b, 'J_BP2', 1.0, 0)                                          # edge-A connector off x = 80.0
-def sv_no_gnd_end(b): pad(b, 'J_SV2', '13').SetNet(pad(b, 'J_SV2', '12').GetNet())  # last pin not GND
-def sv_pin_without_resistor(b): pad(b, 'J_SV2', '2').SetNet(pad(b, 'R62', '1').GetNet())   # 5V_SYS straight to the pin
-def sv_resistor_far(b): fp(b, 'R71').SetPosition(xy(45.0, 90.0))                   # DRIVE_EN service resistor > 10 mm from every node pad
+def sv_no_gnd_end(b): pad(b, 'J_SV2', '12').SetNet(pad(b, 'J_SV2', '11').GetNet())  # last pin not GND
+def srv_r(b, node):                                                                 # service resistor of a node (names follow parts.py)
+    return next(f.GetReference() for f in b.GetFootprints() if f.GetReference().startswith('R') and {a.GetNetname().split('/')[-1] for a in f.Pads()} == {node, 'SRV_' + node})
+
+
+def sv_pin_without_resistor(b): pad(b, 'J_SV2', '2').SetNet(pad(b, srv_r(b, '5V_SYS'), '1').GetNet())   # 5V_SYS straight to the pin
+def sv_resistor_far(b): fp(b, srv_r(b, 'OC_GOOD')).SetPosition(xy(45.0, 90.0))    # OC_GOOD service resistor > 10 mm from every node pad
 def narrow_track(b):                                                                # longest signal track thinned to 0.25 mm
     t = max((t for t in b.GetTracks() if not isinstance(t, p.PCB_VIA) and t.GetNetname() != 'GND' and p.ToMM(t.GetWidth()) >= .3), key=lambda t: t.GetLength())
     t.SetWidth(mm(.25))
@@ -160,9 +164,9 @@ def return_cut(b):                                                              
 def null_control(b): pass
 
 
-CASES = [(null_control, None), (mount_shift, 'M3 holes'), (jbp_shift, 'J_BP (edge A)'), (sv_no_gnd_end, 'Service headers'),
-         (sv_pin_without_resistor, 'Service headers'), (sv_resistor_far, 'Service headers'), ('label_missing', 'Service headers'),
-         ('label_swap', 'Service headers'), ('too_tall', 'Every part <='), (narrow_track, 'Every track >='), (pwr_thin, 'Every track >='),
+CASES = [(null_control, None), (mount_shift, 'M3 holes'), (jbp_shift, 'J_BP (edge A)'), (sv_no_gnd_end, 'Service header'),
+         (sv_pin_without_resistor, 'Service header'), (sv_resistor_far, 'Service header'), ('label_missing', 'Service header'),
+         ('label_swap', 'Service header'), ('too_tall', 'Every part <='), (narrow_track, 'Every track >='), (pwr_thin, 'Every track >='),
          (bottom_soic, 'S1-2 section 4'), ('dru_present', 'Rules as P02'), ('force_pour_missing', 'Force pours VMOTOR'),
          (force_thermal, 'Force pours VMOTOR'), (force_narrow, 'Force path >= 4 mm'), (via_in_shunt_pad, 'Force pours stitched'),
          (under_shunt, 'Nothing under the shunt'), (kelvin_via, 'Kelvin pair'), (foreign_in_kelvin, 'No track or via of another net'),
@@ -197,13 +201,13 @@ for fn, expected in CASES:
         env['EGRLAB_HEIGHT_OVERRIDE'] = 'C1=17.0'
     b.BuildConnectivity(); p.ZONE_FILLER(b).Fill(b.Zones())
     copy = d / f'{NAME}.kicad_pcb'; p.SaveBoard(str(copy), b)
-    if name == 'label_missing':                                            # silk label of J_SV1 pin 2 deleted at file level
-        lab = labels['J_SV1.2']; drop(copy, lambda g: isinstance(g, list) and g and g[0] == 'gr_text' and g[1] == lab)
+    if name == 'label_missing':                                            # silk label of J_SV2 pin 2 deleted at file level
+        lab = labels['J_SV2.2']; drop(copy, lambda g: isinstance(g, list) and g and g[0] == 'gr_text' and g[1] == lab)
     if name == 'gnd_pour_removed':                                         # the B.Cu GND pour deleted at file level (b.Remove() breaks SWIG)
         drop(copy, lambda g: zone_of(g, 'GND', 'B.Cu'))
     if name == 'force_pour_missing':                                       # the B.Cu VMOTOR pour deleted at file level
         drop(copy, lambda g: zone_of(g, 'VMOTOR', 'B.Cu'))
-    if name == 'label_swap':                                               # labels of J_SV2 pins 8 and 9 (RAILS_OK / OC_LOCAL_N) swapped
+    if name == 'label_swap':                                               # labels of J_SV2 pins 8 and 9 (OC_GOOD / DRIVE_OK) swapped
         t = parse(copy.read_text(encoding='utf-8')); l2, l3 = labels['J_SV2.8'], labels['J_SV2.9']; k = 0
         for g in t:
             if isinstance(g, list) and g and g[0] == 'gr_text' and g[1] in (l2, l3):

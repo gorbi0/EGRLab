@@ -17,12 +17,15 @@ P04_NETS = ('MOTOR_PERMIT', 'PWM_OUT', 'ARM_CLK', 'DRIVE_OK', 'SAFE_N')
 OPP = {'in': 'out', 'out': 'in'}
 WIRES = {'J1': {'1': 'VMOTOR', '2': 'PGND'}, 'J2': {'1': 'MOD_BP', '2': 'PGND'}, 'J3': {'1': 'MOD_MP', '2': 'T_EGR_P3'}, 'J4': {'1': 'T_EGR_P1', '2': 'T_EGR_P3'}}
 JMOD = {'1': 'RPWM', '2': 'LPWM', '3': 'R_EN', '4': 'L_EN', '5': 'R_IS', '6': 'L_IS', '7': '5V_MOD', '8': 'MOD_GND'}
-ANALOG = {'I_T_OUT', 'ADC_AIN', 'REF_BUF', 'REF25', 'OC_HIGH', 'OC_LOW'}
-PACK = {'VMOTOR', 'MOD_BP', 'KPWR_COIL_LOW', 'T_EGR_P1'}
-RAILS = {'5V_SYS', '5VA_P07', '3V3A_P07', '3V3_IO', '5V_MOD'}
-LOGIC = {'RAILS_OK', 'OC_LOCAL_N', 'OC_GOOD', 'NO_TRIP', 'DRIVE_EN'}
+# simplification 1 (user decision 6.10): one strip J_SV2 (slot S3) with the nodes of the critical acceptance only
+ANALOG = {'I_T_OUT'}
+PACK = set()
+RAILS = {'5V_SYS', '5VA_P07', '3V3A_P07'}
+LOGIC = {'KPWR_COIL_LOW', 'SAFE_OK', 'OC_LOCAL_N', 'OC_GOOD', 'DRIVE_OK'}
+REQUIRED = ANALOG | RAILS | LOGIC
+SV_HDRS = ('J_SV2',)
 OHM = {**{n: 10000 for n in ANALOG}, **{n: 4700 for n in PACK}, **{n: 1000 for n in RAILS | LOGIC}}
-GROUP = {'J_SV1': ANALOG | PACK, 'J_SV2': RAILS | LOGIC}
+GROUP = {'J_SV2': ANALOG | RAILS | LOGIC}
 SV_FP = 'Connector_PinHeader_2.54mm:PinHeader_1x{:02d}_P2.54mm_Horizontal'
 R_SMD = 'Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder'; C_SMD = 'Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder'
 EXC_FP = {'R4': 'Resistor_SMD:R_2512_6332Metric_Pad1.40x3.35mm_HandSolder', 'C1': 'Capacitor_THT:CP_Radial_D8.0mm_P3.50mm',
@@ -108,7 +111,8 @@ def check(c):
     ok('JMOD-PINOUT', c.get('J5', {}).get('pins') == JMOD and 'IDC-Header_2x04' in c.get('J5', {}).get('fp', ''), c.get('J5', {}).get('pins'))
     # service strips (S1 6)
     seen = {}
-    for j in ('J_SV1', 'J_SV2'):
+    ok('SV-ONLY-J_SV2', not any(r.startswith('J_SV') and r not in SV_HDRS for r in c), sorted(r for r in c if r.startswith('J_SV')))
+    for j in SV_HDRS:
         s = pinmap(j); n = max(s) if s else 0
         ok(j + '-MAX-13-PINS', s and sorted(s) == list(range(1, n + 1)) and n <= 13 and c[j]['fp'] == SV_FP.format(n))
         ok(j + '-GND-ENDS', s and s[1] == G and s[n] == G)
@@ -134,8 +138,9 @@ def check(c):
                 if x in PACK and not (y == G or y in PACK): bad.append((p, x, q, y))
         ok(j + '-NEIGHBOURS', not bad, bad)
     ok('SRV-EACH-NODE-ONCE', seen and all(v == 1 for v in seen.values()), {k: v for k, v in seen.items() if v != 1})
+    ok('SRV-REQUIRED-NODES', set(seen) == REQUIRED, {'missing': sorted(REQUIRED - set(seen)), 'extra': sorted(set(seen) - REQUIRED)})
     sv = {(r['zlacze'], int(r['pin'])): r['siec'] for r in rows(P / 'docs/SERWIS.csv')}
-    ok('CSV-SERWIS', sv == {(j, p): (n[4:] if n.startswith('SRV_') else n) for j in ('J_SV1', 'J_SV2') for p, n in pinmap(j).items()})
+    ok('CSV-SERWIS', sv == {(j, p): (n[4:] if n.startswith('SRV_') else n) for j in SV_HDRS for p, n in pinmap(j).items()})
     # Kelvin shunt from the footprint geometry, in the motor line
     sp = pads(c['RSH1']['fp']); net = c['RSH1']['pins']
     good = len(sp) == 4 and set(net) == set(sp) and '2512' in c['RSH1']['fp']
@@ -182,6 +187,10 @@ def mut_val(r, v):
     return f
 
 
+def srv(m, node):
+    return next(r for r, x in m.items() if r.startswith('R') and set(x['pins'].values()) == {node, 'SRV_' + node})
+
+
 def mut_fp(r, v):
     def f(m): m[r]['fp'] = v
     return f
@@ -197,14 +206,16 @@ MUT = [('J_BP1.6 CS_ITEST_N <-> 8 MOTOR_INA', lambda m: (mut_pin('J_BP1', 6, 'MO
        ('VMOTOR on the tape (J_BP2.14)', mut_pin('J_BP2', 14, 'VMOTOR'), 'JBP-NO-FOREIGN-NETS'),
        ('M+ wire to the TEST port directly (J3.1 -> T_EGR_P1)', mut_pin('J3', 1, 'T_EGR_P1'), 'WIRES-MOTOR-PATH'),
        ('J_MOD VCC/GND swapped', lambda m: (mut_pin('J5', 7, 'MOD_GND')(m), mut_pin('J5', 8, '5V_MOD')(m)), 'JMOD-PINOUT'),
-       ('J_SV1 14 pins', mut_fp('J_SV1', SV_FP.format(14)), 'J_SV1-MAX-13-PINS'),
-       ('J_SV2.13 not GND', mut_pin('J_SV2', 13, 'NC'), 'J_SV2-GND-ENDS'),
-       ('service R of REF25 1K', mut_val('R55', '1K'), 'J_SV1-SERIES-R-AT-NODE-CLASS'),
-       ('pack rail R 1K', mut_val('R60', '1K'), 'J_SV1-SERIES-R-AT-NODE-CLASS'),
-       ('analog node on J_SV2 (SRV_RAILS_OK -> REF25 via R67)', lambda m: (mut_pin('R67', 1, 'REF25')(m), mut_val('R67', '10K')(m)), 'J_SV2-GROUP'),
-       ('J_SV1 pin 8 GND -> pin 7 net (analog next to pack)', lambda m: (mut_pin('J_SV1', 8, 'SRV_OC_LOW')(m), mut_pin('J_SV1', 7, G)(m)), 'J_SV1-NEIGHBOURS'),
-       ('node probed twice (R71 -> RAILS_OK)', lambda m: mut_pin('R71', 1, 'RAILS_OK')(m), 'SRV-EACH-NODE-ONCE'),
-       ('SERWIS.csv stale (J_SV2.12 -> RAILS_OK)', lambda m: (mut_pin('J_SV2', 12, 'SRV_RAILS_OK')(m)), 'CSV-SERWIS'),
+       ('J_SV2 14 pins', mut_fp('J_SV2', SV_FP.format(14)), 'J_SV2-MAX-13-PINS'),
+       ('J_SV2 last pin not GND', mut_pin('J_SV2', 12, 'NC'), 'J_SV2-GND-ENDS'),
+       ('service R of I_T_OUT 1K', lambda m: mut_val(srv(m, 'I_T_OUT'), '1K')(m), 'J_SV2-SERIES-R-AT-NODE-CLASS'),
+       ('rail service R 10K', lambda m: mut_val(srv(m, '5V_SYS'), '10K')(m), 'J_SV2-SERIES-R-AT-NODE-CLASS'),
+       ('node outside the group (SRV_OC_GOOD -> REF25, 10K)', lambda m: (lambda r: (mut_pin(r, 1, 'REF25')(m), mut_val(r, '10K')(m)))(srv(m, 'OC_GOOD')), 'J_SV2-GROUP'),
+       ('J_SV2 pin 10 GND -> DRIVE_OK (analog next to logic)', lambda m: (mut_pin('J_SV2', 10, 'SRV_DRIVE_OK')(m), mut_pin('J_SV2', 9, G)(m)), 'J_SV2-NEIGHBOURS'),
+       ('node probed twice (DRIVE_OK resistor -> OC_GOOD)', lambda m: mut_pin(srv(m, 'DRIVE_OK'), 1, 'OC_GOOD')(m), 'SRV-EACH-NODE-ONCE'),
+       ('required node missing (SAFE_OK pin -> GND)', lambda m: mut_pin('J_SV2', 6, G)(m), 'SRV-REQUIRED-NODES'),
+       ('second strip J_SV1 appears', lambda m: m.__setitem__('J_SV1', {'pins': {'1': G, '2': G}, 'value': 'x', 'mpn': '', 'fp': SV_FP.format(2)}), 'SV-ONLY-J_SV2'),
+       ('SERWIS.csv stale (J_SV2.8 -> SRV_DRIVE_OK)', lambda m: (mut_pin('J_SV2', 8, 'SRV_DRIVE_OK')(m)), 'CSV-SERWIS'),
        ('shunt sense pads swapped', lambda m: (mut_pin('RSH1', 2, 'K_MINUS')(m), mut_pin('RSH1', 3, 'K_PLUS')(m)), 'RSH1-KELVIN-MOTOR-LINE'),
        ('INA240 IN+ on K_MINUS side', lambda m: (mut_pin('U1', 8, 'INA_MINUS')(m), mut_pin('U1', 1, 'INA_PLUS')(m)), 'INA240-KELVIN-INPUTS'),
        ('R15 in 0805', mut_fp('R15', 'Resistor_SMD:R_0805_2012Metric'), 'PART-TYPES-S1'),
