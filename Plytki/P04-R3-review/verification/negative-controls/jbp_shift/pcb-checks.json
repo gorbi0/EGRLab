@@ -1,0 +1,1037 @@
+{
+  "board": "/home/tgorbacz/AI/Claude/EGRLab/.worktrees/p04-r3-pcb/Plytki/P04-R3-review/verification/negative-controls/jbp_shift/P04.kicad_pcb",
+  "board_sha256": "6b438d44dcdbd4d03881759d8c3d8c86628f7f8e43a6e51e6ffd5f9e28471789",
+  "checks": [
+    {
+      "check": "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
+      "pass": false
+    },
+    {
+      "check": "100 on-board parts + 12 mounting holes, nothing else",
+      "pass": true
+    },
+    {
+      "check": "Every value, footprint ID and pad net equals the exported schematic netlist",
+      "pass": true
+    },
+    {
+      "check": "S1-2 section 4: parts on the bottom only SMD <= 1.5 mm, no SOIC (level 6 is not level 1), >= 1 mm from THT pads (P04 R3: none on the bottom)",
+      "pass": true
+    },
+    {
+      "check": "2 copper layers, 1.6 mm board (S1: FR4 1.6 mm)",
+      "pass": true
+    },
+    {
+      "check": "Both copper layers 35 um (S1)",
+      "pass": true
+    },
+    {
+      "check": "Outline class L: 160.0 x 100.0 mm, 4 corner arcs R 1.0 mm (format-s1.json)",
+      "pass": true
+    },
+    {
+      "check": "M3 holes: 12 NPTH 3.2 mm exactly at the S1 positions (x_w_slocie + 53.5 k, y 14 / 86)",
+      "pass": true
+    },
+    {
+      "check": "Standoff zones D7: no courtyard and no copper (pads, tracks, vias, pours) within 3.5 mm of a hole centre; rule areas on both layers",
+      "pass": true
+    },
+    {
+      "check": "Rules as P02 R3 / R4 (clearance >= 0.25, track >= 0.30, edge 0.5), annular ring >= 0.25 mm (S1 section 3); class PWR 0.4 mm for 3V3_IO, P04_3V3, PANEL_3V3, 5V_SYS; no custom rules file, no DRC exclusions",
+      "pass": true
+    },
+    {
+      "check": "Every track >= 0.30 mm (S1 section 3)",
+      "pass": true
+    },
+    {
+      "check": "Supply nets 3V3_IO, P04_3V3, PANEL_3V3, 5V_SYS: every track >= 0.4 mm (task 5.10: P04_3V3, 5V_SYS, PANEL_3V3 >= 0.4 mm; 3V3_IO in the same class)",
+      "pass": true
+    },
+    {
+      "check": "Every PTH pad and via has an annular ring >= 0.25 mm (measured on the copper)",
+      "pass": true
+    },
+    {
+      "check": "J_BP1..3 (edge A): IDC 2x8 / 2x10 / 2x10 angled, body front at y = 0, pin centre x = 26.5 / 80.0 / 133.5 (slots S1-S3), pin 1 at the smaller x, odd pins GND, pinout = docs/J_BP.csv (P12 contract)",
+      "pass": false
+    },
+    {
+      "check": "Service headers J_SV1..3 (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pin 1 at the larger x, pins out ~6 mm, GND on both ends, one series resistor per pin as docs/SERWIS.csv and of its class (1K; 10K SAFE_N / ARM_BUTTON_N, README decision 6) <= 10 mm from its node (a pad or locked via of the node net), one silk label per pin with the name of its node (LABEL in silkscreen.py), GND at both ends",
+      "pass": true
+    },
+    {
+      "check": "Reserved strip of edge A (S1 §5: y 0-10, x 10-43 of each J_BP slot): no other part",
+      "pass": true
+    },
+    {
+      "check": "Every part <= 16.5 mm above the board (limit above level 6, user decision 5.10; src/heights.py)",
+      "pass": true
+    },
+    {
+      "check": "Watchdog RC traces (WD_RC, WD_C) <= 15 mm each, locked, F.Cu only, without vias (P04 R2.2)",
+      "pass": true
+    },
+    {
+      "check": "C1 lands on the U1 timing nodes (C1.1 = U1.15 = WD_RC, C1.2 = U1.14 = WD_C), not on ground (P04 R2.2)",
+      "pass": true
+    },
+    {
+      "check": "SAFE_N ends at U2.11: C18 (1 nF) pad <= 5 mm, R5 (100 k) pad <= 16 mm, both SAFE_N / GND (P04 R2.2 R4-04)",
+      "pass": true
+    },
+    {
+      "check": "Series resistors at their connector pins (P04 R2.2 R4-03 / R4-07, MECHANIKA): R40 PANEL_3V3, R42 MECH_OK, R3 ARM_CONTACT, R41 TEST_KEY at J_BP1, R39 P04_3V3 and R38 PG_SEND at J_BP2; the connector-side net holds only pin + resistor (+ its service resistor), pad <= 10 mm from the pin (R39 <= 15 mm: end of the P04_3V3 escape), copper within the limit",
+      "pass": true
+    },
+    {
+      "check": "SUP_N_OUT short and referenced to GND (KONTRAKT-RESET, README): copper <= 20 mm, <= 1 via, J_BP3.11 / .13 GND, GND pour on the other layer under >= 70 % of its length (pour, tracks or pads), U9.5 <= 10 mm and R17 <= 6 mm from it; net = J_BP3.12 + R17.1 + U9.5 only",
+      "pass": true
+    },
+    {
+      "check": "Decoupling at the IC supply pins: 100 nF pad 1 (3V3_IO) <= 6 mm from the VCC pin on the copper (U1-U11, second 100 nF C15-C17 at U8-U10)",
+      "pass": true
+    },
+    {
+      "check": "Decoupling, ground side: capacitor GND pad -> GND pin of its IC through GND copper <= 1.3 x straight + 3 mm (gndpath.py; P05 R3 review 2.10 method)",
+      "pass": true
+    },
+    {
+      "check": "Default-state resistors at their buffers (MECHANIKA): R12-R22 (input side) and R25-R35 (output side) pad <= 12 mm from the U8-U10 pin",
+      "pass": true
+    },
+    {
+      "check": "GND pours on both layers: B.Cu >= 50 % of the board; island removal always (every island tied)",
+      "pass": true
+    },
+    {
+      "check": "Every visible reference outside the courtyards of other parts",
+      "pass": true
+    },
+    {
+      "check": "Every visible reference nearer its own part than any other (text centre to courtyard; P03 R6 review 1.10)",
+      "pass": true
+    },
+    {
+      "check": "Pin 1 of every connector (J_BP1..3, J_SV1..3) marked \"1\" on the silkscreen <= 3 mm from the pad (S1 §9)",
+      "pass": true
+    },
+    {
+      "check": "Silkscreen legible: every visible text on F.SilkS / B.SilkS >= 1.0 mm high with a >= 0.15 mm line (JLCPCB legend minimum)",
+      "pass": true
+    },
+    {
+      "check": "Silkscreen: board name \"P04 R3 S1-L S1-S3\", edge markers A and B",
+      "pass": true
+    }
+  ],
+  "details": {
+    "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)": {
+      "violations": 135,
+      "unconnected_items": 1,
+      "schematic_parity": 0,
+      "other_violations": 129,
+      "other_types": [
+        "clearance",
+        "hole_clearance",
+        "shorting_items",
+        "solder_mask_bridge",
+        "starved_thermal",
+        "track_dangling"
+      ],
+      "accepted_lib_mismatch": [
+        "J_BP1",
+        "J_BP2",
+        "J_BP3",
+        "J_SV1",
+        "J_SV2",
+        "J_SV3"
+      ]
+    },
+    "Every value, footprint ID and pad net equals the exported schematic netlist": {
+      "errors": [],
+      "pads": 397
+    },
+    "S1-2 section 4: parts on the bottom only SMD <= 1.5 mm, no SOIC (level 6 is not level 1), >= 1 mm from THT pads (P04 R3: none on the bottom)": {
+      "bottom_parts": {}
+    },
+    "Both copper layers 35 um (S1)": {
+      "F.Cu": 0.035,
+      "B.Cu": 0.035
+    },
+    "Outline class L: 160.0 x 100.0 mm, 4 corner arcs R 1.0 mm (format-s1.json)": {
+      "bbox_line_centres": [
+        0.0,
+        0.0,
+        160.0,
+        100.0
+      ],
+      "arcs": 4,
+      "segments": 4
+    },
+    "M3 holes: 12 NPTH 3.2 mm exactly at the S1 positions (x_w_slocie + 53.5 k, y 14 / 86)": {
+      "want": [
+        [
+          4.0,
+          14.0
+        ],
+        [
+          4.0,
+          86.0
+        ],
+        [
+          49.0,
+          14.0
+        ],
+        [
+          49.0,
+          86.0
+        ],
+        [
+          57.5,
+          14.0
+        ],
+        [
+          57.5,
+          86.0
+        ],
+        [
+          102.5,
+          14.0
+        ],
+        [
+          102.5,
+          86.0
+        ],
+        [
+          111.0,
+          14.0
+        ],
+        [
+          111.0,
+          86.0
+        ],
+        [
+          156.0,
+          14.0
+        ],
+        [
+          156.0,
+          86.0
+        ]
+      ],
+      "got": [
+        [
+          4.0,
+          14.0
+        ],
+        [
+          4.0,
+          86.0
+        ],
+        [
+          49.0,
+          14.0
+        ],
+        [
+          49.0,
+          86.0
+        ],
+        [
+          57.5,
+          14.0
+        ],
+        [
+          57.5,
+          86.0
+        ],
+        [
+          102.5,
+          14.0
+        ],
+        [
+          102.5,
+          86.0
+        ],
+        [
+          111.0,
+          14.0
+        ],
+        [
+          111.0,
+          86.0
+        ],
+        [
+          156.0,
+          14.0
+        ],
+        [
+          156.0,
+          86.0
+        ]
+      ]
+    },
+    "Standoff zones D7: no courtyard and no copper (pads, tracks, vias, pours) within 3.5 mm of a hole centre; rule areas on both layers": {
+      "courtyards": [],
+      "copper": [],
+      "rule_areas": 12
+    },
+    "Rules as P02 R3 / R4 (clearance >= 0.25, track >= 0.30, edge 0.5), annular ring >= 0.25 mm (S1 section 3); class PWR 0.4 mm for 3V3_IO, P04_3V3, PANEL_3V3, 5V_SYS; no custom rules file, no DRC exclusions": {
+      "board_minimums": {
+        "min_clearance": 0.25,
+        "min_track_width": 0.3,
+        "min_copper_edge_clearance": 0.5,
+        "min_via_annular_width": 0.25
+      },
+      "classes": {
+        "Default": [
+          0.3,
+          0.25
+        ],
+        "PWR": [
+          0.4,
+          0.25
+        ]
+      },
+      "patterns": [
+        [
+          "PWR",
+          "3V3_IO"
+        ],
+        [
+          "PWR",
+          "5V_SYS"
+        ],
+        [
+          "PWR",
+          "P04_3V3"
+        ],
+        [
+          "PWR",
+          "PANEL_3V3"
+        ]
+      ]
+    },
+    "Every track >= 0.30 mm (S1 section 3)": [],
+    "Supply nets 3V3_IO, P04_3V3, PANEL_3V3, 5V_SYS: every track >= 0.4 mm (task 5.10: P04_3V3, 5V_SYS, PANEL_3V3 >= 0.4 mm; 3V3_IO in the same class)": {
+      "3V3_IO": {
+        "tracks": 124,
+        "min_width_mm": 0.4,
+        "copper_mm": 456.22
+      },
+      "P04_3V3": {
+        "tracks": 6,
+        "min_width_mm": 0.4,
+        "copper_mm": 29.78
+      },
+      "PANEL_3V3": {
+        "tracks": 5,
+        "min_width_mm": 0.4,
+        "copper_mm": 15.23
+      },
+      "5V_SYS": {
+        "tracks": 4,
+        "min_width_mm": 0.4,
+        "copper_mm": 25.08
+      }
+    },
+    "Every PTH pad and via has an annular ring >= 0.25 mm (measured on the copper)": [],
+    "J_BP1..3 (edge A): IDC 2x8 / 2x10 / 2x10 angled, body front at y = 0, pin centre x = 26.5 / 80.0 / 133.5 (slots S1-S3), pin 1 at the smaller x, odd pins GND, pinout = docs/J_BP.csv (P12 contract)": {
+      "J_BP1": {
+        "centre_x": 26.5,
+        "pin1": [
+          17.61,
+          13.33
+        ],
+        "fab_front_y": 0.0,
+        "pinout_equals_J_BP.csv": true,
+        "ok": true
+      },
+      "J_BP2": {
+        "centre_x": 80.0,
+        "pin1": [
+          68.57,
+          13.33
+        ],
+        "fab_front_y": 0.0,
+        "pinout_equals_J_BP.csv": true,
+        "ok": true
+      },
+      "J_BP3": {
+        "centre_x": 134.5,
+        "pin1": [
+          123.07,
+          13.33
+        ],
+        "fab_front_y": 0.0,
+        "pinout_equals_J_BP.csv": true,
+        "ok": false
+      }
+    },
+    "Service headers J_SV1..3 (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pin 1 at the larger x, pins out ~6 mm, GND on both ends, one series resistor per pin as docs/SERWIS.csv and of its class (1K; 10K SAFE_N / ARM_BUTTON_N, README decision 6) <= 10 mm from its node (a pad or locked via of the node net), one silk label per pin with the name of its node (LABEL in silkscreen.py), GND at both ends": {
+      "J_SV1": {
+        "problems": [],
+        "pins": [
+          {
+            "pin": 2,
+            "node": "SAFE_N",
+            "resistor": "R43",
+            "value": "10K",
+            "node_dist_mm": 2.5,
+            "label": "SAFE_N",
+            "side": "F"
+          },
+          {
+            "pin": 4,
+            "node": "ARM_BUTTON_N",
+            "resistor": "R44",
+            "value": "10K",
+            "node_dist_mm": 4.1,
+            "label": "ARM_BTN",
+            "side": "F"
+          },
+          {
+            "pin": 6,
+            "node": "ARM_CLK",
+            "resistor": "R45",
+            "value": "1K",
+            "node_dist_mm": 8.1,
+            "label": "ARM_CLK",
+            "side": "F"
+          },
+          {
+            "pin": 7,
+            "node": "HW_ARMED",
+            "resistor": "R46",
+            "value": "1K",
+            "node_dist_mm": 2.8,
+            "label": "HW_ARM",
+            "side": "F"
+          },
+          {
+            "pin": 8,
+            "node": "SAFE_OK",
+            "resistor": "R47",
+            "value": "1K",
+            "node_dist_mm": 5.8,
+            "label": "SAFE_OK",
+            "side": "F"
+          },
+          {
+            "pin": 9,
+            "node": "SAFE_WD",
+            "resistor": "R48",
+            "value": "1K",
+            "node_dist_mm": 2.8,
+            "label": "SAFE_WD",
+            "side": "F"
+          },
+          {
+            "pin": 10,
+            "node": "WD_Q",
+            "resistor": "R49",
+            "value": "1K",
+            "node_dist_mm": 4.1,
+            "label": "WD_Q",
+            "side": "F"
+          },
+          {
+            "pin": 11,
+            "node": "Q1_B",
+            "resistor": "R50",
+            "value": "1K",
+            "node_dist_mm": 5.4,
+            "label": "Q1_B",
+            "side": "F"
+          },
+          {
+            "pin": 12,
+            "node": "LOCAL_SUP_N",
+            "resistor": "R51",
+            "value": "1K",
+            "node_dist_mm": 2.5,
+            "label": "LSUP_N",
+            "side": "F"
+          }
+        ]
+      },
+      "J_SV2": {
+        "problems": [],
+        "pins": [
+          {
+            "pin": 2,
+            "node": "SUP_OK",
+            "resistor": "R52",
+            "value": "1K",
+            "node_dist_mm": 2.5,
+            "label": "SUP_OK",
+            "side": "F"
+          },
+          {
+            "pin": 3,
+            "node": "INTERLOCK",
+            "resistor": "R53",
+            "value": "1K",
+            "node_dist_mm": 2.5,
+            "label": "INTRLCK",
+            "side": "F"
+          },
+          {
+            "pin": 4,
+            "node": "MOTOR_PERMIT",
+            "resistor": "R54",
+            "value": "1K",
+            "node_dist_mm": 2.7,
+            "label": "MOT_PRM",
+            "side": "F"
+          },
+          {
+            "pin": 5,
+            "node": "PWM_OUT",
+            "resistor": "R55",
+            "value": "1K",
+            "node_dist_mm": 2.5,
+            "label": "PWM_OUT",
+            "side": "F"
+          },
+          {
+            "pin": 6,
+            "node": "SENSOR_PERMIT",
+            "resistor": "R56",
+            "value": "1K",
+            "node_dist_mm": 2.8,
+            "label": "SEN_PRM",
+            "side": "F"
+          }
+        ]
+      },
+      "J_SV3": {
+        "problems": [],
+        "pins": [
+          {
+            "pin": 2,
+            "node": "5V_SYS",
+            "resistor": "R57",
+            "value": "1K",
+            "node_dist_mm": 1.7,
+            "label": "5V_SYS",
+            "side": "F"
+          },
+          {
+            "pin": 3,
+            "node": "3V3_IO",
+            "resistor": "R58",
+            "value": "1K",
+            "node_dist_mm": 3.2,
+            "label": "3V3_IO",
+            "side": "F"
+          },
+          {
+            "pin": 4,
+            "node": "PANEL_3V3",
+            "resistor": "R59",
+            "value": "1K",
+            "node_dist_mm": 3.6,
+            "label": "PNL_3V3",
+            "side": "F"
+          },
+          {
+            "pin": 5,
+            "node": "P04_3V3",
+            "resistor": "R60",
+            "value": "1K",
+            "node_dist_mm": 2.4,
+            "label": "P04_3V3",
+            "side": "F"
+          },
+          {
+            "pin": 6,
+            "node": "PG_SEND",
+            "resistor": "R61",
+            "value": "1K",
+            "node_dist_mm": 2.8,
+            "label": "PG_SEND",
+            "side": "F"
+          }
+        ]
+      }
+    },
+    "Reserved strip of edge A (S1 §5: y 0-10, x 10-43 of each J_BP slot): no other part": {
+      "J_BP1": {
+        "pas": [
+          10.0,
+          0.0,
+          43.0,
+          10.0
+        ],
+        "czesci": []
+      },
+      "J_BP2": {
+        "pas": [
+          63.5,
+          0.0,
+          96.5,
+          10.0
+        ],
+        "czesci": []
+      },
+      "J_BP3": {
+        "pas": [
+          117.0,
+          0.0,
+          150.0,
+          10.0
+        ],
+        "czesci": []
+      }
+    },
+    "Every part <= 16.5 mm above the board (limit above level 6, user decision 5.10; src/heights.py)": {
+      "max": [
+        "C1",
+        13.0
+      ],
+      "over": {}
+    },
+    "Watchdog RC traces (WD_RC, WD_C) <= 15 mm each, locked, F.Cu only, without vias (P04 R2.2)": {
+      "WD_RC": {
+        "length_mm": 9.9,
+        "vias": 0,
+        "all_front_locked": true
+      },
+      "WD_C": {
+        "length_mm": 6.62,
+        "vias": 0,
+        "all_front_locked": true
+      }
+    },
+    "SAFE_N ends at U2.11: C18 (1 nF) pad <= 5 mm, R5 (100 k) pad <= 16 mm, both SAFE_N / GND (P04 R2.2 R4-04)": {
+      "C18.1": 3.25,
+      "R5.1": 3.72,
+      "SAFE_N_copper_mm": 68.73
+    },
+    "Series resistors at their connector pins (P04 R2.2 R4-03 / R4-07, MECHANIKA): R40 PANEL_3V3, R42 MECH_OK, R3 ARM_CONTACT, R41 TEST_KEY at J_BP1, R39 P04_3V3 and R38 PG_SEND at J_BP2; the connector-side net holds only pin + resistor (+ its service resistor), pad <= 10 mm from the pin (R39 <= 15 mm: end of the P04_3V3 escape), copper within the limit": {
+      "PANEL_3V3": {
+        "pads_on_net": [
+          "J_BP1.2",
+          "R40.2",
+          "R59.1"
+        ],
+        "want": [
+          "J_BP1.2",
+          "R40.2",
+          "R59.1"
+        ],
+        "distance_mm": 5.56,
+        "distance_limit_mm": 10,
+        "copper_mm": 15.23,
+        "limit_mm": 25
+      },
+      "MECH_OK": {
+        "pads_on_net": [
+          "J_BP1.4",
+          "R42.1"
+        ],
+        "want": [
+          "J_BP1.4",
+          "R42.1"
+        ],
+        "distance_mm": 5.52,
+        "distance_limit_mm": 10,
+        "copper_mm": 6.87,
+        "limit_mm": 15
+      },
+      "ARM_CONTACT": {
+        "pads_on_net": [
+          "J_BP1.8",
+          "R3.2"
+        ],
+        "want": [
+          "J_BP1.8",
+          "R3.2"
+        ],
+        "distance_mm": 5.5,
+        "distance_limit_mm": 10,
+        "copper_mm": 7.02,
+        "limit_mm": 15
+      },
+      "TEST_KEY": {
+        "pads_on_net": [
+          "J_BP1.14",
+          "R41.1"
+        ],
+        "want": [
+          "J_BP1.14",
+          "R41.1"
+        ],
+        "distance_mm": 5.5,
+        "distance_limit_mm": 10,
+        "copper_mm": 7.84,
+        "limit_mm": 15
+      },
+      "P04_3V3": {
+        "pads_on_net": [
+          "J_BP2.14",
+          "R39.2",
+          "R60.1"
+        ],
+        "want": [
+          "J_BP2.14",
+          "R39.2",
+          "R60.1"
+        ],
+        "distance_mm": 13.05,
+        "distance_limit_mm": 15,
+        "copper_mm": 29.78,
+        "limit_mm": 45
+      },
+      "PG_SEND": {
+        "pads_on_net": [
+          "J_BP2.20",
+          "R38.2",
+          "R61.1"
+        ],
+        "want": [
+          "J_BP2.20",
+          "R38.2",
+          "R61.1"
+        ],
+        "distance_mm": 5.52,
+        "distance_limit_mm": 10,
+        "copper_mm": 9.13,
+        "limit_mm": 30
+      }
+    },
+    "SUP_N_OUT short and referenced to GND (KONTRAKT-RESET, README): copper <= 20 mm, <= 1 via, J_BP3.11 / .13 GND, GND pour on the other layer under >= 70 % of its length (pour, tracks or pads), U9.5 <= 10 mm and R17 <= 6 mm from it; net = J_BP3.12 + R17.1 + U9.5 only": {
+      "copper_mm": 12.81,
+      "vias": 1,
+      "J_BP3.11/13": [
+        "GND",
+        "GND"
+      ],
+      "gnd_reference_percent": 71.0,
+      "U9.5_from_J_BP3.12_mm": 9.29,
+      "R17.1_from_U9.5_mm": 3.61,
+      "pads": [
+        "J_BP3.12",
+        "R17.1",
+        "U9.5"
+      ]
+    },
+    "Decoupling at the IC supply pins: 100 nF pad 1 (3V3_IO) <= 6 mm from the VCC pin on the copper (U1-U11, second 100 nF C15-C17 at U8-U10)": {
+      "C4": {
+        "ic_pin": "U1.16",
+        "supply_path_mm": 3.39,
+        "straight_mm": 3.23
+      },
+      "C5": {
+        "ic_pin": "U2.14",
+        "supply_path_mm": 3.39,
+        "straight_mm": 3.23
+      },
+      "C6": {
+        "ic_pin": "U3.14",
+        "supply_path_mm": 3.39,
+        "straight_mm": 3.23
+      },
+      "C7": {
+        "ic_pin": "U4.14",
+        "supply_path_mm": 3.39,
+        "straight_mm": 3.23
+      },
+      "C8": {
+        "ic_pin": "U5.14",
+        "supply_path_mm": 3.39,
+        "straight_mm": 3.23
+      },
+      "C9": {
+        "ic_pin": "U6.14",
+        "supply_path_mm": 3.39,
+        "straight_mm": 3.23
+      },
+      "C10": {
+        "ic_pin": "U7.14",
+        "supply_path_mm": 3.39,
+        "straight_mm": 3.23
+      },
+      "C11": {
+        "ic_pin": "U8.14",
+        "supply_path_mm": 2.5,
+        "straight_mm": 2.5
+      },
+      "C12": {
+        "ic_pin": "U9.14",
+        "supply_path_mm": 3.207,
+        "straight_mm": 3.04
+      },
+      "C13": {
+        "ic_pin": "U10.14",
+        "supply_path_mm": 2.5,
+        "straight_mm": 2.5
+      },
+      "C14": {
+        "ic_pin": "U11.2",
+        "supply_path_mm": 3.854,
+        "straight_mm": 3.76
+      },
+      "C15": {
+        "ic_pin": "U8.14",
+        "supply_path_mm": 3.207,
+        "straight_mm": 3.04
+      },
+      "C16": {
+        "ic_pin": "U9.14",
+        "supply_path_mm": 3.225,
+        "straight_mm": 3.05
+      },
+      "C17": {
+        "ic_pin": "U10.14",
+        "supply_path_mm": 3.207,
+        "straight_mm": 3.04
+      }
+    },
+    "Decoupling, ground side: capacitor GND pad -> GND pin of its IC through GND copper <= 1.3 x straight + 3 mm (gndpath.py; P05 R3 review 2.10 method)": {
+      "C4": {
+        "to": "U1.8",
+        "path_mm": 21.4,
+        "straight_mm": 21.4,
+        "limit_mm": 30.8
+      },
+      "C5": {
+        "to": "U2.7",
+        "path_mm": 18.8,
+        "straight_mm": 18.9,
+        "limit_mm": 27.6
+      },
+      "C6": {
+        "to": "U3.7",
+        "path_mm": 18.8,
+        "straight_mm": 18.9,
+        "limit_mm": 27.6
+      },
+      "C7": {
+        "to": "U4.7",
+        "path_mm": 18.8,
+        "straight_mm": 18.9,
+        "limit_mm": 27.6
+      },
+      "C8": {
+        "to": "U5.7",
+        "path_mm": 18.8,
+        "straight_mm": 18.9,
+        "limit_mm": 27.6
+      },
+      "C9": {
+        "to": "U6.7",
+        "path_mm": 18.8,
+        "straight_mm": 18.9,
+        "limit_mm": 27.6
+      },
+      "C10": {
+        "to": "U7.7",
+        "path_mm": 18.8,
+        "straight_mm": 18.9,
+        "limit_mm": 27.6
+      },
+      "C11": {
+        "to": "U8.7",
+        "path_mm": 10.8,
+        "straight_mm": 10.3,
+        "limit_mm": 16.4
+      },
+      "C12": {
+        "to": "U9.7",
+        "path_mm": 9.0,
+        "straight_mm": 8.9,
+        "limit_mm": 14.6
+      },
+      "C13": {
+        "to": "U10.7",
+        "path_mm": 10.6,
+        "straight_mm": 10.3,
+        "limit_mm": 16.4
+      },
+      "C14": {
+        "to": "U11.3",
+        "path_mm": 3.8,
+        "straight_mm": 3.8,
+        "limit_mm": 7.9
+      },
+      "C15": {
+        "to": "U8.7",
+        "path_mm": 8.2,
+        "straight_mm": 8.9,
+        "limit_mm": 14.6
+      },
+      "C16": {
+        "to": "U9.7",
+        "path_mm": 13.4,
+        "straight_mm": 10.1,
+        "limit_mm": 16.1
+      },
+      "C17": {
+        "to": "U10.7",
+        "path_mm": 8.2,
+        "straight_mm": 8.9,
+        "limit_mm": 14.6
+      }
+    },
+    "Default-state resistors at their buffers (MECHANIKA): R12-R22 (input side) and R25-R35 (output side) pad <= 12 mm from the U8-U10 pin": {
+      "R12": {
+        "net": "PWM",
+        "buffer_pin": "U8.2",
+        "mm": 2.76
+      },
+      "R13": {
+        "net": "HEARTBEAT",
+        "buffer_pin": "U8.5",
+        "mm": 7.39
+      },
+      "R14": {
+        "net": "MCU_ARM",
+        "buffer_pin": "U8.9",
+        "mm": 2.75
+      },
+      "R15": {
+        "net": "SENSOR_ENABLE",
+        "buffer_pin": "U8.12",
+        "mm": 5.41
+      },
+      "R16": {
+        "net": "CORE_LINK",
+        "buffer_pin": "U9.2",
+        "mm": 4.65
+      },
+      "R17": {
+        "net": "SUP_N_OUT",
+        "buffer_pin": "U9.5",
+        "mm": 3.61
+      },
+      "R18": {
+        "net": "PSU_OK",
+        "buffer_pin": "U9.9",
+        "mm": 3.5
+      },
+      "R19": {
+        "net": "DAQ_OK",
+        "buffer_pin": "U9.12",
+        "mm": 6.02
+      },
+      "R20": {
+        "net": "DRIVE_OK",
+        "buffer_pin": "U10.2",
+        "mm": 2.75
+      },
+      "R21": {
+        "net": "SENSOR_OK",
+        "buffer_pin": "U10.5",
+        "mm": 2.75
+      },
+      "R22": {
+        "net": "PG_LINK",
+        "buffer_pin": "U10.9",
+        "mm": 2.75
+      },
+      "R25": {
+        "net": "PWM_P04",
+        "buffer_pin": "U8.3",
+        "mm": 7.35
+      },
+      "R26": {
+        "net": "HEARTBEAT_P04",
+        "buffer_pin": "U8.6",
+        "mm": 8.31
+      },
+      "R27": {
+        "net": "MCU_ARM_P04",
+        "buffer_pin": "U8.8",
+        "mm": 7.15
+      },
+      "R28": {
+        "net": "SENSOR_ENABLE_P04",
+        "buffer_pin": "U8.11",
+        "mm": 6.6
+      },
+      "R29": {
+        "net": "CORE_LINK_P04",
+        "buffer_pin": "U9.3",
+        "mm": 6.49
+      },
+      "R30": {
+        "net": "SUP_N_P04",
+        "buffer_pin": "U9.6",
+        "mm": 3.5
+      },
+      "R31": {
+        "net": "PSU_OK_P04",
+        "buffer_pin": "U9.8",
+        "mm": 7.75
+      },
+      "R32": {
+        "net": "DAQ_OK_P04",
+        "buffer_pin": "U9.11",
+        "mm": 9.22
+      },
+      "R33": {
+        "net": "DRIVE_OK_P04",
+        "buffer_pin": "U10.3",
+        "mm": 5.06
+      },
+      "R34": {
+        "net": "SENSOR_OK_P04",
+        "buffer_pin": "U10.6",
+        "mm": 3.26
+      },
+      "R35": {
+        "net": "PG_LINK_P04",
+        "buffer_pin": "U10.8",
+        "mm": 5.53
+      }
+    },
+    "GND pours on both layers: B.Cu >= 50 % of the board; island removal always (every island tied)": {
+      "cover_percent": {
+        "F.Cu": 71.4,
+        "B.Cu": 72.7
+      },
+      "islands": {
+        "F.Cu": 27,
+        "B.Cu": 27
+      }
+    },
+    "Every visible reference outside the courtyards of other parts": {},
+    "Every visible reference nearer its own part than any other (text centre to courtyard; P03 R6 review 1.10)": {},
+    "Pin 1 of every connector (J_BP1..3, J_SV1..3) marked \"1\" on the silkscreen <= 3 mm from the pad (S1 §9)": {
+      "J_BP1": [
+        "1"
+      ],
+      "J_BP2": [
+        "1"
+      ],
+      "J_BP3": [
+        "1"
+      ],
+      "J_SV1": [
+        "1"
+      ],
+      "J_SV2": [
+        "1"
+      ],
+      "J_SV3": [
+        "1"
+      ]
+    },
+    "Silkscreen legible: every visible text on F.SilkS / B.SilkS >= 1.0 mm high with a >= 0.15 mm line (JLCPCB legend minimum)": [],
+    "Silkscreen: board name \"P04 R3 S1-L S1-S3\", edge markers A and B": {
+      "title": [
+        "P04 R3 S1-L S1-S3"
+      ],
+      "marks": [
+        "KRAWEDZ A (P12)",
+        "KRAWEDZ B"
+      ]
+    }
+  },
+  "passed": 29,
+  "total": 31
+}

@@ -1,0 +1,306 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-05T17:52:20",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [
+        {
+            "description": "Sieć pola (MECH_OK) nie pasuje do sieci nadanej na schemacie (/ILK/MECH_OK_P04)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [MECH_OK] z R24 na F.Cu",
+                    "pos": {
+                        "x": 20.65,
+                        "y": 21.89
+                    },
+                    "uuid": "a0b1930a-dd9d-4ef8-bb1a-e76d2e280ad6"
+                }
+            ],
+            "severity": "warning",
+            "type": "net_conflict"
+        }
+    ],
+    "source": "P04.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [MECH_OK] z R24 na F.Cu",
+                    "pos": {
+                        "x": 20.65,
+                        "y": 21.89
+                    },
+                    "uuid": "a0b1930a-dd9d-4ef8-bb1a-e76d2e280ad6"
+                },
+                {
+                    "description": "Pole lutownicze 1 [MECH_OK] z R42 na F.Cu",
+                    "pos": {
+                        "x": 20.65,
+                        "y": 16.29
+                    },
+                    "uuid": "506064c4-b517-4bf8-9c68-7b0fec46469b"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci MECH_OK oraz /ILK/MECH_OK_P04)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [MECH_OK] z R24 na F.Cu",
+                    "pos": {
+                        "x": 20.65,
+                        "y": 21.89
+                    },
+                    "uuid": "a0b1930a-dd9d-4ef8-bb1a-e76d2e280ad6"
+                },
+                {
+                    "description": "Ścieżka [/ILK/MECH_OK_P04] na F.Cu, długość 1,9570 mm",
+                    "pos": {
+                        "x": 18.8726,
+                        "y": 23.2738
+                    },
+                    "uuid": "bf8edf20-cbff-4430-8e52-86859c71f363"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci MECH_OK oraz /ILK/MECH_OK_P04)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [MECH_OK] z R24 na F.Cu",
+                    "pos": {
+                        "x": 20.65,
+                        "y": 21.89
+                    },
+                    "uuid": "a0b1930a-dd9d-4ef8-bb1a-e76d2e280ad6"
+                },
+                {
+                    "description": "Ścieżka [/ILK/MECH_OK_P04] na F.Cu, długość 2,5000 mm",
+                    "pos": {
+                        "x": 20.65,
+                        "y": 21.89
+                    },
+                    "uuid": "b942e330-5b73-4aa8-b443-2af060af148d"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci /ILK/MECH_OK_P04 oraz MECH_OK)",
+            "items": [
+                {
+                    "description": "Ścieżka [/ILK/MECH_OK_P04] na F.Cu, długość 0,3936 mm",
+                    "pos": {
+                        "x": 20.2564,
+                        "y": 21.89
+                    },
+                    "uuid": "72e945d5-264a-4266-a676-55cc8145b996"
+                },
+                {
+                    "description": "Pole lutownicze 1 [MECH_OK] z R24 na F.Cu",
+                    "pos": {
+                        "x": 20.65,
+                        "y": 21.89
+                    },
+                    "uuid": "a0b1930a-dd9d-4ef8-bb1a-e76d2e280ad6"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/ILK/MECH_OK_P04] na F.Cu, długość 0,3936 mm",
+                    "pos": {
+                        "x": 20.2564,
+                        "y": 21.89
+                    },
+                    "uuid": "72e945d5-264a-4266-a676-55cc8145b996"
+                },
+                {
+                    "description": "Pole lutownicze 1 [MECH_OK] z R24 na F.Cu",
+                    "pos": {
+                        "x": 20.65,
+                        "y": 21.89
+                    },
+                    "uuid": "a0b1930a-dd9d-4ef8-bb1a-e76d2e280ad6"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/ILK/MECH_OK_P04] na F.Cu, długość 2,5000 mm",
+                    "pos": {
+                        "x": 20.65,
+                        "y": 21.89
+                    },
+                    "uuid": "b942e330-5b73-4aa8-b443-2af060af148d"
+                },
+                {
+                    "description": "Pole lutownicze 1 [MECH_OK] z R24 na F.Cu",
+                    "pos": {
+                        "x": 20.65,
+                        "y": 21.89
+                    },
+                    "uuid": "a0b1930a-dd9d-4ef8-bb1a-e76d2e280ad6"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/ILK/MECH_OK_P04] na F.Cu, długość 1,9570 mm",
+                    "pos": {
+                        "x": 18.8726,
+                        "y": 23.2738
+                    },
+                    "uuid": "bf8edf20-cbff-4430-8e52-86859c71f363"
+                },
+                {
+                    "description": "Pole lutownicze 1 [MECH_OK] z R24 na F.Cu",
+                    "pos": {
+                        "x": 20.65,
+                        "y": 21.89
+                    },
+                    "uuid": "a0b1930a-dd9d-4ef8-bb1a-e76d2e280ad6"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP3",
+                    "pos": {
+                        "x": 122.07,
+                        "y": 13.33
+                    },
+                    "uuid": "13ec4ca9-68e4-441a-8cac-6467a5355273"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV1",
+                    "pos": {
+                        "x": 41.74,
+                        "y": 95.96
+                    },
+                    "uuid": "48ff8470-3730-4d04-a9b0-f22af5b6b42f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x08_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP1",
+                    "pos": {
+                        "x": 17.61,
+                        "y": 13.33
+                    },
+                    "uuid": "895ae7eb-ffb9-4241-aae0-c88388bcc672"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x07_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV3",
+                    "pos": {
+                        "x": 141.12,
+                        "y": 95.96
+                    },
+                    "uuid": "9bec974a-697f-42f3-af07-fa82513f0fdd"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x07_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV2",
+                    "pos": {
+                        "x": 87.62,
+                        "y": 95.96
+                    },
+                    "uuid": "b337dc63-2f35-4d23-a88a-092c269a0c2a"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP2",
+                    "pos": {
+                        "x": 68.57,
+                        "y": 13.33
+                    },
+                    "uuid": "f156c85f-0526-4338-95cf-2589f0162e8c"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        }
+    ]
+}
