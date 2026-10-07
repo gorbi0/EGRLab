@@ -1,0 +1,535 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-05T15:06:32",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P08.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Ścieżka [SENSOR_OK] na B.Cu, długość 2,8457 mm",
+                    "pos": {
+                        "x": 26.5,
+                        "y": 22.4423
+                    },
+                    "uuid": "2fd6d661-7d91-424b-9ba7-c5917e3003e4"
+                },
+                {
+                    "description": "Pole lutownicze 2 [SENSOR_OK] z R11 na F.Cu",
+                    "pos": {
+                        "x": 21.175,
+                        "y": 26.04
+                    },
+                    "uuid": "6502c689-0a9f-4a87-b41e-83c6be561982"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [/IO/SENSOR_OK_TX] z R11 na F.Cu",
+                    "pos": {
+                        "x": 24.275,
+                        "y": 26.04
+                    },
+                    "uuid": "d44430f9-fe18-481f-942f-602e123dcf68"
+                },
+                {
+                    "description": "Ścieżka [/IO/SENSOR_OK_TX] na B.Cu, długość 0,4243 mm",
+                    "pos": {
+                        "x": 26.15,
+                        "y": 29.05
+                    },
+                    "uuid": "2ad606f1-276a-413b-bb13-0680257365db"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Naruszenie prześwitu ( prześwit 0,2500 mm; obecnie 0,0650 mm)",
+            "items": [
+                {
+                    "description": "Przelotka [GND] na F.Cu - B.Cu",
+                    "pos": {
+                        "x": 24.1245,
+                        "y": 27.43
+                    },
+                    "uuid": "20047d01-bab7-4a9f-a461-b572eadcb79b"
+                },
+                {
+                    "description": "Pole lutownicze 1 [/IO/SENSOR_OK_TX] z R11 na F.Cu",
+                    "pos": {
+                        "x": 24.275,
+                        "y": 26.04
+                    },
+                    "uuid": "d44430f9-fe18-481f-942f-602e123dcf68"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci SENSOR_OK oraz /CONNECT/SRV_3V3_IO)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 2 [SENSOR_OK] z R11 na F.Cu",
+                    "pos": {
+                        "x": 21.175,
+                        "y": 26.04
+                    },
+                    "uuid": "6502c689-0a9f-4a87-b41e-83c6be561982"
+                },
+                {
+                    "description": "Ścieżka [/CONNECT/SRV_3V3_IO] na F.Cu, długość 0,5251 mm",
+                    "pos": {
+                        "x": 21.1418,
+                        "y": 24.8994
+                    },
+                    "uuid": "d2570a82-2ca6-4cee-abd8-c64d0ef96215"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci SENSOR_OK oraz /CONNECT/SRV_3V3_IO)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 2 [SENSOR_OK] z R11 na F.Cu",
+                    "pos": {
+                        "x": 21.175,
+                        "y": 26.04
+                    },
+                    "uuid": "6502c689-0a9f-4a87-b41e-83c6be561982"
+                },
+                {
+                    "description": "Ścieżka [/CONNECT/SRV_3V3_IO] na F.Cu, długość 15,9064 mm",
+                    "pos": {
+                        "x": 20.7705,
+                        "y": 25.2707
+                    },
+                    "uuid": "afc7e8f6-71ab-4a40-a330-7f8f389ab0cb"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci /CONNECT/SRV_3V3_IO oraz SENSOR_OK)",
+            "items": [
+                {
+                    "description": "Przelotka [/CONNECT/SRV_3V3_IO] na F.Cu - B.Cu",
+                    "pos": {
+                        "x": 21.1418,
+                        "y": 24.8994
+                    },
+                    "uuid": "54e87bac-5720-4556-8dd5-b79101a68e35"
+                },
+                {
+                    "description": "Pole lutownicze 2 [SENSOR_OK] z R11 na F.Cu",
+                    "pos": {
+                        "x": 21.175,
+                        "y": 26.04
+                    },
+                    "uuid": "6502c689-0a9f-4a87-b41e-83c6be561982"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0656 mm)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 2 [SENSOR_OK] z R11 na F.Cu",
+                    "pos": {
+                        "x": 21.175,
+                        "y": 26.04
+                    },
+                    "uuid": "6502c689-0a9f-4a87-b41e-83c6be561982"
+                },
+                {
+                    "description": "Przelotka [/CONNECT/SRV_3V3_IO] na F.Cu - B.Cu",
+                    "pos": {
+                        "x": 21.1418,
+                        "y": 24.8994
+                    },
+                    "uuid": "54e87bac-5720-4556-8dd5-b79101a68e35"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0656 mm)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 2 [SENSOR_OK] z R11 na F.Cu",
+                    "pos": {
+                        "x": 21.175,
+                        "y": 26.04
+                    },
+                    "uuid": "6502c689-0a9f-4a87-b41e-83c6be561982"
+                },
+                {
+                    "description": "Przelotka [/CONNECT/SRV_3V3_IO] na F.Cu - B.Cu",
+                    "pos": {
+                        "x": 21.1418,
+                        "y": 24.8994
+                    },
+                    "uuid": "54e87bac-5720-4556-8dd5-b79101a68e35"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu ( prześwit 0,2500 mm; obecnie 0,2106 mm)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 2 [GND] z C3 na F.Cu",
+                    "pos": {
+                        "x": 22.6245,
+                        "y": 27.63
+                    },
+                    "uuid": "66dcf4a7-59dd-4d28-b5d8-d6935792771f"
+                },
+                {
+                    "description": "Pole lutownicze 2 [SENSOR_OK] z R11 na F.Cu",
+                    "pos": {
+                        "x": 21.175,
+                        "y": 26.04
+                    },
+                    "uuid": "6502c689-0a9f-4a87-b41e-83c6be561982"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz /IO/SENSOR_OK_TX)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 2 [GND] z R12 na F.Cu",
+                    "pos": {
+                        "x": 25.575,
+                        "y": 26.04
+                    },
+                    "uuid": "96bea474-ef4d-4cb8-a010-997c285c6aa0"
+                },
+                {
+                    "description": "Pole lutownicze 1 [/IO/SENSOR_OK_TX] z R11 na F.Cu",
+                    "pos": {
+                        "x": 24.275,
+                        "y": 26.04
+                    },
+                    "uuid": "d44430f9-fe18-481f-942f-602e123dcf68"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint R12",
+                    "pos": {
+                        "x": 27.125,
+                        "y": 26.04
+                    },
+                    "uuid": "1548e921-7651-4ff9-9c92-51a164a0aa48"
+                },
+                {
+                    "description": "Footprint R11",
+                    "pos": {
+                        "x": 22.725,
+                        "y": 26.04
+                    },
+                    "uuid": "d53ee9ef-9cc8-4d86-a65d-7150d24e78fd"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint C3",
+                    "pos": {
+                        "x": 21.062,
+                        "y": 27.63
+                    },
+                    "uuid": "1b9fa078-cb24-4a95-90ca-d596bfca2436"
+                },
+                {
+                    "description": "Footprint R11",
+                    "pos": {
+                        "x": 22.725,
+                        "y": 26.04
+                    },
+                    "uuid": "d53ee9ef-9cc8-4d86-a65d-7150d24e78fd"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/CONNECT/SRV_3V3_IO] na F.Cu, długość 15,9064 mm",
+                    "pos": {
+                        "x": 20.7705,
+                        "y": 25.2707
+                    },
+                    "uuid": "afc7e8f6-71ab-4a40-a330-7f8f389ab0cb"
+                },
+                {
+                    "description": "Pole lutownicze 2 [SENSOR_OK] z R11 na F.Cu",
+                    "pos": {
+                        "x": 21.175,
+                        "y": 26.04
+                    },
+                    "uuid": "6502c689-0a9f-4a87-b41e-83c6be561982"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [/CONNECT/SRV_3V3_IO] na F.Cu, długość 0,5251 mm",
+                    "pos": {
+                        "x": 21.1418,
+                        "y": 24.8994
+                    },
+                    "uuid": "d2570a82-2ca6-4cee-abd8-c64d0ef96215"
+                },
+                {
+                    "description": "Pole lutownicze 2 [SENSOR_OK] z R11 na F.Cu",
+                    "pos": {
+                        "x": 21.175,
+                        "y": 26.04
+                    },
+                    "uuid": "6502c689-0a9f-4a87-b41e-83c6be561982"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Przelotka [/CONNECT/SRV_3V3_IO] na F.Cu - B.Cu",
+                    "pos": {
+                        "x": 21.1418,
+                        "y": 24.8994
+                    },
+                    "uuid": "54e87bac-5720-4556-8dd5-b79101a68e35"
+                },
+                {
+                    "description": "Pole lutownicze 2 [SENSOR_OK] z R11 na F.Cu",
+                    "pos": {
+                        "x": 21.175,
+                        "y": 26.04
+                    },
+                    "uuid": "6502c689-0a9f-4a87-b41e-83c6be561982"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole lutownicze 2 [GND] z R12 na F.Cu",
+                    "pos": {
+                        "x": 25.575,
+                        "y": 26.04
+                    },
+                    "uuid": "96bea474-ef4d-4cb8-a010-997c285c6aa0"
+                },
+                {
+                    "description": "Pole lutownicze 1 [/IO/SENSOR_OK_TX] z R11 na F.Cu",
+                    "pos": {
+                        "x": 24.275,
+                        "y": 26.04
+                    },
+                    "uuid": "d44430f9-fe18-481f-942f-602e123dcf68"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [SENSOR_OK] na F.Cu, długość 2,5000 mm",
+                    "pos": {
+                        "x": 31.175,
+                        "y": 26.04
+                    },
+                    "uuid": "d20aeb8c-2986-407d-b6ac-b1a8067ed36f"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [/IO/SENSOR_OK_TX] na F.Cu, długość 0,0269 mm",
+                    "pos": {
+                        "x": 34.275,
+                        "y": 26.04
+                    },
+                    "uuid": "4d0acc60-d5f9-4f0b-b641-a10a8d537a0a"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J2",
+                    "pos": {
+                        "x": 41.74,
+                        "y": 95.96
+                    },
+                    "uuid": "006d3b0b-52fe-4d7f-85bf-743a0c80c6f4"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x08_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J1",
+                    "pos": {
+                        "x": 17.61,
+                        "y": 13.33
+                    },
+                    "uuid": "891fdfd3-5418-4477-91d5-f06e78cf0b68"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Pole odnośnika do C3",
+                    "pos": {
+                        "x": 21.061999,
+                        "y": 24.834999
+                    },
+                    "uuid": "eb0fe996-4e20-487d-8faa-4761845b7aa6"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment z C3 na F.Silkscreen",
+                    "pos": {
+                        "x": 20.350748,
+                        "y": 26.72
+                    },
+                    "uuid": "db53c08d-4bd3-4f11-a32d-eb3eaf1655cc"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment z R11 na F.Silkscreen",
+                    "pos": {
+                        "x": 23.452064,
+                        "y": 26.95
+                    },
+                    "uuid": "fcd2060c-0581-41f2-a17e-ed6276e38912"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0183 mm)",
+            "items": [
+                {
+                    "description": "Segment z R11 na F.Silkscreen",
+                    "pos": {
+                        "x": 23.452064,
+                        "y": 25.13
+                    },
+                    "uuid": "ae2a7557-5d7e-40d0-93f7-fb7087b1d5e8"
+                },
+                {
+                    "description": "Pole odnośnika do C3",
+                    "pos": {
+                        "x": 21.061999,
+                        "y": 24.834999
+                    },
+                    "uuid": "eb0fe996-4e20-487d-8faa-4761845b7aa6"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        }
+    ]
+}

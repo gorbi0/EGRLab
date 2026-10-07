@@ -1,0 +1,572 @@
+{
+  "board": "/home/tgorbacz/AI/Claude/EGRLab/.worktrees/p08-r2-pcb/Plytki/P08-R2-review/verification/negative-controls/zone_copper/P08.kicad_pcb",
+  "board_sha256": "3fa5e7b75bc3b8b5b06c80f961804fb57f972fec47af605b09d9a3a6939f8e89",
+  "checks": [
+    {
+      "check": "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)",
+      "pass": false
+    },
+    {
+      "check": "52 on-board parts + 4 mounting holes, nothing else",
+      "pass": true
+    },
+    {
+      "check": "Every value, footprint ID and pad net equals the exported schematic netlist",
+      "pass": true
+    },
+    {
+      "check": "S1-2 section 4: parts on the bottom only SMD <= 1.5 mm, no SOIC (level 5), >= 1 mm from THT pads",
+      "pass": true
+    },
+    {
+      "check": "2 copper layers, 1.6 mm board (S1: FR4 1.6 mm)",
+      "pass": true
+    },
+    {
+      "check": "Both copper layers 35 um (S1)",
+      "pass": true
+    },
+    {
+      "check": "Outline class 1/3: 53.0 x 100.0 mm, 4 corner arcs R 1.0 mm (format-s1.json)",
+      "pass": true
+    },
+    {
+      "check": "M3 holes: 4 NPTH 3.2 mm exactly at the S1 positions (x_w_slocie + 53.5 k, y 14 / 86)",
+      "pass": true
+    },
+    {
+      "check": "Standoff zones D7: no courtyard and no copper (pads, tracks, vias, pours) within 3.5 mm of a hole centre; rule areas on both layers",
+      "pass": false
+    },
+    {
+      "check": "Rules as P02 R3 / R4 (clearance >= 0.25, track >= 0.30, edge 0.5) and annular ring >= 0.25 mm (S1 section 3); no DRC exclusions",
+      "pass": true
+    },
+    {
+      "check": "Every track >= 0.30 mm (S1 section 3)",
+      "pass": true
+    },
+    {
+      "check": "Every PTH pad and via has an annular ring >= 0.25 mm (measured on the copper)",
+      "pass": true
+    },
+    {
+      "check": "J1 = J_BP (edge A): IDC 2x8 angled, body front at y = 0, pin centre x = 26.5, pin 1 at the smaller x, pinout = docs/J_BP.csv (P12 contract)",
+      "pass": true
+    },
+    {
+      "check": "Service header J2 (edge B, S1 section 6): <= 13 pins in x 10..43, pins out ~6 mm, GND on both ends, one series resistor per pin of the value in docs/SERWIS.csv, <= 10 mm from its node, one silk label per pin with the name of its node (LABEL in silkscreen.py), GND at the ends",
+      "pass": true
+    },
+    {
+      "check": "Reserved strip of edge A (S1 §5: y 0-10, x 10-43 of each J_BP slot): no other part on either side; the edge-B zone of the service headers is reported only (S1 §6 gives the header position, not a reserved strip)",
+      "pass": true
+    },
+    {
+      "check": "Every part <= 16.5 mm above the board (level 5, S1 section 4; src/heights.py; G6K 5.2, DIP18 5.33, C10 12.5)",
+      "pass": true
+    },
+    {
+      "check": "J4 (TSENSOR pair W4) at the panel side: anchor holes 12 mm from the pads towards x = 0, hole edge 1.5-6 mm from x = 0 (the pair leaves through the panel to the TEST port), solder row <= 25 mm in, not in the edge A / B zones; no copper within 3 mm of the anchor centres",
+      "pass": true
+    },
+    {
+      "check": "Sensor path through K1 (task 5.10): U1.6 -> K1.3 <= 8 mm, K1.4 -> J4.1 (5V_SENSOR) and K1.5 -> J4.2 (AGND_SENSOR) <= 12 mm of track; the return contact K1.6 joined solid (no thermal spokes) to the GND pour on both layers",
+      "pass": true
+    },
+    {
+      "check": "Track widths of the supply and sensor path: every 5V_SYS track >= 0.6 mm, every SENSOR_LIMITED / 5V_SENSOR / AGND_SENSOR track >= 0.5 mm (task 5.10)",
+      "pass": true
+    },
+    {
+      "check": "Decoupling at the pins: capacitor pad <= 7 mm from its supply pin (C1 / C2 U1 IN / OUT, C3-C5 U3-U5 VCC, C6-C8 supervisors VDD, C9 K1 coil +)",
+      "pass": true
+    },
+    {
+      "check": "Series resistor at its driver: R11 (SENSOR_OK) / R13 (SENSOR_HEALTHY) 100 R pad <= 6 mm from U4.6 / U5.6",
+      "pass": true
+    },
+    {
+      "check": "Decoupling, ground side: capacitor GND pad -> GND pin of its part through GND copper <= 1.3 x straight + 3 mm (gndpath.py, as P05 R3 review 2.10)",
+      "pass": true
+    },
+    {
+      "check": "GND pours on both layers: B.Cu >= 50 % of the board; island removal always (every island tied)",
+      "pass": true
+    },
+    {
+      "check": "Every visible reference outside the courtyards of other parts",
+      "pass": true
+    },
+    {
+      "check": "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)",
+      "pass": true
+    },
+    {
+      "check": "Pin 1 mark of the TSENSOR wire field J4 on the silkscreen, <= 3 mm from its pad (S1 §9)",
+      "pass": true
+    },
+    {
+      "check": "Silkscreen legible: every visible text on F.SilkS / B.SilkS >= 1.0 mm high with a >= 0.15 mm line (JLCPCB legend minimum; as P05 R3 review 2.10)",
+      "pass": true
+    },
+    {
+      "check": "Silkscreen: board name \"P08 R2 S1-1/3 S1\", edge markers A and B",
+      "pass": true
+    }
+  ],
+  "details": {
+    "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)": {
+      "violations": 4,
+      "unconnected_items": 1,
+      "schematic_parity": 0,
+      "other_violations": 2,
+      "other_types": [
+        "items_not_allowed",
+        "track_dangling"
+      ],
+      "accepted_lib_mismatch": [
+        "J1",
+        "J2"
+      ]
+    },
+    "Every value, footprint ID and pad net equals the exported schematic netlist": {
+      "errors": [],
+      "pads": 194
+    },
+    "S1-2 section 4: parts on the bottom only SMD <= 1.5 mm, no SOIC (level 5), >= 1 mm from THT pads": {
+      "bottom_parts": {
+        "R26": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.07
+        },
+        "R25": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 7.83
+        },
+        "R24": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 12.96
+        },
+        "R22": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 6.79
+        },
+        "R21": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.12
+        },
+        "R27": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.13
+        },
+        "R23": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 2.69
+        },
+        "R19": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.24
+        },
+        "R28": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 6.01
+        },
+        "R20": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 1.07
+        },
+        "R29": {
+          "smd": true,
+          "height_mm": 0.7,
+          "soic": false,
+          "min_gap_to_THT_mm": 3.64
+        }
+      }
+    },
+    "Both copper layers 35 um (S1)": {
+      "F.Cu": 0.035,
+      "B.Cu": 0.035
+    },
+    "Outline class 1/3: 53.0 x 100.0 mm, 4 corner arcs R 1.0 mm (format-s1.json)": {
+      "bbox_line_centres": [
+        0.0,
+        0.0,
+        53.0,
+        100.0
+      ],
+      "arcs": 4,
+      "segments": 4
+    },
+    "M3 holes: 4 NPTH 3.2 mm exactly at the S1 positions (x_w_slocie + 53.5 k, y 14 / 86)": {
+      "want": [
+        [
+          4.0,
+          14.0
+        ],
+        [
+          4.0,
+          86.0
+        ],
+        [
+          49.0,
+          14.0
+        ],
+        [
+          49.0,
+          86.0
+        ]
+      ],
+      "got": [
+        [
+          4.0,
+          14.0
+        ],
+        [
+          4.0,
+          86.0
+        ],
+        [
+          49.0,
+          14.0
+        ],
+        [
+          49.0,
+          86.0
+        ]
+      ]
+    },
+    "Standoff zones D7: no courtyard and no copper (pads, tracks, vias, pours) within 3.5 mm of a hole centre; rule areas on both layers": {
+      "courtyards": [],
+      "copper": [
+        "('GND', (4.0, 14.0))"
+      ],
+      "rule_areas": 4
+    },
+    "Every track >= 0.30 mm (S1 section 3)": [],
+    "Every PTH pad and via has an annular ring >= 0.25 mm (measured on the copper)": [],
+    "J1 = J_BP (edge A): IDC 2x8 angled, body front at y = 0, pin centre x = 26.5, pin 1 at the smaller x, pinout = docs/J_BP.csv (P12 contract)": {
+      "centre_x": 26.5,
+      "pin1": [
+        17.61,
+        13.33
+      ],
+      "fab_front_y": 0.0,
+      "pinout_equals_J_BP.csv": true
+    },
+    "Service header J2 (edge B, S1 section 6): <= 13 pins in x 10..43, pins out ~6 mm, GND on both ends, one series resistor per pin of the value in docs/SERWIS.csv, <= 10 mm from its node, one silk label per pin with the name of its node (LABEL in silkscreen.py), GND at the ends": {
+      "problems": [],
+      "pins": [
+        {
+          "pin": 2,
+          "node": "5V_SYS",
+          "resistor": "R19",
+          "value": "1K",
+          "node_dist_mm": 1.2,
+          "label": "5V_SYS",
+          "side": "B"
+        },
+        {
+          "pin": 3,
+          "node": "3V3_IO",
+          "resistor": "R20",
+          "value": "1K",
+          "node_dist_mm": 0.0,
+          "label": "3V3_IO",
+          "side": "B"
+        },
+        {
+          "pin": 4,
+          "node": "SUP3_N",
+          "resistor": "R21",
+          "value": "1K",
+          "node_dist_mm": 2.8,
+          "label": "SUP3_N",
+          "side": "B"
+        },
+        {
+          "pin": 5,
+          "node": "SUP5_N",
+          "resistor": "R22",
+          "value": "1K",
+          "node_dist_mm": 0.0,
+          "label": "SUP5_N",
+          "side": "B"
+        },
+        {
+          "pin": 6,
+          "node": "SENSOR_OK",
+          "resistor": "R23",
+          "value": "1K",
+          "node_dist_mm": 0.0,
+          "label": "SNS_OK",
+          "side": "B"
+        },
+        {
+          "pin": 7,
+          "node": "SENSOR_HEALTHY",
+          "resistor": "R24",
+          "value": "1K",
+          "node_dist_mm": 0.0,
+          "label": "HEALTHY",
+          "side": "B"
+        },
+        {
+          "pin": 8,
+          "node": "PERMIT_LOCAL",
+          "resistor": "R25",
+          "value": "1K",
+          "node_dist_mm": 0.0,
+          "label": "PERMIT",
+          "side": "B"
+        },
+        {
+          "pin": 9,
+          "node": "SENSOR_LOCAL",
+          "resistor": "R26",
+          "value": "1K",
+          "node_dist_mm": 2.8,
+          "label": "SNS_LOC",
+          "side": "B"
+        },
+        {
+          "pin": 10,
+          "node": "TPS_EN",
+          "resistor": "R27",
+          "value": "10K",
+          "node_dist_mm": 3.7,
+          "label": "TPS_EN",
+          "side": "B"
+        },
+        {
+          "pin": 11,
+          "node": "SENSOR_LIMITED",
+          "resistor": "R28",
+          "value": "1K",
+          "node_dist_mm": 0.0,
+          "label": "SNS_LIM",
+          "side": "B"
+        },
+        {
+          "pin": 12,
+          "node": "SENSOR_FAULT_LOCAL_N",
+          "resistor": "R29",
+          "value": "1K",
+          "node_dist_mm": 0.0,
+          "label": "FAULT_N",
+          "side": "B"
+        }
+      ]
+    },
+    "Reserved strip of edge A (S1 §5: y 0-10, x 10-43 of each J_BP slot): no other part on either side; the edge-B zone of the service headers is reported only (S1 §6 gives the header position, not a reserved strip)": {
+      "J1 (A)": {
+        "pas": [
+          10.0,
+          0.0,
+          43.0,
+          10.0
+        ],
+        "czesci": []
+      },
+      "J2 (B)": {
+        "pas": [
+          10.0,
+          90.0,
+          43.0,
+          100.0
+        ],
+        "czesci": []
+      }
+    },
+    "Every part <= 16.5 mm above the board (level 5, S1 section 4; src/heights.py; G6K 5.2, DIP18 5.33, C10 12.5)": {
+      "max": [
+        "C10",
+        12.5
+      ],
+      "over": {}
+    },
+    "J4 (TSENSOR pair W4) at the panel side: anchor holes 12 mm from the pads towards x = 0, hole edge 1.5-6 mm from x = 0 (the pair leaves through the panel to the TEST port), solder row <= 25 mm in, not in the edge A / B zones; no copper within 3 mm of the anchor centres": {
+      "pad1_5V_SENSOR": [
+        15.5,
+        62.5
+      ],
+      "pad2_AGND_SENSOR": [
+        15.5,
+        59.0
+      ],
+      "anchors": [
+        [
+          3.5,
+          55.5
+        ],
+        [
+          3.5,
+          66.0
+        ]
+      ],
+      "anchor_hole_edge_to_x0_mm": [
+        1.9,
+        1.9
+      ],
+      "anchor_to_pads_mm": [
+        12.0,
+        12.0
+      ],
+      "keepouts": 2,
+      "copper_in_keepouts": []
+    },
+    "Sensor path through K1 (task 5.10): U1.6 -> K1.3 <= 8 mm, K1.4 -> J4.1 (5V_SENSOR) and K1.5 -> J4.2 (AGND_SENSOR) <= 12 mm of track; the return contact K1.6 joined solid (no thermal spokes) to the GND pour on both layers": {
+      "pins": {
+        "1": "5V_SYS",
+        "3": "SENSOR_LIMITED",
+        "4": "5V_SENSOR",
+        "5": "AGND_SENSOR",
+        "6": "GND",
+        "8": "SENSOR_COIL_LOW"
+      },
+      "track_chain_mm": {
+        "SENSOR_LIMITED U1.6-K1.3": 3.64,
+        "5V_SENSOR K1.4-J4.1": 7.16,
+        "AGND_SENSOR K1.5-J4.2": 5.28
+      },
+      "limit_mm": {
+        "SENSOR_LIMITED U1.6-K1.3": 8.0,
+        "5V_SENSOR K1.4-J4.1": 12.0,
+        "AGND_SENSOR K1.5-J4.2": 12.0
+      },
+      "K1.6_solid": true,
+      "K1.6_in_GND_pour": {
+        "F.Cu": true,
+        "B.Cu": true
+      }
+    },
+    "Track widths of the supply and sensor path: every 5V_SYS track >= 0.6 mm, every SENSOR_LIMITED / 5V_SENSOR / AGND_SENSOR track >= 0.5 mm (task 5.10)": {
+      "min_mm": {
+        "5V_SYS": 0.6,
+        "SENSOR_LIMITED": 0.5,
+        "5V_SENSOR": 0.5,
+        "AGND_SENSOR": 0.5
+      },
+      "widths_mm": {
+        "5V_SYS": [
+          0.6
+        ],
+        "SENSOR_LIMITED": [
+          0.6
+        ],
+        "5V_SENSOR": [
+          0.6
+        ],
+        "AGND_SENSOR": [
+          0.6
+        ]
+      }
+    },
+    "Decoupling at the pins: capacitor pad <= 7 mm from its supply pin (C1 / C2 U1 IN / OUT, C3-C5 U3-U5 VCC, C6-C8 supervisors VDD, C9 K1 coil +)": {
+      "C1-U1.1": 5.61,
+      "C2-U1.6": 4.25,
+      "C3-U3.14": 2.75,
+      "C4-U4.14": 2.37,
+      "C5-U5.14": 2.5,
+      "C6-U6.2": 3.76,
+      "C7-U7.2": 3.76,
+      "C8-U8.2": 3.76,
+      "C9-K1.1": 6.5
+    },
+    "Series resistor at its driver: R11 (SENSOR_OK) / R13 (SENSOR_HEALTHY) 100 R pad <= 6 mm from U4.6 / U5.6": {
+      "R11-U4.6": 2.75,
+      "R13-U5.6": 2.75
+    },
+    "Decoupling, ground side: capacitor GND pad -> GND pin of its part through GND copper <= 1.3 x straight + 3 mm (gndpath.py, as P05 R3 review 2.10)": {
+      "C1-U1.2": {
+        "path_mm": 2.4,
+        "straight_mm": 2.4,
+        "limit_mm": 6.1
+      },
+      "C2-U1.2": {
+        "path_mm": 10.6,
+        "straight_mm": 6.8,
+        "limit_mm": 11.8
+      },
+      "C3-U3.7": {
+        "path_mm": 19.4,
+        "straight_mm": 15.9,
+        "limit_mm": 23.7
+      },
+      "C4-U4.7": {
+        "path_mm": 14.2,
+        "straight_mm": 14.2,
+        "limit_mm": 21.5
+      },
+      "C5-U5.7": {
+        "path_mm": 13.6,
+        "straight_mm": 12.9,
+        "limit_mm": 19.8
+      },
+      "C6-U6.3": {
+        "path_mm": 3.6,
+        "straight_mm": 3.8,
+        "limit_mm": 7.9
+      },
+      "C7-U7.3": {
+        "path_mm": 3.8,
+        "straight_mm": 3.8,
+        "limit_mm": 7.9
+      },
+      "C8-U8.3": {
+        "path_mm": 3.8,
+        "straight_mm": 3.8,
+        "limit_mm": 7.9
+      }
+    },
+    "GND pours on both layers: B.Cu >= 50 % of the board; island removal always (every island tied)": {
+      "cover_percent": {
+        "F.Cu": 67.5,
+        "B.Cu": 76.6
+      },
+      "islands": {
+        "F.Cu": 13,
+        "B.Cu": 4
+      }
+    },
+    "Every visible reference outside the courtyards of other parts": {},
+    "Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)": {},
+    "Pin 1 mark of the TSENSOR wire field J4 on the silkscreen, <= 3 mm from its pad (S1 §9)": {
+      "J4.1 1": [
+        "1"
+      ]
+    },
+    "Silkscreen legible: every visible text on F.SilkS / B.SilkS >= 1.0 mm high with a >= 0.15 mm line (JLCPCB legend minimum; as P05 R3 review 2.10)": [],
+    "Silkscreen: board name \"P08 R2 S1-1/3 S1\", edge markers A and B": {
+      "title": [
+        "P08 R2 S1-1/3 S1"
+      ],
+      "marks": [
+        "KRAWEDZ A",
+        "KRAWEDZ B"
+      ]
+    }
+  },
+  "passed": 26,
+  "total": 28
+}
