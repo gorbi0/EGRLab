@@ -1,0 +1,147 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-05T22:35:12",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [
+        {
+            "description": "Sieć pola (MOTOR_INA) nie pasuje do sieci nadanej na schemacie (CS_ITEST_N)",
+            "items": [
+                {
+                    "description": "Pole PTH 6 [MOTOR_INA] na J12",
+                    "pos": {
+                        "x": 76.19,
+                        "y": 33.28
+                    },
+                    "uuid": "c0fe6ad4-ad86-4dee-accc-0880b4043f36"
+                }
+            ],
+            "severity": "warning",
+            "type": "net_conflict"
+        }
+    ],
+    "source": "P12.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole PTH 6 [MOTOR_INA] na J12",
+                    "pos": {
+                        "x": 76.19,
+                        "y": 33.28
+                    },
+                    "uuid": "c0fe6ad4-ad86-4dee-accc-0880b4043f36"
+                },
+                {
+                    "description": "Ścieżka [MOTOR_INA] na B.Cu, długość 1,8122 mm",
+                    "pos": {
+                        "x": 77.4601,
+                        "y": 34.5499
+                    },
+                    "uuid": "1bc75e63-2791-46f2-97ff-f0e0a224de2c"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci CS_ITEST_N oraz MOTOR_INA)",
+            "items": [
+                {
+                    "description": "Ścieżka [CS_ITEST_N] na F.Cu, długość 1,7712 mm",
+                    "pos": {
+                        "x": 77.4424,
+                        "y": 34.5324
+                    },
+                    "uuid": "08d0af28-ef7c-4600-828d-6fbf43b07abb"
+                },
+                {
+                    "description": "Pole PTH 6 [MOTOR_INA] na J12",
+                    "pos": {
+                        "x": 76.19,
+                        "y": 33.28
+                    },
+                    "uuid": "c0fe6ad4-ad86-4dee-accc-0880b4043f36"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [CS_ITEST_N] na F.Cu, długość 1,7712 mm",
+                    "pos": {
+                        "x": 77.4424,
+                        "y": 34.5324
+                    },
+                    "uuid": "08d0af28-ef7c-4600-828d-6fbf43b07abb"
+                },
+                {
+                    "description": "Pole PTH 6 [MOTOR_INA] na J12",
+                    "pos": {
+                        "x": 76.19,
+                        "y": 33.28
+                    },
+                    "uuid": "c0fe6ad4-ad86-4dee-accc-0880b4043f36"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [CS_ITEST_N] na F.Cu, długość 1,7712 mm",
+                    "pos": {
+                        "x": 77.4424,
+                        "y": 34.5324
+                    },
+                    "uuid": "08d0af28-ef7c-4600-828d-6fbf43b07abb"
+                },
+                {
+                    "description": "Pole PTH 6 [MOTOR_INA] na J12",
+                    "pos": {
+                        "x": 76.19,
+                        "y": 33.28
+                    },
+                    "uuid": "c0fe6ad4-ad86-4dee-accc-0880b4043f36"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        }
+    ]
+}

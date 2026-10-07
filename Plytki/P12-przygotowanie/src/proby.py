@@ -50,9 +50,20 @@ def opis_w_specyfikacji(cfg, tmp):     # stary nagłówek S1 §8 (x = 80,0 mm dl
     cfg['opisy_w_specyfikacji'][0]['plik'] = str(kopia)
 
 
+def budzet_pelny_ryzyko(cfg):          # 5.10: P07 z 900 mA (np. bez decyzji o cewce) — stos ponad 1,8 A z 2 A przetwornicy (uwaga ryzyka, kod 0)
+    next(p for p in cfg['plytki'] if p['plytka'] == 'P07 S1')['prad_5V_mA'] = 900
+
+
+def bez_P07(cfg):                      # 5.10: P07 bez pinoutu — jego sieci wracają do stanu „czeka” (kod 0, ale nie 0 czeka)
+    pl = next(p for p in cfg['plytki'] if p['plytka'] == 'P07 S1'); pl.pop('zrodlo'); pl['zlacza'] = {}
+    cfg['pojemnosc_5V']['plytki'] = [p for p in cfg['pojemnosc_5V']['plytki'] if not p['plytka'].startswith('P07')]
+
+
+BEZ_BLEDU = {'budzet_pelny_ryzyko', 'bez_P07'}   # wada sygnalizowana uwagą albo stanem „czeka”, nie błędem
 PROBY = [(None, None), (nazwa_sieci, 'brak na P05'), (brak_nadajnika, 'brak nadajnika'), (dwa_nadajniki, 'więcej niż jeden nadajnik'),
          (prad_ponad_styki, 'na 2 pinach'), (dziura_w_numeracji, 'dziury w numeracji'), (opis_w_specyfikacji, 'slot S3 ma środek'),
-         (schemat_inny_niz_plan, 'plan z zadania PFAIL_N'), (pojemnosc_bez_decyzji, 'pojemność na szynach 5 V')]
+         (schemat_inny_niz_plan, 'plan z zadania PFAIL_N'), (pojemnosc_bez_decyzji, 'pojemność na szynach 5 V'),
+         (budzet_pelny_ryzyko, 'ryzyko: suma budżetów 5V_SYS wariantu pełnego'), (bez_P07, 'czeka 12')]
 wyniki = []
 with tempfile.TemporaryDirectory() as t:
     tmp = Path(t)
@@ -66,7 +77,7 @@ with tempfile.TemporaryDirectory() as t:
         c = tmp / f'{nazwa}.json'; c.write_text(json.dumps(cfg, ensure_ascii=False), encoding='utf-8')
         r = subprocess.run([sys.executable, str(P / 'src/kontrakty.py'), str(c), str(tmp / nazwa)], capture_output=True, text=True)
         # zerowa: wynik jak w przebiegu bazowym (baza może mieć prawdziwe błędy, np. pojemność 5 V); wada: nowy komunikat, którego baza nie ma
-        ok = (r.stdout == baza) if oczek is None else (r.returncode == 1 and oczek in r.stdout and oczek not in baza)
+        ok = (r.stdout == baza) if oczek is None else (r.returncode == (0 if nazwa in BEZ_BLEDU else 1) and oczek in r.stdout and oczek not in baza)
         wyniki.append({'proba': nazwa, 'oczekiwane': oczek or 'brak błędów', 'wykryta': ok, 'wyjscie': r.stdout.strip().splitlines()[:4]})
         print('OK ' if ok else 'ZLE', nazwa, '->', r.stdout.strip().splitlines()[:2])
 (P / 'wyniki/proby.json').write_text(json.dumps(wyniki, indent=1, ensure_ascii=False) + '\n', encoding='utf-8')
