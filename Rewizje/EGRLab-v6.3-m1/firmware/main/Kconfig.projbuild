@@ -1,0 +1,65 @@
+menu "EGRLab"
+config EGR_CORE_ONLY
+    bool "Tylko uruchomienie CORE bez pozostalych PCB"
+    default n
+config EGR_TEMP_PRESENT
+    bool "Zamontowany TEMP"
+    default n
+config EGR_CAN_PRESENT
+    bool "Zamontowany CAN"
+    default n
+config EGR_LOG_CURRENT_PRESENT
+    bool "Zamontowany I-LOGGER MCP3201"
+    default n
+config EGR_TEST_CURRENT_PRESENT
+    bool "Zamontowany DRIVE MCP3201"
+    default n
+config EGR_ACTIVE_TEST
+    bool "Wlacz TEST po odbiorze sprzetu i kalibracji"
+    depends on EGR_TEMP_PRESENT && EGR_TEST_CURRENT_PRESENT && !EGR_CORE_ONLY
+    default n
+config EGR_SAMPLE_HZ
+    int "Zadana czestotliwosc probkowania; kwalifikuj czasy na sprzecie"
+    range 1000 10000
+    default 2000
+    help
+      6.2-s1 F-05 (P05 R2 docs/INTEGRACJA.md): start 2 kS/s przy SPI 1 MHz. Kwalifikacja 10 kS/s wymaga
+      EGR_ADC_SPI_HZ = 4000000 (transfer 128 bit 32 us + BUSY do ok. 9,9 us przy OS x8) i pomiaru opoznien.
+      Bufor PSRAM 8 MiB wystarcza na ok. 21 s przy 10 kS/s (105 s przy 2 kS/s).
+config EGR_PFAIL_PRESENT
+    bool "PFAIL_N z P02 R4 na GPIO3 (format S1: P03 R6)"
+    default y
+    help
+      6.2-s1 F-01/F-02: zbocze opadajace po starcie = zanik zasilania (UVLO): naped w dol, zamkniecie
+      plikow w <= 10 ms. PFAIL_N = L od startu przez >= 100 ms = tryb stolowy (tylko USB) bez zapisu
+      sesji i bez TEST. Wylacz tylko dla CORE sprzed S1 (GPIO3 niepodlaczone).
+config EGR_ADC_SOFTWARE_MODE
+    bool "AD7606B w software mode (zworki OS[2:0] = 111, zakres per kanal)"
+    default y
+    help
+      Wymaga ukladu AD7606B i zworek OS[2:0] ustawionych na 111. Daje zakres
+      +-2,5 V na kanale masy czujnika i odczyt jedna ramka 128-bit.
+      Wylacz, jesli masz zwykly AD7606: wtedy wszystkie kanaly pracuja na
+      +-10 V, a odczyt idzie osmioma ramkami 16-bit. Tryb jest wybierany
+      swiadomie przy kompilacji, a nie zgadywany w czasie pracy.
+config EGR_WIFI_UI
+    bool "SoftAP z podgladem i przyciskami na telefonie"
+    default n
+    depends on EGR_ACTIVE_TEST
+config EGR_WIFI_SSID
+    string "SSID punktu dostepowego"
+    default "EGRLab"
+    depends on EGR_WIFI_UI
+config EGR_WIFI_PASSWORD
+    string "Haslo WPA2 (min. 8 znakow; puste = siec otwarta)"
+    default "zmien-to-haslo"
+    depends on EGR_WIFI_UI
+config EGR_ADC_SPI_HZ
+    int "AD7606B SPI clock Hz (qualify on hardware)"
+    range 1000000 8000000
+    default 1000000
+config EGR_SD_KHZ
+    int "SD SPI clock kHz (sustained write acceptance required)"
+    range 2000 10000
+    default 4000
+endmenu
