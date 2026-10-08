@@ -17,7 +17,7 @@ FORBIDDEN = {0, 45, 46, 19, 20, 33, 34, 35, 36, 37, 43, 44, 47, 48}
 SPEC = {9: 'ADC_SCLK', 11: 'ADC_DOUTA', 2: 'ADC_SDI', 12: 'ADC_CS', 13: 'ADC_CONVST', 14: 'ADC_BUSY', 10: 'ADC_RESET', 4: 'SPI3_SCK', 5: 'SPI3_MOSI',
         6: 'SPI3_MISO', 7: 'SD_CS', 8: 'TC1_CS', 16: 'TC2_CS', 18: 'CAN_RXD', 1: 'RPWM', 21: 'LPWM', 39: 'DRIVE_EN', 40: 'SENS_EN', 42: 'SENS_FAULT_N',
         15: 'BTN', 41: 'SCOPE_TRIG', 3: 'GPIO3_TP', 38: 'NC'}   # SPECYFIKACJA 3 (LPWM on 21, GPIO38 = module RGB LED)
-R_IN = 1e6   # AD7606B analog input impedance (data sheet, +-10 V range)
+R_IN = 5e6   # AD7606B analog input impedance 5 MOhm (B grade data sheet; firmware 6.2-s1 F-03 uses the same; the AUDYT 1 MOhm note was the AD7606)
 
 
 def nodes(N):
