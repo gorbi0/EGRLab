@@ -38,6 +38,10 @@ rc_readme = (', narożniki R' + dec(RCM)) if RCM else ''
 rc_spec = (' z narożnikami R' + dec(RCM) + ' mm') if RCM else ''
 
 
+COPPER_ROW = (f"**{CU} µm na warstwach zewnętrznych, {dec(CFG['inner_copper_um'])} µm na wewnętrznych**" if NCU == 4 and CFG.get('inner_copper_um')
+              else f'**{CU} µm na każdej stronie**')   # M1: P07 miało na sztywno 2 warstwy i „na każdej stronie”
+
+
 def przelotki(n):
     if n == 1:
         return '1 przelotka'
@@ -62,9 +66,9 @@ Wydanie **{DATE}**, źródło **{CFG['source']}**. Plik płytki jest bajtowo zgo
 | Parametr | Ustawienie |
 |---|---|
 | Wymiary | **{dec(W)} × {dec(H)} mm**{rc_readme} |
-| Warstwy | 2 |
+| Warstwy | {NCU}{(' (' + CFG['stackup'].split(' (')[0] + ')') if NCU == 4 and CFG.get('stackup') else ''} |
 | Laminat | FR4 1,6 mm{' (w Satlandzie wybrać 1,5 mm)' if FAB == 'Satland' else ' (JLCPCB: 1.6 mm; w Satlandzie 1,5 mm)'} |
-| Miedź | **{CU} µm na każdej stronie**{' (zmiana z 70 µm — poniżej)' if CFG.get('copper_note') else ''} |
+| Miedź | {COPPER_ROW}{' (zmiana z 70 µm — poniżej)' if CFG.get('copper_note') else ''} |
 | Wykończenie | HAL |
 | Maska | zielona, obie strony |
 | Opis | biały, {'**tylko góra** (dolny opis w projekcie jest pusty)' if silk_top_only else 'obie strony'} |
