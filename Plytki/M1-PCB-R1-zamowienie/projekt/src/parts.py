@@ -125,7 +125,9 @@ sdsym = custom('Adafruit_4682_microSD', [([(1, '3V', 'power_in'), (2, 'GND', 'po
 add('SD1', 'P03:SD1', sdsym, SDFP, 'Adafruit 4682 microSD (3V)', 'owned Adafruit 4682, soldered by its 1x9 header (D-M1-11)',
     {1: V3, 2: G, 3: 'SPI3_SCK', 4: 'SPI3_MISO', 5: 'SPI3_MOSI', 6: 'SD_CS', 7: 'NC', 8: 'NC', 9: 'NC'}, 'MCU', 'https://www.adafruit.com/product/4682', zrodlo=REG)
 res('R1', 'M1:NEW', '10K', 10000, 'SD_CS', V3, 'MCU', note='SD CS idle high at reset.')
-res('R2', 'P07:R3', '100K', 100000, 'DRIVE_EN', G, 'MCU', note='D-M1-4: bridge disabled while the ESP32 is in reset / booting.')
+res('R2', 'P07:R3', '4.7K', 4700, 'DRIVE_EN', G, 'MCU', note='D-M1-4: bridge disabled while the ESP32 is in reset / booting. 4.7k, not 100k: GPIO39 (MTCK) has the '
+    'internal ~45k pull-up after reset (ESP32-S3 datasheet v2.2 table 2-1 note 7, EFUSE_DIS_PAD_JTAG = 0) until the firmware takes the pin; 100k gave ~2.3 V '
+    '(HIGH for the 74AHCT125, VIH 2.0 V). 4.7k: <= 0.63 V even with a 20k pull-up (VIL 0.8 V). Review of firmware PR #17, 8.10.')
 res('R3', 'M1:NEW', '100K', 100000, 'RPWM', G, 'MCU'); res('R4', 'M1:NEW', '100K', 100000, 'LPWM', G, 'MCU')
 res('R5', 'P08:NEW', '100K', 100000, 'SENS_EN', G, 'MCU', note='Sensor 5 V off while the ESP32 is in reset (no 5 V onto an ECU line in LOGGER).')
 add('J3', 'M1:NEW', symbol('Connector_Generic', 'Conn_01x02'), tail('PAD_BTN', 2, 2.54, 1.0, 1.8, anchors=False), 'BTN / pola', '2 x 0.25 mm2 to the START/STOP push button on the enclosure',

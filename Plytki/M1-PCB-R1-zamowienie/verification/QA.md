@@ -1,6 +1,6 @@
 # Kontrola wydania do wykonania M1 — 08.10.2026
 
-Źródło: M1-R1-review. SHA-256 płytki: `b2080204635f0001632b5ecc68855148dfc5def3e91c719bbe2718ceb11c45a2` (bajtowo zgodna z wydaniem; `source-snapshot.json`, `source-unchanged.json`).
+Źródło: M1-R1-review. SHA-256 płytki: `2b39a9ef6a1859437d935b1c7fb7464b49a346cf886a65b2d6c3c769a95a4c8b` (bajtowo zgodna z wydaniem; `source-snapshot.json`, `source-unchanged.json`).
 
 ## Wyniki
 

@@ -90,6 +90,12 @@ def chk_safe(N):
     bad = []
     for n in ('DRIVE_EN', 'RPWM', 'LPWM', 'SENS_EN', 'ADC_RESET'):
         if not res_between(N, n, 'GND'): bad.append((n, 'no pull-down'))
+    # 8.10 (review of firmware PR #17): GPIO39 = MTCK has the internal ~45k pull-up after reset (ESP32-S3 datasheet v2.2 table 2-1
+    # note 7); its pull-down must win against it at the TTL input of the 74AHCT125 (VIL 0.8 V): <= 10k
+    gp = {int(r['gpio']): N['M1'].get(r['pin_modulu']) for r in GP}
+    for g in (39,):
+        pd = res_between(N, gp[g], 'GND')
+        if not pd or max(pd) > 10000: bad.append((f'GPIO{g} {gp[g]}', 'pull-down vs internal pull-up', pd))
     for n in ('SD_CS', 'TC1_CS', 'TC2_CS', 'ADC_CS'):
         if not res_between(N, n, '3V3'): bad.append((n, 'no pull-up'))
     u = N['U7']
@@ -167,6 +173,7 @@ MUT = [('X1', 'J6.1 swapped with J6.2 (P3 / P4)', lambda N: (setp(N, 'J6', '1', 
        ('PRAD', 'INA240 REF1 on GND (unidirectional)', lambda N: setp(N, 'U4', '7', 'GND')),
        ('START', 'DRIVE_EN pull-down removed', lambda N: [setp(N, r, '2', 'NC') for r, a, b in two_pin(N, 'R') if {a, b} == {'DRIVE_EN', 'GND'}]),
        ('START', 'U7 OE on 3V3', lambda N: setp(N, 'U7', '1', '3V3')),
+       ('START', 'DRIVE_EN pull-down 100k again (R2 / R3 swapped)', lambda N: (setp(N, 'R2', '1', 'RPWM'), setp(N, 'R3', '1', 'DRIVE_EN'))),
        ('MISO', 'TC2 SDO straight on MISO', lambda N: setp(N, 'TC2', '5', 'SPI3_MISO')),
        ('MISO', 'buffer OE swapped (TC1 gate on TC2_CS)', lambda N: setp(N, 'U5', '1', 'TC2_CS')),
        ('ZASILANIE', 'F1 bypassed (VMOTOR on BAT_P)', lambda N: setp(N, 'J2', '1', 'BAT_P')),
