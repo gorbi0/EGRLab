@@ -1,0 +1,177 @@
+{
+  "checks": [
+    {
+      "id": "X1",
+      "ok": true,
+      "note": "16 X1 rows, wire pads J1/J2/J5/J6 all listed",
+      "bad": []
+    },
+    {
+      "id": "GPIO",
+      "ok": true,
+      "note": "36 module GPIOs vs SPECYFIKACJA 3; forbidden [0, 19, 20, 33, 34, 35, 36, 37, 43, 44, 45, 46, 47, 48] NC; 5 V in J1-21, module 3V3 not tied",
+      "bad": []
+    },
+    {
+      "id": "ADC",
+      "ok": true,
+      "note": "CH1 P1_EGR: FS 43.0 V; CH2 P3: FS 43.0 V; CH3 P4: FS 11.0 V; CH4 P5: FS 11.0 V; CH5 P6: FS 11.0 V; CH7 VBAT_CAR: FS 64.9 V; CH8 SENS_5V: FS 11.0 V",
+      "bad": []
+    },
+    {
+      "id": "PRAD",
+      "ok": true,
+      "note": "INA240A2: 0.250 V/A around 2.5 V; linear +-9.2 A (need +-8.0 A > F1 7.5 A)",
+      "bad": []
+    },
+    {
+      "id": "START",
+      "ok": true,
+      "note": "bridge inputs and sensor supply off while the ESP32 is in reset; CS lines idle high",
+      "bad": []
+    },
+    {
+      "id": "MISO",
+      "ok": true,
+      "note": "3 MISO sources: SD1 + U5 gates enabled by the matching module CS",
+      "bad": []
+    },
+    {
+      "id": "ZASILANIE",
+      "ok": true,
+      "note": "5V: 508 mA / 2000 mA; 3V3: 113 mA / 2000 mA (peak, derated to 50 %)",
+      "bad": []
+    },
+    {
+      "id": "SIECI",
+      "ok": true,
+      "note": "no net with a single pin",
+      "bad": []
+    }
+  ],
+  "negative_controls": [
+    {
+      "mutation": "J6.1 swapped with J6.2 (P3 / P4)",
+      "target": "X1",
+      "detected": true,
+      "by": [
+        "X1"
+      ]
+    },
+    {
+      "mutation": "LPWM back on GPIO38 (module RGB LED)",
+      "target": "GPIO",
+      "detected": true,
+      "by": [
+        "GPIO"
+      ]
+    },
+    {
+      "mutation": "GPIO0 (strap) used for BTN",
+      "target": "GPIO",
+      "detected": true,
+      "by": [
+        "GPIO"
+      ]
+    },
+    {
+      "mutation": "module 3V3 tied to the board 3V3",
+      "target": "GPIO",
+      "detected": true,
+      "by": [
+        "GPIO"
+      ]
+    },
+    {
+      "mutation": "CH1 divider bottom removed (100k only into 1M)",
+      "target": "ADC",
+      "detected": true,
+      "by": [
+        "ADC"
+      ]
+    },
+    {
+      "mutation": "CH7 without RC",
+      "target": "ADC",
+      "detected": true,
+      "by": [
+        "ADC"
+      ]
+    },
+    {
+      "mutation": "Kelvin pins swapped",
+      "target": "PRAD",
+      "detected": true,
+      "by": [
+        "PRAD"
+      ]
+    },
+    {
+      "mutation": "INA240 REF1 on GND (unidirectional)",
+      "target": "PRAD",
+      "detected": true,
+      "by": [
+        "PRAD"
+      ]
+    },
+    {
+      "mutation": "DRIVE_EN pull-down removed",
+      "target": "START",
+      "detected": true,
+      "by": [
+        "START"
+      ]
+    },
+    {
+      "mutation": "U7 OE on 3V3",
+      "target": "START",
+      "detected": true,
+      "by": [
+        "START"
+      ]
+    },
+    {
+      "mutation": "TC2 SDO straight on MISO",
+      "target": "MISO",
+      "detected": true,
+      "by": [
+        "MISO",
+        "SIECI"
+      ]
+    },
+    {
+      "mutation": "buffer OE swapped (TC1 gate on TC2_CS)",
+      "target": "MISO",
+      "detected": true,
+      "by": [
+        "MISO"
+      ]
+    },
+    {
+      "mutation": "F1 bypassed (VMOTOR on BAT_P)",
+      "target": "ZASILANIE",
+      "detected": true,
+      "by": [
+        "X1",
+        "ZASILANIE"
+      ]
+    },
+    {
+      "mutation": "SD card on 5V",
+      "target": "ZASILANIE",
+      "detected": true,
+      "by": [
+        "ZASILANIE"
+      ]
+    },
+    {
+      "mutation": "button pull-up disconnected from BTN",
+      "target": "SIECI",
+      "detected": true,
+      "by": [
+        "SIECI"
+      ]
+    }
+  ],
+  "null_control_clean": true
+}

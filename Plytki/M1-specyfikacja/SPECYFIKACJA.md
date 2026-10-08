@@ -23,7 +23,7 @@ Termopary 2 × K ── osobna mufa ──► wprost do zacisków modułów MAX3
 | CH1 | P1 (silnik, za bocznikiem — strona EGR) | MOTOR: 300 k / 100 k + RC |
 | CH2 | P3 (silnik) | MOTOR |
 | CH3–CH5 | P4, P5, P6 (czujnik: zasilanie / masa / sygnał w nieznanej permutacji — firmware rozpoznaje) | SENSOR: 100 k szeregowo + RC |
-| CH6 | prąd silnika: INA240A2 (×50) z bocznika 5 mΩ, offset REF = 2,5 V z AD7606B REFOUT przez wtórnik | ±10 A → 2,5 V ± 2,5 V |
+| CH6 | prąd silnika: INA240A2 (×50) z bocznika 5 mΩ, REF1 = 5 V, REF2 = GND (wyjście w połowie VS, bez bufora odniesienia), 1 k / 1 n do kanału | 2,5 V + 0,25 V/A; liniowo ok. ±9 A (powyżej F1 7,5 A); zero zapisywane przy wyłączonym silniku |
 | CH7 | VBAT auta | VSENSE: 499 k / 100 k + RC |
 | CH8 | SENS_5V (wyjście TPS2553) | SENSOR |
 
@@ -39,15 +39,15 @@ Numeracja jak firmware 6.2-s1 (`board.c`) tam, gdzie sygnał został; nowe przyp
 | 13 / 14 | CONVST / BUSY | bez zmian |
 | 10 | ADC RESET | było SDA I²C (reset przez MCP23017) |
 | 4 / 5 / 6 | SPI3 SCK / MOSI / MISO | bez zmian |
-| 7 / 8 / 16 | CS karty SD / CS TC1 / CS TC2 | bez zmian |
-| 17 / 18 | TWAI TX / RX (listen-only) | bez zmian |
-| 1 | RPWM (LEDC) → 74AHCT125 → IBT-2 | było PWM (bramki AND na P07) |
-| 38 | LPWM (LEDC) → 74AHCT125 → IBT-2 | było CURRENT_CS |
+| 7 / 8 / 16 | CS karty SD / CS TC1 / CS TC2 (10 k do 3V3) | bez zmian; SDO modułów MAX31856 przez 74LVC125 z OE = CS na wspólne MISO (SDO modułu nie jest gwarantowanie w stanie Z — funkcja, nie zabezpieczenie) |
+| 17 / 18 | TWAI TX (niepodłączony: TXD i S transceivera na 3V3, odbiór cichy) / RX przez 100 R | bez zmian |
+| 1 | RPWM (LEDC) → 74AHCT125 → IBT-2; 100 k do GND | było PWM (bramki AND na P07) |
+| 21 | LPWM (LEDC) → 74AHCT125 → IBT-2; 100 k do GND | było HEART (8.10: GPIO38 steruje diodą RGB modułu) |
 | 39 | DRIVE_EN → 74AHCT125 → IBT-2 R_EN + L_EN; 100 k do GND (mostek wyłączony w resecie ESP32) | było ARM |
 | 40 | SENS_EN → TPS2553 EN; 100 k do GND | było HW_ARM |
 | 42 | SENS_FAULT_N ← TPS2553 (otwarty dren, 10 k do 3V3) | było INTERLOCK |
 | 15 | przycisk START / STOP (do GND, 10 k do 3V3) | było SCL I²C |
-| 21 | LED stanu | bez zmian (HEART) |
+| 38 | LED stanu = dioda RGB modułu DEV-KIT (bez części na płytce) | było CURRENT_CS |
 | 41 | wyzwalacz oscyloskopu — pole testowe | bez zmian (SCOPE) |
 | 3 | wolny (pole testowe) | było PFAIL_N |
 
@@ -70,7 +70,7 @@ ECU i EGR tej samej linii lądują na **jednym zacisku** (przelotowo w listwie) 
 | X1 | Sieć | Przewód PCB ↔ listwa | Uwagi |
 |---|---|---|---|
 | 1 / 2 | BAT+ / BAT− (pakiet za BMS) | 2,0 mm² | |
-| 3 / 4 | VMOTOR (za F1) / PGND → IBT-2 B+ / B− | 2,0 mm² | |
+| 3 / 4 | VMOTOR (za F1) → IBT-2 B+ / IBT-2 B− (X1.4 zmostkowany z X1.2 na listwie, bez PCB) | 2,0 mm² | jedna masa GND na PCB; prąd silnika nie płynie przez płytkę |
 | 5 | P1_ECU (silnik od ECU; w TESTER: IBT-2 M+) | 2,0 mm² | wejście bocznika |
 | 6 | P1_EGR (silnik do zaworu) | 2,0 mm² | wyjście bocznika |
 | 7 | P3 (silnik; ECU / zawór; w TESTER: IBT-2 M−) | 0,25 mm² odczep | przelotowo w listwie |
@@ -106,4 +106,8 @@ IBT-2 (logika): pola na PCB dla RPWM, LPWM, R_EN, L_EN, VCC (5 V), GND — przew
 | D-M1-12 | Moduły MAX31856 i ESP32: wlutowane wprost czy na gniazdach | **wlutowane wprost** (jak decyzja P09 1.10) — mniej złączy; ESP32 DEV-KIT także na kołkach lutowanych |
 | D-M1-13 | Bezpiecznik F1 | **MINI 7,5 A w oprawce lutowanej** (jak decyzja 5.10 dla P02) |
 
-Po decyzjach: krok 4 — schemat z jednego generatora (`parts.py`), części przenoszone z pakietów S1 z ich `source_ref`.
+**8.10 — D-M1-10…13 przyjęte przez użytkownika** (4 warstwy, Adafruit 4682 wlutowany, moduły MAX31856 i ESP32 wlutowane wprost, F1 MINI 7,5 A w oprawce lutowanej).
+
+**8.10 — poprawki przy schemacie (krok 4):** LPWM na GPIO21 (GPIO38 = dioda RGB modułu, ona jest LED stanu); bufor MISO 74LVC125 dla modułów MAX31856; IBT-2 B− na listwie (X1.4 zmostkowany z X1.2), na PCB jedna masa; INA240 z REF1 = 5 V / REF2 = GND bez bufora odniesienia (zakres liniowy ok. ±9 A zamiast deklarowanych ±10 A — wystarcza, bo F1 ma 7,5 A).
+
+Krok 4 — schemat z jednego generatora: `Plytki/M1-R1-review` (`src/parts.py`, `verification/QA.md`).
