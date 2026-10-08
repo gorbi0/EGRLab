@@ -43,5 +43,5 @@
 
 - Bez procesów dłuższych niż ok. 15 min; długie wyjścia do pliku, pokazuj koniec. Dwie nieudane próby czegoś = zapisz stan i opisz w PR (zasada 9).
 - Po każdym etapie commit i push na `m1-firmware`.
-- Nie zmieniaj: `Rewizje/EGRLab-v6.2-s1/`, `Rewizje/EGRLab-v6.1-rc1/`, `Plytki/`, `EGRLab-AKTYWNE.md`, `docs/` (poza nową sekcją „6.3-m1” w `docs/04-firmware-logi.md`, jeśli zmieniasz zdarzenia logu), `scripts/`, `.gitignore`.
+- Nie zmieniaj: `Rewizje/EGRLab-v6.2-s1/`, `Rewizje/EGRLab-v6.1-rc1/`, `Plytki/`, `EGRLab-AKTYWNE.md`, `docs/` (zdarzenia logu opisuj w `Rewizje/EGRLab-v6.3-m1/docs/04-firmware-logi.md`, sekcja „6.3-m1”), `scripts/`, `.gitignore`.
 - Zakończ PR-em do `m1` po polsku. Pytania (np. M-06) wpisz do opisu PR. Nie włączaj śledzenia PR.
