@@ -236,7 +236,7 @@ static void adc_probe_software_mode(void) {
 /* esp_restart(): mostek i zasilanie czujnika w dol przed resetem. */
 static void board_shutdown(void) { gpio_set_level(GPIO_DRIVE_EN, 0); gpio_set_level(GPIO_SENS_EN, 0); pwm_set(0, 0); }
 esp_err_t board_init(void) {
-    /* M-05/M-07: stany bezpieczne zanim wyjscia zostana wlaczone (pull-downy 100 k trzymaja je w resecie). */
+    /* M-05/M-07: stany bezpieczne zanim wyjscia zostana wlaczone (pull-downy w resecie: DRIVE_EN 4,7 k przeciw WPU MTCK, reszta 100 k). */
     const int low[] = {GPIO_DRIVE_EN, GPIO_SENS_EN, GPIO_RPWM, GPIO_LPWM, GPIO_ADC_RESET, GPIO_ADC_CONVST,
                        GPIO_SCOPE, GPIO_ADC_SDI};
     uint64_t mask = 0;

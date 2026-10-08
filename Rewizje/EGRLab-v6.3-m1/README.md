@@ -49,7 +49,7 @@ Przy zmianach testów względem 6.2-s1: usunięte `test_v62_s1.py` i `probe_v62_
 
 ## Odbiór na sprzęcie — NIE ZBADANO
 
-1. **Stany w resecie (M-05, M-06, M-07):** DRIVE_EN (GPIO39), SENS_EN (GPIO40), RPWM, LPWM zmierzone od włączenia zasilania przez bootloader do startu aplikacji, przy resecie przyciskiem i po panice (`panic` z konsoli JTAG / celowy błąd): zawsze L na wejściach 74AHCT125. GPIO39–42 to piny JTAG — sprawdzić, czy wewnętrzne podciągnięcie w resecie nie przeważa 100 k.
+1. **Stany w resecie (M-05, M-06, M-07):** DRIVE_EN (GPIO39), SENS_EN (GPIO40), RPWM, LPWM zmierzone od włączenia zasilania przez bootloader do startu aplikacji, przy resecie przyciskiem i po panice (`panic` z konsoli JTAG / celowy błąd): zawsze L na wejściach 74AHCT125. GPIO39 (MTCK) ma po resecie wewnętrzne podciąganie ok. 45 k (karta ESP32-S3 v2.2, tab. 2-1, przyp. 7) — dlatego R2 (DRIVE_EN) ma 4,7 k (zmiana płytki po recenzji 8.10); zmierzyć DRIVE_EN ≤ 0,8 V w czasie bootloadera. GPIO40–42 bez podciągania.
 2. **Watchdogi (M-06):** zablokowane zadanie safety → panika ≤ 200 ms, DRIVE_EN w dół przed zrzutem (oscyloskop na DRIVE_EN i UART); RTC WDT → reset ≤ 1 s.
 3. **Ograniczenie prądu (M-06):** obciążenie IBT-2 rezystorem mocy / zablokowanym zaworem: zdarzenie `overcurrent` i DRIVE_EN w dół ≤ 1,5 ms od przekroczenia (pomiar prądu zewnętrznym bocznikiem). Zakres liniowy INA240 do ok. ±9 A.
 4. **AD7606B (M-02):** rozruch 2,1 s z RESET z GPIO10; potem kroki P05 12–17 (2 kS/s przy 1 MHz, kwalifikacja 4 MHz / 10 kS/s, `daq_stats`).

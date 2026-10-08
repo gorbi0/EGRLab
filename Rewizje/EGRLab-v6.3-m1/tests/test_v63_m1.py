@@ -119,8 +119,9 @@ class M1Firmware(unittest.TestCase):
         drive=body(b,'void board_drive(');self.assertIn('reverse_until = now + 5000',drive)
         self.assertIn('pwm_set(current_sign > 0 ? d : 0, current_sign < 0 ? d : 0)',drive);self.assertIn('fminf(fabsf(duty), .9f)',drive)
         p=parts()
-        for r,net in [('R2','DRIVE_EN'),('R3','RPWM'),('R4','LPWM'),('R5','SENS_EN')]:
-            self.assertEqual((p[r]['value'],p[r]['pins']),('100K',{'1':net,'2':'GND'}),r)
+        # R2 4,7 k (GPIO39 = MTCK: wewnetrzne podciaganie ok. 45 k po resecie, karta ESP32-S3 v2.2 tab. 2-1 przyp. 7), reszta 100 k
+        for r,net,val in [('R2','DRIVE_EN','4.7K'),('R3','RPWM','100K'),('R4','LPWM','100K'),('R5','SENS_EN','100K')]:
+            self.assertEqual((p[r]['value'],p[r]['pins']),(val,{'1':net,'2':'GND'}),r)
         u=p['U7']['pins'];self.assertEqual((u['2'],u['5'],u['9'],u['12']),('RPWM','LPWM','DRIVE_EN','DRIVE_EN'))
         self.assertEqual((u['3'],u['6'],u['8'],u['11']),('IBT_RPWM','IBT_LPWM','IBT_REN','IBT_LEN'))
     def test_m06_software_current_limit_and_watchdogs(self):
