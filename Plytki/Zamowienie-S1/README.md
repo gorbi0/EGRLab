@@ -15,7 +15,7 @@ Decyzja użytkownika 4.10.2026: paczki produkcyjne dla wszystkich płytek z zatw
 | P06 R2 | `P06-PCB-R2-zamowienie/DO-ZAMOWIENIA_P06-PCB-R2.zip` | 106,5 × 100 | obie | 228 / 14 | `d73c5de0…` | zamawiać |
 | P07 S1 | `P07-PCB-S1-zamowienie/DO-ZAMOWIENIA_P07-PCB-S1.zip` | 106,5 × 100 | obie | 360 / 16 | `31102a53…` | zamawiać — **4 warstwy, osobna pozycja w JLCPCB** (patrz niżej) |
 | P08 R2 | `P08-PCB-R2-zamowienie/DO-ZAMOWIENIA_P08-PCB-R2.zip` | 53 × 100 | obie | 153 / 6 | `18637d14…` | zamawiać (recenzja 6.10: bez BLOCKER) |
-| P09 R2 | `P09-PCB-R2-zamowienie/DO-ZAMOWIENIA_P09-PCB-R2.zip` | 53 × 100 | obie | 157 / 4 | `644e0379…` | **wstrzymana** do pomiaru modułu MAX31856 |
+| P09 R2 | `P09-PCB-R2-zamowienie/DO-ZAMOWIENIA_P09-PCB-R2.zip` | 53 × 100 | obie | 157 / 4 | `644e0379…` | zamawiać (8.10: pomiar modułu MAX31856 XU zgodny z footprintem) |
 | P10 R2 | `P10-PCB-R2-zamowienie/DO-ZAMOWIENIA_P10-PCB-R2.zip` | 53 × 100 | góra | 74 / 6 | `92e5323c…` | zamawiać |
 | P11 R2 | `P11-PCB-R2-zamowienie/DO-ZAMOWIENIA_P11-PCB-R2.zip` | 36 × 100 | góra | 104 / 10 | `a77181a0…` | zamawiać |
 | P12 R2 | `P12-PCB-R2-zamowienie/DO-ZAMOWIENIA_P12-PCB-R2.zip` | 160 × 136 | obie | 403 / 8 | `fd44318b…` | zamawiać (8.10: kontrakt z końcową płytką P07 potwierdzony, 56 OK / 0 czeka) |
@@ -25,7 +25,7 @@ P12 R1 (LOGGER, `P12-PCB-R1-zamowienie`) **nie wchodzi** do zamówienia — zast
 Ustawienia JLCPCB dla wszystkich **poza P07**: FR-4, 2 warstwy, 1,6 mm, 1 oz, HASL bezołowiowy, maska zielona, opis biały, Via Covering: Tented, bez PCBA i szablonu. P03 i P10 mają opis tylko od góry (w ZIP nie ma warstwy dolnego opisu). Szczegóły: `SPECYFIKACJA-DLA-PRODUCENTA.txt` w każdej paczce. **P07 S1 to osobna pozycja: 4 warstwy, stos JLC04161H-7628 (zewnętrzne 1 oz, wewnętrzne 0,5 oz), reszta jak wyżej — według `P07-PCB-S1-zamowienie/SPECYFIKACJA-DLA-PRODUCENTA.txt`** (decyzja użytkownika 6.10).
 
 Przed wysłaniem:
-1. P09 — porównać zmierzony moduł MAX31856 z footprintem (J3 / J4 P09); do tego czasu P09 nie zamawiać.
+1. ~~P09 — porównać zmierzony moduł MAX31856 z footprintem~~ — zrobione 8.10 (użytkownik): raster, wymiar w stronę terminala, położenie listwy, wysokość, kolejność pinów i GND zgodne; P09 zamawiać.
 2. Niezależna recenzja paczek (zadanie dla chmury `Plytki/Format-S1/zadania/ZADANIE-RECENZJA-ZAMOWIENIA-S1.md`) — zalecane przed wysłaniem plików.
 3. Wydruk 1:1 z PDF wydania (`projekt/output/pdf/`) i przymiarka dużych części: C1 / C3 220 µF, złącza IDC.
 
@@ -50,3 +50,6 @@ Paczka: DRC 0 niepołączonych / 0 niezgodności (4 × lib_footprint_mismatch od
 
 Uwagi (bez wpływu na zamówienie): J5 wystaje 0,45 mm za krawędź x = 106,5 (taśma do modułu na ściance — obudowa dobierana do stosu); przewody J4 → P11 obchodzą stos (ok. 450 mm, `P07-S1-review/docs/WIAZKA-MODUL.md`); decyzje sporne (ścieżki 0,2 mm, przelotki 0,6 / 0,3, logika na In2 pod blokiem przekaźnika) opisane w README wydania P07. NIE ZBADANO: przymiarka 1:1, montaż, pomiary modułu D / E.
 
+## P09 — pomiar modułu MAX31856 (8.10)
+
+Użytkownik zmierzył oba egzemplarze modułu MAX31856 XU bez zasilania: raster listwy 1 × 9 (2,54 mm), wymiar od osi rzędu w stronę terminala, położenie rzędu wzdłuż boku, wysokość (listwa + płytka + terminal ≤ 16,5 mm), kolejność pinów VIN … DRDY z napisów i GND — wszystko zgodne z footprintem `P09:MAX31856_XU`. P09 R2 zamawiana bez zmian. Przed lutowaniem zostają kroki elektryczne 2–4 z `P09-R2-review/docs/MODUL-KWALIFIKACJA.md` (3Vo przy VIN 3,3 V, ewentualnie wariant 5 V i JP1 / JP2).
