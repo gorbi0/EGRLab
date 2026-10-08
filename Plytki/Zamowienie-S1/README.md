@@ -1,6 +1,6 @@
 # Wspólne zamówienie płytek S1 (JLCPCB) — 4.10.2026
 
-*7.10.2026 (gałąź `zamowienie-pelny-s1`): wariant pełny — P04 R3, P07 S1, P08 R2, P12 R2 zamiast P12 R1; niezależna recenzja P04 / P08 / P12 R2 z 6.10 w sekcji „Recenzja 6.10” na końcu.*
+*7–8.10.2026 (gałąź `zamowienie-pelny-s1`): wariant pełny — P04 R3, P07 S1, P08 R2, P12 R2 zamiast P12 R1; recenzja P04 / P08 / P12 R2 z 6.10 i P07 z 8.10 na końcu.*
 
 *Uzupełnienie 4.10 wieczorem: P11 R2 (PCB po schemacie z chmury) i P12 R1 (płytka połączeń krawędzi A, wariant LOGGER).*
 
@@ -13,12 +13,12 @@ Decyzja użytkownika 4.10.2026: paczki produkcyjne dla wszystkich płytek z zatw
 | P04 R3 | `P04-PCB-R3-zamowienie/DO-ZAMOWIENIA_P04-PCB-R3.zip` | 160 × 100 | góra | 409 / 12 | `1b7478eb…` | zamawiać (recenzja 6.10: bez BLOCKER) |
 | P05 R3 | `P05-PCB-R3-zamowienie/DO-ZAMOWIENIA_P05-PCB-R3.zip` | 106,5 × 100 | obie | 362 / 12 | `2b922d52…` | zamawiać |
 | P06 R2 | `P06-PCB-R2-zamowienie/DO-ZAMOWIENIA_P06-PCB-R2.zip` | 106,5 × 100 | obie | 228 / 14 | `d73c5de0…` | zamawiać |
-| P07 S1 | `P07-PCB-S1-zamowienie/…` | 106,5 × 100 | obie | — | — | **w toku: layout 4 warstwy** (osobna pozycja w JLCPCB, patrz niżej) |
+| P07 S1 | `P07-PCB-S1-zamowienie/DO-ZAMOWIENIA_P07-PCB-S1.zip` | 106,5 × 100 | obie | 360 / 16 | `31102a53…` | zamawiać — **4 warstwy, osobna pozycja w JLCPCB** (patrz niżej) |
 | P08 R2 | `P08-PCB-R2-zamowienie/DO-ZAMOWIENIA_P08-PCB-R2.zip` | 53 × 100 | obie | 153 / 6 | `18637d14…` | zamawiać (recenzja 6.10: bez BLOCKER) |
 | P09 R2 | `P09-PCB-R2-zamowienie/DO-ZAMOWIENIA_P09-PCB-R2.zip` | 53 × 100 | obie | 157 / 4 | `644e0379…` | **wstrzymana** do pomiaru modułu MAX31856 |
 | P10 R2 | `P10-PCB-R2-zamowienie/DO-ZAMOWIENIA_P10-PCB-R2.zip` | 53 × 100 | góra | 74 / 6 | `92e5323c…` | zamawiać |
 | P11 R2 | `P11-PCB-R2-zamowienie/DO-ZAMOWIENIA_P11-PCB-R2.zip` | 36 × 100 | góra | 104 / 10 | `a77181a0…` | zamawiać |
-| P12 R2 | `P12-PCB-R2-zamowienie/DO-ZAMOWIENIA_P12-PCB-R2.zip` | 160 × 136 | obie | 403 / 8 | `fd44318b…` | zamawiać **po zamknięciu P07** (kontrakt J12 / J13 na końcowej płytce P07) |
+| P12 R2 | `P12-PCB-R2-zamowienie/DO-ZAMOWIENIA_P12-PCB-R2.zip` | 160 × 136 | obie | 403 / 8 | `fd44318b…` | zamawiać (8.10: kontrakt z końcową płytką P07 potwierdzony, 56 OK / 0 czeka) |
 
 P12 R1 (LOGGER, `P12-PCB-R1-zamowienie`) **nie wchodzi** do zamówienia — zastępuje ją P12 R2 wariantu pełnego (decyzja 5.10: wszystko razem z wariantem pełnym).
 
@@ -43,4 +43,10 @@ Niezależny przegląd paczek (sumy ZIP, manifesty, BOM ↔ footprint, DRC z pacz
 4. **NIT:** linie nadruku z bibliotek 0,12 mm (jak w paczkach LOGGER); teksty ≥ 1,0 / 0,15 mm.
 
 NIE ZBADANO w recenzji: przymiarki taśm i rysunków IDC T821, taśmy P11 → J10, kart MCP100 / WIMA / EEU-EB1J100, integralności SPI na P12. Po scaleniu do main: `P12-przygotowanie/zrodla.json` przełączyć na `origin/main` i powtórzyć kontrakty.
+
+## Recenzja P07 S1 (8.10, po zamknięciu paczki)
+
+Paczka: DRC 0 niepołączonych / 0 niezgodności (4 × lib_footprint_mismatch od przyciętego nadruku, przyjęte jak w innych paczkach), kontrole PCB 35/35, próby ujemne 41/41, CAM 24/24 (cztery warstwy miedzi, pola wewnętrzne po położeniu), próby ujemne CAM 9/9 + zerowa, oględziny podglądów (góra, F / B / In1 / In2). Stos S1: J_BP1 / J_BP2 w x 26,500 / 80,000 (kontrakt P12 R2 — 56 OK), osiem M3 w pozycjach S1, K1 15,7 mm ≤ 16,5, od spodu tylko SMD ≤ 1,5 mm ≥ 1 mm od THT. **MAJOR-1 z 6.10 zamknięty:** J1 / J2 / J4 przy krawędzi x = 106,5, J3 na krawędzi B; żaden przewód nad P08.
+
+Uwagi (bez wpływu na zamówienie): J5 wystaje 0,45 mm za krawędź x = 106,5 (taśma do modułu na ściance — obudowa dobierana do stosu); przewody J4 → P11 obchodzą stos (ok. 450 mm, `P07-S1-review/docs/WIAZKA-MODUL.md`); decyzje sporne (ścieżki 0,2 mm, przelotki 0,6 / 0,3, logika na In2 pod blokiem przekaźnika) opisane w README wydania P07. NIE ZBADANO: przymiarka 1:1, montaż, pomiary modułu D / E.
 
