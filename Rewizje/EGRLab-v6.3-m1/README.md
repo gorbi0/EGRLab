@@ -1,70 +1,79 @@
-# EGRLab 6.2-s1 — firmware pod format S1
+# EGRLab 6.3-m1 — firmware pod płytkę M1
 
-*1.10.2026. Kopia części programowej `Rewizje/EGRLab-v6.1-rc1` (firmware, profile, narzędzia, testy) zmieniona według `Plytki/Format-S1/zadania/ZADANIE-FIRMWARE-S1.md`: wymagania F-01…F-09 i decyzje użytkownika D-1…D-3 z 1.10. Wydanie 6.1-rc1 zostaje bez zmian i służy testom regresji jako wzorzec sprzętu (model M2.1: `hardware/`, `stabilizacja/`, `reference/`).*
+*8.10.2026. Kopia części programowej `Rewizje/EGRLab-v6.2-s1` (firmware, profile, narzędzia, testy) zmieniona pod sprzęt M1-R1 według `Plytki/M1-specyfikacja/zadania/ZADANIE-M1-KROK8-FIRMWARE.md` (M-01…M-13). Źródła o sprzęcie: `Plytki/M1-specyfikacja/SPECYFIKACJA.md`, `AUDYT.md` (D-M1-1…13), `Plytki/M1-R1-review/docs/GPIO.csv` i `parts.json`. Wydanie 6.2-s1 zostaje bez zmian i służy jako wzorzec regresji (ścieżka profilu schema 6), a 6.1-rc1 — jako model sprzętu dla testów 6.1.*
 
-**Status: kod, kontrole hosta i 5/5 kompilacji ESP-IDF 5.4.3 gotowe; sprzętu nie uruchamiano — odbiór niżej: NIE ZBADANO.** Wszystkie obrazy mają `EGR_HARDWARE_ACCEPTED=0`; kompilacja nie jest odbiorem.
+**Status: kod, kontrole hosta i 5/5 kompilacji ESP-IDF 5.4.3 gotowe; sprzętu nie uruchamiano — odbiór sprzętu: NIE ZBADANO.** Wszystkie obrazy mają `EGR_HARDWARE_ACCEPTED=0`; kompilacja nie jest odbiorem.
 
-## Zmiany względem 6.1-rc1
+## Zmiany względem 6.2-s1
 
 | ID | Zmiana | Pliki |
 |---|---|---|
-| F-01, D-3 | **PFAIL_N na GPIO3** (P02 R4 → P03 R6, R42 1 kΩ / R43 100 kΩ): wejście bez wewnętrznych podciągnięć, przerwanie na zbocze opadające po uzbrojeniu. Zadanie `pfail` (priorytet 22): najpierw napęd (`board_power_fail_stop`: ARM i PWM w dół na stałe), potem koniec próbkowania, linia `power_fail` (reason UVLO, liczba próbek niezapisanych) i zamknięcie obu plików. GPIO41 (wyjście triggera) jest wysoko od zbocza do zamknięcia plików — pomiar ODBIOR P02 R4 O-05. Stan niski krótszy niż 30 µs to `pfail_glitch`, sesja trwa. | `board.c`, `app_main.c`, `storage.c` |
-| F-02, D-2 | **Tryb stołowy:** PFAIL_N = L przez ≥ 100 ms od startu (tylko USB, P02 bez zasilania) — bez plików na karcie, bez TEST (`test` odrzucone), licznik sesji w NVS nie rośnie, PFAIL_N ignorowany. Konsola, podgląd i kalibracja działają. | `app_main.c`, `storage.c` |
-| F-03 | Sprawdzone: CH7 (indeks 6) = VBAT_SENSE, P05 R3 R31 499k / R32 100k i wejście AD7606B 5 MΩ → nominalnie 6,0898 jak w 6.1. Warunek 9–16,5 V dotyczy akumulatora auta, nie pakietu 4S; opis w `meta.json` i komentarzach. | `control.h`, `control.c`, `storage.c` |
-| F-04 | **Rozruch AD7606B:** ≥ 10 ms przed RESET, RESET 20 µs, **2100 ms** po pierwszym RESET (było 10 ms). Konfiguracja z odczytem kontrolnym **przed** MEAS_EN, potem 25 ms na przekaźniki; błąd konfiguracji = MEAS_EN wyłączone. Błąd odczytu (zanik P05, BUSY) unieważnia konfigurację, a następna zaczyna od pełnego RESET i 2100 ms; bez samoczynnego powrotu do TEST. | `board.c`, `app_main.c` |
-| F-05 | `EGR_SAMPLE_HZ` do 10 000 (start 2 kS/s przy SPI 1 MHz; kwalifikacja 10 kS/s przy 4 MHz), okno prądu 256 punktów (20 ms do 12,8 kS/s), zdarzenie `daq_stats` co 10 s (CONVST, próbki, błędy, resety, zgubione takty). Kalibracja dalej w firmware, nie w rejestrach AD7606B. | `Kconfig.projbuild`, `measure.*`, `app_main.c`, `board.c` |
-| F-06 | Potwierdzone po rewizji S1 P06 (bocznik 5 mΩ, INA240A2 G50, dzielnik 1:2 — bez zmian): współczynniki jak w 6.1; w każdym zdarzeniu `config` pole `current_chain`. Odrzucanie danych przy READY = 0 i w BYPASS bez zmian. | `jsonlog.c` |
-| F-07 | Łata P09 (MAX31856: CS 2/2, 300 ms po konfiguracji, odczyt kontrolny CR0/CR1, rejestry 0x0C–0x0F, błąd = NAN i fault 255) nałożona bez zmian. | `board.c` |
-| F-08 | **CAN w osobnym zadaniu** `can` (priorytet 7, poniżej zapisu). Ramki i RPM jako zdarzenia „miękkie” (pełna kolejka = licznik straty, nie błąd zapisu DAQ). `can_config` na starcie i w `meta.json` (500 kbit/s, listen-only, źródło czasu, profil), `can_stats` co 1 s przy zmianie liczników. Dekoder RPM `obd.c`: ISO-TP SF z długością zgodną z DLC, jeden ECU (0x7E8 wypiera wyższe), `rpm_stale` po 1 s — brak danych ≠ 0 rpm. | `app_main.c`, `obd.*`, `storage.c` |
-| F-09 | `profiles/hardware.json`: P02 R4, P03 R6, P05 R3, P06 R2, P09 R2, P10 R2 z interfejsem S1; P01 zastąpiona przez P02 R4; P04 / P07 / P08 / P11 bez rewizji S1. Kalibracja i tożsamości bez zmian (schema 6). | `profiles/hardware.json` |
-| D-1 | Wersja 6.2-s1 (`PROJECT_VER`, `meta.json`, `config`). Kompilacja w Dockerze: `scripts/egrlab-idf` (obraz `espressif/idf:v5.4.3`, waga CPU 2, ≤ 2 rdzenie — Frigate ma pierwszeństwo). | `firmware/CMakeLists.txt`, `scripts/egrlab-idf` |
+| M-01 | Usunięte: MCP23017 i I²C, dekoder CS, P04 SAFE (ARM, HW_ARM, INTERLOCK), P05 TAPS / MEAS_EN / READY, MCP3201, wejścia adapterów (LOG/TEST_PRESENT), HEART. Wszystkie piny wprost z GPIO według `GPIO.csv` (nazwy w `board.h`). Bez detekcji adaptera TEST sprawdza okablowanie z napięć: `test` odrzucony, gdy CH1–CH5 albo CH8 mają ponad 0,5 V (ECU steruje albo zasila czujnik). | `board.*`, `control.*`, `app_main.c`, `Kconfig.projbuild` |
+| M-02 | AD7606B jak P05 R3 (szeregowy programowy, OS = 111, wewn. odniesienie, ±10 V); **RESET z GPIO10** (20 µs; R9 10 k do GND). Rozruch F-04 bez zmian: 10 ms → RESET → 2100 ms; konfiguracja przed trybem; błąd odczytu albo nieudana konfiguracja = następny pełny RESET. | `board.c` |
+| M-03 | Skale nominalne z `parts.json` i wejścia 5 MΩ: CH1/CH2 4,06, CH3–CH5 i CH8 1,02, CH6 1,0002, CH7 6,0898. CH8 = SENS_5V (zamiast AUX, zawsze ±10 V). Opis kanałów w `meta.json`. | `control.c`, `storage.c` |
+| M-04 | **Prąd z CH6 AD7606B** (INA240A2 ×50, 5 mΩ, U = VS/2 + 0,25 V/A, RC 1 k / 1 n), ten sam tor w LOGGER i TEST, próbkowany razem z napięciami. Rekord v5 bez zmian (`current_raw` 65535, status ABSENT); config `local_current: false`, więc `egrlog.py` liczy prąd z `raw[5]`. Zero mierzy `zero` przy wyłączonym mostku i bez prądu ECU (CH1/CH2 w ±0,5 V przez 1 s), nie stała 2,5 V. | `app_main.c`, `control.c`, `jsonlog.c` |
+| M-05 | IBT-2 przez 74AHCT125: **RPWM GPIO1 / LPWM GPIO21** (LEDC, 10 bit, `CONFIG_EGR_PWM_HZ` 100–25 000, domyślnie 1 kHz jak 6.2-s1), **DRIVE_EN GPIO39**. Kierunek = który PWM, drugi nisko; zmiana kierunku = DRIVE_EN i oba PWM w dół na 5 ms; wypełnienie ≤ 90 %. Przy starcie wszystkie trzy (i SENS_EN) w stanie niskim zanim staną się wyjściami. | `board.c`, `Kconfig.projbuild` |
+| M-06 | Bez sprzętowego okna OC (D-M1-4): **programowe ograniczenie prądu** z CH6 w zadaniu akwizycji (`CONFIG_EGR_SW_CURRENT_LIMIT`, domyślnie włączone, 8 A, 2 kolejne próbki = 1 ms przy 2 kS/s; działa także bez kalibracji, na nominałach; nasycenie = przekroczenie) — zdejmuje DRIVE_EN, zatrzask do następnej konfiguracji, TEST → FAULT `OVERCURRENT`, zdarzenie `overcurrent`. **Do potwierdzenia — pytanie w PR.** Watchdogi: TWDT 200 ms z paniką (zadanie safety) i RTC WDT 1 s z resetem systemu; owinięty `esp_panic_handler` zdejmuje DRIVE_EN i SENS_EN rejestrami przed zrzutem; `esp_restart` przez shutdown handler. | `measure.*`, `app_main.c`, `board.c`, `main/CMakeLists.txt` |
+| M-07 | TPS2553: **SENS_EN GPIO40** tylko z bankiem TEST (`board_mode` odmawia i wyłącza; safety wyłącza poza TEST), **SENS_FAULT_N GPIO42** wprost. W SENSOR_CHECK i ruchu CH8 musi mieć 4,5–5,5 V i zgadzać się z pinem zasilania czujnika (0,3 V). CH8 > 1 V w LOGGER → zdarzenie `sens5v_in_logger`. | `board.c`, `control.c`, `app_main.c` |
+| M-08 | MAX31856 ×2 na SPI3, CS GPIO8 / GPIO16 wprost (bufor SDO z OE = CS przezroczysty). Łata F-07 bez zmian (`board_temperature` identyczna z P09). SD na SPI3, CS GPIO7. | `board.c` |
+| M-09 | TWAI listen-only jak F-08: RX GPIO18; TX na GPIO17 (niepodłączony; TCAN1051V ma TXD i S na 3V3). | `board.c` |
+| M-10 | Brak PFAIL_N: usunięte F-01 (zadanie `pfail`, `power_fail`, `pfail_glitch`) i tryb stołowy F-02. Przy zaniku zasilania pliki mogą zostać niedomknięte; `fsync` co `CONFIG_EGR_SD_SYNC_MS` = 1000 ms (było 2 s), więc ginie najwyżej ok. 1 s i obcięty ostatni blok. | `storage.*`, `app_main.c` |
+| M-11 | Samo USB (D-M1-6): brak karty SD nie zatrzymuje firmware — **tryb bez karty** (bez plików, bez TEST, licznik sesji stoi, komunikat w konsoli); AD7606B bez zasilania: dane nieważne, jedno `adc_error` na serię, ponowna próba od pełnego RESET. | `app_main.c`, `board.c`, `storage.*` |
+| M-12 | Przycisk **START / STOP GPIO15** (filtr 20 ms): w stanach TEST każde naciśnięcie = STOP od razu; poza TEST krótkie = znacznik `mark`, długie (≥ 1 s) = SAFE → LOGGER albo STOP. **Dioda RGB modułu GPIO38** (WS2812 przez RMT, bez komponentu `led_strip`): miga 2 Hz przy żywej akwizycji; zielony LOGGER, niebieski SAFE, żółty TEST, biały ruch, czerwony FAULT / stoi, fioletowy bez karty. Wyzwalacz oscyloskopu GPIO41 bez zmian. | `board.c`, `app_main.c` |
+| M-13 | `profiles/hardware.json`: `schema` 7, `configuration` „M1-R1”, `configuration_version` 1; moduły M1 (DAQ_001, IL_001) i IBT2 (DR_001); jeden tor prądu dla obu banków (IL_001, D-M1-7); termopary TC_001/TC_002; bez `aux`. `profile_v6.py` obsługuje schema 7 (`ivpa` zamiast `iscal`, bez `auxcal`), schema 6 bez zmian. Profil NVS wersja 7, klucz `profile_m1` (kalibracja 6.x nie przechodzi na M1). | `profiles/`, `tools/profile_v6.py`, `control.h`, `profile.c` |
+| — | Wersja 6.3-m1 (`PROJECT_VER`, `meta.json`, `config`). Konsola: `ivpa`; usunięte `aux`, `auxcal`, `iscal`. Podgląd Wi-Fi: pola `naped` i `tryb` zamiast `uzbrojony` / `adapter`. | `CMakeLists.txt`, `app_main.c`, `webui.c` |
 
-Zdarzenia i pola logu: `docs/04-firmware-logi.md`, sekcja „6.2-s1”.
+Zdarzenia i pola logu: `docs/04-firmware-logi.md`, sekcja „6.3-m1”; profil i rozkazy: `docs/05-profile.md`; procedura TEST na listwie X1: `docs/06-diagnostyka.md`.
 
-## Kontrole (1.10.2026)
+## Kontrole (8.10.2026)
 
 | Kontrola | Wynik |
 |---|---|
-| Kompilacje ESP-IDF 5.4.3 (Docker, `espressif/idf:v5.4.3`) | **5/5**; w `main/` jedno ostrzeżenie (wariant core: `adc_probe_software_mode` nieużywana przy CORE_ONLY) — to samo co w 6.1; obraz bazowy 6.1 (logger) z tego kontenera ma 418 800 B jak w wydaniu 6.1 |
-| Testy hosta C (`tests/run_host.py --cc gcc`) | 107 asercji, 0 nieudanych testow · runtime: 47 assertions OK · health: 64 assertions, 0 failed · obd: 23 assertions, 0 failed · ADC fault injection: 111 assertions OK · Current ADC fault injection: 15 assertions OK · Storage contracts: 41 assertions OK |
-| Python (`python3 -m unittest discover -s tests`) | OK — 86 regresji 6.1 (na modelu sprzętu 6.1) i 10 nowych (`test_v62_s1.py`) |
-| Próby mutacyjne nowych kontroli (`tests/probe_v62_mutations.py`) | **11/11** z zerową |
-| Najdłuższe zdarzenie `config` (pola maksymalnej długości) | 1280 B z 2048 |
+| Kompilacje ESP-IDF 5.4.3 (Docker, `espressif/idf:v5.4.3`, `scripts/egrlab-idf`) | **5/5**; w `main/` jedno ostrzeżenie (wariant core: `adc_probe_software_mode` nieużywana przy CORE_ONLY) — to samo co w 6.1 i 6.2-s1. Owinięcie `esp_panic_handler` potwierdzone w ELF (handler paniki woła `__wrap_esp_panic_handler`). |
+| Testy hosta C (`tests/run_host.py --cc gcc`) | control: 131 asercji, 0 nieudanych testów · runtime: 66 OK · health: 58, 0 failed · obd: 23, 0 failed · ADC fault injection: 118 OK · Storage contracts: 39 OK · **Drive / SENS_EN safe states: 45 OK** (nowe `probe_drive.py`: prawdziwe `board_drive` / `board_mode` z `board.c`) |
+| Python (`python3 -m unittest discover -s tests`) | OK — 102 testy: 86 regresji (6.1 na modelu `../EGRLab-v6.1-rc1`; profil schema 6 na `../EGRLab-v6.2-s1/profiles`) i 16 nowych (`test_v63_m1.py`: mapa GPIO z `GPIO.csv`, skale z `parts.json`, stany bezpieczne, SENS_EN, M-01…M-13) |
+| Próby mutacyjne nowych kontroli (`tests/probe_v63_mutations.py`) | **31/31** z zerową (30 mutacji M-01…M-13, każda wykryta przez `test_v63_m1` albo testy C) |
+| Najdłuższe zdarzenie `config` (pola maksymalnej długości) | 1111 B z 2048 |
 
-| Wariant | Obraz | SHA-256 |
-|---|---|---|
-| core | 363 808 B | `f812bc603b1e7e52…` |
-| minimal | 417 584 B | `6ffa0f7316343b5d…` |
-| logger | 424 960 B | `75e2dc516d2f0f01…` |
-| test | 418 240 B | `d4ba47b6c3b86e5f…` |
-| wifi | 970 688 B | `0f9da61bbbade7bc…` |
+| Wariant | Zawartość | Obraz | SHA-256 |
+|---|---|---|---|
+| core | uruchomienie ESP32 / PSRAM / SD, bez akwizycji | 364 016 B | `42368bcb636b1c69…` |
+| minimal | LOGGER bez MAX31856 i CAN (prąd CH6 jest zawsze) | 421 120 B | `f0782f363ad89878…` |
+| logger | LOGGER + MAX31856 + CAN, TEST wyłączony | 428 448 B | `a6b9febc95e3b71f…` |
+| test | TESTER (IBT-2, SENS_5V) + MAX31856, bez CAN | 421 728 B | `ceb75f6ca2b53d70…` |
+| wifi | jak test + SoftAP | 972 576 B | `51787b10ae9f75ac…` |
 
-Pełne sumy i źródła: `verification/builds.json`; obrazy do wgrania: `firmware/prebuilt/<wariant>/` (`python -m esptool --chip esp32s3 -p PORT -b 460800 --before default_reset --after hard_reset write_flash "@flash_args"` z katalogu wariantu).
+Pełne sumy: `verification/builds.json`; obrazy: `firmware/prebuilt/<wariant>/` (`python -m esptool --chip esp32s3 -p PORT -b 460800 --before default_reset --after hard_reset write_flash "@flash_args"` z katalogu wariantu). **Nie ma wariantów z P04 ani P07** — M1 nie ma tych płytek (D-M1-4: mostek to moduł IBT-2 sterowany wprost z GPIO, bez SAFE).
+
+Przy zmianach testów względem 6.2-s1: usunięte `test_v62_s1.py` i `probe_v62_mutations.py` (sprawdzały F-01/F-02/P06/P02, których M1 nie ma — zostają w 6.2-s1), `probe_current.py` (MCP3201) zastąpiony `probe_drive.py`. W regresjach 6.1 cztery asercje dotyczące firmware tej rewizji (MCP23017, MCP3201, wersja profilu, odczyt SENSOR_HEALTHY) zmienione na odpowiedniki M1; asercje modelu sprzętu 6.1 bez zmian.
 
 ## Odbiór na sprzęcie — NIE ZBADANO
 
-1. **PFAIL (P02 R4 O-05):** zbocze PFAIL_N → GPIO41 w dół (pliki zamknięte) ≤ 10 ms przy 6 W; plik czytelny po wyjęciu pakietu, ostatnia linia `power_fail`.
-2. **Tryb stołowy:** CORE z USB, P02 podłączony bez zasilania → komunikat „TRYB STOLOWY”, brak katalogu sesji, `test` odrzucony.
-3. **P05 kroki 8–10:** rozruch AD7606B (2,1 s), konfiguracja przed MEAS_EN, zanik 5V_SYS przy sesji → FAULT, ponowna konfiguracja z RESET.
-4. **P05 kroki 12–17:** 2 kS/s przy 1 MHz, potem kwalifikacja 4 MHz i 10 kS/s (`daq_stats`: `convst` = `samples`, `lost_ticks` = 0).
-5. **P10 „Ruch ciągły”:** 10 min, liczba ramek w logu = we wzorcu, `can_stats` bez strat; RPM z zewnętrznego testera.
-6. **P06:** wspólna magistrala SPI z P05 (MCP3201 tryb 0 / AD7606B tryb 2); dane odrzucone przy READY = 0 i w BYPASS.
-7. **P09 MODUL-KWALIFIKACJA krok 4:** odłączony moduł → błąd w logu, nigdy 0 °C.
+1. **Stany w resecie (M-05, M-06, M-07):** DRIVE_EN (GPIO39), SENS_EN (GPIO40), RPWM, LPWM zmierzone od włączenia zasilania przez bootloader do startu aplikacji, przy resecie przyciskiem i po panice (`panic` z konsoli JTAG / celowy błąd): zawsze L na wejściach 74AHCT125. GPIO39–42 to piny JTAG — sprawdzić, czy wewnętrzne podciągnięcie w resecie nie przeważa 100 k.
+2. **Watchdogi (M-06):** zablokowane zadanie safety → panika ≤ 200 ms, DRIVE_EN w dół przed zrzutem (oscyloskop na DRIVE_EN i UART); RTC WDT → reset ≤ 1 s.
+3. **Ograniczenie prądu (M-06):** obciążenie IBT-2 rezystorem mocy / zablokowanym zaworem: zdarzenie `overcurrent` i DRIVE_EN w dół ≤ 1,5 ms od przekroczenia (pomiar prądu zewnętrznym bocznikiem). Zakres liniowy INA240 do ok. ±9 A.
+4. **AD7606B (M-02):** rozruch 2,1 s z RESET z GPIO10; potem kroki P05 12–17 (2 kS/s przy 1 MHz, kwalifikacja 4 MHz / 10 kS/s, `daq_stats`).
+5. **Prąd CH6 (M-04):** `zero` przy odpiętym mostku i ECU (ok. 2,5 V = VS/2), skala V/A w obu kierunkach (`ivpa`), porównanie z oscyloskopem metryki 20 ms (`metric`).
+6. **SENS_5V (M-07):** TESTER na stole — CH8 4,5–5,5 V, FAULT_N przy zwarciu wyjścia; LOGGER — CH8 ≈ 0 V cały czas; `test` przy włączonym zapłonie i podpiętym ECU → `test_rejected`.
+7. **Tylko USB (M-11):** komunikat „TRYB BEZ KARTY”, konsola działa, `test` odrzucony, brak zawieszenia.
+8. **Przycisk i dioda (M-12):** krótkie / długie naciśnięcie, STOP w TEST; kolory i miganie diody modułu (WS2812 na GPIO38 — typ diody na DEV-KIT do potwierdzenia).
+9. **MAX31856 (M-08):** MODUL-KWALIFIKACJA P09 krok 4 — odłączona termopara → błąd w logu, nigdy 0 °C. **CAN (M-09):** P10 „Ruch ciągły”.
+10. **Zanik zasilania (M-10):** wyjęcie pakietu w trakcie zapisu → plik czytelny `egrlog.py inspect`, brak najwyżej ok. 1 s.
 
 ## Budowanie i testy
 
-Z katalogu `firmware` (komputer 24/7, D-1):
+Z katalogu `firmware`:
 
 ```text
 ../../../scripts/egrlab-idf idf.py -B build-logger -DIDF_TARGET=esp32s3 -DSDKCONFIG=sdkconfig.logger "-DSDKCONFIG_DEFAULTS=sdkconfig.defaults;sdkconfig.logger.defaults" build
 ```
 
-Zmień `logger` na `core`, `minimal`, `test` albo `wifi`. Testy z katalogu wydania: `python3 tests/run_host.py --cc gcc`, `python3 -m unittest discover -s tests`, `python3 tests/probe_v62_mutations.py`.
+Zmień `logger` na `core`, `minimal`, `test` albo `wifi`. Testy z katalogu wydania: `python3 tests/run_host.py --cc gcc`, `python3 -m unittest discover -s tests`, `python3 tests/probe_v63_mutations.py --cc gcc`.
 
 ## Pliki
 
 - `firmware/` — źródła, `sdkconfig.*.defaults`, `prebuilt/` (5 wariantów).
-- `profiles/`, `tools/` — jak w 6.1 (profil sprzętu z rewizjami S1).
-- `tests/` — testy 6.1 (ścieżki sprzętu wskazują na 6.1-rc1), `test_obd.c`, `test_v62_s1.py`, `probe_v62_mutations.py`.
-- `docs/` — 04–06 z 6.1, w 04 sekcja 6.2-s1.
-- `verification/` — `builds.json`, logi kompilacji, `sdkconfig.*`, wyniki testów hosta i prób mutacyjnych.
+- `profiles/` — `hardware.json` M1-R1 (schema 7), `valve.json` i `session.json` jak w 6.2-s1; `tools/` — `profile_v6.py` z gałęzią M1.
+- `tests/` — testy 6.1 (model sprzętu 6.1-rc1), `test_v63_m1.py`, `probe_drive.py`, `probe_v63_mutations.py`.
+- `docs/` — 04–06 z 6.2-s1, w 04 sekcja 6.3-m1, w 05 i 06 uwagi M1.
+- `verification/` — `builds.json`, skróty logów kompilacji, `sdkconfig.*`, wyniki testów hosta i prób mutacyjnych.
