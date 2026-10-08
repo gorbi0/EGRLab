@@ -1,0 +1,197 @@
+2026-10-05T15:29:24.428065100Z main ERROR Could not determine local host name java.net.UnknownHostException: 5437bbd88d97: 5437bbd88d97: Temporary failure in name resolution
+	at java.base/java.net.InetAddress.getLocalHost(InetAddress.java:1936)
+	at org.apache.logging.log4j.core.util.NetUtils.getHostname(NetUtils.java:71)
+	at org.apache.logging.log4j.core.util.NetUtils.getLocalHostname(NetUtils.java:56)
+	at org.apache.logging.log4j.core.LoggerContext.lambda$setConfiguration$2(LoggerContext.java:667)
+	at java.base/java.util.concurrent.ConcurrentHashMap.computeIfAbsent(ConcurrentHashMap.java:1708)
+	at org.apache.logging.log4j.core.LoggerContext.setConfiguration(LoggerContext.java:667)
+	at org.apache.logging.log4j.core.LoggerContext.reconfigure(LoggerContext.java:762)
+	at org.apache.logging.log4j.core.LoggerContext.reconfigure(LoggerContext.java:784)
+	at org.apache.logging.log4j.core.LoggerContext.start(LoggerContext.java:300)
+	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(Log4jContextFactory.java:153)
+	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(Log4jContextFactory.java:46)
+	at org.apache.logging.log4j.LogManager.getContext(LogManager.java:138)
+	at org.apache.logging.log4j.LogManager.getLogger(LogManager.java:555)
+	at app.freerouting.logger.FRLogger.traceEntry(FRLogger.java:96)
+	at app.freerouting.Freerouting.main(Freerouting.java:51)
+Caused by: java.net.UnknownHostException: 5437bbd88d97: Temporary failure in name resolution
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Inet6AddressImpl.java:52)
+	at java.base/java.net.InetAddress$PlatformResolver.lookupByName(InetAddress.java:1211)
+	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1828)
+	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:1139)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818)
+	at java.base/java.net.InetAddress.getLocalHost(InetAddress.java:1931)
+	... 14 more
+
+2026-10-05T15:29:24.507929723Z main ERROR Could not determine local host name java.net.UnknownHostException: 5437bbd88d97: 5437bbd88d97: Temporary failure in name resolution
+	at java.base/java.net.InetAddress.getLocalHost(InetAddress.java:1936)
+	at org.apache.logging.log4j.core.util.NetUtils.getHostname(NetUtils.java:71)
+	at org.apache.logging.log4j.core.util.NetUtils.getLocalHostname(NetUtils.java:56)
+	at org.apache.logging.log4j.core.LoggerContext.lambda$setConfiguration$2(LoggerContext.java:667)
+	at java.base/java.util.concurrent.ConcurrentHashMap.computeIfAbsent(ConcurrentHashMap.java:1708)
+	at org.apache.logging.log4j.core.LoggerContext.setConfiguration(LoggerContext.java:667)
+	at org.apache.logging.log4j.core.LoggerContext.reconfigure(LoggerContext.java:762)
+	at org.apache.logging.log4j.core.LoggerContext.reconfigure(LoggerContext.java:784)
+	at org.apache.logging.log4j.core.LoggerContext.start(LoggerContext.java:300)
+	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(Log4jContextFactory.java:257)
+	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(Log4jContextFactory.java:46)
+	at org.apache.logging.log4j.LogManager.getContext(LogManager.java:118)
+	at app.freerouting.logger.FRLogger.changeFileLogLocation(FRLogger.java:379)
+	at app.freerouting.settings.GlobalSettings.setUserDataPath(GlobalSettings.java:110)
+	at app.freerouting.Freerouting.main(Freerouting.java:92)
+Caused by: java.net.UnknownHostException: 5437bbd88d97: Temporary failure in name resolution
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Inet6AddressImpl.java:52)
+	at java.base/java.net.InetAddress$PlatformResolver.lookupByName(InetAddress.java:1211)
+	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1828)
+	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:1139)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818)
+	at java.base/java.net.InetAddress.getLocalHost(InetAddress.java:1931)
+	... 14 more
+
+2026-10-05 17:29:24.556 INFO   Freerouting v2.1.0 (build-date: 2025-04-12)
+java.util.concurrent.CompletionException: java.net.ConnectException
+	at java.base/java.util.concurrent.CompletableFuture.encodeRelay(CompletableFuture.java:368)
+	at java.base/java.util.concurrent.CompletableFuture.uniComposeStage(CompletableFuture.java:1189)
+	at java.base/java.util.concurrent.CompletableFuture.thenCompose(CompletableFuture.java:2341)
+	at java.net.http/jdk.internal.net.http.MultiExchange.responseAsyncImpl(MultiExchange.java:481)
+	at java.net.http/jdk.internal.net.http.MultiExchange.lambda$responseAsyncImpl$7(MultiExchange.java:477)
+	at java.base/java.util.concurrent.CompletableFuture.uniHandle(CompletableFuture.java:934)
+	at java.base/java.util.concurrent.CompletableFuture.uniHandleStage(CompletableFuture.java:950)
+	at java.base/java.util.concurrent.CompletableFuture.handle(CompletableFuture.java:2372)
+	at java.net.http/jdk.internal.net.http.MultiExchange.responseAsyncImpl(MultiExchange.java:467)
+	at java.net.http/jdk.internal.net.http.MultiExchange.lambda$responseAsync0$2(MultiExchange.java:355)
+	at java.base/java.util.concurrent.CompletableFuture$UniCompose.tryFire(CompletableFuture.java:1150)
+	at java.base/java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:510)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1773)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.net.ConnectException
+	at java.net.http/jdk.internal.net.http.common.Utils.toConnectException(Utils.java:1065)
+	at java.net.http/jdk.internal.net.http.PlainHttpConnection.connectAsync(PlainHttpConnection.java:227)
+	at java.net.http/jdk.internal.net.http.AsyncSSLConnection.connectAsync(AsyncSSLConnection.java:56)
+	at java.net.http/jdk.internal.net.http.Http2Connection.createAsync(Http2Connection.java:529)
+	at java.net.http/jdk.internal.net.http.Http2ClientImpl.getConnectionFor(Http2ClientImpl.java:140)
+	at java.net.http/jdk.internal.net.http.ExchangeImpl.get(ExchangeImpl.java:98)
+	at java.net.http/jdk.internal.net.http.Exchange.establishExchange(Exchange.java:391)
+	at java.net.http/jdk.internal.net.http.Exchange.responseAsyncImpl0(Exchange.java:584)
+	at java.net.http/jdk.internal.net.http.Exchange.responseAsyncImpl(Exchange.java:428)
+	at java.net.http/jdk.internal.net.http.Exchange.responseAsync(Exchange.java:420)
+	at java.net.http/jdk.internal.net.http.MultiExchange.responseAsyncImpl(MultiExchange.java:435)
+	... 12 more
+Caused by: java.nio.channels.UnresolvedAddressException
+	at java.base/sun.nio.ch.Net.checkAddress(Net.java:147)
+	at java.base/sun.nio.ch.Net.checkAddress(Net.java:155)
+	at java.base/sun.nio.ch.SocketChannelImpl.checkRemote(SocketChannelImpl.java:842)
+	at java.base/sun.nio.ch.SocketChannelImpl.connect(SocketChannelImpl.java:865)
+	at java.net.http/jdk.internal.net.http.PlainHttpConnection.lambda$connectAsync$1(PlainHttpConnection.java:210)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:571)
+	at java.net.http/jdk.internal.net.http.PlainHttpConnection.connectAsync(PlainHttpConnection.java:212)
+	... 21 more
+2026-10-05 17:29:26.660 INFO   [02F42B\052411] Job '02F42B\052411' started at 2026-10-05T15:29:26.659991853Z
+2026-10-05 17:30:00.033 INFO   [02F42B\052411] Auto-router pass #1 on board '07b6d18406493c531d6f45162dc4e9d1' was completed in 32,99 seconds with the score of 901,77 (61 unrouted), using 363,27 CPU seconds and 13513 MB memory.
+2026-10-05 17:30:17.043 INFO   [02F42B\052411] Auto-router pass #2 on board '473d5448a95184c78eeaf4c373f39e7d' was completed in 16,91 seconds with the score of 942,54 (32 unrouted), using 869,35 CPU seconds and 22068 MB memory.
+2026-10-05 17:30:29.918 INFO   [02F42B\052411] Auto-router pass #3 on board '0563bd7e7a5b49b588fb916958a4d428' was completed in 12,79 seconds with the score of 959,93 (18 unrouted), using 1424,34 CPU seconds and 29276 MB memory.
+2026-10-05 17:30:40.969 INFO   [02F42B\052411] Auto-router pass #4 on board 'a9768472ebe7b9f11f1a1c2a9e3a40d1' was completed in 10,96 seconds with the score of 970,88 (8 unrouted), using 2006,94 CPU seconds and 35111 MB memory.
+2026-10-05 17:30:44.661 INFO   [02F42B\052411] Auto-router pass #5 on board '9f0d254dbf4fbd476a4e4009990e7dde' was completed in 3,62 seconds with the score of 970,58 (8 unrouted), using 2184,79 CPU seconds and 36686 MB memory.
+2026-10-05 17:30:47.248 INFO   [02F42B\052411] Auto-router pass #6 on board '06fc472cd73116cb178657c767c2f53d' was completed in 2,51 seconds with the score of 971,33 (7 unrouted), using 2370,83 CPU seconds and 38295 MB memory.
+2026-10-05 17:30:49.485 INFO   [02F42B\052411] Auto-router pass #7 on board 'ba8c239a038811689350fb28bf6bcdac' was completed in 2,17 seconds with the score of 973,54 (5 unrouted), using 2499,53 CPU seconds and 39341 MB memory.
+2026-10-05 17:30:52.496 INFO   [02F42B\052411] Auto-router pass #8 on board 'b6daef5fac15c51171169037c3ff5188' was completed in 2,95 seconds with the score of 973,54 (5 unrouted), using 2699,55 CPU seconds and 41101 MB memory.
+2026-10-05 17:30:53.801 INFO   [02F42B\052411] Auto-router pass #9 on board 'fa4189c70f1443cd6b8aee61a053451d' was completed in 1,24 seconds with the score of 973,67 (5 unrouted), using 2837,62 CPU seconds and 42339 MB memory.
+2026-10-05 17:30:55.685 INFO   [02F42B\052411] Auto-router pass #10 on board '84dda3d46ee8bbd716d2b76b98523d0f' was completed in 1,82 seconds with the score of 973,73 (5 unrouted), using 2908,08 CPU seconds and 42882 MB memory.
+2026-10-05 17:30:59.783 INFO   [02F42B\052411] Auto-router pass #11 on board '64fc58b3028872d5532498e29d7e00a7' was completed in 4,04 seconds with the score of 973,39 (5 unrouted), using 3274,40 CPU seconds and 45426 MB memory.
+2026-10-05 17:31:04.590 INFO   [02F42B\052411] Auto-router pass #12 on board 'aef431f01feb371a63cf6bd29633787f' was completed in 4,75 seconds with the score of 973,89 (5 unrouted), using 3584,48 CPU seconds and 47850 MB memory.
+2026-10-05 17:31:08.639 INFO   [02F42B\052411] Auto-router pass #13 on board 'd83be142e28721e81c0d4f5cca432786' was completed in 3,99 seconds with the score of 972,84 (6 unrouted), using 3909,41 CPU seconds and 49962 MB memory.
+2026-10-05 17:31:12.732 INFO   [02F42B\052411] Auto-router pass #14 on board '52b1f7cf67fdbbc064717c88df9c7d37' was completed in 4,03 seconds with the score of 973,05 (6 unrouted), using 4336,80 CPU seconds and 52676 MB memory.
+2026-10-05 17:31:17.358 INFO   [02F42B\052411] Auto-router pass #15 on board 'e6ec9f3097dbabe8ccd90e152c422c2e' was completed in 4,57 seconds with the score of 972,56 (6 unrouted), using 4695,75 CPU seconds and 54793 MB memory.
+2026-10-05 17:31:24.638 INFO   [02F42B\052411] Auto-router pass #16 on board '4495f89eb84fa8fdf0e26446320f3ffa' was completed in 7,22 seconds with the score of 975,59 (3 unrouted), using 5360,85 CPU seconds and 58980 MB memory.
+2026-10-05 17:31:26.220 INFO   [02F42B\052411] Auto-router pass #17 on board 'af8c7e133daaf1883386c14ea70aabfb' was completed in 1,53 seconds with the score of 975,66 (3 unrouted), using 5559,47 CPU seconds and 60129 MB memory.
+2026-10-05 17:31:27.846 INFO   [02F42B\052411] Auto-router pass #18 on board 'cb4458f33930d9a6b6e6653121ec0b45' was completed in 1,57 seconds with the score of 975,70 (3 unrouted), using 5761,94 CPU seconds and 61184 MB memory.
+2026-10-05 17:31:29.297 INFO   [02F42B\052411] Auto-router pass #19 on board '477e424e9889dc4ca7e5367b1b8b3ff9' was completed in 1,39 seconds with the score of 975,76 (3 unrouted), using 5864,60 CPU seconds and 61724 MB memory.
+2026-10-05 17:31:34.242 INFO   [02F42B\052411] Restoring an earlier board that has the score of 975,76 (3 unrouted).
+2026-10-05 17:31:34.243 INFO   [02F42B\052411] Auto-router pass #20 on board 'e3bd8e3f2ddbadd3670f62b34ef0fd9f' was completed in 4,89 seconds with the score of 975,60 (3 unrouted), using 6392,16 CPU seconds and 64596 MB memory.
+2026-10-05 17:31:35.523 INFO   [02F42B\052411] Auto-router pass #21 on board 'e3bd8e3f2ddbadd3670f62b34ef0fd9f' was completed in 1,23 seconds with the score of 975,80 (3 unrouted), using 6500,49 CPU seconds and 65155 MB memory.
+2026-10-05 17:31:36.761 INFO   [02F42B\052411] Auto-router pass #22 on board '03f6817810e286ed271235b176b59984' was completed in 1,16 seconds with the score of 975,80 (3 unrouted), using 6719,87 CPU seconds and 66333 MB memory.
+2026-10-05 17:31:37.981 INFO   [02F42B\052411] Auto-router pass #23 on board '8885dad79423175380d1719613397722' was completed in 1,17 seconds with the score of 975,70 (3 unrouted), using 6830,97 CPU seconds and 66950 MB memory.
+2026-10-05 17:31:41.112 INFO   [02F42B\052411] Restoring an earlier board that has the score of 975,80 (3 unrouted).
+2026-10-05 17:31:41.112 INFO   [02F42B\052411] Auto-router pass #24 on board '3437a5c0582faffbbe1414b0b6fe118f' was completed in 3,07 seconds with the score of 975,66 (3 unrouted), using 7169,74 CPU seconds and 68868 MB memory.
+2026-10-05 17:31:42.297 INFO   [02F42B\052411] Auto-router pass #25 on board '8885dad79423175380d1719613397722' was completed in 1,16 seconds with the score of 975,70 (3 unrouted), using 7284,47 CPU seconds and 69424 MB memory.
+2026-10-05 17:31:43.553 INFO   [02F42B\052411] Auto-router pass #26 on board '8f3d3d9b94605516bb106c3b9f7d3c8d' was completed in 1,20 seconds with the score of 975,67 (3 unrouted), using 7400,07 CPU seconds and 70041 MB memory.
+2026-10-05 17:31:45.579 INFO   [02F42B\052411] Auto-router pass #27 on board '763d8b707a8c9b7d89e18c58654af015' was completed in 1,96 seconds with the score of 975,86 (3 unrouted), using 7634,10 CPU seconds and 71228 MB memory.
+2026-10-05 17:31:49.186 INFO   [02F42B\052411] Restoring an earlier board that has the score of 975,86 (3 unrouted).
+2026-10-05 17:31:49.187 INFO   [02F42B\052411] Auto-router pass #28 on board '99c295c2060c8425acd28e96529167a4' was completed in 3,55 seconds with the score of 975,65 (3 unrouted), using 8113,58 CPU seconds and 73648 MB memory.
+2026-10-05 17:31:50.620 INFO   [02F42B\052411] Auto-router pass #29 on board '99c295c2060c8425acd28e96529167a4' was completed in 1,41 seconds with the score of 975,77 (3 unrouted), using 8235,80 CPU seconds and 74218 MB memory.
+2026-10-05 17:31:52.028 INFO   [02F42B\052411] Auto-router pass #30 on board 'ea59f1f01c76cee1ee7a0815f1efc20a' was completed in 1,36 seconds with the score of 975,55 (3 unrouted), using 8482,93 CPU seconds and 75448 MB memory.
+{
+  "host": "KiCad's Pcbnew,10.0.6",
+  "unit": "mm",
+  "board": {
+    "bounding_box": {
+      "x": 1601.0,
+      "y": 1.0,
+      "width": -1.0,
+      "height": -1001.0
+    },
+    "size": {
+      "x": 0.0,
+      "y": 0.0,
+      "width": 1602.0,
+      "height": 1002.0
+    }
+  },
+  "layers": {
+    "total_count": 2,
+    "signal_count": 2
+  },
+  "items": {
+    "total_count": 2126,
+    "trace_count": 460,
+    "via_count": 140,
+    "conduction_area_count": 1,
+    "drill_item_count": 397,
+    "pin_count": 0,
+    "component_count": 1069,
+    "other_count": 59
+  },
+  "components": {
+    "total_count": 112
+  },
+  "pads": {
+    "total_count": 397
+  },
+  "nets": {
+    "total_count": 95,
+    "class_count": 3
+  },
+  "connections": {
+    "maximum_count": 903,
+    "incomplete_count": 3
+  },
+  "traces": {
+    "total_count": 460,
+    "total_segment_count": 1177,
+    "total_length": 62126.98,
+    "total_weighted_length": 2.229E8,
+    "average_length": 135.05865,
+    "total_vertical_length": 19185.484,
+    "total_horizontal_length": 27870.973,
+    "total_angled_length": 17263.941
+  },
+  "bends": {
+    "total_count": 717,
+    "90_degree_count": 14,
+    "45_degree_count": 703,
+    "other_angle_count": 0
+  },
+  "vias": {
+    "total_count": 140,
+    "through_hole_count": 140,
+    "blind_count": 0,
+    "buried_count": 0
+  },
+  "clearance_violations": {
+    "total_count": 0
+  }
+}

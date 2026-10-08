@@ -1,0 +1,481 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-05T17:52:43",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P04.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Pole lutownicze 1 [SUP_N_OUT] z R17 na F.Cu",
+                    "pos": {
+                        "x": 141.207601,
+                        "y": 10.368597
+                    },
+                    "uuid": "5438b4d1-34d8-4e88-8b58-4b86657151d1"
+                },
+                {
+                    "description": "Ścieżka [SUP_N_OUT] na B.Cu, długość 1,7961 mm",
+                    "pos": {
+                        "x": 134.77,
+                        "y": 10.79
+                    },
+                    "uuid": "1c5c45b4-fae8-459a-b01d-5a00ac524a57"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz SUP_N_OUT)",
+            "items": [
+                {
+                    "description": "Ścieżka [GND] na F.Cu, długość 4,0600 mm",
+                    "pos": {
+                        "x": 141.12,
+                        "y": 12.06
+                    },
+                    "uuid": "06f338cc-3918-4a90-8362-b00e2003a318"
+                },
+                {
+                    "description": "Pole lutownicze 1 [SUP_N_OUT] z R17 na F.Cu",
+                    "pos": {
+                        "x": 141.207601,
+                        "y": 10.368597
+                    },
+                    "uuid": "5438b4d1-34d8-4e88-8b58-4b86657151d1"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci HEARTBEAT oraz SUP_N_OUT)",
+            "items": [
+                {
+                    "description": "Pole PTH 16 [HEARTBEAT] na J_BP3",
+                    "pos": {
+                        "x": 139.85,
+                        "y": 10.79
+                    },
+                    "uuid": "1d0608b1-f238-4a2d-99f8-0841e88081ff"
+                },
+                {
+                    "description": "Pole lutownicze 1 [SUP_N_OUT] z R17 na F.Cu",
+                    "pos": {
+                        "x": 141.207601,
+                        "y": 10.368597
+                    },
+                    "uuid": "5438b4d1-34d8-4e88-8b58-4b86657151d1"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci MCU_ARM oraz SUP_N_OUT)",
+            "items": [
+                {
+                    "description": "Pole PTH 18 [MCU_ARM] na J_BP3",
+                    "pos": {
+                        "x": 142.39,
+                        "y": 10.79
+                    },
+                    "uuid": "7a0b39d3-64c0-44d3-acd4-b09861daff82"
+                },
+                {
+                    "description": "Pole lutownicze 1 [SUP_N_OUT] z R17 na F.Cu",
+                    "pos": {
+                        "x": 141.207601,
+                        "y": 10.368597
+                    },
+                    "uuid": "5438b4d1-34d8-4e88-8b58-4b86657151d1"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci INTERLOCK oraz GND)",
+            "items": [
+                {
+                    "description": "Pole PTH 20 [INTERLOCK] na J_BP3",
+                    "pos": {
+                        "x": 144.93,
+                        "y": 10.79
+                    },
+                    "uuid": "c6eeadfd-f89e-4410-8647-a9bae1498448"
+                },
+                {
+                    "description": "Pole lutownicze 2 [GND] z R17 na F.Cu",
+                    "pos": {
+                        "x": 144.307601,
+                        "y": 10.368597
+                    },
+                    "uuid": "ce9983d7-6a01-4ad0-b1ae-478496101e15"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint J_BP3",
+                    "pos": {
+                        "x": 122.07,
+                        "y": 13.33
+                    },
+                    "uuid": "13ec4ca9-68e4-441a-8cac-6467a5355273"
+                },
+                {
+                    "description": "Footprint R17",
+                    "pos": {
+                        "x": 142.757601,
+                        "y": 10.368597
+                    },
+                    "uuid": "da37bfab-4def-41f7-a75f-8bfc2d0d703c"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 16 [HEARTBEAT] na J_BP3",
+                    "pos": {
+                        "x": 139.85,
+                        "y": 10.79
+                    },
+                    "uuid": "1d0608b1-f238-4a2d-99f8-0841e88081ff"
+                },
+                {
+                    "description": "Footprint R17",
+                    "pos": {
+                        "x": 142.757601,
+                        "y": 10.368597
+                    },
+                    "uuid": "da37bfab-4def-41f7-a75f-8bfc2d0d703c"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 18 [MCU_ARM] na J_BP3",
+                    "pos": {
+                        "x": 142.39,
+                        "y": 10.79
+                    },
+                    "uuid": "7a0b39d3-64c0-44d3-acd4-b09861daff82"
+                },
+                {
+                    "description": "Footprint R17",
+                    "pos": {
+                        "x": 142.757601,
+                        "y": 10.368597
+                    },
+                    "uuid": "da37bfab-4def-41f7-a75f-8bfc2d0d703c"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 20 [INTERLOCK] na J_BP3",
+                    "pos": {
+                        "x": 144.93,
+                        "y": 10.79
+                    },
+                    "uuid": "c6eeadfd-f89e-4410-8647-a9bae1498448"
+                },
+                {
+                    "description": "Footprint R17",
+                    "pos": {
+                        "x": 142.757601,
+                        "y": 10.368597
+                    },
+                    "uuid": "da37bfab-4def-41f7-a75f-8bfc2d0d703c"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "Niekompletne łączenie termiczne ze strefą (warstwa F.Cu; strefa min. liczba łącz 2; obecnie 1)",
+            "items": [
+                {
+                    "description": "Strefa [GND] na F.Cu, priorytet 0",
+                    "pos": {
+                        "x": 0.3,
+                        "y": 0.3
+                    },
+                    "uuid": "154f9268-e4ee-4e21-b4e3-9423047996ca"
+                },
+                {
+                    "description": "Pole lutownicze 2 [GND] z R17 na F.Cu",
+                    "pos": {
+                        "x": 144.307601,
+                        "y": 10.368597
+                    },
+                    "uuid": "ce9983d7-6a01-4ad0-b1ae-478496101e15"
+                }
+            ],
+            "severity": "error",
+            "type": "starved_thermal"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [GND] na F.Cu, długość 4,0600 mm",
+                    "pos": {
+                        "x": 141.12,
+                        "y": 12.06
+                    },
+                    "uuid": "06f338cc-3918-4a90-8362-b00e2003a318"
+                },
+                {
+                    "description": "Pole lutownicze 1 [SUP_N_OUT] z R17 na F.Cu",
+                    "pos": {
+                        "x": 141.207601,
+                        "y": 10.368597
+                    },
+                    "uuid": "5438b4d1-34d8-4e88-8b58-4b86657151d1"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole PTH 16 [HEARTBEAT] na J_BP3",
+                    "pos": {
+                        "x": 139.85,
+                        "y": 10.79
+                    },
+                    "uuid": "1d0608b1-f238-4a2d-99f8-0841e88081ff"
+                },
+                {
+                    "description": "Pole lutownicze 1 [SUP_N_OUT] z R17 na F.Cu",
+                    "pos": {
+                        "x": 141.207601,
+                        "y": 10.368597
+                    },
+                    "uuid": "5438b4d1-34d8-4e88-8b58-4b86657151d1"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole PTH 18 [MCU_ARM] na J_BP3",
+                    "pos": {
+                        "x": 142.39,
+                        "y": 10.79
+                    },
+                    "uuid": "7a0b39d3-64c0-44d3-acd4-b09861daff82"
+                },
+                {
+                    "description": "Pole lutownicze 1 [SUP_N_OUT] z R17 na F.Cu",
+                    "pos": {
+                        "x": 141.207601,
+                        "y": 10.368597
+                    },
+                    "uuid": "5438b4d1-34d8-4e88-8b58-4b86657151d1"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole PTH 20 [INTERLOCK] na J_BP3",
+                    "pos": {
+                        "x": 144.93,
+                        "y": 10.79
+                    },
+                    "uuid": "c6eeadfd-f89e-4410-8647-a9bae1498448"
+                },
+                {
+                    "description": "Pole lutownicze 2 [GND] z R17 na F.Cu",
+                    "pos": {
+                        "x": 144.307601,
+                        "y": 10.368597
+                    },
+                    "uuid": "ce9983d7-6a01-4ad0-b1ae-478496101e15"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [SUP_N_OUT] na F.Cu, długość 1,7992 mm",
+                    "pos": {
+                        "x": 135.4978,
+                        "y": 18.2972
+                    },
+                    "uuid": "3e4eb194-6918-466a-8406-6f770a1e15ba"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP3",
+                    "pos": {
+                        "x": 122.07,
+                        "y": 13.33
+                    },
+                    "uuid": "13ec4ca9-68e4-441a-8cac-6467a5355273"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV1",
+                    "pos": {
+                        "x": 41.74,
+                        "y": 95.96
+                    },
+                    "uuid": "48ff8470-3730-4d04-a9b0-f22af5b6b42f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x08_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP1",
+                    "pos": {
+                        "x": 17.61,
+                        "y": 13.33
+                    },
+                    "uuid": "895ae7eb-ffb9-4241-aae0-c88388bcc672"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x07_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV3",
+                    "pos": {
+                        "x": 141.12,
+                        "y": 95.96
+                    },
+                    "uuid": "9bec974a-697f-42f3-af07-fa82513f0fdd"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x07_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV2",
+                    "pos": {
+                        "x": 87.62,
+                        "y": 95.96
+                    },
+                    "uuid": "b337dc63-2f35-4d23-a88a-092c269a0c2a"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP2",
+                    "pos": {
+                        "x": 68.57,
+                        "y": 13.33
+                    },
+                    "uuid": "f156c85f-0526-4338-95cf-2589f0162e8c"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment z R17 na F.Silkscreen",
+                    "pos": {
+                        "x": 142.030537,
+                        "y": 11.278597
+                    },
+                    "uuid": "98056880-d3ff-404f-a5c6-edfa79150b12"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        }
+    ]
+}

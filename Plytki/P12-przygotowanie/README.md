@@ -30,6 +30,8 @@
 
 **1.10 (po PR #7):** P05 R3 czytany ze schematu z chmury (`origin/p05-s1`, `docs/J_BP.csv`), a tabele z zadania zostały w `zrodla.json` jako `plan_piny`: skrypt porównuje schemat z planem pin po pinie (zgodne; nowa próba ujemna `schemat_inny_niz_plan`).
 
+**5.10 (wariant pełny, gałąź p12-r2):** dopisane źródła P04 R3 (`origin/p04-r3-pcb`, poziom 6, J_BP1/2/3 w S1/S2/S3, środki zmierzone 26,5 / 80,0 / 133,5), P08 R2 (`origin/p08-r2-pcb`, poziom 5, S1, środek 26,5) i P07 S1 (`origin/p07-s1-pcb`, poziom 5, J_BP1 w S2, J_BP2 w S3 — tylko schemat, środków nie zmierzono). Dystans nad poziomem 5 = 20 mm (format S1, P04 na poziomie 6, spód 121,0 mm). **Wynik: 0 błędów, 0 uwag, 56 sieci OK, 0 czeka.** Jedna rozbieżność, rozstrzygnięta jako oczywista: `cele` SAFE_N płytki P02 R4 w `zrodla.json` (tabela ręczna, P02 nie ma kolumny celów) wskazywały tylko P04, a P07 S1 czyta i ściąga węzeł OC SAFE_N — dopisane P07 (P02 bez zmian). Budżet 5V_SYS stosu pełnego: 1090 (LOGGER) + P07 110 (z cewką KPWR 80 mA) + P08 200 + P04 0 = **1400 mA** wobec 1,8 A (90 % TSR 2-2450) — bez ryzyka; nowa uwaga „ryzyko”, gdy suma > 1,8 A. Pojemność 5 V z P04/P07/P08: razem 519,7 µF (< 600 µF). Próby ujemne 11/11 (nowe: `budzet_pelny_ryzyko`, `bez_P07`).
+
 Ustalenia:
 1. **Specyfikacja S1 §8 miała zły nagłówek:** „Pinout P02 R4 J_BP (2×10, slot S3, środek x = 80,0 mm)”. Slot S3 ma środek 133,5 mm i tam stoi J_BP na płytce P02 R4 (raport PCB: 133,5 mm). Poprawione w tej gałęzi; P02 R4 bez zmian.
 2. **Zasilanie 5V_SYS:** budżety z dokumentów płytek LOGGER dają razem 1,09 A:
@@ -50,7 +52,7 @@ Ustalenia:
 - **Po scaleniu gałęzi płytki:** w `zrodla.json` zmienić jej `ref` na `origin/main`.
 - **P05 (zrobione 1.10):** źródło `csv` z `origin/p05-s1`; po scaleniu PR #7 zmienić `ref` na `origin/main`.
 - **P06 (zrobione 1.10 wieczorem):** źródło `csv` i raport PCB z `origin/p06-r2-pcb`.
-- **P11, P04, P07, P08:** dopisać źródła, gdy powstaną pinouty.
+- **P11 (4.10), P04, P07, P08 (5.10):** źródła dopisane; po scaleniu gałęzi p04-r3-pcb / p07-s1-pcb / p08-r2-pcb zmienić `ref` na `origin/main`, a po layoucie P07 dopisać `pcb_checks`.
 
 Uruchomienie (Python 3, bez dodatkowych pakietów; najpierw `git fetch origin`):
 

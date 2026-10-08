@@ -113,6 +113,7 @@ Punkty, których nie ma na listwie, wymagają rozebrania stosu.
 | 3 | 20 mm | P05 | P05 | P09 |
 | 4 | 20 mm | P06 | P06 (klasa 2/3, decyzja 1.10) | P10 |
 | 5 (pełny) | 20 mm | P08 | P07 | P07 |
+| 6 (pełny) | 20 mm | P04 | P04 | P04 (klasa L, decyzja użytkownika 5.10.2026) |
 
 Uzasadnienie:
 - P02 R4 leży na dole i od strony wejść: XT60, VBAT i najcięższe elementy.

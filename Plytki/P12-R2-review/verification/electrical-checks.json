@@ -1,0 +1,422 @@
+{
+ "checks": [
+  {
+   "id": "K1",
+   "opis": "Złącza J1..J16: footprint prostego IDC o typie z kontraktu (2x5 / 2x8 / 2x10, kontrakty.json) i wszystkie piny w netliście",
+   "pass": true,
+   "detail": {}
+  },
+  {
+   "id": "K2",
+   "opis": "Każdy pin każdego złącza: sieć = kontrakt-P12.json (pinout płytki, GND jawnie; R2: docs/NIEPODLACZONE.csv pusta)",
+   "pass": true,
+   "detail": []
+  },
+  {
+   "id": "K3",
+   "opis": "Grupy połączeń P12 = grupy z kontraktu (każda sieć dokładnie z pinami tej nazwy, bez sieci dodatkowych)",
+   "pass": true,
+   "detail": {}
+  },
+  {
+   "id": "K4",
+   "opis": "Kontrola krzyżowa: końce każdej sieci poza GND = P12-przygotowanie/wyniki/kontrakty.json (56 OK, 0 innych)",
+   "pass": true,
+   "detail": {}
+  },
+  {
+   "id": "K5",
+   "opis": "GND, 5V_SYS i 3V3_IO to osobne sieci; P03 J_BP2 16/17/19/20 (PFAIL_N / 5V_SYS) nie łączą się z P05 J_BP2 16/17/19/20 (GND)",
+   "pass": true,
+   "detail": {
+    "pary": {
+     "J3.16/J6.16": [
+      "PFAIL_N",
+      "GND"
+     ],
+     "J3.17/J6.17": [
+      "5V_SYS",
+      "GND"
+     ],
+     "J3.19/J6.19": [
+      "5V_SYS",
+      "GND"
+     ],
+     "J3.20/J6.20": [
+      "5V_SYS",
+      "GND"
+     ]
+    },
+    "GND": 134,
+    "5V_SYS": 20,
+    "3V3_IO": 12
+   }
+  },
+  {
+   "id": "K6",
+   "opis": "Żadna sieć nie łączy pinów, którym kontrakt daje różne sieci (brak połączeń pin w pin)",
+   "pass": true,
+   "detail": {}
+  },
+  {
+   "id": "K7",
+   "opis": "5V_SYS: 3 piny źródła P02 + 16 pinów odbiorników (w tym P08 2, P07 2, P04 1) + TP2; 3V3_IO: 2 piny źródła + 9 odbiorników (w tym P04 2, P07 1, P08 1) + TP3; P04_3V3 osobno (P02 J_BP.15 - P04 J_BP2.14)",
+   "pass": true,
+   "detail": {
+    "5V_SYS": [
+     "J1.2",
+     "J1.4",
+     "J1.6",
+     "J11.16",
+     "J11.2",
+     "J13.10",
+     "J13.12",
+     "J16.8",
+     "J3.17",
+     "J3.19",
+     "J3.20",
+     "J5.2",
+     "J5.4",
+     "J7.16",
+     "J7.2",
+     "J8.10",
+     "J8.12",
+     "J9.10",
+     "J9.2",
+     "TP2.1"
+    ],
+    "3V3_IO": [
+     "J1.10",
+     "J1.8",
+     "J10.20",
+     "J11.4",
+     "J13.14",
+     "J15.10",
+     "J16.10",
+     "J4.5",
+     "J7.4",
+     "J8.14",
+     "J9.4",
+     "TP3.1"
+    ]
+   }
+  },
+  {
+   "id": "K8",
+   "opis": "Brak pinów bez połączenia (R2: wszystkie płytki obecne, NIEPODLACZONE.csv pusta); PG_SEND (J1.17-J15.20) i PG_LINK (J1.18-J15.18) osobno, bez mostka na P12 (zwora R34 na P02)",
+   "pass": true,
+   "detail": {
+    "jednopinowe": {},
+    "NIEPODLACZONE": {},
+    "PG": {
+     "PG_SEND": [
+      "J1.17",
+      "J15.20"
+     ],
+     "PG_LINK": [
+      "J1.18",
+      "J15.18"
+     ]
+    }
+   }
+  },
+  {
+   "id": "K9",
+   "opis": "Pola pomiarowe: TP1 / TP4 GND, TP2 5V_SYS, TP3 3V3_IO",
+   "pass": true,
+   "detail": {
+    "TP1": "GND",
+    "TP2": "5V_SYS",
+    "TP3": "3V3_IO",
+    "TP4": "GND"
+   }
+  },
+  {
+   "id": "K10",
+   "opis": "Na schemacie tylko J1..J16 i TP1..TP4 (bez elementów aktywnych i biernych)",
+   "pass": true,
+   "detail": []
+  }
+ ],
+ "negative_controls": [
+  {
+   "mutation": "proba_zerowa",
+   "expected": "clean",
+   "expected_check": null,
+   "failed_checks": [],
+   "detected": false,
+   "ok": true
+  },
+  {
+   "mutation": "zamieniony_pin_ADC_SCLK_DOUTA",
+   "expected": "detected",
+   "expected_check": "K2",
+   "failed_checks": [
+    "K2",
+    "K3",
+    "K4",
+    "K6"
+   ],
+   "detected": true,
+   "ok": true
+  },
+  {
+   "mutation": "zamieniony_pin_P09_MISO_MOSI",
+   "expected": "detected",
+   "expected_check": "K2",
+   "failed_checks": [
+    "K2",
+    "K3",
+    "K4",
+    "K6"
+   ],
+   "detected": true,
+   "ok": true
+  },
+  {
+   "mutation": "brak_sieci_ADC_BUSY",
+   "expected": "detected",
+   "expected_check": "K2",
+   "failed_checks": [
+    "K2",
+    "K3",
+    "K4",
+    "K8"
+   ],
+   "detected": true,
+   "ok": true
+  },
+  {
+   "mutation": "brak_konca_CAN_RX_P10",
+   "expected": "detected",
+   "expected_check": "K2",
+   "failed_checks": [
+    "K2",
+    "K3",
+    "K4",
+    "K8"
+   ],
+   "detected": true,
+   "ok": true
+  },
+  {
+   "mutation": "zwarcie_5V_SYS_GND",
+   "expected": "detected",
+   "expected_check": "K5",
+   "failed_checks": [
+    "K2",
+    "K3",
+    "K4",
+    "K5",
+    "K6",
+    "K7",
+    "K9"
+   ],
+   "detected": true,
+   "ok": true
+  },
+  {
+   "mutation": "pin_w_pin_J3_17_J6_17",
+   "expected": "detected",
+   "expected_check": "K5",
+   "failed_checks": [
+    "K2",
+    "K3",
+    "K4",
+    "K5",
+    "K6",
+    "K7"
+   ],
+   "detected": true,
+   "ok": true
+  },
+  {
+   "mutation": "pin_w_pin_J3_16_J6_16",
+   "expected": "detected",
+   "expected_check": "K6",
+   "failed_checks": [
+    "K2",
+    "K3",
+    "K4",
+    "K5",
+    "K6"
+   ],
+   "detected": true,
+   "ok": true
+  },
+  {
+   "mutation": "zly_typ_P05_J_BP1_2x8",
+   "expected": "detected",
+   "expected_check": "K1",
+   "failed_checks": [
+    "K1"
+   ],
+   "detected": true,
+   "ok": true
+  },
+  {
+   "mutation": "zly_typ_katowy_P10",
+   "expected": "detected",
+   "expected_check": "K1",
+   "failed_checks": [
+    "K1"
+   ],
+   "detected": true,
+   "ok": true
+  },
+  {
+   "mutation": "P04_3V3_do_3V3_IO",
+   "expected": "detected",
+   "expected_check": "K7",
+   "failed_checks": [
+    "K2",
+    "K3",
+    "K4",
+    "K6",
+    "K7",
+    "K8"
+   ],
+   "detected": true,
+   "ok": true
+  },
+  {
+   "mutation": "PG_SEND_PG_LINK_zmostkowane",
+   "expected": "detected",
+   "expected_check": "K8",
+   "failed_checks": [
+    "K2",
+    "K3",
+    "K4",
+    "K6",
+    "K8"
+   ],
+   "detected": true,
+   "ok": true
+  },
+  {
+   "mutation": "zamieniony_pin_P04_MOTOR_PERMIT_PWM_OUT",
+   "expected": "detected",
+   "expected_check": "K2",
+   "failed_checks": [
+    "K2",
+    "K3",
+    "K4",
+    "K6"
+   ],
+   "detected": true,
+   "ok": true
+  },
+  {
+   "mutation": "zamieniony_pin_P08_SENSOR_OK_HEALTHY",
+   "expected": "detected",
+   "expected_check": "K2",
+   "failed_checks": [
+    "K2",
+    "K3",
+    "K4",
+    "K6"
+   ],
+   "detected": true,
+   "ok": true
+  },
+  {
+   "mutation": "brak_sieci_DRIVE_OK",
+   "expected": "detected",
+   "expected_check": "K2",
+   "failed_checks": [
+    "K2",
+    "K3",
+    "K4",
+    "K8"
+   ],
+   "detected": true,
+   "ok": true
+  },
+  {
+   "mutation": "brak_konca_SAFE_N_P07",
+   "expected": "detected",
+   "expected_check": "K8",
+   "failed_checks": [
+    "K2",
+    "K3",
+    "K4",
+    "K8"
+   ],
+   "detected": true,
+   "ok": true
+  },
+  {
+   "mutation": "pin_w_pin_P07_J_BP2_10_P04_J_BP2_10",
+   "expected": "detected",
+   "expected_check": "K7",
+   "failed_checks": [
+    "K2",
+    "K3",
+    "K4",
+    "K6",
+    "K7"
+   ],
+   "detected": true,
+   "ok": true
+  },
+  {
+   "mutation": "zwarcie_5V_SYS_GND_P08",
+   "expected": "detected",
+   "expected_check": "K2",
+   "failed_checks": [
+    "K2",
+    "K3",
+    "K4",
+    "K6",
+    "K7"
+   ],
+   "detected": true,
+   "ok": true
+  },
+  {
+   "mutation": "zly_typ_P07_J_BP1_2x10",
+   "expected": "detected",
+   "expected_check": "K1",
+   "failed_checks": [
+    "K1"
+   ],
+   "detected": true,
+   "ok": true
+  },
+  {
+   "mutation": "zly_typ_katowy_P04_J_BP3",
+   "expected": "detected",
+   "expected_check": "K1",
+   "failed_checks": [
+    "K1"
+   ],
+   "detected": true,
+   "ok": true
+  },
+  {
+   "mutation": "TP2_na_GND",
+   "expected": "detected",
+   "expected_check": "K9",
+   "failed_checks": [
+    "K3",
+    "K6",
+    "K7",
+    "K9"
+   ],
+   "detected": true,
+   "ok": true
+  },
+  {
+   "mutation": "dodatkowa_czesc_R1",
+   "expected": "detected",
+   "expected_check": "K10",
+   "failed_checks": [
+    "K3",
+    "K8",
+    "K10"
+   ],
+   "detected": true,
+   "ok": true
+  }
+ ]
+}

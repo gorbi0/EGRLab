@@ -1,0 +1,779 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-05T17:51:57",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P04.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Ścieżka [SAFE_N] na B.Cu, długość 3,2500 mm",
+                    "pos": {
+                        "x": 85.62,
+                        "y": 41.62
+                    },
+                    "uuid": "d72fc2f9-5e2a-4eb1-99cd-592dc9b03e19"
+                },
+                {
+                    "description": "Ścieżka [SAFE_N] na F.Cu, długość 2,0000 mm",
+                    "pos": {
+                        "x": 88.87,
+                        "y": 43.62
+                    },
+                    "uuid": "e62b09eb-24ae-4451-bba2-da746a9951de"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        },
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Ścieżka [SAFE_N] na B.Cu, długość 1,8026 mm",
+                    "pos": {
+                        "x": 88.87,
+                        "y": 41.62
+                    },
+                    "uuid": "b0e88348-e9c4-4179-8f80-af56434dd9d8"
+                },
+                {
+                    "description": "Pole PTH 1 [SAFE_N] na C18",
+                    "pos": {
+                        "x": 96.87,
+                        "y": 41.62
+                    },
+                    "uuid": "afb5c2b3-315b-4420-92d3-27b359d2321f"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci DRIVE_OK_P04 oraz SAFE_N)",
+            "items": [
+                {
+                    "description": "Ścieżka [DRIVE_OK_P04] na F.Cu, długość 9,3661 mm",
+                    "pos": {
+                        "x": 96.0,
+                        "y": 41.62
+                    },
+                    "uuid": "41fd2e58-8dc8-4ca8-a0e5-46e387923043"
+                },
+                {
+                    "description": "Pole PTH 1 [SAFE_N] na C18",
+                    "pos": {
+                        "x": 96.87,
+                        "y": 41.62
+                    },
+                    "uuid": "afb5c2b3-315b-4420-92d3-27b359d2321f"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci DAQ_OK_P04 oraz GND)",
+            "items": [
+                {
+                    "description": "Ścieżka [DAQ_OK_P04] na B.Cu, długość 1,7174 mm",
+                    "pos": {
+                        "x": 94.7856,
+                        "y": 35.3256
+                    },
+                    "uuid": "5b94a23e-fb26-40fb-a267-5e2cf131c673"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na C18",
+                    "pos": {
+                        "x": 96.87,
+                        "y": 36.62
+                    },
+                    "uuid": "f42df811-cdfe-4521-8a43-3fed31017ff5"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci INTERLOCK oraz GND)",
+            "items": [
+                {
+                    "description": "Ścieżka [INTERLOCK] na B.Cu, długość 2,3822 mm",
+                    "pos": {
+                        "x": 98.1549,
+                        "y": 36.1255
+                    },
+                    "uuid": "e44ae174-8fe8-4789-bdc1-3355451e307e"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na C18",
+                    "pos": {
+                        "x": 96.87,
+                        "y": 36.62
+                    },
+                    "uuid": "f42df811-cdfe-4521-8a43-3fed31017ff5"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0089 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [INTERLOCK] na B.Cu, długość 2,3822 mm",
+                    "pos": {
+                        "x": 98.1549,
+                        "y": 36.1255
+                    },
+                    "uuid": "e44ae174-8fe8-4789-bdc1-3355451e307e"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na C18",
+                    "pos": {
+                        "x": 96.87,
+                        "y": 36.62
+                    },
+                    "uuid": "f42df811-cdfe-4521-8a43-3fed31017ff5"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci SAFE_N oraz DRIVE_OK_P04)",
+            "items": [
+                {
+                    "description": "Pole PTH 1 [SAFE_N] na C18",
+                    "pos": {
+                        "x": 96.87,
+                        "y": 41.62
+                    },
+                    "uuid": "afb5c2b3-315b-4420-92d3-27b359d2321f"
+                },
+                {
+                    "description": "Pole PTH 4 [DRIVE_OK_P04] na U6",
+                    "pos": {
+                        "x": 96.0,
+                        "y": 41.62
+                    },
+                    "uuid": "6dd24aa5-cd12-4efe-9e79-3d0015f5d2a3"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci SAFE_N oraz DRIVE_OK_P04)",
+            "items": [
+                {
+                    "description": "Pole PTH 1 [SAFE_N] na C18",
+                    "pos": {
+                        "x": 96.87,
+                        "y": 41.62
+                    },
+                    "uuid": "afb5c2b3-315b-4420-92d3-27b359d2321f"
+                },
+                {
+                    "description": "Pole PTH 4 [DRIVE_OK_P04] na U6",
+                    "pos": {
+                        "x": 96.0,
+                        "y": 41.62
+                    },
+                    "uuid": "6dd24aa5-cd12-4efe-9e79-3d0015f5d2a3"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz DAQ_OK_P04)",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [GND] na C18",
+                    "pos": {
+                        "x": 96.87,
+                        "y": 36.62
+                    },
+                    "uuid": "f42df811-cdfe-4521-8a43-3fed31017ff5"
+                },
+                {
+                    "description": "Pole PTH 2 [DAQ_OK_P04] na U6",
+                    "pos": {
+                        "x": 96.0,
+                        "y": 36.54
+                    },
+                    "uuid": "456c0f23-006a-4106-823e-063f7337b46c"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz DAQ_OK_P04)",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [GND] na C18",
+                    "pos": {
+                        "x": 96.87,
+                        "y": 36.62
+                    },
+                    "uuid": "f42df811-cdfe-4521-8a43-3fed31017ff5"
+                },
+                {
+                    "description": "Pole PTH 2 [DAQ_OK_P04] na U6",
+                    "pos": {
+                        "x": 96.0,
+                        "y": 36.54
+                    },
+                    "uuid": "456c0f23-006a-4106-823e-063f7337b46c"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint C18",
+                    "pos": {
+                        "x": 96.87,
+                        "y": 41.62
+                    },
+                    "uuid": "4f8e9318-0170-4f51-9f85-d77e354919c4"
+                },
+                {
+                    "description": "Footprint U6",
+                    "pos": {
+                        "x": 96.0,
+                        "y": 34.0
+                    },
+                    "uuid": "d29a01fe-c158-4ba7-8904-0bb69bf51f8e"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [DAQ_OK_P04] na U6",
+                    "pos": {
+                        "x": 96.0,
+                        "y": 36.54
+                    },
+                    "uuid": "456c0f23-006a-4106-823e-063f7337b46c"
+                },
+                {
+                    "description": "Footprint C18",
+                    "pos": {
+                        "x": 96.87,
+                        "y": 41.62
+                    },
+                    "uuid": "4f8e9318-0170-4f51-9f85-d77e354919c4"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 3 [/ILK/OK_A] na U6",
+                    "pos": {
+                        "x": 96.0,
+                        "y": 39.08
+                    },
+                    "uuid": "cecfc1a4-e708-49a2-92e6-707837e811a0"
+                },
+                {
+                    "description": "Footprint C18",
+                    "pos": {
+                        "x": 96.87,
+                        "y": 41.62
+                    },
+                    "uuid": "4f8e9318-0170-4f51-9f85-d77e354919c4"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 4 [DRIVE_OK_P04] na U6",
+                    "pos": {
+                        "x": 96.0,
+                        "y": 41.62
+                    },
+                    "uuid": "6dd24aa5-cd12-4efe-9e79-3d0015f5d2a3"
+                },
+                {
+                    "description": "Footprint C18",
+                    "pos": {
+                        "x": 96.87,
+                        "y": 41.62
+                    },
+                    "uuid": "4f8e9318-0170-4f51-9f85-d77e354919c4"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 1 [SAFE_N] na C18",
+                    "pos": {
+                        "x": 96.87,
+                        "y": 41.62
+                    },
+                    "uuid": "afb5c2b3-315b-4420-92d3-27b359d2321f"
+                },
+                {
+                    "description": "Footprint U6",
+                    "pos": {
+                        "x": 96.0,
+                        "y": 34.0
+                    },
+                    "uuid": "d29a01fe-c158-4ba7-8904-0bb69bf51f8e"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [GND] na C18",
+                    "pos": {
+                        "x": 96.87,
+                        "y": 36.62
+                    },
+                    "uuid": "f42df811-cdfe-4521-8a43-3fed31017ff5"
+                },
+                {
+                    "description": "Footprint U6",
+                    "pos": {
+                        "x": 96.0,
+                        "y": 34.0
+                    },
+                    "uuid": "d29a01fe-c158-4ba7-8904-0bb69bf51f8e"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [DRIVE_OK_P04] na F.Cu, długość 9,3661 mm",
+                    "pos": {
+                        "x": 96.0,
+                        "y": 41.62
+                    },
+                    "uuid": "41fd2e58-8dc8-4ca8-a0e5-46e387923043"
+                },
+                {
+                    "description": "Pole PTH 1 [SAFE_N] na C18",
+                    "pos": {
+                        "x": 96.87,
+                        "y": 41.62
+                    },
+                    "uuid": "afb5c2b3-315b-4420-92d3-27b359d2321f"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [INTERLOCK] na B.Cu, długość 2,3822 mm",
+                    "pos": {
+                        "x": 98.1549,
+                        "y": 36.1255
+                    },
+                    "uuid": "e44ae174-8fe8-4789-bdc1-3355451e307e"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na C18",
+                    "pos": {
+                        "x": 96.87,
+                        "y": 36.62
+                    },
+                    "uuid": "f42df811-cdfe-4521-8a43-3fed31017ff5"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [DAQ_OK_P04] na B.Cu, długość 1,7174 mm",
+                    "pos": {
+                        "x": 94.7856,
+                        "y": 35.3256
+                    },
+                    "uuid": "5b94a23e-fb26-40fb-a267-5e2cf131c673"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na C18",
+                    "pos": {
+                        "x": 96.87,
+                        "y": 36.62
+                    },
+                    "uuid": "f42df811-cdfe-4521-8a43-3fed31017ff5"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [DAQ_OK_P04] na U6",
+                    "pos": {
+                        "x": 96.0,
+                        "y": 36.54
+                    },
+                    "uuid": "456c0f23-006a-4106-823e-063f7337b46c"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na C18",
+                    "pos": {
+                        "x": 96.87,
+                        "y": 36.62
+                    },
+                    "uuid": "f42df811-cdfe-4521-8a43-3fed31017ff5"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole PTH 1 [SAFE_N] na C18",
+                    "pos": {
+                        "x": 96.87,
+                        "y": 41.62
+                    },
+                    "uuid": "afb5c2b3-315b-4420-92d3-27b359d2321f"
+                },
+                {
+                    "description": "Pole PTH 4 [DRIVE_OK_P04] na U6",
+                    "pos": {
+                        "x": 96.0,
+                        "y": 41.62
+                    },
+                    "uuid": "6dd24aa5-cd12-4efe-9e79-3d0015f5d2a3"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [DAQ_OK_P04] na U6",
+                    "pos": {
+                        "x": 96.0,
+                        "y": 36.54
+                    },
+                    "uuid": "456c0f23-006a-4106-823e-063f7337b46c"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na C18",
+                    "pos": {
+                        "x": 96.87,
+                        "y": 36.62
+                    },
+                    "uuid": "f42df811-cdfe-4521-8a43-3fed31017ff5"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Pole PTH 1 [SAFE_N] na C18",
+                    "pos": {
+                        "x": 96.87,
+                        "y": 41.62
+                    },
+                    "uuid": "afb5c2b3-315b-4420-92d3-27b359d2321f"
+                },
+                {
+                    "description": "Pole PTH 4 [DRIVE_OK_P04] na U6",
+                    "pos": {
+                        "x": 96.0,
+                        "y": 41.62
+                    },
+                    "uuid": "6dd24aa5-cd12-4efe-9e79-3d0015f5d2a3"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [SAFE_N] na F.Cu, długość 2,0000 mm",
+                    "pos": {
+                        "x": 88.87,
+                        "y": 43.62
+                    },
+                    "uuid": "e62b09eb-24ae-4451-bba2-da746a9951de"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Otwory na wylot zbyt blisko siebie (ograniczenia w konfiguracji płytki minimum 0,3000 mm; obecnie 0,0700 mm)",
+            "items": [
+                {
+                    "description": "Pole PTH 4 [DRIVE_OK_P04] na U6",
+                    "pos": {
+                        "x": 96.0,
+                        "y": 41.62
+                    },
+                    "uuid": "6dd24aa5-cd12-4efe-9e79-3d0015f5d2a3"
+                },
+                {
+                    "description": "Pole PTH 1 [SAFE_N] na C18",
+                    "pos": {
+                        "x": 96.87,
+                        "y": 41.62
+                    },
+                    "uuid": "afb5c2b3-315b-4420-92d3-27b359d2321f"
+                }
+            ],
+            "severity": "warning",
+            "type": "hole_to_hole"
+        },
+        {
+            "description": "Otwory na wylot zbyt blisko siebie (ograniczenia w konfiguracji płytki minimum 0,3000 mm; obecnie 0,0737 mm)",
+            "items": [
+                {
+                    "description": "Pole PTH 2 [DAQ_OK_P04] na U6",
+                    "pos": {
+                        "x": 96.0,
+                        "y": 36.54
+                    },
+                    "uuid": "456c0f23-006a-4106-823e-063f7337b46c"
+                },
+                {
+                    "description": "Pole PTH 2 [GND] na C18",
+                    "pos": {
+                        "x": 96.87,
+                        "y": 36.62
+                    },
+                    "uuid": "f42df811-cdfe-4521-8a43-3fed31017ff5"
+                }
+            ],
+            "severity": "warning",
+            "type": "hole_to_hole"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP3",
+                    "pos": {
+                        "x": 122.07,
+                        "y": 13.33
+                    },
+                    "uuid": "13ec4ca9-68e4-441a-8cac-6467a5355273"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x13_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV1",
+                    "pos": {
+                        "x": 41.74,
+                        "y": 95.96
+                    },
+                    "uuid": "48ff8470-3730-4d04-a9b0-f22af5b6b42f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x08_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP1",
+                    "pos": {
+                        "x": 17.61,
+                        "y": 13.33
+                    },
+                    "uuid": "895ae7eb-ffb9-4241-aae0-c88388bcc672"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x07_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV3",
+                    "pos": {
+                        "x": 141.12,
+                        "y": 95.96
+                    },
+                    "uuid": "9bec974a-697f-42f3-af07-fa82513f0fdd"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x07_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV2",
+                    "pos": {
+                        "x": 87.62,
+                        "y": 95.96
+                    },
+                    "uuid": "b337dc63-2f35-4d23-a88a-092c269a0c2a"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x10_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP2",
+                    "pos": {
+                        "x": 68.57,
+                        "y": 13.33
+                    },
+                    "uuid": "f156c85f-0526-4338-95cf-2589f0162e8c"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment z C18 na F.Silkscreen",
+                    "pos": {
+                        "x": 95.5,
+                        "y": 36.5
+                    },
+                    "uuid": "788c106d-deab-4553-885a-360820b1dcb4"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment z C18 na F.Silkscreen",
+                    "pos": {
+                        "x": 95.5,
+                        "y": 41.74
+                    },
+                    "uuid": "4c8041a2-12fa-479d-b7a2-0d44dd9d9c0f"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment z C18 na F.Silkscreen",
+                    "pos": {
+                        "x": 95.837,
+                        "y": 41.74
+                    },
+                    "uuid": "bc635e23-acac-4818-9fad-8bbcf9aa6c46"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment z U6 na F.Silkscreen",
+                    "pos": {
+                        "x": 97.16,
+                        "y": 32.67
+                    },
+                    "uuid": "c251c327-a931-40b5-8e5b-4898966ee4f2"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        }
+    ]
+}

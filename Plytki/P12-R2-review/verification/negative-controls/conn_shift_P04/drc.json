@@ -1,0 +1,1211 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-05T22:34:54",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P12.kicad_pcb",
+    "unconnected_items": [],
+    "violations": [
+        {
+            "description": "Naruszenie prześwitu ( prześwit 0,2500 mm; obecnie 0,2304 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [CORE_LINK] na B.Cu, długość 1,7702 mm",
+                    "pos": {
+                        "x": 124.61,
+                        "y": 11.68
+                    },
+                    "uuid": "24f73207-b1af-442a-9621-5ae16b6dde5f"
+                },
+                {
+                    "description": "Pole PTH 6 [HW_ARMED] na J16",
+                    "pos": {
+                        "x": 126.35,
+                        "y": 11.68
+                    },
+                    "uuid": "93ce3c81-7866-4414-8926-8d71203bf333"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu ( prześwit 0,3000 mm; obecnie 0,2304 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [HW_ARMED] na F.Cu, długość 1,7961 mm",
+                    "pos": {
+                        "x": 127.15,
+                        "y": 11.68
+                    },
+                    "uuid": "e12eff5f-1baa-4dc2-aa53-cbaca23539bc"
+                },
+                {
+                    "description": "Pole PTH 8 [5V_SYS] na J16",
+                    "pos": {
+                        "x": 128.89,
+                        "y": 11.68
+                    },
+                    "uuid": "e1dd5eff-0551-4dba-bd56-c552c7288fb9"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz CORE_LINK)",
+            "items": [
+                {
+                    "description": "Pole PTH 5 [GND] na J16",
+                    "pos": {
+                        "x": 126.35,
+                        "y": 14.22
+                    },
+                    "uuid": "3629eb97-3dd8-4a7b-9f20-5a083834ae5f"
+                },
+                {
+                    "description": "Ścieżka [CORE_LINK] na B.Cu, długość 1,7837 mm",
+                    "pos": {
+                        "x": 125.8617,
+                        "y": 14.7867
+                    },
+                    "uuid": "ab2648d3-d39d-47e9-b89d-5c9f4a4241bc"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0981 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [CORE_LINK] na B.Cu, długość 1,7837 mm",
+                    "pos": {
+                        "x": 125.8617,
+                        "y": 14.7867
+                    },
+                    "uuid": "ab2648d3-d39d-47e9-b89d-5c9f4a4241bc"
+                },
+                {
+                    "description": "Pole PTH 5 [GND] na J16",
+                    "pos": {
+                        "x": 126.35,
+                        "y": 14.22
+                    },
+                    "uuid": "3629eb97-3dd8-4a7b-9f20-5a083834ae5f"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz INTERLOCK)",
+            "items": [
+                {
+                    "description": "Pole PTH 19 [GND] na J16",
+                    "pos": {
+                        "x": 144.13,
+                        "y": 14.22
+                    },
+                    "uuid": "89d2b020-c294-432f-8af6-dee9e4cd35d5"
+                },
+                {
+                    "description": "Ścieżka [INTERLOCK] na F.Cu, długość 16,3452 mm",
+                    "pos": {
+                        "x": 143.66,
+                        "y": 29.2952
+                    },
+                    "uuid": "f82ccd71-1159-4154-aa25-d77595c8aec4"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [INTERLOCK] na F.Cu, długość 16,3452 mm",
+                    "pos": {
+                        "x": 143.66,
+                        "y": 29.2952
+                    },
+                    "uuid": "f82ccd71-1159-4154-aa25-d77595c8aec4"
+                },
+                {
+                    "description": "Pole PTH 19 [GND] na J16",
+                    "pos": {
+                        "x": 144.13,
+                        "y": 14.22
+                    },
+                    "uuid": "89d2b020-c294-432f-8af6-dee9e4cd35d5"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu ( prześwit 0,2500 mm; obecnie 0,2304 mm)",
+            "items": [
+                {
+                    "description": "Pole PTH 20 [INTERLOCK] na J16",
+                    "pos": {
+                        "x": 144.13,
+                        "y": 11.68
+                    },
+                    "uuid": "013cc692-2167-4445-8086-a1f9a8c64c9b"
+                },
+                {
+                    "description": "Ścieżka [MCU_ARM] na F.Cu, długość 1,8355 mm",
+                    "pos": {
+                        "x": 143.6879,
+                        "y": 10.3821
+                    },
+                    "uuid": "ba225686-5dca-41fa-a899-7fe9931eeb63"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu ( prześwit 0,2500 mm; obecnie 0,2304 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [HEARTBEAT] na F.Cu, długość 2,6474 mm",
+                    "pos": {
+                        "x": 141.722,
+                        "y": 9.808
+                    },
+                    "uuid": "8db4e2d2-a205-434e-8832-fe495e62c9a7"
+                },
+                {
+                    "description": "Pole PTH 18 [MCU_ARM] na J16",
+                    "pos": {
+                        "x": 141.59,
+                        "y": 11.68
+                    },
+                    "uuid": "fecc754d-74f3-4d30-82dd-2e5b11fa0f04"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz PWM)",
+            "items": [
+                {
+                    "description": "Pole PTH 15 [GND] na J16",
+                    "pos": {
+                        "x": 139.05,
+                        "y": 14.22
+                    },
+                    "uuid": "566dd0c5-060d-4f22-ba42-55c64ac5ccd8"
+                },
+                {
+                    "description": "Ścieżka [PWM] na F.Cu, długość 12,0455 mm",
+                    "pos": {
+                        "x": 138.5815,
+                        "y": 24.997
+                    },
+                    "uuid": "9a56fc07-00be-4dc1-8faf-11c032924773"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [PWM] na F.Cu, długość 12,0455 mm",
+                    "pos": {
+                        "x": 138.5815,
+                        "y": 24.997
+                    },
+                    "uuid": "9a56fc07-00be-4dc1-8faf-11c032924773"
+                },
+                {
+                    "description": "Pole PTH 15 [GND] na J16",
+                    "pos": {
+                        "x": 139.05,
+                        "y": 14.22
+                    },
+                    "uuid": "566dd0c5-060d-4f22-ba42-55c64ac5ccd8"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz SUP_N_OUT)",
+            "items": [
+                {
+                    "description": "Pole PTH 13 [GND] na J16",
+                    "pos": {
+                        "x": 136.51,
+                        "y": 14.22
+                    },
+                    "uuid": "8dbf4d5b-ca4c-4a00-9d1b-6f2ee2f55192"
+                },
+                {
+                    "description": "Ścieżka [SUP_N_OUT] na F.Cu, długość 10,2878 mm",
+                    "pos": {
+                        "x": 136.04,
+                        "y": 23.2378
+                    },
+                    "uuid": "c9741565-2a3f-4441-bb3c-d984b0037b1f"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu ( prześwit 0,2500 mm; obecnie 0,2304 mm)",
+            "items": [
+                {
+                    "description": "Pole PTH 16 [HEARTBEAT] na J16",
+                    "pos": {
+                        "x": 139.05,
+                        "y": 11.68
+                    },
+                    "uuid": "37e6aaa8-bdb3-463a-939e-3619b621bfef"
+                },
+                {
+                    "description": "Ścieżka [PWM] na F.Cu, długość 1,7982 mm",
+                    "pos": {
+                        "x": 138.5815,
+                        "y": 12.9515
+                    },
+                    "uuid": "406f3fab-89eb-483f-976c-7e6f5e5544d8"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [SUP_N_OUT] na F.Cu, długość 10,2878 mm",
+                    "pos": {
+                        "x": 136.04,
+                        "y": 23.2378
+                    },
+                    "uuid": "c9741565-2a3f-4441-bb3c-d984b0037b1f"
+                },
+                {
+                    "description": "Pole PTH 13 [GND] na J16",
+                    "pos": {
+                        "x": 136.51,
+                        "y": 14.22
+                    },
+                    "uuid": "8dbf4d5b-ca4c-4a00-9d1b-6f2ee2f55192"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz HW_ARMED)",
+            "items": [
+                {
+                    "description": "Pole PTH 7 [GND] na J16",
+                    "pos": {
+                        "x": 128.89,
+                        "y": 14.22
+                    },
+                    "uuid": "15eb4196-ee5c-4ed8-b33d-d4155f369cfb"
+                },
+                {
+                    "description": "Ścieżka [HW_ARMED] na F.Cu, długość 3,4480 mm",
+                    "pos": {
+                        "x": 128.419999,
+                        "y": 12.95
+                    },
+                    "uuid": "d53da88b-4482-4667-8a1c-91946af09755"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu ( prześwit 0,2500 mm; obecnie 0,2304 mm)",
+            "items": [
+                {
+                    "description": "Pole PTH 14 [PWM] na J16",
+                    "pos": {
+                        "x": 136.51,
+                        "y": 11.68
+                    },
+                    "uuid": "4410c8f1-c4ab-44d8-854e-609999574a61"
+                },
+                {
+                    "description": "Ścieżka [SUP_N_OUT] na F.Cu, długość 1,7961 mm",
+                    "pos": {
+                        "x": 136.04,
+                        "y": 12.95
+                    },
+                    "uuid": "f98aacd9-f565-49ce-9f56-6e69acff93fa"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [HW_ARMED] na F.Cu, długość 3,4480 mm",
+                    "pos": {
+                        "x": 128.419999,
+                        "y": 12.95
+                    },
+                    "uuid": "d53da88b-4482-4667-8a1c-91946af09755"
+                },
+                {
+                    "description": "Pole PTH 7 [GND] na J16",
+                    "pos": {
+                        "x": 128.89,
+                        "y": 14.22
+                    },
+                    "uuid": "15eb4196-ee5c-4ed8-b33d-d4155f369cfb"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz CORE_LINK)",
+            "items": [
+                {
+                    "description": "Pole PTH 5 [GND] na J16",
+                    "pos": {
+                        "x": 126.35,
+                        "y": 14.22
+                    },
+                    "uuid": "3629eb97-3dd8-4a7b-9f20-5a083834ae5f"
+                },
+                {
+                    "description": "Ścieżka [CORE_LINK] na B.Cu, długość 1,8550 mm",
+                    "pos": {
+                        "x": 125.8617,
+                        "y": 12.9317
+                    },
+                    "uuid": "89a25636-cd57-4129-8c86-54e986db2c24"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [CORE_LINK] na B.Cu, długość 1,8550 mm",
+                    "pos": {
+                        "x": 125.8617,
+                        "y": 12.9317
+                    },
+                    "uuid": "89a25636-cd57-4129-8c86-54e986db2c24"
+                },
+                {
+                    "description": "Pole PTH 5 [GND] na J16",
+                    "pos": {
+                        "x": 126.35,
+                        "y": 14.22
+                    },
+                    "uuid": "3629eb97-3dd8-4a7b-9f20-5a083834ae5f"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz SENSOR_ENABLE)",
+            "items": [
+                {
+                    "description": "Pole PTH 3 [GND] na J16",
+                    "pos": {
+                        "x": 123.81,
+                        "y": 14.22
+                    },
+                    "uuid": "39b4b9bb-0c4c-4dd3-8b40-4395c19f44c5"
+                },
+                {
+                    "description": "Ścieżka [SENSOR_ENABLE] na F.Cu, długość 1,8318 mm",
+                    "pos": {
+                        "x": 123.3405,
+                        "y": 12.9505
+                    },
+                    "uuid": "bd02547a-66cf-4008-b597-ddde29995840"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [SENSOR_ENABLE] na F.Cu, długość 1,8318 mm",
+                    "pos": {
+                        "x": 123.3405,
+                        "y": 12.9505
+                    },
+                    "uuid": "bd02547a-66cf-4008-b597-ddde29995840"
+                },
+                {
+                    "description": "Pole PTH 3 [GND] na J16",
+                    "pos": {
+                        "x": 123.81,
+                        "y": 14.22
+                    },
+                    "uuid": "39b4b9bb-0c4c-4dd3-8b40-4395c19f44c5"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz SENSOR_ENABLE)",
+            "items": [
+                {
+                    "description": "Pole PTH 3 [GND] na J16",
+                    "pos": {
+                        "x": 123.81,
+                        "y": 14.22
+                    },
+                    "uuid": "39b4b9bb-0c4c-4dd3-8b40-4395c19f44c5"
+                },
+                {
+                    "description": "Ścieżka [SENSOR_ENABLE] na F.Cu, długość 25,1443 mm",
+                    "pos": {
+                        "x": 123.3405,
+                        "y": 14.7823
+                    },
+                    "uuid": "f3371ac4-a15f-4779-897f-c0b5c17fdda1"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0825 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [SENSOR_ENABLE] na F.Cu, długość 25,1443 mm",
+                    "pos": {
+                        "x": 123.3405,
+                        "y": 14.7823
+                    },
+                    "uuid": "f3371ac4-a15f-4779-897f-c0b5c17fdda1"
+                },
+                {
+                    "description": "Pole PTH 3 [GND] na J16",
+                    "pos": {
+                        "x": 123.81,
+                        "y": 14.22
+                    },
+                    "uuid": "39b4b9bb-0c4c-4dd3-8b40-4395c19f44c5"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Naruszenie prześwitu ( prześwit 0,2500 mm; obecnie 0,2304 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [SENSOR_ENABLE] na F.Cu, długość 1,7968 mm",
+                    "pos": {
+                        "x": 122.07,
+                        "y": 11.68
+                    },
+                    "uuid": "5ef38cb9-151a-4b10-af7b-eb044a6b71aa"
+                },
+                {
+                    "description": "Pole PTH 4 [CORE_LINK] na J16",
+                    "pos": {
+                        "x": 123.81,
+                        "y": 11.68
+                    },
+                    "uuid": "dbf35e15-3902-497e-b469-a21c9ee90dc2"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci 3V3_IO oraz SENSOR_ENABLE)",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 1,2425 mm",
+                    "pos": {
+                        "x": 120.6978,
+                        "y": 11.1164
+                    },
+                    "uuid": "d0b67e60-62b3-42f2-a56c-380fab54f488"
+                },
+                {
+                    "description": "Pole PTH 2 [SENSOR_ENABLE] na J16",
+                    "pos": {
+                        "x": 121.27,
+                        "y": 11.68
+                    },
+                    "uuid": "e4ab0ee7-3f72-4c55-82b3-827868c3ee84"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0531 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 1,2425 mm",
+                    "pos": {
+                        "x": 120.6978,
+                        "y": 11.1164
+                    },
+                    "uuid": "d0b67e60-62b3-42f2-a56c-380fab54f488"
+                },
+                {
+                    "description": "Pole PTH 2 [SENSOR_ENABLE] na J16",
+                    "pos": {
+                        "x": 121.27,
+                        "y": 11.68
+                    },
+                    "uuid": "e4ab0ee7-3f72-4c55-82b3-827868c3ee84"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci GND oraz 3V3_IO)",
+            "items": [
+                {
+                    "description": "Pole PTH 1 [GND] na J16",
+                    "pos": {
+                        "x": 121.27,
+                        "y": 14.22
+                    },
+                    "uuid": "9fb3c42f-e77b-4597-a25c-db612a7f7b13"
+                },
+                {
+                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 17,3392 mm",
+                    "pos": {
+                        "x": 120.6978,
+                        "y": 28.4556
+                    },
+                    "uuid": "ce311cab-664c-494d-a68a-270862c09d08"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 17,3392 mm",
+                    "pos": {
+                        "x": 120.6978,
+                        "y": 28.4556
+                    },
+                    "uuid": "ce311cab-664c-494d-a68a-270862c09d08"
+                },
+                {
+                    "description": "Pole PTH 1 [GND] na J16",
+                    "pos": {
+                        "x": 121.27,
+                        "y": 14.22
+                    },
+                    "uuid": "9fb3c42f-e77b-4597-a25c-db612a7f7b13"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci 3V3_IO oraz SENSOR_ENABLE)",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 17,3392 mm",
+                    "pos": {
+                        "x": 120.6978,
+                        "y": 28.4556
+                    },
+                    "uuid": "ce311cab-664c-494d-a68a-270862c09d08"
+                },
+                {
+                    "description": "Pole PTH 2 [SENSOR_ENABLE] na J16",
+                    "pos": {
+                        "x": 121.27,
+                        "y": 11.68
+                    },
+                    "uuid": "e4ab0ee7-3f72-4c55-82b3-827868c3ee84"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 17,3392 mm",
+                    "pos": {
+                        "x": 120.6978,
+                        "y": 28.4556
+                    },
+                    "uuid": "ce311cab-664c-494d-a68a-270862c09d08"
+                },
+                {
+                    "description": "Pole PTH 2 [SENSOR_ENABLE] na J16",
+                    "pos": {
+                        "x": 121.27,
+                        "y": 11.68
+                    },
+                    "uuid": "e4ab0ee7-3f72-4c55-82b3-827868c3ee84"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci 5V_SYS oraz SENSOR_ENABLE)",
+            "items": [
+                {
+                    "description": "Ścieżka [5V_SYS] na B.Cu, długość 1,3851 mm",
+                    "pos": {
+                        "x": 121.3433,
+                        "y": 10.0282
+                    },
+                    "uuid": "e3e6d834-5e71-4414-9402-8daca00638fb"
+                },
+                {
+                    "description": "Pole PTH 2 [SENSOR_ENABLE] na J16",
+                    "pos": {
+                        "x": 121.27,
+                        "y": 11.68
+                    },
+                    "uuid": "e4ab0ee7-3f72-4c55-82b3-827868c3ee84"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,1162 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [5V_SYS] na B.Cu, długość 1,3851 mm",
+                    "pos": {
+                        "x": 121.3433,
+                        "y": 10.0282
+                    },
+                    "uuid": "e3e6d834-5e71-4414-9402-8daca00638fb"
+                },
+                {
+                    "description": "Pole PTH 2 [SENSOR_ENABLE] na J16",
+                    "pos": {
+                        "x": 121.27,
+                        "y": 11.68
+                    },
+                    "uuid": "e4ab0ee7-3f72-4c55-82b3-827868c3ee84"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci 5V_SYS oraz GND)",
+            "items": [
+                {
+                    "description": "Ścieżka [5V_SYS] na B.Cu, długość 7,8663 mm",
+                    "pos": {
+                        "x": 120.3639,
+                        "y": 11.0076
+                    },
+                    "uuid": "7eeeb042-55ed-4764-b205-2b94b801abf2"
+                },
+                {
+                    "description": "Pole PTH 1 [GND] na J16",
+                    "pos": {
+                        "x": 121.27,
+                        "y": 14.22
+                    },
+                    "uuid": "9fb3c42f-e77b-4597-a25c-db612a7f7b13"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [5V_SYS] na B.Cu, długość 7,8663 mm",
+                    "pos": {
+                        "x": 120.3639,
+                        "y": 11.0076
+                    },
+                    "uuid": "7eeeb042-55ed-4764-b205-2b94b801abf2"
+                },
+                {
+                    "description": "Pole PTH 1 [GND] na J16",
+                    "pos": {
+                        "x": 121.27,
+                        "y": 14.22
+                    },
+                    "uuid": "9fb3c42f-e77b-4597-a25c-db612a7f7b13"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Elementy łączą dwie różne sieci (sieci 5V_SYS oraz SENSOR_ENABLE)",
+            "items": [
+                {
+                    "description": "Ścieżka [5V_SYS] na B.Cu, długość 7,8663 mm",
+                    "pos": {
+                        "x": 120.3639,
+                        "y": 11.0076
+                    },
+                    "uuid": "7eeeb042-55ed-4764-b205-2b94b801abf2"
+                },
+                {
+                    "description": "Pole PTH 2 [SENSOR_ENABLE] na J16",
+                    "pos": {
+                        "x": 121.27,
+                        "y": 11.68
+                    },
+                    "uuid": "e4ab0ee7-3f72-4c55-82b3-827868c3ee84"
+                }
+            ],
+            "severity": "error",
+            "type": "shorting_items"
+        },
+        {
+            "description": "Naruszenie prześwitu otworów (ograniczenia w konfiguracji płytki dla otworów prześwit 0,2500 mm; obecnie 0,0000 mm)",
+            "items": [
+                {
+                    "description": "Ścieżka [5V_SYS] na B.Cu, długość 7,8663 mm",
+                    "pos": {
+                        "x": 120.3639,
+                        "y": 11.0076
+                    },
+                    "uuid": "7eeeb042-55ed-4764-b205-2b94b801abf2"
+                },
+                {
+                    "description": "Pole PTH 2 [SENSOR_ENABLE] na J16",
+                    "pos": {
+                        "x": 121.27,
+                        "y": 11.68
+                    },
+                    "uuid": "e4ab0ee7-3f72-4c55-82b3-827868c3ee84"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Niekompletne łączenie termiczne ze strefą (warstwa F.Cu; strefa min. liczba łącz 2; obecnie 1)",
+            "items": [
+                {
+                    "description": "Strefa [GND] na F.Cu, priorytet 0",
+                    "pos": {
+                        "x": 0.3,
+                        "y": 0.3
+                    },
+                    "uuid": "e6707d11-df55-4f04-a023-f89c09610b14"
+                },
+                {
+                    "description": "Pole PTH 1 [GND] na J16",
+                    "pos": {
+                        "x": 121.27,
+                        "y": 14.22
+                    },
+                    "uuid": "9fb3c42f-e77b-4597-a25c-db612a7f7b13"
+                }
+            ],
+            "severity": "error",
+            "type": "starved_thermal"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [5V_SYS] na B.Cu, długość 7,8663 mm",
+                    "pos": {
+                        "x": 120.3639,
+                        "y": 11.0076
+                    },
+                    "uuid": "7eeeb042-55ed-4764-b205-2b94b801abf2"
+                },
+                {
+                    "description": "Pole PTH 1 [GND] na J16",
+                    "pos": {
+                        "x": 121.27,
+                        "y": 14.22
+                    },
+                    "uuid": "9fb3c42f-e77b-4597-a25c-db612a7f7b13"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [SENSOR_ENABLE] na F.Cu, długość 1,8318 mm",
+                    "pos": {
+                        "x": 123.3405,
+                        "y": 12.9505
+                    },
+                    "uuid": "bd02547a-66cf-4008-b597-ddde29995840"
+                },
+                {
+                    "description": "Pole PTH 3 [GND] na J16",
+                    "pos": {
+                        "x": 123.81,
+                        "y": 14.22
+                    },
+                    "uuid": "39b4b9bb-0c4c-4dd3-8b40-4395c19f44c5"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [SENSOR_ENABLE] na F.Cu, długość 25,1443 mm",
+                    "pos": {
+                        "x": 123.3405,
+                        "y": 14.7823
+                    },
+                    "uuid": "f3371ac4-a15f-4779-897f-c0b5c17fdda1"
+                },
+                {
+                    "description": "Pole PTH 3 [GND] na J16",
+                    "pos": {
+                        "x": 123.81,
+                        "y": 14.22
+                    },
+                    "uuid": "39b4b9bb-0c4c-4dd3-8b40-4395c19f44c5"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [CORE_LINK] na B.Cu, długość 1,8550 mm",
+                    "pos": {
+                        "x": 125.8617,
+                        "y": 12.9317
+                    },
+                    "uuid": "89a25636-cd57-4129-8c86-54e986db2c24"
+                },
+                {
+                    "description": "Pole PTH 5 [GND] na J16",
+                    "pos": {
+                        "x": 126.35,
+                        "y": 14.22
+                    },
+                    "uuid": "3629eb97-3dd8-4a7b-9f20-5a083834ae5f"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [CORE_LINK] na B.Cu, długość 1,7837 mm",
+                    "pos": {
+                        "x": 125.8617,
+                        "y": 14.7867
+                    },
+                    "uuid": "ab2648d3-d39d-47e9-b89d-5c9f4a4241bc"
+                },
+                {
+                    "description": "Pole PTH 5 [GND] na J16",
+                    "pos": {
+                        "x": 126.35,
+                        "y": 14.22
+                    },
+                    "uuid": "3629eb97-3dd8-4a7b-9f20-5a083834ae5f"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [HW_ARMED] na F.Cu, długość 3,4480 mm",
+                    "pos": {
+                        "x": 128.419999,
+                        "y": 12.95
+                    },
+                    "uuid": "d53da88b-4482-4667-8a1c-91946af09755"
+                },
+                {
+                    "description": "Pole PTH 7 [GND] na J16",
+                    "pos": {
+                        "x": 128.89,
+                        "y": 14.22
+                    },
+                    "uuid": "15eb4196-ee5c-4ed8-b33d-d4155f369cfb"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [SUP_N_OUT] na F.Cu, długość 10,2878 mm",
+                    "pos": {
+                        "x": 136.04,
+                        "y": 23.2378
+                    },
+                    "uuid": "c9741565-2a3f-4441-bb3c-d984b0037b1f"
+                },
+                {
+                    "description": "Pole PTH 13 [GND] na J16",
+                    "pos": {
+                        "x": 136.51,
+                        "y": 14.22
+                    },
+                    "uuid": "8dbf4d5b-ca4c-4a00-9d1b-6f2ee2f55192"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [PWM] na F.Cu, długość 12,0455 mm",
+                    "pos": {
+                        "x": 138.5815,
+                        "y": 24.997
+                    },
+                    "uuid": "9a56fc07-00be-4dc1-8faf-11c032924773"
+                },
+                {
+                    "description": "Pole PTH 15 [GND] na J16",
+                    "pos": {
+                        "x": 139.05,
+                        "y": 14.22
+                    },
+                    "uuid": "566dd0c5-060d-4f22-ba42-55c64ac5ccd8"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [INTERLOCK] na F.Cu, długość 16,3452 mm",
+                    "pos": {
+                        "x": 143.66,
+                        "y": 29.2952
+                    },
+                    "uuid": "f82ccd71-1159-4154-aa25-d77595c8aec4"
+                },
+                {
+                    "description": "Pole PTH 19 [GND] na J16",
+                    "pos": {
+                        "x": 144.13,
+                        "y": 14.22
+                    },
+                    "uuid": "89d2b020-c294-432f-8af6-dee9e4cd35d5"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 1,2425 mm",
+                    "pos": {
+                        "x": 120.6978,
+                        "y": 11.1164
+                    },
+                    "uuid": "d0b67e60-62b3-42f2-a56c-380fab54f488"
+                },
+                {
+                    "description": "Pole PTH 2 [SENSOR_ENABLE] na J16",
+                    "pos": {
+                        "x": 121.27,
+                        "y": 11.68
+                    },
+                    "uuid": "e4ab0ee7-3f72-4c55-82b3-827868c3ee84"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [5V_SYS] na B.Cu, długość 7,8663 mm",
+                    "pos": {
+                        "x": 120.3639,
+                        "y": 11.0076
+                    },
+                    "uuid": "7eeeb042-55ed-4764-b205-2b94b801abf2"
+                },
+                {
+                    "description": "Pole PTH 2 [SENSOR_ENABLE] na J16",
+                    "pos": {
+                        "x": 121.27,
+                        "y": 11.68
+                    },
+                    "uuid": "e4ab0ee7-3f72-4c55-82b3-827868c3ee84"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Tylna soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [5V_SYS] na B.Cu, długość 1,3851 mm",
+                    "pos": {
+                        "x": 121.3433,
+                        "y": 10.0282
+                    },
+                    "uuid": "e3e6d834-5e71-4414-9402-8daca00638fb"
+                },
+                {
+                    "description": "Pole PTH 2 [SENSOR_ENABLE] na J16",
+                    "pos": {
+                        "x": 121.27,
+                        "y": 11.68
+                    },
+                    "uuid": "e4ab0ee7-3f72-4c55-82b3-827868c3ee84"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 17,3392 mm",
+                    "pos": {
+                        "x": 120.6978,
+                        "y": 28.4556
+                    },
+                    "uuid": "ce311cab-664c-494d-a68a-270862c09d08"
+                },
+                {
+                    "description": "Pole PTH 1 [GND] na J16",
+                    "pos": {
+                        "x": 121.27,
+                        "y": 14.22
+                    },
+                    "uuid": "9fb3c42f-e77b-4597-a25c-db612a7f7b13"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Przednia soldermaska łączy elementy o różnych sieciach",
+            "items": [
+                {
+                    "description": "Ścieżka [3V3_IO] na F.Cu, długość 17,3392 mm",
+                    "pos": {
+                        "x": 120.6978,
+                        "y": 28.4556
+                    },
+                    "uuid": "ce311cab-664c-494d-a68a-270862c09d08"
+                },
+                {
+                    "description": "Pole PTH 2 [SENSOR_ENABLE] na J16",
+                    "pos": {
+                        "x": 121.27,
+                        "y": 11.68
+                    },
+                    "uuid": "e4ab0ee7-3f72-4c55-82b3-827868c3ee84"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0421 mm)",
+            "items": [
+                {
+                    "description": "Segment z J16 na F.Silkscreen",
+                    "pos": {
+                        "x": 116.06,
+                        "y": 17.51
+                    },
+                    "uuid": "7c27faf8-ed98-445f-b900-9624cb393dac"
+                },
+                {
+                    "description": "Tekst PCB '1' na F.Silkscreen",
+                    "pos": {
+                        "x": 115.524999,
+                        "y": 14.22
+                    },
+                    "uuid": "c497761e-56c0-4cd2-b1f6-6e613da00c5b"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        }
+    ]
+}

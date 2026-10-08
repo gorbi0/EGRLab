@@ -14,6 +14,7 @@ Dokument jest samowystarczalny przy stole. Szczegóły i uzasadnienia liczb są 
 6. **Zwarcie widziane przez kołek:** omomierz między kołkiem a GND pokazuje rezystor szeregowy + rezystancję węzła. Odczyt równy samemu rezystorowi szeregowemu (np. 1,00 kΩ na kołku 1 kΩ) = węzeł zwarty do masy.
 7. Masa sondy DHO804: kołek GND tej samej listwy, krótka sprężynka. Sondy ×10, ograniczenie pasma 20 MHz włączone przy pomiarach zasilania.
 8. Termometr palcem: żaden element nie może parzyć po 1 min pracy na stole (wyjątek: P06 R21 PR02 — ciepły, ok. 0,7 W).
+9. **Taśmy do P12 (dopisane 7.10 po recenzji P12 R2):** wtyki kątowe J_BP muszą mieć szczelinę klucza po stronie przeciwnej do PCB, a gniazda P12 wycięcie zgodne z nadrukiem. Taśma odwrócona o 180° łączy pin k z pinem 2N + 1 − k, czyli 5V_SYS z GND. **Po wpięciu każdej taśmy, bez zasilania: omomierz TP2 (5V_SYS) ↔ TP1 (GND) na P12 — nie może pokazać zwarcia** (odczyt porównaj z poprzednią taśmą: skok w dół = odwrócona taśma).
 
 ## 1. Przygotowanie
 

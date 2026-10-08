@@ -1,0 +1,160 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-08T08:59:22",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P07.kicad_pcb",
+    "unconnected_items": [
+        {
+            "description": "Missing connection between items",
+            "items": [
+                {
+                    "description": "Ścieżka [/DIG/CLK_LOCAL] na F.Cu, długość 0,6034 mm",
+                    "pos": {
+                        "x": 24.8483,
+                        "y": 32.1133
+                    },
+                    "uuid": "111a39b4-c82e-47cf-b252-414f223bf6f0"
+                },
+                {
+                    "description": "Ścieżka [/DIG/CLK_LOCAL] na F.Cu, długość 6,1300 mm",
+                    "pos": {
+                        "x": 68.13,
+                        "y": 74.36
+                    },
+                    "uuid": "ac6b1324-54ea-420c-bb2f-e05e59d9c82e"
+                }
+            ],
+            "severity": "error",
+            "type": "unconnected_items"
+        }
+    ],
+    "violations": [
+        {
+            "description": "Naruszenie prześwitu ( prześwit 0,2500 mm; obecnie 0,0500 mm)",
+            "items": [
+                {
+                    "description": "Pole lutownicze 4 [/MOC/T_EGR_P1] z RSH1 na F.Cu",
+                    "pos": {
+                        "x": 68.535,
+                        "y": 73.015
+                    },
+                    "uuid": "4161f6f0-f02b-4129-bcae-1a242b626dfc"
+                },
+                {
+                    "description": "Ścieżka [/DIG/CLK_LOCAL] na F.Cu, długość 6,1300 mm",
+                    "pos": {
+                        "x": 68.13,
+                        "y": 74.36
+                    },
+                    "uuid": "ac6b1324-54ea-420c-bb2f-e05e59d9c82e"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Track has unconnected end",
+            "items": [
+                {
+                    "description": "Ścieżka [/DIG/CLK_LOCAL] na F.Cu, długość 6,1300 mm",
+                    "pos": {
+                        "x": 68.13,
+                        "y": 74.36
+                    },
+                    "uuid": "ac6b1324-54ea-420c-bb2f-e05e59d9c82e"
+                }
+            ],
+            "severity": "warning",
+            "type": "track_dangling"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x08_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP1",
+                    "pos": {
+                        "x": 17.61,
+                        "y": 13.33
+                    },
+                    "uuid": "59271eb7-feb8-48f5-b83c-d195e1273d99"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x08_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J_BP2",
+                    "pos": {
+                        "x": 71.11,
+                        "y": 13.33
+                    },
+                    "uuid": "6b5e84f1-d740-470a-92db-b77485946879"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'PinHeader_1x12_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_PinHeader_2.54mm'",
+            "items": [
+                {
+                    "description": "Footprint J_SV2",
+                    "pos": {
+                        "x": 41.74,
+                        "y": 95.96
+                    },
+                    "uuid": "9bc7f272-0d4f-4867-aac3-558a0f6a4bdc"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'IDC-Header_2x04_P2.54mm_Horizontal' nie odpowiada jego kopii w bibliotece 'Connector_IDC'",
+            "items": [
+                {
+                    "description": "Footprint J5",
+                    "pos": {
+                        "x": 93.17,
+                        "y": 59.14
+                    },
+                    "uuid": "bf938851-689f-4519-a5bc-3c02e4bb695f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        }
+    ]
+}

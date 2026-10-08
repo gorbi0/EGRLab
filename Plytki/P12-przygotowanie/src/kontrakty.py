@@ -1,4 +1,4 @@
-"""Zbiorcza mapa kontraktów krawędzi A (J_BP, format S1) — przygotowanie płytki połączeń P12 (1.10.2026).
+"""Zbiorcza mapa kontraktów krawędzi A (J_BP, format S1) — przygotowanie płytki połączeń P12 (1.10.2026; 5.10: wariant pełny).
 
 Czyta pinouty płytek (docs/J_BP.csv, parts.json albo plan z zadania) z gałęzi git podanych w zrodla.json, położenia złączy
 z raportów PCB (verification/pcb-checks.json) i sprawdza:
@@ -210,6 +210,17 @@ for pl in logger:
         bledy.append(f"{pl['plytka']}: {pl['prad_5V_mA']} mA z 5V_SYS na {n} pinach (≤ {IMAX} A/styk)")
 if src5 and suma > src5['max_A'] * 1000:
     bledy.append(f'suma budżetów 5V_SYS {suma} mA > styki źródła {src5["max_A"]} A')
+# 5.10: wariant pełny (P04 R3, P07 S1, P08 R2) — budżet całego stosu wobec styków źródła i przetwornicy 2 A (rezerwa 10 %: 1,8 A)
+pelny = [pl for pl in plytki if pl.get('wariant') == 'pełny' and 'prad_5V_mA' in pl]
+suma_pelny = suma + sum(pl['prad_5V_mA'] for pl in pelny); LIMIT_5V_mA = CFG.get('limit_5V_mA', 1800)
+for pl in pelny:
+    n = sum(1 for q in pl['_piny'] if q['siec'] == '5V_SYS')
+    if pl['_piny'] and n * IMAX * 1000 < pl['prad_5V_mA']:
+        bledy.append(f"{pl['plytka']}: {pl['prad_5V_mA']} mA z 5V_SYS na {n} pinach (≤ {IMAX} A/styk)")
+if pelny and src5 and suma_pelny > src5['max_A'] * 1000:
+    bledy.append(f'suma budżetów 5V_SYS wariantu pełnego {suma_pelny} mA > styki źródła {src5["max_A"]} A')
+if pelny and suma_pelny > LIMIT_5V_mA:
+    uwagi.append(f'ryzyko: suma budżetów 5V_SYS wariantu pełnego {suma_pelny} mA > {LIMIT_5V_mA} mA (90 % przetwornicy 2 A)')
 
 # ---- pojemność na szynach 5 V (obciążenie pojemnościowe TSR 2-2450) ----
 def farad(v):                          # '4u7' -> 4.7e-6, '22u / 16V' -> 22e-6, '100nF / X7R' -> 1e-7
@@ -257,7 +268,8 @@ with open(W / 'zlacza-P12.csv', 'w', encoding='utf-8', newline='') as fh:
     for z in sorted(zlacza, key=lambda z: (str(z['poziom']), z['slot'])):
         w.writerow([z['poziom'], z['slot'], z['x_stos_mm'], z['z_spodu_plytki_mm'], z['plytka'], z['zlacze'], z['typ'], z['zmierzone_x_mm'], z['stan']])
 res = {'zrodla': {pl['plytka']: pl.get('_wersja') for pl in plytki if pl['_piny']}, 'zlacza': zlacza, 'sieci': wynik_sieci, 'zasilanie': zas,
-       'budzet_5V_mA': {pl['plytka']: pl['prad_5V_mA'] for pl in logger}, 'suma_5V_mA': suma, 'pojemnosc_5V': pojemnosc, 'opisy_w_specyfikacji': opisy, 'bledy': bledy, 'uwagi': uwagi}
+       'budzet_5V_mA': {pl['plytka']: pl['prad_5V_mA'] for pl in logger + pelny}, 'suma_5V_mA': suma, 'suma_5V_pelny_mA': suma_pelny,
+       'budzet_3V3_mA': {pl['plytka']: pl['prad_3V3_mA'] for pl in plytki if 'prad_3V3_mA' in pl}, 'pojemnosc_5V': pojemnosc, 'opisy_w_specyfikacji': opisy, 'bledy': bledy, 'uwagi': uwagi}
 (W / 'kontrakty.json').write_text(json.dumps(res, indent=1, ensure_ascii=False) + '\n', encoding='utf-8')
 
 L = ['# Kontrakty krawędzi A (J_BP) — mapa dla P12', '', '*Plik generowany przez `src/kontrakty.py` z `zrodla.json`; nie edytować ręcznie.*', '',
@@ -286,6 +298,11 @@ pl02 = next(pl for pl in plytki if baza(pl['plytka']) == 'P02')
 L += ['', f"Budżety 5V_SYS z dokumentów płytek (LOGGER): " + ', '.join(f"{pl['plytka']} {pl['prad_5V_mA']} mA" for pl in logger)
       + f" — **razem {suma} mA**. Źródło: {pl02['zasilacz']['5V_SYS']}; styki J_BP P02 R4: {pl_(src5['max_A'])} A. Budżetów 3V3_IO płytki nie podają." if src5 else '', '']
 L += [f"- {pl['plytka']}: {pl['prad_zrodlo']}" for pl in logger] + ['']
+if pelny:
+    L += [f"**Wariant pełny** dodatkowo: " + ', '.join(f"{pl['plytka']} {pl['prad_5V_mA']} mA" for pl in pelny) + f" — **razem cały stos {suma_pelny} mA** "
+          f"wobec {LIMIT_5V_mA} mA (90 % przetwornicy 2 A){' — RYZYKO' if suma_pelny > LIMIT_5V_mA else ''}. 3V3_IO (płytki, które podają budżet): "
+          + ', '.join(f"{pl['plytka']} {pl['prad_3V3_mA']} mA" for pl in plytki if 'prad_3V3_mA' in pl) + '.', '']
+    L += [f"- {pl['plytka']}: {pl['prad_zrodlo']}" for pl in pelny] + ['']
 if pojemnosc:
     L += ['## Pojemność na szynach 5 V', '', f"Sieci: " + ', '.join(f'{k} ({v})' for k, v in poj['sieci'].items()) + f". Limit: {poj['limit_uF']} µF ({poj['limit_zrodlo']}).", '',
           '| Płytka | µF | Największe | Źródło |', '|---|---|---|---|']

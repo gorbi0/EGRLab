@@ -1,0 +1,310 @@
+[
+  {
+    "control": "null_control",
+    "expected_failing_check": "none (all PASS)",
+    "detected": true,
+    "failed_checks": []
+  },
+  {
+    "control": "mount_shift",
+    "expected_failing_check": "M3 holes",
+    "detected": true,
+    "failed_checks": [
+      "M3 holes: 12 NPTH 3.2 mm exactly at the S1 positions (x_w_slocie + 53.5 k, y 14 / 86)"
+    ]
+  },
+  {
+    "control": "jbp_shift",
+    "expected_failing_check": "J_BP1..3",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
+      "J_BP1..3 (edge A): IDC 2x8 / 2x10 / 2x10 angled, body front at y = 0, pin centre x = 26.5 / 80.0 / 133.5 (slots S1-S3), pin 1 at the smaller x, odd pins GND, pinout = docs/J_BP.csv (P12 contract)"
+    ]
+  },
+  {
+    "control": "jbp_flip",
+    "expected_failing_check": "J_BP1..3",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
+      "Standoff zones D7: no courtyard and no copper (pads, tracks, vias, pours) within 3.5 mm of a hole centre; rule areas on both layers",
+      "J_BP1..3 (edge A): IDC 2x8 / 2x10 / 2x10 angled, body front at y = 0, pin centre x = 26.5 / 80.0 / 133.5 (slots S1-S3), pin 1 at the smaller x, odd pins GND, pinout = docs/J_BP.csv (P12 contract)",
+      "Series resistors at their connector pins (P04 R2.2 R4-03 / R4-07, MECHANIKA): R40 PANEL_3V3, R42 MECH_OK, R3 ARM_CONTACT, R41 TEST_KEY at J_BP1, R39 P04_3V3 and R38 PG_SEND at J_BP2; the connector-side net holds only pin + resistor (+ its service resistor), pad <= 10 mm from the pin (R39 <= 15 mm: end of the P04_3V3 escape), copper within the limit",
+      "Every visible reference outside the courtyards of other parts",
+      "Every visible reference nearer its own part than any other (text centre to courtyard; P03 R6 review 1.10)"
+    ]
+  },
+  {
+    "control": "sv_no_gnd_end",
+    "expected_failing_check": "Service headers",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
+      "Every value, footprint ID and pad net equals the exported schematic netlist",
+      "Service headers J_SV1..3 (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pin 1 at the larger x, pins out ~6 mm, GND on both ends, one series resistor per pin as docs/SERWIS.csv and of its class (1K; 10K SAFE_N / ARM_BUTTON_N, README decision 6) <= 10 mm from its node (a pad or locked via of the node net), one silk label per pin with the name of its node (LABEL in silkscreen.py), GND at both ends"
+    ]
+  },
+  {
+    "control": "sv_pin_without_resistor",
+    "expected_failing_check": "Service headers",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
+      "Every value, footprint ID and pad net equals the exported schematic netlist",
+      "Service headers J_SV1..3 (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pin 1 at the larger x, pins out ~6 mm, GND on both ends, one series resistor per pin as docs/SERWIS.csv and of its class (1K; 10K SAFE_N / ARM_BUTTON_N, README decision 6) <= 10 mm from its node (a pad or locked via of the node net), one silk label per pin with the name of its node (LABEL in silkscreen.py), GND at both ends"
+    ]
+  },
+  {
+    "control": "sv_resistor_far",
+    "expected_failing_check": "Service headers",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
+      "Service headers J_SV1..3 (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pin 1 at the larger x, pins out ~6 mm, GND on both ends, one series resistor per pin as docs/SERWIS.csv and of its class (1K; 10K SAFE_N / ARM_BUTTON_N, README decision 6) <= 10 mm from its node (a pad or locked via of the node net), one silk label per pin with the name of its node (LABEL in silkscreen.py), GND at both ends"
+    ]
+  },
+  {
+    "control": "label_missing",
+    "expected_failing_check": "Service headers",
+    "detected": true,
+    "failed_checks": [
+      "Service headers J_SV1..3 (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pin 1 at the larger x, pins out ~6 mm, GND on both ends, one series resistor per pin as docs/SERWIS.csv and of its class (1K; 10K SAFE_N / ARM_BUTTON_N, README decision 6) <= 10 mm from its node (a pad or locked via of the node net), one silk label per pin with the name of its node (LABEL in silkscreen.py), GND at both ends"
+    ]
+  },
+  {
+    "control": "label_swap",
+    "expected_failing_check": "Service headers",
+    "detected": true,
+    "failed_checks": [
+      "Service headers J_SV1..3 (edge B, S1 section 6): <= 13 pins in x 10..43 of the slot, pin 1 at the larger x, pins out ~6 mm, GND on both ends, one series resistor per pin as docs/SERWIS.csv and of its class (1K; 10K SAFE_N / ARM_BUTTON_N, README decision 6) <= 10 mm from its node (a pad or locked via of the node net), one silk label per pin with the name of its node (LABEL in silkscreen.py), GND at both ends"
+    ]
+  },
+  {
+    "control": "too_tall",
+    "expected_failing_check": "Every part <=",
+    "detected": true,
+    "failed_checks": [
+      "Every part <= 16.5 mm above the board (limit above level 6, user decision 5.10; src/heights.py)"
+    ]
+  },
+  {
+    "control": "bottom_soic",
+    "expected_failing_check": "S1-2 section 4",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
+      "S1-2 section 4: parts on the bottom only SMD <= 1.5 mm, no SOIC (level 6 is not level 1), >= 1 mm from THT pads (P04 R3: none on the bottom)",
+      "Decoupling at the IC supply pins: 100 nF pad 1 (3V3_IO) <= 6 mm from the VCC pin on the copper (U1-U11, second 100 nF C15-C17 at U8-U10)",
+      "Default-state resistors at their buffers (MECHANIKA): R12-R22 (input side) and R25-R35 (output side) pad <= 12 mm from the U8-U10 pin"
+    ]
+  },
+  {
+    "control": "narrow_track",
+    "expected_failing_check": "Every track >=",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
+      "Every track >= 0.30 mm (S1 section 3)"
+    ]
+  },
+  {
+    "control": "narrow_supply",
+    "expected_failing_check": "Supply nets",
+    "detected": true,
+    "failed_checks": [
+      "Supply nets 3V3_IO, P04_3V3, PANEL_3V3, 5V_SYS: every track >= 0.4 mm (task 5.10: P04_3V3, 5V_SYS, PANEL_3V3 >= 0.4 mm; 3V3_IO in the same class)"
+    ]
+  },
+  {
+    "control": "wd_via",
+    "expected_failing_check": "Watchdog RC",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
+      "Watchdog RC traces (WD_RC, WD_C) <= 15 mm each, locked, F.Cu only, without vias (P04 R2.2)"
+    ]
+  },
+  {
+    "control": "wd_unlocked",
+    "expected_failing_check": "Watchdog RC",
+    "detected": true,
+    "failed_checks": [
+      "Watchdog RC traces (WD_RC, WD_C) <= 15 mm each, locked, F.Cu only, without vias (P04 R2.2)"
+    ]
+  },
+  {
+    "control": "c1_grounded",
+    "expected_failing_check": "C1 lands",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
+      "Every value, footprint ID and pad net equals the exported schematic netlist",
+      "C1 lands on the U1 timing nodes (C1.1 = U1.15 = WD_RC, C1.2 = U1.14 = WD_C), not on ground (P04 R2.2)"
+    ]
+  },
+  {
+    "control": "c18_far",
+    "expected_failing_check": "SAFE_N ends at U2.11",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
+      "SAFE_N ends at U2.11: C18 (1 nF) pad <= 5 mm, R5 (100 k) pad <= 16 mm, both SAFE_N / GND (P04 R2.2 R4-04)",
+      "Every visible reference outside the courtyards of other parts",
+      "Every visible reference nearer its own part than any other (text centre to courtyard; P03 R6 review 1.10)"
+    ]
+  },
+  {
+    "control": "ser_detour",
+    "expected_failing_check": "Series resistors at their connector",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
+      "Series resistors at their connector pins (P04 R2.2 R4-03 / R4-07, MECHANIKA): R40 PANEL_3V3, R42 MECH_OK, R3 ARM_CONTACT, R41 TEST_KEY at J_BP1, R39 P04_3V3 and R38 PG_SEND at J_BP2; the connector-side net holds only pin + resistor (+ its service resistor), pad <= 10 mm from the pin (R39 <= 15 mm: end of the P04_3V3 escape), copper within the limit"
+    ]
+  },
+  {
+    "control": "ser_extra_pad",
+    "expected_failing_check": "Series resistors at their connector",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
+      "Every value, footprint ID and pad net equals the exported schematic netlist",
+      "Series resistors at their connector pins (P04 R2.2 R4-03 / R4-07, MECHANIKA): R40 PANEL_3V3, R42 MECH_OK, R3 ARM_CONTACT, R41 TEST_KEY at J_BP1, R39 P04_3V3 and R38 PG_SEND at J_BP2; the connector-side net holds only pin + resistor (+ its service resistor), pad <= 10 mm from the pin (R39 <= 15 mm: end of the P04_3V3 escape), copper within the limit"
+    ]
+  },
+  {
+    "control": "supn_long",
+    "expected_failing_check": "SUP_N_OUT short",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
+      "SUP_N_OUT short and referenced to GND (KONTRAKT-RESET, README): copper <= 20 mm, <= 1 via, J_BP3.11 / .13 GND, GND pour on the other layer under >= 70 % of its length (pour, tracks or pads), U9.5 <= 10 mm and R17 <= 6 mm from it; net = J_BP3.12 + R17.1 + U9.5 only"
+    ]
+  },
+  {
+    "control": "supn_r17_far",
+    "expected_failing_check": "SUP_N_OUT short",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
+      "Reserved strip of edge A (S1 §5: y 0-10, x 10-43 of each J_BP slot): no other part",
+      "SUP_N_OUT short and referenced to GND (KONTRAKT-RESET, README): copper <= 20 mm, <= 1 via, J_BP3.11 / .13 GND, GND pour on the other layer under >= 70 % of its length (pour, tracks or pads), U9.5 <= 10 mm and R17 <= 6 mm from it; net = J_BP3.12 + R17.1 + U9.5 only"
+    ]
+  },
+  {
+    "control": "supn_no_ref",
+    "expected_failing_check": "SUP_N_OUT short",
+    "detected": true,
+    "failed_checks": [
+      "SUP_N_OUT short and referenced to GND (KONTRAKT-RESET, README): copper <= 20 mm, <= 1 via, J_BP3.11 / .13 GND, GND pour on the other layer under >= 70 % of its length (pour, tracks or pads), U9.5 <= 10 mm and R17 <= 6 mm from it; net = J_BP3.12 + R17.1 + U9.5 only"
+    ]
+  },
+  {
+    "control": "decap_far",
+    "expected_failing_check": "Decoupling at the IC",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
+      "Decoupling at the IC supply pins: 100 nF pad 1 (3V3_IO) <= 6 mm from the VCC pin on the copper (U1-U11, second 100 nF C15-C17 at U8-U10)",
+      "Decoupling, ground side: capacitor GND pad -> GND pin of its IC through GND copper <= 1.3 x straight + 3 mm (gndpath.py; P05 R3 review 2.10 method)",
+      "Every visible reference outside the courtyards of other parts",
+      "Every visible reference nearer its own part than any other (text centre to courtyard; P03 R6 review 1.10)"
+    ]
+  },
+  {
+    "control": "default_far",
+    "expected_failing_check": "Default-state resistors",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
+      "Default-state resistors at their buffers (MECHANIKA): R12-R22 (input side) and R25-R35 (output side) pad <= 12 mm from the U8-U10 pin",
+      "Every visible reference outside the courtyards of other parts",
+      "Every visible reference nearer its own part than any other (text centre to courtyard; P03 R6 review 1.10)"
+    ]
+  },
+  {
+    "control": "gnd_pour_removed",
+    "expected_failing_check": "GND pours",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
+      "SUP_N_OUT short and referenced to GND (KONTRAKT-RESET, README): copper <= 20 mm, <= 1 via, J_BP3.11 / .13 GND, GND pour on the other layer under >= 70 % of its length (pour, tracks or pads), U9.5 <= 10 mm and R17 <= 6 mm from it; net = J_BP3.12 + R17.1 + U9.5 only",
+      "GND pours on both layers: B.Cu >= 50 % of the board; island removal always (every island tied)"
+    ]
+  },
+  {
+    "control": "zone_copper",
+    "expected_failing_check": "Standoff zones D7",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
+      "Standoff zones D7: no courtyard and no copper (pads, tracks, vias, pours) within 3.5 mm of a hole centre; rule areas on both layers"
+    ]
+  },
+  {
+    "control": "ref_on_part",
+    "expected_failing_check": "Every visible reference",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
+      "Every visible reference outside the courtyards of other parts",
+      "Every visible reference nearer its own part than any other (text centre to courtyard; P03 R6 review 1.10)"
+    ]
+  },
+  {
+    "control": "ref_far",
+    "expected_failing_check": "Every visible reference nearer",
+    "detected": true,
+    "failed_checks": [
+      "Every visible reference outside the courtyards of other parts",
+      "Every visible reference nearer its own part than any other (text centre to courtyard; P03 R6 review 1.10)"
+    ]
+  },
+  {
+    "control": "strip_part",
+    "expected_failing_check": "Reserved strip of edge A",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
+      "Reserved strip of edge A (S1 §5: y 0-10, x 10-43 of each J_BP slot): no other part",
+      "Default-state resistors at their buffers (MECHANIKA): R12-R22 (input side) and R25-R35 (output side) pad <= 12 mm from the U8-U10 pin",
+      "Every visible reference outside the courtyards of other parts",
+      "Every visible reference nearer its own part than any other (text centre to courtyard; P03 R6 review 1.10)"
+    ]
+  },
+  {
+    "control": "mark_missing",
+    "expected_failing_check": "Pin 1 of every connector",
+    "detected": true,
+    "failed_checks": [
+      "Pin 1 of every connector (J_BP1..3, J_SV1..3) marked \"1\" on the silkscreen <= 3 mm from the pad (S1 §9)"
+    ]
+  },
+  {
+    "control": "title_wrong",
+    "expected_failing_check": "Silkscreen: board name",
+    "detected": true,
+    "failed_checks": [
+      "Silkscreen: board name \"P04 R3 S1-L S1-S3\", edge markers A and B"
+    ]
+  },
+  {
+    "control": "silk_small",
+    "expected_failing_check": "Silkscreen legible",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
+      "Silkscreen legible: every visible text on F.SilkS / B.SilkS >= 1.0 mm high with a >= 0.15 mm line (JLCPCB legend minimum)"
+    ]
+  },
+  {
+    "control": "rules_dru",
+    "expected_failing_check": "Rules as P02",
+    "detected": true,
+    "failed_checks": [
+      "Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed and whose pads equal the library)",
+      "Rules as P02 R3 / R4 (clearance >= 0.25, track >= 0.30, edge 0.5), annular ring >= 0.25 mm (S1 section 3); class PWR 0.4 mm for 3V3_IO, P04_3V3, PANEL_3V3, 5V_SYS; no custom rules file, no DRC exclusions"
+    ]
+  }
+]

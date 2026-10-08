@@ -1,0 +1,76 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-10-05T22:34:25",
+    "ignored_checks": [
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning",
+        "exclusion"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "P12.kicad_pcb",
+    "unconnected_items": [],
+    "violations": [
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Tekst PCB 'J3  P03 J_BP2 (poziom 2, S2)' na F.Silkscreen",
+                    "pos": {
+                        "x": 78.73,
+                        "y": 98.08
+                    },
+                    "uuid": "030c4b01-c1b9-4f3b-ad7a-c9874494da25"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Prześwit opisów (ograniczenia w konfiguracji płytki dla opisów prześwit 0,1500 mm; obecnie 0,0057 mm)",
+            "items": [
+                {
+                    "description": "Tekst PCB 'J3  P03 J_BP2 (poziom 2, S2)' na F.Silkscreen",
+                    "pos": {
+                        "x": 78.73,
+                        "y": 98.08
+                    },
+                    "uuid": "030c4b01-c1b9-4f3b-ad7a-c9874494da25"
+                },
+                {
+                    "description": "Segment z J3 na F.Silkscreen",
+                    "pos": {
+                        "x": 64.66,
+                        "y": 102.6
+                    },
+                    "uuid": "249921d9-b708-4563-b033-0d427a513f8a"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        }
+    ]
+}
