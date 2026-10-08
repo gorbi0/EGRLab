@@ -1,0 +1,111 @@
+{
+  "schema": 7,
+  "configuration": "M1-R1",
+  "configuration_version": 1,
+  "synthetic": false,
+  "current_driver": "ad7606b_ch6_ina240",
+  "daq_module": "DAQ_001",
+  "modules": {
+    "M1": {
+      "serial": "M1_001",
+      "hardware_revision": "R1",
+      "interface": "X1",
+      "accepted": false,
+      "identities": [
+        "DAQ_001",
+        "IL_001"
+      ],
+      "note": "jedna plytka (Plytki/M1-R1-review): AD7606B (DAQ_001), bocznik + INA240A2 na CH6 (IL_001), 2 x MAX31856, TCAN1051V, TPS2553"
+    },
+    "IBT2": {
+      "serial": "DR_001",
+      "hardware_revision": "BTS7960",
+      "interface": "M1 pola IBT-2 (RPWM, LPWM, R_EN, L_EN)",
+      "accepted": false,
+      "note": "modul poza plytka (D-M1-2); IS nieuzywane - prad mierzy INA240 na M1"
+    }
+  },
+  "channels": [
+    "P1_EGR",
+    "P3",
+    "P4",
+    "P5",
+    "P6",
+    "I_MOT",
+    "VBAT_CAR",
+    "SENS_5V"
+  ],
+  "voltage": [
+    {
+      "accepted": false,
+      "gain": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "offset": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "accepted": false,
+      "gain": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "offset": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    }
+  ],
+  "current": [
+    {
+      "module_id": "IL_001",
+      "accepted": false,
+      "volts_per_amp": null,
+      "zero": null,
+      "calibration_date": null
+    },
+    {
+      "module_id": "IL_001",
+      "accepted": false,
+      "volts_per_amp": null,
+      "zero": null,
+      "calibration_date": null
+    }
+  ],
+  "current_window_accepted": false,
+  "temperature": {
+    "module": "M1_001",
+    "probes": [
+      "TC_001",
+      "TC_002"
+    ],
+    "acceptance_file": null
+  }
+}
