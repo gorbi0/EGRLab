@@ -1,0 +1,7 @@
+(version 1)
+(rule "drobny raster U3: odstep 0.15 mm miedzy elementami w obrysie ukladu (bez wylewek)"
+  (condition "A.Type != 'Zone' && B.Type != 'Zone' && ((A.intersectsCourtyard('U3') && B.intersectsCourtyard('U3')))")
+  (constraint clearance (min 0.15mm)))
+(rule "drobny raster U3: wylewka 0.15 mm tylko do miedzi calej w pierscieniu padow"
+  (condition "A.Type == 'Zone' && (B.enclosedByArea('DRC_ONLY_U3'))")
+  (constraint clearance (min 0.15mm)))
