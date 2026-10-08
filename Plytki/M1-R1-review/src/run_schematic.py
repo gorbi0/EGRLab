@@ -15,6 +15,7 @@ def run(name, *cmd):
     print(name, 'PASS', flush=True)
 
 
+if (P / 'eda/M1.kicad_pro').exists(): run('project-rules-kept', PY, 'src/check_pro_preserved.py')   # recenzja M1-05
 run('schematic-build', PY, 'src/build_schematic.py')
 run('tables', PY, 'src/make_tables.py')
 run('erc', CLI, 'sch', 'erc', '--severity-all', '--format', 'json', '-o', 'verification/erc.json', 'eda/M1.kicad_sch')

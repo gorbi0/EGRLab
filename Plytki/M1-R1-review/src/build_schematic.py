@@ -83,9 +83,14 @@ for i, (name, title) in enumerate(names[1:], 2):
     old = sh.path; sh.path = '/' + uid('M1') + '/' + sid; sh.items = [t.replace(q(old), q(sh.path)) for t in sh.items]
 for sh in S.values(): sh.finish(); sh.save()
 write_tables()
-pro = {'meta': {'filename': 'M1.kicad_pro', 'version': 3}, 'sheets': [[uid(n) if n == 'M1' else uid('sheet/' + n), n] for n, _ in names], 'boards': [],
-       'libraries': {'pinned_footprint_libs': [], 'pinned_symbol_libs': []}, 'schematic': {'legacy_lib_dir': '', 'legacy_lib_list': []}, 'text_variables': {}}
-(P / 'eda/M1.kicad_pro').write_text(json.dumps(pro, indent=2) + '\n')
+# 8.10 (recenzja M1-05): istniejacy projekt tylko uzupelniany - generator ustawia wylacznie swoje pola (meta, sheets); reguly plytki
+# (board), klasy sieci (net_settings) i inne sekcje zostaja. Nowy plik powstaje tylko, gdy go nie ma.
+pro_path = P / 'eda/M1.kicad_pro'
+pro = json.loads(pro_path.read_text()) if pro_path.exists() else {'boards': [], 'libraries': {'pinned_footprint_libs': [], 'pinned_symbol_libs': []},
+                                                                  'schematic': {'legacy_lib_dir': '', 'legacy_lib_list': []}, 'text_variables': {}}
+pro['meta'] = {**pro.get('meta', {}), 'filename': 'M1.kicad_pro', 'version': pro.get('meta', {}).get('version', 3)}
+pro['sheets'] = [[uid(n) if n == 'M1' else uid('sheet/' + n), n] for n, _ in names]
+pro_path.write_text(json.dumps(pro, indent=2) + '\n')
 (P / 'verification').mkdir(exist_ok=True)
 (P / 'verification/sheet-parts.json').write_text(json.dumps({n: list(s.parts) for n, s in S.items()}, indent=2))
 print(len(PARTS), 'parts;', len(S), 'sheets')

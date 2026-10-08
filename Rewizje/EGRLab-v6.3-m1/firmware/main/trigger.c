@@ -105,10 +105,12 @@ uint32_t trigger_sample(const float v[8], uint64_t t_us) {
     bool have_current = cfg.current_valid;
     float current = have_current ? (v[CH_CURRENT] - cfg.zero) / cfg.volts_per_amp : NAN;
 
-    if (fire(0, !(ref >= 4.5f && ref <= 5.5f), t_us)) mask |= TRIG_REF;
+    /* 6.3.1-m1 (recenzja M1-12): brak waznego pomiaru (NaN: kalibracja nieodebrana, ADC niewazny) to nie usterka
+     * obwodu - REF / FEEDBACK tylko dla zmierzonych napiec poza zakresem. */
+    if (fire(0, isfinite(ref) && !(ref >= 4.5f && ref <= 5.5f), t_us)) mask |= TRIG_REF;
     if (fire(1, fabsf(gnd) > TRIG_GND_EVENT_V, t_us)) mask |= TRIG_GND;
     if (fire(2, fabsf(gnd) > TRIG_GND_WARN_V, t_us)) mask |= TRIG_GND_WARN;
-    if (fire(3, !(fb >= .2f && fb <= 4.8f), t_us)) mask |= TRIG_FB;
+    if (fire(3, isfinite(fb) && !(fb >= .2f && fb <= 4.8f), t_us)) mask |= TRIG_FB;
 
     float ratio = (ref > 1.0f) ? fb / ref : NAN;
     float past=NAN;

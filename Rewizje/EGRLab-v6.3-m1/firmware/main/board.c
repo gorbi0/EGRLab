@@ -59,6 +59,8 @@ static rmt_channel_handle_t led_chan;
 static rmt_encoder_handle_t led_encoder;
 static wdt_hal_context_t rtc_wdt = RWDT_HAL_CONTEXT_DEFAULT();
 static bool rtc_wdt_on;
+/* 6.3.1-m1 (recenzja M1-03): true dopiero po pelnym uruchomieniu TWDT i RTC WDT; bez tego bramka napedu sie nie zwalnia. */
+static _Atomic bool watchdogs_ok;
 
 /* M-05: oba PWM w jednym miejscu; kanal 0 = RPWM (GPIO1), kanal 1 = LPWM (GPIO21). */
 static void pwm_set(uint32_t r, uint32_t l) {
@@ -79,7 +81,7 @@ void board_emergency_stop(void) {
     board_kill();
 }
 bool board_release(uint32_t token) {
-    portENTER_CRITICAL(&gate_mux); bool ok=token==gate_epoch;
+    portENTER_CRITICAL(&gate_mux); bool ok=token==gate_epoch && watchdogs_ok;
     if(ok) inhibited=false;
     portEXIT_CRITICAL(&gate_mux); return ok;
 }
@@ -411,8 +413,10 @@ esp_err_t board_watchdogs_start(void) {
     wdt_hal_enable(&rtc_wdt);
     wdt_hal_write_protect_enable(&rtc_wdt);
     rtc_wdt_on = true;
+    watchdogs_ok = true;
     return ESP_OK;
 }
+bool board_watchdogs_ok(void) { return watchdogs_ok; }
 void board_watchdogs_feed(void) {
     esp_task_wdt_reset();
     if (!rtc_wdt_on) return;

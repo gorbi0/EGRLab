@@ -25,7 +25,7 @@ static int ledc_set_duty(int mode,int ch,uint32_t d){(void)mode;duty_set[ch]=d;r
 static int ledc_update_duty(int mode,int ch){(void)mode;duty_out[ch]=duty_set[ch];return 0;}
 static uint64_t esp_timer_get_time(void){return now_us;}
 static void vTaskDelay(int t){now_us+=1000ull*t;}
-static portMUX_TYPE gate_mux;static bool inhibited=true;static uint32_t gate_epoch;
+static portMUX_TYPE gate_mux;static bool inhibited=true;static uint32_t gate_epoch;static bool watchdogs_ok=true;   /* 6.3.1-m1 (M1-03): watchdogi sprawne - zachowanie bez nich sprawdza probe_review_m1.py */
 static bool drive_ok=true,sens_on,acquisition_running;static int current_sign;static uint64_t reverse_until;
 void board_kill(void);esp_err_t board_sensor_off(void);
 /* Niezmiennik M-05: nigdy oba PWM naraz; DRIVE_EN wysoki tylko przy jednym aktywnym kierunku albo postoju. */

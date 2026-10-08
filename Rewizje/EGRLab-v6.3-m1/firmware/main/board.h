@@ -62,6 +62,8 @@ bool board_release(uint32_t token);
 /* --- M-06 / D-M1-4: brak sprzetowego okna OC i zatrzasku ------------------
  * Mostek wylacza firmware i watchdogi ESP32: zadaniowy (TWDT, panika) i RTC (reset systemu).
  * Przy panice DRIVE_EN i SENS_EN ida w dol jeszcze przed zrzutem (owiniety esp_panic_handler);
- * w resecie trzymaja je pull-downy 100 k (R2-R5). */
+ * w resecie trzymaja je pull-downy R2-R5 (DRIVE_EN 4,7 k przeciw podciaganiu MTCK, reszta 100 k). */
 esp_err_t board_watchdogs_start(void);
 void board_watchdogs_feed(void);
+/* 6.3.1-m1 (M1-03): false do pelnego startu obu watchdogow; board_release() odmawia, TEST jest odrzucany. */
+bool board_watchdogs_ok(void);

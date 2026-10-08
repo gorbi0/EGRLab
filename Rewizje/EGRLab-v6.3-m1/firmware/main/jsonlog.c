@@ -37,10 +37,11 @@ bool json_config(char *out,size_t cap,const session_config_t *c,uint64_t t) {
         c->local_current?"true":"false",c->current_calibrated?"true":"false",c->current_module,c->valve,c->adapter,c->vehicle_id,c->session_note);
     char z[32],closed[32],open[32];
     json_add(&b,",\"current_zero\":%s,\"current_volts_per_amp\":%.9g,\"current_valid\":%s,"
-        "\"closed\":%s,\"open\":%s,\"opening_sign\":%d,\"learned\":%s,\"ch8\":\"SENS_5V\","
+        "\"closed\":%s,\"open\":%s,\"opening_sign\":%d,\"learned\":%s,\"ch8\":\"SENS_5V\",\"ch7_source\":\"%s\","
         "\"adc_software_mode\":%s,\"adc_config_ok\":%s,\"current_window_qualified\":%s,"
-        "\"current_metric\":\"sample_mean_20ms\",\"current_chain\":\"%s\",\"hardware\":\"M1-R1\",\"firmware\":\"6.3-m1\"}",json_number(z,c->current_zero),c->current_volts_per_amp,c->current_valid?"true":"false",
+        "\"current_metric\":\"sample_mean_20ms\",\"current_chain\":\"%s\",\"hardware\":\"M1-R1\",\"firmware\":\"6.3.1-m1\"}",json_number(z,c->current_zero),c->current_volts_per_amp,c->current_valid?"true":"false",
         json_number(closed,c->closed),json_number(open,c->open),c->opening_sign,c->learned?"true":"false",
+        c->bank?"vmotor_x1_3":"car_battery_x1_13",   /* 6.3.1-m1 (M1-02): CH7 = auto w LOGGER, VMOTOR (zworka X1.13-X1.3) w TEST */
         c->adc_software_mode?"true":"false",c->adc_config_ok?"true":"false",
         c->current_window_qualified?"true":"false",CHAIN_M1);
     return b.ok;

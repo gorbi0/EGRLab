@@ -12,9 +12,19 @@ RPM: z potwierdzonego dekodera CAN albo odpowiedzi na żądanie innego przyrząd
 
 Komenda `logger`, następnie `identify`. Program pasywnie sprawdza sześć przypisań trzech przewodów 4/5/6; wymaga jednej stabilnej odpowiedzi przez 2 s, ma timeout. Oczekiwany feedback dla 28410-2A850 jest na pinie4; 5/6 identyfikowane jako referencja i masa. Niejednoznaczności nie rozstrzyga się podaniem zasilania na próbę. Porównaj widok gniazda, wyniki i adapter, zapisz profil. Dwie zwory adaptera T ustawiają własne zasilanie i powrót na rozpoznanych stykach.
 
-Odłącz ECU, wybierz TEST, `stop`, `test`. SENSOR_CHECK zasila tylko czujnik i sprawdza zakres oraz stabilność przed READY. Przed ruchem wymagany nowy ARM. Silnik pozostaje na pinach1/3.
+Przepnij listwę według tabeli niżej (wszystkie pięć żył ECU odłączone), wybierz TEST (`bank 1`), `stop`, `test`. SENSOR_CHECK zasila tylko czujnik i sprawdza zakres oraz stabilność przed READY. M1 nie ma fizycznego ARM (6.1 / S1: „nowy ARM przed ruchem” nie dotyczy M1). Silnik pozostaje na pinach 1/3.
 
-**6.3-m1 (M1-R1):** nie ma adapterów z detekcją ani fizycznego ARM. Tryb TESTER to przepięcie na listwie X1: przewód ECU odpięty z X1.5, na X1.5 / X1.7 wyjścia IBT-2 M+ / M−, X1.11 do pinu zasilania czujnika, X1.12 do masy czujnika (SPECYFIKACJA M1, sekcja 5). Rozkaz `test` jest odrzucany (`test_rejected`), gdy CH1/CH2, CH3–CH5 albo CH8 mają ponad 0,5 V — czyli gdy ECU nadal steruje silnikiem albo zasila czujnik. Przy zgaszonym zapłonie ECU nic nie podaje, więc kontrola go nie wykryje: przepięcie trzeba zrobić świadomie. W SENSOR_CHECK CH8 (SENS_5V) musi mieć 4,5–5,5 V i zgadzać się (0,3 V) z pinem uznanym za zasilanie. W stanach TEST każde naciśnięcie START / STOP to natychmiastowy STOP. LEARN dotyczy mapy pozycji testera, nie adaptacji zapamiętywanej przez ECU auta.
+**6.3.1-m1 (M1-R1; recenzja M1-02 i M1-06):** nie ma adapterów z detekcją ani fizycznego ARM. Tryb TESTER to przepięcie na listwie X1 (SPECYFIKACJA M1, sekcja 5):
+
+| Krok | Zacisk | Czynność (pakiet i zapłon wyłączone) |
+|---|---|---|
+| 1 | X1.5, X1.7, X1.8, X1.9, X1.10 | odłączyć i zaizolować **wszystkie pięć przewodów strony ECU** (P1, P3, P4, P5, P6); przewody zaworu zostają |
+| 2 | X1.5 / X1.7 | IBT-2 M+ na X1.5, IBT-2 M− na X1.7 |
+| 3 | X1.13 | przewód akumulatora auta odpięty; zworka X1.13 ↔ X1.3 (VMOTOR) — CH7 mierzy zasilanie mostka, zakres TEST 9,0–17,3 V (`config.ch7_source = vmotor_x1_3`) |
+| 4 | X1.11 / X1.12 | SENS_5V do zacisku pinu zasilania czujnika, GND do zacisku masy czujnika |
+| 5 | — | omomierzem przy odłączonych źródłach: żadna żyła strony ECU nie łączy się z X1 |
+
+Powrót do LOGGER: zdjąć zworki (X1.11, X1.12, X1.13 ↔ X1.3), odpiąć IBT-2, podłączyć pięć przewodów ECU, X1.12 do masy auta, X1.13 do akumulatora. Rozkaz `test` jest odrzucany (`test_rejected`), gdy CH1/CH2, CH3–CH5 albo CH8 mają ponad 0,5 V — czyli gdy ECU nadal steruje silnikiem albo zasila czujnik. Przy zgaszonym zapłonie ECU nic nie podaje, więc kontrola go nie wykryje: przepięcie trzeba zrobić świadomie. W SENSOR_CHECK CH8 (SENS_5V) musi mieć 4,5–5,5 V i zgadzać się (0,3 V) z pinem uznanym za zasilanie. W stanach TEST każde naciśnięcie START / STOP to natychmiastowy STOP. LEARN dotyczy mapy pozycji testera, nie adaptacji zapamiętywanej przez ECU auta.
 
 ## MANUAL i LEARN
 

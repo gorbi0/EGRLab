@@ -148,10 +148,12 @@ def physical(record, cfg):
             return math.nan
         return n*f/32768*g+o
     v = [value(n,f,g,o) for n,f,g,o in zip(raw,cfg['full_scale'],cfg['gain'],cfg['offset'])]
-    if len(record)==16:
+    # 6.3.1-m1 (recenzja M1-10): pola MCP3201 rekordu v5 zastepuja CH6 tylko w sesjach z lokalnym przetwornikiem
+    # (local_current=true, S1). M1 zapisuje prad w raw[5] (CH6 AD7606B) i ma local_current=false - v[5] zostaje.
+    if len(record)==16 and cfg.get('local_current') is True:
         n,begin,end,status=record[10:14]
         g_adc=cfg.get('current_adc_gain');o_adc=cfg.get('current_adc_offset')
-        v[5]=n*g_adc+o_adc if (cfg.get('local_current') is True and status==1 and 4<=n<=4091 and not flags&128 and
+        v[5]=n*g_adc+o_adc if (status==1 and 4<=n<=4091 and not flags&128 and
             0<=begin<=end<=400 and end-begin<=100 and all(isinstance(x,(int,float)) and math.isfinite(x) for x in (g_adc,o_adc))) else math.nan
     s, g, f = channels(cfg)
     ref = ratio = position = math.nan
@@ -171,8 +173,10 @@ def physical(record, cfg):
     return [t, seq, flags, config_id, *raw, *v, v[0] - v[1], current, ref, ratio, position]
 
 
-def columns(version):
-    names = NAMES_V2 if version >= 2 else NAMES_V1
+def columns(version, sens5v=False):
+    names = list(NAMES_V2 if version >= 2 else NAMES_V1)
+    if sens5v and version >= 2:
+        names[7] = 'sens_5v_v'   # M1: CH8 = SENS_5V (config ch8), nie AUX z S1
     return (['t_us', 'sequence', 'flags', 'config_id'] + [f'raw_ch{i}' for i in range(1, 9)]
             + names + ['motor_diff_v', 'current_a', 'sensor_ref_v', 'sensor_ratio', 'position']
             + (['current_raw','current_begin_us','current_end_us','current_status'] if version==5 else []))
@@ -324,7 +328,8 @@ def export(path,target,meta_path=None,recovery=False,start=None,end=None):
     with open(target,'w',newline='',encoding='utf-8') as output:
         writer=csv.writer(output); wrote=False
         for header,row in iter_session(path,recovery,warnings):
-            if not wrote: writer.writerow(columns(header['version'])); wrote=True
+            if not wrote:
+                writer.writerow(columns(header['version'],any(c.get('ch8')=='SENS_5V' for c in configs.values()))); wrote=True
             if start is not None and row[0]<start*1e6: continue
             if end is not None and row[0]>end*1e6: continue
             cfg=fallback if header['version']<3 else config_for(configs,fallback,row[-1],warnings,seen)
@@ -369,6 +374,7 @@ def report(path,target,meta_path=None,recovery=False,points=3000,start=None,end=
     table+='</table>'
     note=f'Format {header["version"]}; {count} rekordow; czas {lo:.6f}–{hi:.6f} s. '
     note+=('Pelna rozdzielczosc.' if full else 'Obwiednia min/max kazdego przedzialu; wszystkie probki uczestnicza w agregacji. Nie wyznaczaj czasu impulsu z pomniejszonego widoku.')
+    if any(c.get('ch8')=='SENS_5V' for c in configs.values()): note+=' Seria aux = CH8 SENS_5V (M1); vbat = CH7 wedlug ch7_source w config.'
     if header['synthetic']: note+=' DANE SYNTETYCZNE'
     document=HTML.replace('__TITLE__',html.escape(Path(path).name)).replace('__NOTE__',html.escape(note))
     document=document.replace('__TABLE__',table).replace('__WARN__','<br>'.join(html.escape(x) for x in warnings))

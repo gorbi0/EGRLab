@@ -123,7 +123,7 @@ class V5Hardware(unittest.TestCase):
 class V5Profiles(unittest.TestCase):
     def setUp(self):
         # 6.3-m1: sciezka schema 6 (S1/M2) sprawdzana na profilu zamknietego 6.2-s1; profil M1-R1 (schema 7) w test_v63_m1.py.
-        self.hw,self.valve,self.session=[json.loads((R.parent/'EGRLab-v6.2-s1'/'profiles'/f'{name}.json').read_text()) for name in ['hardware','valve','session']]
+        self.hw,self.valve,self.session=[json.loads((R/'tests'/'fixtures'/f'v6.2-s1-{name}.json').read_text()) for name in ['hardware','valve','session']]
     def measured_fixture(self):
         for v in self.hw['voltage']:v.update(accepted=True,gain=[1]*8,offset=[0]*8)
         for a in self.hw['aux']:a.update(gain=1,offset=0)

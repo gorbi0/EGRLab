@@ -1,0 +1,41 @@
+{
+ "source": "6.3-m1 (R1, commit 7b2740e: Rewizje/EGRLab-v6.3-m1/firmware/main + tools) - expected to FAIL",
+ "failed_groups": [
+  "safety",
+  "adc",
+  "producer",
+  "reader"
+ ],
+ "output": [
+  "M1-08 mutex blocked 400 ms in MANUAL: DRIVE_EN=1 RPWM=306 stop_pending=0 button_reads=0 watchdog_feeds=400",
+  "FAIL M1-08 mutex blocked 400 ms in MANUAL: !level[GPIO_DRIVE_EN] && !duty_out[0]",
+  "FAIL M1-08 mutex blocked 400 ms in MANUAL: stop_pending",
+  "FAIL M1-08 mutex blocked 400 ms in MANUAL: button_reads>=390",
+  "M1-08 control: lock available: DRIVE_EN=1 state=MANUAL stop_pending=0 feeds=50",
+  "M1-03 watchdog start failure: released=1 DRIVE_EN=1 RPWM=306",
+  "FAIL M1-03 watchdog start failure: !released && !level[GPIO_DRIVE_EN] && !duty_out[0]",
+  "safety probe: 7 checks, 4 failed",
+  "M1-09 TIMEOUT then two good transfers: pushed=3 board_config_ok=0 recover_pending=0",
+  "  record[0] seq=0 config_id=17 INVALID=0",
+  "  record[1] seq=2 config_id=17 INVALID=0",
+  "  record[2] seq=3 config_id=17 INVALID=0",
+  "FAIL M1-09: records after the error must stay INVALID until reconfiguration",
+  "FAIL M1-09: no physical value from an unconfirmed ADC",
+  "FAIL M1-09: recovery (reconfiguration with a new config_id) not requested",
+  "adc probe: 4 checks, 3 failed",
+  "M1-02 TEST CH7=0.0 V: state=FAULT fault=SUPPLY",
+  "M1-02 TEST CH7=8.9 V: state=FAULT fault=SUPPLY",
+  "M1-02 TEST CH7=13.5 V: state=READY fault=none",
+  "M1-02 TEST CH7=16.8 V: state=FAULT fault=SUPPLY",
+  "FAIL M1-02 16.8 V (full 4S): !supply_case(16.8f)",
+  "M1-02 TEST CH7=17.4 V: state=FAULT fault=SUPPLY",
+  "{\"type\":\"config\",\"t_us\":0,\"config_id\":1,\"bank\":0,\"ch_supply\":2,\"ch_ground\":4,\"ch_feedback\":3,\"full_scale\":[10,10,10,5,2.5,5,10,10],\"gain\":[4.05999994,4.05999994,1.01999998,1.01999998,1.01999998,1.00020003,6.08979988,1.01999998],\"offset\":[0,0,0,0,0,0,0,0],\"daq_module\":\"M1_SYNTHETIC\",\"voltage_calibrated\":true,\"local_current\":false,\"current_calibrated\":true,\"current_module\":\"M1_SYNTHETIC\",\"valve_id\":\"\",\"adapter_id\":\"\",\"vehicle_id\":\"\",\"session_note\":\"\",\"current_time\":\"ad7606b_simultaneous\",\"synchronous\":true,\"current_zero\":2.5,\"current_volts_per_amp\":0.25,\"current_valid\":true,\"closed\":0.150000006,\"open\":0.850000024,\"opening_sign\":1,\"learned\":true,\"ch8\":\"SENS_5V\",\"adc_software_mode\":true,\"adc_config_ok\":true,\"current_window_qualified\":false,\"current_metric\":\"sample_mean_20ms\",\"current_chain\":\"M1R1 RSH1 5mOhm INA240A2 G50 REF=VS/2 RC1k/1n AD7606B-CH6\",\"hardware\":\"M1-R1\",\"firmware\":\"6.3-m1\"}",
+  "M1-12 NaN vector mask=9",
+  "FAIL M1-12 NaN: !(f&TRIG_REF) && !(f&TRIG_FB)",
+  "M1-12 real 4 V REF mask=1",
+  "M1-11 after cal 1 5: accepted=1 vcal=0 ical=1 metric=1",
+  "FAIL M1-11 CH6 cal: ok && !p->current_calibrated[1] && !p->current_window_qualified",
+  "FAIL M1-11 qualify needs a new current acceptance: ok && !(p->voltage_calibrated[1] && p->current_calibrated[1] && p->current_window_qualified)",
+  "producer probe: 10 checks, 4 failed"
+ ]
+}

@@ -14,7 +14,7 @@ for name,sources in [('test_control',['control.c']),('test_runtime',['control.c'
     for line in run.stdout.splitlines():
         if line.startswith('{'):json.loads(line,parse_constant=lambda x:(_ for _ in ()).throw(ValueError(x)))
     (out/(name+'-results.txt')).write_text(run.stdout,encoding='utf-8');results.append(run.stdout.splitlines()[-1])
-for probe in ['probe_adc','probe_storage','probe_drive']:   # 6.3-m1: probe_current (MCP3201) -> probe_drive (M-05..M-07)
+for probe in ['probe_adc','probe_storage','probe_drive','probe_review_m1']:   # 6.3.1-m1: regresje recenzji M1-R1   # 6.3-m1: probe_current (MCP3201) -> probe_drive (M-05..M-07)
     run=subprocess.run([sys.executable,str(r/'tests'/(probe+'.py')),'--cc',a.cc,'--out',str(out)],capture_output=True,text=True)
     if run.returncode:sys.exit(run.stdout+run.stderr)
     results.append(run.stdout.splitlines()[-1])

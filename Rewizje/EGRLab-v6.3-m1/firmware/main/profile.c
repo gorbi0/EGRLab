@@ -57,6 +57,9 @@ bool profile_command(profile_t *p, const char *line) {
         n.current_window_qualified=b!=0;
     else return false;
     if (!profile_valid(&n)) return false;
-    if (!strcmp(cmd,"cal")) {n.qualified=false;n.voltage_calibrated[b]=false;}
+    if (!strcmp(cmd,"cal")) {n.qualified=false;n.voltage_calibrated[b]=false;
+        /* 6.3.1-m1 (recenzja M1-11): CH6 to napiecie wyjscia INA240 - nowa skala uniewaznia odbior pradu banku
+         * (zero i V/A odnosily sie do starego przeksztalcenia) i kwalifikacje metryki. Inne kanaly pradu nie ruszaja. */
+        if (j==5) {n.current_calibrated[b]=false;n.current_window_qualified=false;}}
     *p=n; return true;
 }

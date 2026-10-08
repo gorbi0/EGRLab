@@ -15,3 +15,11 @@ Wariant M1 (decyzje D-M1-1…13, `Plytki/M1-specyfikacja/`): uproszczony S1 dla 
 - Górna krawędź: pola przewodów do X1 w kolejności zacisków; prawa: ESP32-S3 DEV-KIT (antena w rogu, strefa bez miedzi, USB-C przy dolnej krawędzi); dolna: pola IBT-2, moduły MAX31856 (zaciski przy krawędzi), moduł microSD (gniazdo przy krawędzi).
 - Tor 7,5 A (BAT_P, VBUS, P1_ECU, P1_EGR): wylewki na F.Cu i B.Cu zszyte przelotkami; para Kelvina zablokowana (K_MINUS przez In2.Cu pod masą In1); miedź wokół AD7606B przeniesiona z P05 R3 (to samo ułożenie, przesunięcie +37 / −15 mm) z jego regułami drobnego rastra (0,15 mm tylko w obrysie U3).
 - Wydanie: `src/run_release.py` (schemat, layout, nadruk, `verify_pcb.py` z próbami ujemnymi, widoki, `output/pdf/M1-R1-PCB.pdf`, `verification/QA-PCB.md`).
+
+## Po recenzjach M1-R1 (8.10)
+
+- Odpowiedź: `Plytki/M1-specyfikacja/ODPOWIEDZ-NA-RECENZJE-M1-R1.md`. PCB i CAM bez zmian.
+- **Montaż (M1-01, decyzja użytkownika):** przed wlutowaniem modułu ESP32 wylutować na nim diodę D1 (USB VBUS → pin 5V listwy); samo USB nie zasila wtedy płytki, programowanie przy włączonym pakiecie.
+- **TEST (M1-02, M1-06):** przepięcie listwy według tabeli w SPECYFIKACJI (sekcja 5): pięć żył ECU odłączonych, X1.13 zworką do X1.3.
+- **Generator (M1-05):** `build_schematic.py` uzupełnia `eda/M1.kicad_pro` zamiast go nadpisywać; bramka `src/check_pro_preserved.py` w `run_schematic.py`.
+

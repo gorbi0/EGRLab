@@ -92,7 +92,7 @@ class M1Firmware(unittest.TestCase):
         self.assertEqual(p['U4']['pins']['3'],'GND')                                                             # REF2
         self.assertAlmostEqual(0.005*50,float(re.search(r'current_volts_per_amp\[bank\] = ([.\d]+)f',src('control.c')).group(1)))
         meta=src('storage.c')
-        for frag in ['CH1 P1_EGR 300k/100k','CH6 I_MOT INA240A2 x50 5mOhm VS/2+0.25V/A 1k/1n','CH7 VBAT_CAR 499k/100k','CH8 SENS_5V 100k',
+        for frag in ['CH1 P1_EGR 300k/100k','CH6 I_MOT INA240A2 x50 5mOhm VS/2+0.25V/A 1k/1n','CH7 499k/100k: LOGGER akumulator auta (X1.13), TEST VMOTOR','CH8 SENS_5V 100k',
                      'input_impedance_ohm','filter_pf']:self.assertIn(frag,meta)
     def test_m04_current_sampled_with_voltages(self):
         acq=body(src('app_main.c'),'static void acquisition(')
@@ -135,7 +135,11 @@ class M1Firmware(unittest.TestCase):
         self.assertIn('if (!in->drive_ok)     { fail(c, "OVERCURRENT"); return; }',src('control.c'))
         safety=body(src('app_main.c'),'static void safety(')
         self.assertLess(safety.index('board_watchdogs_start()'),safety.index('while(true)'))
-        loop=safety[safety.index('while(true)'):];self.assertLess(loop.index('board_watchdogs_feed()'),loop.index('control_step('))
+        # 6.3.1-m1 (recenzja M1-08): karmienie po ocenie sterowania i granicy czasu, tylko przy postepie albo bez napedu;
+        # zachowanie sprawdza probe_review_m1.py (rzeczywista petla safety), tu tylko kolejnosc w zrodle
+        loop=safety[safety.index('while(true)'):];self.assertLess(loop.index('control_step('),loop.index('board_watchdogs_feed()'))
+        self.assertIn('if(evaluated || !run_permission) board_watchdogs_feed();',loop)
+        self.assertLess(loop.index('CONTROL_STALE_US'),loop.index('board_watchdogs_feed()'))
         b=src('board.c');wrap=body(b,'void IRAM_ATTR __wrap_esp_panic_handler(')
         self.assertLess(wrap.index('GPIO_DRIVE_EN, 0'),wrap.index('__real_esp_panic_handler(info)'))
         self.assertIn('GPIO_SENS_EN, 0',wrap)
@@ -155,7 +159,7 @@ class M1Firmware(unittest.TestCase):
         self.assertEqual(p['R32']['pins'],{'1':'SENS_FAULT_N','2':'3V3'})
         self.assertIn('return !gpio_get_level(GPIO_SENS_FAULT_N)',b)
     def test_m08_f07_max31856_patch_and_direct_cs(self):
-        ref=(R.parents[1]/'Plytki/P09-R1-review/firmware/board.c').read_text(encoding='utf-8')
+        ref=(R/'tests/fixtures/P09-R1-board.c').read_text(encoding='utf-8')   # M1-07: fixture
         mine=body(src('board.c'),'esp_err_t board_temperature(')
         self.assertEqual(mine,body(ref,'esp_err_t board_temperature(').replace('\r',''))
         self.assertIn('.cs_ena_pretrans = 2, .cs_ena_posttrans = 2',src('board.c'))
@@ -188,7 +192,7 @@ class M1Firmware(unittest.TestCase):
         hw,valve,session=[json.loads((R/'profiles'/f'{x}.json').read_text(encoding='utf-8')) for x in ['hardware','valve','session']]
         self.assertEqual((hw['schema'],hw['configuration'],hw['configuration_version']),(7,'M1-R1',1))
         self.assertEqual(hw['current_driver'],'ad7606b_ch6_ina240');self.assertNotIn('aux',hw)
-        old=json.loads((R.parent/'EGRLab-v6.2-s1/profiles/hardware.json').read_text(encoding='utf-8'))
+        old=json.loads((R/'tests/fixtures/v6.2-s1-hardware.json').read_text(encoding='utf-8'))   # M1-07: fixture
         self.assertEqual(hw['daq_module'],old['daq_module'])                                   # tozsamosci jak w 6.2-s1
         self.assertEqual(hw['current'][0]['module_id'],old['current'][0]['module_id'])
         self.assertEqual(hw['current'][1]['module_id'],hw['current'][0]['module_id'])          # D-M1-7: jeden tor
@@ -206,7 +210,7 @@ class M1Firmware(unittest.TestCase):
         app=src('app_main.c');self.assertEqual(app.count('"profile_m1"'),2);self.assertNotIn('"profile5"',app)
         self.assertIn('#define EGR_HARDWARE_ACCEPTED 0',src('commissioning.h'))
     def test_version(self):
-        self.assertIn('set(PROJECT_VER "6.3-m1")',(R/'firmware/CMakeLists.txt').read_text(encoding='utf-8'))
-        self.assertIn('EGRLab-6.3-m1',src('storage.c'));self.assertIn('\\"firmware\\":\\"6.3-m1\\"',src('jsonlog.c'))
+        self.assertIn('set(PROJECT_VER "6.3.1-m1")',(R/'firmware/CMakeLists.txt').read_text(encoding='utf-8'))
+        self.assertIn('EGRLab-6.3.1-m1',src('storage.c'));self.assertIn('\\"firmware\\":\\"6.3.1-m1\\"',src('jsonlog.c'))
         self.assertNotIn('6.2-s1"',code('app_main.c'))
 if __name__=='__main__':unittest.main()

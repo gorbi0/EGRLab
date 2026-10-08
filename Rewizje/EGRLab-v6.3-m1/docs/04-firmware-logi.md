@@ -105,11 +105,11 @@ Tryb stołowy (D-2): PFAIL_N = L przez ≥ 100 ms od startu (P02 podłączony be
 
 Zmiany według `Plytki/M1-specyfikacja/zadania/ZADANIE-M1-KROK8-FIRMWARE.md` (M-01…M-13); pełna tabela w `README.md` tej rewizji. Format próbek bez zmian (wersja 5, rekord 40 B), zmienia się znaczenie kanałów.
 
-**Kanały AD7606B (M-03, M-04):** CH1 P1_EGR i CH2 P3 (300 k / 100 k), CH3–CH5 P4/P5/P6 (100 k szeregowo), **CH6 = prąd silnika** (INA240A2 ×50 na boczniku 5 mΩ, U = VS/2 + 0,25 V/A, RC 1 k / 1 n), CH7 VBAT_CAR (499 k / 100 k), **CH8 = SENS_5V** (100 k, wyjście TPS2553). Nominalne wzmocnienia z wejściem 5 MΩ: 4,06 / 4,06 / 1,02 ×3 / 1,0002 / 6,0898 / 1,02. Prąd jest próbkowany razem z napięciami (koniec MCP3201 i jego przedziału czasu): `raw[5]` to wyjście INA240, `current_raw` = 65535 i `current_status` = 2 (ABSENT) w każdym rekordzie. Prąd = `(raw[5]·FS/32768·gain[5] + offset[5] − current_zero) / current_volts_per_amp`; w config `local_current: false`, więc `tools/egrlog.py` liczy go z `raw[5]` bez zmian w czytniku. Ten sam tor w banku LOGGER i TEST (D-M1-7). Zero (ok. VS/2) mierzy rozkaz `zero` przy wyłączonym mostku i bez prądu ECU: przez całą sekundę linie silnika CH1/CH2 w ±0,5 V, CH6 stabilne (< 20 mV p-p) w 1–4 V.
+**Kanały AD7606B (M-03, M-04):** CH1 P1_EGR i CH2 P3 (300 k / 100 k), CH3–CH5 P4/P5/P6 (100 k szeregowo), **CH6 = prąd silnika** (INA240A2 ×50 na boczniku 5 mΩ, U = VS/2 + 0,25 V/A, RC 1 k / 1 n), CH7 VBAT_CAR (499 k / 100 k), **CH8 = SENS_5V** (100 k, wyjście TPS2553). Nominalne wzmocnienia z wejściem 5 MΩ: 4,06 / 4,06 / 1,02 ×3 / 1,0002 / 6,0898 / 1,02. Prąd jest próbkowany razem z napięciami (koniec MCP3201 i jego przedziału czasu): `raw[5]` to wyjście INA240, `current_raw` = 65535 i `current_status` = 2 (ABSENT) w każdym rekordzie. Prąd = `(raw[5]·FS/32768·gain[5] + offset[5] − current_zero) / current_volts_per_amp`; w config `local_current: false`. **6.3.1-m1 (recenzja M1-10):** `tools/egrlog.py` 6.3-m1 mimo to zastępował CH6 polami MCP3201 i eksportował pusty prąd; od 6.3.1-m1 pola MCP3201 zastępują CH6 tylko przy `local_current: true` (sesje S1), a w M1 prąd liczy się z `raw[5]`; kolumna CH8 w CSV nazywa się `sens_5v_v`. Ten sam tor w banku LOGGER i TEST (D-M1-7). Zero (ok. VS/2) mierzy rozkaz `zero` przy wyłączonym mostku i bez prądu ECU: przez całą sekundę linie silnika CH1/CH2 w ±0,5 V, CH6 stabilne (< 20 mV p-p) w 1–4 V.
 
-**Zanik zasilania (M-10):** M1 nie ma PFAIL_N ani podtrzymania. Pliki nie są zamykane przy zaniku zasilania; writer robi `fsync` obu plików co `CONFIG_EGR_SD_SYNC_MS` (domyślnie **1000 ms**, w 6.2-s1 2 s). Po zaniku w pliku może brakować ostatniej sekundy i ostatni blok `BLK1` może być obcięty — czytnik zgłasza to jako obcięty ostatni blok i czyta resztę. Nie ma już zdarzeń `power_fail` ani `pfail_glitch`. Przy wyłączaniu przyrządu: najpierw `stop`, odczekać ok. 2 s, potem wyłącznik.
+**Zanik zasilania (M-10):** M1 nie ma PFAIL_N ani podtrzymania. Pliki nie są zamykane przy zaniku zasilania; writer robi `fsync` obu plików co `CONFIG_EGR_SD_SYNC_MS` (domyślnie **1000 ms**, w 6.2-s1 2 s). **6.3.1-m1 (recenzja M1-04): 1 s to okres synchronizacji, nie granica straty.** Kolejka próbek w PSRAM mieści ok. 105 s; przy zadławieniu karty (writer opóźniony) zanik zasilania traci całą niezapisaną kolejkę, nie tylko ostatnią sekundę. Ostatni blok `BLK1` może być obcięty — czytnik zgłasza to i czyta resztę. Stan widać w `daq_stats` (`pending_samples`, `since_sync_ms`, `sync_ms`) i w odpowiedzi `status` (`queue`, `since_sync_ms`). Przed wyłącznikiem: `stop`, potem `status` aż `queue` jest mała (< 200 próbek, ok. 0,1 s) i `since_sync_ms` < 1500. Nie ma już zdarzeń `power_fail` ani `pfail_glitch`.
 
-**Tryb bez karty (M-11, zastępuje tryb stołowy F-02):** jeśli karta SD się nie zamontuje (np. zasilanie tylko z USB — D-M1-6: SD, AD7606B VDRIVE i MAX31856 są wtedy bez 3,3 V), firmware działa dalej bez plików: bez TEST, licznik sesji nie rośnie, konsola wypisuje „TRYB BEZ KARTY”. AD7606B bez zasilania daje błędy odczytu: jedno zdarzenie `adc_error` na serię (pełna liczba w `daq_stats.adc_errors`), dane oznaczone jako nieważne, następna konfiguracja zaczyna od pełnego RESET i 2100 ms.
+**Tryb bez karty (M-11, zastępuje tryb stołowy F-02):** jeśli karta SD się nie zamontuje (brak / uszkodzona karta; 6.3.1-m1: samo USB już niczego nie zasila — na module wylutowana D1, recenzja M1-01), firmware działa dalej bez plików: bez TEST, licznik sesji nie rośnie, konsola wypisuje „TRYB BEZ KARTY”. AD7606B bez zasilania daje błędy odczytu: jedno zdarzenie `adc_error` na serię (pełna liczba w `daq_stats.adc_errors`), dane oznaczone jako nieważne, następna konfiguracja zaczyna od pełnego RESET i 2100 ms.
 
 Nowe i zmienione zdarzenia w `events_NNN.ndjson`:
 
@@ -126,3 +126,22 @@ Nowe i zmienione zdarzenia w `events_NNN.ndjson`:
 `meta.json`: `firmware` EGRLab-6.3-m1, `hardware` M1-R1, `channels` (osiem opisów), `input_impedance_ohm`, `filter_pf`, `current` (kanał 6, puste pola MCP3201, sposób pomiaru zera), `power_fail` (`input` null, okres fsync), `can`.
 
 Profil w NVS ma wersję 7 i klucz `profile_m1`: kalibracja zapisana przez 6.1 / 6.2-s1 (inny sprzęt) nie wczytuje się na M1. Rozkazy `auxcal` i `iscal` są odrzucane; skalę prądu CH6 ustawia `ivpa <bank> <V/A>` (opis w `05-profile.md`).
+
+## 6.3.1-m1 — poprawki po recenzji M1-R1 (8.10.2026)
+
+Pełna tabela: `README.md` (R-01…R-12 ↔ M1-01…M1-12). Zmiany w logu:
+
+| Typ / pole | Kiedy | Treść |
+|---|---|---|
+| `config.ch7_source` | każda konfiguracja | `car_battery_x1_13` (LOGGER) albo `vmotor_x1_3` (TEST, zworka X1.13–X1.3); M1-02 |
+| `config.firmware` | każda konfiguracja | `6.3.1-m1` |
+| `hotsoak_point.vbat_source` | punkt HOT-SOAK (TEST) | `vmotor_x1_3` |
+| `config_gap.reason` = `adc_recovery` | M1-09: po błędzie odczytu ADC w LOGGER / SAFE udana rekonfiguracja AD7606B | nowy `config_id`; próbki między błędem a tym zdarzeniem mają flagę INVALID i brak wartości fizycznych |
+| `adc_recovery_failed` | M1-09: rekonfiguracja nieudana | `t_us`; ponowna próba co 1 s, próbki dalej INVALID |
+| `control_stale` | M1-08: ruch bez oceny sterowania dłużej niż 20 ms (np. zajęta blokada managera) | `t_us`, `age_us`; mostek w dół i STOP |
+| `watchdog_failed` | M1-03: nieudany start TWDT / RTC WDT | `t_us`; bramka napędu nie zwalnia się do restartu, `test` odrzucany |
+| `daq_stats` | co 10 s | dodatkowo `pending_samples`, `since_sync_ms`, `sync_ms` (M1-04) |
+| `trigger` REF / FEEDBACK | M1-12 | tylko dla zmierzonych napięć poza zakresem; brak ważnego pomiaru (NaN) nie wyzwala |
+
+`meta.json`: `firmware` EGRLab-6.3.1-m1; opis CH7 według trybu; `power_fail.note` bez obietnicy „1 s”.
+

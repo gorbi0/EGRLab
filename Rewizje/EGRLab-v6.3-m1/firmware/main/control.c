@@ -263,8 +263,10 @@ void control_step(control_t *c, const inputs_t *in) {
     if (!in->storage_ok)   { fail(c, "STORAGE"); return; }
     /* M-06: programowe ograniczenie prądu z CH6 zadziałało w zadaniu akwizycji (mostek już wyłączony). */
     if (!in->drive_ok)     { fail(c, "OVERCURRENT"); return; }
-    /* F-03 bez zmian: akumulator auta (VBAT_CAR, X1.13), nie pakiet 4S zasilajacy przyrzad i mostek. */
-    if (!isfinite(in->v[CH_VBAT]) || in->v[CH_VBAT] < 9 || in->v[CH_VBAT] > 16.5f) {
+    /* 6.3.1-m1 (recenzja M1-02): ta kontrola dziala tylko w stanach TEST (LOGGER wychodzi wyzej). W TEST X1.13 jest
+     * zworka polaczony z X1.3 (VMOTOR za F1), a przewod akumulatora auta odpiety - CH7 mierzy zasilanie mostka.
+     * Zakres 9,0-17,3 V obejmuje naladowany pakiet 4S (16,8 V) z zapasem na blad pomiaru (bylo 9-16,5 V dla auta). */
+    if (!isfinite(in->v[CH_VBAT]) || in->v[CH_VBAT] < 9.0f || in->v[CH_VBAT] > 17.3f) {
         fail(c, "SUPPLY"); return;
     }
     /* TPS fault is distinct from an analog sensor still settling at start-up. */

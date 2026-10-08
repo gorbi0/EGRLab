@@ -5,7 +5,9 @@ from pathlib import Path
 import hashlib, json, subprocess, zipfile, time
 
 ROOT = Path(__file__).resolve().parents[2]
-DIRS = ['Plytki/M1-specyfikacja', 'Plytki/M1-R1-review', 'Plytki/M1-PCB-R1-zamowienie', 'Rewizje/EGRLab-v6.3-m1']
+DIRS = ['Plytki/M1-specyfikacja', 'Plytki/M1-R1-review', 'Plytki/M1-PCB-R1-zamowienie', 'Rewizje/EGRLab-v6.3-m1',
+        # 8.10 (recenzja M1-07): model sprzetu v6.1 dla regresji firmware i poprzednie recenzje do porownania
+        'Rewizje/EGRLab-v6.1-rc1', 'Plytki/M1-R1-recenzja-Astra', 'Plytki/M1-R1-recenzja-Ultra']
 TOP = 'M1-R1-do-recenzji'
 OUT = ROOT / 'Plytki/M1-R1-do-recenzji.zip'
 commit = subprocess.run(['git', '-C', str(ROOT), 'rev-parse', 'HEAD'], capture_output=True, text=True, check=True).stdout.strip()
@@ -14,7 +16,9 @@ assert not dirty, 'commit the M1 directories first:\n' + dirty
 ts = int(subprocess.run(['git', '-C', str(ROOT), 'log', '-1', '--format=%ct'], capture_output=True, text=True, check=True).stdout)
 dt = time.gmtime(ts)[:6]
 skip = lambda p: any(x in ('__pycache__', 'tmp') for x in p.parts) or p.name.endswith('.lck')
-files = sorted(p for d in DIRS for p in (ROOT / d).rglob('*') if p.is_file() and not skip(p.relative_to(ROOT)))
+# only files tracked by git (local build-*, *.exe and other ignored files stay out)
+tracked = subprocess.run(['git', '-C', str(ROOT), 'ls-files', '-z', '--', *DIRS], capture_output=True, check=True).stdout.decode('utf-8').split('\0')
+files = sorted(ROOT / f for f in tracked if f and (ROOT / f).is_file() and not skip(Path(f)))
 sha = {p.relative_to(ROOT).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest() for p in files}
 manifest = {'commit': commit, 'branch': 'm1', 'files': len(sha), 'sha256': sha}
 

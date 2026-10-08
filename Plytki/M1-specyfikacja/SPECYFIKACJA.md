@@ -58,10 +58,12 @@ Numeracja jak firmware 6.2-s1 (`board.c`) tam, gdzie sygnał został; nowe przyp
 | Szyna | Odbiorniki (typ. / szczyt) | Źródło |
 |---|---|---|
 | Pakiet 4S, 10–16,8 V | wszystko; silnik EGR 1,5–3,5 A (próba bierna toru do 10 A) | BMS 40 A, F1 7,5 A MINI na PCB |
-| 5 V | ESP32 DEV-KIT (do ok. 350 mA przy Wi-Fi), AD7606B AVCC ok. 25 mA, INA240 2 mA, IBT-2 VCC ok. 20 mA, 74AHCT125 1 mA, TPS2553 (czujnik ok. 10 mA, limit ok. 100 mA) | TSR 2-2450 (2 A) |
+| 5 V | ESP32 DEV-KIT (do ok. 350 mA przy Wi-Fi), AD7606B AVCC ok. 25 mA, INA240 2 mA, IBT-2 VCC ok. 20 mA, 74AHCT125 1 mA, TPS2553 (czujnik ok. 10 mA; limit z R31 232 k: ok. 99–139 mA, typ. 117 mA — nie twarde 100 mA, recenzja 8.10) | TSR 2-2450 (2 A) |
 | 3,3 V | karta SD do 100 mA, MAX31856 ×2 (moduły, VIN = 3,3 V) ok. 5 mA, AD7606B VDRIVE 1 mA, TCAN1051V VIO 1 mA | TSR 2-2433 (2 A) |
 
 Razem z 5 V ok. 0,45 A szczytowo, z 3,3 V ok. 0,15 A: zapas kilkukrotny. ESP32 ma własne LDO modułu z 5 V; peryferia z osobnego 3,3 V (wspólna masa).
+
+**USB (D-M1-6, recenzja M1-01, decyzja użytkownika 8.10):** na module Waveshare USB VBUS zasila przez diodę D1 (B5819WS na schemacie rodziny) pin 5V listwy, czyli szynę 5 V całej płytki — bez szyny 3,3 V (TSR 2-2433 z pakietu). Wtedy GPIO podają 3,3 V na AD7606B bez VDRIVE (przekroczenie dopuszczalnego wejścia). **Przed wlutowaniem modułu wylutować na nim D1** (najpierw potwierdzić na posiadanym egzemplarzu oznaczenie i rewizję; po wylutowaniu brak ciągłości USB VBUS ↔ pin 5V listwy). Samo USB niczego wtedy nie zasila; programowanie i konsola tylko przy włączonym pakiecie. Kolejność: pakiet włączony przed podłączeniem USB, USB odłączone przed wyłączeniem pakietu. Odbiór: tabela stanów pakiet/USB i rozruch / zanik obu TSR (VDRIVE ≤ AVCC + 0,3 V).
 
 ## 5. Listwa X1 (kontrakt — tak jak dawne J_BP)
 
@@ -77,10 +79,22 @@ ECU i EGR tej samej linii lądują na **jednym zacisku** (przelotowo w listwie) 
 | 8 / 9 / 10 | P4 / P5 / P6 (czujnik) | 0,25 mm² odczepy | przelotowo |
 | 11 | SENS_5V (TESTER: do pinu zasilania czujnika) | 0,5 mm² | |
 | 12 | GND przyrządu / masa auta (odniesienie pomiarów) | 0,5 mm² | **w LOGGER podłączyć do masy auta** |
-| 13 | VBAT_CAR (akumulator auta, pomiar) | 0,25 mm² | |
+| 13 | VBAT_CAR (LOGGER: akumulator auta; TEST: zworka do X1.3 = VMOTOR, przewód auta odpięty) | 0,25 mm² | CH7; nigdy oba źródła naraz (recenzja M1-02) |
 | 14 / 15 / 16 | CAN_H / CAN_L / CAN_GND | skrętka 0,25 mm² | |
 
-**Tryby (świadomy użytkownik, przepięcia na listwie):** LOGGER — X1.5 = przewód silnika od ECU, X1.6 = przewód do zaworu, czujnik ECU ↔ zawór przelotowo na X1.8–10, SENS_EN wyłączone. TESTER — przewód ECU odpięty z X1.5, na X1.5 / X1.7 wyjścia IBT-2 M+ / M−, X1.11 do pinu zasilania czujnika, X1.12 do masy czujnika.
+**Tryby (świadomy użytkownik, przepięcia na listwie).** LOGGER: przewody ECU i zaworu tej samej linii na wspólnych zaciskach X1.5 (ECU) / X1.6 (zawór), X1.7–X1.10 przelotowo; X1.12 do masy auta, X1.13 do akumulatora auta; SENS_EN wyłączone.
+
+**LOGGER → TEST (recenzja M1-06 — wszystkie pięć żył ECU):** przy wyłączonym pakiecie i zapłonie:
+
+| Krok | Zacisk | Czynność |
+|---|---|---|
+| 1 | X1.5, X1.7, X1.8, X1.9, X1.10 | odłączyć i zaizolować **wszystkie pięć przewodów strony ECU** (P1, P3, P4, P5, P6); przewody zaworu zostają (X1.6, X1.7–X1.10) |
+| 2 | X1.5 / X1.7 | IBT-2 M+ na X1.5 (wejście bocznika), IBT-2 M− na X1.7 (P3 zaworu) |
+| 3 | X1.13 | odłączyć przewód akumulatora auta; zworka X1.13 ↔ X1.3 (VMOTOR za F1, pomiar CH7 w TEST) |
+| 4 | X1.11 / X1.12 | zworka SENS_5V (X1.11) do zacisku pinu zasilania czujnika, GND (X1.12, odpięty od masy auta) do zacisku masy czujnika — według mapy zaworu (IDENTIFY / karta) |
+| 5 | — | sprawdzić omomierzem przy odłączonych źródłach: żadna żyła strony ECU nie ma połączenia z X1; dopiero potem pakiet i `test` |
+
+**TEST → LOGGER:** zdjąć zworki X1.11, X1.12 (masa czujnika) i X1.13 ↔ X1.3; odłączyć IBT-2 M+ / M− z X1.5 / X1.7; podłączyć przewody ECU na X1.5, X1.7–X1.10; X1.12 do masy auta, X1.13 do akumulatora auta. Brak napięcia na liniach przed `test` (kontrola firmware) nie zastępuje kroku 5: wyłączone ECU też ma 0 V.
 
 Kontrola schematu i PCB (jak `verify_s1`): każda sieć z tabeli ma pole przewodu na PCB, pola przy jednej krawędzi w kolejności X1, przekroje jak w tabeli.
 

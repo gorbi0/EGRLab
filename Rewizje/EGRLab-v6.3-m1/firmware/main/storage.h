@@ -50,5 +50,8 @@ bool storage_config(const session_config_t *cfg);
 void storage_mark(uint64_t t_us);
 bool storage_ok(void);
 uint32_t storage_lost_events(void);
+/* 6.3.1-m1 (recenzja M1-04): probki w kolejce RAM jeszcze nieprzekazane do pliku, wiek ostatniego udanego fsync
+ * i czas jego trwania. Okres fsync to nie gwarancja maksymalnej straty przy zaniku zasilania. */
+void storage_backlog(uint32_t *pending_samples, uint32_t *since_sync_ms, uint32_t *sync_ms);
 void storage_writer(void *arg);
 uint32_t egr_crc32(const void *data, unsigned length);

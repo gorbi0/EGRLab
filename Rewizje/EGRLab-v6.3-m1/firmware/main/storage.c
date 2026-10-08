@@ -118,18 +118,19 @@ bool storage_init(uint32_t session, uint32_t rate) {
     FILE *meta = fopen(path, "w");
     if (!meta) return false;
     /* M-03 / M-04 / M-10: opis kanalow M1-R1 i zachowania przy zaniku zasilania. */
-    fprintf(meta, "{\n\"schema\":5,\"firmware\":\"EGRLab-6.3-m1\",\"synthetic\":false,\"utc\":null,\n"
+    fprintf(meta, "{\n\"schema\":5,\"firmware\":\"EGRLab-6.3.1-m1\",\"synthetic\":false,\"utc\":null,\n"
         "\"identity_source\":\"config events and session manifest\",\"record_bytes\":40,\n"
         "\"sample_rate\":%" PRIu32 ",\"session\":%" PRIu32 ",\"adc_spi_hz\":%d,\n"
         "\"hardware\":\"M1-R1 (jedna plytka, IBT-2 poza plytka)\",\n"
         "\"channels\":[\"CH1 P1_EGR 300k/100k\",\"CH2 P3 300k/100k\",\"CH3 P4 100k\",\"CH4 P5 100k\",\"CH5 P6 100k\","
-        "\"CH6 I_MOT INA240A2 x50 5mOhm VS/2+0.25V/A 1k/1n\",\"CH7 VBAT_CAR 499k/100k (akumulator auta, nie pakiet 4S)\","
+        "\"CH6 I_MOT INA240A2 x50 5mOhm VS/2+0.25V/A 1k/1n\",\"CH7 499k/100k: LOGGER akumulator auta (X1.13), TEST VMOTOR (zworka X1.13-X1.3), pole ch7_source w config\","
         "\"CH8 SENS_5V 100k (TPS2553)\"],\n"
         "\"input_impedance_ohm\":5000000,\"filter_pf\":220,\n"
         "\"current\":{\"channel\":6,\"record_fields\":\"current_raw=65535, current_status=2 (brak MCP3201)\","
         "\"zero\":\"mierzone rozkazem zero przy wylaczonym mostku i bez pradu ECU\"},\n"
         "\"power_fail\":{\"input\":null,\"note\":\"M1 bez PFAIL_N: przy zaniku zasilania pliki moga zostac niedomkniete; "
-        "fsync co %d ms, ostatni blok moze byc obciety\"},\n"
+        "fsync co %d ms to okres synchronizacji, nie granica straty: niezapisana kolejka RAM (do ok. 105 s) ginie; "
+        "stan w daq_stats (pending_samples, since_sync_ms), ostatni blok moze byc obciety\"},\n"
         "\"can\":%s,\n"
         "\"note\":\"Kalibracja i zakresy w events.ndjson jako zdarzenia config; "
         "kazdy rekord niesie config_id.\"}\n", rate, session, CONFIG_EGR_ADC_SPI_HZ,
@@ -226,6 +227,14 @@ void storage_mark(uint64_t t_us) {
 /* Kazda operacja na plikach pod file_lock. W trybie bez karty (sink, M-11) kolejki sa oprozniane bez zapisu.
  * Zdarzenia: do 64 na obieg (ramki CAN, F-08). M-10: fsync co CONFIG_EGR_SD_SYNC_MS (bylo 2 s). */
 static void writer_stop(void) { xSemaphoreGive(file_lock); while (true) vTaskDelay(portMAX_DELAY); }
+static volatile uint64_t last_sync_us, last_sync_dur_us;
+void storage_backlog(uint32_t *pending_samples, uint32_t *since_sync_ms, uint32_t *sync_ms) {
+    portENTER_CRITICAL(&mux); uint64_t n = head - tail; portEXIT_CRITICAL(&mux);
+    uint64_t now = esp_timer_get_time(), last = last_sync_us;
+    *pending_samples = (uint32_t)n;
+    *since_sync_ms = sink || !last ? UINT32_MAX : (uint32_t)((now - last) / 1000);
+    *sync_ms = (uint32_t)(last_sync_dur_us / 1000);
+}
 void storage_writer(void *arg) {
     (void)arg;
     static sample_t batch[BLOCK_COUNT];
@@ -265,6 +274,7 @@ void storage_writer(void *arg) {
             if (!sink && now - last_flush > (uint64_t)CONFIG_EGR_SD_SYNC_MS * 1000) {
                 last_flush = now;
                 if (!sync_file(samples) || !sync_file(eventfile)) unhealthy();
+                else { uint64_t done = esp_timer_get_time(); last_sync_us = done; last_sync_dur_us = done - now; }
             }
         }
         xSemaphoreGive(file_lock);

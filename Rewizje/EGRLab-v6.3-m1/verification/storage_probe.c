@@ -76,7 +76,7 @@ bool storage_event(const char *fmt, ...) {
     campaign_t *p=&ctrl.soak; if(!p->point_ready) return;
     char n[7][32];
     storage_event("{\"type\":\"hotsoak_point\",\"t_us\":%" PRIu64 ",\"index\":%d,\"config_id\":%u,"
-        "\"tc1\":%s,\"tc2\":%s,\"vbat\":%s,\"i_break_open\":%s,\"i_break_close\":%s,"
+        "\"tc1\":%s,\"tc2\":%s,\"vbat\":%s,\"vbat_source\":\"vmotor_x1_3\",\"i_break_open\":%s,\"i_break_close\":%s,"
         "\"ms_10_90\":%s,\"ms_90_10\":%s,\"current_metric\":\"sample_mean_20ms\",\"metric_qualified\":%s}",
         (uint64_t)esp_timer_get_time(),p->done,active_cfg.id,json_number(n[0],p->t1),json_number(n[1],p->t2),
         json_number(n[2],p->vbat),json_number(n[3],p->i_break_open),json_number(n[4],p->i_break_close),
