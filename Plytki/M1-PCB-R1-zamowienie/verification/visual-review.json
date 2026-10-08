@@ -1,0 +1,43 @@
+{
+ "pass": true,
+ "reviewer": "Claude (sesja lokalna, recenzja PR #16; oględziny podglądów wygenerowanych z plików CAM po przebudowie)",
+ "time_utc": "2026-10-08T12:50:09.596898+00:00",
+ "viewed_images": [
+  "CAM-top",
+  "CAM-bottom",
+  "CAM-F_Cu",
+  "CAM-In1_Cu",
+  "CAM-kontrola-warstw"
+ ],
+ "observations": [
+  "Przebudowa 8.10 po zmianie R2 100 k -> 4,7 k (wartość części; miedź bez zmian: te same 518 odcinków, 149 przelotek, 49 wypełnień i 93 części co w poprzedniej wersji paczki, dwa odcinki z zamienionym początkiem i końcem). Gerbery różnią się kolejnością apertur; kontrola CAM 24/24 na nowych plikach.",
+  "Obejrzane obrazy (nowe, po przebudowie): CAM-top, CAM-bottom (od spodu), CAM-F_Cu, CAM-In1_Cu oraz zestawienie CAM-kontrola-warstw; w poprzedniej wersji paczki obejrzano też osobno CAM-B_Cu i CAM-In2_Cu (ta sama geometria) (w nim pozostałe warstwy B_Cu, In2_Cu, maski i opisy tylko w miniaturach; osobnych podglądów B_Cu, In2_Cu, masek i opisów nie oglądano).",
+  "Antena ESP32: prostokąt w prawym górnym rogu (widok z góry) nad modułem M1 bez miedzi na F.Cu, In1 i B.Cu (na zestawieniu także na B.Cu); w żadnej z obejrzanych warstw ścieżka, przelotka ani wylewka nie wchodzi w ten obszar.",
+  "Pola X1: rząd dziesięciu pól przewodów (P3, P4, P5, P6, 5S, G, VB, H, L, G) przy górnej krawędzi, pierwsze pole kwadratowe; opisy w kolejności zacisków; pola widoczne też na In1 (z odsunięciem od płaszczyzny) i na maskach.",
+  "Tor 7,5 A: na F.Cu szerokie wylewki łączące J1, F1, J2, J5 i bocznik RSH1 oraz pola przewodów; na zestawieniu B.Cu wylewki pod tymi samymi polami (obejrzane w miniaturze), przelotki zszywające widoczne na In1.",
+  "Otwory M3: cztery otwory w narożach płytki widoczne na górze i spodzie, z wycięciem miedzi wokół na F.Cu i In1; dodatkowo dwa otwory przy dolnej krawędzi nad SD1 oraz otwory kotew opasek wzdłuż górnej i dolnej krawędzi.",
+  "In1: ciągła płaszczyzna masy na całej płytce z oknami wokół przelotek i pól THT oraz bez miedzi w obszarze anteny; In2: tylko ścieżki sygnałowe, bez wylewek (liczba konturów 0, zgodnie z kontrolą CAM).",
+  "Opis dolny: tylko oznaczenia C8, C9, C10, C13 (pod AD7606B) — zgodnie z zawartością B.SilkS; opis górny czytelny, napis „PRZEWODY DO LISTWY X1” i znacznik wersji „EGRLab M1-R1 2026-10-08” przy bocznikach; oznaczenia części DNP R25/R27 pozostają na płytce.",
+  "Obejrzane obrazy nie wykazały zabrudzeń, brakujących pól ani nadmiarowych elementów względem projektu; to nie zastępuje przymiarki 1:1 (NIE ZBADANO)."
+ ],
+ "images": {
+  "podglad/CAM-top.png": "cca69f03d68c2e952b10004f9e80cfa024568636450ca1e3ca68f34041133088",
+  "podglad/CAM-bottom.png": "041f091bb761ae4e26ab744716f7e6a570653f7427485fea6e3b30c58f9fde06",
+  "podglad/CAM-F_Cu.png": "ad02de58a730cfeed5860a39e7c2b800eb947c91a2746889f2f8ef89ce053911",
+  "podglad/CAM-In1_Cu.png": "1903368e27db78c53a7dcbd0b6e08d6e02aa308fbc1347144ee53c767d82bd5e",
+  "podglad/CAM-kontrola-warstw.png": "849075490675f988b103043a68dff38c2b2caaefdd8ebd3ff2158f162d3b7018"
+ },
+ "cam_files": {
+  "M1-B_Cu.gbl": "8c4c9049b5645768acfdcdfbbd4c81fbe7a019bd0142e6570773b9e56e4f7d36",
+  "M1-B_Mask.gbs": "ce84b87e45789759eeee8684b3b1ca1c8e655ed151b56a69a3a9d0a4e9344b29",
+  "M1-B_Silkscreen.gbo": "bda071ec27c48c57616cde4d7eab4171ff4cdb2545a183bdfa3fd2b5b7467a2d",
+  "M1-Edge_Cuts.gm1": "cc1a653bd659ef4b4ba35389e7be5077e86b03c40cd777ba73f6991eb1f23e48",
+  "M1-F_Cu.gtl": "45247c331be437ff4ac118987e848d2a1f62acd44412acc51f93a190eff205cb",
+  "M1-F_Mask.gts": "9b5b2dc68a529b5859946289ce784af1f28f66fbd63340fedcfc7f6f426413aa",
+  "M1-F_Silkscreen.gto": "d2a3d3c8f0cabde9703fe935b6d4dd4be83e1a32b4f51f228559cc8b113d4747",
+  "M1-In1_Cu.g1": "32268459554bba595c8face876c26a1e007f872ea1d2f895752353decacb5686",
+  "M1-In2_Cu.g2": "9d74ed0ecbf09be0e20b4ed49de47c419fa046fb70bff7aafed41f8bc0f5f7be",
+  "M1-NPTH.drl": "c9e89ffd19ca54d860a669b138365fb548a309a389ccfffebf72e550388c4a7b",
+  "M1-PTH.drl": "cf1af0e3edfce5f23ca5f3477f2993478a016177a4b23f5756d85c962483be86"
+ }
+}
