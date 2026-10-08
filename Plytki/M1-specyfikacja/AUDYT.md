@@ -91,4 +91,6 @@ TESTER: zawór na stole podłącza się do tych samych 5 zacisków strony EGR, a
 | D-M1-8 | Termopary | Własna mufa wprost do MAX31856 (bez listwy) |
 | D-M1-9 | Liczba płytek | **Jedna** (IBT-2 osobno jako posiadany moduł) |
 
+**8.10 — decyzje użytkownika: wszystkie rekomendacje przyjęte.** D-M1-3: pakiet 4S z posiadanym modułem BMS / PCM 4S 14,8 V 40 A (Allegro, kupiony hurtem) — ochrona ogniw (przeładowanie, głębokie rozładowanie, przeciążenie) jest w BMS, UVLO na płytce wycięte. Próg odcięcia BMS i obecność balansowania odczytać z etykiety / karty modułu przy odbiorze; przyrząd pracuje w całym zakresie 4S (ok. 10–16,8 V).
+
 Po decyzjach: krok 3 (specyfikacja, budżet zasilania, lista zacisków jako kontrakt, plan płytki), potem schemat z jednego generatora.
