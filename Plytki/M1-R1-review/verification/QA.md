@@ -2,7 +2,7 @@
 
 Części na płytce: 91 (+ 2 DNP), w tym 10 pól testowych bez elementu. Poza płytką: listwa X1, IBT-2, BMS, pakiet.
 ERC: 0 naruszeń na 7 arkuszach. Netlista: 93 części, 357 pinów sprawdzonych pin po pinie względem `parts.py`, 0 błędów, 99 sieci.
-Kontrole M1 (`verify_m1.py`): 8/8 PASS; mutacje 15/15 wykrytych przez kontrolę docelową; próba zerowa: czysta.
+Kontrole M1 (`verify_m1.py`): 8/8 PASS; mutacje 16/16 wykrytych przez kontrolę docelową; próba zerowa: czysta.
 
 | Kontrola | Wynik | Uwagi |
 |---|---|---|
@@ -29,6 +29,7 @@ Kontrole M1 (`verify_m1.py`): 8/8 PASS; mutacje 15/15 wykrytych przez kontrolę 
 | INA240 REF1 on GND (unidirectional) | PRAD | tak | PRAD |
 | DRIVE_EN pull-down removed | START | tak | START |
 | U7 OE on 3V3 | START | tak | START |
+| DRIVE_EN pull-down 100k again (R2 / R3 swapped) | START | tak | START |
 | TC2 SDO straight on MISO | MISO | tak | MISO, SIECI |
 | buffer OE swapped (TC1 gate on TC2_CS) | MISO | tak | MISO |
 | F1 bypassed (VMOTOR on BAT_P) | ZASILANIE | tak | X1, ZASILANIE |

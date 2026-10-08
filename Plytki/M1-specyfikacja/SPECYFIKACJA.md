@@ -43,7 +43,7 @@ Numeracja jak firmware 6.2-s1 (`board.c`) tam, gdzie sygnał został; nowe przyp
 | 17 / 18 | TWAI TX (niepodłączony: TXD i S transceivera na 3V3, odbiór cichy) / RX przez 100 R | bez zmian |
 | 1 | RPWM (LEDC) → 74AHCT125 → IBT-2; 100 k do GND | było PWM (bramki AND na P07) |
 | 21 | LPWM (LEDC) → 74AHCT125 → IBT-2; 100 k do GND | było HEART (8.10: GPIO38 steruje diodą RGB modułu) |
-| 39 | DRIVE_EN → 74AHCT125 → IBT-2 R_EN + L_EN; 100 k do GND (mostek wyłączony w resecie ESP32) | było ARM |
+| 39 | DRIVE_EN → 74AHCT125 → IBT-2 R_EN + L_EN; **4,7 k do GND** (mostek wyłączony w resecie ESP32; GPIO39 = MTCK ma po resecie wewnętrzne podciąganie ok. 45 k — karta ESP32-S3 v2.2, tab. 2-1, przyp. 7; 100 k przegrywało: ok. 2,3 V = stan wysoki dla 74AHCT125) | było ARM |
 | 40 | SENS_EN → TPS2553 EN; 100 k do GND | było HW_ARM |
 | 42 | SENS_FAULT_N ← TPS2553 (otwarty dren, 10 k do 3V3) | było INTERLOCK |
 | 15 | przycisk START / STOP (do GND, 10 k do 3V3) | było SCL I²C |
