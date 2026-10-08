@@ -16,13 +16,19 @@ pads = {}
 for f in b.GetFootprints():
     for a in f.Pads():
         pads.setdefault(a.GetNetCode(), []).append(a)
+p.ZONE_FILLER(b).Fill(b.Zones())
+zones = {}
+for z in b.Zones():
+    if not z.GetIsRuleArea():
+        zones.setdefault(z.GetNetCode(), []).append(z)
 dead, shortened = set(), []
 
 
 def on_copper(t, pt, others):
     v = p.VECTOR2I(p.FromMM(pt[0]), p.FromMM(pt[1]))
     return (any(a.IsOnLayer(t.GetLayer()) and a.HitTest(v) for a in pads.get(t.GetNetCode(), []))
-            or any((isinstance(u, p.PCB_VIA) or u.GetLayer() == t.GetLayer()) and u.HitTest(v) for u in others))
+            or any((isinstance(u, p.PCB_VIA) or u.GetLayer() == t.GetLayer()) and u.HitTest(v) for u in others)
+            or any(z.GetFilledPolysList(t.GetLayer()).Contains(v) for z in zones.get(t.GetNetCode(), []) if z.IsOnLayer(t.GetLayer())))   # M1: tap from a force pour
 
 
 while True:
@@ -65,7 +71,7 @@ assert n0 - len(tree) == len(dead), (n0 - len(tree), len(dead))
 fn.write_text(dump(tree) + chr(10), encoding='utf-8')
 b = p.LoadBoard(str(fn)); p.ZONE_FILLER(b).Fill(b.Zones()); b.BuildConnectivity(); after = b.GetConnectivity().GetUnconnectedCount(True)
 if after > before:
-    fn.write_bytes(BACKUP); print(f'trim aborted: unconnected {before} -> {after}; input board restored'); sys.exit(3)
+    fn.write_bytes(BACKUP); print(f'trim aborted: unconnected {before} -> {after}; input board restored'); print(json.dumps({'removed': info, 'shortened': shortened})); sys.exit(3)
 p.SaveBoard(str(fn), b)
 # phase 2: what native DRC still calls track_dangling (it matches exact anchor points; phase 1 tests shapes), one piece at a time
 import os, subprocess

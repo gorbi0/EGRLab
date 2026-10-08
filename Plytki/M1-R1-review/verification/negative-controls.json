@@ -1,0 +1,104 @@
+[
+ {
+  "control": "DRC: jedno naruszenie clearance",
+  "expected_failing_check": "DRC",
+  "failed_checks": [
+   "DRC: 0 naruszen (poza lib_footprint_mismatch po przycieciu nadruku), 0 niepolaczonych, 0 niezgodnosci ze schematem"
+  ],
+  "detected": true
+ },
+ {
+  "control": "Brak otworu M3",
+  "expected_failing_check": "Obrys",
+  "failed_checks": [
+   "Obrys 150 x 80 mm, 4 warstwy miedzi, 4 otwory M3 w narozach"
+  ],
+  "detected": true
+ },
+ {
+  "control": "Pola X1.7 / X1.8 zamienione",
+  "expected_failing_check": "Pola przewodow",
+  "failed_checks": [
+   "Pola przewodow X1 w jednym rzedzie przy gornej krawedzi, w kolejnosci zaciskow, sieci jak docs/X1.csv, kotwy opasek nad polami"
+  ],
+  "detected": true
+ },
+ {
+  "control": "Gniazdo SD 3 mm od krawedzi",
+  "expected_failing_check": "Dolna krawedz",
+  "failed_checks": [
+   "Dolna krawedz: gniazdo SD, USB-C modulu i zaciski termopar <= 1,5 mm od krawedzi"
+  ],
+  "detected": true
+ },
+ {
+  "control": "Przelotka w strefie anteny",
+  "expected_failing_check": "Antena",
+  "failed_checks": [
+   "Antena ESP32: brak miedzi w strefie ANTENNA M1 (sciezki, przelotki, wylewki)"
+  ],
+  "detected": true
+ },
+ {
+  "control": "P1_EGR rozciete na F.Cu",
+  "expected_failing_check": "Tor 7,5 A",
+  "failed_checks": [
+   "Tor 7,5 A: wylewki F.Cu laczace J1.1-F1.1, F1.2-J2.1, J5.1-RSH1.1, RSH1.4-J5.2; wylewki B.Cu; >= 2 przelotki zszywajace na siec"
+  ],
+  "detected": true
+ },
+ {
+  "control": "VBUS bez przelotek zszywajacych",
+  "expected_failing_check": "Tor 7,5 A",
+  "failed_checks": [
+   "Tor 7,5 A: wylewki F.Cu laczace J1.1-F1.1, F1.2-J2.1, J5.1-RSH1.1, RSH1.4-J5.2; wylewki B.Cu; >= 2 przelotki zszywajace na siec"
+  ],
+  "detected": true
+ },
+ {
+  "control": "Odcinek routera na K_MINUS",
+  "expected_failing_check": "Para Kelvina",
+  "failed_checks": [
+   "Para Kelvina tylko z miedzi zablokowanej (route_critical.py)"
+  ],
+  "detected": true
+ },
+ {
+  "control": "Obca sciezka przy boczniku",
+  "expected_failing_check": "Brak obcej miedzi",
+  "failed_checks": [
+   "Brak obcej miedzi routera przy boczniku, parze Kelvina i wewnatrz U3 (check_intrusion.py)"
+  ],
+  "detected": true
+ },
+ {
+  "control": "5V sciezka 0,3 mm",
+  "expected_failing_check": "Sciezki zasilan",
+  "failed_checks": [
+   "Sciezki zasilan (PWR) routera >= 0.5 mm"
+  ],
+  "detected": true
+ },
+ {
+  "control": "Powrot kondensatora za dlugi",
+  "expected_failing_check": "Powroty",
+  "failed_checks": [
+   "Powroty odsprzegania w limicie (return_check.py)"
+  ],
+  "detected": true
+ },
+ {
+  "control": "Napis plytki bez miejsca",
+  "expected_failing_check": "Nadruk",
+  "failed_checks": [
+   "Nadruk: napisy plytki umieszczone; oznaczenia bez miejsca (<= 10 %) na rysunku montazowym z F.Fab"
+  ],
+  "detected": true
+ },
+ {
+  "control": "proba zerowa (kopia bez zmian)",
+  "expected_failing_check": "-",
+  "failed_checks": [],
+  "detected": true
+ }
+]

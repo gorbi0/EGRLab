@@ -1,4 +1,4 @@
-"""P07 S1 silkscreen (from P06 R2; format S1, class 2/3; the P03 R6 script via P09 R2 / P10 R2 / P05 R3, board values from board.py). Run after run_layout.py; changes
+"""M1-R1 silkscreen (P07 S1 script; no S1 format here, board texts for M1; the P03 R6 script via P09 R2 / P10 R2 / P05 R3, board values from board.py). Run after run_layout.py; changes
 only F.SilkS (and hides values), never copper. Steps as P03 R6: footprint silk that would break DRC dropped at file level,
 references placed at the first free candidate, board texts (name, edge markers, pin 1 of J1 / J2, PIN_MARKS) and one label per
 service pin of J2 (LABEL: the net name, shortened only where it does not fit; vertical, read from edge B). Every drop is listed in routing/silkscreen.json."""
@@ -7,8 +7,8 @@ import pcbnew as p, json, math, sys
 from sexpr import parse, dump, sub, one
 P = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(P / 'src'))
-from board import NAME, REV, JBP, JSV, CLASS, SLOTS, PIN_MARKS
-TYTUL = f"{REV} S1-{CLASS} {SLOTS[0] if len(SLOTS) == 1 else SLOTS[0] + '-' + SLOTS[-1]}"   # S1 §9: nazwa, rewizja, klasa i sloty (jak P02 R4)
+from board import NAME, REV, JBP, JSV, PIN_MARKS, DATE
+TYTUL = f'EGRLab {REV}  {DATE}'
 fn = P / f'eda/{NAME}.kicad_pcb'
 from build_board import W, Hh as H, holes
 STREFY = [(hx, hy) for hx, hy in holes()]; RZ_M3 = 3.5   # 1.10 (recenzja P09): tekst w strefie Ø7 przykrywa dystans M3 z podkładką
@@ -140,7 +140,7 @@ def free(box, own, bottom=False):
         return False
     if any(hit(box, pb, .25) for r, pb in (botpads if bottom else padboxes)):
         return False
-    if not bottom and (any(hit(box, sb, .2) for r, sb in silk) or any(hit(box, tb, .2) for tb in placed)):
+    if not bottom and (any(hit(box, sb, .2) for r, sb in silk if not (r == own and (sb[2] - sb[0]) * (sb[3] - sb[1]) > 100)) or any(hit(box, tb, .2) for tb in placed)):   # M1: inside the outline of an own module
         return False
     if bottom and any(hit(box, tb, .2) for tb in placed_b):
         return False
@@ -204,6 +204,8 @@ for r in sorted(fps, key=lambda r: (yards[r].BBox().GetArea(), r)):   # 30.09: t
         for k in (2, 3):
             cands += [(cx, y0 - k * d, 0), (cx, y1 + k * d, 0), (x0 - k * d, cy_, 90), (x1 + k * d, cy_, 90)]
         cands += [(x0 - half, cy_, 0), (x1 + half, cy_, 0), (cx, y0 - half, 90), (cx, y1 + half, 90)]
+        # M1: last resort, every 0.5 mm spot within 6 mm of the courtyard centre, nearest first (still 'nearest to its own part')
+        cands += sorted(((cx + i * .5, cy_ + j * .5, a_) for i in range(-12, 13) for j in range(-12, 13) for a_ in (0, 90)), key=lambda q: math.hypot(q[0] - cx, q[1] - cy_))
         for x, y, a in cands:
             ref.SetTextSize(p.VECTOR2I(mm(size), mm(size))); ref.SetTextThickness(mm(MIN_T))
             ref.SetTextAngle(p.EDA_ANGLE(a, p.DEGREES_T)); ref.SetPosition(p.VECTOR2I(mm(x), mm(y)))
@@ -244,11 +246,14 @@ def place_text(t, spots, size=1.0, angle=0, just=None, own=None):
 res = {}
 # 1/3 board (53 mm wide): title in a free area (P10: the empty middle, then the lower third), short edge markers in the corners next to J1 / J2
 # P05 R3 (2/3 board): title in the free lower right quarter (between U6 / U7 and J_SV2), then the lower left
-res['title'] = place_text(TYTUL, [(x, y) for y in (84, 82, 86, 80, 88) for x in (24, 20, 28, 16, 32)] + [(x, y) for y in (21, 23, 25, 19, 27, 88, 90) for x in (50, 47, 53, 56, 44, 60)], 1.2)   # P07 (7.10): free lower left above J_SV2 first (the top middle holds the logic)
-res['edge_A'] = place_text('KRAWEDZ A (P12)', [(x, y) for y in (3.0, 4.5, 6.0, 7.5) for x in (53.0, 52.0, 54.0, 51.0, 55.0)], MIN_H)   # P07: between J_BP1 and J_BP2
-if res['edge_A'] is None:   # 30.09: on 53 mm the long marker does not fit beside J1 -> the short one in a corner
-    extra.remove('KRAWEDZ A (P12)'); res['edge_A'] = place_text('KRAWEDZ A', [(x, y) for y in (2.5, 4, 5.5, 7) for x in (6.0, 5.5, 47.0, 47.5)], MIN_H)
-res['edge_B'] = place_text('KRAWEDZ B', [(x, y) for y in (97.5, 98.2, 96.5, 95.5) for x in (53.0, 52.0, 54.0, 5.0, 101.5)], MIN_H)   # P05: between J_SV1 and J_SV2
+def scan(c0, r=60):   # M1: every 0.5 mm spot of the board, nearest to c0 first, as the fallback of a board text
+    pts = [(x * .5, y * .5) for x in range(10, int(W * 2) - 10) for y in range(6, int(H * 2) - 6)]
+    return sorted(pts, key=lambda q: (q[0] - c0[0]) ** 2 + (q[1] - c0[1]) ** 2)[:20000]
+
+
+res['title'] = place_text(TYTUL, [(x, y) for y in (46, 44, 48, 42, 50) for x in (40, 36, 44, 32)] + scan((40, 46)), 1.2)
+res['edge_A'] = place_text('PRZEWODY DO LISTWY X1 (kolejnosc zaciskow)', [(x, y) for y in (8.0, 7.5, 8.5, 9.0) for x in (86.0, 85.0, 87.0, 84.0)] + scan((86, 8))[:4000], MIN_H, own='J6')   # between the J6 anchors, inside its courtyard
+res['edge_B'] = place_text('TERMOPARY K', [(x, y) for y in (56.5, 56.0, 55.5) for x in (60.0, 62.0, 58.0, 64.0)] + scan((60, 56)), MIN_H)
 yy = None
 for y0 in ((64, 60, 56, 68, 44, 40, 36) if used else ()):   # legend of the abbreviations (none on P09 / P10): one block, first free place
     for x0 in (118, 122, 9, 12, 100):

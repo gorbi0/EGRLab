@@ -1,5 +1,5 @@
-"""Review PDF of the P07 S1 PCB (format S1, class 2/3): native KiCad plots at 1:1 (A4 landscape), no redrawn copper (P03 R6 / P09 R2 / P10 R2 pattern).
-Pages: 1 overview, 2 assembly top, 3 F.Cu, 4 B.Cu (seen from below), 5 fit print 1:1 (outline, courtyards, holes, heights).
+"""Review PDF of the M1-R1 PCB (150 x 80 mm, 4 layers): native KiCad plots at 1:1 (A4 landscape), no redrawn copper (P07 S1 make_pdf.py pattern).
+Pages: 1 overview, 2 assembly top, 3 F.Cu, 4 In1.Cu, 5 In2.Cu, 6 B.Cu (seen from below), 7 fit print 1:1.
 Fonts: reportlab with the Arial files named here; in the cloud image egrlab_winpaths maps them to Liberation Sans.
 """
 from pathlib import Path
@@ -14,17 +14,13 @@ import json, hashlib, sys, xml.etree.ElementTree as ET
 P = Path(__file__).resolve().parents[1]; O = P / 'output'
 sys.path.insert(0, str(P / 'src'))
 from heights import HEIGHTS
-from board import NAME, REV, CLASS, SLOTS
-TYTUL = f"{REV} S1-{CLASS} {SLOTS[0] if len(SLOTS) == 1 else SLOTS[0] + '-' + SLOTS[-1]}"
+from board import NAME, REV, W as BW, H as BH
+TYTUL = f'EGRLab {REV}'
 checks = json.loads((P / 'verification/pcb-checks.json').read_text(encoding='utf-8')); assert checks['passed'] == checks['total']
-assert checks['board_sha256'] == hashlib.sha256((P / f'eda/{NAME}.kicad_pcb').read_bytes()).hexdigest()
 neg = json.loads((P / 'verification/negative-controls.json').read_text(encoding='utf-8'))
 parts = json.loads((P / 'docs/parts.json').read_text(encoding='utf-8'))
 drc = json.loads((P / 'verification/drc.json').read_text(encoding='utf-8')); silk = json.loads((P / 'routing/silkscreen.json').read_text(encoding='utf-8'))
-det = checks['details']
-kel = next(v for k, v in det.items() if k.startswith('Kelvin pair'))
-dcp = next(v for k, v in det.items() if k.startswith('Decoupling at the pins')); dcp = dcp.get('distance_limit_mm', dcp)   # 7.10: detail with exceptions
-force = next(v for k, v in det.items() if k.startswith('Force pours VMOTOR'))
+snap = json.loads((P / 'verification/pcb-snapshot.json').read_text())
 bottom = sorted((r for r, v in json.loads((P / 'src/placement.json').read_text(encoding='utf-8')).items() if len(v) > 3 and v[3] == 'B'),
                 key=lambda r: (r[0], int(''.join(ch for ch in r if ch.isdigit()))))
 nlib = sum(1 for v in drc['violations'] if v['type'] == 'lib_footprint_mismatch')
@@ -32,7 +28,7 @@ pdfmetrics.registerFont(TTFont('Arial', 'C:/Windows/Fonts/arial.ttf')); pdfmetri
 pdfmetrics.registerFontFamily('Arial', normal='Arial', bold='Bold', italic='Arial', boldItalic='Bold')   # 30.09: <b> in the notes printed as regular without it
 (O / 'pdf').mkdir(parents=True, exist_ok=True)
 PDF = O / f"pdf/{REV.replace(' ', '-')}-PCB.pdf"
-c = Canvas(str(PDF), pagesize=(297 * mm, 210 * mm)); c.setTitle(f'EGRLab {REV}: PCB DRIVE w formacie S1')
+c = Canvas(str(PDF), pagesize=(297 * mm, 210 * mm)); c.setTitle(f'EGRLab {REV}: PCB (LOGGER + TESTER, jedna plytka)')
 style = ParagraphStyle('body', fontName='Arial', fontSize=9.5, leading=13, textColor=HexColor('#172833'))
 NPAGES = 7
 
@@ -46,13 +42,13 @@ def start(n, title, subtitle):
     c.setFillColor(HexColor('#172833')); c.setFont('Bold', 18); c.drawString(12 * mm, 190 * mm, title)
     c.setFont('Arial', 9); c.drawString(12 * mm, 182 * mm, subtitle)
     c.setStrokeColor(HexColor('#cdd7dc')); c.line(12 * mm, 14 * mm, 285 * mm, 14 * mm)
-    c.setFont('Arial', 8); c.drawString(12 * mm, 9 * mm, f'{TYTUL} | 05.10.2026 | PCB (layout lokalny) | przymiarka 1:1 i odbiór sprzętu: NIE ZBADANO')
+    c.setFont('Arial', 8); c.drawString(12 * mm, 9 * mm, f'{TYTUL} | 08.10.2026 | PCB (layout lokalny) | przymiarka 1:1 i odbiór sprzętu: NIE ZBADANO')
     c.drawRightString(285 * mm, 9 * mm, f'{n} / {NPAGES}')
 
 
-def board(name, x=12, y=42):
+def board(name, x=12, y=92):
     svg = ET.parse(O / 'svg' / (name + '.svg')).getroot(); w = float(svg.attrib['width'].removesuffix('mm')); h = float(svg.attrib['height'].removesuffix('mm'))
-    assert abs(w - 106.5) < .2 and abs(h - 100) < .2, (name, w, h)
+    assert abs(w - BW) < .2 and abs(h - BH) < .2, (name, w, h)
     c.drawImage(str(O / 'previews' / (name + '.png')), x * mm, y * mm, w * mm, h * mm, mask='auto')
     c.setStrokeColor(HexColor('#000000')); c.setLineWidth(1.2); c.line(x * mm, (y - 10) * mm, (x + 100) * mm, (y - 10) * mm)
     for xx in (x, x + 100):
@@ -70,60 +66,50 @@ def h_of(r):
 
 npass = sum(x['detected'] for x in neg)
 onboard = [r for r in parts if parts[r].get('on_board', True)]
+fitted = [r for r in onboard if not parts[r].get('dnp')]
 hmax = max(h_of(r) for r in onboard); tall = sorted(r for r in onboard if h_of(r) == hmax)
 hidden = silk['hidden_references']
-start(1, f'{REV} — DRIVE pod moduł IBT-2 (KPWR, bocznik 5 mΩ, INA240), PCB w formacie S1',
-      'Klasa 2/3 (106,5 × 100 mm), sloty S2–S3 poziomu 5 (dystanse 20 mm). Schemat: osobny PDF (P07-S1-schemat.pdf, 8 arkuszy A3).')
-y = 172
 fx = lambda v: str(v).replace('.', ',')
-for t in [f'<b>Płytka:</b> 106,5 × 100 mm (klasa 2/3), narożniki R1, 4 warstwy JLC04161H-7628 1,6 mm (zewnętrzne 35 µm, wewnętrzne 15 µm; In1 masa, In2 sygnały + zasilania); 8 otworów M3 (NPTH 3,2) według format-s1.json, strefy dystansów Ø7 '
-          f'bez miedzi i części. {len(onboard)} części; od spodu {len(bottom)} SMD ≤ 1,5 mm; najwyższa {", ".join(tall)} {fx(hmax)} mm (limit 16,5 mm).',
-          '<b>Krawędź A:</b> J_BP1 (S2, x = 26,5) i J_BP2 (S3, x = 80,0), IDC 2×8, pinout docs/J_BP.csv, pin 1 od mniejszego x. '
-          '<b>Krawędź B:</b> jedna listwa J_SV2 (slot S2, x 13,8–41,7, 12 kołków: szyny, KPWR, SAFE_OK, łańcuch OC, DRIVE_OK, ITEST — uproszczenie 6.10), GND na końcach, rezystory przy węzłach (docs/SERWIS.csv). '
-          '<b>Końcówki przewodów (decyzje 6.10 wieczorem i 7.10):</b> J1 VMOTOR, J2 B+/B−, J4 TEST w kolumnie przy krawędzi x = 106,5 (w stosie x = 160, strona wejść), J3 M+/M− na krawędzi B obok J4 (2 × 2,0 mm² każde), przewody lutowane, kotwy opasek 12 mm za polami; żaden przewód nad P08. '
-          '<b>J5</b> (obudowane IDC 2×4 kątowe) przy krawędzi x = 106,5 — taśma 8 żył do modułu.',
-          '<b>Tor 10 A:</b> VMOTOR, MOD_BP, MOD_MP, T_EGR_P1 / P3 i PGND jako wylewki na obu warstwach (≥ 4 mm, zszyte przelotkami); styki K1 (COM / NO) '
-          'przy J1.1 / J2.1, PGND łączy J1.2 i J2.2 pasem między polami a kotwami; pętla silnika J3 → RSH1 → J4 w prawym dolnym rogu. GND i PGND rozdzielone (wspólny punkt na P02 R4); cewka K1 5 V z 5V_SYS w domenie GND. '
-          f'<b>Kelvin:</b> z pól pomiarowych RSH1 przez R6 / R7 do U1 (INA240), tylko F.Cu, bez przelotek (drogi: K_PLUS {fx(kel["K_PLUS"]["path_mm"])} mm, '
-          f'K_MINUS {fx(kel["K_MINUS"]["path_mm"])} mm). Pod bocznikiem od spodu nic (strefa zakazana).',
-          f'<b>U2</b> (MCP1525): C5 {fx(dcp["C5-U2.2"][0])} mm od wyjścia (karta: ≤ 5 mm); 100 nF przy każdym układzie (≤ 6 mm).',
+start(1, f'{REV} — jedna płytka LOGGER + TESTER (wariant M1)', f'{fx(BW)} × {fx(BH)} mm, 4 warstwy. Schemat: osobny PDF (M1-R1-schemat.pdf, 7 arkuszy A3). Obudowa dopasowana do płytki.')
+y = 172
+for t in [f'<b>Płytka:</b> {fx(BW)} × {fx(BH)} mm, narożniki R1, 4 warstwy JLC04161H-7628 1,6 mm (zewnętrzne 35 µm, wewnętrzne 15 µm; In1 ciągła masa, In2 sygnały); '
+          f'4 otwory M3 (NPTH 3,2) w narożach, strefy Ø7 bez miedzi. {len(fitted)} części montowanych (+ {len(onboard) - len(fitted)} DNP), od spodu {len(bottom)} kondensatory 1206 pod AD7606B (jak P05 R3); '
+          f'najwyższa {", ".join(tall)} {fx(hmax)} mm (szacunek).',
+          '<b>Górna krawędź:</b> pola przewodów do listwy X1 w kolejności zacisków (docs/X1.csv): BAT+ / GND, VMOTOR, P1_ECU / P1_EGR (2,0 mm²), P3 … CAN_GND (cienkie); '
+          'kotwy opasek 12 mm nad polami. <b>Prawa:</b> ESP32-S3 DEV-KIT na kołkach, antena w rogu (strefa bez miedzi na wszystkich warstwach), USB-C przy dolnej krawędzi. '
+          '<b>Dolna:</b> pola IBT-2 (J4), moduły MAX31856 (zaciski termopar przy krawędzi, osobna mufa), moduł microSD (gniazdo przy krawędzi).',
+          '<b>Tor 7,5 A:</b> BAT_P (J1.1 → F1), VBUS (F1 → J2 VMOTOR), P1_ECU / P1_EGR (J5 ↔ bocznik) jako wylewki na F.Cu i B.Cu, zszyte przelotkami; minus silnika poza płytką (X1.4 ↔ X1.2). '
+          '<b>Kelvin:</b> K_PLUS z pola 2 w dół po F.Cu do R22, K_MINUS z pola 3 przelotką na In2.Cu (pod masą In1) do R23; tylko miedź zablokowana, pod bocznikiem od spodu nic. '
+          '<b>AD7606B:</b> miedź wokół układu przeniesiona z P05 R3 (to samo ułożenie, przesunięcie +37 / −15 mm): odsprzęganie, wyprowadzenia, masa wewnątrz pierścienia pól.',
           f'<b>Kontrole:</b> DRC: {len(drc["unconnected_items"])} niepołączonych, {len(drc["schematic_parity"])} niezgodności ze schematem, '
           f'{len(drc["violations"]) - nlib} innych naruszeń'
-          + (f'; {liczba(nlib, "zgłoszenie", "zgłoszenia", "zgłoszeń")} lib_footprint_mismatch u części z przyciętym nadrukiem (przyjęte przez verify_pcb.py)' if nlib else '')
+          + (f'; {liczba(nlib, "zgłoszenie", "zgłoszenia", "zgłoszeń")} lib_footprint_mismatch u części z przyciętym nadrukiem' if nlib else '')
           + f'; PCB {checks["passed"]}/{checks["total"]}; próby ujemne PCB {npass}/{len(neg)} (z próbą zerową).',
-          '<b>Otwarte:</b> przymiarka 1:1 (strona 5: końcówki przewodów przy x = 106,5 i krawędzi B, K1 15,7 mm, C1 stojący), grubość kondensatorów od spodu (BOM ≤ 1,5 mm); '
-          f'{liczba(len(hidden), "oznaczenie ukryte", "oznaczenia ukryte", "oznaczeń ukrytych")} z braku miejsca'
-          f'{(" (na rysunku montażowym z warstwy F.Fab)") if hidden else ""}; pomiary modułu D1 / E2 / E3 przy odbiorze.']:
+          '<b>Otwarte:</b> przymiarka 1:1 (strona 7: moduły, oprawka F1, pola przewodów), wysokości modułów (szacunek); '
+          f'{liczba(len(hidden), "oznaczenie ukryte", "oznaczenia ukryte", "oznaczeń ukrytych")} z braku miejsca.']:
     y = para(t, 12, y, 120)
 c.drawImage(str(O / 'previews/isometric.png'), 138 * mm, 30 * mm, 150 * mm, 125 * mm, preserveAspectRatio=True, anchor='c', mask='auto')
 para('Render KiCad bez modeli 3D części (obraz Dockera nie ma biblioteki modeli KiCad).', 140, 30, 140)
 c.showPage()
 pages = [(2, 'Montaż od góry — 1:1', 'assembly', [
-    '<b>Kolejność lutowania:</b> najpierw spód (rezystory listew i części przy węzłach, R4 2512 pod K1 — grubość kondensatorów ≤ 1,5 mm), potem góra (S1-2).',
-    '<b>RSH1</b> (WSK2512, 4 pola): pola pomiarowe 2 / 3 na przekątnej; lutować bez nadmiaru cyny na polach prądowych. SOIC wprost; U6 (MCP3201) w podstawce '
-    '(opcjonalnie), TO-92, K1 i C1 od góry.',
-    '<b>J1–J4:</b> przewody 2,0 mm² lutowane do otworów (opisy VM / PG, B+ / B−, M+ / M−, P1 / P3 obok pól), opaska na izolacji przez dwa otwory kotwy. '
-    '<b>J5:</b> wycięcie klucza obudowy ustala orientację gniazda taśmy (pin 1 = RPWM).']),
+    '<b>Kolejność:</b> spód (C8, C9, C10, C13 pod AD7606B), potem SMD od góry (AD7606B najpierw), THT (TSR, oprawka F1), na końcu moduły ESP32 / SD / MAX31856 (lutowane wprost, D-M1-11 / 12). '
+    '<b>RSH1</b>: pola pomiarowe 2 / 3 na przekątnej; bez nadmiaru cyny na polach prądowych. R25 / R27 (0R, opcja 5 V modułów termopar) nie montować.',
+    '<b>Przewody:</b> 2,0 mm² do J1 / J2 / J5, cienkie do J6 / J4, opaska przez dwa otwory kotwy nad każdym rzędem; opisy przy polach (B+, B-, VM, ECU, EGR, P3 … G, RP … G).']),
     (3, 'Miedź F.Cu — 1:1', 'copper-front', [
-    'Natywny eksport KiCad po wypełnieniu stref. Szare pola to miedź: GND oraz wylewki toru 10 A i PGND po prawej stronie (blok przekaźnika u góry, pętla silnika u dołu).',
-    '<b>Bocznik:</b> MOD_MP dochodzi do górnego pola prądowego z prawej, T_EGR_P1 do dolnego od lewej i od dołu; K_PLUS z lewego górnego pola pomiarowego w dół i pod '
-    'korpusem w prawo, K_MINUS z prawego dolnego pola w prawo. <b>Bez miedzi</b> wokół otworów M3 (Ø7) i kotw opasek (3 mm).',
-    'Wydruk kontrolny, nie plik produkcyjny.']),
-    (4, 'Miedź B.Cu — 1:1, widok od spodu', 'copper-back', [
-    'Widok od spodu (lustrzany względem strony 3). B.Cu to głównie masa GND; po stronie x = 106,5 druga warstwa wylewek toru 10 A i PGND, pod bocznikiem pusto.']),
-    (5, 'Miedź In1.Cu — 1:1 (płaszczyzna masy)', 'copper-in1', [
-    'Warstwa wewnętrzna 1 (0,5 oz): ciągła masa GND pod logiką, łańcuchem analogowym i parą Kelvina; pod blokiem mocy osobny obszar PGND (masy łączą się tylko na P02 R4).']),
-    (6, 'Miedź In2.Cu — 1:1 (sygnały i zasilania)', 'copper-in2', [
-    'Warstwa wewnętrzna 2 (0,5 oz): część ścieżek sygnałowych i strefy zasilań 3V3A_P07 (ADC), 5VA_P07 (INA240 / okno OC) i 3V3_IO (logika); pod blokiem mocy tylko ścieżki logiki (decyzja 7.10, bez analogu), bez stref zasilań. Tor 10 A tylko na warstwach zewnętrznych.']),
+    'Natywny eksport KiCad po wypełnieniu stref (szare = miedź). Wylewki toru 7,5 A w lewym górnym rogu i pod polami P1; reszta warstwy to masa GND. Wydruk kontrolny, nie plik produkcyjny.']),
+    (4, 'Miedź In1.Cu — 1:1 (masa)', 'copper-in1', [
+    'Warstwa wewnętrzna 1 (0,5 oz): ciągła masa GND pod całą płytką (otwory przelotek i pól THT jako wycięcia); bez miedzi w strefie anteny.']),
+    (5, 'Miedź In2.Cu — 1:1 (sygnały)', 'copper-in2', [
+    'Warstwa wewnętrzna 2 (0,5 oz): ścieżki sygnałowe routera i K_MINUS (zablokowany, pod torem P1_EGR). Zasilania 5V / 3V3 jako ścieżki klasy PWR (0,5 mm).']),
+    (6, 'Miedź B.Cu — 1:1, widok od spodu', 'copper-back', [
+    'Widok od spodu (lustrzany względem strony 3). Druga warstwa wylewek toru 7,5 A, kondensatory pod AD7606B, reszta masa GND; pod bocznikiem pusto.']),
     (7, 'Przymiarka 1:1 — obrys, obrysy części, otwory', 'fit', [
-    'Wydrukować w skali 100 % i położyć na części / w obudowie. Kółka Ø7 wokół otworów M3 to strefy dystansów.',
-    f'<b>Wysokości (limit 16,5 mm, poziom 5):</b> K1 {fx(h_of("K1"))} mm, C1 ok. {fx(h_of("C1"))} mm, IDC ok. 9,2 mm, '
-    'DIP w podstawce ok. 8 mm, TO-92 ok. 7 mm (szacunek).',
-    'Kołki listew J_SV wystają ok. 6 mm za krawędź B; J_BP wtyk równo z krawędzią A; przewody J1, J2, J4 i taśma J5 wychodzą za krawędź x = 106,5, przewody J3 za krawędź B.'])]
+    'Wydrukować w skali 100 % (sprawdzić belkę 100 mm). Kółka Ø7 wokół otworów M3 to strefy dystansów.',
+    f'<b>Wysokości (szacunek, do projektu obudowy):</b> moduły MAX31856 {fx(h_of("TC1"))} mm, oprawka F1 z wkładką {fx(h_of("F1"))} mm, ESP32 {fx(h_of("M1"))} mm, TSR {fx(h_of("U1"))} mm.'])]
 for n, title, name, notes in pages:
     start(n, title, 'Geometria z natywnego pliku PCB; sprawdź belkę 100 mm przed przymiarką.'); board(name)
-    yy = 172
+    yy = 70
     for t in notes:
-        yy = para(t, 128, yy, 157)
+        yy = para(t, 12, yy, 270)
     c.showPage()
 c.save(); print(PDF)

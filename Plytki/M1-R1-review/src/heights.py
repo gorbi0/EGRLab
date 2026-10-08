@@ -1,32 +1,27 @@
-"""P07 S1: part heights above the board (mm) for the S1 level-5 limit (16.5 mm top, 1.5 mm bottom; SPECYFIKACJA-FORMATU-S1.md §4).
-Values with their source; 'szacunek' = estimate to confirm at the 1:1 fit. Used by verify_pcb.py and make_pdf.py.
-(Structure from P06 R2 heights.py.) Bottom-side capacitors: 100 nF / 1 uF / 10 nF / 1 nF 1206 with the BOM thickness note (<= 1.5 mm).
+"""M1-R1: part heights above the board (mm) for the enclosure design (no S1 level limit; the enclosure follows the board, user 8.10).
+Values with their source; 'szacunek' = estimate to confirm at the 1:1 fit. Used by make_pdf.py. (Structure from P07 S1 heights.py.)
 """
 import os as _os
 HEIGHTS = {  # footprint id or reference -> (height mm, source)
-    'Connector_IDC:IDC-Header_2x08_P2.54mm_Horizontal': (9.2, 'typowe gniazdo IDC kątowe obudowane: 8,9-9,2 mm'),
-    'Connector_IDC:IDC-Header_2x04_P2.54mm_Horizontal': (9.2, 'IDC 2x4 kątowe obudowane (box header): jak 2x8, 8,9-9,2 mm'),
-    'Connector_PinHeader_2.54mm:PinHeader_1x13_P2.54mm_Horizontal': (2.6, 'listwa kątowa 2,54 mm: korpus 2,54 mm'),
-    'Connector_PinHeader_2.54mm:PinHeader_1x12_P2.54mm_Horizontal': (2.6, 'listwa kątowa 2,54 mm: korpus 2,54 mm (J_SV2 12 kołków od 6.10)'),
-    'P07:PTH_VMOTOR': (6.0, 'szacunek: przewody 2,0 mm² lutowane do otworów, łuk i opaska na kotwach (jak P06 R2)'),
-    'P07:PTH_MODPWR': (6.0, 'szacunek: przewody 2,0 mm² lutowane do otworów, opaska na kotwach'),
-    'P07:PTH_MODOUT': (6.0, 'szacunek: przewody 2,0 mm² lutowane do otworów, opaska na kotwach'),
-    'P07:PTH_TEST': (6.0, 'szacunek: przewody 2,0 mm² lutowane do otworów, opaska na kotwach'),
-    'Relay_THT:Relay_SPDT_Omron_G2RL-1-E': (15.7, 'Omron G2RL-1-E: wysokość korpusu 15,7 mm (karta, README)'),
-    'Capacitor_THT:CP_Radial_D8.0mm_P3.50mm': (13.5, 'EEU-FR1V221 D8 x 11,5 mm + ok. 2 mm (README: stojący)'),
-    'Diode_SMD:D_SMC': (2.62, 'DO-214AB (SMC): max 2,62 mm'),
-    'P07:R_Shunt_Vishay_WSK2512_T1.19mm_SenseE1.70': (0.9, 'Vishay WSK2512 (karta 30108): H 0,635 +/- 0,254 mm'),
-    'Resistor_SMD:R_2512_6332Metric_Pad1.40x3.35mm_HandSolder': (0.7, 'RC2512: 0,55 +/- 0,1 mm'),
+    'M1:Waveshare_ESP32-S3-DEV-KIT_2x22_W22.86': (11.0, 'szacunek: listwa kołkowa 2,5 + płytka modułu 1,6 + moduł WROOM / USB-C ok. 3,5 + zapas (D-M1-12: wlutowany na kołkach)'),
+    'M1:Adafruit_4682_microSD_1x09': (6.5, 'szacunek: listwa 2,5 + płytka 1,6 + gniazdo microSD ok. 2'),
+    'M1:MAX31856_XU': (14.1, 'P09 R2 src/heights.py: plastik listwy 2,5 + płytka modułu 1,6 + terminal do 10 (szacunek górny)'),
+    'Converter_DCDC:Converter_DCDC_TRACO_TSR2-xxxx_THT': (10.2, 'szacunek: TRACO TSR 2 SIP-3 stojący, korpus ok. 10 mm nad płytką'),
+    'Fuse:Fuseholder_Blade_Mini_Keystone_3568': (16.0, 'szacunek: oprawka Keystone 3568 + wkładka MINI (ok. 11 mm wysokości wkładki)'),
+    'M1:PAD_BAT': (6.0, 'szacunek: przewody 2,0 mm² lutowane, łuk i opaska na kotwach'),
+    'M1:PAD_VMOTOR': (6.0, 'szacunek: jak PAD_BAT'), 'M1:PAD_P1': (6.0, 'szacunek: jak PAD_BAT'),
+    'M1:PAD_SIG': (3.0, 'szacunek: przewody 0,25-0,5 mm², opaska'), 'M1:PAD_IBT': (3.0, 'szacunek: przewody 0,25 mm², opaska'),
+    'M1:PAD_BTN': (2.0, 'szacunek: dwa cienkie przewody'),
+    'M1:R_Shunt_Vishay_WSK2512_T1.19mm_SenseE1.70': (0.9, 'Vishay WSK2512 (karta 30108): H 0,635 +/- 0,254 mm'),
+    'Package_QFP:LQFP-64_10x10mm_P0.5mm': (1.6, 'LQFP-64: max 1,6 mm'),
     'Package_SO:SOIC-8_3.9x4.9mm_P1.27mm': (1.75, 'JEDEC MS-012 max'),
     'Package_SO:SOIC-14_3.9x8.7mm_P1.27mm': (1.75, 'JEDEC MS-012 max'),
-    'Package_DIP:DIP-8_W7.62mm': (8.0, 'README P06 R2: w podstawce ok. 8 mm'),
-    'Package_TO_SOT_THT:TO-92_Inline_Wide': (7.0, 'szacunek: TO-92 korpus 4,6-5,3 mm + ok. 1,5 mm wyprowadzeń nad płytką'),
     'Package_TO_SOT_SMD:SOT-23': (1.2, 'SOT-23: max 1,1-1,2 mm'),
-    'Package_TO_SOT_SMD:SOT-23-6': (1.45, 'SOT-23-6 / SC-74: max 1,45 mm'),
-    'Diode_SMD:D_SOD-123': (1.35, 'SOD-123: max 1,35 mm'),
-    'Fuse:Fuse_1206_3216Metric_Pad1.42x1.75mm_HandSolder': (0.85, 'MF-NSMF012: max 0,85 mm'),
+    'Package_TO_SOT_SMD:SOT-23-6': (1.45, 'SOT-23-6: max 1,45 mm'),
     'Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder': (0.7, 'RC1206: 0,55 +/- 0,1 mm'),
     'Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder': (1.8, 'max z kart GRM31 (4,7-10 uF: do 1,6 +/- 0,2 mm); od góry'),
+    'Capacitor_SMD:C_1210_3225Metric': (2.7, 'C3225 22 uF: max 2,5-2,7 mm'),
+    'TestPoint:TestPoint_Pad_D1.5mm': (0.05, 'pole miedzi'),
 }
 # bottom side: capacitors <= 1 uF 1206 with the BOM thickness note (GRM31M class 1.15 +/- 0.1 mm; C0G 0.6-1.15 mm)
 BOTTOM_C = (1.25, 'od spodu: kondensator 1206 <= 1 uF o grubości <= 1,5 mm (uwaga w BOM; np. GRM31M, 1,15 +/- 0,1 mm)')

@@ -75,7 +75,7 @@ class Sheet:
   if 'text_at' in part:tx,ty=mm(x+part['text_at'][0]),mm(y+part['text_at'][1])  # explicit offset in 2.54 mm units
   effects='(effects (font (size 1.27 1.27)) (justify '+('right' if a in [90,180] else 'left')+'))'
   ob='yes' if part.get('on_board',True) else 'no'
-  sn=f'(symbol (lib_id {q(name)}) (at {mm(x)} {mm(y)} {a}) '+(f'(mirror {mirror}) ' if mirror else '')+f'(unit {unit}) (in_bom yes) (on_board {ob}) (dnp {"yes" if part.get("dnp") else "no"}) (uuid {uid(k)}) '
+  sn=f'(symbol (lib_id {q(name)}) (at {mm(x)} {mm(y)} {a}) '+(f'(mirror {mirror}) ' if mirror else '')+f'(unit {unit}) (in_bom {"yes" if part.get("in_bom", True) else "no"}) (on_board {ob}) (dnp {"yes" if part.get("dnp") else "no"}) (uuid {uid(k)}) '
   fa=90 if a%180 else 0
   sn+=f'(property "Reference" {q(ref)} (at {tx} {ty} {fa}) {effects}) (property "Value" {q(value)} (at {tx} {ty+2.54} {fa}) {effects})'
   for prop,val in [('Footprint',part['footprint']),('MPN',part['mpn']),('BaselineRef',part['source_ref']),('Datasheet',part.get('url',''))]:

@@ -94,6 +94,8 @@ if __name__ == '__main__':
         for pad in f.Pads():
             if pad.GetNumber():
                 pad.SetNet(pin[ref, pad.GetNumber()])
+        if parts[ref].get('dnp'):   # M1: R25 / R27 (0R options) not fitted, as the schematic symbol
+            f.SetDNP(True)
         b.Add(f); fmap[ref] = f
     missing = sorted(set(fmap) - set(pos)); assert not missing, missing
     extra = sorted(set(pos) - set(fmap)); assert not extra, extra

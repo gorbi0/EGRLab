@@ -171,28 +171,24 @@ put('U3', 95.0, 39.0, 90)
 # ---- logic ----
 put('U6', 108.0, 27.0, 0)   # TCAN1051V under J6.9 / J6.10
 put('U8', 64.0, 24.0, 0)    # TPS2553 under J6.1 (SENS_5V runs along the J6 row)
-put('U5', 63.0, 50.0, 0)    # 74LVC125 MISO buffer above the module headers
+put('U5', 55.5, 50.5, 0)    # 74LVC125 MISO buffer above the module headers
 put('U7', 24.0, 53.0, 0)    # 74AHCT125 above J4
-# ---- channel filters in a grid left of the ADC, one row per AD7606B input (V1 top .. V8 bottom; the router joins the rows to the
-# 0.5 mm pin pitch): series resistor x 71.5 (source pad 1 left), divider bottom x 77.5 (CH1 / CH2 / CH7), 220 pF x 84 (pad 1 at the ADC) ----
-ROW = {1: ('R11', 'R12', 'C16'), 2: ('R13', 'R14', 'C17'), 3: ('R15', None, 'C18'), 4: ('R16', None, 'C19'), 5: ('R17', None, 'C20'),
-       6: ('R21', None, 'C23'), 7: ('R18', 'R19', 'C21'), 8: ('R20', None, 'C22')}
-for ch, (rs, rb, cf) in ROW.items():
-    y = 28.0 + 3.2 * (ch - 1)
-    put(rs, 71.5, y, 0); put(cf, 84.0, y, 180)
-    if rb: put(rb, 77.5, y, 0)
-# ---- AD7606B capacitors by hand (rot 90: pins 33-48 on top at y 33.3, x 98.75 .. 91.25; pin 1 bottom left; 23 / 24 right). Two tiers
-# above the package, pad 1 (signal) down towards the pin, GND pad up with its via; references and AVCC in the first tier ----
-put('C9', 89.3, 29.5, 270)    # AVCC 48 (91.25)
-put('C15', 92.4, 29.5, 270)   # REFCAP 44 / 45 (93.0)
-put('C14', 95.7, 29.5, 270)   # ADC_REF 42 (94.25), 22 uF 1210
-put('C8', 99.0, 29.5, 270)    # AVCC 37 / 38 (96.5)
-put('C13', 92.4, 23.8, 270)   # ADC_REF 100 nF
-put('C11', 98.9, 23.8, 270)   # REGCAP_A 36 (97.25)
-put('C12', 95.7, 23.8, 270)   # REGCAP_D 39 (95.75)
-put('C7', 102.1, 29.5, 270)   # AVCC 37 (second 100 nF)
-put('C6', 91.0, 48.4, 90)     # AVCC 1 (bottom left, 91.25 / 44.7): pad 1 up
-put('C10', 104.6, 42.6, 180)  # VDRIVE 23 (right side y 39.75)
+# ---- AD7606B neighbourhood transplanted from P05 R3 (same package turned 90, U1 at (58, 54) there; here +37 / -15 mm): decoupling on
+# top and bottom, input filter column, test pad; route_critical.route_u3() locks the P05 R3 copper with the same offset ----
+DX, DY = 95.0 - 58.0, 39.0 - 54.0
+for ref, (x, y, r, *s) in {'C6': (-4.4, 9.25, 270), 'C8': (2.6, -1.438, 90, 'B'), 'C5': (-.7, -15.3, 90), 'C9': (-2.1, -1.438, 90, 'B'),
+                           'C10': (3.9, 3.562, 90, 'B'), 'C11': (3.45, -9.3, 90), 'C12': (.8, -9.3, 90), 'C13': (.25, -1.438, 90, 'B'),
+                           'C14': (-2.05, -9.25, 90), 'C15': (-5.6, -9.25, 90), 'TP8': (-3.825, -15.4, 0),
+                           'C16': (-15.062, -9.6, 180), 'C17': (-15.062, -6.95, 180), 'C18': (-15.062, -4.3, 180), 'C19': (-15.062, -1.65, 180),
+                           'C20': (-15.062, 1.0, 180), 'C23': (-13.5, 3.95, 180), 'C21': (-15.062, 6.9, 180), 'C22': (-15.062, 9.55, 180)}.items():
+    put(ref, 95.0 + x, 39.0 + y, r, *s)
+put('R8', 104.9, 39.25, 0)    # DOUTA 24: the P05 stub ends at x 103.2 on pad 1
+# series resistors in the rows of the P05 source stubs (stub at the capacitor row + 1.325 mm, ends at x 76.0); CH1: R11 at the P1_EGR lane
+SRC_ROW = {'R13': 32.05, 'R15': 34.7, 'R16': 37.35, 'R17': 40.0, 'R21': 42.95 + .05, 'R18': 45.9, 'R20': 48.55}
+for ref, cy in SRC_ROW.items():
+    put(ref, 67.5, cy + 1.325, 0)
+put('R11', 59.0, 26.6, 0)     # P1_EGR (pad 1) on a locked stub from the lane (route_critical.py), ADC_CH1 by the router
+put('TP3', 29.0, 22.6, 0)     # VBUS test pad standing in the locked VBUS pour
 # ---- CAN corner (U6 pins 1-4 left x 105.5, 5-8 right x 110.5; antenna rule area from x 113.2 above y 21.8) ----
 put('C26', 107.5, 22.2, 0)    # VCC 3 (105.5, 27.6)
 put('C27', 113.6, 31.0, 270)  # VIO 5 (110.5, 28.9)
@@ -203,10 +199,13 @@ put('R8', 104.6, 39.25, 0)    # DOUTA 24 (39.25): 33 R at the pin
 RESERVED = [(s, z) for s in ('F', 'B') for z in [(11.0, 15.0, 17.0, 25.5), (21.4, 18.6, 35.6, 26.0), (30.6, 15.0, 35.6, 23.0),   # BAT_P, VBUS
                                                   (41.4, 15.0, 47.0, 24.9), (47.4, 15.0, 55.4, 28.1)]]                            # P1_ECU, P1_EGR lanes
 RESERVED += [(s, (113.0, 0.0, W, 22.0)) for s in ('F', 'B')]   # ANTENNA M1 rule area (build_board.antenna_rect)
+RESERVED += [('F', (54.5, 25.4, 57.0, 27.8))]                      # locked P1_EGR stub to R11
+RESERVED += [('F', (66.0, y + 1.325 - .7, 76.0, y + 1.325 + .7)) for y in (32.05, 34.7, 37.35, 40.0, 43.0, 45.9, 48.55)]   # locked source stubs to the series resistors
+RESERVED += [('F', (75.5, 22.0, 103.6, 50.2)), ('B', (86.0, 30.0, 104.0, 47.0))]   # P05 R3 copper round U3 (route_u3)
 RESERVED += [('F', (12.0, 28.4, 28.0, 29.6)), ('F', (41.5, 25.0, 44.0, 41.5)), ('F', (47.6, 19.8, 50.3, 22.0))]   # VBUS trunk, K_PLUS, K_MINUS via
-DEC = {'C2': ('U1', '3'), 'C3': ('U2', '3'), 'C24': ('U4', '6'),
+DEC = {'C2': ('U1', '3'), 'C3': ('U2', '3'), 'C24': ('U4', '6'), 'R12': ('C16', '1'), 'R14': ('C17', '1'), 'R19': ('C21', '1'),
          # references first (P05 R3)
-       'R7': ('U3', '1'), 'C5': ('R7', '2'), 'R9': ('U3', '11'),
+       'R7': ('C5', '1'), 'C7': ('C5', '1'), 'R9': ('U3', '11'),
        'R10': ('U3', '13'),
       
       
@@ -235,8 +234,8 @@ for c, t in DEC.items():
         FAILED.append(c); print(last)
 MARG = 1.4
 # test pads: next to a pad of their net (TP4 / TP10 GND at the supply corner and at the ADC)
-TPA = {'TP1': ('U1', '3'), 'TP2': ('U2', '3'), 'TP3': ('C1', '1'), 'TP4': ('U1', '2'), 'TP5': ('U4', '5'), 'TP6': ('M1', 'J3-7'), 'TP7': ('M1', 'J1-13'),
-       'TP8': ('U3', '42'), 'TP9': ('U8', '6'), 'TP10': ('C5', '2')}
+TPA = {'TP1': ('U1', '3'), 'TP2': ('U2', '3'), 'TP4': ('U1', '2'), 'TP5': ('U4', '5'), 'TP6': ('M1', 'J3-7'), 'TP7': ('M1', 'J1-13'),
+       'TP9': ('U8', '6'), 'TP10': ('C5', '2')}
 for t, a in TPA.items():
     for side, rad in (('F', 10), ('F', 20), ('F', 35)):
         try:

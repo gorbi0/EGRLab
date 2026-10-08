@@ -50,7 +50,7 @@ def tail(name, n, pitch, drill, pad, anchors=True):
 
 
 R1206 = copyfp('Resistor_SMD', 'R_1206_3216Metric_Pad1.30x1.75mm_HandSolder'); C1206 = copyfp('Capacitor_SMD', 'C_1206_3216Metric_Pad1.33x1.80mm_HandSolder')
-C1210 = copyfp('Capacitor_SMD', 'C_1210_3225Metric_Pad1.33x2.70mm_HandSolder')
+C1210 = copyfp('Capacitor_SMD', 'C_1210_3225Metric')   # as P05 R3 (its U1 layout is reused; the hand-solder pads collide there)
 SO8 = copyfp('Package_SO', 'SOIC-8_3.9x4.9mm_P1.27mm'); SO14 = copyfp('Package_SO', 'SOIC-14_3.9x8.7mm_P1.27mm'); SOT23 = copyfp('Package_TO_SOT_SMD', 'SOT-23')
 SOT236 = copyfp('Package_TO_SOT_SMD', 'SOT-23-6'); QFP = copyfp('Package_QFP', 'LQFP-64_10x10mm_P0.5mm')
 TSR = copyfp('Converter_DCDC', 'Converter_DCDC_TRACO_TSR2-xxxx_THT'); BLADE = copyfp('Fuse', 'Fuseholder_Blade_Mini_Keystone_3568')
@@ -232,7 +232,7 @@ add('J6', 'M1:NEW', symbol('Connector_Generic', 'Conn_01x10'), tail('PAD_SIG', 1
     {k: n for k, n in SIG}, 'LISTWA', note='Taps P3-P6 (ECU and valve wires share one X1 screw each), SENS_5V, GND (car ground reference in LOGGER), VBAT_CAR, CAN H / L / GND.')
 TPS_ = [('TP1', V5), ('TP2', V3), ('TP3', VB), ('TP4', G), ('TP5', 'I_MOT'), ('TP6', 'SCOPE_TRIG'), ('TP7', 'GPIO3_TP'), ('TP8', 'ADC_REF'), ('TP9', 'SENS_5V'), ('TP10', G)]
 for r, n in TPS_:
-    add(r, 'M1:NEW', STP, TP, 'TP ' + n, 'Test pad 1.5 mm (no part)', {1: n}, 'LISTWA', note='Replaces the S1 service strips (audit: S).')
+    add(r, 'M1:NEW', STP, TP, 'TP ' + n, 'Test pad 1.5 mm (no part)', {1: n}, 'LISTWA', note='Replaces the S1 service strips (audit: S).', in_bom=False)
 X1 = [  # (X1 screw, net on the board, board pad, wire, note)
     (1, 'BAT_P', 'J1.1', '2.0 mm2', 'pakiet + (za BMS, przez wylacznik na obudowie)'), (2, G, 'J1.2', '2.0 mm2', 'pakiet -; tu tez IBT-2 B-'),
     (3, VB, 'J2.1', '2.0 mm2', 'VMOTOR za F1 -> IBT-2 B+'), (4, '-', '-', '2.0 mm2', 'IBT-2 B-; mostek do X1.2 na listwie (bez PCB)'),

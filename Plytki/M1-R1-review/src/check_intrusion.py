@@ -17,12 +17,12 @@ for L, x0, y0, x1, y1 in ROUTER_KEEPOUT:
     ps = p.SHAPE_POLY_SET(); ps.NewOutline()
     for x, y in [(x0, y0), (x1, y0), (x1, y1), (x0, y1)]:
         ps.Append(p.FromMM(x), p.FromMM(y))
-    areas.append((f'keepout {L} {x0}..{x1} x {y0}..{y1}', p.F_Cu if L == 'F.Cu' else p.B_Cu, ps))
+    areas.append((f'keepout {L} {x0}..{x1} x {y0}..{y1}', {'F.Cu': p.F_Cu, 'B.Cu': p.B_Cu, 'In2.Cu': p.In2_Cu}[L], ps))
 hits = []
 for t in b.GetTracks():
     if t.IsLocked() or t.GetNetname().split('/')[-1] in own:
         continue
-    for L in ((p.F_Cu, p.B_Cu) if isinstance(t, p.PCB_VIA) else (t.GetLayer(),)):
+    for L in ((p.F_Cu, p.In2_Cu, p.B_Cu) if isinstance(t, p.PCB_VIA) else (t.GetLayer(),)):
         q = p.SHAPE_POLY_SET(); t.TransformShapeToPolygon(q, L, 0, p.FromMM(.005), p.ERROR_INSIDE)
         for name, al, area in areas:
             if al is not None and al != L:

@@ -52,7 +52,7 @@ for nn in sub(one(route,'network_out'),'net'):
   else:raise ValueError(item)
 net=b.FindNet('GND')
 assert net is not None
-for layer in [p.F_Cu,p.B_Cu,p.In1_Cu]:   # P07 S1 (6.10): In1.Cu = GND plane (the PGND area of route_critical.py has priority there)
+for layer in [p.F_Cu,p.B_Cu,p.In1_Cu]:   # M1: In1.Cu = solid GND plane
  z=p.ZONE(b);z.SetLayer(layer);z.SetNet(net)
  z.SetLocalClearance(p.FromMM(.3));z.SetMinThickness(p.FromMM(.25))
  z.SetPadConnection(p.ZONE_CONNECTION_THERMAL)
@@ -64,6 +64,16 @@ for layer in [p.F_Cu,p.B_Cu,p.In1_Cu]:   # P07 S1 (6.10): In1.Cu = GND plane (th
   sh=b.FindFootprintByReference(SHUNT);sh.BuildCourtyardCaches();cb=sh.GetCourtyard(p.F_CrtYd).BBox();o.NewHole()
   for x,y in [(cb.GetLeft(),cb.GetTop()),(cb.GetRight(),cb.GetTop()),(cb.GetRight(),cb.GetBottom()),(cb.GetLeft(),cb.GetBottom())]:
    o.Append(x+(p.FromMM(.3) if x==cb.GetRight() else -p.FromMM(.3)),y+(p.FromMM(.3) if y==cb.GetBottom() else -p.FromMM(.3)),-1,0)   # hole 0 of the outline
+ b.Add(z)
+# M1 (P05 R3, review 2.10 MINOR-1): named rule area over the pad ring of U3, no restriction in it; set_rules.py gives the GND pours
+# 0.15 mm only to items wholly inside. Made after the router (a DSN keepout holding pins breaks it).
+from board import FINE
+for ref in FINE:
+ f_=b.FindFootprintByReference(ref);f_.BuildCourtyardCaches();bb=f_.GetCourtyard(p.F_CrtYd).BBox()
+ z=p.ZONE(b);z.SetIsRuleArea(True);z.SetZoneName(f'DRC_ONLY_{ref}');ls=p.LSET();ls.AddLayer(p.F_Cu);ls.AddLayer(p.B_Cu);z.SetLayerSet(ls)
+ z.SetDoNotAllowTracks(False);z.SetDoNotAllowVias(False);z.SetDoNotAllowZoneFills(False);z.SetDoNotAllowPads(False);z.SetDoNotAllowFootprints(False)
+ o=z.Outline();o.NewOutline()
+ for x,y in [(bb.GetLeft(),bb.GetTop()),(bb.GetRight(),bb.GetTop()),(bb.GetRight(),bb.GetBottom()),(bb.GetLeft(),bb.GetBottom())]:o.Append(int(x),int(y))
  b.Add(z)
 b.BuildConnectivity();p.ZONE_FILLER(b).Fill(b.Zones())
 p.SaveBoard(str(P/f'eda/{NAME}.kicad_pcb'),b)

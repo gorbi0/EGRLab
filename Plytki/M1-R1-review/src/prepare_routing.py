@@ -15,7 +15,7 @@ from pathlib import Path
 import shutil, subprocess, sys, json, re, os
 import pcbnew as p
 P = Path(__file__).resolve().parents[1]; sys.path.insert(0, str(Path(__file__).resolve().parent))
-from board import NAME, CLASS, ROUTER_KEEPOUT, FORCE, KELVIN, TOP_ONLY
+from board import NAME, W, H, ROUTER_KEEPOUT, FORCE, KELVIN, TOP_ONLY, GND_INNER
 try:
     from board import IN2_SUPPLY
 except ImportError:
@@ -46,14 +46,16 @@ def fix(m):
 d = re.sub(r'(\(net ("[^"]+"|\S+)\s*\n\s*)\(pins ([^)]*)\)', fix, d)
 d, k = re.subn(r'\(plane ', '(keepout ', d); assert k >= 2 * len(FORCE), k   # each force pour on F.Cu and B.Cu (+ PGND on In1.Cu, P07 S1 4 layers)
 d, kp = re.subn(r'\(layer In1\.Cu\s*\n\s*\(type signal\)', '(layer In1.Cu\n      (type power)', d); assert kp == 1, kp   # 6.10: In1 = GND plane, no routing
+# M1 (P05 R3): the GND pins of U3 (LQFP-64) are tied inwards to the F.Cu pour inside the pad ring and its vias (route_u3): out of the GND net
+m_ = re.search(r'(\(net GND\s*\n\s*\(pins )([^)]*)\)', d); assert m_
+d = d[:m_.start(2)] + ' '.join(q for q in m_.group(2).split() if not any(q.startswith(r + '-') for r in GND_INNER)) + d[m_.end(2):]
 if GND_MODE == 'out':
     d, ng = re.subn(r'(\(net GND\s*\n\s*)\(pins [^)]*\)', r'\1(pins)', d); assert ng == 1, ng
-S1 = json.loads((P.parents[0] / 'Format-S1/format-s1.json').read_text(encoding='utf-8')); W, H = S1['klasy'][CLASS]['W'], S1['klasy'][CLASS]['H']
 e = .4; strips = [(0, 0, W, e), (0, H - e, W, H), (0, 0, e, H), (W - e, 0, W, H)]
 add = ''.join(f'    (keepout "EDGE_STRIP" (polygon {L} 0  {x0 * 1000:.0f} {-y0 * 1000:.0f}  {x1 * 1000:.0f} {-y0 * 1000:.0f}  {x1 * 1000:.0f} {-y1 * 1000:.0f}  {x0 * 1000:.0f} {-y1 * 1000:.0f}))\n'
               for L in ('F.Cu', 'In2.Cu', 'B.Cu') for x0, y0, x1, y1 in strips)
 add += ''.join(f'    (keepout "SHUNT_KELVIN" (polygon {L} 0  {x0 * 1000:.0f} {-y0 * 1000:.0f}  {x1 * 1000:.0f} {-y0 * 1000:.0f}  {x1 * 1000:.0f} {-y1 * 1000:.0f}  {x0 * 1000:.0f} {-y1 * 1000:.0f}))\n'
-               for L, x0, y0, x1, y1 in ROUTER_KEEPOUT + [('In2.Cu', *r[1:]) for r in ROUTER_KEEPOUT if r[0] == 'F.Cu'])
+               for L, x0, y0, x1, y1 in ROUTER_KEEPOUT + [('In2.Cu', *r[1:]) for r in ROUTER_KEEPOUT if r[0] == 'F.Cu' and r in __import__('board').KELVIN_KEEPOUT])
 i = d.index('(keepout'); d = d[:i] + add.lstrip() + '    ' + d[i:]
 if GND_MODE == 'plane':   # the router joins every GND pin to this B.Cu plane (SMD pins: short stub + via where it finds room)
     m = .5; pl = f'    (plane GND (polygon In1.Cu 0  {m * 1000:.0f} {-m * 1000:.0f}  {(W - m) * 1000:.0f} {-m * 1000:.0f}  {(W - m) * 1000:.0f} {-(H - m) * 1000:.0f}  {m * 1000:.0f} {-(H - m) * 1000:.0f}))\n'

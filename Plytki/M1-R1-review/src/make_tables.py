@@ -15,7 +15,7 @@ table('GPIO.csv', ['gpio', 'pin_modulu', 'siec'], sorted([[int(n[4:].split('_')[
 table('netlist-pinowa.csv', ['ref', 'pin', 'net'], [[r, p, n] for r, v in PARTS.items() for p, n in v['pins'].items()])
 g = collections.defaultdict(list)
 for r, v in PARTS.items():
-    if v.get('dnp'): continue
+    if v.get('dnp') or not v.get('in_bom', True): continue
     g[(v['zrodlo'], v['mpn'], v['display'], v['footprint'].split(':')[-1])].append(r)
 key = lambda s: (re.sub(r'\d', '', s), int(re.sub(r'\D', '', s) or 0))
 table('zakupy.csv', ['zrodlo', 'nazwa', 'wartosc', 'ilosc_szt', 'referencje', 'obudowa'], [[z, m, d, len(rr), ', '.join(sorted(rr, key=key)), f] for (z, m, d, f), rr in sorted(g.items())]
