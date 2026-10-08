@@ -2,11 +2,20 @@
 
 
 
-Aktualizacja: 4.10.2026. Decyzje 4.10: P11-1…P11-7 (P11 odchudzona), wspólne zamówienie płytek, SW1 tuleja B3; scalone P02 R4 nadruk, P05 SW1 / C35, P06 szprychy / C17. Scalone 2.10: P05 R3 PCB i P06 R2 PCB po niezależnych recenzjach, nadruk 1,0 mm na P03 / P09 / P10, firmware 6.2-s1, P12 przygotowanie, szkic zakupów 3, przygotowanie P11 S1. Scalone 1.10: P09 R2 i P10 R2 (PCB), P05 R3 (schemat S1, PR #7), przygotowanie P12, wymagania firmware S1, szkic listy zakupowej 3; P03 R6 PCB po recenzji (R70 10 kΩ, listwy według zasady szyn, nowe trasowanie). P02 R4: PCB w klasie L scalona (PR #4) i paczka produkcyjna gotowa (`Plytki/P02-PCB-R4-zamowienie`, ZIP aa7b526b…, pod JLCPCB; nie zamówiona). Format S1-3 (P10 na poziomie 4). P00 i P04 mają pakiety do zamówienia PCB (`Plytki/Zamowienie-Satland/`), P01 i stare P02 wstrzymane (zasilanie z pakietu 4S). Baza odniesienia: `Rewizje/EGRLab-v6.1-rc1`.
+Aktualizacja: 8.10.2026. Scalone 8.10: wspólne zamówienie S1 wariantu pełnego (P04 R3, P07 S1 na 4 warstwach, P08 R2, P12 R2) — sekcja 8.10 niżej. Decyzje 4.10: P11-1…P11-7 (P11 odchudzona), wspólne zamówienie płytek, SW1 tuleja B3; scalone P02 R4 nadruk, P05 SW1 / C35, P06 szprychy / C17. Scalone 2.10: P05 R3 PCB i P06 R2 PCB po niezależnych recenzjach, nadruk 1,0 mm na P03 / P09 / P10, firmware 6.2-s1, P12 przygotowanie, szkic zakupów 3, przygotowanie P11 S1. Scalone 1.10: P09 R2 i P10 R2 (PCB), P05 R3 (schemat S1, PR #7), przygotowanie P12, wymagania firmware S1, szkic listy zakupowej 3; P03 R6 PCB po recenzji (R70 10 kΩ, listwy według zasady szyn, nowe trasowanie). P02 R4: PCB w klasie L scalona (PR #4) i paczka produkcyjna gotowa (`Plytki/P02-PCB-R4-zamowienie`, ZIP aa7b526b…, pod JLCPCB; nie zamówiona). Format S1-3 (P10 na poziomie 4). P00 i P04 mają pakiety do zamówienia PCB (`Plytki/Zamowienie-Satland/`), P01 i stare P02 wstrzymane (zasilanie z pakietu 4S). Baza odniesienia: `Rewizje/EGRLab-v6.1-rc1`.
 
 Pakiety płytek i ich recenzje znajdują się w `Plytki/`.
 
 
+
+
+## 8.10.2026 — WSPÓLNE ZAMÓWIENIE S1 (WARIANT PEŁNY) SCALONE
+
+**Scalone („scal”, 8.10):** gałąź `zamowienie-pelny-s1` = `pelny-s1` + `p04-r3-pcb` + `p08-r2-pcb` + `p12-r2` + `p07-s1-pcb`. Indeks paczek: `Plytki/Zamowienie-S1/README.md` — 11 paczek, wszystkie FABRICATION_FILES_VERIFIED, sumy ZIP zgodne: P02 R4, P03 R6, P04 R3, P05 R3, P06 R2, **P07 S1 (4 warstwy JLC04161H-7628 — osobna pozycja w JLCPCB, ZIP 31102a53)**, P08 R2, P09 R2 (**wstrzymana** do pomiaru MAX31856), P10 R2, P11 R2, P12 R2. P12 R1 (LOGGER) nie wchodzi do zamówienia.
+
+**P07 S1 PCB** (`Plytki/P07-S1-review`, paczka `Plytki/P07-PCB-S1-zamowienie`): DRC 0 niepołączonych / 0 niezgodności, PCB 35/35, próby ujemne 41/41, CAM 24/24, próby CAM 9/9. Decyzje użytkownika 6.10 wieczorem / 7.10: 4 warstwy; J1 / J2 / J4 przy krawędzi x = 106,5, J3 na krawędzi B (żaden przewód nad P08); logika może biec na In2 pod blokiem przekaźnika (bez analogu). Sporne (README P07): ścieżki 0,2 mm, przelotki 0,6 / 0,3 (moc 0,9 / 0,4), U11.13 na 3V3_IO. Kontrakt P12 R2 ↔ P07: 56 OK / 0 czeka.
+
+**Recenzje:** P04 R3 / P08 R2 / P12 R2 (6.10) i P07 (8.10) — bez BLOCKER, wnioski na końcu indeksu zamówienia. Do zrobienia przy zakupie i montażu: klucze kątowych IDC po stronie przeciwnej do PCB (zasada 9 w `Plytki/Odbior-S1/URUCHOMIENIE.md`: pomiar TP2–TP1 na P12 po wpięciu każdej taśmy), P04 C18 rozgiąć nóżki do 5 mm, przewody J4 → P11 ok. 450 mm.
 
 
 ## 4.10.2026 — DECYZJE UŻYTKOWNIKA (OKNO DECYZJI) I SCALENIA
