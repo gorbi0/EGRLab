@@ -30,11 +30,12 @@ class Stabilization(unittest.TestCase):
         app=(R/'firmware/main/app_main.c').read_text(encoding='utf-8')
         snapshot=app[app.index('static inputs_t snapshot'):app.index('static void tick')]
         self.assertIn('it=inputs_time',snapshot);self.assertIn('control_guard_io(&i,it)',snapshot)
-        update=app[app.index('bool io_ok='):app.index('#if CONFIG_EGR_CAN_PRESENT',app.index('bool io_ok='))]
-        self.assertLess(update.index('portENTER_CRITICAL'),update.index('inputs_time=completed'))
-        self.assertLess(update.index('inputs_time=completed'),update.index('portEXIT_CRITICAL'))
+        # 6.3-m1 (M-07): SENS_FAULT_N wprost z GPIO42; czas i wartosc w tej samej sekcji krytycznej.
+        update=app[app.index('bool fault=board_sensor_fault();'):app.index('#if CONFIG_EGR_CAN_PRESENT',app.index('bool fault=board_sensor_fault();'))]
+        self.assertLess(update.index('portENTER_CRITICAL'),update.index('inputs_time=esp_timer_get_time()'))
+        self.assertLess(update.index('inputs_time=esp_timer_get_time()'),update.index('portEXIT_CRITICAL'))
         board=(R/'firmware/main/board.c').read_text(encoding='utf-8')
-        self.assertIn('mcp_write(0x0d, 0x4c)',board);self.assertIn('*sensor_fault = !(b & B_SENSOR_HEALTHY)',board)
+        self.assertIn('bool board_sensor_fault(void) { return !gpio_get_level(GPIO_SENS_FAULT_N); }',board)
     def test_integrated_p01_keeps_reviewed_analog_circuit(self):
         reference=json.loads((HW/'P01-PROTECT/hardware/components.json').read_text(encoding='utf-8'))
         def net(n):

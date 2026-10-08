@@ -11,7 +11,8 @@ def number(x,lo,hi):
     if isinstance(x,bool) or not isinstance(x,(int,float)) or not math.isfinite(x) or not lo<=x<=hi:raise ValueError(f'Measured number required: {lo}..{hi}')
     return x
 def commands(hw,valve,session):
-    if hw.get('schema')!=6 or valve.get('schema')!=6 or session.get('schema')!=6:raise ValueError('schema 6 required')
+    if hw.get('schema')==7:return commands_m1(hw,valve,session)
+    if hw.get('schema')!=6 or valve.get('schema')!=6 or session.get('schema')!=6:raise ValueError('schema 6 (S1/M2) or hardware schema 7 (M1-R1) required')
     if any(x.get('synthetic') for x in [hw,valve,session]):raise ValueError('Synthetic profiles cannot commission hardware')
     if valve.get('drive_class')!='dc12_analog5' or hw.get('current_driver')!='mcp3201_ina240':raise ValueError('Unsupported hardware/valve driver')
     for module,serial in [('P05',hw['daq_module']),('P06',hw['current'][0]['module_id']),('P07',hw['current'][1]['module_id'])]:
@@ -33,6 +34,33 @@ def commands(hw,valve,session):
         if c.get('accepted') is not True:raise ValueError(f'Current bank {bank}: acceptance missing')
         lines += [f"imodule {bank} {ident(c['module_id'])}",
                   f"iscal {bank} {number(c['adc_gain'],.0001,.01):.9g} {number(c['adc_offset'],-.5,.5):.9g} {number(c['volts_per_amp'],.05,2):.9g}",
+                  f"currentcal {bank} {number(c['zero'],1,4):.9g}",f'icalok {bank} 1']
+    lim=valve['limits']
+    lines += [f"limits {number(lim['duty'],.001,.35):.9g} {number(lim['current_a'],.01,3.5):.9g} {number(lim['temperature_c'],10,60):.9g}",
+              f"metric {int(hw.get('current_window_accepted') is True)}",'save','profile']
+    return '\n'.join(lines)+'\n'
+def commands_m1(hw,valve,session):
+    """6.3-m1 (M-13): plytka M1-R1 - jeden tor pradu (CH6 AD7606B) dla obu bankow, bez AUX i bez MCP3201 (iscal/auxcal
+    odrzuca firmware). Napiecie wyjscia INA240 kalibruje `cal <bank> 5`, skale V/A `ivpa`, zero `currentcal` (wynik `zero`)."""
+    if hw.get('configuration')!='M1-R1' or hw.get('configuration_version')!=1:raise ValueError('M1-R1 configuration version 1 required')
+    if valve.get('schema')!=6 or session.get('schema')!=6:raise ValueError('schema 6 required for valve and session')
+    if any(x.get('synthetic') for x in [hw,valve,session]):raise ValueError('Synthetic profiles cannot commission hardware')
+    if valve.get('drive_class')!='dc12_analog5' or hw.get('current_driver')!='ad7606b_ch6_ina240':raise ValueError('Unsupported hardware/valve driver')
+    ids=hw['modules']['M1']['identities']
+    if hw['daq_module'] not in ids or any(c['module_id'] not in ids for c in hw['current']):
+        raise ValueError('M1: DAQ and current identities must belong to the M1 board')
+    lines=['stop',f"bind {ident(valve['valve_id'])} {ident(valve['adapter_id'])}",f"daqmodule {ident(hw['daq_module'])}",f"session {ident(session['vehicle_id'])} {ident(session['test_id'])}"]
+    for bank in [0,1]:
+        v=hw['voltage'][bank]
+        if v.get('accepted') is not True:raise ValueError(f'Voltage bank {bank}: acceptance missing')
+        if len(v['gain'])!=8 or len(v['offset'])!=8:raise ValueError('8 voltage channels required')
+        for j,(gain,offset) in enumerate(zip(v['gain'],v['offset'])):
+            lines.append(f'cal {bank} {j} {number(gain,.1,20):.9g} {number(offset,-2,2):.9g}')
+    lines+=['vcalok 0 1','vcalok 1 1']
+    for bank in [0,1]:
+        c=hw['current'][bank]
+        if c.get('accepted') is not True:raise ValueError(f'Current bank {bank}: acceptance missing')
+        lines += [f"imodule {bank} {ident(c['module_id'])}",f"ivpa {bank} {number(c['volts_per_amp'],.05,2):.9g}",
                   f"currentcal {bank} {number(c['zero'],1,4):.9g}",f'icalok {bank} 1']
     lim=valve['limits']
     lines += [f"limits {number(lim['duty'],.001,.35):.9g} {number(lim['current_a'],.01,3.5):.9g} {number(lim['temperature_c'],10,60):.9g}",

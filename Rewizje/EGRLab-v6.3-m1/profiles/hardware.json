@@ -1,81 +1,40 @@
 {
-  "schema": 6,
+  "schema": 7,
+  "configuration": "M1-R1",
+  "configuration_version": 1,
   "synthetic": false,
-  "current_driver": "mcp3201_ina240",
+  "current_driver": "ad7606b_ch6_ina240",
   "daq_module": "DAQ_001",
   "modules": {
-    "P01": {
-      "serial": "P01_001",
-      "hardware_revision": "R3.1",
-      "interface": "none",
-      "accepted": false,
-      "note": "S1: zastapiona przez P02 R4 (zasilanie z pakietu 4S); nie montowac"
-    },
-    "P02": {
-      "serial": "P02_001",
-      "hardware_revision": "R4",
-      "interface": "S1",
-      "accepted": false
-    },
-    "P03": {
-      "serial": "P03_001",
-      "hardware_revision": "R6",
-      "interface": "S1",
-      "accepted": false
-    },
-    "P04": {
-      "serial": "P04_001",
-      "hardware_revision": "R2.2",
-      "interface": "M2",
-      "accepted": false,
-      "note": "wariant pelny; rewizja S1 w toku"
-    },
-    "P05": {
-      "serial": "DAQ_001",
-      "hardware_revision": "R3",
-      "interface": "S1",
-      "accepted": false
-    },
-    "P06": {
-      "serial": "IL_001",
-      "hardware_revision": "R2",
-      "interface": "S1",
-      "accepted": false
-    },
-    "P07": {
-      "serial": "DR_001",
-      "hardware_revision": "6.0",
-      "interface": "M2",
-      "accepted": false,
-      "note": "wariant pelny; rewizja S1 w toku"
-    },
-    "P08": {
-      "serial": "P08_001",
-      "hardware_revision": "6.0",
-      "interface": "M2",
-      "accepted": false,
-      "note": "wariant pelny; rewizja S1 w toku"
-    },
-    "P09": {
-      "serial": "P09_001",
-      "hardware_revision": "R2",
-      "interface": "S1",
-      "accepted": false
-    },
-    "P10": {
-      "serial": "P10_001",
-      "hardware_revision": "R2",
-      "interface": "S1",
-      "accepted": false
-    },
-    "P11": {
-      "serial": "P11_001",
+    "M1": {
+      "serial": "M1_001",
       "hardware_revision": "R1",
-      "interface": "M2",
+      "interface": "X1",
       "accepted": false,
-      "note": "rewizja S1 (nowy panel) w toku"
+      "identities": [
+        "DAQ_001",
+        "IL_001"
+      ],
+      "note": "jedna plytka (Plytki/M1-R1-review): AD7606B (DAQ_001), bocznik + INA240A2 na CH6 (IL_001), 2 x MAX31856, TCAN1051V, TPS2553"
+    },
+    "IBT2": {
+      "serial": "DR_001",
+      "hardware_revision": "BTS7960",
+      "interface": "M1 pola IBT-2 (RPWM, LPWM, R_EN, L_EN)",
+      "accepted": false,
+      "note": "modul poza plytka (D-M1-2); IS nieuzywane - prad mierzy INA240 na M1"
     }
   },
+  "channels": [
+    "P1_EGR",
+    "P3",
+    "P4",
+    "P5",
+    "P6",
+    "I_MOT",
+    "VBAT_CAR",
+    "SENS_5V"
+  ],
   "voltage": [
     {
       "accepted": false,
@@ -124,31 +83,17 @@
       ]
     }
   ],
-  "aux": [
-    {
-      "gain": null,
-      "offset": null
-    },
-    {
-      "gain": null,
-      "offset": null
-    }
-  ],
   "current": [
     {
       "module_id": "IL_001",
       "accepted": false,
-      "adc_gain": null,
-      "adc_offset": null,
       "volts_per_amp": null,
       "zero": null,
       "calibration_date": null
     },
     {
-      "module_id": "DR_001",
+      "module_id": "IL_001",
       "accepted": false,
-      "adc_gain": null,
-      "adc_offset": null,
       "volts_per_amp": null,
       "zero": null,
       "calibration_date": null
@@ -156,7 +101,7 @@
   ],
   "current_window_accepted": false,
   "temperature": {
-    "module": "P09_001",
+    "module": "M1_001",
     "probes": [
       "TC_001",
       "TC_002"

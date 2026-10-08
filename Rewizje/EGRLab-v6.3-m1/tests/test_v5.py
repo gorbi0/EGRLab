@@ -70,8 +70,9 @@ class V5Hardware(unittest.TestCase):
         m=self.c['P03_M1']['pins'];self.assertFalse({'47','48','35','36','37'}&set(m))
         self.assertEqual(self.c['P03_U17']['pins']['25'],'LOGGER_CURRENT_OK_CORE')
         self.assertEqual(self.c['P03_U17']['pins']['8'],'NC')
+        # 6.3-m1 (M-01): firmware bez MCP23017 - erraty B7 nie dotyczy; mapa GPIO M1 w test_v63_m1.py.
         code=(R/'firmware/main/board.c').read_text(encoding='utf-8')
-        self.assertIn('mcp_write(0x00, 0x10)',code);self.assertIn('mcp_write(0x01, 0x7f)',code)
+        self.assertNotIn('mcp_write',code);self.assertNotIn('i2c',code)
     def test_idc_mechanical_keys_remove_only_the_specified_position(self):
         rows=list(csv.DictReader((HW/'hardware/connectors.csv').open(encoding='utf-8-sig'),delimiter=';'))
         seen={}
@@ -121,7 +122,8 @@ class V5Hardware(unittest.TestCase):
 
 class V5Profiles(unittest.TestCase):
     def setUp(self):
-        self.hw,self.valve,self.session=[json.loads((R/'profiles'/f'{name}.json').read_text()) for name in ['hardware','valve','session']]
+        # 6.3-m1: sciezka schema 6 (S1/M2) sprawdzana na profilu zamknietego 6.2-s1; profil M1-R1 (schema 7) w test_v63_m1.py.
+        self.hw,self.valve,self.session=[json.loads((R.parent/'EGRLab-v6.2-s1'/'profiles'/f'{name}.json').read_text()) for name in ['hardware','valve','session']]
     def measured_fixture(self):
         for v in self.hw['voltage']:v.update(accepted=True,gain=[1]*8,offset=[0]*8)
         for a in self.hw['aux']:a.update(gain=1,offset=0)

@@ -143,11 +143,12 @@ class V6Assembly(unittest.TestCase):
 
     def test_v5_profile_rejected_and_commissioning_stays_disabled(self):
         objects=[json.loads((R/'profiles'/f'{x}.json').read_text()) for x in ['hardware','valve','session']]
-        self.assertTrue(all(o['schema']==6 for o in objects))
+        # 6.3-m1 (M-13): sprzet M1-R1 ma schema 7, zawor i sesja zostaja na 6.
+        self.assertEqual([o['schema'] for o in objects],[7,6,6])
         objects[0]['schema']=5
         with self.assertRaisesRegex(ValueError,'schema 6'):profile_v6.commands(*objects)
         self.assertIn('#define EGR_HARDWARE_ACCEPTED 0',(R/'firmware/main/commissioning.h').read_text())
-        header=(R/'firmware/main/control.h').read_text();self.assertIn('0x36524745u',header);self.assertIn('EGR_PROFILE_VERSION 6',header)
+        header=(R/'firmware/main/control.h').read_text();self.assertIn('0x36524745u',header);self.assertIn('EGR_PROFILE_VERSION 7',header)
 
     def test_configurable_clocks_are_used_and_timing_limit_retained(self):
         code=(R/'firmware/main/board.c').read_text(encoding='utf-8')
@@ -156,7 +157,7 @@ class V6Assembly(unittest.TestCase):
         k=(R/'firmware/main/Kconfig.projbuild').read_text()
         self.assertRegex(k,r'config EGR_ADC_SPI_HZ[\s\S]*?default 1000000')
         self.assertRegex(k,r'config EGR_SD_KHZ[\s\S]*?default 4000')
-        self.assertIn('.clock_speed_hz=500000',code)
+        self.assertNotIn('.clock_speed_hz=500000',code)   # 6.3-m1: bez MCP3201 (M-01)
         self.assertIn('pdMS_TO_TICKS(100)',code)
 
 if __name__=='__main__':unittest.main()
