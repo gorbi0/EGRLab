@@ -1,5 +1,7 @@
 # Kalibracja, profile i wymiana modułów
 
+> **6.3-m1 (M1-R1):** `profiles/hardware.json` ma `schema` 7 i `configuration` „M1-R1” (wersja 1). Jeden tor prądu (CH6 AD7606B, INA240A2) obsługuje oba banki — `current[0]` i `current[1]` wskazują ten sam moduł `IL_001` (D-M1-7); identyfikatory DAQ, termopar i napędu (`DR_001` = IBT-2) jak w 6.2-s1, tablica `aux` usunięta. Firmware odrzuca `auxcal` (brak AUX) i `iscal` (brak MCP3201). Prąd: napięcie wyjścia INA240 kalibruje `cal <bank> 5 gain offset` (jak inne kanały), skalę V/A `ivpa <bank> <V/A>` (kasuje `icalok` i metrykę), zero mierzy `zero` (bridge wyłączony, linie silnika bez napięcia) albo wpisuje `currentcal`. `tools/profile_v6.py` dla schema 7 generuje `cal`, `vcalok`, `imodule`, `ivpa`, `currentcal`, `icalok`; dla schema 6 działa jak w 6.2-s1. Profil NVS: wersja 7, klucz `profile_m1`. Tabela i opisy niżej dotyczą 6.1 / 6.2-s1 tam, gdzie mówią o AUX, MCP3201, ARM i P01–P10.
+
 Trzy pliki w `profiles/`: sprzęt/kalibracje, zawór/adapter, pojazd/sesja. Szablony mają `accepted:false` i puste wyniki pomiarów. Nominalne wartości w dokumentacji nie są danymi odbioru.
 
 W firmware nadal istnieje zwarta migawka profile_t ze względów prostoty NVS, lecz informacje są rozdzielone logicznie i w plikach użytkownika. To nie jest mechanizm wgrywania dowolnego nowego sterownika z JSON. Nowy rodzaj ADC/napędu wymaga kodu; zmiana skali/egzemplarza obsługiwanego modułu wymaga konfiguracji, bez przebudowy sterownika.

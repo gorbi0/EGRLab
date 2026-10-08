@@ -1,5 +1,7 @@
 # Firmware i dane
 
+> **6.3-m1 (płytka M1-R1):** obowiązuje sekcja „6.3-m1” na końcu. Opisy MCP23017, MCP3201, ARM, PFAIL_N i trybu stołowego w sekcjach wcześniejszych dotyczą 6.1 / 6.2-s1 i zostały jako historia formatu.
+
 ESP-IDF 5.4.3 / ESP32-S3, Flash 32 MB OPI, PSRAM 16 MiB OCT. Użyto istniejącego, kompilowanego firmware v4.1 i rozszerzono jego sterownik, konfigurację i log. Stan testów tej rewizji opisuje `verification/README.md`.
 
 | Wariant | Zastosowanie |
@@ -98,3 +100,29 @@ Nowe i zmienione zdarzenia w `events_NNN.ndjson`:
 Zdarzenia „miękkie” (`can`, `rpm_*`) przy pełnej kolejce zdarzeń nie oznaczają zapisu jako niezdrowego: rośnie licznik `log_dropped` / `soft_event_drops`, a próbki EGR mają pierwszeństwo (P10 R2 `docs/INTEGRACJA.md`). Limit ruchu CAN zapisywanego bez strat trzeba wyznaczyć na stole (odbiór P10 „Ruch ciągły”).
 
 Tryb stołowy (D-2): PFAIL_N = L przez ≥ 100 ms od startu (P02 podłączony bez zasilania, CORE z USB) — bez plików na karcie, bez TEST, licznik sesji nie rośnie; konsola, podgląd i kalibracja działają.
+
+## 6.3-m1 — płytka M1-R1 (8.10.2026)
+
+Zmiany według `Plytki/M1-specyfikacja/zadania/ZADANIE-M1-KROK8-FIRMWARE.md` (M-01…M-13); pełna tabela w `README.md` tej rewizji. Format próbek bez zmian (wersja 5, rekord 40 B), zmienia się znaczenie kanałów.
+
+**Kanały AD7606B (M-03, M-04):** CH1 P1_EGR i CH2 P3 (300 k / 100 k), CH3–CH5 P4/P5/P6 (100 k szeregowo), **CH6 = prąd silnika** (INA240A2 ×50 na boczniku 5 mΩ, U = VS/2 + 0,25 V/A, RC 1 k / 1 n), CH7 VBAT_CAR (499 k / 100 k), **CH8 = SENS_5V** (100 k, wyjście TPS2553). Nominalne wzmocnienia z wejściem 5 MΩ: 4,06 / 4,06 / 1,02 ×3 / 1,0002 / 6,0898 / 1,02. Prąd jest próbkowany razem z napięciami (koniec MCP3201 i jego przedziału czasu): `raw[5]` to wyjście INA240, `current_raw` = 65535 i `current_status` = 2 (ABSENT) w każdym rekordzie. Prąd = `(raw[5]·FS/32768·gain[5] + offset[5] − current_zero) / current_volts_per_amp`; w config `local_current: false`, więc `tools/egrlog.py` liczy go z `raw[5]` bez zmian w czytniku. Ten sam tor w banku LOGGER i TEST (D-M1-7). Zero (ok. VS/2) mierzy rozkaz `zero` przy wyłączonym mostku i bez prądu ECU: przez całą sekundę linie silnika CH1/CH2 w ±0,5 V, CH6 stabilne (< 20 mV p-p) w 1–4 V.
+
+**Zanik zasilania (M-10):** M1 nie ma PFAIL_N ani podtrzymania. Pliki nie są zamykane przy zaniku zasilania; writer robi `fsync` obu plików co `CONFIG_EGR_SD_SYNC_MS` (domyślnie **1000 ms**, w 6.2-s1 2 s). Po zaniku w pliku może brakować ostatniej sekundy i ostatni blok `BLK1` może być obcięty — czytnik zgłasza to jako obcięty ostatni blok i czyta resztę. Nie ma już zdarzeń `power_fail` ani `pfail_glitch`. Przy wyłączaniu przyrządu: najpierw `stop`, odczekać ok. 2 s, potem wyłącznik.
+
+**Tryb bez karty (M-11, zastępuje tryb stołowy F-02):** jeśli karta SD się nie zamontuje (np. zasilanie tylko z USB — D-M1-6: SD, AD7606B VDRIVE i MAX31856 są wtedy bez 3,3 V), firmware działa dalej bez plików: bez TEST, licznik sesji nie rośnie, konsola wypisuje „TRYB BEZ KARTY”. AD7606B bez zasilania daje błędy odczytu: jedno zdarzenie `adc_error` na serię (pełna liczba w `daq_stats.adc_errors`), dane oznaczone jako nieważne, następna konfiguracja zaczyna od pełnego RESET i 2100 ms.
+
+Nowe i zmienione zdarzenia w `events_NNN.ndjson`:
+
+| Typ | Kiedy | Pola |
+|---|---|---|
+| `overcurrent` | M-06: \|I\| z CH6 ponad `CONFIG_EGR_SW_CURRENT_LIMIT_MA` (domyślnie 8 A) w dwóch kolejnych próbkach; raz na epizod | `t_us`, `config_id`, `amps` (null = nasycenie / nieznana skala), `limit_a`, `bank`, `drive_was_permitted` |
+| `test_rejected` | rozkaz `test` przy liniach pod napięciem (ECU podpięte, zapłon) | `t_us`, `reason`: MOTOR_LINES_LIVE, SENSOR_LINES_LIVE, SENS_5V_ON, VOLTAGE_UNKNOWN, ADC_CONFIG, ADC_STALE |
+| `sens5v_in_logger` | CH8 > 1 V poza bankiem TEST (SENS_EN i tak wyłączane) | `t_us` |
+| `button` | M-12: przycisk START / STOP (GPIO15) | `t_us`, `press`: `short` (znacznik `mark`), `long` (≥ 1 s: SAFE → LOGGER albo STOP), `stop` (w stanach TEST od razu) |
+| `daq_stats` | co 10 s | jak 6.2-s1 + `overcurrent_samples` |
+| `state` | jak dotąd | nowy powód FAULT: `OVERCURRENT` (zamiast `HARDWARE_NOT_ARMED`, `DRIVE_IO`, `INTERLOCK`, `TEST_ADAPTER`, `LOGGER_ADAPTER_PRESENT`) |
+| `config` | jak dotąd | `local_current` false, `current_time` ad7606b_simultaneous, `synchronous` true, `ch8` SENS_5V (zamiast `aux_position`), `current_chain` jeden tor M1, `hardware` M1-R1, `firmware` 6.3-m1; bez `current_adc_gain` / `current_adc_offset` |
+
+`meta.json`: `firmware` EGRLab-6.3-m1, `hardware` M1-R1, `channels` (osiem opisów), `input_impedance_ohm`, `filter_pf`, `current` (kanał 6, puste pola MCP3201, sposób pomiaru zera), `power_fail` (`input` null, okres fsync), `can`.
+
+Profil w NVS ma wersję 7 i klucz `profile_m1`: kalibracja zapisana przez 6.1 / 6.2-s1 (inny sprzęt) nie wczytuje się na M1. Rozkazy `auxcal` i `iscal` są odrzucane; skalę prądu CH6 ustawia `ivpa <bank> <V/A>` (opis w `05-profile.md`).
