@@ -1,0 +1,122 @@
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe build_board.py
+Created M1 board: 93 footprints + 4 M3 holes; outline 150.0 x 80.0 ; rule areas: ANTENNA M1, SD1 M2.5 1, SD1 M2.5 2, J1 support 1, J1 support 2, J2 support 1, J2 support 2, J4 support 1, J4 support 2, J5 support 1, J5 support 2, J6 support 1, J6 support 2
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe set_stackup.py
+4-layer stackup JLC04161H-7628: Cu35 / 7628 0.2104 / In1 15.2 um / core 1.065 / In2 15.2 um / 7628 0.2104 / Cu35 = 1.586 mm + mask, nominal 1.6 mm.
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe set_rules.py
+Rules: clearance 0.25 (fine pitch ['U3']: 0.15 / track 0.2), track 0.20 (Default) / PWR 0.50, vias 0.6/0.3 (PWR 0.9/0.4); no DRC exclusions.
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe route_critical.py
+M1: force pours {'BAT_P': 2, 'VBUS': 6, 'P1_ECU': 2, 'P1_EGR': 3} stitching vias, Kelvin pair, U3 (P05 R3 copper) locked (131 items); DSN exported.
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe fanout_gnd.py
+GND fan-out: 2 SOIC bars, 37 stubs, 41 vias; failed: none; longest stubs: [('U4.2', 1.46), ('U4.3', 1.46), ('U6.2', 1.46), ('C1.2', 1.2), ('C16.2', 1.2)]; DSN exported again.
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe prepare_routing.py
+Rules: clearance 0.25 (fine pitch ['U3']: 0.15 / track 0.2), track 0.20 (Default) / PWR 0.50, vias 0.6/0.3 (PWR 0.9/0.4); no DRC exclusions.
+DSN: 8 force pours as keepouts; 13 force stitching vias as In2 keepouts; 160 keepouts in all; pins removed from 8 nets; 0 nets on F.Cu only; pre-routed board frozen.
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe import_routing.py
+SES imported; GND planes filled; saved native board.
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe inner_zones.py
+In2 supply zones: none (M1)
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe set_rules.py
+Rules: clearance 0.25 (fine pitch ['U3']: 0.15 / track 0.2), track 0.20 (Default) / PWR 0.50, vias 0.6/0.3 (PWR 0.9/0.4); no DRC exclusions.
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe cleanup.py --tidy
+tidy (unconnected 5 left for the planner):  removed 1 redundant free items ['/ADC/REGCAP_D'] ; dropped 14 tiny; joined 2 near-miss ends; 10 duplicate, 0 via-on-THT-pad and 8 dead-end items; solid zone connection: none
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe set_rules.py
+Rules: clearance 0.25 (fine pitch ['U3']: 0.15 / track 0.2), track 0.20 (Default) / PWR 0.50, vias 0.6/0.3 (PWR 0.9/0.4); no DRC exclusions.
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe check_intrusion.py
+foreign router copper at RSH1 / Kelvin pair: 0 []
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe stitch.py
+GND stitching: 11 grid vias, pour islands {'F.Cu': 17, 'B.Cu': 8} -> {'F.Cu': 17, 'B.Cu': 8} | rescue: 11 vias, pour mm2 {'F.Cu': 8000.8, 'B.Cu': 7959.3} -> {'F.Cu': 8154.8, 'B.Cu': 8307.0} islands {'F.Cu': 25, 'B.Cu': 14} | tied GND clusters: 0 | GND pads not joined to J1.2: none | targeted vias: 0 new, 0 without a legal spot
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe set_rules.py
+Rules: clearance 0.25 (fine pitch ['U3']: 0.15 / track 0.2), track 0.20 (Default) / PWR 0.50, vias 0.6/0.3 (PWR 0.9/0.4); no DRC exclusions.
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe complete_routes.py
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe complete_routes.py --ties
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe set_rules.py
+Rules: clearance 0.25 (fine pitch ['U3']: 0.15 / track 0.2), track 0.20 (Default) / PWR 0.50, vias 0.6/0.3 (PWR 0.9/0.4); no DRC exclusions.
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe stitch.py --targeted
+GND stitching: 0 grid vias, pour islands {'F.Cu': 26, 'B.Cu': 14} -> {'F.Cu': 26, 'B.Cu': 14} | rescue: 0 vias, pour mm2 {'F.Cu': 8124.1, 'B.Cu': 8230.0} -> {'F.Cu': 8124.1, 'B.Cu': 8230.0} islands {'F.Cu': 26, 'B.Cu': 14} | tied GND clusters: 0 | GND pads not joined to J1.2: none | targeted vias: 0 new, 0 without a legal spot
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe set_rules.py
+Rules: clearance 0.25 (fine pitch ['U3']: 0.15 / track 0.2), track 0.20 (Default) / PWR 0.50, vias 0.6/0.3 (PWR 0.9/0.4); no DRC exclusions.
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\kicad-cli.exe pcb drc --format json --severity-all --schematic-parity --all-track-errors --refill-zones -o routing/postroute-drc.json eda/M1.kicad_pcb
+routing/postroute-drc.json {'starved_thermal': 3, 'track_dangling': 3, 'silk_edge_clearance': 4, 'silk_over_copper': 22, 'silk_overlap': 31} unconnected 0 parity 0
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe cleanup.py J3.2 SD1.2 TC1.3
+ removed 0 redundant free items [] ; dropped 0 tiny; joined 0 near-miss ends; 0 duplicate, 0 via-on-THT-pad and 0 dead-end items; solid zone connection: ['J3.2', 'SD1.2', 'TC1.3']
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\kicad-cli.exe pcb drc --format json --severity-all --schematic-parity --all-track-errors --refill-zones -o routing/postroute-drc.json eda/M1.kicad_pcb
+routing/postroute-drc.json {'track_dangling': 3, 'silk_edge_clearance': 4, 'silk_over_copper': 22, 'silk_overlap': 31} unconnected 0 parity 0
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe set_rules.py
+Rules: clearance 0.25 (fine pitch ['U3']: 0.15 / track 0.2), track 0.20 (Default) / PWR 0.50, vias 0.6/0.3 (PWR 0.9/0.4); no DRC exclusions.
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\kicad-cli.exe pcb drc --format json --severity-all --schematic-parity --all-track-errors --refill-zones -o routing/postclean-drc.json eda/M1.kicad_pcb
+routing/postclean-drc.json {'track_dangling': 3, 'silk_edge_clearance': 4, 'silk_over_copper': 22, 'silk_overlap': 31} unconnected 0 parity 0
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe trim_stubs.py
+trimmed: 1 unused track pieces removed, 2 shortened; unconnected 0 -> 0
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe set_rules.py
+Rules: clearance 0.25 (fine pitch ['U3']: 0.15 / track 0.2), track 0.20 (Default) / PWR 0.50, vias 0.6/0.3 (PWR 0.9/0.4); no DRC exclusions.
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe inner_zones.py
+In2 supply zones: none (M1)
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\python.exe set_rules.py
+Rules: clearance 0.25 (fine pitch ['U3']: 0.15 / track 0.2), track 0.20 (Default) / PWR 0.50, vias 0.6/0.3 (PWR 0.9/0.4); no DRC exclusions.
+> C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\kicad-cli.exe pcb drc --format json --severity-all --schematic-parity --all-track-errors --refill-zones -o routing/postclean-drc.json eda/M1.kicad_pcb
+routing/postclean-drc.json {'silk_edge_clearance': 4, 'silk_over_copper': 22, 'silk_overlap': 31} unconnected 0 parity 0
+
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+
+Fontconfig error: No writable cache directories
+	C:/WINDOWS/Cache/Fontcache
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+
+Fontconfig error: No writable cache directories
+	C:/WINDOWS/Cache/Fontcache
+
+Fontconfig error: No writable cache directories
+	C:/WINDOWS/Cache/Fontcache
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+Adding duplicate image handler for 'PNG file'
+Adding duplicate image handler for 'JPEG file'
+Adding duplicate image handler for 'TIFF file'
+Adding duplicate image handler for 'GIF file'
+Adding duplicate image handler for 'PNM file'
+Adding duplicate image handler for 'PCX file'
+Adding duplicate image handler for 'IFF file'
+Adding duplicate image handler for 'Windows icon file'
+Adding duplicate image handler for 'Windows cursor file'
+Adding duplicate image handler for 'Windows animated cursor file'
+Adding duplicate image handler for 'TGA file'
+Adding duplicate image handler for 'XPM file'
+Adding duplicate image handler for 'WebP file'
+
+Fontconfig error: No writable cache directories
+	C:/WINDOWS/Cache/Fontcache

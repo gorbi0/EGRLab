@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html class="client-nojs" lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<title>ESP32-S3-DEV-KIT-N8R8 - Waveshare Wiki</title>
+<script>document.documentElement.className="client-js";RLCONF={"wgBreakFrames":!1,"wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgRequestId":"68c6a598f53c614051c0d4b0","wgCSPNonce":!1,"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":!1,"wgNamespaceNumber":0,"wgPageName":"ESP32-S3-DEV-KIT-N8R8","wgTitle":"ESP32-S3-DEV-KIT-N8R8","wgCurRevisionId":110631,"wgRevisionId":110631,"wgArticleId":15448,"wgIsArticle":!0,"wgIsRedirect":!1,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["USB Type-C interface"],"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgRelevantPageName":"ESP32-S3-DEV-KIT-N8R8","wgRelevantArticleId":15448,"wgIsProbablyEditable":!1,"wgRelevantPageIsProbablyEditable":!1,"wgRestrictionEdit":[],"wgRestrictionMove":[]};RLSTATE={"ext.gadget.tabber"
+:"ready","site.styles":"ready","noscript":"ready","user.styles":"ready","user":"ready","user.options":"loading","mediawiki.toc.styles":"ready","skins.tweeki.styles":"ready","skins.tweeki.bootstraptheme.styles":"ready","skins.tweeki.externallinks.styles":"ready","skins.tweeki.awesome.styles":"ready"};RLPAGEMODULES=["site","mediawiki.page.startup","mediawiki.page.ready","mediawiki.toc","ext.FancyBoxThumbs","ext.HighlightjsIntegration","skins.tweeki.messages","skins.tweeki.scripts"];</script>
+<script>(RLQ=window.RLQ||[]).push(function(){mw.loader.implement("user.options@1hzgi",function($,jQuery,require,module){/*@nomin*/mw.user.tokens.set({"patrolToken":"+\\","watchToken":"+\\","csrfToken":"+\\"});
+});});</script>
+<link rel="stylesheet" href="/w/Uy8Yw0y/aAdkk0o.php?lang=en&amp;modules=mediawiki.toc.styles%7Cskins.tweeki.awesome.styles%7Cskins.tweeki.bootstraptheme.styles%7Cskins.tweeki.externallinks.styles%7Cskins.tweeki.styles&amp;only=styles&amp;skin=tweeki"/>
+<script async="" src="/w/Uy8Yw0y/aAdkk0o.php?lang=en&amp;modules=startup&amp;only=scripts&amp;raw=1&amp;skin=tweeki"></script>
+<meta name="ResourceLoaderDynamicStyles" content=""/>
+<link rel="stylesheet" href="/w/Uy8Yw0y/aAdkk0o.php?lang=en&amp;modules=ext.gadget.tabber&amp;only=styles&amp;skin=tweeki"/>
+<link rel="stylesheet" href="/w/Uy8Yw0y/aAdkk0o.php?lang=en&amp;modules=site.styles&amp;only=styles&amp;skin=tweeki"/>
+<meta name="generator" content="MediaWiki 1.35.5"/>
+<meta property="og:image" content="https://www.waveshare.com/w/upload/1/1d/360px-ESP32-S3-DEV-KIT-N8R8-1.jpg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="shortcut icon" href="/w/favicon.ico"/>
+<link rel="search" type="application/opensearchdescription+xml" href="/w/opensearch_desc.php" title="Waveshare Wiki (en)"/>
+<link rel="EditURI" type="application/rsd+xml" href="https://www.waveshare.com/w/api.php?action=rsd"/>
+<link rel="alternate" type="application/atom+xml" title="Waveshare Wiki Atom feed" href="/w/index.php?title=Special:RecentChanges&amp;feed=atom"/>
+<!--[if lt IE 9]><script src="/w/resources/lib/html5shiv/html5shiv.js"></script><![endif]-->
+</head>
+<body class="mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject page-ESP32-S3-DEV-KIT-N8R8 rootpage-ESP32-S3-DEV-KIT-N8R8 skin-tweeki action-view tweeki-animateLayout tweeki-non-advanced tweeki-user-anon"><a href="https://www.waveshare.com/cdn-cgi/content?id=M7bqrlLDeKY3TRHZKssEloPU8L4k.4lPIIiT_aGdKcc-1791477281.0154672-1.2.1.1-QUK_T6Ymo91otrz_J_9lnPOL7R5Ro3OHtv7QZyGnnInD8CYMukOkVqRTpKxiyuST" aria-hidden="true" rel="nofollow noopener" style="display: none !important; visibility: hidden !important"></a>			<!-- navbar -->
+			<div id="mw-navigation" class="navbar navbar-default navbar-fixed-top navbar-expand-lg fixed-top navbar-light bg-light" role="navigation">
+				<h2>Navigation menu</h2>
+				<div id="mw-head" class="navbar-inner">
+					<div class="container">
+
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+
+							<a href="/wiki/Main_Page" class="navbar-brand"><img src="https://www.waveshare.com/w/upload/a/a7/Ws-watermark-en.svg" alt="Waveshare Wiki" /></a>
+						</div>
+
+						<div id="navbar" class="navbar-collapse collapse">
+													<ul class="nav navbar-nav">
+							<li class="nav"><a href="#" id="n-raspberry-pi" class="dropdown-toggle" data-toggle="dropdown">Raspberry Pi <b class="caret"></b></a><ul class="dropdown-menu " role="menu"><li id="n-main_page.2523rpi-boards"><a href="/wiki/Main_Page#RPi-Boards" tabindex="-1">Boards/Kits</a></li><li id="n-main_page.2523rpi-displays"><a href="/wiki/Main_Page#RPi-Displays" tabindex="-1">Displays</a></li><li id="n-main_page.2523rpi-cameras"><a href="/wiki/Main_Page#RPi-Cameras" tabindex="-1">Cameras</a></li><li id="n-main_page.2523rpi-expansions"><a href="/wiki/Main_Page#RPi-Expansions" tabindex="-1">Expansions</a></li><li id="n-main_page.2523rpi-laptops"><a href="/wiki/Main_Page#RPi-Laptops" tabindex="-1">All-in-one</a></li><li id="n-main_page.2523rpi-robots"><a href="/wiki/Main_Page#RPi-Robots" tabindex="-1">Robots</a></li><li id="n-main_page.2523rpi-games"><a href="/wiki/Main_Page#RPi-Games" tabindex="-1">Portable Gaming</a></li><li id="n-main_page.2523rpi-acces"><a href="/wiki/Main_Page#RPi-Acces" tabindex="-1">Accessories</a></li><li id="n-main_page.2523android-linux-boards"><a href="/wiki/Main_Page#Android-Linux-Boards" tabindex="-1">Other Android/Linux Boards</a></li></ul></li><li class="nav"><a href="#" id="n-ai" class="dropdown-toggle" data-toggle="dropdown">AI <b class="caret"></b></a><ul class="dropdown-menu " role="menu"><li id="n-main_page.2523jetson-ai-boards"><a href="/wiki/Main_Page#Jetson-AI-Boards" tabindex="-1">Boards/Kits</a></li><li id="n-main_page.2523jetson-ai-displays"><a href="/wiki/Main_Page#Jetson-AI-Displays" tabindex="-1">Displays</a></li><li id="n-main_page.2523jetson-ai-cameras"><a href="/wiki/Main_Page#Jetson-AI-Cameras" tabindex="-1">Cameras</a></li><li id="n-main_page.2523jetson-ai-hat"><a href="/wiki/Main_Page#Jetson-AI-HAT" tabindex="-1">Expansions</a></li><li id="n-main_page.2523jetson-ai-robots"><a href="/wiki/Main_Page#Jetson-AI-Robots" tabindex="-1">Robots</a></li></ul></li><li class="nav"><a href="#" id="n-displays" class="dropdown-toggle" data-toggle="dropdown">Displays <b class="caret"></b></a><ul class="dropdown-menu " role="menu"><li id="n-main_page.2523display-lcd-oleds"><a href="/wiki/Main_Page#Display-LCD-OLEDs" tabindex="-1">LCD/OLED</a></li><li id="n-main_page.2523display-e-paper"><a href="/wiki/Main_Page#Display-e-Paper" tabindex="-1">e-Paper</a></li></ul></li><li class="nav"><a href="#" id="n-iot" class="dropdown-toggle" data-toggle="dropdown">IoT <b class="caret"></b></a><ul class="dropdown-menu " role="menu"><li id="n-main_page.2523long-range-wireless-comm"><a href="/wiki/Main_Page#Long-range-wireless-comm" tabindex="-1">Long Range Wireless</a></li><li id="n-main_page.2523short-range-wireless-comm"><a href="/wiki/Main_Page#Short-range-wireless-comm" tabindex="-1">Short Range Wireless</a></li><li id="n-main_page.2523wired-communication"><a href="/wiki/Main_Page#Wired-communication" tabindex="-1">Wired Comm / Converter</a></li><li id="n-main_page.2523misc-cameras-av"><a href="/wiki/Main_Page#Misc-cameras-av" tabindex="-1">Cameras / Audio / Video</a></li><li id="n-main_page.2523misc-sensor-modules"><a href="/wiki/Main_Page#Misc-sensor-modules" tabindex="-1">Sensors</a></li><li id="n-main_page.2523misc-servos-motors"><a href="/wiki/Main_Page#Misc-servos-motors" tabindex="-1">Motors / Servos</a></li><li id="n-main_page.2523misc-other-modules"><a href="/wiki/Main_Page#Misc-other-modules" tabindex="-1">others</a></li></ul></li><li class="nav"><a href="#" id="n-robotics" class="dropdown-toggle" data-toggle="dropdown">Robotics <b class="caret"></b></a><ul class="dropdown-menu " role="menu"><li id="n-main_page.2523robotics-cars"><a href="/wiki/Main_Page#Robotics-cars" tabindex="-1">Mobile Robots</a></li><li id="n-main_page.2523dog-like-robots"><a href="/wiki/Main_Page#Dog-like-Robots" tabindex="-1">Dog-like Robots</a></li><li id="n-main_page.2523robotics-drivers-sensors"><a href="/wiki/Main_Page#Robotics-drivers-sensors" tabindex="-1">Drivers / Sensors</a></li><li id="n-main_page.2523robotics-robot-arms"><a href="/wiki/Main_Page#Robotics-robot-arms" tabindex="-1">Robot Arm / Control</a></li></ul></li><li class="nav"><a href="#" id="n-mcu.252Ffpga" class="dropdown-toggle" data-toggle="dropdown">MCU/FPGA <b class="caret"></b></a><ul class="dropdown-menu " role="menu"><li id="n-main_page.2523arduino-main-boards"><a href="/wiki/Main_Page#Arduino-main-boards" tabindex="-1">Arduino</a></li><li id="n-main_page.2523micro.253Abit"><a href="/wiki/Main_Page#micro:bit" tabindex="-1">micro:bit</a></li><li id="n-main_page.2523mcu.2farm" class="LPC"><a href="/wiki/Main_Page#MCU.2FARM" tabindex="-1">STM32</a></li><li id="n-main_page.2523fpga"><a href="/wiki/Main_Page#FPGA" tabindex="-1">FPGA</a></li></ul></li><li class="nav"><a href="https://service.waveshare.com" id="n-https.253A.252F.252Fservice.waveshare.com" rel="nofollow" target="_blank">Support</a></li>							</ul>
+						
+													<ul class="nav navbar-nav navbar-right">
+							</ul>
+				<form class="navbar-form navbar-right" action="/w/index.php" id="searchform">
+					<div class="form-group"><input type="search" name="search" placeholder="Product name search" title="Search Waveshare Wiki [f]" accesskey="f" id="searchInput" class="search-query form-control"/><input type="submit" name="go" value="Go" title="Go to a page with this exact name if it exists" id="mw-searchButton" class="searchButton btn hidden"/>
+					</div>
+				</form><ul class="nav navbar-nav navbar-right">							</ul>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+			<!-- /navbar -->
+					<div id="mw-page-base"></div>
+			<div id="mw-head-base"></div>
+			<a id="top"></a>
+
+			<!-- content -->
+			<div id="contentwrapper" class="user-loggedout not-editable container with-navbar with-navbar-fixed">
+
+				
+				<div class="row">
+					<div class="col-md-offset-2 col-md-10" role="main">
+								<div class="mw-body" id="content">
+			<div id="mw-js-message" style="display:none;"></div>
+									<h1 id="firstHeading" class="firstHeading page-header" lang="en"><span dir="auto">ESP32-S3-DEV-KIT-N8R8</span></h1>
+									<!-- bodyContent -->
+			<div id="bodyContent">
+								<div id="siteSub">From Waveshare Wiki</div>
+								<div id="contentSub"></div>
+												<div id="jump-to-nav" class="mw-jump">
+					Jump to:					<a href="#mw-navigation">navigation</a>, 					<a href="#p-search">search</a>
+				</div>
+				<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr"><div class="mw-parser-output"><p> 
+<meta http-equiv="refresh" content="0; url=https://docs.waveshare.com/ESP32-S3-DEV-KIT-N8R8" />
+
+</p>
+<div class="wiki-pages jet-green-color">
+<div class="tabber">
+<table id="infotable" class="a-r at-c roundy bgd-green bl-white" style="margin-left: 5px; margin-bottom: 5px; width: 30%;">
+
+<tbody><tr>
+<td>
+<table class="at-c roundy" style="background: transparent;width:100%;">
+
+<tbody><tr>
+<td class="at-c textwhite"><b>ESP32-S3-DEV-KIT-N8R8 <br />Without header</b>
+</td></tr>
+<tr>
+<td class="at-c bgwhite" style="margin:5px;"><a href="https://www.waveshare.com/esp32-s3-dev-kit-n8r8.htm?sku=24363" target="_blank" rel="nofollow noreferrer noopener"><img alt="ESP32-S3-Pico" src="/w/upload/1/1d/360px-ESP32-S3-DEV-KIT-N8R8-1.jpg" decoding="async" loading="lazy" width="360" height="260" /></a><br /><br /><small>ESP32-S3, USB Type-C</small>
+</td></tr></tbody></table>
+</td></tr>
+<tr>
+<td>
+<table class="roundy" style="background: transparent;width:100%;">
+
+<tbody><tr>
+<td class="at-c textwhite"><b>ESP32-S3-DEV-KIT-N8R8 <br />With pre-soldered header</b>
+</td></tr>
+<tr>
+<td class="at-c bgwhite" style="margin:5px;"><a href="https://www.waveshare.com/esp32-s3-dev-kit-n8r8.htm?sku=24243" target="_blank" rel="nofollow noreferrer noopener"><img alt="ESP32-S3-Pico" src="/w/upload/6/6d/360px-ESP32-S3-DEV-KIT-N8R8-M-1.jpg" decoding="async" loading="lazy" width="360" height="270" /></a>
+<br /><br /><small>ESP32-S3, USB Type-C</small>
+</td></tr></tbody></table>
+</td></tr>
+<tr style="display:none;">
+<td>
+<table class="roundy" style="background: transparent;width:100%;">
+
+<tbody><tr>
+<td class="at-c textwhite"><b>{{{name3}}}</b>
+</td></tr>
+<tr>
+<td class="at-c bgwhite" style="margin:5px;"><br />
+</td></tr></tbody></table>
+</td></tr>
+<tr style="display:none;">
+<td>
+<table class="roundy" style="background: transparent;width:100%;">
+
+<tbody><tr>
+<td class="at-c textwhite"><b>{{{name4}}}</b>
+</td></tr>
+<tr>
+<td class="at-c bgwhite" style="margin:5px;"><br />
+</td></tr></tbody></table>
+</td></tr>
+<tr style="display:none;">
+<td>
+<table class="roundy" style="background: transparent;width:100%;">
+
+<tbody><tr>
+<td class="at-c textwhite"><b>{{{name5}}}</b>
+</td></tr>
+<tr>
+<td class="at-c bgwhite" style="margin:5px;"><br />
+</td></tr></tbody></table>
+</td></tr>
+<tr style="display:none;">
+<td>
+<table class="roundy" style="background: transparent;width:100%;">
+
+<tbody><tr>
+<td class="at-c textwhite"><b>{{{name6}}}</b>
+</td></tr>
+<tr>
+<td class="at-c bgwhite" style="margin:5px;"><br />
+</td></tr></tbody></table>
+</td></tr>
+<tr>
+<td>
+<table class="roundy" style="display:none;">
+<tbody><tr>
+<td style="width:2%;">
+</td>
+<td style="width:3%;">
+</td>
+<th colspan="2" width="90%" class="at-c roundytop bgl-white">Primary Attribute
+</th>
+<td style="width:3%;">
+</td>
+<td style="width:2%;">
+</td></tr>
+<tr>
+<td colspan="6" width="90px" class="at-c roundytl roundytr bgwhite b-green" style="border-width: 0 0 1px 0;"><b>Category:</b>
+</td></tr>
+<tr style="display:none;">
+<th colspan="3" width="90px" class="at-r bgwhite b-green" style="border-width: 0 0 1px 0;">{{{userDefinedInfo}}}:
+</th>
+<td colspan="3" class="at-l b-green bgwhite" style="border-width: 0 0 1px 0;">{{{userdefinedvalue}}}
+</td></tr>
+<tr style="display:none;">
+<td colspan="6" width="90px" class="at-c roundybl roundybr bgwhite"><b>Brand:</b> Waveshare
+</td></tr></tbody></table>
+</td></tr>
+<tr>
+<td>
+<table class="a-r roundy" style="display:none;">
+<tbody><tr>
+<td style="width:2%;">
+</td>
+<td style="width:3%;">
+</td>
+<th colspan="2" width="90%" class="at-c roundytop bgl-white">Website
+</th>
+<td style="width:3%;">
+</td>
+<td style="width:2%;">
+</td></tr>
+<tr>
+<td colspan="6" width="90px" class="at-c roundytl roundytr bgwhite b-green" style="border-width: 0 0 1px 0;"><b>International:</b> {{{website_en}}}
+</td></tr>
+<tr>
+<td colspan="6" width="90px" class="at-c roundybl roundybr bgwhite"><b>Chinese:</b> {{{website_cn}}}
+</td></tr></tbody></table>
+</td></tr>
+<tr>
+<td>
+<table class="a-r roundy" style="background: transparent; border-collapse:collapse;width:100%;display:none;">
+<tbody><tr>
+<td style="width:2%;">
+</td>
+<td style="width:3%;">
+</td>
+<th colspan="2" width="90%" class="at-c roundytop bgl-white">Onboard Interfaces
+</th>
+<td style="width:3%;">
+</td>
+<td style="width:2%;">
+</td></tr>
+<tr>
+<td colspan="6" width="90px" class="at-l roundy bgwhite b-green" style="border-width: 0 0 1px 0;">
+<table class="roundy bgwhite fulltable" style="text-align:center;">
+
+<tbody><tr>
+<td class="roundy bl-gray bw-1" style="width:25%;;"><small><b><a href="/w/index.php?title=Category:USB_Type-C_interface&amp;action=edit&amp;redlink=1" class="new" title="Category:USB Type-C interface (page does not exist)">USB Type-C</a></b></small>
+</td>
+<td class="roundy bl-gray bw-1" style="width:25%;display:none;"><small></small>
+</td>
+<td class="roundy bl-gray bw-1" style="width:25%;display:none;"><small></small>
+</td>
+<td class="roundy bl-gray bw-1" style="width:25%;display:none;"><small></small>
+</td></tr>
+<tr>
+<td class="roundy bl-gray bw-1" style="width:25%;display:none;"><small></small>
+</td>
+<td class="roundy bl-gray bw-1" style="width:25%;display:none;"><small></small>
+</td>
+<td class="roundy bl-gray bw-1" style="width:25%;display:none;"><small></small>
+</td>
+<td class="roundy bl-gray bw-1" style="width:25%;display:none;"><small></small>
+</td></tr>
+<tr>
+<td class="roundy bl-gray bw-1" style="width:25%;display:none;"><small></small>
+</td>
+<td class="roundy bl-gray bw-1" style="width:25%;display:none;"><small></small>
+</td>
+<td class="roundy bl-gray bw-1" style="width:25%;display:none;"><small></small>
+</td>
+<td class="roundy bl-gray bw-1" style="width:25%;display:none;"><small></small>
+</td></tr>
+<tr>
+<td class="roundy bl-gray bw-1" style="width:25%;display:none;"><small></small>
+</td>
+<td class="roundy bl-gray bw-1" style="width:25%;display:none;"><small></small>
+</td>
+<td class="roundy bl-gray bw-1" style="width:25%;display:none;"><small></small>
+</td>
+<td class="roundy bl-gray bw-1" style="width:25%;display:none;"><small></small>
+</td></tr>
+<tr>
+<td class="roundy bl-gray bw-1" style="width:25%;display:none;"><small></small>
+</td>
+<td class="roundy bl-gray bw-1" style="width:25%;display:none;"><small></small>
+</td>
+<td class="roundy bl-gray bw-1" style="width:25%;display:none;"><small></small>
+</td>
+<td class="roundy bl-gray bw-1" style="width:25%;display:none;"><small></small>
+</td></tr></tbody></table>
+</td></tr></tbody></table>
+</td></tr>
+<tr style="display:none;">
+<td>
+<table class="a-r roundy" style="background: transparent; border-collapse:collapse;width:100%;;display:none;">
+<tbody><tr>
+<td style="width:2%;">
+</td>
+<td style="width:3%;">
+</td>
+<th colspan="2" width="90%" class="at-c roundytop bgl-white">Related Products
+</th>
+<td style="width:3%;">
+</td>
+<td style="width:2%;">
+</td></tr>
+<tr>
+<td colspan="6" width="90px" class="at-l roundy bgwhite b-green" style="border-width: 0 0 1px 0;">
+</td></tr></tbody></table>
+</td></tr></tbody></table>
+<div class="tabbertab" title="Overview" id="myintro">
+<div id="toc" class="toc" role="navigation" aria-labelledby="mw-toc-heading"><input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" style="display:none" /><div class="toctitle" lang="en" dir="ltr"><h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label class="toctogglelabel" for="toctogglecheckbox"></label></span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Version_Description"><span class="tocnumber">1</span> <span class="toctext">Version Description</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Overview"><span class="tocnumber">2</span> <span class="toctext">Overview</span></a>
+<ul>
+<li class="toclevel-2 tocsection-3"><a href="#Introduction"><span class="tocnumber">2.1</span> <span class="toctext">Introduction</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#Features"><span class="tocnumber">2.2</span> <span class="toctext">Features</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#Functional_Block_Diagram"><span class="tocnumber">2.3</span> <span class="toctext">Functional Block Diagram</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Interfaces"><span class="tocnumber">2.4</span> <span class="toctext">Interfaces</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Pinout_Definition"><span class="tocnumber">2.5</span> <span class="toctext">Pinout Definition</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#Dimensions"><span class="tocnumber">2.6</span> <span class="toctext">Dimensions</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-9"><a href="#Development_Environment_Configuration"><span class="tocnumber">3</span> <span class="toctext">Development Environment Configuration</span></a>
+<ul>
+<li class="toclevel-2 tocsection-10"><a href="#ESP-IDF"><span class="tocnumber">3.1</span> <span class="toctext">ESP-IDF</span></a>
+<ul>
+<li class="toclevel-3 tocsection-11"><a href="#Develop_with_VSCode_Plug-in"><span class="tocnumber">3.1.1</span> <span class="toctext">Develop with VSCode Plug-in</span></a>
+<ul>
+<li class="toclevel-4 tocsection-12"><a href="#Install_VSCode"><span class="tocnumber">3.1.1.1</span> <span class="toctext">Install VSCode</span></a></li>
+<li class="toclevel-4 tocsection-13"><a href="#Install_Espressif_IDF_Plugin"><span class="tocnumber">3.1.1.2</span> <span class="toctext">Install Espressif IDF Plugin</span></a></li>
+<li class="toclevel-4 tocsection-14"><a href="#Run_Official_Demos"><span class="tocnumber">3.1.1.3</span> <span class="toctext">Run Official Demos</span></a>
+<ul>
+<li class="toclevel-5 tocsection-15"><a href="#Create_Demo"><span class="tocnumber">3.1.1.3.1</span> <span class="toctext">Create Demo</span></a></li>
+<li class="toclevel-5 tocsection-16"><a href="#Modify_COM_Port"><span class="tocnumber">3.1.1.3.2</span> <span class="toctext">Modify COM Port</span></a></li>
+<li class="toclevel-5 tocsection-17"><a href="#Modify_Driver_Object"><span class="tocnumber">3.1.1.3.3</span> <span class="toctext">Modify Driver Object</span></a></li>
+<li class="toclevel-5 tocsection-18"><a href="#Other_Status_Bars"><span class="tocnumber">3.1.1.3.4</span> <span class="toctext">Other Status Bars</span></a></li>
+<li class="toclevel-5 tocsection-19"><a href="#Compile.2C_Flash_and_Serial_Port_Monitor"><span class="tocnumber">3.1.1.3.5</span> <span class="toctext">Compile, Flash and Serial Port Monitor</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-20"><a href="#Arduino"><span class="tocnumber">3.2</span> <span class="toctext">Arduino</span></a>
+<ul>
+<li class="toclevel-3 tocsection-21"><a href="#Install_Arduino_IDE"><span class="tocnumber">3.2.1</span> <span class="toctext">Install Arduino IDE</span></a></li>
+<li class="toclevel-3 tocsection-22"><a href="#Install_Arduino-esp32_Online"><span class="tocnumber">3.2.2</span> <span class="toctext">Install Arduino-esp32 Online</span></a></li>
+<li class="toclevel-3 tocsection-23"><a href="#Install_Arduino-esp32_Offline"><span class="tocnumber">3.2.3</span> <span class="toctext">Install Arduino-esp32 Offline</span></a></li>
+<li class="toclevel-3 tocsection-24"><a href="#Run_Arduino_Demos"><span class="tocnumber">3.2.4</span> <span class="toctext">Run Arduino Demos</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-25"><a href="#MicroPython"><span class="tocnumber">3.3</span> <span class="toctext">MicroPython</span></a>
+<ul>
+<li class="toclevel-3 tocsection-26"><a href="#Flash_Firmware"><span class="tocnumber">3.3.1</span> <span class="toctext">Flash Firmware</span></a></li>
+<li class="toclevel-3 tocsection-27"><a href="#Install_Thonny"><span class="tocnumber">3.3.2</span> <span class="toctext">Install Thonny</span></a></li>
+<li class="toclevel-3 tocsection-28"><a href="#Get_Demo"><span class="tocnumber">3.3.3</span> <span class="toctext">Get Demo</span></a></li>
+<li class="toclevel-3 tocsection-29"><a href="#Run_Demo"><span class="tocnumber">3.3.4</span> <span class="toctext">Run Demo</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-30"><a href="#Flash_Firmware_Flashing_and_Erasing"><span class="tocnumber">4</span> <span class="toctext">Flash Firmware Flashing and Erasing</span></a></li>
+<li class="toclevel-1 tocsection-31"><a href="#"><span class="tocnumber">5</span> <span class="toctext"></span></a></li>
+<li class="toclevel-1 tocsection-32"><a href="#Resources"><span class="tocnumber">6</span> <span class="toctext">Resources</span></a>
+<ul>
+<li class="toclevel-2 tocsection-33"><a href="#Schematic_Diagram"><span class="tocnumber">6.1</span> <span class="toctext">Schematic Diagram</span></a></li>
+<li class="toclevel-2 tocsection-34"><a href="#3D_Structure"><span class="tocnumber">6.2</span> <span class="toctext">3D Structure</span></a></li>
+<li class="toclevel-2 tocsection-35"><a href="#Demo"><span class="tocnumber">6.3</span> <span class="toctext">Demo</span></a></li>
+<li class="toclevel-2 tocsection-36"><a href="#Software"><span class="tocnumber">6.4</span> <span class="toctext">Software</span></a>
+<ul>
+<li class="toclevel-3 tocsection-37"><a href="#ESP32-S3"><span class="tocnumber">6.4.1</span> <span class="toctext">ESP32-S3</span></a></li>
+<li class="toclevel-3 tocsection-38"><a href="#Arduino_2"><span class="tocnumber">6.4.2</span> <span class="toctext">Arduino</span></a></li>
+<li class="toclevel-3 tocsection-39"><a href="#CH343"><span class="tocnumber">6.4.3</span> <span class="toctext">CH343</span></a></li>
+<li class="toclevel-3 tocsection-40"><a href="#Serial_Port"><span class="tocnumber">6.4.4</span> <span class="toctext">Serial Port</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-41"><a href="#Datasheets"><span class="tocnumber">6.5</span> <span class="toctext">Datasheets</span></a>
+<ul>
+<li class="toclevel-3 tocsection-42"><a href="#ESP32-S3_2"><span class="tocnumber">6.5.1</span> <span class="toctext">ESP32-S3</span></a></li>
+<li class="toclevel-3 tocsection-43"><a href="#CH343_2"><span class="tocnumber">6.5.2</span> <span class="toctext">CH343</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-44"><a href="#Official_Documents"><span class="tocnumber">6.6</span> <span class="toctext">Official Documents</span></a>
+<ul>
+<li class="toclevel-3 tocsection-45"><a href="#Raspberry_Pi_Official_Documents"><span class="tocnumber">6.6.1</span> <span class="toctext">Raspberry Pi Official Documents</span></a></li>
+<li class="toclevel-3 tocsection-46"><a href="#MicroPython_Official_Documents"><span class="tocnumber">6.6.2</span> <span class="toctext">MicroPython Official Documents</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-47"><a href="#Project_Resources"><span class="tocnumber">6.7</span> <span class="toctext">Project Resources</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-48"><a href="#FAQ"><span class="tocnumber">7</span> <span class="toctext">FAQ</span></a></li>
+<li class="toclevel-1 tocsection-49"><a href="#Support"><span class="tocnumber">8</span> <span class="toctext">Support</span></a></li>
+</ul>
+</div>
+
+<h1><span class="mw-headline" id="Version_Description">Version Description</span></h1>
+<table class="wikitable">
+<caption>Version Comparison
+</caption>
+<tbody><tr>
+<th>Comparison Item</th>
+<th>ESP32-S3-DEV-KIT-N8R8</th>
+<th>ESP32-S3-DEV-KIT-N16R8</th>
+<th>ESP32-S3-DEV-KIT-N32R16V
+</th></tr>
+<tr>
+<td>Product Illustration</td>
+<td><a href="/wiki/File:ESP32-S3-DEV-KIT-N8R8.png" class="image"><img alt="ESP32-S3-DEV-KIT-N8R8.png" src="/w/upload/thumb/3/39/ESP32-S3-DEV-KIT-N8R8.png/200px-ESP32-S3-DEV-KIT-N8R8.png" decoding="async" loading="lazy" width="200" height="172" srcset="/w/upload/thumb/3/39/ESP32-S3-DEV-KIT-N8R8.png/300px-ESP32-S3-DEV-KIT-N8R8.png 1.5x, /w/upload/3/39/ESP32-S3-DEV-KIT-N8R8.png 2x" /></a></td>
+<td><a href="/wiki/File:ESP32-S3-DEV-KIT-N16R8.png" class="image"><img alt="ESP32-S3-DEV-KIT-N16R8.png" src="/w/upload/thumb/7/79/ESP32-S3-DEV-KIT-N16R8.png/200px-ESP32-S3-DEV-KIT-N16R8.png" decoding="async" loading="lazy" width="200" height="171" srcset="/w/upload/thumb/7/79/ESP32-S3-DEV-KIT-N16R8.png/300px-ESP32-S3-DEV-KIT-N16R8.png 1.5x, /w/upload/7/79/ESP32-S3-DEV-KIT-N16R8.png 2x" /></a></td>
+<td><a href="/wiki/File:ESP32-S3-DEV-KIT-N32R16V.png" class="image"><img alt="ESP32-S3-DEV-KIT-N32R16V.png" src="/w/upload/thumb/c/c3/ESP32-S3-DEV-KIT-N32R16V.png/200px-ESP32-S3-DEV-KIT-N32R16V.png" decoding="async" loading="lazy" width="200" height="171" srcset="/w/upload/thumb/c/c3/ESP32-S3-DEV-KIT-N32R16V.png/300px-ESP32-S3-DEV-KIT-N32R16V.png 1.5x, /w/upload/c/c3/ESP32-S3-DEV-KIT-N32R16V.png 2x" /></a>
+</td></tr>
+<tr>
+<td>Module</td>
+<td>ESP32-S3-WROOM-1-N8R8</td>
+<td>ESP32-S3-WROOM-1-N16R8</td>
+<td>ESP32-S3-WROOM-2-N32R16V
+</td></tr>
+<tr>
+<td>Flash Configuration</td>
+<td>8MB (Quad SPI, DIO/QIO mode)</td>
+<td>16MB (Quad SPI, DIO/QIO mode)</td>
+<td>32MB (Octal SPI, OPI mode)
+</td></tr>
+<tr>
+<td>PSRAM Configuration</td>
+<td>8MB</td>
+<td>8MB</td>
+<td>16MB
+</td></tr>
+<tr>
+<td>Pin 28/29/30 Function (Corresponding to GPIO35/GPIO36/GPIO37)</td>
+<td>Functional Pins (Configurable as GPIO, SPI, I2C, etc., for peripheral expansion)</td>
+<td>Functional Pins (Configurable as GPIO, SPI, I2C, etc., for peripheral expansion)</td>
+<td>NC
+</td></tr>
+<tr>
+<td>IO47/IO48 Output High Level</td>
+<td>3.3V</td>
+<td>3.3V</td>
+<td>1.8V (The integrated SPI Flash and PSRAM inside the module operate at 1.8V. IO47/IO48 belong to the VDD_SPI domain, so the output high level is 1.8V)
+</td></tr>
+</tbody></table>
+<h1><span class="mw-headline" id="Overview">Overview</span></h1>
+<h2><span class="mw-headline" id="Introduction">Introduction</span></h2>
+<p>ESP32-S3-DEV-KIT-NxR8 is a compact-size microcontroller development board with multiple digital interfaces.
+</p><p>In terms of hardware, it adopts ESP32-S3-WROOM-1-NxR8 module, which is equipped with a dual-core Xtensa 32-bit LX7 processor with 240MHz running frequency, built-in 512 KB SRAM (TCM) and 8MB PSRAM. Onboard CH343 and CH334 chips for USB and UART development via USB-C port. Compatible with the pinout of ESP32-S3-DevKitC-1 development board, more convenient to use and expand a variety of peripheral modules.
+</p><p>As for the software, you can choose ESP-IDF, Arduino, MicroPython, or other development environments so that you can easily and quickly get started and apply it to the product.
+</p>
+<h2><span class="mw-headline" id="Features">Features</span></h2>
+<ul><li>Adopts ESP32-S3-WROOM-1-NxR8 module with Xtensa 32-bit LX7 dual-core processor, capable of running at 240 MHz</li>
+<li>Integrated 512KB SRAM, 384KB ROM, 8MB PSRAM, 8MB/16MB Flash memory</li>
+<li>Integrated 2.4GHz WiFi and Bluetooth LE dual-mode wireless communication, with superior RF performance</li>
+<li>Type-C connector, easier to use</li>
+<li>Onboard CH343 and CH334 chips can meet the needs of USB and UART development via a Type-C interface</li>
+<li>Rich peripheral interfaces, compatible with the pinout of ESP32-S3-DevKitC-1 development board, offers strong compatibility and expandability</li>
+<li>Castellated module allows soldering directly to carrier boards</li>
+<li>Support a variety of low-power operating states, adjustable balance between communication distance, data rate and power consumption to meet the power requirements of various application scenarios</li></ul>
+<h2><span class="mw-headline" id="Functional_Block_Diagram">Functional Block Diagram</span></h2>
+<p><a href="/wiki/File:ESP32-S3-DEV-KIT-N8R8-details-11.jpg" class="image"><img alt="ESP32-S3-DEV-KIT-N8R8-details-11.jpg" src="/w/upload/7/73/ESP32-S3-DEV-KIT-N8R8-details-11.jpg" decoding="async" loading="lazy" width="960" height="760" /></a>
+</p>
+<h2><span class="mw-headline" id="Interfaces">Interfaces</span></h2>
+<p><a href="/wiki/File:ESP32-S3-DEV-KIT-N8R8-details-intro.png" class="image"><img alt="ESP32-S3-DEV-KIT-N8R8-details-intro.png" src="/w/upload/f/f8/ESP32-S3-DEV-KIT-N8R8-details-intro.png" decoding="async" loading="lazy" width="930" height="460" /></a>
+</p>
+<h2><span class="mw-headline" id="Pinout_Definition">Pinout Definition</span></h2>
+<p><a href="/wiki/File:ESP32-S3-DEV-KIT-N8R8-details-13.png" class="image"><img alt="ESP32-S3-DEV-KIT-N8R8-details-13.png" src="/w/upload/c/c6/ESP32-S3-DEV-KIT-N8R8-details-13.png" decoding="async" loading="lazy" width="906" height="968" /></a>
+</p>
+<h2><span class="mw-headline" id="Dimensions">Dimensions</span></h2>
+<p><a href="/wiki/File:ESP32-S3-DEV-KIT-N8R8-details-size.png" class="image"><img alt="ESP32-S3-DEV-KIT-N8R8-details-size.png" src="/w/upload/a/ab/ESP32-S3-DEV-KIT-N8R8-details-size.png" decoding="async" loading="lazy" width="839" height="527" /></a>
+</p>
+</div>
+<div class="tabbertab" title="使用">
+<h1><span class="mw-headline" id="Development_Environment_Configuration">Development Environment Configuration</span></h1>
+<ul><li>The following development system is Windows by default</li></ul>
+<h2><span class="mw-headline" id="ESP-IDF">ESP-IDF</span></h2>
+<ul><li>It is recommended to use the VSC plugin for development</li></ul>
+<h3><span class="mw-headline" id="Develop_with_VSCode_Plug-in">Develop with VSCode Plug-in</span></h3>
+<h4><span class="mw-headline" id="Install_VSCode">Install VSCode</span></h4>
+<ol><li>Open the <a target="_blank" rel="nofollow noreferrer noopener" class="external text" href="https://code.visualstudio.com/download">download page</a> of the official VSCode website, and select the corresponding system and system bit to download <br /><a href="/wiki/File:Esp32-vscod-01.jpg" class="image"><img alt="Esp32-vscod-01.jpg" src="/w/upload/5/5f/Esp32-vscod-01.jpg" decoding="async" loading="lazy" width="800" height="512" /></a></li>
+<li>After running the installation package, the rest can be installed by default, but here for the subsequent experience, it is recommended to check boxes 1, 2, and 3<br /> <a href="/wiki/File:Esp32-vscod-02.jpg" class="image"><img alt="Esp32-vscod-02.jpg" src="/w/upload/0/08/Esp32-vscod-02.jpg" decoding="async" loading="lazy" width="800" height="615" /></a>
+<ul><li>After the first two items are enabled, you can open VSCode directly by right-clicking files or directories, which can improve the subsequent user experience</li>
+<li>After the third item is enabled, you can select VSCode directly when you choose how to open it</li></ul></li></ol>
+<h4><span class="mw-headline" id="Install_Espressif_IDF_Plugin">Install Espressif IDF Plugin</span></h4>
+<ul><li>Note: Currently the latest version of the plugin is V1.6.0, users can choose the same version as us for a consistent experience</li></ul>
+<ol><li>Open VSCode, use Shift+Ctrl+X enter the plug-in manager <br /><a href="/wiki/File:Esp32-vscod-03.jpg" class="image"><img alt="Esp32-vscod-03.jpg" src="/w/upload/1/1c/Esp32-vscod-03.jpg" decoding="async" loading="lazy" width="1024" height="768" /></a></li>
+<li>In the search bar, enter Espressif IDF to select the corresponding plug-in and click Install<br /><a href="/wiki/File:Esp32-vscod-04.jpg" class="image"><img alt="Esp32-vscod-04.jpg" src="/w/upload/8/89/Esp32-vscod-04.jpg" decoding="async" loading="lazy" width="1024" height="768" /></a></li>
+<li>Use the shortcut key F1 and enter <pre>esp-idf: configure esp-idf extension</pre><br /><a href="/wiki/File:Esp32-vscod-05.jpg" class="image"><img alt="Esp32-vscod-05.jpg" src="/w/upload/d/d6/Esp32-vscod-05.jpg" decoding="async" loading="lazy" width="1024" height="768" /></a></li>
+<li>Select express (This tutorial is intended for first-time installation users, so only the first general installation tutorial is covered)<a href="/wiki/File:Esp32-vscod-06.jpg" class="image"><img alt="Esp32-vscod-06.jpg" src="/w/upload/f/f7/Esp32-vscod-06.jpg" decoding="async" loading="lazy" width="1024" height="768" /></a></li>
+<li>After opening, it displays this interface <br /><a href="/wiki/File:800px-Esp32-vscod-07.jpg" class="image"><img alt="800px-Esp32-vscod-07.jpg" src="/w/upload/8/8e/800px-Esp32-vscod-07.jpg" decoding="async" loading="lazy" width="800" height="601" /></a></li>
+<li>Choose the download server, we recommend users to use Espressif as your download server<br /><a href="/wiki/File:Esp32-vscod-08.jpg" class="image"><img alt="Esp32-vscod-08.jpg" src="/w/upload/a/a4/Esp32-vscod-08.jpg" decoding="async" loading="lazy" width="1024" height="769" /></a></li>
+<li>Select the ESP-IDF version you want to download, we choose the latest V5.0.1 (note that ESP-IDF only supports ESP32-S3 after V4.4) <br /><a href="/wiki/File:Esp32-vscod-09.jpg" class="image"><img alt="Esp32-vscod-09.jpg" src="/w/upload/e/e3/Esp32-vscod-09.jpg" decoding="async" loading="lazy" width="1024" height="769" /></a></li>
+<li>The following two are the installation paths respectively for the ESP-IDF container directory and the ESP-IDF Tools directory <br /><a href="/wiki/File:Esp32-vscod-10.jpg" class="image"><img alt="Esp32-vscod-10.jpg" src="/w/upload/c/cf/Esp32-vscod-10.jpg" decoding="async" loading="lazy" width="1024" height="769" /></a>
+<ul><li><b>Note: If you have installed ESP-IDF before, or failed to do so, please be sure to delete the file completely or create a new path without Chinese</b></li></ul></li>
+<li>After configuring, click Install to download <br /><a href="/wiki/File:Esp32-vscod-11.jpg" class="image"><img alt="Esp32-vscod-11.jpg" src="/w/upload/e/e0/Esp32-vscod-11.jpg" decoding="async" loading="lazy" width="1024" height="769" /></a></li>
+<li>Enter the download interface, and then it will automatically install the corresponding tools and environment, just wait for a second<br /><a href="/wiki/File:Esp32-vscod-11.jpg" class="image"><img alt="Esp32-vscod-11.jpg" src="/w/upload/e/e0/Esp32-vscod-11.jpg" decoding="async" loading="lazy" width="1024" height="769" /></a></li>
+<li>After the installation is complete, you will enter the following interface, indicating that the installation is finished<br /><a href="/wiki/File:Esp32-vscod-13.jpg" class="image"><img alt="Esp32-vscod-13.jpg" src="/w/upload/9/99/Esp32-vscod-13.jpg" decoding="async" loading="lazy" width="1024" height="769" /></a></li></ol>
+<h4><span class="mw-headline" id="Run_Official_Demos">Run Official Demos</span></h4>
+<h5><span class="mw-headline" id="Create_Demo">Create Demo</span></h5>
+<ol><li>Using the shortcut F1, enter <pre>esp-idf:show examples projects</pre><br /><a href="/wiki/File:Esp32-vscod-14.jpg" class="image"><img alt="Esp32-vscod-14.jpg" src="/w/upload/d/d4/Esp32-vscod-14.jpg" decoding="async" loading="lazy" width="1024" height="769" /></a></li>
+<li>Select your current IDF version<br /><a href="/wiki/File:Esp32-vscod-15.jpg" class="image"><img alt="Esp32-vscod-15.jpg" src="/w/upload/5/5a/Esp32-vscod-15.jpg" decoding="async" loading="lazy" width="1024" height="769" /></a></li>
+<li>Take the Hello world demo as an example:<br /><a href="/wiki/File:Esp32-vscod-16.jpg" class="image"><img alt="Esp32-vscod-16.jpg" src="/w/upload/9/98/Esp32-vscod-16.jpg" decoding="async" loading="lazy" width="1024" height="769" /></a></li>
+<li>①Select the corresponding demo</li>
+<li>②Its readme will state what chip the demo applies to (how to use the demo and the file structure are described below, omitted here)</li>
+<li>③Click to create the demo</li>
+<li>Select the path to save the demo, and require that the demos cannot use folders with the same name<br /><a href="/wiki/File:Esp32-vscod-17.jpg" class="image"><img alt="Esp32-vscod-17.jpg" src="/w/upload/f/fe/Esp32-vscod-17.jpg" decoding="async" loading="lazy" width="1061" height="710" /></a></li></ol>
+<h5><span class="mw-headline" id="Modify_COM_Port">Modify COM Port</span></h5>
+<ol><li>The corresponding COM ports are shown here, click to modify them<br /><a href="/wiki/File:Esp32-vscod-18.jpg" class="image"><img alt="Esp32-vscod-18.jpg" src="/w/upload/6/62/Esp32-vscod-18.jpg" decoding="async" loading="lazy" width="1024" height="769" /></a></li>
+<li>The COM of our CH343 is COM5, so we choose COM5. Please choose the COM port corresponding to your CH343<br /><a href="/wiki/File:Esp32-vscod-19.jpg" class="image"><img alt="Esp32-vscod-19.jpg" src="/w/upload/c/c6/Esp32-vscod-19.jpg" decoding="async" loading="lazy" width="1024" height="769" /></a></li>
+<li>Select the project or demo to use<br /><a href="/wiki/File:Esp32-vscod-20.jpg" class="image"><img alt="Esp32-vscod-20.jpg" src="/w/upload/a/a4/Esp32-vscod-20.jpg" decoding="async" loading="lazy" width="1024" height="769" /></a></li>
+<li>Then we finish the modification of the COM ports</li></ol>
+<h5><span class="mw-headline" id="Modify_Driver_Object">Modify Driver Object</span></h5>
+<ol><li>The driver object used is displayed here, and you can click it to modify the corresponding driver object<br /><a href="/wiki/File:Esp32-vscod-21.jpg" class="image"><img alt="Esp32-vscod-21.jpg" src="/w/upload/2/2c/Esp32-vscod-21.jpg" decoding="async" loading="lazy" width="1024" height="769" /></a></li>
+<li>Select the project or demo to use<br /><a href="/wiki/File:Esp32-vscod-20.jpg" class="image"><img alt="Esp32-vscod-20.jpg" src="/w/upload/a/a4/Esp32-vscod-20.jpg" decoding="async" loading="lazy" width="1024" height="769" /></a></li>
+<li>Click and wait for a moment<br /><a href="/wiki/File:Esp32-vscod-22.jpg" class="image"><img alt="Esp32-vscod-22.jpg" src="/w/upload/2/2e/Esp32-vscod-22.jpg" decoding="async" loading="lazy" width="1024" height="769" /></a></li>
+<li>Select the object we need to drive, which is our main chip ESP32S3<br /><a href="/wiki/File:Esp32-vscod-23.jpg" class="image"><img alt="Esp32-vscod-23.jpg" src="/w/upload/7/7b/Esp32-vscod-23.jpg" decoding="async" loading="lazy" width="1024" height="769" /></a></li>
+<li>Choose the path to openocd, it doesn't affect us here, so let's just choose one<br /><a href="/wiki/File:Esp32-vscod-24.jpg" class="image"><img alt="Esp32-vscod-24.jpg" src="/w/upload/c/cf/Esp32-vscod-24.jpg" decoding="async" loading="lazy" width="1024" height="769" /></a></li></ol>
+<h5><span class="mw-headline" id="Other_Status_Bars">Other Status Bars</span></h5>
+<p><a href="/wiki/File:Esp32-vscod-25.jpg" class="image"><img alt="Esp32-vscod-25.jpg" src="/w/upload/2/2e/Esp32-vscod-25.jpg" decoding="async" loading="lazy" width="1024" height="769" /></a>
+</p>
+<ul><li>①SDK configuration editor, supports modifying many features and configurations of ESP-IDF</li>
+<li>②All cleanup, and clear all compiled files</li>
+<li>③Compile</li>
+<li>④Current download mode, the default is UART</li>
+<li>⑤Burn the current firmware, please do it after compiling</li>
+<li>⑥Open the serial port monitor, used to view the serial port information</li>
+<li>⑦Compile, flash,open the serial monitor, all-in-one button (most commonly used for debugging)</li></ul>
+<h5><span id="Compile,_Flash_and_Serial_Port_Monitor"></span><span class="mw-headline" id="Compile.2C_Flash_and_Serial_Port_Monitor">Compile, Flash and Serial Port Monitor</span></h5>
+<ol><li>Click on the all-in-one button we described before to compile, flash and open the serial port monitor<br /><a href="/wiki/File:Esp32-vscod-29.jpg" class="image"><img alt="Esp32-vscod-29.jpg" src="/w/upload/c/ce/Esp32-vscod-29.jpg" decoding="async" loading="lazy" width="1024" height="769" /></a></li>
+<li>It may take a long time to compile especially for the first time <br /><a href="/wiki/File:Esp32-vscod-26.jpg" class="image"><img alt="Esp32-vscod-26.jpg" src="/w/upload/5/58/Esp32-vscod-26.jpg" decoding="async" loading="lazy" width="1024" height="769" /></a>
+<ul><li>During this process, the ESP-IDF may take up a lot of CPU resources, so it may cause the system to lag</li></ul></li>
+<li>Because we are using CH343 as a USB to serial port chip, and there is an automatic download circuit on board, it can be automatically downloaded without manual operation<br /><a href="/wiki/File:Esp32-vscod-27.jpg" class="image"><img alt="Esp32-vscod-27.jpg" src="/w/upload/4/48/Esp32-vscod-27.jpg" decoding="async" loading="lazy" width="1024" height="769" /></a></li>
+<li>After successful download, it will automatically enter the serial monitor, you can see the chip output the corresponding information and be prompted to restart after 10S<br /><a href="/wiki/File:Esp32-vscod-28.jpg" class="image"><img alt="Esp32-vscod-28.jpg" src="/w/upload/1/1b/Esp32-vscod-28.jpg" decoding="async" loading="lazy" width="1024" height="769" /></a></li></ol>
+<h2><span class="mw-headline" id="Arduino">Arduino</span></h2>
+<h3><span class="mw-headline" id="Install_Arduino_IDE">Install Arduino IDE</span></h3>
+<ol><li>Open the <a target="_blank" rel="nofollow noreferrer noopener" class="external text" href="https://www.arduino.cc/en/software">software download page</a> of the official website, and select the corresponding system and system bit to download <br /><a href="/wiki/File:ESP32-S3-Pico-Ar-01.jpg" class="image"><img alt="ESP32-S3-Pico-Ar-01.jpg" src="/w/upload/6/6d/ESP32-S3-Pico-Ar-01.jpg" decoding="async" loading="lazy" width="955" height="555" /></a></li>
+<li>You can choose to download directly or donate and download<br /><a href="/wiki/File:ESP32-S3-Pico-Ar-02.jpg" class="image"><img alt="ESP32-S3-Pico-Ar-02.jpg" src="/w/upload/e/ec/ESP32-S3-Pico-Ar-02.jpg" decoding="async" loading="lazy" width="657" height="667" /></a></li>
+<li>Run the installer and install all by default</li></ol>
+<h3><span class="mw-headline" id="Install_Arduino-esp32_Online">Install Arduino-esp32 Online</span></h3>
+<ol><li>Open Preferences<br /><a href="/wiki/File:ESP32-S3-Pico-Ar-03.jpg" class="image"><img alt="ESP32-S3-Pico-Ar-03.jpg" src="/w/upload/2/23/ESP32-S3-Pico-Ar-03.jpg" decoding="async" loading="lazy" width="894" height="475" /></a></li>
+<li>Add the corresponding board management link, click the button<br /><a href="/wiki/File:ESP32-S3-Pico-Ar-04.jpg" class="image"><img alt="ESP32-S3-Pico-Ar-04.jpg" src="/w/upload/c/cc/ESP32-S3-Pico-Ar-04.jpg" decoding="async" loading="lazy" width="796" height="529" /></a></li>
+<li>Add the following text in the first blank<pre>https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json</pre><br /><a href="/wiki/File:ESP32-S3-Pico-Ar-05.jpg" class="image"><img alt="ESP32-S3-Pico-Ar-05.jpg" src="/w/upload/a/ae/ESP32-S3-Pico-Ar-05.jpg" decoding="async" loading="lazy" width="792" height="531" /></a></li>
+<li>Save settings</li>
+<li>Open the board manager and input ESP32 to search<br /><a href="/wiki/File:ESP32-S3-Pico-Ar-06.jpg" class="image"><img alt="ESP32-S3-Pico-Ar-06.jpg" src="/w/upload/5/51/ESP32-S3-Pico-Ar-06.jpg" decoding="async" loading="lazy" width="415" height="334" /></a></li>
+<li>Wait for the download<br /><a href="/wiki/File:ESP32-S3-Pico-Ar-07.jpg" class="image"><img alt="ESP32-S3-Pico-Ar-07.jpg" src="/w/upload/d/d8/ESP32-S3-Pico-Ar-07.jpg" decoding="async" loading="lazy" width="800" height="451" /></a></li>
+<li>The arduino-esp32 download is complete<br /><a href="/wiki/File:ESP32-S3-Pico-Ar-08.jpg" class="image"><img alt="ESP32-S3-Pico-Ar-08.jpg" src="/w/upload/e/ed/ESP32-S3-Pico-Ar-08.jpg" decoding="async" loading="lazy" width="800" height="450" /></a></li></ol>
+<h3><span class="mw-headline" id="Install_Arduino-esp32_Offline">Install Arduino-esp32 Offline</span></h3>
+<ol><li><a target="_blank" rel="nofollow noreferrer noopener" class="external text" href="https://drive.google.com/drive/folders/1Pcs_A4FKWvdSHnz9lEBYqOpr-noTMbIv?usp=sharing">Arduino-ESP32 offline component package</a></li>
+<li>Unzip the compressed file <br /><a href="/wiki/File:ESP32-S3-Pico-Ar-18.jpg" class="image"><img alt="ESP32-S3-Pico-Ar-18.jpg" src="/w/upload/1/19/ESP32-S3-Pico-Ar-18.jpg" decoding="async" loading="lazy" width="383" height="159" /></a></li>
+<li>Place the unzipped files in the Arduino components package directory of the corresponding user<pre>C:\Users\{username}\AppData\Local\Arduino15\packages\</pre>Take the username waveshare as an example<pre>C:\Users\waveshare\AppData\Local\Arduino15\packages\</pre></li>
+<li>Close all arduino windows to make sure Arduino is turned off</li>
+<li>Open Arduino, then open the board manager, you can see that esp32-arduino has been installed<br /><a href="/wiki/File:ESP32-S3-Pico-Ar-19.jpg" class="image"><img alt="ESP32-S3-Pico-Ar-19.jpg" src="/w/upload/5/59/ESP32-S3-Pico-Ar-19.jpg" decoding="async" loading="lazy" width="334" height="393" /></a></li></ol>
+<h3><span class="mw-headline" id="Run_Arduino_Demos">Run Arduino Demos</span></h3>
+<ol><li>Select the demo, here we choose the demo to get the chip ID<br /><a href="/wiki/File:ESP32-S3-Pico-Ar-09.jpg" class="image"><img alt="ESP32-S3-Pico-Ar-09.jpg" src="/w/upload/0/07/ESP32-S3-Pico-Ar-09.jpg" decoding="async" loading="lazy" width="966" height="771" /></a></li>
+<li>Choose our board as ESP32S3 Dev Module<br /><a href="/wiki/File:ESP32-S3-Pico-Ar-12.jpg" class="image"><img alt="ESP32-S3-Pico-Ar-12.jpg" src="/w/upload/9/98/ESP32-S3-Pico-Ar-12.jpg" decoding="async" loading="lazy" width="1398" height="775" /></a></li>
+<li>Choose our port number, here we choose COM5 for CH343<br /><a href="/wiki/File:ESP32-S3-Pico-Ar-13.jpg" class="image"><img alt="ESP32-S3-Pico-Ar-13.jpg" src="/w/upload/5/5f/ESP32-S3-Pico-Ar-13.jpg" decoding="async" loading="lazy" width="915" height="770" /></a></li>
+<li>Click the download button, and it will automatically compile and download<br /><a href="/wiki/File:ESP32-S3-Pico-Ar-14.jpg" class="image"><img alt="ESP32-S3-Pico-Ar-14.jpg" src="/w/upload/1/19/ESP32-S3-Pico-Ar-14.jpg" decoding="async" loading="lazy" width="1688" height="950" /></a></li>
+<li>The download is complete<br /><a href="/wiki/File:ESP32-S3-Pico-Ar-15.jpg" class="image"><img alt="ESP32-S3-Pico-Ar-15.jpg" src="/w/upload/7/78/ESP32-S3-Pico-Ar-15.jpg" decoding="async" loading="lazy" width="1690" height="951" /></a></li>
+<li>Open the serial port monitor <br /><a href="/wiki/File:ESP32-S3-Pico-Ar-16.jpg" class="image"><img alt="ESP32-S3-Pico-Ar-16.jpg" src="/w/upload/8/86/ESP32-S3-Pico-Ar-16.jpg" decoding="async" loading="lazy" width="1043" height="823" /></a></li>
+<li>See the chip ID of the loop output<br /><a href="/wiki/File:ESP32-S3-Pico-Ar-17.jpg" class="image"><img alt="ESP32-S3-Pico-Ar-17.jpg" src="/w/upload/e/ec/ESP32-S3-Pico-Ar-17.jpg" decoding="async" loading="lazy" width="1037" height="824" /></a></li></ol>
+<h2><span class="mw-headline" id="MicroPython">MicroPython</span></h2>
+<h3><span class="mw-headline" id="Flash_Firmware">Flash Firmware</span></h3>
+<ol><li>Download MicroPython firmware: <a target="_blank" rel="nofollow noreferrer noopener" class="external text" href="https://files.waveshare.com/wiki/ESP32-S3-DEV-KIT-N8R8/ESP32-S3-DEV-KIT-N8R8-micropython-firmware.zip">Flashing tool and firmware</a> or <a target="_blank" rel="nofollow noreferrer noopener" class="external text" href="https://micropython.org/download/ESP32_GENERIC_S3/">MicroPython official firmware</a></li>
+<li>Unzip and open the just downloaded package <br /><a href="/wiki/File:ESP32-S3-Pico-MPY-01.jpg" class="image"><img alt="ESP32-S3-Pico-MPY-01.jpg" src="/w/upload/1/1e/ESP32-S3-Pico-MPY-01.jpg" decoding="async" loading="lazy" width="744" height="102" /></a></li>
+<li>Go to the flash_download_tool_3.9.4 folder and open the flash_download_tool_3.9.4.exe<br /><a href="/wiki/File:ESP32-S3-Pico-MPY-02.jpg" class="image"><img alt="ESP32-S3-Pico-MPY-02.jpg" src="/w/upload/4/4d/ESP32-S3-Pico-MPY-02.jpg" decoding="async" loading="lazy" width="671" height="241" /></a></li>
+<li>Select the corresponding chip, here select ESP32-S3 <br /><a href="/wiki/File:ESP32-S3-Pico-MPY-03.jpg" class="image"><img alt="ESP32-S3-Pico-MPY-03.jpg" src="/w/upload/7/7e/ESP32-S3-Pico-MPY-03.jpg" decoding="async" loading="lazy" width="221" height="211" /></a></li>
+<li>Select the corresponding COM port, we have already configured other information for you. Click Start to begin the download<br /><a href="/wiki/File:ESP32-S3-Pico-MPY-04.jpg" class="image"><img alt="ESP32-S3-Pico-MPY-04.jpg" src="/w/upload/4/40/ESP32-S3-Pico-MPY-04.jpg" decoding="async" loading="lazy" width="426" height="671" /></a>
+<ul><li>① Select COM port</li>
+<li>② Click Download button</li></ul></li></ol>
+<h3><span class="mw-headline" id="Install_Thonny">Install Thonny</span></h3>
+<ol><li>Open <a target="_blank" rel="nofollow noreferrer noopener" class="external text" href="https://thonny.org/">Thonny official website</a><br /><a href="/wiki/File:ESP32-S3-Pico-MPY-05.jpg" class="image"><img alt="ESP32-S3-Pico-MPY-05.jpg" src="/w/upload/c/c1/ESP32-S3-Pico-MPY-05.jpg" decoding="async" loading="lazy" width="663" height="661" /></a></li>
+<li>Select the appropriate system and version, here choose Windows, the mouse needs to be moved to the Windows section to display the corresponding information <br /><a href="/wiki/File:ESP32-S3-Pico-MPY-06.jpg" class="image"><img alt="ESP32-S3-Pico-MPY-06.jpg" src="/w/upload/2/29/ESP32-S3-Pico-MPY-06.jpg" decoding="async" loading="lazy" width="694" height="647" /></a></li>
+<li>Choose the default installation option<br /><a href="/wiki/File:ESP32-S3-Pico-MPY-07.jpg" class="image"><img alt="ESP32-S3-Pico-MPY-07.jpg" src="/w/upload/7/7c/ESP32-S3-Pico-MPY-07.jpg" decoding="async" loading="lazy" width="495" height="388" /></a></li>
+<li>The installation is complete<br /><a href="/wiki/File:ESP32-S3-Pico-MPY-08.jpg" class="image"><img alt="ESP32-S3-Pico-MPY-08.jpg" src="/w/upload/7/78/ESP32-S3-Pico-MPY-08.jpg" decoding="async" loading="lazy" width="497" height="385" /></a></li></ol>
+<h3><span class="mw-headline" id="Get_Demo">Get Demo</span></h3>
+<ol><li>Click <a target="_blank" rel="nofollow noreferrer noopener" class="external text" href="https://files.waveshare.com/wiki/ESP32-S3-DEV-KIT-N8R8/ESP32-S3-Pico-MPY-Example.zip">here</a> to download the demo</li>
+<li>Unzip the compressed package<br /><a href="/wiki/File:ESP32-S3-Pico-MPY-09.jpg" class="image"><img alt="ESP32-S3-Pico-MPY-09.jpg" src="/w/upload/5/50/ESP32-S3-Pico-MPY-09.jpg" decoding="async" loading="lazy" width="653" height="267" /></a></li></ol>
+<h3><span class="mw-headline" id="Run_Demo">Run Demo</span></h3>
+<ol><li>Open thonny and select Configure interpreter<br /><a href="/wiki/File:ESP32-S3-Pico-MPY-10.jpg" class="image"><img alt="ESP32-S3-Pico-MPY-10.jpg" src="/w/upload/9/9d/ESP32-S3-Pico-MPY-10.jpg" decoding="async" loading="lazy" width="560" height="302" /></a></li>
+<li>Select MicroPython (ESP32) as the interpreter<br /><a href="/wiki/File:ESP32-S3-Pico-MPY-11.jpg" class="image"><img alt="ESP32-S3-Pico-MPY-11.jpg" src="/w/upload/d/d6/ESP32-S3-Pico-MPY-11.jpg" decoding="async" loading="lazy" width="618" height="576" /></a></li>
+<li>Click OK to save<br /><a href="/wiki/File:ESP32-S3-Pico-MPY-12.jpg" class="image"><img alt="ESP32-S3-Pico-MPY-12.jpg" src="/w/upload/2/2f/ESP32-S3-Pico-MPY-12.jpg" decoding="async" loading="lazy" width="614" height="574" /></a></li>
+<li>Click the Stop button or the shortcut Ctrl+F2<br /><a href="/wiki/File:ESP32-S3-Pico-MPY-13.jpg" class="image"><img alt="ESP32-S3-Pico-MPY-13.jpg" src="/w/upload/8/86/ESP32-S3-Pico-MPY-13.jpg" decoding="async" loading="lazy" width="430" height="131" /></a></li>
+<li>At this time, you can see the MicroPython version information and board name in the command line<br /><a href="/wiki/File:ESP32-S3-DEV-MicroPython.png" class="image"><img alt="ESP32-S3-DEV-MicroPython.png" src="/w/upload/e/e8/ESP32-S3-DEV-MicroPython.png" decoding="async" loading="lazy" width="894" height="202" /></a></li>
+<li>Open the file serial port <br /><a href="/wiki/File:ESP32-S3-Pico-MPY-14.jpg" class="image"><img alt="ESP32-S3-Pico-MPY-14.jpg" src="/w/upload/a/ac/ESP32-S3-Pico-MPY-14.jpg" decoding="async" loading="lazy" width="427" height="485" /></a></li>
+<li>Select our demo file and open a demo, here we choose the wifi-scan demo<br /><a href="/wiki/File:ESP32-S3-Pico-MPY-15.jpg" class="image"><img alt="ESP32-S3-Pico-MPY-15.jpg" src="/w/upload/8/8d/ESP32-S3-Pico-MPY-15.jpg" decoding="async" loading="lazy" width="1070" height="672" /></a>
+<ul><li>①Current local file directory</li>
+<li>②The demo wifi-scan.by we need to open</li>
+<li>③ESP32-S3-PICO directory</li></ul></li>
+<li>Click the Run button or the shortcut F5<br /><a href="/wiki/File:ESP32-S3-Pico-MPY-16.jpg" class="image"><img alt="ESP32-S3-Pico-MPY-16.jpg" src="/w/upload/0/09/ESP32-S3-Pico-MPY-16.jpg" decoding="async" loading="lazy" width="433" height="147" /></a></li>
+<li>Wait a moment, you can see the wifi information output by ESP32-S3 Pico <br /><a href="/wiki/File:ESP32-S3-Pico-MPY-18.jpg" class="image"><img alt="ESP32-S3-Pico-MPY-18.jpg" src="/w/upload/d/df/ESP32-S3-Pico-MPY-18.jpg" decoding="async" loading="lazy" width="1074" height="917" /></a></li></ol>
+<h1><span class="mw-headline" id="Flash_Firmware_Flashing_and_Erasing">Flash Firmware Flashing and Erasing</span></h1>
+<ul><li><a target="_blank" rel="nofollow noreferrer noopener" class="external text" href="https://www.waveshare.com/wiki/Flash_Firmware_Flashing_and_Erasing">Flash firmware flashing and erasing </a> for reference</li></ul>
+<h1><span class="mw-headline" id=""></span></h1>
+</div>
+<div class="tabbertab" title="Resources" id="myresources">
+<h1><span class="mw-headline" id="Resources">Resources</span></h1>
+<h2><span class="mw-headline" id="Schematic_Diagram">Schematic Diagram</span></h2>
+<ul><li><a target="_blank" rel="nofollow noreferrer noopener" class="external text" href="https://files.waveshare.com/wiki/ESP32-S3-DEV-KIT-N8R8/ESP32-S3-DEV-KIT-N8R8-schematic.pdf">ESP32-S3-DEV-KIT-N8R8 Schematic</a></li></ul>
+<h2><span class="mw-headline" id="3D_Structure">3D Structure</span></h2>
+<ul><li><a target="_blank" rel="nofollow noreferrer noopener" class="external text" href="https://files.waveshare.com/wiki/ESP32-S3-DEV-KIT-N8R8/ESP32-S3-DEV-KIT-N8R8_20260110.zip">ESP32-S3-DEV-KIT-N8R8 3D structure dimensions</a></li></ul>
+<h2><span class="mw-headline" id="Demo">Demo</span></h2>
+<ul><li><a target="_blank" rel="nofollow noreferrer noopener" class="external text" href="https://files.waveshare.com/wiki/ESP32-S3-DEV-KIT-N8R8/ESP32-S3-DEV-KIT-MPY-Example.zip">MicroPython Demo</a></li></ul>
+<h2><span class="mw-headline" id="Software">Software</span></h2>
+<h3><span class="mw-headline" id="ESP32-S3">ESP32-S3</span></h3>
+<ul><li><a target="_blank" rel="nofollow noreferrer noopener" class="external text" href="https://files.waveshare.com/wiki/ESP32-S3-DEV-KIT-N8R8/ESP32-S3-DEV-KIT-N8R8-micropython-firmware.zip">Flashing software and Micropython firmware</a></li>
+<li><a target="_blank" rel="nofollow noreferrer noopener" class="external text" href="https://files.waveshare.com/wiki/common/Thonny-3.3.3.zip">Thonny Python IDE (Windows V3.3.3)</a></li></ul>
+<h3><span class="mw-headline" id="Arduino_2">Arduino</span></h3>
+<ul><li><a target="_blank" rel="nofollow noreferrer noopener" class="external text" href="https://drive.google.com/drive/folders/1Pcs_A4FKWvdSHnz9lEBYqOpr-noTMbIv?usp=sharing">Arduino-ESP32 offline component package</a></li></ul>
+<h3><span class="mw-headline" id="CH343">CH343</span></h3>
+<ul><li><a target="_blank" rel="nofollow noreferrer noopener" class="external text" href="https://files.waveshare.com/wiki/common/CH343SER.7z">Window VCP driver</a></li>
+<li><a target="_blank" rel="nofollow noreferrer noopener" class="external text" href="https://files.waveshare.com/wiki/common/WCHUARTDemo_V1.3.7z">Android APP</a></li>
+<li><a target="_blank" rel="nofollow noreferrer noopener" class="external text" href="https://files.waveshare.com/wiki/common/CH34XSER_MAC.7z">MAC driver</a></li></ul>
+<h3><span class="mw-headline" id="Serial_Port">Serial Port</span></h3>
+<ul><li><a target="_blank" rel="nofollow noreferrer noopener" class="external text" href="https://files.waveshare.com/wiki/common/Sscom5.13.1.zip">SSCOM debugging assistant</a></li></ul>
+<h2><span class="mw-headline" id="Datasheets">Datasheets</span></h2>
+<h3><span class="mw-headline" id="ESP32-S3_2">ESP32-S3</span></h3>
+<ul><li><a target="_blank" rel="nofollow noreferrer noopener" class="external text" href="https://files.waveshare.com/wiki/common/Esp32-s3_datasheet_en.pdf">ESP32-S3 Datasheet</a></li>
+<li><a target="_blank" rel="nofollow noreferrer noopener" class="external text" href="https://files.waveshare.com/wiki/common/Esp32-s3_technical_reference_manual_en.pdf">ESP32-S3 Technical reference manual</a></li>
+<li><a target="_blank" rel="nofollow noreferrer noopener" class="external text" href="https://files.waveshare.com/wiki/common/Esp32-s3-wroom-1_wroom-1u_datasheet_en.pdf">ESP32-S3-WROOM-1 datasheet</a></li></ul>
+<h3><span class="mw-headline" id="CH343_2">CH343</span></h3>
+<ul><li><a target="_blank" rel="nofollow noreferrer noopener" class="external text" href="https://files.waveshare.com/wiki/common/CH343DS1-en.pdf">CH343 Datasheet</a></li></ul>
+<h2><span class="mw-headline" id="Official_Documents">Official Documents</span></h2>
+<h3><span class="mw-headline" id="Raspberry_Pi_Official_Documents">Raspberry Pi Official Documents</span></h3>
+<ul><li><a target="_blank" rel="nofollow noreferrer noopener" class="external text" href="https://docs.espressif.com/projects/arduino-esp32/en/latest/index.html">ESP32-Arduino official documentation</a></li>
+<li><a target="_blank" rel="nofollow noreferrer noopener" class="external text" href="https://docs.espressif.com/projects/esp-idf/en/release-v5.0/esp32s3/index.html">ESP-IDF official documents</a></li></ul>
+<h3><span class="mw-headline" id="MicroPython_Official_Documents">MicroPython Official Documents</span></h3>
+<ul><li><a target="_blank" rel="nofollow noreferrer noopener" class="external text" href="https://docs.micropython.org/en/latest/">MicroPython official documentation</a></li></ul>
+<h2><span class="mw-headline" id="Project_Resources">Project Resources</span></h2>
+<p>This section features third - party project resources. We merely provide links and bear no responsibility for content updates or maintenance. Thank you for your understanding.<br />
+</p><p><b>Volos Projects-ESP32 Web Server Step by Step | Time, Temperature &amp; Modern UI</b><br />
+<iframe width="400" height="315" src="//www.youtube.com/embed/wGIGs0nl_JU" frameborder="0" allowfullscreen=""></iframe>
+</p>
+<ul><li>Youtube&#160;: <a target="_blank" rel="nofollow noreferrer noopener" class="external text" href="https://www.youtube.com/watch?v=wGIGs0nl_JU">https://www.youtube.com/watch?v=wGIGs0nl_JU</a></li>
+<li>Github&#160;: <a target="_blank" rel="nofollow noreferrer noopener" class="external text" href="https://github.com/VolosR/ESP32asServer">https://github.com/VolosR/ESP32asServer</a></li></ul>
+<p><br />
+<b>Volos Projects-ESP32 Web Server Tutorial – Control LEDs from Your Browser</b><br />
+<iframe width="400" height="315" src="//www.youtube.com/embed/Q-NHHEcfc_4" frameborder="0" allowfullscreen=""></iframe>
+</p>
+<ul><li>Youtube&#160;: <a target="_blank" rel="nofollow noreferrer noopener" class="external text" href="https://www.youtube.com/watch?v=Q-NHHEcfc_4">https://www.youtube.com/watch?v=Q-NHHEcfc_4</a></li>
+<li>Github&#160;: <a target="_blank" rel="nofollow noreferrer noopener" class="external text" href="https://github.com/VolosR/browserToEsp32">https://github.com/VolosR/browserToEsp32</a></li></ul>
+</div>
+<div class="tabbertab" title="FAQ" id="myfaq">
+<h1><span class="mw-headline" id="FAQ">FAQ</span></h1>
+<div class="panel-group">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#accordion1">
+								Question:  After powering on the module, the recognized serial port devices and USB ports keep resetting and rebooting? 
+							</a>
+						</h4>
+					</div>
+					<div id="accordion1" class="panel-collapse collapse in">
+						<div class="panel-body">
+<div>&#160;<b>Answer:</b></div>
+<div>
+<p>Check if the power voltage of the USB port is less than 5V. Generally, the power voltage of the USB port is above 4.9V, and both USB ports of the module can be used normally. If it is below 4.9V, there may be a power supply shortage and USB disconnection issue. In this case, a USB port with sufficient voltage should be used.
+</p>
+</div>
+<div style="display:none;"></div>
+<div style="display:none;"></div>
+<p><font color="red" style="display:none;"></font>
+</p>
+						</div>
+					</div>
+				</div>
+</div>
+<p><br />
+</p>
+<div class="panel-group">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#accordion2">
+								Question:  After the module downloads the demo and re-downloads it, why sometimes it can't connect to the serial port or the flashing fails? 
+							</a>
+						</h4>
+					</div>
+					<div id="accordion2" class="panel-collapse collapse in">
+						<div class="panel-body">
+<div>&#160;<b>Answer:</b></div>
+<div>
+<p>Long press the BOOT button, press RESET at the same time, then release RESET, then release the BOOT button, at this time the module can enter the download mode, which can solve most of the problems that can not be downloaded.
+</p>
+</div>
+<div style="display:none;"></div>
+<div style="display:none;"></div>
+<p><font color="red" style="display:none;"></font>
+</p>
+						</div>
+					</div>
+				</div>
+</div>
+<p><br />
+</p>
+</div>
+<div class="tabbertab" title="Support" id="mysupport">
+<h1><span class="mw-headline" id="Support">Support</span></h1>
+<p><br />
+<br />
+<br />
+</p>
+<div style="background:linear-gradient(to bottom right,#91C942,#7DB036); border-radius:15px; width:100%;min-width:750px;">
+<div style="display:flex;flex-direction: row;align-items: flex-start;">
+<div style="flex:l; font-size:15px; width:70%; margin-top:20px; margin-bottom:20px; margin-right:40px;padding-left:40px;">
+<p style="font-size:20px; font-weight:bold;">
+Technical Support
+</p>
+<p>
+If you need technical support or have any feedback/review, please click the <b>Submit Now</b> button to submit a ticket, Our support team will check and reply to you within 1 to 2 working days. Please be patient as we make every effort to help you to resolve the issue. 
+<br /> 
+Working Time: 9 AM - 6 PM GMT+8 (Monday to Friday)
+</p>
+</div>
+<div style="margin-top:94px;">
+<div id="service" style="display:flex; flex:r; background-color:#393939; color:white; text-align:center; font-size:20px; border-radius:20px;">
+<p><a target="_blank" rel="nofollow noreferrer noopener" class="external text" href="https://service.waveshare.com/">Submit Now</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 
+NewPP limit report
+Cached time: 20261008163442
+Cache expiry: 0
+Dynamic content: true
+Complications: []
+CPU time usage: 0.276 seconds
+Real time usage: 0.444 seconds
+Preprocessor visited node count: 719/1000000
+Post‐expand include size: 7397/2097152 bytes
+Template argument size: 1979/2097152 bytes
+Highest expansion depth: 5/40
+Expensive parser function count: 0/100
+Unstrip recursion depth: 0/20
+Unstrip post‐expand size: 2501/5000000 bytes
+-->
+<!--
+Transclusion expansion time report (%,ms,calls,template)
+100.00%   54.692      1 -total
+ 39.36%   21.526      1 Template:Infobox_item
+ 29.70%   16.244      2 Template:FAQ
+ 24.99%   13.667      1 Template:Servicebox1
+-->
+</div></div>								<div class="printfooter">
+				Retrieved from "<a dir="ltr" href="https://www.waveshare.com/w/index.php?title=ESP32-S3-DEV-KIT-N8R8&amp;oldid=110631">https://www.waveshare.com/w/index.php?title=ESP32-S3-DEV-KIT-N8R8&amp;oldid=110631</a>"				</div>
+												<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="/wiki/Special:Categories" title="Special:Categories">Category</a>: <ul><li><a href="/w/index.php?title=Category:USB_Type-C_interface&amp;action=edit&amp;redlink=1" class="new" title="Category:USB Type-C interface (page does not exist)">USB Type-C interface</a></li></ul></div></div>												<div class="visualClear"></div>
+							</div>
+			<!-- /bodyContent -->
+		</div>
+						</div>
+				</div>
+			</div>
+			<!-- /content -->
+
+			<!-- sidebar-left -->
+			<div class="sidebar-wrapper sidebar-left-wrapper">
+				<div class="sidebar-container container">
+					<div class="row">
+						<div id="sidebar-left" class="col-md-2 col-md-offset-0">
+							<div id="tweekiTOC"></div>						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /sidebar-left -->
+					<!-- footer -->
+			<div id="footer" role="contentinfo" class="footer container footer-sticky bg-light">
+			<ul id="footer-custom"><li class="dropup"><a href="/w/index.php?title=Special:UserLogin&amp;returnto=ESP32-S3-DEV-KIT-N8R8" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Login / Create Account</a></li></ul><div style="clear:both"></div>			</div>
+			<!-- /footer -->
+		
+<script>
+var fbtFancyBoxOptions = {};
+</script>
+
+<script>(RLQ=window.RLQ||[]).push(function(){mw.config.set({"wgPageParseReport":{"limitreport":{"cputime":"0.276","walltime":"0.444","ppvisitednodes":{"value":719,"limit":1000000},"postexpandincludesize":{"value":7397,"limit":2097152},"templateargumentsize":{"value":1979,"limit":2097152},"expansiondepth":{"value":5,"limit":40},"expensivefunctioncount":{"value":0,"limit":100},"unstrip-depth":{"value":0,"limit":20},"unstrip-size":{"value":2501,"limit":5000000},"timingprofile":["100.00%   54.692      1 -total"," 39.36%   21.526      1 Template:Infobox_item"," 29.70%   16.244      2 Template:FAQ"," 24.99%   13.667      1 Template:Servicebox1"]},"cachereport":{"timestamp":"20261008163442","ttl":0,"transientcontent":true}}});mw.config.set({"wgBackendResponseTime":929});});</script>	<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4768dee58c9afc3',t:'MTc5MTQ3NzI4MQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
+

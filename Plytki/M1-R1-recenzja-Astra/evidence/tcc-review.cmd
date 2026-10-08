@@ -1,0 +1,1 @@
+@"C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\EGRLab-v3-review\toolchain\tcc\tcc.exe" -I"C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\M1-R1-recenzja-Astra\work\Rewizje\EGRLab-v6.3-m1\verification\host-tcc-include" %*

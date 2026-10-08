@@ -1,0 +1,21 @@
+<!doctype html><html lang="pl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EGRLab — synthetic-m1-session</title><style>body{font:15px system-ui;background:#101923;color:#e6eff8;margin:24px}h1{font-size:24px}canvas{width:100%;height:190px;background:#172433;margin-bottom:20px}table{border-collapse:collapse}td,th{border:1px solid #607080;padding:5px}aside{color:#f6ba66}</style>
+<h1>EGRLab — synthetic-m1-session</h1><p>Format 5; 3 rekordow; czas 0.001000–0.002000 s. Pelna rozdzielczosc. DANE SYNTETYCZNE</p><p>Pomarańczowy pasek: GAP, nasycenie lub nieważny ADC. Jednostki: ratio/position bezwymiarowe, ground/ref/vbat/aux V, current A.</p><table><tr><th>config_id</th><th>bank</th><th>ADC OK</th><th>learned</th></tr><tr><td>1</td><td>0</td><td>True</td><td>True</td></tr></table><aside></aside><div id="plots"></div>
+<script id="data" type="application/json">{"series":{"ratio":[[0.5,0.5],[0.5,0.5],[0.5,0.5]],"position":[[0.4999999785714292,0.4999999785714292],[0.4999999785714292,0.4999999785714292],[0.4999999785714292,0.4999999785714292]],"ground":[[0.0,0.0],[0.0,0.0],[0.0,0.0]],"ref":[[5.000079247662353,5.000079247662353],[5.000079247662353,5.000079247662353],[5.000079247662353,5.000079247662353]],"current":[[null,null],[null,null],[null,null]],"vbat":[[13.499849343359376,13.499849343359376],[13.499849343359376,13.499849343359376],[13.499849343359376,13.499849343359376]],"aux":[[0.0,0.0],[0.0,0.0],[0.0,0.0]]},"lo":0.001,"hi":0.002,"quality":[],"times":[0.001,0.0015,0.002],"full":true}</script><script>
+const D=JSON.parse(document.getElementById('data').textContent);
+for(const [key,arr] of Object.entries(D.series)) {
+const label=document.createElement('h2');label.textContent=key;plots.appendChild(label);
+const cv=document.createElement('canvas');cv.width=1500;cv.height=210;plots.appendChild(cv);
+const c=cv.getContext('2d');let low=Infinity,high=-Infinity;
+for(const a of arr)if(a[0]!==null){low=Math.min(low,a[0]);high=Math.max(high,a[1]);}
+if(!Number.isFinite(low)){c.fillStyle='#ccc';c.fillText('Brak waznych pomiarow',20,70);continue;}
+if(low===high){low-=.01;high+=.01;}const pad=(high-low)*.05;low-=pad;high+=pad;
+const x=i=>70+1410*(D.full?(D.times[i]-D.lo)/Math.max(1e-9,D.hi-D.lo):i/Math.max(1,arr.length-1)),y=v=>175-(v-low)*150/(high-low);
+c.strokeStyle='#34495d';for(let j=0;j<5;j++){let yy=25+j*150/4;c.beginPath();c.moveTo(70,yy);c.lineTo(1480,yy);c.stroke();c.fillStyle='#ccc';c.fillText((high-j*(high-low)/4).toPrecision(4),2,yy);}
+c.strokeStyle='#62dcc7';c.lineWidth=1;
+let prev=null;for(let i=0;i<arr.length;i++){let a=arr[i];if(a[0]===null){prev=null;continue;}c.beginPath();c.moveTo(x(i),y(a[0]));c.lineTo(x(i),y(a[1]));c.stroke();if(D.full&&prev!==null){c.beginPath();c.moveTo(x(i-1),y(prev));c.lineTo(x(i),y(a[0]));c.stroke();}prev=a[0];}
+c.fillStyle='#f4a344';for(const i of D.quality)c.fillRect(x(i),181,Math.max(1,1410/arr.length),4);
+c.fillStyle='#ddd';c.fillText(D.lo.toFixed(6)+' s',70,203);c.fillText(D.hi.toFixed(6)+' s',1350,203);
+cv.title='Pelne surowe dane: egrlog export katalog --csv okno.csv --from t0 --to t1';
+}
+</script></html>

@@ -1,0 +1,33 @@
+
+Fontconfig error: No writable cache directories
+	C:/WINDOWS/Cache/Fontcache
+Found 0 violations
+Saved ERC Report to M1-R1-recenzja-Astra/work/Plytki/M1-R1-review/verification/erc.json
+
+Fontconfig error: No writable cache directories
+	C:/WINDOWS/Cache/Fontcache
+{"components": 93, "parts": 93, "pin_checks": 357, "extra": [], "erc_sheets": 7, "erc_violations": 0, "nets": 99} errors 0
+X1 PASS 16 X1 rows, wire pads J1/J2/J5/J6 all listed []
+GPIO PASS 36 module GPIOs vs SPECYFIKACJA 3; forbidden [0, 19, 20, 33, 34, 35, 36, 37, 43, 44, 45, 46, 47, 48] NC; 5 V in J1-21, module 3V3 not tied []
+ADC PASS CH1 P1_EGR: FS 40.6 V; CH2 P3: FS 40.6 V; CH3 P4: FS 10.2 V; CH4 P5: FS 10.2 V; CH5 P6: FS 10.2 V; CH7 VBAT_CAR: FS 60.9 V; CH8 SENS_5V: FS 10.2 V []
+PRAD PASS INA240A2: 0.250 V/A around 2.5 V; linear +-9.2 A (need +-8.0 A > F1 7.5 A) []
+START PASS bridge inputs and sensor supply off while the ESP32 is in reset; CS lines idle high []
+MISO PASS 3 MISO sources: SD1 + U5 gates enabled by the matching module CS []
+ZASILANIE PASS 5V: 508 mA / 2000 mA; 3V3: 113 mA / 2000 mA (peak, derated to 50 %) []
+SIECI PASS no net with a single pin []
+mutations 16 / 16 null clean
+
+Fontconfig error: No writable cache directories
+	C:/WINDOWS/Cache/Fontcache
+PASS DRC: 0 naruszen (poza lib_footprint_mismatch po przycieciu nadruku), 0 niepolaczonych, 0 niezgodnosci ze schematem | {}, unconnected 0, parity 0
+PASS Obrys 150 x 80 mm, 4 warstwy miedzi, 4 otwory M3 w narozach | [150.05, 80.05], 4 warstwy, [(4.0, 4.0), (4.0, 76.0), (146.0, 4.0), (146.0, 76.0)]
+PASS Pola przewodow X1 w jednym rzedzie przy gornej krawedzi, w kolejnosci zaciskow, sieci jak docs/X1.csv, kotwy opasek nad polami | 15 pol, y [15.0], x 14.0..109.72
+PASS Dolna krawedz: gniazdo SD, USB-C modulu i zaciski termopar <= 1,5 mm od krawedzi | SD1 (gniazdo karty) 0.69 mm, M1 (USB-C) 0.20 mm, TC1 (zacisk termopary) 0.95 mm, TC2 (zacisk termopary) 0.95 mm
+PASS Antena ESP32: brak miedzi w strefie ANTENNA M1 (sciezki, przelotki, wylewki) | 0 elementow
+PASS Tor 7,5 A: wylewki F.Cu laczace J1.1-F1.1, F1.2-J2.1, J5.1-RSH1.1, RSH1.4-J5.2; wylewki B.Cu; >= 2 przelotki zszywajace na siec | {"BAT_P": {"f_same_poly": true, "b_pour": true, "vias": 2}, "VBUS": {"f_same_poly": true, "b_pour": true, "vias": 6}, "P1_ECU": {"f_same_poly": true, "b_pour": 
+PASS Para Kelvina tylko z miedzi zablokowanej (route_critical.py) | 0 odcinkow routera
+PASS Brak obcej miedzi routera przy boczniku, parze Kelvina i wewnatrz U3 (check_intrusion.py) | kod 0
+PASS Sciezki zasilan (PWR) routera >= 0.5 mm | za cienkie: brak
+PASS Powroty odsprzegania w limicie (return_check.py) | kod 0
+PASS Nadruk: napisy plytki umieszczone; oznaczenia bez miejsca (<= 10 %) na rysunku montazowym z F.Fab | ukryte ['R32', 'C12', 'C29', 'C14'], nieumieszczone brak
+checks 11/11; negative controls 13/13

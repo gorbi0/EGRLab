@@ -1,0 +1,16 @@
+PASS DRC: 0 naruszen (poza lib_footprint_mismatch po przycieciu nadruku), 0 niepolaczonych, 0 niezgodnosci ze schematem | {}, unconnected 0, parity 0
+PASS Obrys 150 x 80 mm, 4 warstwy miedzi, 4 otwory M3 w narozach | [150.05, 80.05], 4 warstwy, [(4.0, 4.0), (4.0, 76.0), (146.0, 4.0), (146.0, 76.0)]
+PASS Pola przewodow X1 w jednym rzedzie przy gornej krawedzi, w kolejnosci zaciskow, sieci jak docs/X1.csv, kotwy opasek nad polami | 15 pol, y [15.0], x 14.0..109.72
+PASS Dolna krawedz: gniazdo SD, USB-C modulu i zaciski termopar <= 1,5 mm od krawedzi | SD1 (gniazdo karty) 0.69 mm, M1 (USB-C) 0.20 mm, TC1 (zacisk termopary) 0.95 mm, TC2 (zacisk termopary) 0.95 mm
+PASS Antena ESP32: brak miedzi w strefie ANTENNA M1 (sciezki, przelotki, wylewki) | 0 elementow
+PASS Tor 7,5 A: wylewki F.Cu laczace J1.1-F1.1, F1.2-J2.1, J5.1-RSH1.1, RSH1.4-J5.2; wylewki B.Cu; >= 2 przelotki zszywajace na siec | {"BAT_P": {"f_same_poly": true, "b_pour": true, "vias": 2}, "VBUS": {"f_same_poly": true, "b_pour": true, "vias": 6}, "P1_ECU": {"f_same_poly": true, "b_pour": 
+PASS Para Kelvina tylko z miedzi zablokowanej (route_critical.py) | 0 odcinkow routera
+PASS Brak obcej miedzi routera przy boczniku, parze Kelvina i wewnatrz U3 (check_intrusion.py) | kod 0
+PASS Sciezki zasilan (PWR) routera >= 0.5 mm | za cienkie: brak
+PASS Powroty odsprzegania w limicie (return_check.py) | kod 0
+PASS Nadruk: napisy plytki umieszczone; oznaczenia bez miejsca (<= 10 %) na rysunku montazowym z F.Fab | ukryte ['R32', 'C12', 'C29', 'C14'], nieumieszczone brak
+checks 11/11; negative controls 13/13
+
+
+Fontconfig error: No writable cache directories
+	C:/WINDOWS/Cache/Fontcache

@@ -1,0 +1,321 @@
+{
+  "pass": true,
+  "parser": "własny parser Gerber X2/Excellon (src/check_cam.py), bez KiCada",
+  "checks": [
+    {
+      "name": "Dokładnie 9 warstw Gerber i 2 pliki Excellon",
+      "pass": true,
+      "details": [
+        "M1-B_Cu.gbl",
+        "M1-B_Mask.gbs",
+        "M1-B_Silkscreen.gbo",
+        "M1-Edge_Cuts.gm1",
+        "M1-F_Cu.gtl",
+        "M1-F_Mask.gts",
+        "M1-F_Silkscreen.gto",
+        "M1-In1_Cu.g1",
+        "M1-In2_Cu.g2",
+        "M1-NPTH.drl",
+        "M1-PTH.drl"
+      ]
+    },
+    {
+      "name": "Funkcje warstw w atrybutach X2",
+      "pass": true,
+      "details": {
+        "F_Cu": "Copper,L1,Top",
+        "In1_Cu": "Copper,L2,Inr",
+        "In2_Cu": "Copper,L3,Inr",
+        "B_Cu": "Copper,L4,Bot",
+        "F_Mask": "Soldermask,Top",
+        "B_Mask": "Soldermask,Bot",
+        "F_Silkscreen": "Legend,Top",
+        "B_Silkscreen": "Legend,Bot",
+        "Edge_Cuts": "Profile,NP"
+      }
+    },
+    {
+      "name": "Każda warstwa (poza zadeklarowanymi jako puste) drukuje dane",
+      "pass": true,
+      "details": {
+        "F_Cu": 1094,
+        "In1_Cu": 254,
+        "In2_Cu": 333,
+        "B_Cu": 439,
+        "F_Mask": 363,
+        "B_Mask": 124,
+        "F_Silkscreen": 3715,
+        "B_Silkscreen": 163,
+        "Edge_Cuts": 8
+      }
+    },
+    {
+      "name": "Wszystkie Gerbery: mm, format 4.6, znacznik końca",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "Maski mają polaryzację Negative",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "Wspólny początek współrzędnych (TF.SameCoordinates)",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "Jeden zamknięty obrys 150 × 80 mm z narożnikami R1 w początku układu",
+      "pass": true,
+      "details": {
+        "segmenty": 8,
+        "proste": [
+          [
+            [
+              0.0,
+              -79.0
+            ],
+            [
+              0.0,
+              -1.0
+            ]
+          ],
+          [
+            [
+              1.0,
+              -80.0
+            ],
+            [
+              149.0,
+              -80.0
+            ]
+          ],
+          [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              149.0,
+              0.0
+            ]
+          ],
+          [
+            [
+              150.0,
+              -79.0
+            ],
+            [
+              150.0,
+              -1.0
+            ]
+          ]
+        ],
+        "łuki_R": true,
+        "obwiednia": [
+          0.0,
+          150.0,
+          -80.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "PTH: każdy otwór zgodny z PCB (położenie i średnica)",
+      "pass": true,
+      "details": {
+        "plik": 253,
+        "pcb": 253,
+        "brak": [],
+        "nadmiar": [],
+        "sparowane_w_tolerancji_0.001mm": [
+          [
+            [
+              19.276,
+              -60.765,
+              0.4
+            ],
+            [
+              19.275,
+              -60.765,
+              0.4
+            ]
+          ],
+          [
+            [
+              106.293,
+              -31.0,
+              0.4
+            ],
+            [
+              106.293,
+              -30.999,
+              0.4
+            ]
+          ],
+          [
+            [
+              63.87,
+              -35.734,
+              0.3
+            ],
+            [
+              63.869,
+              -35.734,
+              0.3
+            ]
+          ],
+          [
+            [
+              112.507,
+              -60.792,
+              0.3
+            ],
+            [
+              112.506,
+              -60.792,
+              0.3
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "name": "PTH: mm, dziesiętnie, współrzędne absolutne, bez szczelin",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "PTH: jawny atrybut metalizacji",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "NPTH: każdy otwór zgodny z PCB (położenie i średnica)",
+      "pass": true,
+      "details": {
+        "plik": 16,
+        "pcb": 16,
+        "brak": [],
+        "nadmiar": [],
+        "sparowane_w_tolerancji_0.001mm": []
+      }
+    },
+    {
+      "name": "NPTH: mm, dziesiętnie, współrzędne absolutne, bez szczelin",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "NPTH: jawny atrybut metalizacji",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "Miedź góra: położenie i sieć każdego pola (bez otworów NPTH) zgodne z PCB",
+      "pass": true,
+      "details": {
+        "pola": 351,
+        "pcb": 351,
+        "brak": [],
+        "nadmiar": []
+      }
+    },
+    {
+      "name": "Miedź góra: liczba regionów wylewek = liczba konturów wypełnienia w PCB",
+      "pass": true,
+      "details": {
+        "gerber": 30,
+        "pcb": 30
+      }
+    },
+    {
+      "name": "Maska góra: otwarcie nad każdym polem z maską w PCB",
+      "pass": true,
+      "details": []
+    },
+    {
+      "name": "Miedź dół: położenie i sieć każdego pola (bez otworów NPTH) zgodne z PCB",
+      "pass": true,
+      "details": {
+        "pola": 112,
+        "pcb": 112,
+        "brak": [],
+        "nadmiar": []
+      }
+    },
+    {
+      "name": "Miedź dół: liczba regionów wylewek = liczba konturów wypełnienia w PCB",
+      "pass": true,
+      "details": {
+        "gerber": 18,
+        "pcb": 18
+      }
+    },
+    {
+      "name": "Maska dół: otwarcie nad każdym polem z maską w PCB",
+      "pass": true,
+      "details": []
+    },
+    {
+      "name": "Miedź In1: położenie i sieć każdego pola (bez otworów NPTH) zgodne z PCB",
+      "pass": true,
+      "details": {
+        "pola": 104,
+        "pcb": 104,
+        "brak": [],
+        "nadmiar": []
+      }
+    },
+    {
+      "name": "Miedź In1: liczba regionów wylewek = liczba konturów wypełnienia w PCB",
+      "pass": true,
+      "details": {
+        "gerber": 1,
+        "pcb": 1
+      }
+    },
+    {
+      "name": "Miedź In2: położenie i sieć każdego pola (bez otworów NPTH) zgodne z PCB",
+      "pass": true,
+      "details": {
+        "pola": 104,
+        "pcb": 104,
+        "brak": [],
+        "nadmiar": []
+      }
+    },
+    {
+      "name": "Miedź In2: liczba regionów wylewek = liczba konturów wypełnienia w PCB",
+      "pass": true,
+      "details": {
+        "gerber": 0,
+        "pcb": 0
+      }
+    },
+    {
+      "name": "Bajty CAM bez zmian od eksportu",
+      "pass": true,
+      "details": null
+    }
+  ],
+  "board_sha256": "2b39a9ef6a1859437d935b1c7fb7464b49a346cf886a65b2d6c3c769a95a4c8b",
+  "files": {
+    "M1-B_Cu.gbl": "a0ae784e2614eec02bca8d5b2b4673f4563a47dae55283a96a7d1245e77b606b",
+    "M1-B_Mask.gbs": "3d65468e86250da7bd4772b44728c1d7122f67a9839b0e7d8dcdf531379472e5",
+    "M1-B_Silkscreen.gbo": "c257a6dcc01e7cb8aa5cafa66b484c9adf20383a0815b885b73553069f303c41",
+    "M1-Edge_Cuts.gm1": "52e9521ef4a28b2fb523cf1485ae455e9fc6e435aaf7314e21fd2ff2f6221d88",
+    "M1-F_Cu.gtl": "ae99ee6d0c59c4f3791a54a2462a46595d70b6110319d468f0e0d5da74b14afb",
+    "M1-F_Mask.gts": "dcbbd7324dde6870be3ae1f7b7460cba1fa569a4a27f8b38944951a4fbb4825e",
+    "M1-F_Silkscreen.gto": "7ce6de70f955cc2fa2c33e62f7c46bb6d93fed6bd1319b81ca6f71bef755444c",
+    "M1-In1_Cu.g1": "31850709c6700e5e672933368564aca8909d348fbaf13ffbaae5718930b9b674",
+    "M1-In2_Cu.g2": "ac616d3278e054d450af0785af81d89f6d1457ba99aca77a56a030f2058ea4f0",
+    "M1-NPTH.drl": "b031a321b80e9b5b12d549cdaaaa58133cbe2194791461d3fb8b2d014da38453",
+    "M1-PTH.drl": "f291a0ede9a05d659c8e65569767b2b2e92c796515c5e46b256f8c858f5582c3"
+  },
+  "notes": [
+    "Współrzędne w plikach nie są odbijane; tylko kolorowy podgląd spodu jest lustrzany (widok od spodu).",
+    "To kontrola zawartości CAM względem modelu PCB, nie niezależny DRC elektryczny.",
+    "Łuki w regionach przybliżone odcinkami wyłącznie do podglądów i testu położenia w masce."
+  ]
+}

@@ -1,0 +1,113 @@
+............................................C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\M1-R1-recenzja-Astra\work\Rewizje\EGRLab-v6.3-m1\tests\test_v5.py:47: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Users\\tgorbacz\\.codex\\.chatgpt-projects\\g-p-6a8827e57cc881919b26f761377a7bd3\\M1-R1-recenzja-Astra\\work\\Rewizje\\EGRLab-v6.1-rc1\\hardware\\wiring.csv' mode='r' encoding='utf-8-sig'>
+  cls.w=list(csv.DictReader((HW/'hardware/wiring.csv').open(encoding='utf-8-sig'),delimiter=';'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+..C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\M1-R1-recenzja-Astra\work\Rewizje\EGRLab-v6.3-m1\tests\test_v5.py:77: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Users\\tgorbacz\\.codex\\.chatgpt-projects\\g-p-6a8827e57cc881919b26f761377a7bd3\\M1-R1-recenzja-Astra\\work\\Rewizje\\EGRLab-v6.1-rc1\\hardware\\connectors.csv' mode='r' encoding='utf-8-sig'>
+  rows=list(csv.DictReader((HW/'hardware/connectors.csv').open(encoding='utf-8-sig'),delimiter=';'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.............EEEE................................E....E.
+======================================================================
+ERROR: test_complete_profile_emits_no_arm_test_or_qualify (test_v5.V5Profiles.test_complete_profile_emits_no_arm_test_or_qualify)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\M1-R1-recenzja-Astra\work\Rewizje\EGRLab-v6.3-m1\tests\test_v5.py", line 126, in setUp
+    self.hw,self.valve,self.session=[json.loads((R.parent/'EGRLab-v6.2-s1'/'profiles'/f'{name}.json').read_text()) for name in ['hardware','valve','session']]
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\M1-R1-recenzja-Astra\work\Rewizje\EGRLab-v6.3-m1\tests\test_v5.py", line 126, in <listcomp>
+    self.hw,self.valve,self.session=[json.loads((R.parent/'EGRLab-v6.2-s1'/'profiles'/f'{name}.json').read_text()) for name in ['hardware','valve','session']]
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\Lib\pathlib.py", line 1058, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\Lib\pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\tgorbacz\\.codex\\.chatgpt-projects\\g-p-6a8827e57cc881919b26f761377a7bd3\\M1-R1-recenzja-Astra\\work\\Rewizje\\EGRLab-v6.2-s1\\profiles\\hardware.json'
+
+======================================================================
+ERROR: test_module_identity_mismatch_and_nan_rejected (test_v5.V5Profiles.test_module_identity_mismatch_and_nan_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\M1-R1-recenzja-Astra\work\Rewizje\EGRLab-v6.3-m1\tests\test_v5.py", line 126, in setUp
+    self.hw,self.valve,self.session=[json.loads((R.parent/'EGRLab-v6.2-s1'/'profiles'/f'{name}.json').read_text()) for name in ['hardware','valve','session']]
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\M1-R1-recenzja-Astra\work\Rewizje\EGRLab-v6.3-m1\tests\test_v5.py", line 126, in <listcomp>
+    self.hw,self.valve,self.session=[json.loads((R.parent/'EGRLab-v6.2-s1'/'profiles'/f'{name}.json').read_text()) for name in ['hardware','valve','session']]
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\Lib\pathlib.py", line 1058, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\Lib\pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\tgorbacz\\.codex\\.chatgpt-projects\\g-p-6a8827e57cc881919b26f761377a7bd3\\M1-R1-recenzja-Astra\\work\\Rewizje\\EGRLab-v6.2-s1\\profiles\\hardware.json'
+
+======================================================================
+ERROR: test_synthetic_or_other_drive_class_rejected (test_v5.V5Profiles.test_synthetic_or_other_drive_class_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\M1-R1-recenzja-Astra\work\Rewizje\EGRLab-v6.3-m1\tests\test_v5.py", line 126, in setUp
+    self.hw,self.valve,self.session=[json.loads((R.parent/'EGRLab-v6.2-s1'/'profiles'/f'{name}.json').read_text()) for name in ['hardware','valve','session']]
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\M1-R1-recenzja-Astra\work\Rewizje\EGRLab-v6.3-m1\tests\test_v5.py", line 126, in <listcomp>
+    self.hw,self.valve,self.session=[json.loads((R.parent/'EGRLab-v6.2-s1'/'profiles'/f'{name}.json').read_text()) for name in ['hardware','valve','session']]
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\Lib\pathlib.py", line 1058, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\Lib\pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\tgorbacz\\.codex\\.chatgpt-projects\\g-p-6a8827e57cc881919b26f761377a7bd3\\M1-R1-recenzja-Astra\\work\\Rewizje\\EGRLab-v6.2-s1\\profiles\\hardware.json'
+
+======================================================================
+ERROR: test_templates_cannot_commission_hardware (test_v5.V5Profiles.test_templates_cannot_commission_hardware)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\M1-R1-recenzja-Astra\work\Rewizje\EGRLab-v6.3-m1\tests\test_v5.py", line 126, in setUp
+    self.hw,self.valve,self.session=[json.loads((R.parent/'EGRLab-v6.2-s1'/'profiles'/f'{name}.json').read_text()) for name in ['hardware','valve','session']]
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\M1-R1-recenzja-Astra\work\Rewizje\EGRLab-v6.3-m1\tests\test_v5.py", line 126, in <listcomp>
+    self.hw,self.valve,self.session=[json.loads((R.parent/'EGRLab-v6.2-s1'/'profiles'/f'{name}.json').read_text()) for name in ['hardware','valve','session']]
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\Lib\pathlib.py", line 1058, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\Lib\pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\tgorbacz\\.codex\\.chatgpt-projects\\g-p-6a8827e57cc881919b26f761377a7bd3\\M1-R1-recenzja-Astra\\work\\Rewizje\\EGRLab-v6.2-s1\\profiles\\hardware.json'
+
+======================================================================
+ERROR: test_m08_f07_max31856_patch_and_direct_cs (test_v63_m1.M1Firmware.test_m08_f07_max31856_patch_and_direct_cs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\M1-R1-recenzja-Astra\work\Rewizje\EGRLab-v6.3-m1\tests\test_v63_m1.py", line 158, in test_m08_f07_max31856_patch_and_direct_cs
+    ref=(R.parents[1]/'Plytki/P09-R1-review/firmware/board.c').read_text(encoding='utf-8')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\Lib\pathlib.py", line 1058, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\Lib\pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\tgorbacz\\.codex\\.chatgpt-projects\\g-p-6a8827e57cc881919b26f761377a7bd3\\M1-R1-recenzja-Astra\\work\\Plytki\\P09-R1-review\\firmware\\board.c'
+
+======================================================================
+ERROR: test_m13_profile_m1 (test_v63_m1.M1Firmware.test_m13_profile_m1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\M1-R1-recenzja-Astra\work\Rewizje\EGRLab-v6.3-m1\tests\test_v63_m1.py", line 191, in test_m13_profile_m1
+    old=json.loads((R.parent/'EGRLab-v6.2-s1/profiles/hardware.json').read_text(encoding='utf-8'))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\Lib\pathlib.py", line 1058, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tgorbacz\.codex\.chatgpt-projects\g-p-6a8827e57cc881919b26f761377a7bd3\.egrlab-toolchains\kicad\runtime\bin\Lib\pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\tgorbacz\\.codex\\.chatgpt-projects\\g-p-6a8827e57cc881919b26f761377a7bd3\\M1-R1-recenzja-Astra\\work\\Rewizje\\EGRLab-v6.2-s1\\profiles\\hardware.json'
+
+----------------------------------------------------------------------
+Ran 102 tests in 4.949s
+
+FAILED (errors=6)
