@@ -259,20 +259,20 @@
     "ref": "R2",
     "source_ref": "P07:R3",
     "footprint": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
-    "display": "100K",
-    "value": "100K",
-    "mpn": "RC1206FR-07100KL",
+    "display": "4.7K",
+    "value": "4.7K",
+    "mpn": "RC1206FR-074K7L",
     "pins": {
       "1": "DRIVE_EN",
       "2": "GND"
     },
     "sheet": "MCU",
     "url": "",
-    "note": "D-M1-4: bridge disabled while the ESP32 is in reset / booting.",
+    "note": "D-M1-4: bridge disabled while the ESP32 is in reset / booting. 4.7k, not 100k: GPIO39 (MTCK) has the internal ~45k pull-up after reset (ESP32-S3 datasheet v2.2 table 2-1 note 7, EFUSE_DIS_PAD_JTAG = 0) until the firmware takes the pin; 100k gave ~2.3 V (HIGH for the 74AHCT125, VIH 2.0 V). 4.7k: <= 0.63 V even with a 20k pull-up (VIL 0.8 V). Review of firmware PR #17, 8.10.",
     "qty": 1,
     "on_board": true,
     "zrodlo": "nowe",
-    "ohms": 100000,
+    "ohms": 4700,
     "tolerance": 0.01
   },
   "R3": {
