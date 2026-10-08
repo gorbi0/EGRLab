@@ -25,3 +25,14 @@ bool current_window_add(current_window_t *w, uint64_t t, float i, float *mean, f
     if(n<16 || t-oldest<18000) return false;
     *mean=(float)(sum/n); *rms=(float)sqrt(squares/n); return true;
 }
+float overcurrent_amps(int16_t raw, float full_scale, float gain, float offset, float zero, float volts_per_amp) {
+    if (raw >= 32760 || raw <= -32760) return INFINITY;           /* nasycony CH6 = poza zakresem pomiaru */
+    if (!isfinite(full_scale) || full_scale <= 0 || !isfinite(gain) || !isfinite(offset) || !isfinite(zero)
+        || !isfinite(volts_per_amp) || volts_per_amp <= 0) return NAN;
+    return (raw * (full_scale / 32768.0f) * gain + offset - zero) / volts_per_amp;
+}
+bool overcurrent_sample(overcurrent_t *o, float amps, float limit_a, unsigned consecutive) {
+    if (isfinite(amps) && fabsf(amps) <= limit_a) { o->over = 0; return false; }
+    if (o->over < consecutive) o->over++;
+    return o->over >= consecutive;
+}

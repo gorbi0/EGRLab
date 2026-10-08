@@ -24,8 +24,11 @@
 #include "freertos/task.h"
 #include "freertos/semphr.h"
 #include "freertos/queue.h"
-#ifndef CONFIG_EGR_PFAIL_PRESENT
-#define CONFIG_EGR_PFAIL_PRESENT 0
+#ifndef CONFIG_EGR_SW_CURRENT_LIMIT
+#define CONFIG_EGR_SW_CURRENT_LIMIT 0
+#endif
+#ifndef CONFIG_EGR_SW_CURRENT_LIMIT_MA
+#define CONFIG_EGR_SW_CURRENT_LIMIT_MA 8000
 #endif
 #ifndef CONFIG_EGR_CAN_PRESENT
 #define CONFIG_EGR_CAN_PRESENT 0
@@ -44,19 +47,19 @@ static esp_timer_handle_t timer;
 static nvs_handle_t nvs;
 static _Atomic bool pause_requested, transitioning=true, stop_pending, config_pending;
 static _Atomic bool acquisition_healthy=true, run_permission, sensor_enabled, radio_allowed;
-/* 6.2-s1: tryb stolowy (D-2) i zanik zasilania z P02 R4 (F-01, D-3). */
+/* 6.3-m1 (M-10/M-11): brak PFAIL_N. Tryb bez karty: SD niezamontowana (np. tylko USB - peryferia 3,3 V bez
+ * zasilania, D-M1-6) -> bez plikow i bez TEST, konsola i podglad dzialaja. Zastepuje tryb stolowy F-02. */
 static bool bench_mode;
-static _Atomic bool power_failed;
-static _Atomic uint32_t stop_epoch, lost_ticks, trigger_count, sample_count;
+static _Atomic uint32_t stop_epoch, lost_ticks, trigger_count, sample_count, overcurrent_count;
 static bool adc_paused; /* command manager only */
 static bool tc_valid;
 static uint64_t tc_time, inputs_time;
-static const char *TAG="EGRLab-6.2-s1";
+static const char *TAG="EGRLab-6.3-m1";
 
 static inputs_t snapshot(void) {
     portENTER_CRITICAL(&data_mux); inputs_t i=latest; bool valid=tc_valid;
     uint64_t tt=tc_time, it=inputs_time; portEXIT_CRITICAL(&data_mux);
-    i.now=esp_timer_get_time(); i.interlock=board_interlock(); i.hw_armed=board_armed();
+    i.now=esp_timer_get_time();
     i.storage_ok=storage_ok() && acquisition_healthy;
     i.adc_ok=board_adc_config_ok(); i.drive_ok=board_drive_ok();
     i.tc_ok=valid && i.now>=tt && i.now-tt<1000000;
@@ -76,7 +79,6 @@ static void request_stop(void) {
 }
 static bool enqueue(const char *line) {
     if(!strcmp(line,"stop")) { request_stop(); return true; }
-    if(power_failed) return false;               /* po PFAIL_N tylko STOP */
     request_t r={.epoch=atomic_load(&stop_epoch)};
     if(strlen(line)>=sizeof r.line) return false;
     strcpy(r.line,line); return xQueueSend(requests,&r,0)==pdTRUE;
@@ -96,7 +98,8 @@ static void log_triggers(const session_config_t *c,const sample_t *s,const float
     }
 }
 static void acquisition(void *unused) {
-    (void)unused; uint32_t seq=0; bool gap=true; current_window_t window; current_window_reset(&window);
+    (void)unused; uint32_t seq=0; bool gap=true, adc_failing=false; current_window_t window; current_window_reset(&window);
+    overcurrent_t oc={0}; bool oc_logged=false;
     while(true) {
         uint32_t ticks=ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
         if(pause_requested) {
@@ -105,7 +108,7 @@ static void acquisition(void *unused) {
             board_adc_set_running(false); xSemaphoreGive(pause_ack);
             xSemaphoreTake(resume_sem,portMAX_DELAY);
             ulTaskNotifyTake(pdTRUE,0); /* discard pre-pause notifications */
-            board_adc_set_running(true); gap=true; current_window_reset(&window); continue;
+            board_adc_set_running(true); gap=true; current_window_reset(&window); oc=(overcurrent_t){0}; continue;
         }
         session_config_t c=active_cfg;
         sample_t s={.sequence=seq++, .config_id=c.id};
@@ -118,14 +121,33 @@ static void acquisition(void *unused) {
         /* The on-disk record is packed. Pass naturally aligned destinations
          * to the peripheral driver, then copy into the serialization object. */
         int16_t raw[8]; uint64_t sample_time;
-        local_current_t cur;
-        esp_err_t e=board_adc(raw,&sample_time,&cur);
+        esp_err_t e=board_adc(raw,&sample_time);
         if(e!=ESP_OK) {
             acquisition_healthy=false; board_emergency_stop(); board_kill();
-            storage_event("{\"type\":\"adc_error\",\"code\":%d}",e); continue;
+            /* M-11: AD7606B bez zasilania (tylko USB) nie moze zalac logu - jedno zdarzenie na serie bledow;
+             * pelna liczba w daq_stats (adc_errors). */
+            if(!adc_failing) storage_event("{\"type\":\"adc_error\",\"code\":%d}",e);
+            adc_failing=true; continue;
         }
+        adc_failing=false;
         memcpy(s.raw,raw,sizeof raw); s.t_us=sample_time;
-        s.current_raw=cur.raw; s.current_begin_us=cur.begin_us; s.current_end_us=cur.end_us; s.current_status=cur.status;
+        /* M-04: rekord v5 bez zmian; pola MCP3201 puste (65535 / status 2 = ABSENT), prad jest w raw[5]. */
+        s.current_raw=65535; s.current_begin_us=0; s.current_end_us=0; s.current_status=2;
+#if CONFIG_EGR_SW_CURRENT_LIMIT
+        /* M-06: przed czymkolwiek innym - ograniczenie pradu dziala na kazdej probce, takze bez kalibracji. */
+        float i_oc=overcurrent_amps(raw[CH_CURRENT],control_full_scale(c.range[CH_CURRENT]),c.gain[CH_CURRENT],
+            c.offset[CH_CURRENT],c.current_zero,c.current_volts_per_amp);
+        if(c.adc_config_ok && overcurrent_sample(&oc,i_oc,CONFIG_EGR_SW_CURRENT_LIMIT_MA/1000.0f,2)) {
+            bool driving=run_permission;
+            board_overcurrent_trip(); atomic_fetch_add(&overcurrent_count,1);
+            if(!oc_logged) {
+                char a[32]; storage_event("{\"type\":\"overcurrent\",\"t_us\":%" PRIu64 ",\"config_id\":%u,\"amps\":%s,"
+                    "\"limit_a\":%.3f,\"bank\":%d,\"drive_was_permitted\":%s}",s.t_us,c.id,json_number(a,i_oc),
+                    CONFIG_EGR_SW_CURRENT_LIMIT_MA/1000.0f,c.bank,driving?"true":"false");
+                oc_logged=true;
+            }
+        } else if(!oc.over) oc_logged=false;
+#endif
         if(c.bank) s.flags|=SAMPLE_TEST;
         if(run_permission) s.flags|=SAMPLE_PERMIT;
         if(sensor_enabled) s.flags|=SAMPLE_SENSOR;
@@ -135,12 +157,11 @@ static void acquisition(void *unused) {
         float v[8];
         for(int j=0;j<8;j++) v[j]=c.adc_config_ok && c.voltage_calibrated && !(sat&(1u<<j))
             ? s.raw[j]*(control_full_scale(c.range[j])/32768.0f)*c.gain[j]+c.offset[j] : NAN;
-        /* v[5] is a semantic current-output voltage; raw[5] remains the unused AD input. */
-        v[CH_CURRENT]=cur.status==CURRENT_OK ? cur.raw*c.current_adc_gain+c.current_adc_offset : NAN;
+        /* M-04: v[5] = napiecie wyjscia INA240 z CH6 (gain/offset jak kazdy kanal); prad = (v[5] - zero) / 0,25 V/A. */
         uint32_t fired=trigger_sample(v,s.t_us);
         if(fired) { s.flags|=SAMPLE_TRIGGER; log_triggers(&c,&s,v,fired); }
         float mean,rms,amps=c.current_valid?(v[5]-c.current_zero)/c.current_volts_per_amp:NAN;
-        bool valid=current_window_add(&window,s.t_us+(cur.begin_us+cur.end_us)/2,amps,&mean,&rms);
+        bool valid=current_window_add(&window,s.t_us,amps,&mean,&rms);   /* jednoczesnie z napieciami */
         portENTER_CRITICAL(&data_mux);
         latest.sample_time=s.t_us; latest.config_id=c.id; latest.saturation_mask=sat;
         memcpy(latest.v,v,sizeof v); latest.current_mean=mean; latest.current_rms=rms;
@@ -171,12 +192,11 @@ static bool resume_adc(void) {
     return xSemaphoreTake(first_sample,pdMS_TO_TICKS(100))==pdTRUE;
 }
 static bool commit_locked(const char *reason) {
-    if(power_failed) return false;    /* 6.2-s1: po PFAIL_N bez przelaczen i bez zapisu konfiguracji */
     uint64_t start=esp_timer_get_time(); uint32_t epoch=atomic_load(&stop_epoch);
     uint32_t gate=board_stop_token();
     if(!pause_adc()) { fault_locked("PAUSE_TIMEOUT"); return false; }
-    /* 6.2-s1 F-04 (P05 R2 INTEGRACJA "Rozruch" 4-5): najpierw konfiguracja AD7606B z odczytem kontrolnym,
-     * dopiero po niej MEAS_EN (board_mode czeka 25 ms na przekazniki). Blad konfiguracji = MEAS_EN wylaczone. */
+    /* F-04: najpierw konfiguracja AD7606B z odczytem kontrolnym, dopiero po niej tryb (M1: tylko SENS_EN,
+     * bez MEAS_EN i przekaznikow). Blad konfiguracji = zasilanie czujnika wylaczone. */
     bool sw=board_adc_software_mode(); control_apply_ranges(&ctrl.profile,sw);
     uint8_t applied[8]; memset(applied,RANGE_UNKNOWN,sizeof applied);
     bool adc_ok=board_adc_ranges(ctrl.profile.range,applied)==ESP_OK && board_adc_config_ok();
@@ -189,7 +209,7 @@ static bool commit_locked(const char *reason) {
         ok=storage_config(&candidate); /* persistent metadata before ID publication */
     }
     if(!ok || stop_epoch!=epoch || stop_pending) {
-        if(adc_ok) board_mode(ctrl.test_bank,false); else board_meas_off();
+        if(adc_ok) board_mode(ctrl.test_bank,false); else board_sensor_off();
         sensor_enabled=false;
         fault_locked(!ok?"CONFIG_COMMIT":"STOP_DURING_CONFIG");
         return false; /* remain paused; stop can retry, storage errors require reboot */
@@ -206,19 +226,17 @@ static bool commit_locked(const char *reason) {
     return true;
 }
 static bool zero_locked(void) {
-    inputs_t in=snapshot();
-    if((ctrl.state!=SAFE && ctrl.state!=READY) || in.log_present ||
-       !ctrl.profile.current_valid[ctrl.test_bank?1:0]) return false;
-    /* No LOGGER plug: the ECU must be physically absent from the zero-current
-     * fixture. TEST motor is inhibited throughout the new full-second window. */
+    if((ctrl.state!=SAFE && ctrl.state!=READY) || !ctrl.profile.current_valid[ctrl.test_bank?1:0]) return false;
+    /* M-04: zero (VS/2) mierzone przy wylaczonym mostku i bez pradu ECU - nie stala 2,5 V. Bez detekcji adaptera
+     * (M-01) warunek "bez ECU" sprawdza control_zero_ok(): linie silnika CH1/CH2 bez napiecia przez cala sekunde. */
     if(!commit_locked("zero_begin")) return false;
     transitioning=true; board_inhibit(true); board_kill();
     uint32_t epoch=stop_epoch; uint16_t id=active_cfg.id; int bank=active_cfg.bank;
     summary_t s; bool got=xQueueReceive(zero_summary,&s,pdMS_TO_TICKS(1800))==pdTRUE;
     bool ok=got && s.config_id==id && s.bank==bank && s.t_us-s.start_us>=1000000
-        && s.valid_count[5]==s.count && s.count>=(unsigned)CONFIG_EGR_SAMPLE_HZ*9/10 && isfinite(s.mean[5])
-        && isfinite(s.min[5]) && isfinite(s.max[5]) && s.max[5]-s.min[5]<.02f
-        && s.mean[5]>1 && s.mean[5]<4 && stop_epoch==epoch && !stop_pending && acquisition_healthy;
+        && s.valid_count[5]==s.count && s.valid_count[0]==s.count && s.valid_count[1]==s.count
+        && s.count>=(unsigned)CONFIG_EGR_SAMPLE_HZ*9/10 && control_zero_ok(s.mean,s.min,s.max)
+        && stop_epoch==epoch && !stop_pending && acquisition_healthy;
     if(ok) ctrl.profile.current_zero[bank]=s.mean[5];
     if(stop_pending) return false;
     return commit_locked(ok?"zero_commit":"zero_rejected") && ok;
@@ -234,15 +252,51 @@ static void log_campaign_locked(void) {
         json_number(n[5],p->ms_open),json_number(n[6],p->ms_close),ctrl.profile.current_window_qualified?"true":"false");
     p->point_ready=false;
 }
+/* M-12: dioda RGB modulu zamiast HEART (GPIO21 to teraz LPWM). Miga 2 Hz, gdy probki ida; stala = akwizycja stoi.
+ * Kolor: zielony LOGGER, niebieski SAFE, zolty TEST (bez ruchu), bialy ruch, czerwony FAULT, fioletowy bez karty. */
+static uint32_t led_colour(state_t st, bool alive) {
+    if(st==FAULT) return 0x200000;
+    if(bench_mode) return 0x100010;
+    if(!alive) return 0x200000;
+    if(st==LOGGER || st==IDENTIFY) return 0x002000;
+    if(st==SAFE) return 0x000020;
+    return control_moving(&ctrl) ? 0x181818 : 0x181000;
+}
+/* M-12: START / STOP (GPIO15, aktywny L). Filtr 20 ms. W stanach TEST kazde nacisniecie = STOP natychmiast.
+ * Poza TEST: krotkie (< 1 s) = znacznik mark; dlugie (>= 1 s) = SAFE -> LOGGER albo LOGGER -> STOP. */
+static void button_tick(uint64_t now, state_t st) {
+    static bool raw_prev, stable, long_done; static uint64_t changed, down_at;
+    bool raw=board_button();
+    if(raw!=raw_prev) { raw_prev=raw; changed=now; }
+    bool test_states=st!=SAFE && st!=LOGGER && st!=IDENTIFY;
+    if(now-changed>=20000 && raw!=stable) {
+        stable=raw;
+        if(stable) {
+            down_at=now; long_done=false;
+            if(test_states) {          /* TEST, READY, ruch, FAULT: STOP bez czekania */
+                long_done=true; request_stop();
+                storage_event("{\"type\":\"button\",\"t_us\":%" PRIu64 ",\"press\":\"stop\"}",now);
+            }
+        } else if(!long_done) {
+            storage_event("{\"type\":\"button\",\"t_us\":%" PRIu64 ",\"press\":\"short\"}",now); storage_mark(now);
+        }
+    }
+    if(stable && !long_done && now-down_at>=1000000) {
+        long_done=true; storage_event("{\"type\":\"button\",\"t_us\":%" PRIu64 ",\"press\":\"long\"}",now);
+        enqueue(st==SAFE ? "logger" : "stop");
+    }
+}
 static void safety(void *unused) {
     (void)unused; TickType_t wake=xTaskGetTickCount(); uint64_t last_beat=0; state_t prior=SAFE;
-    bool was_mark=false, heart_ok=false;
+    bool heart_ok=false, blink=false, sens_warned=false;
+    /* M-06: to zadanie karmi TWDT i RTC WDT; zawieszenie = panika (DRIVE_EN w dol) albo reset systemu. */
+    if(board_watchdogs_start()!=ESP_OK) { ESP_LOGE(TAG,"watchdog: start nieudany - TEST zablokowany"); board_emergency_stop(); }
     while(true) {
+        board_watchdogs_feed();
         inputs_t i=snapshot();
         if(xSemaphoreTake(control_mutex,0)==pdTRUE) {
             i=snapshot(); /* fresh AFTER acquiring the lock */
-            if(power_failed && ctrl.state!=FAULT) fault_locked("POWER_FAIL");
-            if(!transitioning && !stop_pending && !power_failed) {
+            if(!transitioning && !stop_pending) {
                 int8_t map[3]={ctrl.profile.ch_supply,ctrl.profile.ch_ground,ctrl.profile.ch_feedback};
                 control_step(&ctrl,&i);
                 if(map[0]!=ctrl.profile.ch_supply || map[1]!=ctrl.profile.ch_ground || map[2]!=ctrl.profile.ch_feedback) {
@@ -263,16 +317,23 @@ static void safety(void *unused) {
                     i.now,control_name(ctrl.state),ctrl.fault?ctrl.fault:""); prior=ctrl.state;
             }
             heart_ok=ctrl.state!=FAULT;
-            radio_allowed=i.test_present && !i.log_present && !transitioning && ctrl.state!=LOGGER
+            /* Bez detekcji adaptera (M-01): radio tylko w banku TEST poza LOGGER / IDENTIFY / FAULT. */
+            radio_allowed=ctrl.test_bank && !transitioning && ctrl.state!=LOGGER
                 && ctrl.state!=IDENTIFY && ctrl.state!=FAULT;
+            /* M-07 / D-M1-5: SENS_5V nigdy poza bankiem TEST; CH8 > 1 V w LOGGER = ostrzezenie i ponowne wylaczenie. */
+            if(!ctrl.test_bank && board_sensor_enabled()) board_sensor_off();
+            bool sens_high=!ctrl.test_bank && isfinite(i.v[CH_SENS5V]) && i.v[CH_SENS5V]>1;
+            if(sens_high && !sens_warned) storage_event("{\"type\":\"sens5v_in_logger\",\"t_us\":%" PRIu64 "}",i.now);
+            sens_warned=sens_high;
+            button_tick(i.now,ctrl.state);
             xSemaphoreGive(control_mutex);
         }
         if(stop_pending || transitioning) { board_kill(); run_permission=false; }
-        if(i.now-last_beat>=10000) {
-            board_heartbeat(heart_ok && !stop_pending && acquisition_healthy && i.now>=i.sample_time
-                && i.now-i.sample_time<10000); last_beat=i.now;
+        if(i.now-last_beat>=250000) {
+            bool alive=heart_ok && !stop_pending && acquisition_healthy && i.now>=i.sample_time && i.now-i.sample_time<10000;
+            blink=alive ? !blink : true;
+            board_led(blink ? led_colour(ctrl.state,alive) : 0); last_beat=i.now;
         }
-        bool mark=board_mark(); if(mark && !was_mark) storage_mark(i.now); was_mark=mark;
         vTaskDelayUntil(&wake,pdMS_TO_TICKS(1));
     }
 }
@@ -289,22 +350,19 @@ static void auxiliary(void *unused) {
     while(true) {
         uint64_t now=esp_timer_get_time();
         if(now-last_io>=20000) {
-            bool fault=true,log=true,test=false;
-            bool io_ok=board_inputs(&fault,&log,&test)==ESP_OK;
-            if(!io_ok) { fault=true; log=true; test=false; }
-            uint64_t completed=io_ok?esp_timer_get_time():0;
-            portENTER_CRITICAL(&data_mux); latest.sensor_fault=fault; latest.log_present=log; latest.test_present=test;
-            inputs_time=completed;
+            /* M-07: SENS_FAULT_N wprost z GPIO42 (bez MCP23017); przy wylaczonym TPS2553 linia jest wysoko. */
+            bool fault=board_sensor_fault();
+            portENTER_CRITICAL(&data_mux); latest.sensor_fault=fault; inputs_time=esp_timer_get_time();
             portEXIT_CRITICAL(&data_mux); last_io=now;
         }
-        /* 6.2-s1 F-08: odbior CAN ma wlasne zadanie (can_rx); temperatury i SD go nie zatrzymuja. */
+        /* F-08: odbior CAN ma wlasne zadanie (can_rx); temperatury i SD go nie zatrzymuja. */
         vTaskDelay(pdMS_TO_TICKS(2));
-        if(now-last_stats>=10000000) {   /* 6.2-s1 F-05: CONVST, probki, bledy - co 10 s */
+        if(now-last_stats>=10000000) {   /* F-05: CONVST, probki, bledy - co 10 s */
             uint32_t cv,er,rs; board_adc_counters(&cv,&er,&rs);
             storage_event("{\"type\":\"daq_stats\",\"t_us\":%" PRIu64 ",\"convst\":%" PRIu32 ",\"samples\":%" PRIu32
                 ",\"adc_errors\":%" PRIu32 ",\"adc_resets\":%" PRIu32 ",\"lost_ticks\":%" PRIu32 ",\"sample_hz\":%d,\"adc_spi_hz\":%d,"
-                "\"soft_event_drops\":%" PRIu32 "}",now,cv,(uint32_t)atomic_load(&sample_count),er,rs,(uint32_t)lost_ticks,
-                CONFIG_EGR_SAMPLE_HZ,CONFIG_EGR_ADC_SPI_HZ,storage_soft_drops());
+                "\"soft_event_drops\":%" PRIu32 ",\"overcurrent_samples\":%" PRIu32 "}",now,cv,(uint32_t)atomic_load(&sample_count),er,rs,(uint32_t)lost_ticks,
+                CONFIG_EGR_SAMPLE_HZ,CONFIG_EGR_ADC_SPI_HZ,storage_soft_drops(),(uint32_t)atomic_load(&overcurrent_count));
             last_stats=now;
         }
         summary_t s; while(xQueueReceive(summaries,&s,0)==pdTRUE) log_summary(&s);
@@ -321,7 +379,7 @@ static void auxiliary(void *unused) {
     }
 }
 #if CONFIG_EGR_CAN_PRESENT
-/* 6.2-s1 F-08 (P10 R2 docs/INTEGRACJA.md): osobne zadanie oproznia kolejke TWAI (listen-only, 500 kbit/s).
+/* F-08 (P10 R2 docs/INTEGRACJA.md; M1: M-09): osobne zadanie oproznia kolejke TWAI (listen-only, 500 kbit/s).
  * Ramki i RPM to zdarzenia "miekkie": przy pelnej kolejce zdarzen licznik straty, nie bledny zapis DAQ.
  * Co 1 s, gdy cos sie zmienilo: can_stats (zgubione w RX, przepelnienia, bledy magistrali, straty logu).
  * t_us = czas obslugi ramki w tym zadaniu (esp_timer), nie znacznik sprzetowy poczatku ramki. */
@@ -366,34 +424,6 @@ static void can_rx(void *unused) {
     }
 }
 #endif
-#if CONFIG_EGR_PFAIL_PRESENT
-/* 6.2-s1 F-01 / D-3 (P02 R4 SPEC Z-08, Z-09, par. 9; P03 R6 README "PFAIL_N"): zbocze opadajace PFAIL_N po
- * uzbrojeniu = zanik zasilania z P02 R4 (UVLO). Najpierw naped (board_power_fail_stop: ARM i PWM w dol, trwale),
- * potem zatrzymanie probkowania, linia power_fail i zamkniecie plikow - podtrzymanie P02 R4 >= 10 ms przy 6 W.
- * GPIO41 (trigger oscyloskopu) jest wysoko od zbocza do zamkniecia plikow (pomiar ODBIOR P02 R4 O-05).
- * Zaklocenie krotsze niz 30 us (trzy odczyty H) nie konczy sesji; licznik w logu. */
-static void power_fail(void *unused) {
-    (void)unused; uint32_t glitches=0;
-    while(true) {
-        ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
-        bool low=true;
-        for(int k=0;k<3 && low;k++) { esp_rom_delay_us(10); low=!board_pfail_level(); }
-        if(!low) {
-            glitches++; storage_event("{\"type\":\"pfail_glitch\",\"t_us\":%" PRIu64 ",\"count\":%" PRIu32 "}",board_pfail_edge_us(),glitches);
-            board_pfail_rearm(); continue;
-        }
-        uint64_t edge=board_pfail_edge_us();
-        board_scope_level(true);
-        board_power_fail_stop(); power_failed=true; run_permission=false; radio_allowed=false;   /* D-3: najpierw naped */
-        esp_timer_stop(timer);                                                                   /* koniec probkowania */
-        uint64_t stop=esp_timer_get_time();
-        bool ok=storage_power_fail(edge,stop);
-        board_scope_level(false);
-        ESP_LOGE(TAG,"PFAIL_N: pliki %s, %u us od zbocza",ok?"zamkniete":"NIE zamkniete",(unsigned)(esp_timer_get_time()-edge));
-        while(true) vTaskDelay(portMAX_DELAY);
-    }
-}
-#endif
 static void radio(void *unused) {
     (void)unused;
     while(true) {
@@ -412,10 +442,11 @@ static void print_profile(void) {
         ctrl.profile.daq_module,ctrl.profile.vehicle_id,ctrl.profile.session_note);
     for(int b=0;b<2;b++) {
         for(int j=0;j<8;j++) printf("cal %d %d %.9g %.9g\n",b,j,ctrl.profile.gain[b][j],ctrl.profile.offset[b][j]);
-        printf("auxcal %d %.9g %.9g\ncurrentcal %d %.9g\n",b,ctrl.profile.aux_gain[b],ctrl.profile.aux_offset[b],b,ctrl.profile.current_zero[b]);
+        printf("currentcal %d %.9g\n",b,ctrl.profile.current_zero[b]);
     }
-    for(int b=0;b<2;b++) printf("imodule %d %s\niscal %d %.9g %.9g %.9g\nicalok %d %d\n",b,ctrl.profile.current_module[b],b,
-        ctrl.profile.current_adc_gain[b],ctrl.profile.current_adc_offset[b],ctrl.profile.current_volts_per_amp[b],b,ctrl.profile.current_calibrated[b]);
+    /* 6.3-m1: bez auxcal (brak AUX) i iscal (brak MCP3201); skala pradu CH6 = ivpa (V/A). */
+    for(int b=0;b<2;b++) printf("imodule %d %s\nivpa %d %.9g\nicalok %d %d\n",b,ctrl.profile.current_module[b],b,
+        ctrl.profile.current_volts_per_amp[b],b,ctrl.profile.current_calibrated[b]);
     printf("vcalok 0 %d\nvcalok 1 %d\nlimits %.9g %.9g %.9g\nmetric %d\n",ctrl.profile.voltage_calibrated[0],ctrl.profile.voltage_calibrated[1],ctrl.profile.max_duty,ctrl.profile.current_limit,ctrl.profile.temp_limit,ctrl.profile.current_window_qualified);
 }
 static bool execute_locked(const char *line) {
@@ -464,7 +495,7 @@ static bool execute_locked(const char *line) {
     if(!strcmp(cmd,"zero")) return zero_locked();
     if(!strcmp(cmd,"save") && ctrl.state==SAFE && profile_valid(&ctrl.profile)) {
         if(!pause_adc()) return false;
-        esp_err_t e=nvs_set_blob(nvs,"profile5",&ctrl.profile,sizeof ctrl.profile);
+        esp_err_t e=nvs_set_blob(nvs,"profile_m1",&ctrl.profile,sizeof ctrl.profile);
         if(e==ESP_OK) e=nvs_commit(nvs);
         return commit_locked("save") && e==ESP_OK;
     }
@@ -492,14 +523,12 @@ static bool execute_locked(const char *line) {
         ctrl.profile=p; return commit_locked("learn");
     }
     if(ctrl.state==SAFE && profile_command(&ctrl.profile,line)) return commit_locked("calibration");
-    if((ctrl.state==SAFE || ctrl.state==LOGGER) && (!strcmp(cmd,"aux") || !strcmp(cmd,"bypass"))) {
+    /* bypass 1 = prad nieważny (np. LOGGER na sondach back-probe, P1 nie idzie przez bocznik); M1 nie ma zworki AUX. */
+    if((ctrl.state==SAFE || ctrl.state==LOGGER) && !strcmp(cmd,"bypass")) {
         if(a!=0 && a!=1) return false;
-        if(!strcmp(cmd,"aux")) ctrl.profile.aux_position=(uint8_t)a;
-        else {
-            int bank=ctrl.test_bank?1:0;
-            if(a==0 && !ctrl.profile.current_calibrated[bank]) return false;
-            ctrl.profile.current_valid[bank]=a==0;
-        }
+        int bank=ctrl.test_bank?1:0;
+        if(a==0 && !ctrl.profile.current_calibrated[bank]) return false;
+        ctrl.profile.current_valid[bank]=a==0;
         return commit_locked(cmd);
     }
     if(!strcmp(cmd,"bank") && ctrl.state==SAFE && (a==0 || a==1)) {
@@ -508,7 +537,16 @@ static bool execute_locked(const char *line) {
 #if !CONFIG_EGR_ACTIVE_TEST
     if(strcmp(cmd,"logger") && strcmp(cmd,"identify") && strcmp(cmd,"stop")) return false;
 #endif
-    if(bench_mode && !strcmp(cmd,"test")) return false;   /* D-2: tryb stolowy bez TEST */
+    if(bench_mode && !strcmp(cmd,"test")) return false;   /* M-11: bez karty SD (np. tylko USB) bez TEST */
+    if(!strcmp(cmd,"test")) {
+        /* Bez detekcji adaptera (M-01, D-M1-7): przed SENS_5V linie silnika i czujnika musza byc bez napiecia. */
+        inputs_t in=snapshot(); const char *why=control_test_wiring(&in);
+        if(why) {
+            printf("TEST odrzucony: %s (ECU podpiete? zaplon? przepiecie X1.5 / X1.7 / X1.11 / X1.12)\n",why);
+            storage_event("{\"type\":\"test_rejected\",\"t_us\":%" PRIu64 ",\"reason\":\"%s\"}",in.now,why);
+            return false;
+        }
+    }
     if(!control_command(&ctrl,cmd,a,b,esp_timer_get_time())) return false;
     if(!strcmp(cmd,"test") || !strcmp(cmd,"logger") || !strcmp(cmd,"stop") || !strcmp(cmd,"hotsoak_stop"))
         return commit_locked(cmd);
@@ -543,11 +581,11 @@ static void status_json(char *out,size_t len) {
     int cs=active_cfg.ch_supply,cg=active_cfg.ch_ground,cf=active_cfg.ch_feedback;
     bool mapped=cs>=2 && cs<=4 && cg>=2 && cg<=4 && cf>=2 && cf<=4;
     int written=snprintf(out,len,"{\"stan\":\"%s\",\"fault\":\"%s\",\"pozycja\":%s,\"ratio\":%s,\"prad_A\":%s,"
-        "\"VBAT_V\":%s,\"TC1_C\":%s,\"TC2_C\":%s,\"uzbrojony\":%s,\"adapter\":\"%s\",\"config_id\":%u,"
+        "\"VBAT_V\":%s,\"TC1_C\":%s,\"TC2_C\":%s,\"naped\":%s,\"tryb\":\"%s\",\"config_id\":%u,"
         "\"pin_zasil_V\":%s,\"pin_masa_V\":%s,\"pin_sygnal_V\":%s}",
         control_name(ctrl.state),ctrl.fault?ctrl.fault:"",json_number(p,control_position(&ctrl,&i)),
         json_number(r,control_ratio(&ctrl,&i)),json_number(a,control_current(&ctrl,&i)),json_number(v,i.v[6]),
-        json_number(t1,i.t1),json_number(t2,i.t2),i.hw_armed?"true":"false",i.test_present?"TEST":i.log_present?"LOGGER":"brak",active_cfg.id,
+        json_number(t1,i.t1),json_number(t2,i.t2),run_permission?"true":"false",active_cfg.bank?"TEST":"LOGGER",active_cfg.id,
         json_number(vs,mapped?i.v[cs]:NAN),json_number(vg,mapped?i.v[cg]:NAN),json_number(vf,mapped?i.v[cf]:NAN));
     if(written<0 || (size_t)written>=len) snprintf(out,len,"{\"stan\":\"STATUS_ERROR\"}");
     xSemaphoreGive(control_mutex);
@@ -561,7 +599,7 @@ static bool web_command(const char *cmd,float a,int b) {
     return enqueue(line);
 }
 static void console(void *unused) {
-    (void)unused; char line[160]; puts("EGRLab 6.2-s1: commands are queued; STOP is immediate.");
+    (void)unused; char line[160]; puts("EGRLab 6.3-m1 (M1-R1): commands are queued; STOP is immediate.");
     while(true) {
         if(!fgets(line,sizeof line,stdin)) { vTaskDelay(pdMS_TO_TICKS(20)); continue; }
         line[strcspn(line,"\r\n")]=0;
@@ -570,29 +608,28 @@ static void console(void *unused) {
     }
 }
 void app_main(void) {
-#if CONFIG_EGR_PFAIL_PRESENT
-    /* 6.2-s1 D-2 (F-02): PFAIL_N = L od startu przez >= 100 ms -> tylko USB, P02 R4 bez zasilania (ok. 0,33 V
-     * na GPIO3): tryb stolowy bez zapisu sesji i bez TEST, PFAIL_N ignorowany. H w tym czasie = praca normalna. */
-    board_pfail_init(); bench_mode=true;
-    for(int k=0;k<=20 && bench_mode;k++) { if(board_pfail_level()) bench_mode=false; else vTaskDelay(pdMS_TO_TICKS(5)); }
-#endif
     ESP_ERROR_CHECK(nvs_flash_init()); ESP_ERROR_CHECK(nvs_open("egrlab",NVS_READWRITE,&nvs));
     control_init(&ctrl); profile_t saved; size_t bytes=sizeof saved;
-    if(nvs_get_blob(nvs,"profile5",&saved,&bytes)==ESP_OK && bytes==sizeof saved && profile_valid(&saved)) ctrl.profile=saved;
+    /* M-13: klucz NVS i wersja profilu 7 - kalibracja z 6.1 / 6.2-s1 (inny sprzet) nie przechodzi na M1. */
+    if(nvs_get_blob(nvs,"profile_m1",&saved,&bytes)==ESP_OK && bytes==sizeof saved && profile_valid(&saved)) ctrl.profile=saved;
     ctrl.profile.qualified=ctrl.profile.qualified && EGR_HARDWARE_ACCEPTED;
+    ESP_ERROR_CHECK(board_init()); board_inhibit(true);
+    /* M-11 (D-M1-6): z samego USB karta SD, AD7606B (VDRIVE) i MAX31856 sa bez zasilania 3,3 V. Brak karty nie zatrzymuje
+     * firmware: tryb bez karty (bez plikow, bez TEST, licznik sesji nie rosnie); konsola i podglad dzialaja. */
+    esp_err_t sd=board_sd_mount(); bench_mode=sd!=ESP_OK;
     uint32_t session=0; nvs_get_u32(nvs,"session",&session);
     if(!bench_mode) { session++; ESP_ERROR_CHECK(nvs_set_u32(nvs,"session",session)); ESP_ERROR_CHECK(nvs_commit(nvs)); }
-    ESP_LOGI(TAG,"PSRAM=%u; hardware accepted=%d; %s",(unsigned)esp_psram_get_size(),EGR_HARDWARE_ACCEPTED,
-        bench_mode?"TRYB STOLOWY: PFAIL_N = L (P02 bez zasilania) - bez zapisu sesji i bez TEST":"zasilanie z P02");
-    ESP_ERROR_CHECK(board_init()); board_inhibit(true);
-    if(!bench_mode) ESP_ERROR_CHECK(board_sd_mount());
-    #if CONFIG_EGR_CORE_ONLY
-    puts("CORE: init, MCP, PSRAM and SD mount complete; acquisition disabled. Use bench_core.txt checklist.");
-#if CONFIG_EGR_PFAIL_PRESENT
-    printf("PFAIL_N (GPIO3) = %d, tryb stolowy = %d\n",board_pfail_level(),bench_mode);
-#endif
+    ESP_LOGI(TAG,"PSRAM=%u; hardware accepted=%d; AD7606B config=%s; SD=%s",(unsigned)esp_psram_get_size(),EGR_HARDWARE_ACCEPTED,
+        board_adc_config_ok()?"OK":"BRAK",bench_mode?esp_err_to_name(sd):"OK");
+    if(bench_mode)
+        puts("TRYB BEZ KARTY: SD niezamontowana (tylko USB? peryferia 3,3 V bez zasilania z pakietu) - bez zapisu sesji i bez TEST.");
+    if(!board_adc_config_ok())
+        puts("AD7606B: brak odpowiedzi (tylko USB? brak 3,3 V / 5 V) - dane oznaczone jako niewazne, ponowna proba przy konfiguracji.");
+#if CONFIG_EGR_CORE_ONLY
+    puts("CORE (M1): init, PSRAM and SD mount complete; acquisition disabled.");
+    printf("SENS_FAULT_N=%d BTN=%d\n",!board_sensor_fault(),!board_button());
     FILE *probe=bench_mode?NULL:fopen("/sd/core_probe.tmp","wb");
-    if(probe) { fputs("EGRLab 6.2-s1 CORE SD probe\n",probe); fclose(probe); }
+    if(probe) { fputs("EGRLab 6.3-m1 CORE SD probe\n",probe); fclose(probe); }
     return;
 #endif
     if(!(bench_mode ? storage_init_bench(CONFIG_EGR_SAMPLE_HZ) : storage_init(session,CONFIG_EGR_SAMPLE_HZ))) {
@@ -601,7 +638,7 @@ void app_main(void) {
     control_mutex=xSemaphoreCreateMutex(); pause_ack=xSemaphoreCreateBinary(); resume_sem=xSemaphoreCreateBinary(); first_sample=xSemaphoreCreateBinary();
     requests=xQueueCreate(16,sizeof(request_t)); summaries=xQueueCreate(8,sizeof(summary_t)); zero_summary=xQueueCreate(1,sizeof(summary_t));
     configASSERT(control_mutex && pause_ack && resume_sem && first_sample && requests && summaries && zero_summary);
-    latest.t1=latest.t2=NAN; latest.log_present=true; latest.sensor_fault=true;
+    latest.t1=latest.t2=NAN; latest.sensor_fault=true;
     configASSERT(xTaskCreatePinnedToCore(acquisition,"adc",8192,NULL,23,&adc_task,1)==pdPASS);
     esp_timer_create_args_t ta={.callback=tick,.dispatch_method=ESP_TIMER_TASK,.name="sample"};
     ESP_ERROR_CHECK(esp_timer_create(&ta,&timer)); webui_init(status_json,web_command);
@@ -613,12 +650,5 @@ void app_main(void) {
     configASSERT(xTaskCreatePinnedToCore(console,"console",4096,NULL,3,NULL,0)==pdPASS);
 #if CONFIG_EGR_CAN_PRESENT
     configASSERT(xTaskCreatePinnedToCore(can_rx,"can",6144,NULL,7,NULL,0)==pdPASS);   /* ponizej writera (8): DAQ ma pierwszenstwo */
-#endif
-#if CONFIG_EGR_PFAIL_PRESENT
-    if(!bench_mode) {
-        TaskHandle_t pf=NULL;
-        configASSERT(xTaskCreatePinnedToCore(power_fail,"pfail",4096,NULL,22,&pf,0)==pdPASS);
-        board_pfail_arm(pf);
-    }
 #endif
 }

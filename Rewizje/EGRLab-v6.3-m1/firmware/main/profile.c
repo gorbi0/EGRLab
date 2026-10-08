@@ -37,13 +37,12 @@ bool profile_command(profile_t *p, const char *line) {
     if (sscanf(line,"%23s",cmd)!=1) return false;
     if (!strcmp(cmd,"cal") && sscanf(line,"%*s %d %d %f %f %c",&b,&j,&a,&z,&extra)==4
         && b>=0 && b<2 && j>=0 && j<8) { n.gain[b][j]=a; n.offset[b][j]=z; }
-    else if (!strcmp(cmd,"auxcal") && sscanf(line,"%*s %d %f %f %c",&b,&a,&z,&extra)==3
-        && b>=0 && b<2) { n.aux_gain[b]=a; n.aux_offset[b]=z; }
     else if (!strcmp(cmd,"currentcal") && sscanf(line,"%*s %d %f %c",&b,&a,&extra)==2
         && b>=0 && b<2) n.current_zero[b]=a;
-    else if (!strcmp(cmd,"iscal") && sscanf(line,"%*s %d %f %f %f %c",&b,&a,&z,&t,&extra)==4
-        && b>=0 && b<2) { n.current_adc_gain[b]=a; n.current_adc_offset[b]=z;
-        n.current_volts_per_amp[b]=t; n.current_calibrated[b]=false; n.qualified=false; n.current_window_qualified=false; }
+    /* 6.3-m1 (M-04): bez MCP3201 - "iscal" i "auxcal" (brak AUX) odrzucane, zeby profil S1 nie trafil na M1.
+     * Skala pradu CH6: ivpa <bank> <V/A>; napiecie wyjscia INA240 kalibruje "cal <bank> 5". */
+    else if (!strcmp(cmd,"ivpa") && sscanf(line,"%*s %d %f %c",&b,&t,&extra)==2
+        && b>=0 && b<2) { n.current_volts_per_amp[b]=t; n.current_calibrated[b]=false; n.qualified=false; n.current_window_qualified=false; }
     else if (!strcmp(cmd,"icalok") && sscanf(line,"%*s %d %d %c",&b,&j,&extra)==2
         && b>=0 && b<2 && (j==0 || j==1) && strcmp(n.current_module[b],"UNBOUND")) {
         n.current_calibrated[b]=j; n.qualified=false;
@@ -59,6 +58,5 @@ bool profile_command(profile_t *p, const char *line) {
     else return false;
     if (!profile_valid(&n)) return false;
     if (!strcmp(cmd,"cal")) {n.qualified=false;n.voltage_calibrated[b]=false;}
-    if (!strcmp(cmd,"auxcal")) {n.qualified=false;n.voltage_calibrated[0]=n.voltage_calibrated[1]=false;}
     *p=n; return true;
 }

@@ -31,7 +31,8 @@ static int xSemaphoreTake(int a,int b){(void)a;(void)b;return lock_ok;}
 static void xSemaphoreGive(int a){(void)a;releases++;}
 static int adc_reg_write_verified(int a,int b){(void)a;(void)b;return ++calls==fail_at?1:0;}
 static int adc_reg_write(int a,int b){(void)a;(void)b;exit_calls++;return exit_error;}
-/* 6.2-s1 F-04: po bledzie odczytu konfiguracja zaczyna od pelnego RESET (adc_full_reset: MCP GPA0 + 2100 ms). */
+/* F-04: po bledzie odczytu konfiguracja zaczyna od pelnego RESET (6.3-m1 M-02: adc_full_reset = GPIO10 + 2100 ms).
+ * 6.3-m1 M-11: nieudana konfiguracja (np. AD7606B bez zasilania przy samym USB) tez wymaga pelnego RESET. */
 static bool adc_reset_needed;static int resets,reset_error,calls_at_reset=-1;
 static int adc_full_reset(void){resets++;calls_at_reset=calls;return reset_error;}
 '''
@@ -41,8 +42,9 @@ int main(void){int checks=0;uint8_t req[8]={2,2,1,2,0,1,2,2},out[8];
 memset(out,42,8);lock_ok=0;CHECK(board_adc_ranges(req,out)!=ESP_OK);CHECK(!config_ok);
 for(int j=0;j<8;j++)CHECK(out[j]==RANGE_UNKNOWN);
 lock_ok=1;acquisition_running=true;config_ok=true;CHECK(board_adc_ranges(req,out)!=ESP_OK);CHECK(!config_ok);acquisition_running=false;
-for(int fail=1;fail<=6;fail++){calls=exit_calls=0;fail_at=fail;config_ok=true;CHECK(board_adc_ranges(req,out)!=ESP_OK);CHECK(!config_ok);CHECK(exit_calls==1);for(int j=0;j<8;j++)CHECK(out[j]==RANGE_UNKNOWN);}
-fail_at=-1;calls=0;exit_error=1;CHECK(board_adc_ranges(req,out)!=ESP_OK);CHECK(!config_ok);exit_error=0;
+for(int fail=1;fail<=6;fail++){calls=exit_calls=0;fail_at=fail;config_ok=true;adc_reset_needed=false;CHECK(board_adc_ranges(req,out)!=ESP_OK);CHECK(!config_ok);CHECK(exit_calls==1);CHECK(adc_reset_needed);for(int j=0;j<8;j++)CHECK(out[j]==RANGE_UNKNOWN);}
+fail_at=-1;calls=0;exit_error=1;adc_reset_needed=false;CHECK(board_adc_ranges(req,out)!=ESP_OK);CHECK(!config_ok);CHECK(adc_reset_needed);exit_error=0;
+adc_reset_needed=false;resets=0;
 calls=0;CHECK(board_adc_ranges(req,out)==ESP_OK);CHECK(config_ok);CHECK(!memcmp(req,out,8));CHECK(calls==6);
 CHECK(resets==0);
 adc_reset_needed=true;calls=0;CHECK(board_adc_ranges(req,out)==ESP_OK);CHECK(resets==1);CHECK(calls_at_reset==0);CHECK(!adc_reset_needed);CHECK(config_ok);

@@ -11,13 +11,12 @@ static int checks;
 #define CHECK(cond) do { checks++; if (!(cond)) { \
     printf("FAIL %s:%d  %s\n", __FILE__, __LINE__, #cond); return 1; } } while (0)
 
-/* Zdrowe wejscia: swieze dane, wszystkie blokady zamkniete, TEST wpiety. */
+/* Zdrowe wejscia: swieze dane, zapis i przetwornik sprawne (6.3-m1: bez interlock / ARM / adapterow, M-01). */
 static inputs_t healthy(uint64_t now) {
     inputs_t in = {0};
     in.now = now; in.sample_time = now;
-    in.interlock = true; in.hw_armed = true; in.storage_ok = true;
+    in.storage_ok = true;
     in.tc_ok = true; in.t1 = 40; in.t2 = 60;
-    in.test_present = true; in.log_present = false;
     in.adc_ok = true; in.drive_ok = true;
     in.v[CH_VBAT] = 13.5f;
     in.v[CH_CURRENT] = 2.5f;
@@ -27,6 +26,7 @@ static void set_sensor(inputs_t *in, int s, int g, int f, float ratio) {
     in->v[g] = 0.02f;
     in->v[s] = in->v[g] + 5.0f;
     in->v[f] = in->v[g] + 0.2f + ratio * 4.5f;
+    in->v[CH_SENS5V] = in->v[s];          /* M-07: w TEST zasilanie czujnika z TPS2553, widoczne na CH8 */
 }
 static void ready_profile(control_t *c) {
     control_init(c);
@@ -90,12 +90,12 @@ static int test_ranges_follow_mode(void) {
     CHECK(c.profile.range[CH_CURRENT] == RANGE_5V);
     control_apply_ranges(&c.profile, false);
     for (int i = 0; i < 8; i++) CHECK(c.profile.range[i] == RANGE_10V);
-    /* Zworka AUX w pozycji LO daje najczulszy zakres tylko w software mode. */
+    /* 6.3-m1: CH8 = SENS_5V zawsze +-10 V; dawna zworka AUX nie ma wplywu. */
     c.profile.aux_position = AUX_LO;
     control_apply_ranges(&c.profile, true);
-    CHECK(c.profile.range[CH_AUX] == RANGE_2V5);
+    CHECK(c.profile.range[CH_SENS5V] == RANGE_10V);
     control_apply_ranges(&c.profile, false);
-    CHECK(c.profile.range[CH_AUX] == RANGE_10V);
+    CHECK(c.profile.range[CH_SENS5V] == RANGE_10V);
     return 0;
 }
 /* Migawka musi nieść to, co sprzet POTWIERDZIL, i wspolczynniki wlasciwego
@@ -113,14 +113,15 @@ static int test_build_config(void) {
     CHECK(cfg.id == 7 && cfg.bank == 1);
     CHECK(cfg.gain[0] == 4.10f);
     CHECK(cfg.current_zero == 2.60f);
-    CHECK(cfg.gain[CH_AUX] == 4.06f);
+    CHECK(cfg.gain[CH_SENS5V] == 1.02f);  /* M-03: CH8 z gain[bank][7], nie z aux_gain */
     CHECK(!cfg.current_valid);
+    CHECK(!cfg.local_current);            /* M-04: prad z CH6, nie z MCP3201 */
     /* Zakres masy w migawce to +-10 V, bo tyle sprzet potwierdzil, choc
      * profil zadal +-2,5 V. To jest sedno poprawki F06. */
     CHECK(cfg.range[4] == RANGE_10V);
     c.profile.aux_position = AUX_LO;
     control_build_config(&c, &cfg, 8, applied, true, false);
-    CHECK(cfg.gain[CH_AUX] == 1.02f);
+    CHECK(cfg.gain[CH_SENS5V] == 1.02f);
     CHECK(!cfg.adc_config_ok);
     return 0;
 }
@@ -156,39 +157,77 @@ static int test_current_uses_measured_zero_and_validity(void) {
 static int test_guards(void) {
     control_t base; ready_profile(&base);
     base.state = SAFE;
-    for (int variant = 0; variant < 8; variant++) {
+    for (int variant = 0; variant < 10; variant++) {
         control_t c = base;
         c.state = READY;
         inputs_t in = healthy(1000);
         set_sensor(&in, 2, 4, 3, .5f);
         switch (variant) {
-        case 0: in.interlock = false; break;
-        case 1: in.test_present = false; break;
-        case 2: in.log_present = true; break;
+        case 0: in.drive_ok = false; break;                  /* M-06: ograniczenie pradu zadzialalo */
+        case 1: in.v[CH_SENS5V] = 4.2f; break;               /* M-07: SENS_5V za nisko */
+        case 2: in.v[CH_SENS5V] = 5.6f; in.v[2] = 5.5f; break; /* M-07: za wysoko */
         case 3: in.storage_ok = false; break;
         case 4: in.v[CH_VBAT] = 8.0f; break;
         case 5: in.sample_time = 0; in.now = 100000; break;  /* nieswieze dane */
         case 6: in.adc_ok = false; break;                    /* nowe w v3 */
         case 7: in.sensor_fault = true; break;
+        case 8: in.v[CH_SENS5V] = in.v[2] - .5f; break;      /* zasilanie czujnika nie z TPS2553 */
+        case 9: in.v[CH_SENS5V] = NAN; break;
         }
         control_step(&c, &in);
         CHECK(c.state == FAULT);
         CHECK(c.duty == 0.0f);
         CHECK(!c.sensor_on);
     }
-    /* Brak sprzetowego ARM i blad zapisu kierunku blokuja sam ruch. */
-    const char *expected[2] = {"HARDWARE_NOT_ARMED", "DRIVE_IO"};
-    for (int variant = 0; variant < 2; variant++) {
+    /* M-06: zadzialanie ograniczenia pradu w ruchu konczy sie FAULT OVERCURRENT. */
+    {
         control_t c = base;
         c.state = READY;
         inputs_t in = healthy(1000); set_sensor(&in, 2, 4, 3, .5f);
         control_step(&c, &in);
         CHECK(c.state == READY);
         CHECK(control_command(&c, "goto", .5f, 0, 1000));
-        if (variant == 0) in.hw_armed = false; else in.drive_ok = false;
+        in.drive_ok = false;
         control_step(&c, &in);
-        CHECK(c.state == FAULT && !strcmp(c.fault, expected[variant]));
+        CHECK(c.state == FAULT && !strcmp(c.fault, "OVERCURRENT") && c.duty == 0.0f);
     }
+    /* Bank LOGGER nie sprawdza CH8 (SENS_5V wylaczone, D-M1-5). */
+    {
+        control_t c; control_init(&c);
+        CHECK(control_command(&c, "logger", 0, 0, 0));
+        inputs_t in = healthy(1000); set_sensor(&in, 2, 4, 3, .5f); in.v[CH_SENS5V] = 0;
+        control_step(&c, &in);
+        CHECK(c.state == LOGGER);
+    }
+    return 0;
+}
+/* 6.3-m1: bez detekcji adaptera TEST wymaga linii bez napiecia i wylaczonego SENS_5V. */
+static int test_test_wiring(void) {
+    inputs_t in = healthy(1000);
+    for (int j = 0; j < 8; j++) in.v[j] = 0.01f;
+    CHECK(control_test_wiring(&in) == NULL);
+    inputs_t x = in; x.v[CH_MOTOR_A] = 6.0f;  CHECK(!strcmp(control_test_wiring(&x), "MOTOR_LINES_LIVE"));
+    x = in; x.v[CH_MOTOR_B] = -0.8f;          CHECK(!strcmp(control_test_wiring(&x), "MOTOR_LINES_LIVE"));
+    for (int j = 2; j <= 4; j++) { x = in; x.v[j] = 5.0f; CHECK(!strcmp(control_test_wiring(&x), "SENSOR_LINES_LIVE")); }
+    x = in; x.v[CH_SENS5V] = 5.0f;            CHECK(!strcmp(control_test_wiring(&x), "SENS_5V_ON"));
+    x = in; x.v[3] = NAN;                     CHECK(!strcmp(control_test_wiring(&x), "VOLTAGE_UNKNOWN"));
+    x = in; x.adc_ok = false;                 CHECK(!strcmp(control_test_wiring(&x), "ADC_CONFIG"));
+    x = in; x.now = 100000;                   CHECK(!strcmp(control_test_wiring(&x), "ADC_STALE"));
+    x = in; x.v[CH_VBAT] = NAN; x.v[CH_CURRENT] = NAN;
+    CHECK(control_test_wiring(&x) == NULL);   /* VBAT i prad nie decyduja o okablowaniu */
+    return 0;
+}
+/* M-04: zero pradu tylko przy stabilnym CH6 i liniach silnika bez napiecia. */
+static int test_zero_window(void) {
+    float mean[8] = {0}, mn[8] = {0}, mx[8] = {0};
+    mean[CH_CURRENT] = 2.49f; mn[CH_CURRENT] = 2.485f; mx[CH_CURRENT] = 2.495f;
+    CHECK(control_zero_ok(mean, mn, mx));
+    float m2[8]; memcpy(m2, mx, sizeof m2); m2[CH_MOTOR_A] = 0.9f; CHECK(!control_zero_ok(mean, mn, m2));
+    memcpy(m2, mn, sizeof m2); m2[CH_MOTOR_B] = -0.7f; CHECK(!control_zero_ok(mean, m2, mx));
+    memcpy(m2, mx, sizeof m2); m2[CH_CURRENT] = 2.51f; CHECK(!control_zero_ok(mean, mn, m2));  /* 25 mV p-p */
+    memcpy(m2, mean, sizeof m2); m2[CH_CURRENT] = 0.5f; CHECK(!control_zero_ok(m2, mn, mx));
+    memcpy(m2, mean, sizeof m2); m2[CH_CURRENT] = NAN; CHECK(!control_zero_ok(m2, mn, mx));
+    memcpy(m2, mx, sizeof m2); m2[CH_MOTOR_A] = NAN; CHECK(!control_zero_ok(mean, mn, m2));
     return 0;
 }
 static int test_friction_records_breakaway(void) {
@@ -221,7 +260,7 @@ static int test_hotsoak_campaign(void) {
     CHECK(c.state == GOTO);                                /* kampania wydala rozkaz */
     inputs_t broken = healthy(2000);
     set_sensor(&broken, 2, 4, 3, .5f);
-    broken.interlock = false;
+    broken.drive_ok = false;
     control_step(&c, &broken);
     CHECK(c.state == FAULT && !c.soak.active);
     return 0;
@@ -262,6 +301,8 @@ int main(void) {
         {"ratio i pozycja", test_ratio_and_position},
         {"prad: zero i waznosc", test_current_uses_measured_zero_and_validity},
         {"blokady", test_guards},
+        {"TEST: okablowanie bez napiec", test_test_wiring},
+        {"zero pradu: okno", test_zero_window},
         {"FRICTION zapisuje prad zerwania", test_friction_records_breakaway},
         {"kampania HOT-SOAK", test_hotsoak_campaign},
         {"STOP i wyjscie z FAULT", test_stop_and_fault_recovery},

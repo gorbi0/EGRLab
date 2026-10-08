@@ -5,19 +5,22 @@
 /* Czysta logika: bez ESP-IDF, testowalna na PC (tests/test_control.c). */
 
 #define EGR_PROFILE_MAGIC 0x36524745u /* "EGR6" */
-#define EGR_PROFILE_VERSION 6
+/* 6.3-m1 (M-13): wersja 7 - profil z NVS wersji 6 (6.1 / 6.2-s1, kalibracja innego sprzetu) jest odrzucany. */
+#define EGR_PROFILE_VERSION 7
 
-/* Kanały ADC w v[]: 0 = pin1, 1 = pin3, 2 = pin4, 3 = pin5, 4 = pin6,
- * 5 = prąd aktywnego banku, 6 = VBAT, 7 = AUX.
- * 6.2-s1 F-03: CH7 (indeks 6) = VBAT_SENSE, akumulator auta przez P02 R4; dzielnik 499k/100k na P05 R3
- * i wejscie AD7606B 5 MOhm daja nominalne 6,0898. Nie jest to pakiet 4S (warunek 9-16,5 V w control.c).
+/* Kanały ADC w v[] (6.3-m1, M-03/M-04, Plytki/M1-R1-review/docs/parts.json):
+ * 0 = CH1 P1_EGR, 1 = CH2 P3 (300k/100k), 2..4 = CH3..CH5 P4/P5/P6 (100k szeregowo),
+ * 5 = CH6 prąd silnika (INA240A2 x50, bocznik 5 mOhm, U = VS/2 + 0,25 V/A, 1k/1n) - ten sam tor w LOGGER i TEST,
+ * 6 = CH7 VBAT_CAR (499k/100k), 7 = CH8 SENS_5V (100k szeregowo; wyjście TPS2553).
+ * Wejście AD7606B 5 MOhm: nominalnie 4,06 / 1,02 / 1,0002 / 6,0898 (control_init).
+ * CH7 to akumulator auta, nie pakiet 4S (warunek 9-16,5 V w control.c).
  * Które z 2/3/4 jest zasilaniem, masą i sygnałem — ustala IDENTIFY. */
 #define CH_MOTOR_A 0
 #define CH_MOTOR_B 1
 #define CH_SENSOR_FIRST 2
 #define CH_CURRENT 5
 #define CH_VBAT 6
-#define CH_AUX 7
+#define CH_SENS5V 7
 
 /* Kody zakresu AD7606B; wartość FS w control_full_scale(). */
 #define RANGE_2V5 0
@@ -25,8 +28,8 @@
 #define RANGE_10V 2
 #define RANGE_UNKNOWN 255
 
-/* Pozycja zworki JP_AUX. Kalibracja jest osobna dla każdej pozycji, bo to
- * dwa różne dzielniki, a nie jeden dzielnik z przełączanym zakresem. */
+/* 6.3-m1: M1 nie ma zworki JP_AUX ani kanału AUX (CH8 = SENS_5V). Pola aux_* profilu zostają w strukturze
+ * (zgodność układu), ale firmware ich nie używa. */
 #define AUX_HI 0
 #define AUX_LO 1
 
@@ -90,10 +93,11 @@ typedef struct {
     bool current_window_valid;
     uint16_t config_id;
     uint8_t saturation_mask;
-    bool interlock, hw_armed, storage_ok, sensor_fault, tc_ok, io_stale;
-    bool log_present, test_present;
+    /* 6.3-m1 (M-01): bez interlock / hw_armed / log_present / test_present - M1 nie ma P04 SAFE ani
+     * detekcji adapterów; tryb LOGGER / TESTER to przepięcie przewodów na listwie X1 (D-M1-7). */
+    bool storage_ok, sensor_fault, tc_ok, io_stale;
     bool adc_ok;      /* konfiguracja przetwornika potwierdzona odczytem */
-    bool drive_ok;    /* ostatnie sterowanie kierunkiem potwierdzone sprzętowo */
+    bool drive_ok;    /* M-06: false = zadziałało programowe ograniczenie prądu (zatrzask do następnej konfiguracji) */
 } inputs_t;
 
 /* Kampania HOT-SOAK: powtarzane serie pomiarowe na stygnącym silniku. */
@@ -137,6 +141,12 @@ void control_apply_ranges(profile_t *p, bool software_mode);
 /* Buduje migawkę konfiguracji dla aktywnego banku i pozycji zworki AUX. */
 void control_build_config(const control_t *c, session_config_t *out, uint16_t id,
                           const uint8_t applied_range[8], bool software_mode, bool config_ok);
+
+/* 6.3-m1: warunki wejścia w TEST bez detekcji adaptera - zwraca NULL albo powód odmowy.
+ * Linie silnika i czujnika muszą być bez napięcia (ECU odpięte albo bez zapłonu), SENS_5V wyłączone. */
+const char *control_test_wiring(const inputs_t *in);
+/* 6.3-m1 (M-04): okno zera prądu - CH6 stabilne w 1..4 V, linie silnika bez napięcia (mostek i ECU nie sterują). */
+bool control_zero_ok(const float mean[8], const float min[8], const float max[8]);
 
 bool profile_valid(const profile_t *p);
 bool profile_command(profile_t *p, const char *line);

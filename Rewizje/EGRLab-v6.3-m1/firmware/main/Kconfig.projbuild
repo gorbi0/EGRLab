@@ -1,47 +1,67 @@
 menu "EGRLab"
 config EGR_CORE_ONLY
-    bool "Tylko uruchomienie CORE bez pozostalych PCB"
+    bool "Tylko uruchomienie ESP32 / PSRAM / SD na M1, bez akwizycji"
     default n
 config EGR_TEMP_PRESENT
-    bool "Zamontowany TEMP"
+    bool "Moduly MAX31856 wlutowane (M1: U9/U10 na SPI3, CS GPIO8 / GPIO16)"
     default n
 config EGR_CAN_PRESENT
-    bool "Zamontowany CAN"
-    default n
-config EGR_LOG_CURRENT_PRESENT
-    bool "Zamontowany I-LOGGER MCP3201"
-    default n
-config EGR_TEST_CURRENT_PRESENT
-    bool "Zamontowany DRIVE MCP3201"
+    bool "CAN TCAN1051V (M1: odbior GPIO18, tylko nasluch)"
     default n
 config EGR_ACTIVE_TEST
-    bool "Wlacz TEST po odbiorze sprzetu i kalibracji"
-    depends on EGR_TEMP_PRESENT && EGR_TEST_CURRENT_PRESENT && !EGR_CORE_ONLY
+    bool "Wlacz TEST (IBT-2) po odbiorze sprzetu i kalibracji"
+    depends on EGR_TEMP_PRESENT && !EGR_CORE_ONLY
     default n
 config EGR_SAMPLE_HZ
     int "Zadana czestotliwosc probkowania; kwalifikuj czasy na sprzecie"
     range 1000 10000
     default 2000
     help
-      6.2-s1 F-05 (P05 R2 docs/INTEGRACJA.md): start 2 kS/s przy SPI 1 MHz. Kwalifikacja 10 kS/s wymaga
+      F-05 (bez zmian w 6.3-m1): start 2 kS/s przy SPI 1 MHz. Kwalifikacja 10 kS/s wymaga
       EGR_ADC_SPI_HZ = 4000000 (transfer 128 bit 32 us + BUSY do ok. 9,9 us przy OS x8) i pomiaru opoznien.
       Bufor PSRAM 8 MiB wystarcza na ok. 21 s przy 10 kS/s (105 s przy 2 kS/s).
-config EGR_PFAIL_PRESENT
-    bool "PFAIL_N z P02 R4 na GPIO3 (format S1: P03 R6)"
-    default y
-    help
-      6.2-s1 F-01/F-02: zbocze opadajace po starcie = zanik zasilania (UVLO): naped w dol, zamkniecie
-      plikow w <= 10 ms. PFAIL_N = L od startu przez >= 100 ms = tryb stolowy (tylko USB) bez zapisu
-      sesji i bez TEST. Wylacz tylko dla CORE sprzed S1 (GPIO3 niepodlaczone).
 config EGR_ADC_SOFTWARE_MODE
-    bool "AD7606B w software mode (zworki OS[2:0] = 111, zakres per kanal)"
+    bool "AD7606B w software mode (OS[2:0] = 111 na stale na M1, zakres per kanal)"
     default y
     help
-      Wymaga ukladu AD7606B i zworek OS[2:0] ustawionych na 111. Daje zakres
+      M-02: M1 ma OS = 111 na stale, wewnetrzne odniesienie, +-10 V. Daje zakres
       +-2,5 V na kanale masy czujnika i odczyt jedna ramka 128-bit.
-      Wylacz, jesli masz zwykly AD7606: wtedy wszystkie kanaly pracuja na
-      +-10 V, a odczyt idzie osmioma ramkami 16-bit. Tryb jest wybierany
-      swiadomie przy kompilacji, a nie zgadywany w czasie pracy.
+      Wylacz tylko dla zwyklego AD7606: wtedy wszystkie kanaly pracuja na
+      +-10 V, a odczyt idzie osmioma ramkami 16-bit.
+config EGR_PWM_HZ
+    int "Czestotliwosc PWM mostka IBT-2 (BTS7960: najwyzej 25 kHz)"
+    range 100 25000
+    default 1000
+    help
+      M-05: RPWM GPIO1 / LPWM GPIO21 (LEDC, 10 bit), kierunek = ktory PWM pracuje.
+      1 kHz jak w 6.2-s1; zmiana wymaga ponownej kwalifikacji pomiaru pradu (CH6 probkowany 2 kS/s).
+config EGR_SW_CURRENT_LIMIT
+    bool "Programowe ograniczenie pradu silnika z CH6 (M-06, do potwierdzenia)"
+    default y
+    help
+      M1 nie ma sprzetowego okna OC ani zatrzasku (D-M1-4). Gdy |I| z CH6 przekroczy limit w dwoch
+      kolejnych probkach (1 ms przy 2 kS/s), zadanie akwizycji zdejmuje DRIVE_EN i oba PWM, zapisuje
+      zdarzenie overcurrent, a TEST konczy sie FAULT. W LOGGER zdarzenie tylko informuje (pradem steruje ECU).
+      Wylaczenie zostawia jedynie limit z profilu (current_limit <= 3,5 A, sprawdzany w zadaniu safety).
+config EGR_SW_CURRENT_LIMIT_MA
+    int "Limit pradu [mA]"
+    depends on EGR_SW_CURRENT_LIMIT
+    range 1000 9000
+    default 8000
+    help
+      Tor INA240 z REF1 = VS, REF2 = GND jest liniowy do ok. +-9 A; F1 na M1 ma 7,5 A.
+config EGR_DRIVE_WDT_MS
+    int "Watchdog zadania safety (TWDT, panika) [ms]"
+    range 50 2000
+    default 200
+config EGR_RTC_WDT_MS
+    int "Watchdog RTC (reset systemu) [ms]"
+    range 300 10000
+    default 1000
+config EGR_SD_SYNC_MS
+    int "Okres fsync plikow sesji [ms] (M-10: brak PFAIL_N, tyle danych moze przepasc przy zaniku zasilania)"
+    range 250 2000
+    default 1000
 config EGR_WIFI_UI
     bool "SoftAP z podgladem i przyciskami na telefonie"
     default n

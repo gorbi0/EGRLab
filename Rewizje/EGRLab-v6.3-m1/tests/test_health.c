@@ -5,9 +5,9 @@ static int checks,failures;
 #define CHECK(x) do { checks++; if(!(x)) { failures++; printf("FAIL line %d: %s\n",__LINE__,#x); } } while(0)
 static inputs_t input(void) {
     inputs_t i={0};i.now=i.sample_time=1000000;
-    i.interlock=i.hw_armed=i.storage_ok=i.adc_ok=i.drive_ok=i.test_present=i.tc_ok=true;
+    i.storage_ok=i.adc_ok=i.drive_ok=i.tc_ok=true;   /* 6.3-m1: bez interlock / ARM / adapterow */
     i.v[CH_VBAT]=13.5f;i.v[CH_CURRENT]=2.5f;
-    i.v[2]=5;i.v[3]=2.5f;i.v[4]=0;i.t1=i.t2=25;
+    i.v[2]=5;i.v[3]=2.5f;i.v[4]=0;i.v[CH_SENS5V]=5;i.t1=i.t2=25;
     return i;
 }
 int main(void) {
@@ -27,12 +27,12 @@ int main(void) {
     uint64_t stamps[]={0,899999,1000001}; /* never read, stale, future */
     for(unsigned j=0;j<3;j++) {
         inputs_t i=input();control_guard_io(&i,stamps[j]);
-        CHECK(i.sensor_fault);CHECK(i.log_present);CHECK(!i.test_present);CHECK(i.io_stale);
+        CHECK(i.sensor_fault);CHECK(i.io_stale);
         control_t c;control_init(&c);c.state=READY;c.test_bank=c.sensor_on=true;
         control_step(&c,&i);CHECK(c.state==FAULT);CHECK(!strcmp(c.fault,"INPUTS_STALE"));CHECK(!c.sensor_on);
     }
     inputs_t i=input();control_guard_io(&i,900000);
-    CHECK(!i.sensor_fault && !i.log_present && i.test_present && !i.io_stale);
+    CHECK(!i.sensor_fault && !i.io_stale);
 #endif
     printf("health: %d assertions, %d failed\n",checks,failures);return failures!=0;
 }

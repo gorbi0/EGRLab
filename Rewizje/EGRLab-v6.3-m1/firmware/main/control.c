@@ -26,18 +26,18 @@ void control_init(control_t *c) {
     c->profile.temp_limit = 60; c->profile.opening_sign = 1;
     strcpy(c->profile.daq_module,"UNBOUND");
     c->profile.ch_supply = c->profile.ch_ground = c->profile.ch_feedback = -1;
-    /* Nominalne wzmocnienia torów — punkt wyjścia do kalibracji, nie wynik. */
-    const float nominal[8] = {4.06f, 4.06f, 1.02f, 1.02f, 1.02f, 1, 6.0898f, 4.06f};
+    /* Nominalne wzmocnienia torów M1-R1 (M-03/M-04) z wejściem AD7606B 5 MOhm - punkt wyjścia do kalibracji, nie wynik:
+     * 300k/100k -> 4,06; 100k szeregowo -> 1,02; 1k (CH6) -> 1,0002; 499k/100k -> 6,0898. */
+    const float nominal[8] = {4.06f, 4.06f, 1.02f, 1.02f, 1.02f, 1.0002f, 6.0898f, 1.02f};
     for (int bank = 0; bank < 2; bank++) {
         memcpy(c->profile.gain[bank], nominal, sizeof nominal);
-        c->profile.current_zero[bank] = 2.5f; /* do zmierzenia w etapie 6 */
+        c->profile.current_zero[bank] = 2.5f; /* VS/2 nominalnie; M-04: mierzone rozkazem zero, nie stała */
         c->profile.current_valid[bank] = false;
         c->profile.current_volts_per_amp[bank] = .25f;
         c->profile.current_adc_gain[bank] = 5.0f/4096.0f;
         strcpy(c->profile.current_module[bank], "UNBOUND");
     }
-    /* Zworka AUX startuje w pozycji HI: tak samo jak nominalne wzmocnienie
-     * kanału. v2 miało tu niespójność — zakres LO z wzmocnieniem HI. */
+    /* Pola AUX nieużywane w M1 (CH8 = SENS_5V); wartości tylko dla profile_valid(). */
     c->profile.aux_position = AUX_HI;
     c->profile.aux_gain[AUX_HI] = 4.06f;
     c->profile.aux_gain[AUX_LO] = 1.02f;
@@ -46,8 +46,8 @@ void control_init(control_t *c) {
 void control_apply_ranges(profile_t *p, bool software_mode) {
     for (int ch = 0; ch < 8; ch++) p->range[ch] = RANGE_10V;
     if (!software_mode) return;   /* hardware mode: wszystko na ±10 V, bez wyjątków */
-    p->range[CH_CURRENT] = RANGE_5V;
-    p->range[CH_AUX] = p->aux_position == AUX_LO ? RANGE_2V5 : RANGE_10V;
+    p->range[CH_CURRENT] = RANGE_5V;   /* INA240 0..5 V (VS = 5 V) */
+    p->range[CH_SENS5V] = RANGE_10V;   /* 5 V czujnika z zapasem ponad alarm 5,5 V */
     if (p->ch_ground >= CH_SENSOR_FIRST) {
         /* Masa czujnika na ±2,5 V: 76 µV/LSB zamiast 305 µV — o to chodzi w H2. */
         p->range[p->ch_supply] = RANGE_10V; /* retain headroom above the 5.5 V alarm */
@@ -66,16 +66,13 @@ void control_build_config(const control_t *c, session_config_t *out, uint16_t id
     memcpy(out->range, applied_range, 8);
     memcpy(out->gain, p->gain[bank], sizeof out->gain);
     memcpy(out->offset, p->offset[bank], sizeof out->offset);
-    /* Kanał AUX ma własną parę współczynników na pozycję zworki. */
-    out->gain[CH_AUX] = p->aux_gain[p->aux_position ? AUX_LO : AUX_HI];
-    out->offset[CH_AUX] = p->aux_offset[p->aux_position ? AUX_LO : AUX_HI];
     out->current_zero = p->current_zero[bank];
     out->closed = p->closed; out->open = p->open;
     out->opening_sign = p->opening_sign;
     out->aux_position = p->aux_position;
     out->learned = p->learned;
     out->current_valid = p->current_valid[bank] && p->current_calibrated[bank];
-    out->local_current = true;
+    out->local_current = false;   /* M-04: prąd z CH6 AD7606B, nie z MCP3201 */
     out->current_calibrated = p->current_calibrated[bank];
     out->voltage_calibrated=p->voltage_calibrated[bank];
     memcpy(out->daq_module,p->daq_module,sizeof out->daq_module);
@@ -115,10 +112,31 @@ int control_permutation(const inputs_t *in, int8_t out[3]) {
     if (found >= 0 && out) memcpy(out, perm[found], 3);
     return found;
 }
+/* M-07: w TEST zasilanie czujnika pochodzi z TPS2553 - CH8 w 4,5-5,5 V i zgodne (0,3 V) z pinem uznanym za zasilanie. */
+static bool sens5v_ok(const control_t *c, const inputs_t *in) {
+    float s = in->v[CH_SENS5V];
+    return isfinite(s) && s >= 4.5f && s <= 5.5f && fabsf(in->v[c->profile.ch_supply] - s) <= .3f;
+}
 static bool sensor_valid(const control_t *c, const inputs_t *in) {
     const profile_t *p = &c->profile;
-    return mapped(p) && (!c->test_bank || !in->sensor_fault)
+    return mapped(p) && (!c->test_bank || (!in->sensor_fault && sens5v_ok(c, in)))
         && triple_ok(in, p->ch_supply, p->ch_ground, p->ch_feedback);
+}
+const char *control_test_wiring(const inputs_t *in) {
+    if (!in->adc_ok) return "ADC_CONFIG";
+    if (in->now < in->sample_time || in->now - in->sample_time > 10000) return "ADC_STALE";
+    const int ch[] = {CH_MOTOR_A, CH_MOTOR_B, CH_SENSOR_FIRST, CH_SENSOR_FIRST + 1, CH_SENSOR_FIRST + 2, CH_SENS5V};
+    for (unsigned k = 0; k < sizeof ch / sizeof ch[0]; k++) if (!isfinite(in->v[ch[k]])) return "VOLTAGE_UNKNOWN";
+    if (fabsf(in->v[CH_MOTOR_A]) > .5f || fabsf(in->v[CH_MOTOR_B]) > .5f) return "MOTOR_LINES_LIVE";
+    for (int j = CH_SENSOR_FIRST; j < CH_SENSOR_FIRST + 3; j++) if (fabsf(in->v[j]) > .5f) return "SENSOR_LINES_LIVE";
+    if (fabsf(in->v[CH_SENS5V]) > .5f) return "SENS_5V_ON";
+    return NULL;
+}
+bool control_zero_ok(const float mean[8], const float min[8], const float max[8]) {
+    for (int j = CH_MOTOR_A; j <= CH_MOTOR_B; j++)
+        if (!isfinite(min[j]) || !isfinite(max[j]) || fabsf(min[j]) > .5f || fabsf(max[j]) > .5f) return false;
+    return isfinite(mean[CH_CURRENT]) && isfinite(min[CH_CURRENT]) && isfinite(max[CH_CURRENT])
+        && max[CH_CURRENT] - min[CH_CURRENT] < .02f && mean[CH_CURRENT] > 1 && mean[CH_CURRENT] < 4;
 }
 float control_ratio(const control_t *c, const inputs_t *in) {
     if (!sensor_valid(c, in)) return NAN;
@@ -210,9 +228,7 @@ static void campaign_tick(control_t *c, const inputs_t *in) {
 
 void control_guard_io(inputs_t *in, uint64_t inputs_time) {
     in->io_stale = !inputs_time || in->now < inputs_time || in->now-inputs_time > 100000;
-    if (in->io_stale) {
-        in->sensor_fault=true; in->log_present=true; in->test_present=false;
-    }
+    if (in->io_stale) in->sensor_fault=true;
 }
 void control_step(control_t *c, const inputs_t *in) {
     c->duty = 0;
@@ -242,12 +258,12 @@ void control_step(control_t *c, const inputs_t *in) {
     /* Niepotwierdzona konfiguracja przetwornika = nieznana skala napięć.
      * W v2 dane leciały dalej i wyglądały wiarygodnie. */
     if (!in->adc_ok)       { fail(c, "ADC_CONFIG"); return; }
+    /* 6.3-m1: nasycenie CH1-CH7 (bez CH8 = SENS_5V, sprawdzanego osobno). */
     if (in->saturation_mask & 0x7f) { fail(c, "ADC_SATURATED"); return; }
-    if (!in->interlock)    { fail(c, "INTERLOCK"); return; }
-    if (!in->test_present) { fail(c, "TEST_ADAPTER"); return; }
-    if (in->log_present)   { fail(c, "LOGGER_ADAPTER_PRESENT"); return; }
     if (!in->storage_ok)   { fail(c, "STORAGE"); return; }
-    /* 6.2-s1 F-03: akumulator auta (VBAT_SENSE przez P02 R4), nie pakiet 4S zasilajacy przyrzad. */
+    /* M-06: programowe ograniczenie prądu z CH6 zadziałało w zadaniu akwizycji (mostek już wyłączony). */
+    if (!in->drive_ok)     { fail(c, "OVERCURRENT"); return; }
+    /* F-03 bez zmian: akumulator auta (VBAT_CAR, X1.13), nie pakiet 4S zasilajacy przyrzad i mostek. */
     if (!isfinite(in->v[CH_VBAT]) || in->v[CH_VBAT] < 9 || in->v[CH_VBAT] > 16.5f) {
         fail(c, "SUPPLY"); return;
     }
@@ -263,9 +279,6 @@ void control_step(control_t *c, const inputs_t *in) {
     }
     if (!sensor_valid(c, in)) { fail(c, "SENSOR"); return; }
     if (c->state == READY) { campaign_tick(c, in); return; }
-    if (!in->hw_armed) { fail(c, "HARDWARE_NOT_ARMED"); return; }
-    /* Nieudany zapis kierunku przez I²C nie może zostawić ruchu w toku. */
-    if (!in->drive_ok) { fail(c, "DRIVE_IO"); return; }
     float current = control_current(c, in);
     if (!isfinite(current) || fabsf(current) > c->profile.current_limit) { fail(c, "CURRENT"); return; }
     if (!in->tc_ok || !isfinite(in->t1) || in->t1 > c->profile.temp_limit) { fail(c, "TEMPERATURE"); return; }

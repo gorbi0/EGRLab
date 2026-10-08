@@ -40,7 +40,7 @@ static const char PAGE[] =
 "<button class=stop onclick=\"c('stop')\">STOP</button>"
 "<script>"
 "function c(n,a,b){fetch('/api/cmd?c='+n+'&a='+(a||0)+'&b='+(b||0),{method:'POST'})}"
-"const K=['stan','pozycja','ratio','prad_A','pin_zasil_V','pin_masa_V','pin_sygnal_V','VBAT_V','TC1_C','TC2_C','uzbrojony','adapter'];"
+"const K=['stan','pozycja','ratio','prad_A','pin_zasil_V','pin_masa_V','pin_sygnal_V','VBAT_V','TC1_C','TC2_C','naped','tryb'];"
 "async function u(){try{const r=await(await fetch('/api/status')).json();"
 "document.getElementById('s').textContent=r.stan+(r.fault?' / '+r.fault:'');"
 "document.getElementById('t').innerHTML=K.map(k=>'<tr><td>'+k+'</td><td>'+(r[k]==null?'brak danych':r[k])+'</td></tr>').join('')"

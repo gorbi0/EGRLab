@@ -42,8 +42,8 @@ static void *xRingbufferReceive(int handle,size_t *n,int ticks){
 }
 static void vRingbufferReturnItem(int handle,void *p){(void)handle;(void)p;returned++;}
 static bool write_event(const char *p){(void)p;writes++;return write_ok;}
-/* 6.2-s1: tryb stolowy (sink) w drain_events, zdarzenia miekkie CAN (F-08) i zamykanie po PFAIL_N (closing). */
-static bool sink,closing;static unsigned soft_drops;
+/* Tryb bez karty (sink, 6.3-m1 M-11) w drain_events i zdarzenia miekkie CAN (F-08); bez PFAIL_N (M-10) nie ma closing. */
+static bool sink;static unsigned soft_drops;
 '''
 POST=r'''
 #define CHECK(x) do{checks++;if(!(x)){printf("FAIL %d: %s\n",__LINE__,#x);return 1;}}while(0)
@@ -80,7 +80,6 @@ before=sends;CHECK(storage_event_soft("{\"type\":\"can\"}"));CHECK(sends==before
 send_ok=0;CHECK(!storage_event_soft("{}"));CHECK(soft_drops==1);CHECK(healthy);CHECK(lost_events==2);send_ok=1;
 limit[STORAGE_EVENT_MAX-1]='x';limit[STORAGE_EVENT_MAX]=0;before=sends;
 CHECK(!storage_event_soft("%s",limit));CHECK(sends==before && soft_drops==2 && healthy);
-closing=true;before=sends;CHECK(!storage_event_soft("{}"));CHECK(sends==before && soft_drops==3 && healthy);closing=false;
 printf("Storage contracts: %d assertions OK\n",checks);return 0;}
 '''
 

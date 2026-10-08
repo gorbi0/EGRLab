@@ -30,9 +30,10 @@ static sample_t *ring;
 static volatile uint64_t head, tail;
 static volatile bool healthy;
 static atomic_uint lost_events, soft_drops;
-/* 6.2-s1: pliki ma writer albo (po PFAIL_N) zadanie zamykajace - nigdy oba naraz. */
+/* 6.3-m1 (M-10): bez PFAIL_N nie ma zamykania plikow przy zaniku zasilania; file_lock zostaje jako jedyny
+ * dostep do plikow (writer). */
 static SemaphoreHandle_t file_lock;
-static volatile bool closing, closed, sink;
+static volatile bool sink;
 static portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
 static QueueHandle_t configurations;
 static RingbufHandle_t events;
@@ -47,7 +48,10 @@ static unsigned event_segment;
 #ifndef CONFIG_EGR_CAN_PRESENT
 #define CONFIG_EGR_CAN_PRESENT 0
 #endif
-#if CONFIG_EGR_CAN_PRESENT   /* 6.2-s1 F-08: metadane sesji (P10 R2 docs/INTEGRACJA.md) */
+#ifndef CONFIG_EGR_SD_SYNC_MS
+#define CONFIG_EGR_SD_SYNC_MS 1000
+#endif
+#if CONFIG_EGR_CAN_PRESENT   /* F-08: metadane sesji (P10 R2 docs/INTEGRACJA.md) */
 #define CAN_META "{\"present\":true,\"bitrate\":500000,\"mode\":\"listen_only\",\"time_source\":\"rx_task_esp_timer_us\"," \
                  "\"profile\":\"obd2_m01_pid0c_sf_7e8_7ef\"}"
 #else
@@ -113,16 +117,23 @@ bool storage_init(uint32_t session, uint32_t rate) {
     snprintf(path, sizeof path, "%s/meta.json", directory);
     FILE *meta = fopen(path, "w");
     if (!meta) return false;
-    fprintf(meta, "{\n\"schema\":5,\"firmware\":\"EGRLab-6.2-s1\",\"synthetic\":false,\"utc\":null,\n"
+    /* M-03 / M-04 / M-10: opis kanalow M1-R1 i zachowania przy zaniku zasilania. */
+    fprintf(meta, "{\n\"schema\":5,\"firmware\":\"EGRLab-6.3-m1\",\"synthetic\":false,\"utc\":null,\n"
         "\"identity_source\":\"config events and session manifest\",\"record_bytes\":40,\n"
         "\"sample_rate\":%" PRIu32 ",\"session\":%" PRIu32 ",\"adc_spi_hz\":%d,\n"
-        "\"hardware\":\"S1: P02 R4, P03 R6, P05 R3, P06 R2, P09 R2, P10 R2\",\n"
-        "\"channels\":\"CH7 (indeks 6) = VBAT_SENSE: akumulator auta przez P02 R4, dzielnik 499k/100k na P05 R3; nie pakiet 4S\",\n"
-        "\"power_fail\":{\"input\":\"GPIO3 PFAIL_N (P02 R4 -> P03 R6)\",\"event\":\"power_fail\",\"close_target_ms\":10},\n"
+        "\"hardware\":\"M1-R1 (jedna plytka, IBT-2 poza plytka)\",\n"
+        "\"channels\":[\"CH1 P1_EGR 300k/100k\",\"CH2 P3 300k/100k\",\"CH3 P4 100k\",\"CH4 P5 100k\",\"CH5 P6 100k\","
+        "\"CH6 I_MOT INA240A2 x50 5mOhm VS/2+0.25V/A 1k/1n\",\"CH7 VBAT_CAR 499k/100k (akumulator auta, nie pakiet 4S)\","
+        "\"CH8 SENS_5V 100k (TPS2553)\"],\n"
+        "\"input_impedance_ohm\":5000000,\"filter_pf\":220,\n"
+        "\"current\":{\"channel\":6,\"record_fields\":\"current_raw=65535, current_status=2 (brak MCP3201)\","
+        "\"zero\":\"mierzone rozkazem zero przy wylaczonym mostku i bez pradu ECU\"},\n"
+        "\"power_fail\":{\"input\":null,\"note\":\"M1 bez PFAIL_N: przy zaniku zasilania pliki moga zostac niedomkniete; "
+        "fsync co %d ms, ostatni blok moze byc obciety\"},\n"
         "\"can\":%s,\n"
         "\"note\":\"Kalibracja i zakresy w events.ndjson jako zdarzenia config; "
         "kazdy rekord niesie config_id.\"}\n", rate, session, CONFIG_EGR_ADC_SPI_HZ,
-        CAN_META);
+        CONFIG_EGR_SD_SYNC_MS, CAN_META);
     bool good = !ferror(meta);
     if (fclose(meta) != 0) good = false;
     healthy = good;
@@ -136,7 +147,7 @@ void storage_push(const sample_t *s) {
     portEXIT_CRITICAL(&mux);
 }
 bool storage_event_soft(const char *fmt, ...) {
-    if (!events || closing) { soft_drops++; return false; }
+    if (!events) { soft_drops++; return false; }
     char line[STORAGE_EVENT_MAX];
     va_list args; va_start(args, fmt);
     int n = vsnprintf(line, sizeof line, fmt, args);
@@ -176,28 +187,6 @@ bool storage_config(const session_config_t *c) {
     return storage_ok();
 }
 static bool sync_file(FILE *f) { return fflush(f)==0 && fsync(fileno(f))==0; }
-bool storage_power_fail(uint64_t edge_us, uint64_t stop_us) {
-    if (sink || closed) return true;
-    closing = true;                              /* writer: bez nowych blokow i zdarzen */
-    /* Writer konczy biezacy blok (zwykle kilka ms). Po wylaczeniu napedu obciazenie P02 spada, wiec podtrzymanie
-     * trwa dluzej niz 10 ms z karty P02 R4 dla 6 W; czekamy do 200 ms - po zaniku i tak nic nie tracimy. */
-    if (!file_lock || xSemaphoreTake(file_lock, pdMS_TO_TICKS(200)) != pdTRUE) { unhealthy(); return false; }
-    uint32_t pending = (uint32_t)(head - tail);
-    bool ok = samples && sync_file(samples);
-    if (samples && fclose(samples) != 0) ok = false;
-    samples = NULL;
-    if (eventfile) {
-        if (fprintf(eventfile, "{\"type\":\"power_fail\",\"t_us\":%" PRIu64 ",\"stop_us\":%" PRIu64
-                    ",\"source\":\"PFAIL_N\",\"reason\":\"UVLO\",\"samples_not_written\":%" PRIu32 "}\n",
-                    edge_us, stop_us, pending) < 0) ok = false;
-        if (!sync_file(eventfile)) ok = false;
-        if (fclose(eventfile) != 0) ok = false;
-        eventfile = NULL;
-    } else ok = false;
-    closed = true; unhealthy();
-    xSemaphoreGive(file_lock);
-    return ok;
-}
 static bool rotate(void) {
     if(!sync_file(samples) || fclose(samples)!=0) return false;
     char path[160]; snprintf(path,sizeof path,"%s/samples_%03" PRIu32 ".egr",directory,++segment);
@@ -234,17 +223,15 @@ static bool drain_events(unsigned limit) {
 void storage_mark(uint64_t t_us) {
     storage_event("{\"type\":\"mark\",\"t_us\":%" PRIu64 "}", t_us);
 }
-/* 6.2-s1: kazda operacja na plikach pod file_lock; po PFAIL_N (closing / closed) writer juz ich nie dotyka.
- * W trybie stolowym (sink) kolejki sa oprozniane bez zapisu. Zdarzenia: do 64 na obieg (ramki CAN, F-08). */
+/* Kazda operacja na plikach pod file_lock. W trybie bez karty (sink, M-11) kolejki sa oprozniane bez zapisu.
+ * Zdarzenia: do 64 na obieg (ramki CAN, F-08). M-10: fsync co CONFIG_EGR_SD_SYNC_MS (bylo 2 s). */
 static void writer_stop(void) { xSemaphoreGive(file_lock); while (true) vTaskDelay(portMAX_DELAY); }
 void storage_writer(void *arg) {
     (void)arg;
     static sample_t batch[BLOCK_COUNT];
     static char line[STORAGE_EVENT_MAX];
     while (true) {
-        if (closing) { while (true) vTaskDelay(portMAX_DELAY); }
         xSemaphoreTake(file_lock, portMAX_DELAY);
-        if (closing || closed) writer_stop();
         if(xQueueReceive(configurations,line,0)==pdTRUE) {
             config_written=sink || (write_event(line) && sync_file(eventfile));
             if(!config_written) unhealthy();
@@ -275,7 +262,7 @@ void storage_writer(void *arg) {
         {
             static uint64_t last_flush;
             uint64_t now = esp_timer_get_time();
-            if (!sink && now - last_flush > 2000000) {
+            if (!sink && now - last_flush > (uint64_t)CONFIG_EGR_SD_SYNC_MS * 1000) {
                 last_flush = now;
                 if (!sync_file(samples) || !sync_file(eventfile)) unhealthy();
             }

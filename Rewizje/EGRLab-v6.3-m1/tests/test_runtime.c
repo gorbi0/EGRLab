@@ -17,15 +17,18 @@ int main(void) {
     CHECK(!profile_command(&c.profile,"metric 1 garbage"));
     CHECK(profile_command(&c.profile,"cal 1 4 1.012345 0.0234567"));
     CHECK(profile_command(&c.profile,"currentcal 1 2.54321"));
-    CHECK(profile_command(&c.profile,"auxcal 1 1.01995 -0.003"));
+    CHECK(!profile_command(&c.profile,"auxcal 1 1.01995 -0.003"));   /* 6.3-m1: M1 bez kanalu AUX */
     CHECK(profile_command(&c.profile,"limits .1 .5 60"));
     CHECK(profile_command(&c.profile,"metric 1"));
     CHECK(!profile_command(&c.profile,"icalok 0 1"));
     CHECK(!profile_command(&c.profile,"vcalok 0 1"));
     strcpy(c.profile.current_module[0],"IL_001");strcpy(c.profile.daq_module,"DAQ_001");
     CHECK(profile_command(&c.profile,"icalok 0 1"));CHECK(c.profile.current_calibrated[0]);
-    CHECK(profile_command(&c.profile,"iscal 0 .001220703125 0 .25"));
-    CHECK(!c.profile.current_calibrated[0] && !c.profile.current_window_qualified);
+    CHECK(!profile_command(&c.profile,"iscal 0 .001220703125 0 .25"));  /* 6.3-m1: bez MCP3201 */
+    CHECK(c.profile.current_calibrated[0]);
+    CHECK(!profile_command(&c.profile,"ivpa 0 0"));CHECK(!profile_command(&c.profile,"ivpa 2 .25"));
+    CHECK(profile_command(&c.profile,"ivpa 0 .2501"));
+    CHECK(!c.profile.current_calibrated[0] && !c.profile.current_window_qualified && c.profile.current_volts_per_amp[0]==.2501f);
     CHECK(profile_command(&c.profile,"vcalok 0 1"));CHECK(c.profile.voltage_calibrated[0]);
     CHECK(profile_command(&c.profile,"cal 0 0 1 0"));CHECK(!c.profile.voltage_calibrated[0]);
     c.profile.ch_supply=3;c.profile.ch_ground=4;c.profile.ch_feedback=2;
@@ -64,5 +67,21 @@ int main(void) {
     trigger_configure(&cfg,2000);trigger_sample(v,1);v[2]=3.5f;
     CHECK(!(trigger_sample(v,501)&TRIG_JUMP));CHECK(trigger_sample(v,1001)&TRIG_JUMP);
     CHECK(!(trigger_sample(v,1501)&TRIG_JUMP));
+    /* 6.3-m1 M-06: programowe ograniczenie pradu z CH6 (zakres +-5 V, gain 1,0002, zero 2,5 V, 0,25 V/A). */
+    #define RAW_FOR(amps) ((int16_t)lroundf((2.5f+.25f*(amps))/1.0002f/5.0f*32768.0f))
+    CHECK(fabsf(overcurrent_amps(RAW_FOR(0),5,1.0002f,0,2.5f,.25f))<.01f);
+    CHECK(fabsf(overcurrent_amps(RAW_FOR(3),5,1.0002f,0,2.5f,.25f)-3)<.01f);
+    CHECK(fabsf(overcurrent_amps(RAW_FOR(-8.5f),5,1.0002f,0,2.5f,.25f)+8.5f)<.01f);
+    CHECK(isinf(overcurrent_amps(32767,5,1.0002f,0,2.5f,.25f)));     /* nasycenie = poza zakresem */
+    CHECK(isnan(overcurrent_amps(RAW_FOR(0),NAN,1.0002f,0,2.5f,.25f))); /* RANGE_UNKNOWN */
+    CHECK(isnan(overcurrent_amps(RAW_FOR(0),5,1.0002f,0,2.5f,0)));
+    overcurrent_t oc={0};
+    CHECK(!overcurrent_sample(&oc,overcurrent_amps(RAW_FOR(8.5f),5,1.0002f,0,2.5f,.25f),8,2));
+    CHECK(overcurrent_sample(&oc,overcurrent_amps(RAW_FOR(8.5f),5,1.0002f,0,2.5f,.25f),8,2));
+    CHECK(overcurrent_sample(&oc,8.1f,8,2));                          /* zatrzask trwa, dopoki prad nie spadnie */
+    CHECK(!overcurrent_sample(&oc,7.9f,8,2) && oc.over==0);
+    CHECK(!overcurrent_sample(&oc,-8.5f,8,2));CHECK(!overcurrent_sample(&oc,1,8,2)); /* pojedyncza probka nie wylacza */
+    CHECK(!overcurrent_sample(&oc,NAN,8,2));CHECK(overcurrent_sample(&oc,INFINITY,8,2)); /* nieznane = przekroczenie */
+    CHECK(!overcurrent_sample(&oc,8,8,2));                            /* rowno limitowi - jeszcze nie */
     printf("runtime: %d assertions OK\n",assertions);return 0;
 }

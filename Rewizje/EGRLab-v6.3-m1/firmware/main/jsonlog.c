@@ -4,9 +4,9 @@
 #include <string.h>
 #include <math.h>
 #include <inttypes.h>
-/* 6.2-s1 F-06 (P06 R1 docs/FIRMWARE.md, P06 R2 po rewizji S1): tor pradu banku LOGGER w metadanych kazdej konfiguracji. */
-#define CHAIN_LOGGER "P06R2 WSK2512 5mOhm INA240A2 G50 div1:2 tau1.20ms MCP3201"
-#define CHAIN_TEST "P07 pre-S1"
+/* 6.3-m1 M-04 (D-M1-7): jeden tor pradu dla LOGGER i TEST - bocznik RSH1 5 mOhm, INA240A2 (x50), REF1 = VS,
+ * REF2 = GND (wyjscie VS/2 + 0,25 V/A), RC 1 k / 1 n, kanal CH6 AD7606B probkowany razem z napieciami. */
+#define CHAIN_M1 "M1R1 RSH1 5mOhm INA240A2 G50 REF=VS/2 RC1k/1n AD7606B-CH6"
 void json_init(json_buf_t *b,char *p,size_t cap) { *b=(json_buf_t){p,cap,0,cap>0}; if(cap) *p=0; }
 void json_add(json_buf_t *b,const char *fmt,...) {
     if(!b->ok) return;
@@ -30,17 +30,18 @@ bool json_config(char *out,size_t cap,const session_config_t *c,uint64_t t) {
         json_add(&b,"]");
     }
     json_add(&b,",\"daq_module\":\"%s\",\"voltage_calibrated\":%s",c->daq_module,c->voltage_calibrated?"true":"false");
-    json_add(&b,",\"local_current\":true,\"current_adc_gain\":%.9g,\"current_adc_offset\":%.9g,"
+    /* local_current = false: egrlog liczy prad z raw[5] przez gain/offset CH6 (nie z pol MCP3201 rekordu). */
+    json_add(&b,",\"local_current\":%s,"
         "\"current_calibrated\":%s,\"current_module\":\"%s\",\"valve_id\":\"%s\",\"adapter_id\":\"%s\","
-        "\"vehicle_id\":\"%s\",\"session_note\":\"%s\",\"current_time\":\"spi_interval_us\",\"synchronous\":false",
-        c->current_adc_gain,c->current_adc_offset,c->current_calibrated?"true":"false",c->current_module,c->valve,c->adapter,c->vehicle_id,c->session_note);
+        "\"vehicle_id\":\"%s\",\"session_note\":\"%s\",\"current_time\":\"ad7606b_simultaneous\",\"synchronous\":true",
+        c->local_current?"true":"false",c->current_calibrated?"true":"false",c->current_module,c->valve,c->adapter,c->vehicle_id,c->session_note);
     char z[32],closed[32],open[32];
     json_add(&b,",\"current_zero\":%s,\"current_volts_per_amp\":%.9g,\"current_valid\":%s,"
-        "\"closed\":%s,\"open\":%s,\"opening_sign\":%d,\"learned\":%s,\"aux_position\":\"%s\","
+        "\"closed\":%s,\"open\":%s,\"opening_sign\":%d,\"learned\":%s,\"ch8\":\"SENS_5V\","
         "\"adc_software_mode\":%s,\"adc_config_ok\":%s,\"current_window_qualified\":%s,"
-        "\"current_metric\":\"sample_mean_20ms\",\"current_chain\":\"%s\",\"firmware\":\"6.2-s1\"}",json_number(z,c->current_zero),c->current_volts_per_amp,c->current_valid?"true":"false",
+        "\"current_metric\":\"sample_mean_20ms\",\"current_chain\":\"%s\",\"hardware\":\"M1-R1\",\"firmware\":\"6.3-m1\"}",json_number(z,c->current_zero),c->current_volts_per_amp,c->current_valid?"true":"false",
         json_number(closed,c->closed),json_number(open,c->open),c->opening_sign,c->learned?"true":"false",
-        c->aux_position?"LO":"HI",c->adc_software_mode?"true":"false",c->adc_config_ok?"true":"false",
-        c->current_window_qualified?"true":"false",c->bank==0?CHAIN_LOGGER:CHAIN_TEST);
+        c->adc_software_mode?"true":"false",c->adc_config_ok?"true":"false",
+        c->current_window_qualified?"true":"false",CHAIN_M1);
     return b.ok;
 }

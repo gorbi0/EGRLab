@@ -31,7 +31,7 @@ enum {
 #define STORAGE_EVENT_MAX JSON_EVENT_MAX
 
 bool storage_init(uint32_t session, uint32_t rate);
-/* 6.2-s1 (D-2): tryb stolowy (tylko USB, P02 bez zasilania) - bez plikow na karcie; kolejki dzialaja,
+/* 6.3-m1 (M-11): tryb bez karty (SD niezamontowana, np. tylko USB) - bez plikow; kolejki dzialaja,
  * konfiguracje potwierdzane od razu, zapis zdrowy, zeby kalibracja i podglad na stole dzialaly. */
 bool storage_init_bench(uint32_t rate);
 bool storage_bench(void);
@@ -46,9 +46,6 @@ bool storage_event(const char *fmt, ...);
  * zwraca false i liczy jawna strate, a probki EGR maja pierwszenstwo. */
 bool storage_event_soft(const char *fmt, ...);
 uint32_t storage_soft_drops(void);
-/* 6.2-s1 (F-01, D-3): po PFAIL_N - ostatnia linia power_fail i zamkniecie obu plikow (cel <= 10 ms);
- * probki jeszcze w buforze nie sa juz zapisywane (ich liczba w linii). Potem zapis jest zamkniety na stale. */
-bool storage_power_fail(uint64_t edge_us, uint64_t stop_us);
 bool storage_config(const session_config_t *cfg);
 void storage_mark(uint64_t t_us);
 bool storage_ok(void);
