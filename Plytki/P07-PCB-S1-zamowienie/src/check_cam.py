@@ -55,6 +55,8 @@ class Gerber:
                         k, _, v = blk[3:].partition(','); self.file_attrs[k] = v
                     elif blk.startswith('TO.'):
                         k, _, v = blk[3:].partition(','); attrs[k] = tuple(v.split(','))
+                    elif blk.startswith('TA.AperFunction'):   # P07 S1 (7.10): pads on inner layers carry no .P; the aperture function tells pad from fill
+                        attrs['AF'] = tuple(blk.partition(',')[2].split(','))
                     elif blk.startswith('TD'):
                         if blk == 'TD': attrs.clear()
                         else: attrs.pop(blk[3:], None)
@@ -235,9 +237,15 @@ for side, cu, mk in (('góra', 'F_Cu', 'F_Mask'), ('dół', 'B_Cu', 'B_Mask')) +
             cx, cy = bbox_center(contours); net = a.get('N', ('',))[0]
             found[(a['P'][0], a['P'][1], round(cx, 4), round(cy, 4), '' if net == 'N/C' else net)] += 1
     wanted = Counter((p['ref'], p['pin'], round(p['x'], 4), round(p['y'], 4), p['net']) for p in D['pads'] if layer_name in p['copper'] and p['attr'] != 3)
+    if mk is None:   # 7.10: inner layers: KiCad writes no .P / .N on the pads there -> compare the pad positions (ComponentPad flashes / regions)
+        wanted = Counter((round(p['x'], 3), round(p['y'], 3)) for p in D['pads'] if layer_name in p['copper'] and p['attr'] != 3)
+        # the aperture function belongs to the aperture definition, not to the flash: take the flashes standing on a PCB pad position
+        # (vias elsewhere) and the pad regions (square pin 1 pads are drawn as regions)
+        found = Counter(k for k in ((round(x, 3), round(y, 3)) for x, y, code, a, pol in g.flashes) if k in wanted)
+        found += Counter((round(bbox_center(c)[0], 3), round(bbox_center(c)[1], 3)) for c, a, pol in g.regions if a.get('AF', ('',))[0] == 'ComponentPad')
     check(f'Miedź {side}: położenie i sieć każdego pola (bez otworów NPTH) zgodne z PCB', found == wanted,
           {'pola': sum(found.values()), 'pcb': sum(wanted.values()), 'brak': list((wanted - found).elements())[:8], 'nadmiar': list((found - wanted).elements())[:8]})
-    zone_regions = [r for r in g.regions if 'P' not in r[1] and r[2] == 'D']
+    zone_regions = [r for r in g.regions if 'P' not in r[1] and r[2] == 'D' and r[1].get('AF', ('',))[0] != 'ComponentPad']   # 7.10: pad regions are not fills
     check(f'Miedź {side}: liczba regionów wylewek = liczba konturów wypełnienia w PCB',
           len(zone_regions) == D['zone_outlines'][layer_name], {'gerber': len(zone_regions), 'pcb': D['zone_outlines'][layer_name]})
     if mk is None:   # inner layers: no mask

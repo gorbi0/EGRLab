@@ -1,0 +1,37 @@
+PASS Fresh native DRC: 0 violations / 0 unconnected / 0 schematic parity (all severities; lib_footprint_mismatch only for parts whose silk silkscreen.py trimmed)
+PASS 132 on-board parts + 8 mounting holes, nothing else
+PASS Every value, footprint ID and pad net equals the exported schematic netlist
+PASS S1-2 section 4: parts on the bottom only SMD <= 1.5 mm (heights.py, BOM thickness note for the capacitors), no SOIC, >= 1 mm from THT pads
+PASS 4 copper layers, 1.6 mm board (user decision 6.10: 4 layers instead of the S1 default 2)
+PASS Stack JLC04161H-7628 (6.10): outer copper 35 um, inner 15.2 um (0.5 oz), prepreg 7628 0.2104 / core 1.065 / prepreg 0.2104, copper + dielectric 1.55-1.65 mm
+PASS Outline class 2/3: 106.5 x 100.0 mm, 4 corner arcs R 1.0 mm (format-s1.json)
+PASS M3 holes: 8 NPTH 3.2 mm exactly at the S1 positions (x_w_slocie + 53.5 k, y 14 / 86)
+PASS Standoff zones D7: no courtyard and no copper (pads, tracks, vias, pours) within 3.5 mm of a hole centre; rule areas on both layers
+PASS Rules as P02 R3 / R4 (clearance >= 0.25, PWR 0.25 / 0.4 mm for 5V_SYS, 5V_MOD, 5VA_P07, 3V3A_P07, 3V3_IO, track >= 0.20, edge 0.5), via ring >= 0.15 mm (7.10, 4 layers) (S1 section 3); no custom rule file, no DRC exclusions
+PASS Every track >= 0.20 mm (S1 section 3) and every track of 5V_SYS, 5V_MOD, 5VA_P07, 3V3A_P07, 3V3_IO >= 0.4 mm (class PWR)
+PASS Every PTH pad has an annular ring >= 0.25 mm and every via >= 0.15 mm (7.10: vias 0.6 / 0.3 on 4 layers; measured on the copper)
+PASS J_BP (edge A): J_BP1 / J_BP2 IDC 2x8 angled in slots S2 / S3, body front at y = 0, pin centres x = 26.5 / 80.0, pin 1 at the smaller x, pinout = docs/J_BP.csv (P12 contract)
+PASS Service header J_SV2 (edge B, S1 section 6; one strip, simplification 6.10): <= 13 pins in x 10..43 of the slot, pin 1 at the larger x, pins out ~6 mm, GND on both ends, one series resistor per pin as docs/SERWIS.csv and of its S1 class (1K rails / logic, 10K analog node) <= 10 mm from its node, one silk label per pin with the name of its node (LABEL in silkscreen.py), GND at both ends
+PASS Reserved strip of edge A (S1 §5: y 0-10 along J_BP1 / J_BP2, x 10-43 / 63.5-96.5): no other part on either side
+PASS Every part <= 16.5 mm above the board (level 5, S1 section 4; src/heights.py; K1 15.7 mm)
+PASS Force pours VMOTOR / MOD_BP / PGND / MOD_MP / T_EGR_P1 / T_EGR_P3: one zone per net on F.Cu and on B.Cu, priority above GND; relay contact pins (both of each pair), RSH1 force pads, D1 / C1 / R4 solid inside the fill; J1-J4 wire pads on >= 4 spokes >= 2 mm on every layer
+PASS Force path >= 4 mm wide on both layers (fill shrunk by 2 mm stays one piece): J1.1-K1 COM (VMOTOR), J2.1-K1 NO (MOD_BP), J2.2-J1.2 (PGND), J3.1-RSH1.1 (MOD_MP), J4.1-RSH1.4 (T_EGR_P1), J3.2-J4.2 (T_EGR_P3); the 4 mm corridor reaches <= 3.5 mm from the relay pin / shunt force pad centre (the shunt pad itself is 2.03 mm wide), <= 6.0 mm from a wire pad centre (spokes, 7.10) and <= 4.6 mm from the shunt on B.Cu (rule area); exceptions named in board.FORCE_PATH_ACCEPT
+PASS Force pours stitched: >= 8 vias per net (plus the PTH pads); no via in or within 0.3 mm of an RSH1 pad
+PASS Nothing under the shunt: no copper of any net on B.Cu in the RSH1 courtyard (tracks, vias, pours) and on F.Cu only the RSH1 nets (MOD_MP, T_EGR_P1, K_PLUS, K_MINUS)
+PASS Kelvin pair from the sense pads (README): K_PLUS RSH1.2 -> R6 <= 12 mm, K_MINUS RSH1.3 -> R7 <= 8 mm, R6 / R7 -> U1.8 / U1.1 <= 6 mm, F.Cu only, no via, no pour on these nets; the two lines run as a pair (every point of K_MINUS / INA_MINUS <= 5 mm from K_PLUS / INA_PLUS)
+PASS No track or via of another net in the box spanned by the Kelvin pair (shunt to U1, both layers; pours allowed)
+PASS Measuring loop short: J3.1 -> RSH1.1 pad centres <= 14 mm, RSH1.4 -> J4.1 <= 20 mm (T_EGR_P1 band, 4 mm check above); U1 (INA240) <= 20 mm from the shunt sense pads (README)
+PASS Wire tails (user decisions 6.10 evening / 7.10): J1, J2, J4 at the right edge x = 106.5 (pad rows in one column <= 22 mm from the edge, wires out towards +x), J3 at edge B y = 100.0 (<= 22 mm, wires out towards +y); anchor holes 1-9 mm from their edge and outside the D7 zones of the M3 holes, with their 3 mm rule areas and no track in them, no part on the cable between the pads and the edge; right column PGND, VMOTOR, MOD_BP, PGND, T_EGR_P1, T_EGR_P3; J3 MOD_MP, T_EGR_P3 from the left
+PASS Ground separation (README): GND and PGND not joined on P07 (no part on both; GND fill keeps >= 0.3 mm from the PGND fill on all four layers; PGND at most one piece per layer; no 10 A copper on the 0.5 oz inner layers); analog ICs U2-U7 >= 3 mm from every force pour; the 5 V KPWR coil pins (GND domain) outside the power pours
+PASS Decoupling at the pins: 100 nF pad <= 6 mm from the supply pin of every IC, C5 4.7 uF <= 5 mm from U2.2 (MCP1525 data sheet), LDO in / out capacitors <= 6 mm, C9 10 uF <= 8 mm from the KPWR coil (decision 5.10), C16 at R50, C13 at J5.7, C21 at J_BP2.14; exceptions named in board.DEC_ACCEPT
+PASS GND pours on F.Cu, B.Cu and the In1.Cu plane (In1 GND >= 60 % of the board, the rest is the separate PGND area under the power block); island removal always
+PASS In1.Cu GND plane continuous under the logic, the analog chain and the Kelvin pair: every IC courtyard and the Kelvin corridor R6 / R7 -> U1 >= 80 % covered by ONE piece of In1 GND (holes only round vias / THT pins); no track on In1 (plane layer)
+PASS In2.Cu supply zones (6.10): 3V3A_P07, 5VA_P07 and 3V3_IO filled (> 100 mm2 each) round the In2 signals; under the power block (In1 PGND area) In2 carries logic tracks only (7.10, user decision): no analog / Kelvin net (board.ANALOG_NETS) and no supply zone fill there
+PASS Decoupling return through GND copper: capacitor GND pad -> GND pin of its IC <= 1.3 x straight + 3 mm (both layers, gndpath.py; P06 R2 review F2)
+PASS Every visible reference outside the courtyards of other parts
+PASS Every visible reference nearer its own part than any other (text centre to courtyard; review 1.10)
+PASS Net marks of the tails J3 / J4 (ECU / EGR) and J5 (5VA / SW / GND) on the silkscreen next to their pads (text centre <= pad edge + 3 mm; S1 §9)
+PASS Silkscreen legible: every visible text on F.SilkS / B.SilkS >= 1.0 mm high with a >= 0.15 mm line (JLCPCB legend minimum; review 2.10 F1: service labels, edge markers, pin marks and six references were 0.8-0.9 / 0.12 mm)
+PASS Silkscreen: board name "P07 S1 S1-2/3 S2-S3", edge markers A and B
+35/35 PCB checks passed
+

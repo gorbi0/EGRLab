@@ -23,7 +23,8 @@ npth = [h for h in D['holes'] if not h['plated']]
 vias = sum(1 for h in D['holes'] if h['ref'] == 'VIA')
 dmin = min(h['diameter'] for h in D['holes']); dmax = max(h['diameter'] for h in D['holes'])
 zip_name = f'DO-ZAMOWIENIA_{N}-PCB-{REV}.zip'
-layers = {'F.Cu': 'miedź górna (.gtl)', 'In1.Cu': 'miedź wewnętrzna 1 (.g2)', 'In2.Cu': 'miedź wewnętrzna 2 (.g3)', 'B.Cu': 'miedź dolna (.gbl)', 'F.Mask': 'maska górna (.gts)', 'B.Mask': 'maska dolna (.gbs)',
+_ext = {k: next((q.suffix for q in (R / 'gerber').glob(f'*-{k.replace(".", "_")}.*')), '?') for k in ('In1.Cu', 'In2.Cu')}   # 7.10: the extension KiCad wrote (.g1 / .g2)
+layers = {'F.Cu': 'miedź górna (.gtl)', 'In1.Cu': f'miedź wewnętrzna 1 ({_ext["In1.Cu"]})', 'In2.Cu': f'miedź wewnętrzna 2 ({_ext["In2.Cu"]})', 'B.Cu': 'miedź dolna (.gbl)', 'F.Mask': 'maska górna (.gts)', 'B.Mask': 'maska dolna (.gbs)',
           'F.SilkS': 'opis górny (.gto)', 'B.SilkS': 'opis dolny (.gbo)', 'Edge.Cuts': 'obrys (.gm1)'}
 n_neg = sum(1 for x in neg if x['plik'])
 silk_top_only = 'B.SilkS' not in CFG['layers']
@@ -93,7 +94,7 @@ spec = f"""EGRLab {N} — płytka prototypowa, wyłącznie PCB (bez montażu i s
 Plik: {zip_name} (suma SHA-256 w pliku .zip.sha256)
 
 Laminat: FR4, {NCU} warstwy, grubość {'1,5 mm (projekt nominalnie 1,6 mm — 1,5 mm jest akceptowalne)' if FAB == 'Satland' else '1,6 mm (w Satlandzie 1,5 mm jest akceptowalne)'}
-{('Stos: ' + CFG['stackup'] + chr(10) + 'Kolejność warstw: L1 F_Cu (.gtl, góra), L2 In1_Cu (.g2), L3 In2_Cu (.g3), L4 B_Cu (.gbl, dół).' + chr(10)) if NCU == 4 else ''}Miedź: {CU} µm na warstwach zewnętrznych{(', ' + str(CFG['inner_copper_um']).replace('.', ',') + ' µm (0,5 oz) na wewnętrznych') if NCU == 4 else ''}{' (zmiana z 70 µm 28.09.2026; pliki CAM bez zmian)' if CFG.get('copper_note') else ''}
+{('Stos: ' + CFG['stackup'] + chr(10) + f'Kolejność warstw: L1 F_Cu (.gtl, góra), L2 In1_Cu ({_ext["In1.Cu"]}), L3 In2_Cu ({_ext["In2.Cu"]}), L4 B_Cu (.gbl, dół).' + chr(10)) if NCU == 4 else ''}Miedź: {CU} µm na warstwach zewnętrznych{(', ' + str(CFG['inner_copper_um']).replace('.', ',') + ' µm (0,5 oz) na wewnętrznych') if NCU == 4 else ''}{' (zmiana z 70 µm 28.09.2026; pliki CAM bez zmian)' if CFG.get('copper_note') else ''}
 Wymiar: {dec(W)} × {dec(H)} mm, prostokąt{rc_spec}. Obrys po osi linii w pliku .gm1; niektóre przeglądarki
   pokazują {dec(W + 0.05)} × {dec(H + 0.05)} mm, doliczając grubość linii 0,05 mm. Nie skalować.
 Wykończenie: HAL (jeśli możliwe bezołowiowy)

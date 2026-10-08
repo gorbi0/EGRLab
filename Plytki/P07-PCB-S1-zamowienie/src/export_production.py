@@ -99,11 +99,12 @@ def mm(v):
     return round(pcb.ToMM(v), 6)
 
 
+b.BuildConnectivity()   # 7.10: PAD.FlashLayer() needs the connectivity (unconnected pads on inner layers are not plotted)
 pads, holes = [], []
 for fp in b.GetFootprints():
     for p in fp.Pads():
         pos = p.GetPosition(); d = p.GetDrillSize()
-        on = [l for l, i in CU if p.IsOnLayer(i)]
+        on = [l for l, i in CU if p.IsOnLayer(i) and (i in (pcb.F_Cu, pcb.B_Cu) or p.FlashLayer(i))]   # 7.10: inner layers only where KiCad flashes the pad
         mask = [l for l, i in (('F.Mask', pcb.F_Mask), ('B.Mask', pcb.B_Mask)) if p.IsOnLayer(i)]
         pads.append({'ref': fp.GetReference(), 'pin': p.GetNumber(), 'x': mm(pos.x), 'y': -mm(pos.y),
                      'attr': int(p.GetAttribute()), 'net': p.GetNetname(), 'copper': on, 'mask': mask})
