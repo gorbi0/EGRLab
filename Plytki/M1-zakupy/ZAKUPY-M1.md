@@ -12,11 +12,11 @@ Założenie: M1 zastępuje stos S1. Jeśli S1 też będzie składany, kolidują:
 | TRACO TSR 2-2433 | 1 | 1 | U2 | Mouser 24.09 (było dla P02) |
 | 74LVC125AD,118 | 25 | 1 | U5 | Mouser 24.09 |
 | INA240A2EDRQ1 | 2 | 1 | U4 | Mouser 24.09 (druga sztuka zapasem) |
-| AD7606B | 1 | 1 | U3 | posiadany — **potwierdzić, że to goły AD7606BBSTZ (LQFP-64), nie moduł** |
+| AD7606BBSTZ (LQFP-64) | 1 | 1 | U3 | posiadany, goły układ (potwierdzone 9.10) |
 | Waveshare ESP32-S3-DEV-KIT-N32R16V | 1 | 1 | M1 | posiadany; **wylutować D1** (M1-01) |
 | MAX31856 XU | 2 | 2 | TC1, TC2 | posiadane (Allegro), pomiar 8.10 zgodny |
 | IBT-2 (2× BTS7960B) | 1 | 1 | poza płytką | posiadany |
-| Adafruit 4682 (microSD) | ? | 1 | SD1 | **nie ma go w rejestrze**; lista 2 (niezamówiona) miała go do kupienia (Mouser 485-4682) — potwierdzić |
+| Adafruit 4682 (microSD) | 1 | 1 | SD1 | posiadany (potwierdzone 9.10; poza rejestrem `Zamowione/`) |
 | goldpin 1×40 | 9 | 2 | listwy 2×1×22 pod ESP32 | Kamami 24.09 (jeśli moduł nie ma własnych) |
 | dystans M3×10 poliamid, śruby, nakrętki, podkładki M3 | 10 / 100 | 4 kpl. | otwory montażowe | TME 24.09 |
 | tulejki WAGO 216-206 (2,5 mm²) | 6 | wg potrzeb | przewody 2,0 mm² na X1 | TME 24.09 |
