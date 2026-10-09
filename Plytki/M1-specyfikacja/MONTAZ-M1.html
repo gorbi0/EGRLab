@@ -1,0 +1,276 @@
+<title>Montaż M1-R1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: bench card — board map on top, then numbered stages, each a checklist that remembers ticks in this browser */
+:root {
+  --bg: #f1f4f2; --surface: #ffffff; --sunk: #e7ece9; --fg: #16201b; --muted: #5a6962; --line: #d3dcd7;
+  --accent: #1c6a4e; --accent-soft: #dcefe6; --warn: #8f5300; --warn-soft: #fbecd2; --bad: #ad2a1f; --bad-soft: #f8dcd8;
+  --pcb: #1f5c43; --pcb-line: #9fd3bb; --pcb-part: #e9f5ef;
+  --f-display: "Barlow Semi Condensed", "Arial Narrow", system-ui, sans-serif;
+  --f-body: "Barlow", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0f1412; --surface: #161d1a; --sunk: #1d2622; --fg: #e4ebe7; --muted: #93a39b; --line: #2b3631;
+  --accent: #5cc198; --accent-soft: #1b3329; --warn: #f0b45a; --warn-soft: #3a2b12; --bad: #ff8a7e; --bad-soft: #3d1b18;
+  --pcb: #173f2f; --pcb-line: #6fb595; --pcb-part: #24352d; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0f1412; --surface: #161d1a; --sunk: #1d2622; --fg: #e4ebe7; --muted: #93a39b; --line: #2b3631;
+  --accent: #5cc198; --accent-soft: #1b3329; --warn: #f0b45a; --warn-soft: #3a2b12; --bad: #ff8a7e; --bad-soft: #3d1b18;
+  --pcb: #173f2f; --pcb-line: #6fb595; --pcb-part: #24352d; color-scheme: dark }
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--fg); font: 15.5px/1.5 var(--f-body); padding-inline: 16px; padding-block: 20px 56px }
+.wrap { max-width: 860px; margin: 0 auto; display: grid; gap: 18px }
+h1 { font: 700 2rem/1.1 var(--f-display); margin: 0; text-wrap: balance }
+.lede { color: var(--muted); max-width: 65ch; margin: 4px 0 0 }
+.progress { font: 600 .9rem var(--f-display); letter-spacing: .03em; color: var(--muted); font-variant-numeric: tabular-nums }
+.progress b { color: var(--accent) }
+.note { border-radius: 8px; padding: 10px 14px; background: var(--warn-soft); color: var(--warn); font-weight: 500 }
+.note.bad { background: var(--bad-soft); color: var(--bad) }
+.map { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px; overflow-x: auto }
+.map svg { display: block; width: 100%; min-width: 520px; height: auto }
+.map figcaption { color: var(--muted); font-size: .85rem; margin-top: 6px }
+.step { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; display: grid; gap: 10px }
+.step h2 { font: 700 1.25rem/1.2 var(--f-display); margin: 0; display: flex; gap: 10px; align-items: baseline }
+.step h2 .no { font-family: var(--f-mono); font-size: .95rem; color: var(--accent); min-width: 2ch }
+.step h2 .when { margin-left: auto; font: 500 .8rem var(--f-body); color: var(--muted) }
+.step p { margin: 0; max-width: 70ch }
+ul.chk { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px }
+ul.chk li label { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 8px; align-items: start; cursor: pointer; padding: 3px 4px; border-radius: 4px }
+ul.chk li label:hover { background: var(--sunk) }
+ul.chk input { margin-top: 4px; width: 16px; height: 16px; accent-color: var(--accent) }
+ul.chk input:checked + span { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--line) }
+.ref { font: 700 .86rem var(--f-mono) }
+.val { font: 500 .86rem var(--f-mono); color: var(--accent) }
+.tbl { overflow-x: auto }
+table { border-collapse: collapse; width: 100%; font-size: .92rem }
+th, td { text-align: left; padding: 5px 8px; border-top: 1px solid var(--line); vertical-align: top }
+th { font: 700 .75rem var(--f-display); text-transform: uppercase; letter-spacing: .07em; color: var(--muted); border-top: 0 }
+td.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; white-space: nowrap }
+.flag { font: 700 .7rem var(--f-display); text-transform: uppercase; letter-spacing: .06em; padding: 1px 7px; border-radius: 999px; background: var(--bad-soft); color: var(--bad); white-space: nowrap }
+.actions { display: flex; justify-content: flex-end }
+button { font: 600 .9rem var(--f-display); border: 1px solid var(--line); background: var(--surface); color: var(--muted); border-radius: 6px; padding: 6px 12px; cursor: pointer }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Montaż M1-R1</h1>
+    <p class="lede">Kolejność lutowania płytki M1 (150 × 80 mm, 4 warstwy, ENIG) z szablonem na górę. Zasada: najpierw cała pasta i rozpływ, potem lutownica, potem zasilanie bez modułów, dopiero na końcu moduły i przewody. Zaznaczenia zapamiętuje ta przeglądarka.</p>
+    <div class="progress" id="progress"></div>
+  </header>
+
+  <div class="note bad"><b>M1 nie ma zabezpieczenia przed odwrotną polaryzacją</b> (wycięte w audycie). Odwrotnie podłączony pakiet albo zasilacz uszkodzi przetwornice i wszystko za nimi. Przy każdym podłączeniu sprawdź + i − na J1.</div>
+
+  <figure class="map" style="margin:0">
+    <svg viewBox="-4 -4 158 88" role="img" aria-label="Mapa płytki M1 z położeniem kluczowych części i punktów pomiarowych">
+      <rect x="0" y="0" width="150" height="80" rx="1" fill="var(--pcb)" stroke="var(--pcb-line)" stroke-width=".4"/>
+      <g fill="none" stroke="var(--pcb-line)" stroke-width=".3">
+        <circle cx="4" cy="4" r="1.6"/><circle cx="146" cy="4" r="1.6"/><circle cx="4" cy="76" r="1.6"/><circle cx="146" cy="76" r="1.6"/>
+      </g>
+      <g fill="var(--pcb-part)" stroke="var(--pcb-line)" stroke-width=".3">
+        <rect x="8" y="10.5" width="12" height="9"/><rect x="27" y="10.5" width="12" height="9"/><rect x="40" y="10.5" width="10" height="9"/><rect x="52" y="10.5" width="25" height="9"/>
+        <rect x="10.7" y="19.6" width="16.5" height="6.2"/>
+        <rect x="8.5" y="29" width="8.7" height="10"/><rect x="22.5" y="29" width="8.7" height="10"/>
+        <rect x="42.5" y="22.4" width="7" height="3.2"/>
+        <rect x="90" y="34" width="10" height="10"/>
+        <rect x="49.5" y="34.5" width="5" height="5"/><rect x="51.2" y="46.2" width="8.6" height="8.6"/><rect x="105.5" y="24.5" width="5" height="5"/><rect x="19.7" y="48.7" width="8.6" height="8.6"/><rect x="62.5" y="22.5" width="3" height="3"/>
+        <rect x="35" y="50.5" width="6" height="5"/><rect x="24" y="61" width="12" height="8"/>
+        <rect x="116.1" y="15.1" width="25.7" height="64.7" fill-opacity=".55"/>
+        <rect x="89.4" y="53.7" width="25.7" height="25.6" fill-opacity=".55"/>
+        <rect x="37.2" y="57.5" width="24.3" height="21" fill-opacity=".55"/><rect x="63.7" y="57.5" width="24.3" height="21" fill-opacity=".55"/>
+      </g>
+      <g fill="var(--fg)" font-family="JetBrains Mono, monospace" font-size="2.6" font-weight="700" style="paint-order:stroke" stroke="var(--pcb-part)" stroke-width=".5">
+        <text x="9" y="16">J1 BAT</text><text x="28" y="16">J2</text><text x="41" y="16">J5</text><text x="53" y="16">J6 sygnały</text>
+        <text x="12" y="24">F1</text>
+        <text x="9.2" y="35">U1 5V</text><text x="23" y="35">U2 3V3</text>
+        <text x="42.5" y="21.6">RSH1</text>
+        <text x="90.6" y="39.8">U3</text><text x="87" y="46.8" font-size="2">+ C8–C13 spód</text>
+        <text x="49.6" y="33.6" font-size="2.2">U4</text><text x="51.6" y="51">U5 LVC</text><text x="105.6" y="23.8" font-size="2.2">U6</text><text x="19.9" y="53.5">U7 AHCT</text><text x="62.2" y="21.8" font-size="2.2">U8</text>
+        <text x="35.3" y="54">J3</text><text x="25" y="66">J4 IBT-2</text>
+        <text x="118" y="48">M1 ESP32</text><text x="91" y="67">SD1</text><text x="40" y="68">TC1</text><text x="66" y="68">TC2</text>
+      </g>
+      <g font-family="JetBrains Mono, monospace" font-size="2.3" font-weight="700">
+        <g fill="#f2c14e"><circle cx="11" cy="47.1" r="1"/><circle cx="34.2" cy="35.1" r="1"/><circle cx="29" cy="22.6" r="1"/><circle cx="5.5" cy="32.3" r="1"/><circle cx="91.2" cy="23.6" r="1"/><circle cx="57.6" cy="22.6" r="1"/><circle cx="77.5" cy="20.6" r="1"/></g>
+        <g fill="#f2c14e" style="paint-order:stroke" stroke="var(--pcb)" stroke-width=".6">
+          <text x="7" y="45">TP1 5V</text><text x="35.6" y="36.2">TP2 3V3</text><text x="30.4" y="23.3">TP3 VBUS</text><text x="1.6" y="30.4">TP4</text><text x="83" y="22.4">TP8 REF</text><text x="53.5" y="21.2">TP9</text><text x="73.8" y="18.9">TP10</text>
+        </g>
+      </g>
+    </svg>
+    <figcaption>Widok od góry, położenia z pliku płytki. Żółte punkty to pola pomiarowe (TP4 i TP10 = GND). Półprzezroczyste prostokąty to moduły, lutowane na końcu.</figcaption>
+  </figure>
+
+  <section class="step" data-step="0">
+    <h2><span class="no">0</span>Przygotowanie i goła płytka</h2>
+    <ul class="chk">
+      <li><label><input type="checkbox"><span>Pasta: najlepiej Sn63Pb37 (topi się w 183 °C). Niskotemperaturowa z bizmutem (138 °C) jest krucha, więc nie nadaje się do auta z drganiami. Do tego topnik w żelu, alkohol izopropylowy, plecionka, lupa, taśma kapton.</span></label></li>
+      <li><label><input type="checkbox"><span>Zasilacz laboratoryjny z ograniczeniem prądu i multimetr.</span></label></li>
+      <li><label><input type="checkbox"><span>Oglądnij gołą płytkę pod lupą, zwłaszcza pola U3 (raster 0,5 mm).</span></label></li>
+      <li><label><input type="checkbox"><span>Na gołej płytce zmierz rezystancje: J1 BAT+ ↔ GND, TP3 VBUS ↔ GND, TP1 5V ↔ GND, TP2 3V3 ↔ GND, TP1 ↔ TP2. Wszędzie ma być przerwa. Zwarcie na gołej płytce to reklamacja w JLCPCB, nie lutujesz dalej.</span></label></li>
+      <li><label><input type="checkbox"><span>Moduł ESP32 (Waveshare): <b>wylutuj D1</b>, diodę między USB VBUS a pinem 5V, przy złączu USB. Najpierw porównaj oznaczenie diody ze schematem modułu. Potem sprawdź omomierzem, że między USB VBUS a pinem 5V listwy jest przerwa. Robisz to teraz, bo moduł jest jeszcze luzem.</span></label></li>
+      <li><label><input type="checkbox"><span>Rozłóż woreczki według grup z kroku 2. Uważaj na dwa rodzaje 100 k (1 % i 0,1 %) i dwa układy SOIC-14 (LVC i AHCT).</span></label></li>
+    </ul>
+  </section>
+
+  <section class="step" data-step="1">
+    <h2><span class="no">1</span>Pasta przez szablon<span class="when">góra</span></h2>
+    <ul class="chk">
+      <li><label><input type="checkbox"><span>Zaklej taśmą otwory szablonu nad <span class="ref">R25</span> i <span class="ref">R27</span>. Te części nie są montowane (DNP).</span></label></li>
+      <li><label><input type="checkbox"><span>Płytkę unieruchom w ramce z pozostałych płytek M1 (ta sama grubość 1,6 mm) przyklejonych taśmą dookoła. Wtedy szablon leży płasko.</span></label></li>
+      <li><label><input type="checkbox"><span>Dopasuj szablon do pól pod światło. Najdokładniej ustaw okolicę U3, potem przyklej szablon taśmą z jednej strony, jak zawias.</span></label></li>
+      <li><label><input type="checkbox"><span>Pastę nałóż jednym pociągnięciem karty pod kątem około 45°. Szablon podnieś pionowo, bez przesuwania.</span></label></li>
+      <li><label><input type="checkbox"><span>Sprawdź pod lupą pola U3: równe paski, bez mostków. Jeśli źle wyszło, zmyj alkoholem i nałóż jeszcze raz.</span></label></li>
+    </ul>
+  </section>
+
+  <section class="step" data-step="2">
+    <h2><span class="no">2</span>Układanie części na pastę<span class="when">64 części, góra</span></h2>
+    <p>Zaczynasz od U3, póki wokół jest pusto, potem pozostałe układy, na końcu bierne grupami według obszaru. Orientacja: kropka albo ścięcie obudowy do oznaczenia pinu 1 na nadruku.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Kolejność</th><th>Części</th><th>Wartość</th><th>Uwagi</th></tr></thead>
+      <tbody>
+        <tr><td class="num">2.1</td><td><span class="ref">U3</span></td><td class="val">AD7606BBSTZ</td><td>LQFP-64, raster 0,5 mm, <b>pin 1</b>. Ułóż i dociśnij lekko. Po rozpływie pasta sama dociągnie układ, jeśli przesunięcie jest mniejsze niż pół pola.</td></tr>
+        <tr><td class="num">2.2</td><td><span class="ref">U5</span></td><td class="val">74LVC125AD</td><td>SOIC-14 przy TC1 <span class="flag">nie zamieniać z U7</span></td></tr>
+        <tr><td class="num"></td><td><span class="ref">U7</span></td><td class="val">74AHCT125D</td><td>SOIC-14 przy J4 (IBT-2)</td></tr>
+        <tr><td class="num"></td><td><span class="ref">U4</span> · <span class="ref">U6</span></td><td class="val">INA240A2 · TCAN1051V</td><td>SOIC-8, pin 1</td></tr>
+        <tr><td class="num"></td><td><span class="ref">U8</span> · <span class="ref">D1</span></td><td class="val">TPS2553 · PESD2CAN</td><td>SOT-23-6, pin 1 · SOT-23</td></tr>
+        <tr><td class="num">2.3</td><td><span class="ref">RSH1</span></td><td class="val">5 mΩ WSK2512</td><td>bocznik, 4 pola Kelvina</td></tr>
+        <tr><td class="num"></td><td><span class="ref">C14 C15</span></td><td class="val">22 µ 1210</td><td>przy U3 (odniesienie)</td></tr>
+        <tr><td class="num">2.4</td><td><span class="ref">R11 R13</span></td><td class="val">300 k 0,1 %</td><td rowspan="3">dzielniki wejść AD7606B, rząd przy x ≈ 67 mm</td></tr>
+        <tr><td class="num"></td><td><span class="ref">R12 R14–R17 R19 R20</span></td><td class="val">100 k 0,1 %</td></tr>
+        <tr><td class="num"></td><td><span class="ref">R18</span></td><td class="val">499 k 0,1 %</td></tr>
+        <tr><td class="num"></td><td><span class="ref">R22 R23</span></td><td class="val">10 Ω 0,1 %</td><td>przy boczniku (Kelvin)</td></tr>
+        <tr><td class="num">2.5</td><td><span class="ref">C16–C22</span></td><td class="val">220 p C0G</td><td>filtry wejść ADC</td></tr>
+        <tr><td class="num"></td><td><span class="ref">C23</span></td><td class="val">1 n C0G</td><td></td></tr>
+        <tr><td class="num">2.6</td><td><span class="ref">C11 C12 C30</span></td><td class="val">1 µ</td><td>C11, C12 = REGCAP przy U3; C30 = wyjście TPS2553</td></tr>
+        <tr><td class="num"></td><td><span class="ref">C5</span> · <span class="ref">C2 C3</span></td><td class="val">10 µ 16 V</td><td>C5 = 5VA (AVCC U3); C2 = 5V, C3 = 3V3 przy przetwornicach</td></tr>
+        <tr><td class="num"></td><td><span class="ref">C1</span></td><td class="val">4,7 µ 50 V</td><td>VBUS, wejście przetwornic</td></tr>
+        <tr><td class="num"></td><td><span class="ref">C4 C6 C7 C24–C29</span></td><td class="val">100 n</td><td>C4 = filtr przycisku; C6, C7 = 5VA; C24–C29 odsprzęganie układów</td></tr>
+        <tr><td class="num">2.7</td><td><span class="ref">R3 R4 R5</span></td><td class="val">100 k 1 %</td><td><span class="flag">nie z woreczka 0,1 %</span> ściągające RPWM / LPWM / SENS_EN</td></tr>
+        <tr><td class="num"></td><td><span class="ref">R2</span></td><td class="val">4,7 k</td><td>DRIVE_EN do masy (nie 100 k)</td></tr>
+        <tr><td class="num"></td><td><span class="ref">R1 R6 R9 R28 R29 R32</span></td><td class="val">10 k</td><td></td></tr>
+        <tr><td class="num"></td><td><span class="ref">R10</span> · <span class="ref">R21</span> · <span class="ref">R31</span></td><td class="val">47 k · 1 k · 232 k</td><td>R31 ustawia limit prądu TPS2553</td></tr>
+        <tr><td class="num"></td><td><span class="ref">R7</span> · <span class="ref">R8</span> · <span class="ref">R30</span></td><td class="val">1 Ω · 33 Ω · 100 Ω</td><td></td></tr>
+        <tr><td class="num"></td><td><span class="ref">R24 R26</span></td><td class="val">0 Ω</td><td>R25 i R27 zostają puste</td></tr>
+      </tbody>
+    </table></div>
+    <ul class="chk">
+      <li><label><input type="checkbox"><span>U3 ułożony, pin 1 zgodny z nadrukiem.</span></label></li>
+      <li><label><input type="checkbox"><span>U4–U8 i D1 ułożone, piny 1 zgodne.</span></label></li>
+      <li><label><input type="checkbox"><span>RSH1, C14, C15 ułożone.</span></label></li>
+      <li><label><input type="checkbox"><span>Bierne 2.4–2.7 ułożone, R25 i R27 puste.</span></label></li>
+    </ul>
+  </section>
+
+  <section class="step" data-step="3">
+    <h2><span class="no">3</span>Rozpływ</h2>
+    <ul class="chk">
+      <li><label><input type="checkbox"><span>Płyta grzewcza co najmniej 150 × 80 mm: podgrzej około 150 °C przez 60–90 s, potem podnieś temperaturę, aż cała pasta się rozpłynie (dla Sn63Pb37 płyta około 220–230 °C). Gruba płytka z wylewkami nagrzewa się wolniej niż jej powierzchnia, więc patrz na pastę przy RSH1 i C14 / C15, bo na wylewkach rozpływa się ostatnia.</span></label></li>
+      <li><label><input type="checkbox"><span>Bez płyty albo przy mniejszej płycie: hot air z podgrzewaniem od spodu, po kolei obszarami: U3 z otoczeniem, układy, bierne. Nie przegrzewaj jednego miejsca.</span></label></li>
+      <li><label><input type="checkbox"><span>Po rozpływie 20–40 s, potem wyłącz i ostudź bez ruszania płytki.</span></label></li>
+    </ul>
+  </section>
+
+  <section class="step" data-step="4">
+    <h2><span class="no">4</span>Oględziny, poprawki, mycie</h2>
+    <ul class="chk">
+      <li><label><input type="checkbox"><span>U3 pod lupą ze wszystkich czterech stron: mostki usuwaj topnikiem i grotem albo plecionką.</span></label></li>
+      <li><label><input type="checkbox"><span>Pozostałe: nagrobki (stojące rezystory), brakujące spoiny, przesunięcia.</span></label></li>
+      <li><label><input type="checkbox"><span><b>Umyj dokładnie alkoholem</b>, szczególnie okolicę dzielników 100–499 k i U3. Resztki topnika upływem psują pomiar napięć.</span></label></li>
+      <li><label><input type="checkbox"><span>Powtórz pomiary z kroku 0. Teraz nie będzie przerwy, bo są kondensatory i układy, ale żadna para nie może mieć kilku omów (zwykle setki Ω do kΩ, rośnie w trakcie pomiaru).</span></label></li>
+    </ul>
+  </section>
+
+  <section class="step" data-step="5">
+    <h2><span class="no">5</span>Spód: cztery kondensatory<span class="when">lutownica</span></h2>
+    <ul class="chk">
+      <li><label><input type="checkbox"><span><span class="ref">C8 C9 C10 C13</span> <span class="val">100 n</span>, pod U3 na spodzie. Pasta z szablonu ich nie obejmuje, a płyta grzewcza by je odkleiła, więc lutujesz je teraz lutownicą, z płytką na podstawce.</span></label></li>
+    </ul>
+  </section>
+
+  <section class="step" data-step="6">
+    <h2><span class="no">6</span>Przewlekane części zasilania</h2>
+    <ul class="chk">
+      <li><label><input type="checkbox"><span><span class="ref">F1</span> oprawka Keystone 3568. Lutuj dłużej i mocniejszą kolbą (wylewki BAT i VBUS odbierają ciepło).</span></label></li>
+      <li><label><input type="checkbox"><span><span class="ref">U1</span> = <b>TSR 2-2450 (5 V)</b>, <span class="ref">U2</span> = <b>TSR 2-2433 (3,3 V)</b>. <span class="flag">nie zamienić</span> Zamiana podaje 5 V na szynę 3,3 V. Pin 1 (Vin) w kwadratowym polu, pin 2 GND, pin 3 wyjście.</span></label></li>
+      <li><label><input type="checkbox"><span>Para przewodów 2,0 mm² do <span class="ref">J1</span> (BAT+ / BAT−) z zapasem długości. Posłuży do prób i zostanie w obudowie. Odciąż ją opaską przez otwór przy polu.</span></label></li>
+    </ul>
+  </section>
+
+  <section class="step" data-step="7">
+    <h2><span class="no">7</span>Pierwsze zasilanie bez modułów</h2>
+    <p>Zasilacz 12 V, ograniczenie <b>100 mA</b>, bezpiecznik 7,5 A w F1. Bez ESP32 piny sterujące trzymają rezystory ściągające: napęd i zasilanie czujnika są wyłączone.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Punkt</th><th>Oczekiwane</th><th>Co znaczy</th></tr></thead>
+      <tbody>
+        <tr><td class="num">pobór</td><td class="num">kilkadziesiąt mA</td><td>Wejście w ograniczenie prądu = zwarcie, od razu wyłącz.</td></tr>
+        <tr><td class="num">TP3 VBUS</td><td class="num">≈ 12 V</td><td>za bezpiecznikiem</td></tr>
+        <tr><td class="num">TP1 5V</td><td class="num">4,90–5,10 V</td><td>TSR 2-2450</td></tr>
+        <tr><td class="num">TP2 3V3</td><td class="num">3,23–3,37 V</td><td>TSR 2-2433</td></tr>
+        <tr><td class="num">TP8 REF</td><td class="num">≈ 2,50 V</td><td>wewnętrzne odniesienie AD7606B (REF SELECT na 3V3): U3 żyje</td></tr>
+        <tr><td class="num">TP9 SENS_5V</td><td class="num">≈ 0 V</td><td>TPS2553 wyłączony</td></tr>
+      </tbody>
+    </table></div>
+    <ul class="chk">
+      <li><label><input type="checkbox"><span>Pomiary jak w tabeli, masa na TP4 albo TP10.</span></label></li>
+      <li><label><input type="checkbox"><span>Po minucie sprawdź palcem: nic nie jest gorące (U3, U8, przetwornice ledwo ciepłe).</span></label></li>
+    </ul>
+  </section>
+
+  <section class="step" data-step="8">
+    <h2><span class="no">8</span>ESP32 i firmware</h2>
+    <ul class="chk">
+      <li><label><input type="checkbox"><span>Zasilanie odłączone. Moduł z wylutowaną D1 na listwach 2 × 22: włóż listwy w płytkę, nałóż moduł, lutuj najpierw po dwa skrajne piny z każdej strony, sprawdź, czy moduł leży równo, potem reszta.</span></label></li>
+      <li><label><input type="checkbox"><span>Zasilanie 12 V, limit 300 mA: 5 V i 3,3 V jak w kroku 7, pobór rośnie do około 50–100 mA.</span></label></li>
+      <li><label><input type="checkbox"><span>USB podłączasz <b>tylko przy włączonym zasilaniu z J1</b>. Po wylutowaniu D1 samo USB nie zasila płytki.</span></label></li>
+      <li><label><input type="checkbox"><span>Wgraj firmware 6.3.1-m1 (wariant logger), w konsoli <code>status</code>. Bez karty ma się pokazać „TRYB BEZ KARTY”.</span></label></li>
+    </ul>
+  </section>
+
+  <section class="step" data-step="9">
+    <h2><span class="no">9</span>Karta i termopary</h2>
+    <ul class="chk">
+      <li><label><input type="checkbox"><span>Zaciski termopar na modułach MAX31856 wlutuj, zanim wlutujesz moduły (jeśli przyszły osobno).</span></label></li>
+      <li><label><input type="checkbox"><span><span class="ref">SD1</span> Adafruit 4682 na listwie 1 × 9, gniazdem karty do krawędzi.</span></label></li>
+      <li><label><input type="checkbox"><span><span class="ref">TC1</span>, <span class="ref">TC2</span> MAX31856 XU, zaciskami do dolnej krawędzi.</span></label></li>
+      <li><label><input type="checkbox"><span>Próba: karta widoczna w <code>status</code>, odczyt obu termopar; odłączona termopara daje błąd, nigdy 0 °C.</span></label></li>
+    </ul>
+  </section>
+
+  <section class="step" data-step="10">
+    <h2><span class="no">10</span>Przewody<span class="when">przy montażu obudowy</span></h2>
+    <ul class="chk">
+      <li><label><input type="checkbox"><span><span class="ref">J2</span> VMOTOR i <span class="ref">J5</span> P1 ECU / EGR: 2,0 mm², mocna kolba, opaska przez otwór przy polu.</span></label></li>
+      <li><label><input type="checkbox"><span><span class="ref">J6</span>: 10 przewodów do X1.7–X1.16 według tabeli X1 (0,25 / 0,5 mm², skrętka CAN).</span></label></li>
+      <li><label><input type="checkbox"><span><span class="ref">J4</span>: 6 × 0,25 mm² do listwy IBT-2 (RPWM, LPWM, R_EN, L_EN, VCC, GND). <span class="ref">J3</span>: 2 × 0,25 mm² do przycisku START / STOP.</span></label></li>
+      <li><label><input type="checkbox"><span>Dalej odbiór według README firmware (punkty 1–11, stany w resecie, watchdogi, ograniczenie prądu).</span></label></li>
+    </ul>
+  </section>
+
+  <div class="actions"><button type="button" id="reset">Wyczyść zaznaczenia</button></div>
+</div>
+
+<script>
+(() => {
+  const KEY = 'm1-montaz-v1';
+  const boxes = [...document.querySelectorAll('ul.chk input[type=checkbox]')];
+  boxes.forEach((b, i) => { b.id = 'c' + i; });
+  let saved = [];
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { saved = []; }
+  boxes.forEach((b, i) => { b.checked = !!saved[i]; });
+  const prog = document.getElementById('progress');
+  function update() {
+    const n = boxes.filter((b) => b.checked).length;
+    prog.innerHTML = `Zrobione: <b>${n}</b> z ${boxes.length}`;
+    try { localStorage.setItem(KEY, JSON.stringify(boxes.map((b) => b.checked))); } catch (e) {}
+  }
+  boxes.forEach((b) => b.addEventListener('change', update));
+  const reset = document.getElementById('reset');
+  reset.addEventListener('click', () => {
+    if (reset.dataset.armed) { boxes.forEach((b) => { b.checked = false; }); delete reset.dataset.armed; reset.textContent = 'Wyczyść zaznaczenia'; update(); }
+    else { reset.dataset.armed = '1'; reset.textContent = 'Na pewno wyczyścić?'; setTimeout(() => { delete reset.dataset.armed; reset.textContent = 'Wyczyść zaznaczenia'; }, 4000); }
+  });
+  update();
+})();
+</script>
