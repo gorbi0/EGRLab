@@ -102,3 +102,19 @@ Pasywne kupuje się w paczkach (minimum sklepu) — zapas na drugą płytkę wyc
 - D1 na module Waveshare wylutować przed pierwszym zasileniem (najpierw potwierdzić oznaczenie diody na posiadanym egzemplarzu).
 - R2 = 4,7 k (nie 100 k) — GPIO39 ma po resecie wewnętrzne podciąganie ok. 45 k.
 - AD7606BBSTZ jest jeden, w LQFP 0,5 mm — ewentualna druga sztuka na wypadek uszkodzenia przy lutowaniu to decyzja użytkownika.
+
+## 5. Lista do Mousera — `MOUSER-M1.csv`
+
+28 pozycji, 121 szt.: wszystkie części z punktu 2 z zapasem (układy ×2, drobne pasywne zaokrąglone). Kontrola z `zakupy.csv`: 27/27 pozycji BOM pokrytych, ilości ≥ potrzeby. Mouser, bo TME (lista 2, 28.09) nie miało w detalu 232 k 1 %, C3225X7R1E226M250AB sprzedawało tylko po 1000 szt., a TPS2553DBVR miało 5 szt. **Stanów i cen nie sprawdzano** (Mouser blokuje zapytania automatyczne).
+
+Wczytanie: mouser.pl → Narzędzie BOM (BOM Tool) → wgraj CSV, kolumna „Mfr Part Number” jako numer producenta, „Quantity” jako ilość, „Customer Part Number” jako numer klienta (oznaczenia z płytki trafią na etykiety woreczków). Pozycje bez dopasowania albo bez stanu — zamienniki:
+
+| Pozycja | Zamiennik |
+|---|---|
+| RC1206FR-07232KL | Vishay CRCW1206232KFKEA albo Panasonic ERJ-8ENF2323V |
+| RT1206BRD07… (0,1 %) | Panasonic ERA-8AEB…V (np. ERA-8AEB104V = 100 k), Vishay TNPW1206…BE |
+| C3225X7R1E226M250AB | Samsung CL32B226KAJNNNE, Murata GRM32ER71E226KE15L |
+| kondensatory 1206 | dowolne tej samej wartości, napięcia i dielektryka (X7R / C0G) |
+| WSK25125L000FEA | bez zamiennika — footprint Kelvin WSK2512 |
+
+Nie ma na liście (poza płytką, punkt 3): listwa X1, wyłącznik pakietu, przycisk, dławnice, przewody, tulejki — do wyboru z obudową.
